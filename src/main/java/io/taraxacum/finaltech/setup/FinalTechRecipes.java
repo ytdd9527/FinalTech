@@ -52,6 +52,12 @@ public final class FinalTechRecipes {
             SlimefunItems.CARBON_PRESS, SlimefunItems.CARBON_PRESS, SlimefunItems.CARBON_PRESS
     };
 
+    public static final ItemStack[] AVANCED_DUST_FACTORY = new ItemStack[] {
+            null, null, new ItemStack(Material.BEDROCK),
+            null, null, null,
+            null, new ItemStack(Material.BEDROCK),
+    };
+
     public static final ItemStack[] ADVANCED_ELECTRIC_CRUCIBLE = new ItemStack[] {
             SlimefunItems.CRUCIBLE, SlimefunItems.CRUCIBLE, SlimefunItems.CRUCIBLE,
             SlimefunItems.CRUCIBLE, new ItemStack(Material.DISPENSER), SlimefunItems.CRUCIBLE,
@@ -104,6 +110,12 @@ public final class FinalTechRecipes {
             SlimefunItems.FOOD_COMPOSTER, SlimefunItems.FOOD_FABRICATOR, SlimefunItems.FOOD_COMPOSTER,
             SlimefunItems.FOOD_FABRICATOR, new ItemStack(Material.DISPENSER), SlimefunItems.FOOD_FABRICATOR,
             SlimefunItems.FOOD_COMPOSTER, SlimefunItems.FOOD_FABRICATOR, SlimefunItems.FOOD_COMPOSTER
+    };
+
+    public static final ItemStack[] ADVANCED_FREEZER = new ItemStack[] {
+            SlimefunItems.FREEZER, SlimefunItems.FREEZER, SlimefunItems.FREEZER,
+            SlimefunItems.FREEZER, new ItemStack(Material.DISPENSER), SlimefunItems.FREEZER,
+            SlimefunItems.FREEZER, SlimefunItems.FREEZER, SlimefunItems.FREEZER
     };
 
     public static final ItemStack[] ADVANCED_GOLD_PAN = new ItemStack[] {

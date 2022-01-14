@@ -10,21 +10,21 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public class AdvancedEletricPress extends FinalAdvanceMachine {
+public class AdvancedElectricSmeltery extends FinalAdvanceMachine {
 
-    public AdvancedEletricPress(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public AdvancedElectricSmeltery(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
     public void registerDefaultRecipes() {
-        FinalUtil.registerRecipeBySlimefunId(this, "ELECTRIC_PRESS");
+        FinalUtil.registerRecipeBySlimefunId(this, "ELECTRIC_SMELTERY");
     }
 
     @Nonnull
     @Override
     public String getMachineIdentifier() {
-        return "FINALTECH_ADVANCED_ELETRIC_PRESS";
+        return "FINALTECN_ADVANCED_ELETRIC_SMELTERY";
     }
 
     @Override

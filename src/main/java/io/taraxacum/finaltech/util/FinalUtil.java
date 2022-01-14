@@ -12,7 +12,7 @@ public class FinalUtil {
 
     public static void registerRecipeBySlimefunId(FinalBasicMachine finalBasicMachine, String SlimefunId) {
 
-        final SlimefunItem slimefunItem = SlimefunItem.getById("AUTO_DRIER");
+        final SlimefunItem slimefunItem = SlimefunItem.getById(SlimefunId);
         try {
             Method method = slimefunItem.getClass().getMethod("getMachineRecipes");
             List<MachineRecipe> recipes = (List<MachineRecipe>)method.invoke(slimefunItem);
