@@ -8,7 +8,7 @@ author: Final_ROOT
 description: Slimefun4-Addon made by Final_ROOT, trying to make the world balanced wiht all other Slimefun addons.
 
 ## CHANGE this to the path of the class that extends JavaPlugin.
-main: io.taraxacum.FinalTech
+main: io.taraxacum.finaltech.FinalTech
 
 ## You can change this to link to your website or repository. You can also remove this line if you want to.
 website: https://github.com/zomx127/FinalTech
