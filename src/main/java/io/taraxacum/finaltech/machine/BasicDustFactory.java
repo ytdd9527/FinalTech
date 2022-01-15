@@ -16,15 +16,15 @@ public class BasicDustFactory extends FinalBasicMachine {
 
     public BasicDustFactory(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 20), new CustomItemStack(SlimefunItems.IRON_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.IRON_DUST, 28)});
-        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 20), new CustomItemStack(SlimefunItems.GOLD_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.GOLD_DUST, 28)});
-        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 20), new CustomItemStack(SlimefunItems.COPPER_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.COPPER_DUST, 28)});
-        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 20), new CustomItemStack(SlimefunItems.TIN_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.TIN_DUST, 28)});
-        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 20), new CustomItemStack(SlimefunItems.LEAD_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.LEAD_DUST, 28)});
-        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 20), new CustomItemStack(SlimefunItems.SILVER_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.SILVER_DUST, 28)});
-        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 20), new CustomItemStack(SlimefunItems.ALUMINUM_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.ALUMINUM_DUST, 28)});
-        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 20), new CustomItemStack(SlimefunItems.ZINC_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.ZINC_DUST, 28)});
-        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 20), new CustomItemStack(SlimefunItems.MAGNESIUM_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.MAGNESIUM_DUST, 28)});
+        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 64), new CustomItemStack(SlimefunItems.IRON_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.IRON_DUST, 28)});
+        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 64), new CustomItemStack(SlimefunItems.GOLD_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.GOLD_DUST, 28)});
+        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 64), new CustomItemStack(SlimefunItems.COPPER_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.COPPER_DUST, 28)});
+        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 64), new CustomItemStack(SlimefunItems.TIN_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.TIN_DUST, 28)});
+        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 64), new CustomItemStack(SlimefunItems.LEAD_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.LEAD_DUST, 28)});
+        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 64), new CustomItemStack(SlimefunItems.SILVER_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.SILVER_DUST, 28)});
+        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 64), new CustomItemStack(SlimefunItems.ALUMINUM_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.ALUMINUM_DUST, 28)});
+        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 64), new CustomItemStack(SlimefunItems.ZINC_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.ZINC_DUST, 28)});
+        this.registerRecipe(0, new ItemStack[] { new ItemStack(Material.COBBLESTONE, 64), new CustomItemStack(SlimefunItems.MAGNESIUM_DUST, 20)}, new ItemStack[] { new CustomItemStack(SlimefunItems.MAGNESIUM_DUST, 28)});
     }
 
     @Nonnull

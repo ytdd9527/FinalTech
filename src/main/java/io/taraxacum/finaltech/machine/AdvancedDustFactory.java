@@ -76,10 +76,9 @@ public class AdvancedDustFactory extends FinalAdvanceMachine {
                 new CustomItemStack(SlimefunItems.GOLD_DUST, 2)
         });
         registerRecipe(0, new ItemStack[] {
-                new CustomItemStack(SlimefunItems.SIFTED_ORE, 4),
-                new ItemStack(SlimefunItems.URANIUM)
+                new CustomItemStack(SlimefunItems.SIFTED_ORE, 2)
         }, new ItemStack[] {
-                new CustomItemStack(SlimefunItems.URANIUM, 2)
+                new CustomItemStack(SlimefunItems.URANIUM, 1)
         });
     }
 

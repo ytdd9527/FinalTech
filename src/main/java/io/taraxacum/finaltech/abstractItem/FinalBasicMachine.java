@@ -35,11 +35,11 @@ import java.util.*;
  * 4输入4输出
  */
 public abstract class FinalBasicMachine extends SlimefunItem implements RecipeDisplayItem, InventoryBlock, MachineProcessHolder<CraftingOperation> {
-    private static final int[] BORDER = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 13, 14, 21, 23, 30, 32, 39, 40, 41, 45, 46, 47, 48, 49, 50, 51, 52, 53}; // 机器容器边框
-    private static final int[] BORDER_IN = new int[]{9, 10, 11, 20, 29, 36, 37, 38}; // 机器输入槽边框
-    private static final int[] BORDER_OUT = new int[]{15, 16, 17, 24, 33, 42, 43, 44}; // 机器输出槽边框
-    private static final int[] INPUT = new int[]{18, 19, 27, 28}; // 输入槽
-    private static final int[] OUTPUT = new int[]{25, 26, 34, 35}; // 输出槽
+    private static final int[] BORDER = new int[]{3, 4, 5, 12, 13, 14, 21, 23, 30, 32, 39, 40, 41, 48, 49, 50}; // 机器容器边框
+    private static final int[] BORDER_IN = new int[]{2, 11, 20, 29, 38, 47}; // 机器输入槽边框
+    private static final int[] BORDER_OUT = new int[]{6, 15, 24, 33, 42, 51}; // 机器输出槽边框
+    private static final int[] INPUT = new int[]{0, 1, 9, 10, 18, 19, 27, 28, 36, 37, 45, 46}; // 输入槽
+    private static final int[] OUTPUT = new int[]{7, 8, 16, 17, 25, 26, 34, 35, 43, 44, 52, 53}; // 输出槽
     private static final int[] CONFIGURATION = new int[]{31}; // 控制槽：放入物品以改变或控制机器逻辑
     private static final int[] INFO = new int[]{22}; // 信息显示菜单
     protected final List<MachineRecipe> recipes; // 工作配方
@@ -129,7 +129,7 @@ public abstract class FinalBasicMachine extends SlimefunItem implements RecipeDi
      */
     public void register(@Nonnull SlimefunAddon addon) {
         this.addon = addon;
-        this.registerDefaultRecipes();
+//        this.registerDefaultRecipes();
         super.register(addon);
     }
 

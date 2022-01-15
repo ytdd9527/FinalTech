@@ -2,6 +2,8 @@ package io.taraxacum.finaltech.setup;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
+import io.taraxacum.finaltech.machine.AllCompression;
+import io.taraxacum.finaltech.machine.UnOrderedDustFactory;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -9,6 +11,8 @@ public final class FinalTechItems {
 
     // items
     public static final SlimefunItemStack QUANTITY_MODULE = new SlimefunItemStack("FINALTECH_QUANTITY_MODULE", Material.AMETHYST_SHARD, "&3数量组件");
+    public static final SlimefunItemStack UNORDERED_DUST = new SlimefunItemStack("FINALTECH_UNORDERED_DUST", Material.WHEAT_SEEDS, "&f无序尘埃",
+            "&8\"这究竟是什么？\"");
 
     // basic machines
     public static final SlimefunItemStack BASIC_COBBLE_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_COBBLE_FACTORY", Material.CHISELED_STONE_BRICKS, "&7基础刷石工厂");
@@ -17,6 +21,10 @@ public final class FinalTechItems {
     public static final SlimefunItemStack BASIC_FARM_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_FARM_FACTORY", Material.MOSS_BLOCK, "&7基础作物工厂");
 
     // advanced machines
+    public static final SlimefunItemStack UNORDERED_DUST_FACTORY = new SlimefunItemStack("FINALTECH_ORDERED_DUST_FACTORY", Material.DIRT, "&7无序尘埃制造机",
+            "&8输入" + UnOrderedDustFactory.getMatchDifficulty() + "种不同的物品",
+            "&8输入共" + UnOrderedDustFactory.getInputDifficulty() + "个物品",
+            "&8从而产生一个无序尘埃");
     public static final SlimefunItemStack ADVANCED_AUTO_DRIER = new SlimefunItemStack("FINALTECH_ADVANCED_AUTO_DRIER", Material.SMOKER, "&6高级烘干机");
     public static final SlimefunItemStack ADVANCED_CARBON_PRESS = new SlimefunItemStack("FINALTECH_ADVANCED_CARBON_PRESS", Material.BLACK_STAINED_GLASS, "&7高级碳压机");
     public static final SlimefunItemStack ADVANCED_DUST_FACTORY = new SlimefunItemStack("FINALTECH_ADVANCED_DUST_FACTORY", Material.RED_NETHER_BRICKS, "&c高级矿粉工厂");
@@ -33,6 +41,14 @@ public final class FinalTechItems {
     public static final SlimefunItemStack ADVANCED_GOLD_PAN = new SlimefunItemStack("FINALTECH_ADVANCED_GOLD_PAN", Material.BROWN_TERRACOTTA, "&6高级淘金机");
     public static final SlimefunItemStack ADVANCED_HEATED_PRESSURE_CHAMBER = new SlimefunItemStack("FINALTECH_HEATED_PRESSURE_CHAMBER", Material.LIGHT_GRAY_STAINED_GLASS, "&c高级加热压力仓");
 
+    // final machines
+    // 'final' means it's the best machines
+    public static final SlimefunItemStack ALL_COMPRESSION = new SlimefunItemStack("FINALTECH_ALL_COMPRESSION", Material.AMETHYST_BLOCK, "&7万物压缩器",
+            "&8输入" + AllCompression.DIFFICULTY + "个相同物品",
+            "&8从而制成带有特定签名的物品");
+    public static final SlimefunItemStack ALL_FACTORY = new SlimefunItemStack("FINALTECH_ALL_FACTORY", Material.BUDDING_AMETHYST, "&7万物工厂",
+            "&8在中间放入带有特定签名的物品",
+            "&8从而 无 限 复 制 该物品");
 
 
 }

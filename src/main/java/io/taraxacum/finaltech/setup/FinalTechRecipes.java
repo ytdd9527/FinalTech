@@ -11,7 +11,7 @@ public final class FinalTechRecipes {
     public static final ItemStack[] QUANTITY_MODULE = new ItemStack[] {
             new ItemStack(Material.COMPARATOR), SlimefunItems.STEEL_THRUSTER, new ItemStack(Material.COMPARATOR),
             SlimefunItems.ANDROID_INTERFACE_FUEL, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.ANDROID_INTERFACE_ITEMS,
-            new ItemStack(Material.NETHERITE_SCRAP), SlimefunItems.ENERGY_REGULATOR, new ItemStack(Material.NETHERITE_SCRAP)
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ENERGY_REGULATOR, FinalTechItems.UNORDERED_DUST
     };
 
     // basic machines
@@ -41,98 +41,111 @@ public final class FinalTechRecipes {
 
     // advanced machines
     public static final ItemStack[] ADVANCED_AUTO_DRIER = new ItemStack[] {
-            SlimefunItems.AUTO_DRIER, SlimefunItems.AUTO_DRIER, SlimefunItems.AUTO_DRIER,
-            SlimefunItems.AUTO_DRIER, new ItemStack(Material.DISPENSER), SlimefunItems.AUTO_DRIER,
-            SlimefunItems.AUTO_DRIER, SlimefunItems.AUTO_DRIER, SlimefunItems.AUTO_DRIER
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.AUTO_DRIER, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.AUTO_DRIER, null, SlimefunItems.AUTO_DRIER,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.AUTO_DRIER, FinalTechItems.UNORDERED_DUST
     };
 
     public static final ItemStack[] ADVANCED_CARBON_PRESS = new ItemStack[] {
-            SlimefunItems.CARBON_PRESS, SlimefunItems.CARBON_PRESS, SlimefunItems.CARBON_PRESS,
-            SlimefunItems.CARBON_PRESS, new ItemStack(Material.DISPENSER), SlimefunItems.CARBON_PRESS,
-            SlimefunItems.CARBON_PRESS, SlimefunItems.CARBON_PRESS, SlimefunItems.CARBON_PRESS
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.CARBON_PRESS, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.CARBON_PRESS, null, SlimefunItems.CARBON_PRESS,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.CARBON_PRESS, FinalTechItems.UNORDERED_DUST
     };
 
-    public static final ItemStack[] AVANCED_DUST_FACTORY = new ItemStack[] {
-            null, null, new ItemStack(Material.BEDROCK),
-            null, null, null,
-            null, new ItemStack(Material.BEDROCK),
+    public static final ItemStack[] ADVANCED_DUST_FACTORY = new ItemStack[] {
+            FinalTechItems.UNORDERED_DUST, FinalTechItems.BASIC_DUST_FACTORY, FinalTechItems.UNORDERED_DUST,
+            FinalTechItems.BASIC_DUST_FACTORY, null, FinalTechItems.BASIC_DUST_FACTORY,
+            FinalTechItems.UNORDERED_DUST, FinalTechItems.BASIC_DUST_FACTORY, FinalTechItems.UNORDERED_DUST
     };
 
     public static final ItemStack[] ADVANCED_ELECTRIC_CRUCIBLE = new ItemStack[] {
-            SlimefunItems.CRUCIBLE, SlimefunItems.CRUCIBLE, SlimefunItems.CRUCIBLE,
-            SlimefunItems.CRUCIBLE, new ItemStack(Material.DISPENSER), SlimefunItems.CRUCIBLE,
-            SlimefunItems.CRUCIBLE, SlimefunItems.CRUCIBLE, SlimefunItems.CRUCIBLE
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.CRUCIBLE, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.CRUCIBLE, null, SlimefunItems.CRUCIBLE,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.CRUCIBLE, FinalTechItems.UNORDERED_DUST
     };
 
     public static final ItemStack[] ADVANCED_ELECTRIC_DUST_WASHER = new ItemStack[] {
-            SlimefunItems.ELECTRIC_DUST_WASHER, SlimefunItems.ELECTRIC_DUST_WASHER, SlimefunItems.ELECTRIC_DUST_WASHER,
-            SlimefunItems.ELECTRIC_DUST_WASHER, new ItemStack(Material.DISPENSER), SlimefunItems.ELECTRIC_DUST_WASHER,
-            SlimefunItems.ELECTRIC_DUST_WASHER, SlimefunItems.ELECTRIC_DUST_WASHER, SlimefunItems.ELECTRIC_DUST_WASHER
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_DUST_WASHER, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.ELECTRIC_DUST_WASHER, null, SlimefunItems.ELECTRIC_DUST_WASHER,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_DUST_WASHER, FinalTechItems.UNORDERED_DUST
     };
 
     public static final ItemStack[] ADVANCED_ELECTRIC_FURANCE = new ItemStack[] {
-            SlimefunItems.ELECTRIC_FURNACE, SlimefunItems.ELECTRIC_FURNACE, SlimefunItems.ELECTRIC_FURNACE,
-            SlimefunItems.ELECTRIC_FURNACE, new ItemStack(Material.DISPENSER), SlimefunItems.ELECTRIC_FURNACE,
-            SlimefunItems.ELECTRIC_FURNACE, SlimefunItems.ELECTRIC_FURNACE, SlimefunItems.ELECTRIC_FURNACE
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_FURNACE, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.ELECTRIC_FURNACE, null, SlimefunItems.ELECTRIC_FURNACE,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_FURNACE, FinalTechItems.UNORDERED_DUST
     };
 
     public static final ItemStack[] ADVANCED_ELECTRIC_INGOT_FACTORY = new ItemStack[] {
-            SlimefunItems.ELECTRIC_INGOT_FACTORY, SlimefunItems.ELECTRIC_INGOT_FACTORY, SlimefunItems.ELECTRIC_INGOT_FACTORY,
-            SlimefunItems.ELECTRIC_INGOT_FACTORY, new ItemStack(Material.DISPENSER), SlimefunItems.ELECTRIC_INGOT_FACTORY,
-            SlimefunItems.ELECTRIC_INGOT_FACTORY, SlimefunItems.ELECTRIC_INGOT_FACTORY, SlimefunItems.ELECTRIC_INGOT_FACTORY
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_INGOT_FACTORY, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.ELECTRIC_INGOT_FACTORY, null, SlimefunItems.ELECTRIC_INGOT_FACTORY,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_INGOT_FACTORY, FinalTechItems.UNORDERED_DUST
     };
 
     public static final ItemStack[] ADVANCED_ELECTRIC_INGOT_PULVERIZER = new ItemStack[] {
-            SlimefunItems.ELECTRIC_INGOT_PULVERIZER, SlimefunItems.ELECTRIC_INGOT_PULVERIZER, SlimefunItems.ELECTRIC_INGOT_PULVERIZER,
-            SlimefunItems.ELECTRIC_INGOT_PULVERIZER, new ItemStack(Material.DISPENSER), SlimefunItems.ELECTRIC_INGOT_PULVERIZER,
-            SlimefunItems.ELECTRIC_INGOT_PULVERIZER, SlimefunItems.ELECTRIC_INGOT_PULVERIZER, SlimefunItems.ELECTRIC_INGOT_PULVERIZER
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_INGOT_PULVERIZER, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.ELECTRIC_INGOT_PULVERIZER, null, SlimefunItems.ELECTRIC_INGOT_PULVERIZER,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_INGOT_PULVERIZER, FinalTechItems.UNORDERED_DUST
     };
 
     public static final ItemStack[] ADVANCED_ELECTRIC_ORE_GRINDER = new ItemStack[] {
-            SlimefunItems.ELECTRIC_ORE_GRINDER, SlimefunItems.ELECTRIC_ORE_GRINDER, SlimefunItems.ELECTRIC_ORE_GRINDER,
-            SlimefunItems.ELECTRIC_ORE_GRINDER, new ItemStack(Material.DISPENSER), SlimefunItems.ELECTRIC_ORE_GRINDER,
-            SlimefunItems.ELECTRIC_ORE_GRINDER, SlimefunItems.ELECTRIC_ORE_GRINDER, SlimefunItems.ELECTRIC_ORE_GRINDER
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_ORE_GRINDER, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.ELECTRIC_ORE_GRINDER, null, SlimefunItems.ELECTRIC_ORE_GRINDER,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_ORE_GRINDER, FinalTechItems.UNORDERED_DUST
     };
 
     public static final ItemStack[] ADVANCED_ELECTRIC_PRESS = new ItemStack[] {
-            SlimefunItems.ELECTRIC_PRESS, SlimefunItems.ELECTRIC_PRESS, SlimefunItems.ELECTRIC_PRESS,
-            SlimefunItems.ELECTRIC_PRESS, new ItemStack(Material.DISPENSER), SlimefunItems.ELECTRIC_PRESS,
-            SlimefunItems.ELECTRIC_PRESS, SlimefunItems.ELECTRIC_PRESS, SlimefunItems.ELECTRIC_PRESS
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_PRESS, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.ELECTRIC_PRESS, null, SlimefunItems.ELECTRIC_PRESS,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_PRESS, FinalTechItems.UNORDERED_DUST
     };
 
     public static final ItemStack[] ADVANCED_ELECTRIC_SMELTERY = new ItemStack[] {
-            SlimefunItems.ELECTRIC_SMELTERY, SlimefunItems.ELECTRIC_SMELTERY, SlimefunItems.ELECTRIC_SMELTERY,
-            SlimefunItems.ELECTRIC_SMELTERY, new ItemStack(Material.DISPENSER), SlimefunItems.ELECTRIC_SMELTERY,
-            SlimefunItems.ELECTRIC_SMELTERY, SlimefunItems.ELECTRIC_SMELTERY, SlimefunItems.ELECTRIC_SMELTERY
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_SMELTERY, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.ELECTRIC_SMELTERY, null, SlimefunItems.ELECTRIC_SMELTERY,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_SMELTERY, FinalTechItems.UNORDERED_DUST
     };
 
-    public static final ItemStack[] ADVANCED_FOODFACTORY = new ItemStack[] {
-            SlimefunItems.FOOD_COMPOSTER, SlimefunItems.FOOD_FABRICATOR, SlimefunItems.FOOD_COMPOSTER,
-            SlimefunItems.FOOD_FABRICATOR, new ItemStack(Material.DISPENSER), SlimefunItems.FOOD_FABRICATOR,
-            SlimefunItems.FOOD_COMPOSTER, SlimefunItems.FOOD_FABRICATOR, SlimefunItems.FOOD_COMPOSTER
+    public static final ItemStack[] ADVANCED_FOOD_FACTORY = new ItemStack[] {
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.FOOD_FABRICATOR, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.FOOD_FABRICATOR, null, SlimefunItems.FOOD_FABRICATOR,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.FOOD_FABRICATOR, FinalTechItems.UNORDERED_DUST
     };
 
     public static final ItemStack[] ADVANCED_FREEZER = new ItemStack[] {
-            SlimefunItems.FREEZER, SlimefunItems.FREEZER, SlimefunItems.FREEZER,
-            SlimefunItems.FREEZER, new ItemStack(Material.DISPENSER), SlimefunItems.FREEZER,
-            SlimefunItems.FREEZER, SlimefunItems.FREEZER, SlimefunItems.FREEZER
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.FREEZER, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.FREEZER, null, SlimefunItems.FREEZER,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.FREEZER, FinalTechItems.UNORDERED_DUST
     };
 
     public static final ItemStack[] ADVANCED_GOLD_PAN = new ItemStack[] {
-            SlimefunItems.ELECTRIC_GOLD_PAN, SlimefunItems.ELECTRIC_GOLD_PAN, SlimefunItems.ELECTRIC_GOLD_PAN,
-            SlimefunItems.ELECTRIC_GOLD_PAN, new ItemStack(Material.DISPENSER), SlimefunItems.ELECTRIC_GOLD_PAN,
-            SlimefunItems.ELECTRIC_GOLD_PAN, SlimefunItems.ELECTRIC_GOLD_PAN, SlimefunItems.ELECTRIC_GOLD_PAN
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_GOLD_PAN, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.ELECTRIC_GOLD_PAN, null, SlimefunItems.ELECTRIC_GOLD_PAN,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.ELECTRIC_GOLD_PAN, FinalTechItems.UNORDERED_DUST
     };
 
     public static final ItemStack[] ADVANCED_HEATED_PRESSURE_CHAMBER = new ItemStack[] {
-            SlimefunItems.HEATED_PRESSURE_CHAMBER, SlimefunItems.HEATED_PRESSURE_CHAMBER, SlimefunItems.HEATED_PRESSURE_CHAMBER,
-            SlimefunItems.HEATED_PRESSURE_CHAMBER, new ItemStack(Material.DISPENSER), SlimefunItems.HEATED_PRESSURE_CHAMBER,
-            SlimefunItems.HEATED_PRESSURE_CHAMBER, SlimefunItems.HEATED_PRESSURE_CHAMBER, SlimefunItems.HEATED_PRESSURE_CHAMBER
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.HEATED_PRESSURE_CHAMBER, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.HEATED_PRESSURE_CHAMBER, null, SlimefunItems.HEATED_PRESSURE_CHAMBER,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.HEATED_PRESSURE_CHAMBER, FinalTechItems.UNORDERED_DUST
     };
 
-    public static final ItemStack[] ORDERED_DUST_FACTORY = new ItemStack[] {
+    public static final ItemStack[] UNORDERED_DUST_FACTORY = new ItemStack[] {
             SlimefunItems.TRASH_CAN, SlimefunItems.TRASH_CAN, SlimefunItems.TRASH_CAN,
-            SlimefunItems.TRASH_CAN, new ItemStack(Material.DISPENSER), SlimefunItems.TRASH_CAN,
+            SlimefunItems.TRASH_CAN, new ItemStack(Material.DIRT), SlimefunItems.TRASH_CAN,
             SlimefunItems.TRASH_CAN, SlimefunItems.TRASH_CAN, SlimefunItems.TRASH_CAN
+    };
+
+    // final machines
+    public static final ItemStack[] ALL_COMPRESSION = new ItemStack[] {
+            FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.TRASH_CAN, FinalTechItems.UNORDERED_DUST,
+            FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST
+    };
+
+    public static final ItemStack[] ALL_FACTORY = new ItemStack[] {
+            FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST,
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.AMETHYST_BLOCK), FinalTechItems.UNORDERED_DUST,
+            FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST
     };
 }

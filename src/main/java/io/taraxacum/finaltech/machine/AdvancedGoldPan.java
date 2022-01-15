@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.implementation.items.tools.GoldPan;
 import io.github.thebusybiscuit.slimefun4.implementation.items.tools.NetherGoldPan;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.taraxacum.finaltech.abstractItem.FinalAdvanceMachine;
 import io.taraxacum.finaltech.setup.FinalTechItems;
@@ -17,10 +18,9 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.*;
 
 public class AdvancedGoldPan extends FinalAdvanceMachine {
-    private String machineIdentifier = "FINAL_ADVANCED_Gold_Pan";
+    private String machineIdentifier = "FINAL_ADVANCED_GOLD_PAN";
 
     public AdvancedGoldPan(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -44,6 +44,11 @@ public class AdvancedGoldPan extends FinalAdvanceMachine {
         if(quantityModule != null && SlimefunUtils.isItemSimilar(FinalTechItems.QUANTITY_MODULE, quantityModule, true, false)) {
             amount = quantityModule.getAmount();
         }
+
+        CustomItemStack progress = new CustomItemStack(Material.REDSTONE, "&f可升级模块",
+                "&7该机器可以进行升级",
+                "&7当前效率：" + amount);
+        inv.replaceExistingItem(22, progress);
 
         for (int slot : getInputSlots()) {
             ItemStack item = inv.getItemInSlot(slot);

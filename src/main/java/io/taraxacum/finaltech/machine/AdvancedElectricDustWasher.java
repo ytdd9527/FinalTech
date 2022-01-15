@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.items.multiblocks.OreWa
 import io.github.thebusybiscuit.slimefun4.implementation.items.tools.GoldPan;
 import io.github.thebusybiscuit.slimefun4.implementation.items.tools.NetherGoldPan;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.taraxacum.finaltech.abstractItem.FinalAdvanceMachine;
 import io.taraxacum.finaltech.setup.FinalTechItems;
@@ -36,6 +37,11 @@ public class AdvancedElectricDustWasher extends FinalAdvanceMachine {
         if(quantityModule != null && SlimefunUtils.isItemSimilar(FinalTechItems.QUANTITY_MODULE, quantityModule, true, false)) {
             amount = quantityModule.getAmount();
         }
+
+        CustomItemStack progress = new CustomItemStack(Material.REDSTONE, "&f可升级模块",
+                "&7该机器可以进行升级",
+                "&7当前效率：" + amount);
+        inv.replaceExistingItem(22, progress);
 
         for (int slot : getInputSlots()) {
             ItemStack item = inv.getItemInSlot(slot);

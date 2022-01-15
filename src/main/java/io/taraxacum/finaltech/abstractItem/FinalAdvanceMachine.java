@@ -1,5 +1,6 @@
 package io.taraxacum.finaltech.abstractItem;
 
+import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -11,8 +12,12 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecip
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
+import javax.annotation.Nonnull;
 import java.util.*;
+
+import static org.bukkit.Bukkit.getServer;
 
 public abstract class FinalAdvanceMachine extends FinalBasicMachine {
     private final ItemStack progressBar = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, "可升级模块", "&8这个机器可升级","&8在下方放入组件以升级"); // 机器工作图标
@@ -25,6 +30,16 @@ public abstract class FinalAdvanceMachine extends FinalBasicMachine {
         super(itemGroup, item, recipeType, recipe, recipeOutput);
     }
 
+    @Override
+    public void register(@Nonnull SlimefunAddon addon) {
+        this.addon = addon;
+//        this.registerDefaultRecipes();
+        super.register(addon);
+        getServer().getScheduler().runTask((Plugin)addon, () -> {
+            this.registerDefaultRecipes();
+        });
+    }
+
     // I do it!
     protected MachineRecipe findNextRecipe(BlockMenu inv) {
 
@@ -33,6 +48,11 @@ public abstract class FinalAdvanceMachine extends FinalBasicMachine {
         if (quantityModule != null && SlimefunUtils.isItemSimilar(FinalTechItems.QUANTITY_MODULE, quantityModule, true, false)) {
             amount = quantityModule.getAmount();
         }
+
+        CustomItemStack progress = new CustomItemStack(Material.REDSTONE, "&f可升级模块",
+                "&7该机器可以进行升级",
+                "&7当前效率：" + amount);
+        inv.replaceExistingItem(22, progress);
 
         ArrayList<ItemStack> inputs = new ArrayList<>();
         for (int slot : this.getInputSlots()) {
