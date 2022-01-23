@@ -8,6 +8,7 @@ import io.taraxacum.finaltech.abstractItem.MachineMenu;
 import io.taraxacum.finaltech.menu.AllFactoryMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -36,6 +37,8 @@ public class AllFactory extends FinalMachine {
             List<String> lore = itemMeta.getLore();
             if(lore.remove("已经由Final_ROOT签名认证，运行进行复制")) {
                 lore.add("§8已经由Final_ROOT签名认证并允许进行复制");
+                itemMeta.setLore(lore);
+                itemStack.setItemMeta(itemMeta);
             }
 
             ItemStack output = new ItemStack(itemStack);

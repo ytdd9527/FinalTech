@@ -29,7 +29,6 @@ import javax.annotation.Nonnull;
 import java.util.*;
 
 public class Pipe extends FinalCargoMachine {
-    private static final int MAX_SEARCH = 6;
 
     public Pipe(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

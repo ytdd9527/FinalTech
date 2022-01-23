@@ -4,14 +4,16 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
 import io.taraxacum.finaltech.machine.AllCompression;
 import io.taraxacum.finaltech.machine.UnOrderedDustFactory;
+import io.taraxacum.finaltech.util.CargoUtil;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public final class FinalTechItems {
 
     // items
     public static final SlimefunItemStack QUANTITY_MODULE = new SlimefunItemStack("FINALTECH_QUANTITY_MODULE", Material.AMETHYST_SHARD, "&3数量组件");
     public static final SlimefunItemStack UNORDERED_DUST = new SlimefunItemStack("FINALTECH_UNORDERED_DUST", Material.WHEAT_SEEDS, "&f无序尘埃",
-            "&8\"这究竟是什么？\"");
+            "&8它被感知到了");
 
     // basic machines
     public static final SlimefunItemStack BASIC_COBBLE_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_COBBLE_FACTORY", Material.CHISELED_STONE_BRICKS, "&7基础刷石工厂");
@@ -35,6 +37,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack ADVANCED_ELECTRIC_ORE_GRINDER = new SlimefunItemStack("FINALTECH_ADVANCED_ELECTRIC_ORE_GRINDER", Material.FURNACE, "&c高级碎矿机");
     public static final SlimefunItemStack ADVANCED_ELECTRIC_PRESS = new SlimefunItemStack("FINALTECH_ADVANCED_ELECTRIC_PRESS", new SlimefunItemStack("", HeadTexture.ELECTRIC_PRESS, new String(), new String()), "&e高级压缩机");
     public static final SlimefunItemStack ADVANCED_ELECTRIC_SMELTERY = new SlimefunItemStack("FINALTECH_ADVANCED_ELECTRIC_SMELTERY", Material.FURNACE, "&c高级冶炼炉");
+    public static final SlimefunItemStack ADVANCED_FARM_FACTORY = new SlimefunItemStack("FINALTECH_ADVANCED_FARM_FACTORY", new ItemStack(Material.MOSS_BLOCK), "&7高级作物工厂");
     public static final SlimefunItemStack ADVANCED_FOOD_FACTORY = new SlimefunItemStack("FINALTECH_FOOD_FACTORY", Material.GREEN_TERRACOTTA, "&c高级作物加工厂");
     public static final SlimefunItemStack ADVANCED_FREEZER = new SlimefunItemStack("FINALTECH_FREEZER", Material.LIGHT_BLUE_STAINED_GLASS, "&b高级冰箱");
     public static final SlimefunItemStack ADVANCED_GOLD_PAN = new SlimefunItemStack("FINALTECH_ADVANCED_GOLD_PAN", Material.BROWN_TERRACOTTA, "&6高级淘金机");
@@ -52,9 +55,15 @@ public final class FinalTechItems {
     // cargos
     public static final SlimefunItemStack PIPE = new SlimefunItemStack("FINALTECH_CARGO_PIPE", Material.END_ROD, "&7导管",
             "&7把物品从一个容器中运输到另一个容器中",
-            "&7可以通过其他货运组件，动态地改变该物品的黑/白名单模式的匹配物品",
+            "&7可以直线" + CargoUtil.BLOCK_SEARCH_LIMIT + "格距离的容器",
+            "&7通过指向另一个导管以延申其搜索范围",
             "&8即放即用");
     public static final SlimefunItemStack PIPE_GROUP = new SlimefunItemStack("FINALTECH_CARGO_PIPE_GROUP", Material.TINTED_GLASS, "&7中转器",
-            "&7把物品从指定的输入位置，传输到指定的输出位置");
+            "&7把物品从指定的输入位置，传输到指定的输出位置",
+            "&7通过连接对应方向的锁链",
+            "&7可延申其搜索范围");
+    public static final SlimefunItemStack BASIC_FRAME_MACHINE = new SlimefunItemStack("FINALTECH_BASIC_FRAME_MACHINE", Material.STONE, "&7基础机器框架", "&8可放置");
+    public static final SlimefunItemStack DOUBLE_NORMAL_BARREL = new SlimefunItemStack("FINALTECH_DOUBLE_NORMAL_BARREL", Material.GLASS, "&7普通存储单元", "&7可通过粘液货运进行交互", "&8其实就是更大的桶");
+    public static final SlimefunItemStack DOUBLE_LINKED_BARREL = new SlimefunItemStack("FINALTECH_DOUBLE_LINKED_BARREL", Material.GLASS, "&7可识别存储单元", "&7上面三排被识别为输入槽", "&7下面三排被识别为输出槽");
 }
 

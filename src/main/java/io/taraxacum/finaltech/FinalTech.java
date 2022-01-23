@@ -1,17 +1,23 @@
 package io.taraxacum.finaltech;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemHandler;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.setup.SlimefunItemSetup;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
+import io.taraxacum.finaltech.cargo.DoubleLinkedBarrel;
+import io.taraxacum.finaltech.cargo.DoubleNormalBarrel;
 import io.taraxacum.finaltech.cargo.Pipe;
 import io.taraxacum.finaltech.cargo.PipeGroup;
 import io.taraxacum.finaltech.machine.*;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.setup.FinalTechMenus;
 import io.taraxacum.finaltech.setup.FinalTechRecipes;
+import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -55,15 +61,19 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         new AdvancedFreezer(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_FREEZER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_FREEZER).register(this);
         new AdvancedGoldPan(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_GOLD_PAN, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_GOLD_PAN).register(this);
         new AdvancedHeatedPressureChamber(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_HEATED_PRESSURE_CHAMBER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_HEATED_PRESSURE_CHAMBER).register(this);
+        new AdvancedDustFactory(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_DUST_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_DUST_FACTORY).register(this);
+        new AdvancedFarmFactory(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_FARM_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_FARM_FACTORY).register(this);
 
         // register final machines
-        new AdvancedDustFactory(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_DUST_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_DUST_FACTORY).register(this);
         new AllCompression(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.ALL_COMPRESSION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_COMPRESSION).register(this);
         new AllFactory(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.ALL_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_FACTORY).register(this);
 
         // register cargos
+        new BasicFrameMachine(FinalTechMenus.MENU_CARGO, FinalTechItems.BASIC_FRAME_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_FRAME_MACHINE).register(this);
         new Pipe(FinalTechMenus.MENU_CARGO, FinalTechItems.PIPE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.PIPE).register(this);
         new PipeGroup(FinalTechMenus.MENU_CARGO, FinalTechItems.PIPE_GROUP, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.PIPE_GROUP).register(this);
+        new DoubleNormalBarrel(FinalTechMenus.MENU_CARGO, FinalTechItems.DOUBLE_NORMAL_BARREL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DOUBLE_NORMAL_BARREL).register(this);
+        new DoubleLinkedBarrel(FinalTechMenus.MENU_CARGO, FinalTechItems.DOUBLE_LINKED_BARREL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DOUBLE_LINKED_BARREL).register(this);
 
 //        // Give your Category a unique id.
 //        NamespacedKey itemGroupId = new NamespacedKey(this, "finalTech_category");

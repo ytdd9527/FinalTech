@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 public class AllCompression extends FinalMachine {
-    public static final int DIFFICULTY = 512;
+    public static final int DIFFICULTY = 524288;
     private ItemStack item = null;
     private int input = 0;
 
