@@ -1,6 +1,7 @@
 package io.taraxacum.finaltech.core;
 
 import io.github.thebusybiscuit.slimefun4.implementation.operations.CraftingOperation;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.taraxacum.finaltech.machine.AllCompression;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
@@ -19,8 +20,8 @@ public class AllCompressionCraftingOperation extends CraftingOperation {
     private int inputCount = 0;
 
     public AllCompressionCraftingOperation(ItemStack item) {
-        this(new MachineRecipe(0, new ItemStack[] {new ItemStack(item)}, new ItemStack[] {item}));
-        this.addItem(item);
+        this(new MachineRecipe(0, new ItemStack[] {new CustomItemStack(item, 1)}, new ItemStack[] {item}));
+        this.addItem(new CustomItemStack(item));
     }
 
     public AllCompressionCraftingOperation(MachineRecipe machineRecipe) {
@@ -33,7 +34,7 @@ public class AllCompressionCraftingOperation extends CraftingOperation {
         if(lore == null) {
             lore = new ArrayList<>();
         }
-        lore.add("已经由Final_ROOT签名认证，运行进行复制");
+        lore.add("§8已经由Final_ROOT签名认证并允许进行复制");
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
         itemStack.setAmount(1);

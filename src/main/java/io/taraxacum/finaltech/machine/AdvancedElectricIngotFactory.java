@@ -26,14 +26,4 @@ public class AdvancedElectricIngotFactory extends FinalAdvanceMachine {
     public String getMachineIdentifier() {
         return "FINALTECH_ELECTRIC_INGOT_FACTORY";
     }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
-    }
 }

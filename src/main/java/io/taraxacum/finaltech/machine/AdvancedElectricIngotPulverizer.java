@@ -25,14 +25,4 @@ public class AdvancedElectricIngotPulverizer extends FinalAdvanceMachine {
     public String getMachineIdentifier() {
         return "FINALTECH_ELECTRIC_INGOT_PULVERIZER";
     }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
-    }
 }

@@ -7,7 +7,6 @@ import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.abstractItem.FinalBasicMachine;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -31,15 +30,5 @@ public class BasicDustFactory extends FinalBasicMachine {
     @Override
     public String getMachineIdentifier() {
         return "FINAL_BASIC_DUST_FACTORY";
-    }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
     }
 }

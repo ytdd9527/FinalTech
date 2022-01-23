@@ -3,14 +3,22 @@ package io.taraxacum.finaltech.machine;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.taraxacum.finaltech.abstractItem.FinalAdvanceMachine;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
+import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
+import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 
 public class AdvancedDustFactory extends FinalAdvanceMachine {
 
@@ -86,15 +94,5 @@ public class AdvancedDustFactory extends FinalAdvanceMachine {
     @Override
     public String getMachineIdentifier() {
         return "FINALTECH_ADVANCED_DUST_FACTORY";
-    }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
     }
 }

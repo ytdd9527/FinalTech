@@ -26,14 +26,4 @@ public class AdvancedElectricPress extends FinalAdvanceMachine {
     public String getMachineIdentifier() {
         return "FINALTECH_ADVANCED_ELETRIC_PRESS";
     }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
-    }
 }

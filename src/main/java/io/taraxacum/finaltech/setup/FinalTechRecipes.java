@@ -148,4 +148,17 @@ public final class FinalTechRecipes {
             FinalTechItems.UNORDERED_DUST, new ItemStack(Material.AMETHYST_BLOCK), FinalTechItems.UNORDERED_DUST,
             FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST
     };
+
+    // cargos
+    public static final ItemStack[] PIPE = new ItemStack[] {
+            new ItemStack(Material.HOPPER), new ItemStack(Material.HOPPER), new ItemStack(Material.HOPPER),
+            new ItemStack(Material.HOPPER), null, new ItemStack(Material.HOPPER),
+            new ItemStack(Material.HOPPER), new ItemStack(Material.HOPPER), new ItemStack(Material.HOPPER)
+    };
+
+    public static final ItemStack[] PIPE_GROUP = new ItemStack[] {
+            FinalTechItems.PIPE, FinalTechItems.PIPE, FinalTechItems.PIPE,
+            FinalTechItems.PIPE, null, FinalTechItems.PIPE,
+            FinalTechItems.PIPE, FinalTechItems.PIPE, FinalTechItems.PIPE
+    };
 }

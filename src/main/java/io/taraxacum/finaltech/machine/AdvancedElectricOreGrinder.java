@@ -26,14 +26,4 @@ public class AdvancedElectricOreGrinder extends FinalAdvanceMachine {
     public String getMachineIdentifier() {
         return "FINALTECH_ADVANCED_ELECTRIC_ORE_GRINDER";
     }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
-    }
 }

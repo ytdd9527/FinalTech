@@ -5,7 +5,6 @@ import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
 import io.taraxacum.finaltech.machine.AllCompression;
 import io.taraxacum.finaltech.machine.UnOrderedDustFactory;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 public final class FinalTechItems {
 
@@ -50,6 +49,12 @@ public final class FinalTechItems {
             "&8在中间放入带有特定签名的物品",
             "&8从而 无 限 复 制 该物品");
 
-
+    // cargos
+    public static final SlimefunItemStack PIPE = new SlimefunItemStack("FINALTECH_CARGO_PIPE", Material.END_ROD, "&7导管",
+            "&7把物品从一个容器中运输到另一个容器中",
+            "&7可以通过其他货运组件，动态地改变该物品的黑/白名单模式的匹配物品",
+            "&8即放即用");
+    public static final SlimefunItemStack PIPE_GROUP = new SlimefunItemStack("FINALTECH_CARGO_PIPE_GROUP", Material.TINTED_GLASS, "&7中转器",
+            "&7把物品从指定的输入位置，传输到指定的输出位置");
 }
 

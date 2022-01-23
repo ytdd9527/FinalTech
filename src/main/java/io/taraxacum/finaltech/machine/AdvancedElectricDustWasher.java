@@ -27,6 +27,11 @@ public class AdvancedElectricDustWasher extends FinalAdvanceMachine {
     }
 
     @Override
+    protected void registerDefaultRecipes() {
+
+    }
+
+    @Override
     protected MachineRecipe findNextRecipe(BlockMenu inv) {
 
         ItemStack input = new ItemStack(SlimefunItems.SIFTED_ORE);
@@ -67,15 +72,5 @@ public class AdvancedElectricDustWasher extends FinalAdvanceMachine {
     @Override
     public String getMachineIdentifier() {
         return "FINALTECH_ELECTRIC_DUST_WASHER";
-    }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
     }
 }

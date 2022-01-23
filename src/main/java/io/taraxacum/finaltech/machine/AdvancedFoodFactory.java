@@ -27,14 +27,4 @@ public class AdvancedFoodFactory extends FinalAdvanceMachine {
     public String getMachineIdentifier() {
         return "FINALTECH_ADVANCED_FOOD_FACTORY";
     }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
-    }
 }

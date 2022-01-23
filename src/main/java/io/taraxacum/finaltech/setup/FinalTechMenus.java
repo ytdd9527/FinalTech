@@ -13,5 +13,6 @@ public final class FinalTechMenus {
     public static final SubItemGroup MENU_BASIC_MACHINE = new SubItemGroup(new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "FINALTECH_CATEGORY_BASIC_MACHINE"), MAIN_MENU, new CustomItemStack(Material.PISTON, "&f基础机器"));
     public static final SubItemGroup MENU_ADVANCED_MACHINE = new SubItemGroup(new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "FINALTECH_CATEGORY_ADVANCED_MACHINE"), MAIN_MENU, new CustomItemStack(Material.STICKY_PISTON, "&f高级机器"));
     public static final SubItemGroup MENU_FINAL_MACHINE = new SubItemGroup(new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "FINALTECH_CATEGORY_FINAL_MACHINE"), MAIN_MENU, new CustomItemStack(Material.DIRT, "&f终极机器"));
+    public static final SubItemGroup MENU_CARGO = new SubItemGroup(new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "FINALTECH_CARGOS"), MAIN_MENU, new CustomItemStack(Material.END_ROD, "&f运输"));
 
 }

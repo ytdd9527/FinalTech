@@ -5,6 +5,8 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.setup.SlimefunItemSetup;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
+import io.taraxacum.finaltech.cargo.Pipe;
+import io.taraxacum.finaltech.cargo.PipeGroup;
 import io.taraxacum.finaltech.machine.*;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.setup.FinalTechMenus;
@@ -59,6 +61,9 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         new AllCompression(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.ALL_COMPRESSION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_COMPRESSION).register(this);
         new AllFactory(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.ALL_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_FACTORY).register(this);
 
+        // register cargos
+        new Pipe(FinalTechMenus.MENU_CARGO, FinalTechItems.PIPE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.PIPE).register(this);
+        new PipeGroup(FinalTechMenus.MENU_CARGO, FinalTechItems.PIPE_GROUP, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.PIPE_GROUP).register(this);
 
 //        // Give your Category a unique id.
 //        NamespacedKey itemGroupId = new NamespacedKey(this, "finalTech_category");

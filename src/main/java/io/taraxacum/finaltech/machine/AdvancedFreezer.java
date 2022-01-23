@@ -26,14 +26,4 @@ public class AdvancedFreezer extends FinalAdvanceMachine {
     public String getMachineIdentifier() {
         return "FINALtECH_ADVANCED_FREEZER";
     }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
-    }
 }

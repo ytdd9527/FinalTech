@@ -26,14 +26,4 @@ public class AdvancedCarbonPress extends FinalAdvanceMachine {
     public String getMachineIdentifier() {
         return "FINAL_ADVANCED_CARBON_PRESS";
     }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
-    }
 }

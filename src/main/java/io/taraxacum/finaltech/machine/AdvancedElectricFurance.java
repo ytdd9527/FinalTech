@@ -26,14 +26,4 @@ public class AdvancedElectricFurance extends FinalAdvanceMachine {
     public String getMachineIdentifier() {
         return "FINAL_ADVANCED_ELECTRIC_FURANCE";
     }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
-    }
 }

@@ -5,8 +5,12 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.abstractItem.FinalBasicMachine;
+import io.taraxacum.finaltech.abstractItem.FinalMachine;
+import io.taraxacum.finaltech.abstractItem.MachineMenu;
 import io.taraxacum.finaltech.core.UnOrderedDustCraftingOperation;
+import io.taraxacum.finaltech.menu.UnOrderedDustFactoryMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.util.FinalUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -16,13 +20,18 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public class UnOrderedDustFactory extends FinalBasicMachine {
+public class UnOrderedDustFactory extends FinalMachine {
 
     public static final int MATCH_DIFFICULTY = 16;
     public static final int INPUT_DIFFICULTY = 1024;
 
     public UnOrderedDustFactory(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+    }
+
+    @Override
+    protected MachineMenu setMachineMenu() {
+        return new UnOrderedDustFactoryMenu(this.getId(), this.getItemName(), this);
     }
 
     @Override
@@ -72,15 +81,5 @@ public class UnOrderedDustFactory extends FinalBasicMachine {
 
     public static int getInputDifficulty() {
         return INPUT_DIFFICULTY;
-    }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
     }
 }

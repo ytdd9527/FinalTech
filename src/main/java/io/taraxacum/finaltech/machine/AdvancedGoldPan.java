@@ -26,6 +26,11 @@ public class AdvancedGoldPan extends FinalAdvanceMachine {
         super(itemGroup, item, recipeType, recipe);
     }
 
+    @Override
+    protected void registerDefaultRecipes() {
+
+    }
+
     @Nonnull
     @Override
     public String getMachineIdentifier() {
@@ -85,15 +90,5 @@ public class AdvancedGoldPan extends FinalAdvanceMachine {
         }
 
         return null;
-    }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
     }
 }

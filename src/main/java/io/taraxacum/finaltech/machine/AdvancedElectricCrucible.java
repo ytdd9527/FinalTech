@@ -26,14 +26,4 @@ public class AdvancedElectricCrucible extends FinalAdvanceMachine {
     public String getMachineIdentifier() {
         return "FINALTECH_ADVANCED_ELETRIC_CRUCIBLE";
     }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
-    }
 }

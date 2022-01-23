@@ -26,14 +26,4 @@ public class AdvancedHeatedPressureChamber extends FinalAdvanceMachine {
     public String getMachineIdentifier() {
         return "FINALTECH_ADVANCED_HEATED_PRESSURE_CHAMBER";
     }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
-    }
 }

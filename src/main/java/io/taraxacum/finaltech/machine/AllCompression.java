@@ -5,7 +5,12 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.abstractItem.FinalBasicMachine;
+import io.taraxacum.finaltech.abstractItem.FinalMachine;
+import io.taraxacum.finaltech.abstractItem.MachineMenu;
 import io.taraxacum.finaltech.core.AllCompressionCraftingOperation;
+import io.taraxacum.finaltech.menu.AllCompressionMenu;
+import io.taraxacum.finaltech.menu.BasicMachineMenu;
+import io.taraxacum.finaltech.util.FinalUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
@@ -14,13 +19,18 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public class AllCompression extends FinalBasicMachine {
-    public static final int DIFFICULTY = 524288;
+public class AllCompression extends FinalMachine {
+    public static final int DIFFICULTY = 512;
     private ItemStack item = null;
     private int input = 0;
 
     public AllCompression(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+    }
+
+    @Override
+    protected MachineMenu setMachineMenu() {
+        return new AllCompressionMenu(this.getId(), this.getItemName(), this);
     }
 
     @Override
@@ -55,22 +65,12 @@ public class AllCompression extends FinalBasicMachine {
             progress = new CustomItemStack(Material.REDSTONE, "&f完成进度",
                     "&7暂未输入物品");
         }
-        inv.replaceExistingItem(22, progress);
+        inv.replaceExistingItem(AllCompressionMenu.PROGRESS_SLOT, progress);
     }
 
     @Nonnull
     @Override
     public String getMachineIdentifier() {
         return "FINALTECH_ALL_COMPRESSION";
-    }
-
-    @Override
-    protected void tickBefore(Block block) {
-
-    }
-
-    @Override
-    protected void tickAfter(Block block) {
-
     }
 }
