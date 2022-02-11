@@ -5,31 +5,23 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
-import io.taraxacum.finaltech.abstractItem.FinalMachine;
-import io.taraxacum.finaltech.abstractItem.MachineMenu;
+import io.taraxacum.finaltech.abstractItem.machine.AbstractStandardMachine;
+import io.taraxacum.finaltech.abstractItem.menu.AbstractStandardMachineMenu;
 import io.taraxacum.finaltech.menu.BasicFrameMachineMenu;
-import io.taraxacum.finaltech.util.CargoUtil;
+import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
-
-public class BasicFrameMachine extends FinalMachine {
+public class BasicFrameMachine extends AbstractStandardMachine {
     public BasicFrameMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
-    protected MachineMenu setMachineMenu() {
+    protected AbstractStandardMachineMenu setMachineMenu() {
         return new BasicFrameMachineMenu(this.getId(), this.getItemName(), this);
-    }
-
-    @Nonnull
-    @Override
-    public String getMachineIdentifier() {
-        return "FINALTECH_BASIC_FRAME_MACHINE";
     }
 
     @Override
@@ -47,9 +39,11 @@ public class BasicFrameMachine extends FinalMachine {
                 blockMenu.toInventory().setItem(outputSlots[i], new CustomItemStack(inputItem, inputItem.getAmount()));
                 blockMenu.consumeItem(inputSlots[i], inputItem.getAmount());
             } else if(outputItem.getAmount() < outputItem.getMaxStackSize() && SlimefunUtils.isItemSimilar(inputItem, outputItem, true, false)) {
-                int count = Math.min(inputItem.getAmount(), outputItem.getMaxStackSize() - outputItem.getAmount());
-                CargoUtil.changeItemAmount(inputItem, outputItem, count);
+                ItemStackUtil.stack(inputItem, outputItem);
             }
         }
     }
+
+    @Override
+    public void registerDefaultRecipes() { }
 }

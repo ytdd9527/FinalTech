@@ -1,0 +1,81 @@
+package io.taraxacum.finaltech.interfaces;
+
+import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
+import io.taraxacum.finaltech.core.RandomMachineRecipe;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author Final_ROOT
+ */
+public interface RecipeItem extends RecipeDisplayItem {
+
+    /**
+     * 获取机器工作配方列表
+     * @return
+     */
+    List<MachineRecipe> getMachineRecipes();
+
+    /**
+     * 注册一条机器的工作配方
+     * @param recipe
+     */
+    default void registerRecipe(MachineRecipe recipe) {
+        this.getMachineRecipes().add(recipe);
+    }
+
+    default void registerRecipe(RandomMachineRecipe recipe) {
+        this.getMachineRecipes().add(recipe);
+    }
+
+    default void registerRecipe(int seconds, ItemStack[] input, ItemStack[] output) {
+        this.registerRecipe(new MachineRecipe(seconds, input, output));
+    }
+
+    default void registerRecipe(int seconds, ItemStack input, ItemStack output) {
+        this.registerRecipe(new MachineRecipe(seconds, new ItemStack[]{input}, new ItemStack[]{output}));
+    }
+
+    default void registerRecipe(int seconds, ItemStack[] input, ItemStack[] output, boolean randomOutput) {
+        this.registerRecipe(new RandomMachineRecipe(seconds, input, output, randomOutput));
+    }
+
+    /**
+     * 默认的配方注册方法
+     * 继承了该接口的实现类应该重写该方法
+     * 并在该方法内实现注册机器的工作配方
+     */
+    void registerDefaultRecipes();
+
+    /**
+     * 获取物品展示出的工作配方图标
+     * @return
+     */
+    @Nonnull
+    @Override
+    default List<ItemStack> getDisplayRecipes() {
+        List<ItemStack> displayRecipes = new ArrayList<>(this.getMachineRecipes().size() * 2);
+        for (MachineRecipe recipe : this.getMachineRecipes()) {
+            int inputLength = recipe.getInput().length;
+            int outputLength = recipe.getOutput().length;
+            for (int i = 0; i < inputLength; i++) {
+                displayRecipes.add(new ItemStack(recipe.getInput()[i]));
+                if (i < inputLength - 1) {
+                    displayRecipes.add(new ItemStack(Material.AIR));
+                }
+            }
+            for (int i = 0; i < outputLength; i++) {
+                if (i != 0) {
+                    displayRecipes.add(new ItemStack(Material.AIR));
+                }
+                displayRecipes.add(new ItemStack(recipe.getOutput()[i]));
+            }
+        }
+        return displayRecipes;
+    }
+}

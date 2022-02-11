@@ -1,13 +1,15 @@
 package io.taraxacum.finaltech.core;
 
-import io.github.thebusybiscuit.slimefun4.core.machines.MachineOperation;
 import io.github.thebusybiscuit.slimefun4.implementation.operations.CraftingOperation;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.taraxacum.finaltech.machine.UnOrderedDustFactory;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * @author Final_ROOT
+ */
 public class UnOrderedDustCraftingOperation extends CraftingOperation {
 
     private final ItemStack[] inputs;
@@ -25,7 +27,7 @@ public class UnOrderedDustCraftingOperation extends CraftingOperation {
     }
 
     public void addItem(ItemStack item) {
-        if(item == null) {
+        if(ItemStackUtil.isItemNull(item)) {
             return;
         }
         if(matchCount < inputs.length) {
@@ -42,8 +44,8 @@ public class UnOrderedDustCraftingOperation extends CraftingOperation {
             }
         }
         this.inputCount += item.getAmount();
-        if(this.inputCount > UnOrderedDustFactory.INPUT_DIFFICULTY) {
-            this.inputCount = UnOrderedDustFactory.INPUT_DIFFICULTY;
+        if(this.inputCount > UnOrderedDustFactory.getInputDifficulty()) {
+            this.inputCount = UnOrderedDustFactory.getInputDifficulty();
         }
     }
 
@@ -57,6 +59,6 @@ public class UnOrderedDustCraftingOperation extends CraftingOperation {
 
     @Override
     public boolean isFinished() {
-        return (this.inputCount >= UnOrderedDustFactory.INPUT_DIFFICULTY && this.matchCount >= UnOrderedDustFactory.MATCH_DIFFICULTY);
+        return (this.inputCount >= UnOrderedDustFactory.getInputDifficulty() && this.matchCount >= UnOrderedDustFactory.getMatchDifficulty());
     }
 }

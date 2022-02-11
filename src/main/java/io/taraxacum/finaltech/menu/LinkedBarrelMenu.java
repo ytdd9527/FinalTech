@@ -1,15 +1,17 @@
 package io.taraxacum.finaltech.menu;
 
-import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
+import io.taraxacum.finaltech.abstractItem.machine.AbstractMachine;
+import io.taraxacum.finaltech.abstractItem.menu.AbstractMachineMenu;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
 
-public class LinkedBarrelMenu extends BlockMenuPreset {
+/**
+ * @author Final_ROOT
+ */
+public class LinkedBarrelMenu extends AbstractMachineMenu {
     public static final int[] CONTAIN = new int[]{
             0,  1,  2,  3,  4,  5,  6,  7,  8,
             9, 10, 11, 12, 13, 14, 15, 16, 17,
@@ -30,18 +32,39 @@ public class LinkedBarrelMenu extends BlockMenuPreset {
             45, 46, 47, 48, 49, 50, 51, 52, 53
     };
 
-    public LinkedBarrelMenu(@Nonnull String id, @Nonnull String title) {
-        super(id, title);
+    public LinkedBarrelMenu(@Nonnull String id, @Nonnull String title, AbstractMachine machine) {
+        super(id, title, machine);
+    }
+
+    @Override
+    public int[] getBorder() {
+        return new int[0];
+    }
+
+    @Override
+    public int[] getInputBorder() {
+        return new int[0];
+    }
+
+    @Override
+    public int[] getOutputBorder() {
+        return new int[0];
+    }
+
+    @Override
+    public int[] getInputSlots() {
+        return INPUTS;
+    }
+
+    @Override
+    public int[] getOutputSlots() {
+        return OUTPUTS;
     }
 
     @Override
     public void init() {
+        super.init();
         this.setSize(54);
-    }
-
-    @Override
-    public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
-        return Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
     }
 
     @Override
@@ -58,4 +81,7 @@ public class LinkedBarrelMenu extends BlockMenuPreset {
                 return CONTAIN;
         }
     }
+
+    @Override
+    protected void updateMenu(BlockMenu menu, Block block) {}
 }

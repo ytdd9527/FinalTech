@@ -2,10 +2,12 @@ package io.taraxacum.finaltech.menu;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.taraxacum.finaltech.util.CargoUtil;
+import io.taraxacum.finaltech.abstractItem.machine.AbstractMachine;
+import io.taraxacum.finaltech.abstractItem.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.util.cargo.*;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.Material;
@@ -14,7 +16,10 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public abstract class PipeMenu extends BlockMenuPreset {
+/**
+ * @author Final_ROOT
+ */
+public class PipeMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[] {
              0,      2,              6,      8,
                                 14,
@@ -44,15 +49,40 @@ public abstract class PipeMenu extends BlockMenuPreset {
 
     private static final int ITEM_COUNT_LIMIT = 3456;
 
-    public PipeMenu(@Nonnull String id, @Nonnull String title, boolean universal) {
-        super(id, title, universal);
+    public PipeMenu(@Nonnull String id, @Nonnull String title, AbstractMachine machine) {
+        super(id, title, machine);
+    }
+
+    @Override
+    public int[] getBorder() {
+        return BORDER;
+    }
+
+    @Override
+    public int[] getInputBorder() {
+        return new int[0];
+    }
+
+    @Override
+    public int[] getOutputBorder() {
+        return new int[0];
+    }
+
+    @Override
+    public int[] getInputSlots() {
+        return ITEM_MATCH;
+    }
+
+    @Override
+    public int[] getOutputSlots() {
+        return ITEM_MATCH;
     }
 
     @Override
     public void init() {
-        Material border = Material.LIGHT_GRAY_STAINED_GLASS_PANE;
         for (int slot : BORDER) {
-            this.addItem(slot, new CustomItemStack(border, " "), ChestMenuUtils.getEmptyClickHandler());
+            this.addItem(slot, Icon.BORDER_ICON);
+            this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
         for (int slot : new int[]{14}) {
             this.addItem(slot, new CustomItemStack(Material.GRAY_STAINED_GLASS, "&7暂未实现的功能", "&7尽情期待"), ChestMenuUtils.getEmptyClickHandler());
@@ -60,87 +90,86 @@ public abstract class PipeMenu extends BlockMenuPreset {
         this.addItem(1, new CustomItemStack(Material.WATER_BUCKET, "&9输入侧设置"), ChestMenuUtils.getEmptyClickHandler());
         this.addItem(7, new CustomItemStack(Material.LAVA_BUCKET, "&6输出侧设置"), ChestMenuUtils.getEmptyClickHandler());
 
-        this.addItem(ITEM_COUNT_SUB_SLOT, new ItemStack(CargoUtil.ITEM_SUB_ICON));
-        this.addItem(ITEM_COUNT_SLOT, new CustomItemStack(CargoUtil.ITEM_COUNT_ICON, 64), ChestMenuUtils.getEmptyClickHandler());
-        this.addItem(ITEM_COUNT_ADD_SLOT, new ItemStack(CargoUtil.ITEM_ADD_ICON));
+        this.addItem(ITEM_COUNT_SUB_SLOT, new ItemStack(CargoNumber.CARGO_NUMBER_SUB_ICON));
+        this.addItem(ITEM_COUNT_SLOT, new CustomItemStack(CargoNumber.CARGO_NUMBER_ICON, 64), ChestMenuUtils.getEmptyClickHandler());
+        this.addItem(ITEM_COUNT_ADD_SLOT, new ItemStack(CargoNumber.CARGO_NUMBER_ADD_ICON));
 
-        this.addItem(INPUT_SIZE_SLOT, CargoUtil.getSIzeIcon(CargoUtil.SIZE_OUTPUTS_ONLY));
-        this.addItem(INPUT_ORDER_SLOT, CargoUtil.getOrderIcon(CargoUtil.ORDER_ASCENT));
-        this.addItem(INPUT_BLOCK_SEARCH_MODE_SLOT, CargoUtil.BLOCK_SEARCH_MODE_INHERIT_ICON);
+        this.addItem(INPUT_SIZE_SLOT, SlotSearchSize.getIcon(SlotSearchSize.VALUE_OUTPUTS_ONLY));
+        this.addItem(INPUT_ORDER_SLOT, SlotSearchOrder.getIcon(SlotSearchOrder.VALUE_ASCENT));
+        this.addItem(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.ZERO_ICON);
 
-        this.addItem(OUTPUT_SIZE_SLOT, CargoUtil.getSIzeIcon(CargoUtil.SIZE_INPUTS_ONLY));
-        this.addItem(OUTPUT_ORDER_SLOT, CargoUtil.getOrderIcon(CargoUtil.ORDER_ASCENT));
-        this.addItem(OUTPUT_BLOCK_SEARCH_MODE_SLOT, CargoUtil.BLOCK_SEARCH_MODE_INHERIT_ICON);
+        this.addItem(OUTPUT_SIZE_SLOT, SlotSearchSize.getIcon(SlotSearchSize.VALUE_INPUTS_ONLY));
+        this.addItem(OUTPUT_ORDER_SLOT, SlotSearchOrder.getIcon(SlotSearchOrder.VALUE_ASCENT));
+        this.addItem(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.ZERO_ICON);
 
-        this.addItem(FILTER_MODE_SLOT, CargoUtil.getFilterModeIcon(CargoUtil.FILTER_MODE_BLACK_LIST));
+        this.addItem(FILTER_MODE_SLOT, FilterMode.getIcon(FilterMode.VALUE_BLACK));
 
-        this.addItem(CARGO_MODE_SLOT, CargoUtil.getCargoModeIcon(CargoUtil.CARGO_MODE_INPUT_MAIN));
-
+        this.addItem(CARGO_MODE_SLOT, CargoMode.getIcon(CargoMode.VALUE_INPUT_MAIN));
     }
 
     @Override
     public void newInstance(BlockMenu blockMenu, Block block) {
         updateMenu(blockMenu, block);
         blockMenu.addMenuClickHandler(ITEM_COUNT_SUB_SLOT, (player, i, itemStack, clickAction) -> {
-            int itemCount = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.ITEM_COUNT));
+            int itemCount = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), CargoNumber.KEY));
             itemCount = (itemCount - 2 + ITEM_COUNT_LIMIT) % ITEM_COUNT_LIMIT + 1;
-            CargoUtil.setIconAmount(itemCount, blockMenu.getItemInSlot(ITEM_COUNT_SLOT));
-            BlockStorage.addBlockInfo(block.getLocation(), CargoUtil.ITEM_COUNT, String.valueOf(itemCount));
+            CargoNumber.setIcon(blockMenu.getItemInSlot(ITEM_COUNT_SLOT), itemCount);
+            BlockStorage.addBlockInfo(block.getLocation(), CargoNumber.KEY, String.valueOf(itemCount));
             return false;
         });
         blockMenu.addMenuClickHandler(ITEM_COUNT_ADD_SLOT, (player, i, itemStack, clickAction) -> {
-            int itemCount = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.ITEM_COUNT));
+            int itemCount = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), CargoNumber.KEY));
             itemCount = itemCount % ITEM_COUNT_LIMIT + 1;
-            CargoUtil.setIconAmount(itemCount, blockMenu.getItemInSlot(ITEM_COUNT_SLOT));
-            BlockStorage.addBlockInfo(block.getLocation(), CargoUtil.ITEM_COUNT, String.valueOf(itemCount));
+            CargoNumber.setIcon(blockMenu.getItemInSlot(ITEM_COUNT_SLOT), itemCount);
+            BlockStorage.addBlockInfo(block.getLocation(), CargoNumber.KEY, String.valueOf(itemCount));
             return false;
         });
         blockMenu.addMenuClickHandler(INPUT_SIZE_SLOT, (player, i, itemStack, clickAction) -> {
-            String inputSize = CargoUtil.nextSize(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.INPUT_SIZE));
-            blockMenu.replaceExistingItem(INPUT_SIZE_SLOT, CargoUtil.getSIzeIcon(inputSize));
-            BlockStorage.addBlockInfo(block.getLocation(), CargoUtil.INPUT_SIZE, inputSize);
+            String inputSize = SlotSearchSize.next(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT));
+            blockMenu.replaceExistingItem(INPUT_SIZE_SLOT, SlotSearchSize.getIcon(inputSize));
+            BlockStorage.addBlockInfo(block.getLocation(), SlotSearchSize.KEY_INPUT, inputSize);
             return false;
         });
         blockMenu.addMenuClickHandler(INPUT_ORDER_SLOT, (player, i, itemStack, clickAction) -> {
-            String inputOrder = CargoUtil.nextOrder(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.INPUT_ORDER));
-            blockMenu.replaceExistingItem(INPUT_ORDER_SLOT, CargoUtil.getOrderIcon(inputOrder));
-            BlockStorage.addBlockInfo(block.getLocation(), CargoUtil.INPUT_ORDER, inputOrder);
+            String inputOrder = SlotSearchOrder.next(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchOrder.KEY_INPUT));
+            blockMenu.replaceExistingItem(INPUT_ORDER_SLOT, SlotSearchOrder.getIcon(inputOrder));
+            BlockStorage.addBlockInfo(block.getLocation(), SlotSearchOrder.KEY_INPUT, inputOrder);
             return false;
         });
         blockMenu.addMenuClickHandler(INPUT_BLOCK_SEARCH_MODE_SLOT, (player, i, itemStack, clickAction) -> {
-            String inputSearch = CargoUtil.nextBlockSearchMode(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.INPUT_BLOCK_SEARCH_MODE));
-            blockMenu.replaceExistingItem(INPUT_BLOCK_SEARCH_MODE_SLOT, CargoUtil.getBlockSearchModeIcon(inputSearch));
-            BlockStorage.addBlockInfo(block.getLocation(), CargoUtil.INPUT_BLOCK_SEARCH_MODE, inputSearch);
+            String inputSearch = BlockSearchMode.next(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_INPUT), FinalTechItems.PIPE.getItemId());
+            blockMenu.replaceExistingItem(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.getIcon(inputSearch));
+            BlockStorage.addBlockInfo(block.getLocation(), BlockSearchMode.KEY_INPUT, inputSearch);
             return false;
         });
         blockMenu.addMenuClickHandler(OUTPUT_SIZE_SLOT, (player, i, itemStack, clickAction) -> {
-            String outputSize = CargoUtil.nextSize(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.OUTPUT_SIZE));
-            blockMenu.replaceExistingItem(OUTPUT_SIZE_SLOT, CargoUtil.getSIzeIcon(outputSize));
-            BlockStorage.addBlockInfo(block.getLocation(), CargoUtil.OUTPUT_SIZE, outputSize);
+            String outputSize = SlotSearchSize.next(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT));
+            blockMenu.replaceExistingItem(OUTPUT_SIZE_SLOT, SlotSearchSize.getIcon(outputSize));
+            BlockStorage.addBlockInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT, outputSize);
             return false;
         });
         blockMenu.addMenuClickHandler(OUTPUT_ORDER_SLOT, (player, i, itemStack, clickAction) -> {
-            String outputOrder = CargoUtil.nextOrder(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.OUTPUT_ORDER));
-            blockMenu.replaceExistingItem(OUTPUT_ORDER_SLOT, CargoUtil.getOrderIcon(outputOrder));
-            BlockStorage.addBlockInfo(block.getLocation(), CargoUtil.OUTPUT_ORDER, outputOrder);
+            String outputOrder = SlotSearchOrder.next(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchOrder.KEY_OUTPUT));
+            blockMenu.replaceExistingItem(OUTPUT_ORDER_SLOT, SlotSearchOrder.getIcon(outputOrder));
+            BlockStorage.addBlockInfo(block.getLocation(), SlotSearchOrder.KEY_OUTPUT, outputOrder);
             return false;
         });
         blockMenu.addMenuClickHandler(OUTPUT_BLOCK_SEARCH_MODE_SLOT, (player, i, itemStack, clickAction) -> {
-            String outputSearch = CargoUtil.nextBlockSearchMode(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.OUTPUT_BLOCK_SEARCH_MODE));
-            blockMenu.replaceExistingItem(OUTPUT_BLOCK_SEARCH_MODE_SLOT, CargoUtil.getBlockSearchModeIcon(outputSearch));
-            BlockStorage.addBlockInfo(block.getLocation(), CargoUtil.OUTPUT_BLOCK_SEARCH_MODE, outputSearch);
+            String outputSearch = BlockSearchMode.next(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_OUTPUT), FinalTechItems.PIPE.getItemId());
+            blockMenu.replaceExistingItem(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.getIcon(outputSearch));
+            BlockStorage.addBlockInfo(block.getLocation(), BlockSearchMode.KEY_OUTPUT, outputSearch);
             return false;
         });
         blockMenu.addMenuClickHandler(FILTER_MODE_SLOT, (player, i, itemStack, clickAction) -> {
-            String filterMode = CargoUtil.nextFilterMode(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.FILTER_MODE));
-            blockMenu.replaceExistingItem(FILTER_MODE_SLOT, CargoUtil.getFilterModeIcon(filterMode));
-            BlockStorage.addBlockInfo(block.getLocation(), CargoUtil.FILTER_MODE, filterMode);
+            String filterMode = FilterMode.next(BlockStorage.getLocationInfo(block.getLocation(), FilterMode.KEY));
+            blockMenu.replaceExistingItem(FILTER_MODE_SLOT, FilterMode.getIcon(filterMode));
+            BlockStorage.addBlockInfo(block.getLocation(), FilterMode.KEY, filterMode);
             return false;
         });
         blockMenu.addMenuClickHandler(CARGO_MODE_SLOT, (player, i, itemStack, clickAction) -> {
-            String cargoMode = CargoUtil.nextCargoMode(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.CARGO_MODE));
-            blockMenu.replaceExistingItem(CARGO_MODE_SLOT, CargoUtil.getCargoModeIcon(cargoMode));
-            BlockStorage.addBlockInfo(block.getLocation(), CargoUtil.CARGO_MODE, cargoMode);
+            String cargoMode = CargoMode.next(BlockStorage.getLocationInfo(block.getLocation(), CargoMode.KEY));
+            blockMenu.replaceExistingItem(CARGO_MODE_SLOT, CargoMode.getIcon(cargoMode));
+            BlockStorage.addBlockInfo(block.getLocation(), CargoMode.KEY, cargoMode);
             return false;
         });
     }
@@ -155,15 +184,43 @@ public abstract class PipeMenu extends BlockMenuPreset {
         return this.getSlotsAccessedByItemTransport(flow);
     }
 
+    @Override
     public void updateMenu(BlockMenu blockMenu, Block block) {
-        CargoUtil.setIconAmount(Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.ITEM_COUNT)), blockMenu.getItemInSlot(ITEM_COUNT_SLOT));
-        blockMenu.replaceExistingItem(INPUT_SIZE_SLOT, CargoUtil.getSIzeIcon(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.INPUT_SIZE)));
-        blockMenu.replaceExistingItem(INPUT_ORDER_SLOT, CargoUtil.getOrderIcon(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.INPUT_ORDER)));
-        blockMenu.replaceExistingItem(OUTPUT_SIZE_SLOT, CargoUtil.getSIzeIcon(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.OUTPUT_SIZE)));
-        blockMenu.replaceExistingItem(OUTPUT_ORDER_SLOT, CargoUtil.getOrderIcon(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.OUTPUT_ORDER)));
-        blockMenu.replaceExistingItem(FILTER_MODE_SLOT, CargoUtil.getFilterModeIcon(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.FILTER_MODE)));
-        blockMenu.replaceExistingItem(CARGO_MODE_SLOT, CargoUtil.getCargoModeIcon(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.CARGO_MODE)));
-        blockMenu.replaceExistingItem(INPUT_BLOCK_SEARCH_MODE_SLOT, CargoUtil.getBlockSearchModeIcon(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.INPUT_BLOCK_SEARCH_MODE)));
-        blockMenu.replaceExistingItem(OUTPUT_BLOCK_SEARCH_MODE_SLOT, CargoUtil.getBlockSearchModeIcon(BlockStorage.getLocationInfo(block.getLocation(), CargoUtil.OUTPUT_BLOCK_SEARCH_MODE)));
+        if(BlockStorage.getLocationInfo(block.getLocation(), CargoNumber.KEY) == null) {
+            BlockStorage.addBlockInfo(block, CargoNumber.KEY, "64");
+        }
+        if(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT) == null) {
+            BlockStorage.addBlockInfo(block.getLocation(), SlotSearchSize.KEY_INPUT, SlotSearchSize.VALUE_OUTPUTS_ONLY);
+        }
+        if(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchOrder.KEY_INPUT) == null) {
+            BlockStorage.addBlockInfo(block.getLocation(), SlotSearchOrder.KEY_INPUT, SlotSearchOrder.VALUE_ASCENT);
+        }
+        if(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT) == null) {
+            BlockStorage.addBlockInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT, SlotSearchSize.VALUE_INPUTS_ONLY);
+        }
+        if(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchOrder.KEY_OUTPUT) == null) {
+            BlockStorage.addBlockInfo(block.getLocation(), SlotSearchOrder.KEY_OUTPUT, SlotSearchOrder.VALUE_ASCENT);
+        }
+        if(BlockStorage.getLocationInfo(block.getLocation(), FilterMode.KEY) == null) {
+            BlockStorage.addBlockInfo(block.getLocation(), FilterMode.KEY, FilterMode.VALUE_BLACK);
+        }
+        if(BlockStorage.getLocationInfo(block.getLocation(), CargoMode.KEY) == null) {
+            BlockStorage.addBlockInfo(block.getLocation(), CargoMode.KEY, CargoMode.VALUE_INPUT_MAIN);
+        }
+        if(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_INPUT) == null) {
+            BlockStorage.addBlockInfo(block.getLocation(), BlockSearchMode.KEY_INPUT, BlockSearchMode.VALUE_ZERO);
+        }
+        if(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_OUTPUT) == null) {
+            BlockStorage.addBlockInfo(block.getLocation(), BlockSearchMode.KEY_OUTPUT, BlockSearchMode.VALUE_ZERO);
+        }
+        CargoNumber.setIcon(blockMenu.getItemInSlot(ITEM_COUNT_SLOT), Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), CargoNumber.KEY)));
+        blockMenu.replaceExistingItem(INPUT_SIZE_SLOT, SlotSearchSize.getIcon(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT)));
+        blockMenu.replaceExistingItem(INPUT_ORDER_SLOT, SlotSearchOrder.getIcon(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchOrder.KEY_INPUT)));
+        blockMenu.replaceExistingItem(OUTPUT_SIZE_SLOT, SlotSearchSize.getIcon(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT)));
+        blockMenu.replaceExistingItem(OUTPUT_ORDER_SLOT, SlotSearchOrder.getIcon(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchOrder.KEY_OUTPUT)));
+        blockMenu.replaceExistingItem(FILTER_MODE_SLOT, FilterMode.getIcon(BlockStorage.getLocationInfo(block.getLocation(), FilterMode.KEY)));
+        blockMenu.replaceExistingItem(CARGO_MODE_SLOT, CargoMode.getIcon(BlockStorage.getLocationInfo(block.getLocation(), CargoMode.KEY)));
+        blockMenu.replaceExistingItem(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.getIcon(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_INPUT)));
+        blockMenu.replaceExistingItem(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.getIcon(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_OUTPUT)));
     }
 }

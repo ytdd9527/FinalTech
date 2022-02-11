@@ -3,28 +3,35 @@ package io.taraxacum.finaltech.machine;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.taraxacum.finaltech.abstractItem.FinalMachine;
-import io.taraxacum.finaltech.abstractItem.MachineMenu;
+import io.taraxacum.finaltech.abstractItem.machine.AbstractMachine;
+import io.taraxacum.finaltech.abstractItem.machine.AbstractStandardMachine;
+import io.taraxacum.finaltech.abstractItem.menu.AbstractStandardMachineMenu;
+import io.taraxacum.finaltech.core.AllCompressionCraftingOperation;
 import io.taraxacum.finaltech.menu.AllFactoryMenu;
+import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllFactory extends FinalMachine {
+// todo
+/**
+ * @author Final_ROOT
+ */
+public class AllFactory extends AbstractStandardMachine {
 
     public AllFactory(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
-    protected MachineMenu setMachineMenu() {
+    protected AbstractStandardMachineMenu setMachineMenu() {
         return new AllFactoryMenu(this.getId(), this.getItemName(), this);
     }
 
@@ -32,32 +39,31 @@ public class AllFactory extends FinalMachine {
     protected void tick(Block b) {
         BlockMenu inv = BlockStorage.getInventory(b);
         ItemStack itemStack = inv.getItemInSlot(this.getInputSlots()[0]);
-        if (itemStack != null) {
-            ItemMeta itemMeta = itemStack.getItemMeta();
-            List<String> lore = itemMeta.getLore();
-            if(lore.remove("已经由Final_ROOT签名认证，运行进行复制")) {
-                lore.add("§8已经由Final_ROOT签名认证并允许进行复制");
-                itemMeta.setLore(lore);
-                itemStack.setItemMeta(itemMeta);
-            }
-
+        if (!ItemStackUtil.isItemNull(itemStack)) {
             ItemStack output = new ItemStack(itemStack);
-            ItemMeta itemMeta1 = output.getItemMeta();
-            List<String> lore1 = itemMeta1.getLore();
-            if(lore1 == null) {
-                lore1 = new ArrayList<>();
+            ItemMeta itemMeta = output.getItemMeta();
+            List<String> lore = itemMeta.getLore();
+            if(lore == null) {
+                return;
             }
-            if(lore1.remove("§8已经由Final_ROOT签名认证并允许进行复制")) {
-                itemMeta1.setLore(lore1);
-                output.setItemMeta(itemMeta1);
-                inv.pushItem(output, this.getOutputSlots());
+            for(int i = 0; i < lore.size(); i++) {
+                String l = lore.get(i);
+                if(ChatColor.stripColor(l).equals(AllCompressionCraftingOperation.ALL_FACTORY_ITEM_LORE_WITHOUT_COLOR)) {
+                    List<String> lore1 = new ArrayList<>();
+                    for(int j = 0; j < lore.size(); j++) {
+                        if(i != j) {
+                            lore1.add(lore.get(j));
+                        }
+                    }
+                    itemMeta.setLore(lore1);
+                    output.setItemMeta(itemMeta);
+                    inv.pushItem(output, this.getOutputSlots());
+                    return;
+                }
             }
         }
     }
 
-    @Nonnull
     @Override
-    public String getMachineIdentifier() {
-        return "FINALTECH_ALL_FACTORY";
-    }
+    public void registerDefaultRecipes() { }
 }

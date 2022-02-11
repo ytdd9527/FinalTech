@@ -6,37 +6,57 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
-import io.taraxacum.finaltech.abstractItem.FinalCargoMachine;
+import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBreakHandler;
+import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
+import io.taraxacum.finaltech.abstractItem.machine.AbstractCargo;
+import io.taraxacum.finaltech.abstractItem.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.PipeMenu;
-import io.taraxacum.finaltech.util.CargoUtil;
+import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.cargo.*;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.*;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
-import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
 import java.util.*;
 
-public class Pipe extends FinalCargoMachine {
-
+/**
+ * @author Final_ROOT
+ */
+public class Pipe extends AbstractCargo {
+    public static final int BLOCK_SEARCH_LIMIT = 8;
     public Pipe(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+    }
 
-        new PipeMenu(this.getId(), this.getItemName(), false) {
+    @Override
+    protected AbstractMachineMenu setMachineMenu() {
+        return new PipeMenu(this.getId(), this.getItemName(), this);
+    }
+
+    @Nonnull
+    @Override
+    protected BlockBreakHandler onBlockBreak() {
+        return new SimpleBlockBreakHandler() {
             @Override
-            public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
-                return player.hasPermission("slimefun.inventory.bypass") ? true : canUse(player, false) && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
+            public void onBlockBreak(@Nonnull Block block) {
+                BlockMenu inv = BlockStorage.getInventory(block);
+                if (inv != null) {
+                    inv.dropItems(block.getLocation(), getInputSlots());
+                    inv.dropItems(block.getLocation(), getOutputSlots());
+                    inv.dropItems(block.getLocation(), PipeMenu.ITEM_MATCH);
+                    BlockStorage.clearBlockInfo(block.getLocation());
+                }
             }
         };
     }
@@ -44,194 +64,112 @@ public class Pipe extends FinalCargoMachine {
     @Override
     public void preRegister() {
         super.preRegister();
-
         this.addItemHandler(new BlockPlaceHandler(false) {
             @Override
             public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {
-                Block block = blockPlaceEvent.getBlock();;
-                BlockStorage.addBlockInfo(block, CargoUtil.ITEM_COUNT, "64");
-                BlockStorage.addBlockInfo(block, CargoUtil.INPUT_SIZE, CargoUtil.SIZE_OUTPUTS_ONLY);
-                BlockStorage.addBlockInfo(block, CargoUtil.INPUT_ORDER, CargoUtil.ORDER_ASCENT);
-                BlockStorage.addBlockInfo(block, CargoUtil.OUTPUT_SIZE, CargoUtil.SIZE_INPUTS_ONLY);
-                BlockStorage.addBlockInfo(block, CargoUtil.OUTPUT_ORDER, CargoUtil.ORDER_ASCENT);
-                BlockStorage.addBlockInfo(block, CargoUtil.FILTER_MODE, CargoUtil.FILTER_MODE_BLACK_LIST);
-                BlockStorage.addBlockInfo(block, CargoUtil.CARGO_MODE, CargoUtil.CARGO_MODE_INPUT_MAIN);
-                BlockStorage.addBlockInfo(block, CargoUtil.INPUT_BLOCK_SEARCH_MODE, CargoUtil.BLOCK_SEARCH_MODE_INHERIT);
-                BlockStorage.addBlockInfo(block, CargoUtil.OUTPUT_BLOCK_SEARCH_MODE, CargoUtil.BLOCK_SEARCH_MODE_INHERIT);
-            }
-        });
-
-        this.addItemHandler(new BlockBreakHandler(false, false) {
-            @Override
-            public void onPlayerBreak(BlockBreakEvent blockBreakEvent, ItemStack itemStack, List<ItemStack> list) {
-                BlockStorage.clearBlockInfo(blockBreakEvent.getBlock());
-                if (BlockStorage.hasInventory(blockBreakEvent.getBlock())) {
-                    BlockMenu blockMenu = BlockStorage.getInventory(blockBreakEvent.getBlock());
-                    blockMenu.dropItems(blockMenu.getLocation(), PipeMenu.ITEM_MATCH);
-                }
+                Block block = blockPlaceEvent.getBlock();
+                BlockStorage.addBlockInfo(block, "UUID", blockPlaceEvent.getPlayer().getUniqueId().toString());
+                BlockStorage.addBlockInfo(block, CargoNumber.KEY, "64");
+                BlockStorage.addBlockInfo(block, SlotSearchSize.KEY_INPUT, SlotSearchSize.VALUE_OUTPUTS_ONLY);
+                BlockStorage.addBlockInfo(block, SlotSearchOrder.KEY_INPUT, SlotSearchOrder.VALUE_ASCENT);
+                BlockStorage.addBlockInfo(block, SlotSearchSize.KEY_OUTPUT, SlotSearchSize.VALUE_INPUTS_ONLY);
+                BlockStorage.addBlockInfo(block, SlotSearchOrder.KEY_OUTPUT, SlotSearchOrder.VALUE_ASCENT);
+                BlockStorage.addBlockInfo(block, FilterMode.KEY, FilterMode.VALUE_BLACK);
+                BlockStorage.addBlockInfo(block, CargoMode.KEY, CargoMode.VALUE_INPUT_MAIN);
+                BlockStorage.addBlockInfo(block, BlockSearchMode.KEY_INPUT, BlockSearchMode.VALUE_ZERO);
+                BlockStorage.addBlockInfo(block, BlockSearchMode.KEY_OUTPUT, BlockSearchMode.VALUE_ZERO);
             }
         });
     }
 
     /**
      * 每粘液刻的工作逻辑
-     * @param b
+     * @param
      */
     @Override
-    public void tick(Block b) {
-
-        Location location = b.getLocation();
-        String inputSize = BlockStorage.getLocationInfo(location, CargoUtil.INPUT_SIZE);
-        String outputSize = BlockStorage.getLocationInfo(location, CargoUtil.OUTPUT_SIZE);
-        String inputOrder = BlockStorage.getLocationInfo(location, CargoUtil.INPUT_ORDER);
-        String outputOrder = BlockStorage.getLocationInfo(location, CargoUtil.OUTPUT_ORDER);
+    public void tick(Block block) {
+        Location location = block.getLocation();
+        String inputSize = BlockStorage.getLocationInfo(location, SlotSearchSize.KEY_INPUT);
+        String outputSize = BlockStorage.getLocationInfo(location, SlotSearchSize.KEY_OUTPUT);
+        String inputOrder = BlockStorage.getLocationInfo(location, SlotSearchOrder.KEY_INPUT);
+        String outputOrder = BlockStorage.getLocationInfo(location, SlotSearchOrder.KEY_OUTPUT);
 
         Block inputBlock = null;
         Block outputBlock = null;
 
-        BlockData blockData = b.getState().getBlockData();
-        BlockFace blockFace = null;
+        BlockData blockData = block.getState().getBlockData();
+        BlockFace blockFace;
         if (blockData instanceof Directional) {
             blockFace = ((Directional) blockData).getFacing();
-//            inputBlock = b.getRelative(blockFace.getOppositeFace());
-            inputBlock = CargoUtil.searchBlockPiPe(b, BlockStorage.getLocationInfo(location, CargoUtil.INPUT_BLOCK_SEARCH_MODE), blockFace.getOppositeFace(), true);
-//            outputBlock = b.getRelative(blockFace);
-            outputBlock = CargoUtil.searchBlockPiPe(b, BlockStorage.getLocationInfo(location, CargoUtil.OUTPUT_BLOCK_SEARCH_MODE), blockFace, false);
+            inputBlock = searchBlockPiPe(block, BlockStorage.getLocationInfo(location, BlockSearchMode.KEY_INPUT), blockFace.getOppositeFace(), true);
+            outputBlock = searchBlockPiPe(block, BlockStorage.getLocationInfo(location, BlockSearchMode.KEY_OUTPUT), blockFace, false);
         }
 
         if (inputBlock == null || outputBlock == null) {
             return;
         }
 
-        int itemCount = Integer.parseInt(BlockStorage.getLocationInfo(location, CargoUtil.ITEM_COUNT));
-        String filterMode = BlockStorage.getLocationInfo(location, CargoUtil.FILTER_MODE);
-        String cargoMode = BlockStorage.getLocationInfo(location, CargoUtil.CARGO_MODE);
+        String uuid = BlockStorage.getLocationInfo(location, "UUID");
+        if(uuid != null) {
+            if(!SlimefunUtil.hasPermission(inputBlock, uuid) || !SlimefunUtil.hasPermission(outputBlock, uuid)) {
+                return;
+            }
+        }
+        int cargoNumber = Integer.parseInt(BlockStorage.getLocationInfo(location, CargoNumber.KEY));
+        String filterMode = BlockStorage.getLocationInfo(location, FilterMode.KEY);
+        String cargoMode = BlockStorage.getLocationInfo(location, CargoMode.KEY);
 
-
-        BlockMenu blockMenu = BlockStorage.getInventory(b);
+        BlockMenu blockMenu = BlockStorage.getInventory(block);
+        Inventory blockInv = blockMenu.toInventory();
 
         // input main
-        if (CargoUtil.CARGO_MODE_INPUT_MAIN.equals(cargoMode)) {
-            CargoUtil.InvWithSlots inputMap = CargoUtil.getInv(inputBlock, inputSize, inputOrder);
-            if(inputMap == null) {
-                return;
-            }
-            Inventory inputInv = inputMap.getInventory();
-            int[] inputSlots = inputMap.getSlots();
-            if(inputInv == null || inputSlots == null) {
-                return;
-            }
-            for (int inputSlot : inputSlots) {
-                ItemStack inputItem = inputInv.getItem(inputSlot);
-                if (inputItem == null) {
-                    continue;
-                }
-                if (CargoUtil.ifMatch(inputItem, blockMenu, filterMode, PipeMenu.ITEM_MATCH) == false) {
-                    continue;
-                }
-                CargoUtil.InvWithSlots outputMap = CargoUtil.getInv(outputBlock, outputSize, outputOrder, inputItem);
-                if(outputMap == null) {
-                    continue;
-                }
-                Inventory outputInv = outputMap.getInventory();
-                int[] outputSlots = outputMap.getSlots();
-                if(outputInv == null || outputSlots == null) {
-                    continue;
-                }
-                for (int outputSlot : outputSlots) {
-                    if (itemCount == 0) {
-                        break;
-                    }
-                    ItemStack outputItem = outputInv.getItem(outputSlot);
-                    if (outputItem == null) {
-                        int count = Math.min(itemCount, inputItem.getAmount());
-                        outputInv.setItem(outputSlot, new CustomItemStack(inputItem, count));
-                        inputItem.setAmount(inputItem.getAmount() - count);
-                        itemCount -= count;
-                    } else if (SlimefunUtils.isItemSimilar(inputItem, outputItem, true, false)) {
-                        int count = Math.min(itemCount, Math.min(inputItem.getAmount(), outputItem.getMaxStackSize() - outputItem.getAmount()));
-                        CargoUtil.changeItemAmount(inputItem, outputItem, count);
-                        itemCount -= count;
-                    }
-                }
-                if (itemCount == 0) {
-                    break;
-                }
-            }
+        if (CargoMode.VALUE_INPUT_MAIN.equals(cargoMode)) {
+            CargoUtil.doCargoInputMain(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, CargoItemMode.VALUE_ALL, filterMode, blockInv, PipeMenu.ITEM_MATCH);
         }
 
         // output main
-        if (CargoUtil.CARGO_MODE_OUTPUT_MAIN.equals(cargoMode)) {
-            CargoUtil.InvWithSlots outputMap = CargoUtil.getInv(outputBlock, outputSize, outputOrder);
-            if(outputMap == null) {
-                return;
+        if (CargoMode.VALUE_OUTPUT_MAIN.equals(cargoMode)) {
+            CargoUtil.doCargoOutputMain(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, CargoItemMode.VALUE_ALL, filterMode, blockInv, PipeMenu.ITEM_MATCH);
+        }
+    }
+
+    public static Block searchBlockPiPe(@Nonnull Block begin, String searchMode, BlockFace blockFace, boolean input) {
+        Block result = begin.getRelative(blockFace);
+        int count = 1;
+        if(BlockSearchMode.VALUE_ZERO.equals(searchMode)) {
+            return result;
+        }
+        List<Location> locationList = new ArrayList<>();
+        while(true) {
+            if(BlockStorage.hasInventory(result) && !result.getType().equals(FinalTechItems.PIPE.getType())) {
+                break;
             }
-            Inventory outputInv = outputMap.getInventory();
-            int[] outputSlots = outputMap.getSlots();
-            if(outputInv == null || outputSlots == null) {
-                return;
+            if(PaperLib.getBlockState(result, false).getState() instanceof InventoryHolder) {
+                break;
             }
-            for (int outputSlot : outputSlots) {
-                ItemStack outputItem = outputInv.getItem(outputSlot);
-                CargoUtil.InvWithSlots inputMap = CargoUtil.getInv(inputBlock, inputSize, inputOrder, outputItem);
-                if(inputMap == null) {
-                    return;
-                }
-                Inventory inputInv = inputMap.getInventory();
-                int[] inputSlots = inputMap.getSlots();
-                if(inputInv == null || inputSlots == null) {
-                    continue;
-                }
-                if (outputItem == null) {
-                    for (int inputSlot : inputSlots) {
-                        if (itemCount == 0) {
-                            break;
-                        }
-                        ItemStack inputItem = inputInv.getItem(inputSlot);
-                        if (inputItem == null) {
-                            continue;
-                        }
-                        if (CargoUtil.ifMatch(inputItem, blockMenu, filterMode, PipeMenu.ITEM_MATCH) == false) {
-                            continue;
-                        }
-                        if(outputItem == null) {
-                            int count = Math.min(itemCount, inputItem.getAmount());
-                            outputItem = new CustomItemStack(inputItem, count);
-                            outputInv.setItem(outputSlot, outputItem);
-                            inputItem.setAmount(inputItem.getAmount() - count);
-                            itemCount -= count;
-                        } else if(SlimefunUtils.isItemSimilar(inputItem, outputItem, true, false)) {
-                            int count = Math.min(itemCount, Math.min(inputItem.getAmount(), outputItem.getMaxStackSize() - outputItem.getAmount()));
-                            CargoUtil.changeItemAmount(inputItem, outputItem, count);
-                            itemCount -= count;
-                        }
-                    }
-                    continue;
-                }
-                if (CargoUtil.ifMatch(outputItem, blockMenu, filterMode, PipeMenu.ITEM_MATCH) == false) {
-                    continue;
-                }
-                for (int inputSlot : inputSlots) {
-                    if (itemCount == 0) {
-                        break;
-                    }
-                    ItemStack inputItem = inputInv.getItem(inputSlot);
-                    if (inputItem != null && SlimefunUtils.isItemSimilar(inputItem, outputItem, true, false)) {
-                        int count = Math.min(itemCount, Math.min(inputItem.getAmount(), outputItem.getMaxStackSize() - outputItem.getAmount()));
-                        CargoUtil.changeItemAmount(inputItem, outputItem, count);
-                        itemCount -= count;
+            if (result.getType() == FinalTechItems.PIPE.getType()) {
+                count = 0;
+                for(Location location : locationList) {
+                    if(location.equals(result.getLocation())) {
+                        return result;
                     }
                 }
-                if (itemCount == 0) {
-                    break;
+                locationList.add(result.getLocation());
+                if(BlockSearchMode.VALUE_INHERIT.equals(searchMode)){
+                    BlockData blockData = result.getState().getBlockData();
+                    if(blockData instanceof Directional) {
+                        blockFace = ((Directional) blockData).getFacing();
+                        if(input) {
+                            blockFace = blockFace.getOppositeFace();
+                        }
+                    }
                 }
+            }
+            result = result.getRelative(blockFace);
+            if(count++ > BLOCK_SEARCH_LIMIT) {
+                return null;
             }
         }
-
-        // todo
-        // balance mode
-        if(CargoUtil.CARGO_MODE_BALANCE.equals(cargoMode)) {
-
-        }
+        return result;
     }
 }
