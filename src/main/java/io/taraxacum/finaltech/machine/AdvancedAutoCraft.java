@@ -76,7 +76,7 @@ public class AdvancedAutoCraft extends AbstractMachine implements RecipeItem {
             }
             @Override
             public boolean isSynchronized() {
-                return false;
+                return true;
             }
         });
         this.addItemHandler(new BlockPlaceHandler(false) {
@@ -122,8 +122,54 @@ public class AdvancedAutoCraft extends AbstractMachine implements RecipeItem {
         MachineRecipe recipe = new MachineRecipe(0, ItemStackUtil.toArray(recipeInputList, true), new ItemStack[] {recipeOutput});
 
         BlockMenu containerMenu = BlockStorage.getInventory(containerBlock);
-        int[] inputSlots = containerMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.INSERT);
-        int[] outputSlots = containerMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
+        String size = BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT);
+        int[] inputSlots = new int[0];
+        int[] outputSlots = new int[0];
+        switch (size) {
+            case SlotSearchSize.VALUE_INPUTS_ONLY:
+                inputSlots = containerMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.INSERT);
+                break;
+            case SlotSearchSize.VALUE_OUTPUTS_ONLY:
+                inputSlots = containerMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
+                break;
+            case SlotSearchSize.VALUE_INPUTS_AND_OUTPUTS:
+                int[] in = containerMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.INSERT);
+                int[] out = containerMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
+                inputSlots = new int[in.length + out.length];
+                int i;
+                for(i = 0; i < in.length; i++) {
+                    inputSlots[i] = in[i];
+                }
+                for(int j = 0; i + j < inputSlots.length; j++) {
+                    inputSlots[i + j] = out[j];
+                }
+                break;
+            default:
+                break;
+        }
+        size = BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT);
+        switch (size) {
+            case SlotSearchSize.VALUE_INPUTS_ONLY:
+                outputSlots = containerMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.INSERT);
+                break;
+            case SlotSearchSize.VALUE_OUTPUTS_ONLY:
+                outputSlots = containerMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
+                break;
+            case SlotSearchSize.VALUE_INPUTS_AND_OUTPUTS:
+                int[] in = containerMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.INSERT);
+                int[] out = containerMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
+                outputSlots = new int[in.length + out.length];
+                int i;
+                for(i = 0; i < in.length; i++) {
+                    outputSlots[i] = in[i];
+                }
+                for(int j = 0; i + j < outputSlots.length; j++) {
+                    outputSlots[i + j] = out[j];
+                }
+                break;
+            default:
+                break;
+        }
         Inventory containerInv = containerMenu.toInventory();
         List<ItemStack> itemList = new ArrayList<>();
         for(int slot : inputSlots) {

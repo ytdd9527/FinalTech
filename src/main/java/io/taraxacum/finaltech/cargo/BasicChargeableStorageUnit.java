@@ -9,7 +9,7 @@ import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponen
 import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBreakHandler;
 import io.taraxacum.finaltech.abstractItem.machine.AbstractCargo;
 import io.taraxacum.finaltech.abstractItem.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.NormalBarrelMenu;
+import io.taraxacum.finaltech.menu.BasicNormalStorageUnitMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.block.Block;
@@ -27,7 +27,7 @@ public class BasicChargeableStorageUnit extends AbstractCargo implements EnergyN
 
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new NormalBarrelMenu(this.getId(), this.getItemName(), this);
+        return new BasicNormalStorageUnitMenu(this.getId(), this.getItemName(), this);
     }
 
     @Nonnull
@@ -38,7 +38,7 @@ public class BasicChargeableStorageUnit extends AbstractCargo implements EnergyN
             public void onBlockBreak(@Nonnull Block block) {
                 BlockMenu inv = BlockStorage.getInventory(block);
                 if (inv != null) {
-                    inv.dropItems(block.getLocation(), NormalBarrelMenu.CONTAIN);
+                    inv.dropItems(block.getLocation(), BasicNormalStorageUnitMenu.CONTAIN);
                 }
             }
         };

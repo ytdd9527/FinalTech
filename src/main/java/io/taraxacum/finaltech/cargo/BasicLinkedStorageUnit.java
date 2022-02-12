@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.abstractItem.machine.AbstractCargo;
 import io.taraxacum.finaltech.abstractItem.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.LinkedBarrelMenu;
+import io.taraxacum.finaltech.menu.BasicLinkedStorageUnitMenu;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,7 +19,7 @@ public class BasicLinkedStorageUnit extends AbstractCargo {
 
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new LinkedBarrelMenu(this.getId(), this.getItemName(), this);
+        return new BasicLinkedStorageUnitMenu(this.getId(), this.getItemName(), this);
     }
 
     @Override

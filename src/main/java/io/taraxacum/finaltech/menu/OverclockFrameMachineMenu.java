@@ -11,16 +11,14 @@ import javax.annotation.Nonnull;
 /**
  * @author Final_ROOT
  */
-public class AllFrameMachineMenu extends AbstractStandardMachineMenu {
-    private static final int[] BORDER = new int[]{0, 1, 2, 6, 7, 8};
-    private static final int[] INPUT_BORDER = new int[]{3};
-    private static final int[] OUTPUT_BORDER = new int[]{5};
+public class OverclockFrameMachineMenu extends AbstractMachineMenu {
+    private static final int[] BORDER = new int[]{0, 1, 2, 3, 5, 6, 7, 8};
     private static final int[] INPUT_SLOTS = new int[]{4};
     private static final int[] OUTPUT_SLOTS = new int[]{4};
 
     public static final int MACHINE_SLOT = 4;
 
-    public AllFrameMachineMenu(@Nonnull String id, @Nonnull String title, @Nonnull AbstractMachine machine) {
+    public OverclockFrameMachineMenu(@Nonnull String id, @Nonnull String title, @Nonnull AbstractMachine machine) {
         super(id, title, machine);
     }
 
@@ -31,12 +29,12 @@ public class AllFrameMachineMenu extends AbstractStandardMachineMenu {
 
     @Override
     public int[] getInputBorder() {
-        return INPUT_BORDER;
+        return new int[0];
     }
 
     @Override
     public int[] getOutputBorder() {
-        return OUTPUT_BORDER;
+        return new int[0];
     }
 
     @Override
@@ -48,4 +46,7 @@ public class AllFrameMachineMenu extends AbstractStandardMachineMenu {
     public int[] getOutputSlots() {
         return OUTPUT_SLOTS;
     }
+
+    @Override
+    protected void updateMenu(BlockMenu menu, Block block) {}
 }

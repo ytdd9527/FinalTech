@@ -9,6 +9,7 @@ import io.taraxacum.finaltech.util.JavaUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -23,7 +24,7 @@ import java.util.*;
  * @author Final_ROOT
  */
 public class CargoUtil {
-
+    public static final ItemStack NULL_ITEM = new ItemStack(Material.AIR);
     public static final int doCargoInputMain(@Nonnull Block inputBlock, @Nonnull Block outputBlock, String inputSize, String inputOrder, String outputSize, String outputOrder, int cargoNumber, String itemMode, String filterMode, Inventory filterInv, int[] filterSlots) {
         InvWithSlots inputMap = getInv(inputBlock, inputSize, inputOrder);
         if(inputMap == null) {
@@ -102,8 +103,11 @@ public class CargoUtil {
                     cargoNumber -= count;
                     number += count;
                     if(CargoItemMode.VALUE_STACK.equals(itemMode)) {
-                        cargoNumber = outputItem.getMaxStackSize() - outputItem.getAmount();
-                        break;
+                        outputItem = outputInv.getItem(outputSlot);
+                        if(!ItemStackUtil.isItemNull(outputItem)) {
+                            cargoNumber = outputItem.getMaxStackSize() - outputItem.getAmount();
+                            break;
+                        }
                     }
                     ifWork = true;
                 } else if(SlimefunUtils.isItemSimilar(inputItem, outputItem, true, false) && outputItem.getMaxStackSize() > outputItem.getAmount()) {
@@ -248,8 +252,11 @@ public class CargoUtil {
             inventory = blockMenu.toInventory();
             switch (size) {
                 case SlotSearchSize.VALUE_INPUTS_ONLY:
-                    if(item == null) {
+                    if(ItemStackUtil.isItemNull(item)) {
                         slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.INSERT);
+                        if(slots.length == 0) {
+                            slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, NULL_ITEM);
+                        }
                     } else {
                         slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, item);
                     }
@@ -258,8 +265,11 @@ public class CargoUtil {
 //                    }
                     break;
                 case SlotSearchSize.VALUE_OUTPUTS_ONLY:
-                    if(item == null) {
+                    if(ItemStackUtil.isItemNull(item)) {
                         slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
+                        if(slots.length == 0) {
+                            slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.WITHDRAW, NULL_ITEM);
+                        }
                     } else {
                         slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.WITHDRAW, item);
                     }
@@ -276,9 +286,15 @@ public class CargoUtil {
 //                    if(withdraw == null || withdraw.length == 0) {
 //                        withdraw = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
 //                    }
-                    if(item == null) {
+                    if(ItemStackUtil.isItemNull(item)) {
                         insert = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.INSERT);
+                        if(insert.length == 0) {
+                            insert = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, NULL_ITEM);
+                        }
                         withdraw = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
+                        if(withdraw.length == 0) {
+                            withdraw = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.WITHDRAW, NULL_ITEM);
+                        }
                     } else {
                         insert = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, item);
                         withdraw = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.WITHDRAW, item);

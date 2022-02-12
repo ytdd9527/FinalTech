@@ -9,6 +9,7 @@ import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -130,7 +131,7 @@ public class SlimefunUtil {
     }
 
     public static final boolean hasPermission(@Nonnull Block block, @Nonnull String uuid) {
-        Player player = Bukkit.getPlayer(UUID.fromString(uuid));
+        OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
         return Slimefun.getProtectionManager().hasPermission(player, block, Interaction.INTERACT_BLOCK);
     }
 }

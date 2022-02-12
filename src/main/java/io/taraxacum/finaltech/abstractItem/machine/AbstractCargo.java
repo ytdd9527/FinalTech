@@ -19,6 +19,7 @@ public abstract class AbstractCargo extends AbstractMachine {
 
     @Override
     public void preRegister() {
+        super.preRegister();
         this.addItemHandler(new BlockTicker() {
             @Override
             public void tick(Block block, SlimefunItem slimefunItem, Config config) {
