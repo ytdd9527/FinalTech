@@ -146,9 +146,12 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
 
         this.addItem(SEARCH_INFO_SLOT, new CustomItemStack(Material.TARGET, "&7介绍",
                 "",
-                "&7仅支持 高级工作台、魔法工作台、盔甲锻造台 的类型的合成配方",
-                "&7会读取该方块下方一个的方块的物品，并尝试合成",
+                "&7仅支持自动合成部分粘液科技物品",
+                "&7会读取该方块下方一格的容器的物品并尝试合成",
                 "&7仅支持非原版容器",
+                "",
+                "&7在最上面一行放入机器",
+                "&7可以实现多级合成",
                 "",
                 "&7左边=合成原料搜索范围",
                 "&7右边=输出产物搜索范围"));

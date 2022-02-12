@@ -51,7 +51,7 @@ public class AdvancedElectricDustWasher extends AbstractAdvanceMachine {
                     return recipe;
                 }
             } else if(SlimefunUtils.isItemSimilar(item, SlimefunItems.PULVERIZED_ORE, true, false)) {
-
+                // todo
             }
         }
         return null;

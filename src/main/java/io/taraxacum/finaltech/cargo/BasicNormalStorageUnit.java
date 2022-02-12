@@ -18,8 +18,8 @@ import javax.annotation.Nonnull;
 /**
  * @author Final_ROOT
  */
-public class DoubleNormalBarrel extends AbstractCargo {
-    public DoubleNormalBarrel(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class BasicNormalStorageUnit extends AbstractCargo {
+    public BasicNormalStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 

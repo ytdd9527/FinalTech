@@ -26,6 +26,7 @@ public abstract class AbstractBasicMachine extends AbstractStandardMachine {
     protected AbstractBasicMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.addItemHandler(onBlockBreak());
+        this.registerDefaultRecipes();
     }
 
     @Override

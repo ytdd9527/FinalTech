@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public final class FinalTechItems {
     // items
+    public static final SlimefunItemStack GEARWHEEL = new SlimefunItemStack("FINALTECH_GEARWHEEL", Material.REDSTONE, "&7齿轮");
     public static final SlimefunItemStack QUANTITY_MODULE = new SlimefunItemStack("FINALTECH_QUANTITY_MODULE", Material.AMETHYST_SHARD, "&3数量组件");
     public static final SlimefunItemStack UNORDERED_DUST = new SlimefunItemStack("FINALTECH_UNORDERED_DUST", Material.WHEAT_SEEDS, "&f无序尘埃",
             "&8它被感知到了");
@@ -32,7 +33,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack CODE_CREATE = new SlimefunItemStack("FINALTECH_CODE_CREATE", Material.PAPER, "&9高级概念<创造>",
             "&7繁荣的基础");
 //    public static final SlimefunItemStack ORDERED_DUST = new SlimefunItemStack("FINALTECH_ORDERED_DUST", Material.);
-    public static final SlimefunItemStack CODE_FINAL = new SlimefunItemStack("FINALTECH_CODE_FINAL", Material.BOOK, "&7概念<Final>",
+    public static final SlimefunItemStack CODE_FINAL = new SlimefunItemStack("FINALTECH_CODE_FINAL", Material.BOOK, "&f概念<Final>",
         "&7无数概念交织在一起",
         "&7于是他们无法再创造新事物");
 
@@ -47,7 +48,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MANUAL_ENHANCED_CRAFTING_TABLE = new SlimefunItemStack("FINALTECH_MANUAL_ENHANCED_CRAFTING_TABLE", Material.CRAFTING_TABLE, "&6快捷增强型工作台");
     public static final SlimefunItemStack MANUAL_GRIND_STONE = new SlimefunItemStack("FINALTECH_MANUAL_GRIND_STONE", Material.DISPENSER, "&6快捷磨石");
     public static final SlimefunItemStack MANUAL_HEATED_PRESSURE_CHAMBER = new SlimefunItemStack("FINALTECH_MANUAL_HEATED_PRESSURE_CHAMBER", Material.LIGHT_GRAY_STAINED_GLASS, "&6快捷加热压力舱");
-    public static final SlimefunItemStack MANUAL_JUICER = new SlimefunItemStack("FINALTECH_JUICER", Material.GLASS, "&6快捷榨汁机");
+    public static final SlimefunItemStack MANUAL_JUICER = new SlimefunItemStack("FINALTECH_MANUAL_JUICER", Material.GLASS, "&6快捷榨汁机");
     public static final SlimefunItemStack MANUAL_MAGIC_WORKBENCH = new SlimefunItemStack("FINALTECH_MANUAL_MAGIC_WORKBENCH", Material.BOOKSHELF, "&6快捷魔法工作台");
     public static final SlimefunItemStack MANUAL_ORE_CRUSHER = new SlimefunItemStack("FINALTECH_MANUAL_ORE_CRUSHER", Material.DROPPER, "&6快捷矿石粉碎机");
     public static final SlimefunItemStack MANUAL_PRESSURE_CHAMBER = new SlimefunItemStack("FINALTECH_MANUAL_PRESSURE_CHAMBER", Material.STICKY_PISTON, "&6快捷压力机");
@@ -74,10 +75,11 @@ public final class FinalTechItems {
     public static final SlimefunItemStack ADVANCED_ELECTRIC_PRESS = new SlimefunItemStack("FINALTECH_ADVANCED_ELECTRIC_PRESS", new SlimefunItemStack("", HeadTexture.ELECTRIC_PRESS, new String(), new String()), "&c高级压缩机");
     public static final SlimefunItemStack ADVANCED_ELECTRIC_SMELTERY = new SlimefunItemStack("FINALTECH_ADVANCED_ELECTRIC_SMELTERY", Material.FURNACE, "&c高级冶炼炉");
     public static final SlimefunItemStack ADVANCED_FARM_FACTORY = new SlimefunItemStack("FINALTECH_ADVANCED_FARM_FACTORY", new ItemStack(Material.MOSS_BLOCK), "&c高级作物工厂");
-    public static final SlimefunItemStack ADVANCED_FOOD_FACTORY = new SlimefunItemStack("FINALTECH_FOOD_FACTORY", Material.GREEN_TERRACOTTA, "&c高级作物加工厂");
-    public static final SlimefunItemStack ADVANCED_FREEZER = new SlimefunItemStack("FINALTECH_FREEZER", Material.LIGHT_BLUE_STAINED_GLASS, "&c高级冰箱");
+    public static final SlimefunItemStack ADVANCED_FOOD_FACTORY = new SlimefunItemStack("FINALTECH_ADVANCED_FOOD_FACTORY", Material.GREEN_TERRACOTTA, "&c高级作物加工厂");
+    public static final SlimefunItemStack ADVANCED_FREEZER = new SlimefunItemStack("FINALTECH_ADVANCED_FREEZER", Material.LIGHT_BLUE_STAINED_GLASS, "&c高级冰箱");
     public static final SlimefunItemStack ADVANCED_GOLD_PAN = new SlimefunItemStack("FINALTECH_ADVANCED_GOLD_PAN", Material.BROWN_TERRACOTTA, "&c高级淘金机");
-    public static final SlimefunItemStack ADVANCED_HEATED_PRESSURE_CHAMBER = new SlimefunItemStack("FINALTECH_HEATED_PRESSURE_CHAMBER", Material.LIGHT_GRAY_STAINED_GLASS, "&c高级加热压力仓");
+    public static final SlimefunItemStack ADVANCED_HEATED_PRESSURE_CHAMBER = new SlimefunItemStack("FINALTECH_ADVANCED_HEATED_PRESSURE_CHAMBER", Material.LIGHT_GRAY_STAINED_GLASS, "&c高级加热压力仓");
+    public static final SlimefunItemStack ADVANCED_ORE_FACTORY = new SlimefunItemStack("FINALTECH_ADVANCED_ORE_FACTORY", Material.PURPUR_PILLAR, "&c高级矿石工厂");
 
     // best machines
     public static final SlimefunItemStack ALL_COMPRESSION = new SlimefunItemStack("FINALTECH_ALL_COMPRESSION", Material.AMETHYST_BLOCK, "&8万物压缩器",
@@ -109,11 +111,11 @@ public final class FinalTechItems {
             "&7从指定的输入方向的容器输入物品至自身的缓存中",
             "&7设置搜索模式后，可以通过邻接锁链或中转器正向地无限延长其搜索范围");
     public static final SlimefunItemStack BASIC_FRAME_MACHINE = new SlimefunItemStack("FINALTECH_BASIC_FRAME_MACHINE", Material.STONE, "&f基础机器框架", "&8可放置");
-    public static final SlimefunItemStack DOUBLE_NORMAL_BARREL = new SlimefunItemStack("FINALTECH_DOUBLE_NORMAL_BARREL", Material.GLASS, "&f普通存储单元", "&7可通过粘液货运进行交互", "&8其实就是更大的桶");
-    public static final SlimefunItemStack DOUBLE_LINKED_BARREL = new SlimefunItemStack("FINALTECH_DOUBLE_LINKED_BARREL", Material.GLASS, "&f可识别存储单元", "&7上面三排被识别为输入槽", "&7下面三排被识别为输出槽");
-    public static final SlimefunItemStack DOUBLE_CHARGEABLE_BARREL = new SlimefunItemStack("FINALTECH_DOUBLE_CHARGEABLE_BARREL", Material.GLASS, "&f可充电存储单元",
+    public static final SlimefunItemStack BASIC_NORMAL_STORAGE_UNIT = new SlimefunItemStack("FINALTECH_BASIC_NORMAL_STORAGE_UNIT", Material.GLASS, "&f普通存储单元", "&7可通过粘液货运进行交互", "&8其实就是更大的桶");
+    public static final SlimefunItemStack BASIC_LINKED_STORAGE_UNIT = new SlimefunItemStack("FINALTECH_BASIC_LINKED_STORAGE_UNIT", Material.GLASS, "&f可识别存储单元", "&7上面三排被识别为输入槽", "&7下面三排被识别为输出槽");
+    public static final SlimefunItemStack BASIC_CHARGEABLE_STORAGE_UNIT = new SlimefunItemStack("FINALTECH_BASIC_CHARGEABLE_STORAGE_UNIT", Material.GLASS, "&f可充电存储单元",
             "&7该机器充电后自身并不会产生任何效果",
-            "&6最大可存储电量 &e" + (Integer.MAX_VALUE - 1) + "J");
+            "&6最大可存储电量 &e" + (536870912) + "J");
 
     // electric
     public static final SlimefunItemStack BASIC_CHARGE_INCREASE_CAPACITOR = new SlimefunItemStack("FINALTECH_BASIC_CHARGE_INCREASE_CAPACITOR", Material.RED_STAINED_GLASS, "&7基础充电增益电容",

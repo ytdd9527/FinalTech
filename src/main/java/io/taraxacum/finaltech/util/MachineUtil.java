@@ -88,7 +88,7 @@ public class MachineUtil {
                         resultAmount -= outputItem.getMaxStackSize();
                     }
                     if(resultAmount != 0) {
-                        resultOutputs[outputPointer] = new CustomItemStack(outputItem, resultAmount);
+                        resultOutputs[outputPointer++] = new CustomItemStack(outputItem, resultAmount);
                     }
                 }
                 if(InvUtils.fitAll(inv, resultOutputs, slots)) {

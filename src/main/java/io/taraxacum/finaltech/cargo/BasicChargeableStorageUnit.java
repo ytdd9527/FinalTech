@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 /**
  * @author Final_ROOT
  */
-public class DoubleChargeableBarrel extends AbstractCargo implements EnergyNetComponent {
-    public DoubleChargeableBarrel(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class BasicChargeableStorageUnit extends AbstractCargo implements EnergyNetComponent {
+    public BasicChargeableStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 

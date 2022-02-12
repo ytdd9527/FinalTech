@@ -2,11 +2,13 @@ package io.taraxacum.finaltech;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.cargo.*;
 import io.taraxacum.finaltech.electric.capacitor.*;
+import io.taraxacum.finaltech.enchantment.NullEnchantment;
 import io.taraxacum.finaltech.machine.*;
 import io.taraxacum.finaltech.machine.advanced.*;
 import io.taraxacum.finaltech.machine.basic.*;
@@ -15,6 +17,8 @@ import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.setup.FinalTechMenus;
 import io.taraxacum.finaltech.setup.FinalTechRecipes;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -42,7 +46,10 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         FinalTechMenus.MENU_CARGO.setTier(0);
         FinalTechMenus.MENU_ELECTRIC.setTier(0);
 
+        FinalTechItems.CODE_CREATE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+
         // register items
+        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.GEARWHEEL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.GEARWHEEL, new SlimefunItemStack(FinalTechItems.GEARWHEEL, 4)).register(this);
         new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.UNORDERED_DUST,  FinalTechRecipes.RECIPE_TYPE_UNORDERED_DUST_FACTORY, new ItemStack[] {}).register(this);
         new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.QUANTITY_MODULE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.QUANTITY_MODULE).register(this);
         new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.SINGULARITY, FinalTechRecipes.RECIPE_TYPE_ALL_COMPRESSION, new ItemStack[] {null, null, null, null, new CustomItemStack(Material.BOOK, "&f合成方式", "&7对已经压缩过的物品", "&7再进行一次压缩")}).register(this);
@@ -52,8 +59,10 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_RANDOM, RecipeType.NULL, new ItemStack[] {}).register(this);
         new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_CYCLE, RecipeType.NULL, new ItemStack[] {}).register(this);
         new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_REVERSE, RecipeType.NULL, new ItemStack[] {}).register(this);
-        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_NULL, RecipeType.NULL, new ItemStack[] {}).register(this);
         new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_INFINITE, RecipeType.NULL, new ItemStack[] {}).register(this);
+        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_NULL, RecipeType.NULL, new ItemStack[] {}).register(this);
+        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_CREATE, RecipeType.NULL, new ItemStack[] {}).register(this);
+        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_FINAL, RecipeType.NULL, new ItemStack[] {}).register(this);
 
         // register machines
         new BasicCobbleFactory(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.BASIC_COBBLE_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_COBBLE_FACTORY).register(this);
@@ -89,6 +98,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         new AdvancedFreezer(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_FREEZER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_FREEZER).register(this);
         new AdvancedGoldPan(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_GOLD_PAN, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_GOLD_PAN).register(this);
         new AdvancedHeatedPressureChamber(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_HEATED_PRESSURE_CHAMBER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_HEATED_PRESSURE_CHAMBER).register(this);
+        new AdvancedOreFactory(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_ORE_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ORE_FACTORY).register(this);
         new AdvancedDustFactory(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_DUST_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_DUST_FACTORY).register(this);
         new AdvancedFarmFactory(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_FARM_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_FARM_FACTORY).register(this);
         new AdvancedAutoCraft(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_AUTO_CRAFT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_AUTO_CRAFT).register(this);
@@ -102,9 +112,9 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         new BasicFrameMachine(FinalTechMenus.MENU_CARGO, FinalTechItems.BASIC_FRAME_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_FRAME_MACHINE).register(this);
         new Pipe(FinalTechMenus.MENU_CARGO, FinalTechItems.PIPE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.PIPE).register(this);
         new TransferStation(FinalTechMenus.MENU_CARGO, FinalTechItems.TRANSFER_STATION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.TRANSFER_STATION).register(this);
-        new DoubleNormalBarrel(FinalTechMenus.MENU_CARGO, FinalTechItems.DOUBLE_NORMAL_BARREL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DOUBLE_NORMAL_BARREL).register(this);
-        new DoubleLinkedBarrel(FinalTechMenus.MENU_CARGO, FinalTechItems.DOUBLE_LINKED_BARREL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DOUBLE_LINKED_BARREL).register(this);
-        new DoubleChargeableBarrel(FinalTechMenus.MENU_CARGO, FinalTechItems.DOUBLE_CHARGEABLE_BARREL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DOUBLE_CHARGEABLE_BARREL).register(this);
+        new BasicNormalStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.BASIC_NORMAL_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_NORMAL_STORAGE_UNIT).register(this);
+        new BasicLinkedStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.BASIC_LINKED_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_LINKED_STORAGE_UNIT).register(this);
+        new BasicChargeableStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.BASIC_CHARGEABLE_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_CHARGEABLE_STORAGE_UNIT).register(this);
 
         // register electirc
         new BasicChargeIncreaseCapacitor(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_CHARGE_INCREASE_CAPACITOR).register(this);

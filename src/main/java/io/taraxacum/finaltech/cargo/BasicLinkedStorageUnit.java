@@ -12,8 +12,8 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Final_ROOT
  */
-public class DoubleLinkedBarrel extends AbstractCargo {
-    public DoubleLinkedBarrel(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class BasicLinkedStorageUnit extends AbstractCargo {
+    public BasicLinkedStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 

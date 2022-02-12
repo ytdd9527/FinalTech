@@ -96,25 +96,7 @@ public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
     }
 
     protected MachineRecipe findNextRecipe(BlockMenu inv) {
-        ItemStack quantityModule = inv.getItemInSlot(AdvancedMachineMenu.MODULE_SLOT);
-        int amount = 1;
-        if (quantityModule != null && SlimefunUtils.isItemSimilar(FinalTechItems.QUANTITY_MODULE, quantityModule, true, false)) {
-            amount = quantityModule.getAmount();
-        }
-
-        ItemStack moduleIcon = inv.getItemInSlot(AdvancedMachineMenu.INFO_SLOT);
-        ItemMeta itemMeta = moduleIcon.getItemMeta();
-        List<String> lore = itemMeta.getLore();
-        if(lore == null || lore.size() < 2) {
-            lore = new ArrayList<>();
-            lore.add(0, "§7该机器可以进行升级");
-            lore.add(1, "§7当前效率：" + amount);
-        } else {
-            lore.set(1, "§7当前效率：" + amount);
-        }
-        itemMeta.setLore(lore);
-        moduleIcon.setItemMeta(itemMeta);
-
+        int amount = MachineUtil.updateQuantityModule(inv, AdvancedMachineMenu.MODULE_SLOT, AdvancedMachineMenu.INFO_SLOT);
         ArrayList<ItemStack> inputs = new ArrayList<>();
         for (int slot : this.getInputSlots()) {
             ItemStack item = inv.getItemInSlot(slot);
