@@ -1,8 +1,6 @@
 package io.taraxacum.finaltech.menu;
 
-import io.taraxacum.finaltech.abstractItem.machine.AbstractMachine;
-import io.taraxacum.finaltech.abstractItem.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.abstractItem.menu.AbstractStandardMachineMenu;
+import io.taraxacum.finaltech.machine.AbstractMachine;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.block.Block;
 

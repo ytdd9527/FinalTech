@@ -2,10 +2,12 @@ package io.taraxacum.finaltech.setup;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
-import io.taraxacum.finaltech.cargo.Pipe;
-import io.taraxacum.finaltech.electric.capacitor.*;
-import io.taraxacum.finaltech.machine.AllCompression;
-import io.taraxacum.finaltech.machine.UnOrderedDustFactory;
+import io.taraxacum.finaltech.item.StorageCardItem;
+import io.taraxacum.finaltech.machine.cargo.Pipe;
+import io.taraxacum.finaltech.machine.capacitor.*;
+import io.taraxacum.finaltech.machine.standard.AllCompression;
+import io.taraxacum.finaltech.machine.standard.UnOrderedDustFactory;
+import io.taraxacum.finaltech.util.StringItemUtil;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,6 +20,9 @@ public final class FinalTechItems {
     public static final SlimefunItemStack UNORDERED_DUST = new SlimefunItemStack("FINALTECH_UNORDERED_DUST", Material.WHEAT_SEEDS, "&f无序尘埃",
             "&8它被感知到了");
     public static final SlimefunItemStack QUANTITY_MODULE = new SlimefunItemStack("FINALTECH_QUANTITY_MODULE", Material.AMETHYST_SHARD, "&3数量组件");
+    public static final SlimefunItemStack QUANTITY_MODULE_CORE = new SlimefunItemStack("FINALTECH_QUANTITY_MODULE_CORE", Material.AMETHYST_SHARD, "&3数量组件核心",
+            "&7其本质并非加法",
+            "&7而是别的什么东西");
     public static final SlimefunItemStack SINGULARITY = new SlimefunItemStack("FINALTECH_SINGULARITY", Material.NETHER_STAR, "&e奇点",
             "&7纯粹意义上的奇点",
             "&d数量&7的堆积物");
@@ -26,16 +31,24 @@ public final class FinalTechItems {
     public static final SlimefunItemStack CODE_ADDITION = new SlimefunItemStack("FINALTECH_CODE_ADDITION0", Material.PAPER, "&b概念<加法>");
     public static final SlimefunItemStack CODE_SYMMETRY = new SlimefunItemStack("FINALTECH_CODE_SYMMETRY", Material.PAPER, "&b概念<对称>");
     public static final SlimefunItemStack CODE_RANDOM = new SlimefunItemStack("FINALTECH_CODE_RANDOM", Material.PAPER, "&b概念<随机>");
-    public static final SlimefunItemStack CODE_CYCLE = new SlimefunItemStack("FINALTECH_CODE_CYCLE", Material.PAPER, "&b概念<循环>");
-    public static final SlimefunItemStack CODE_REVERSE = new SlimefunItemStack("FINALTECH_CODE_REVERSE", Material.PAPER, "&b概念<逆向>");
-    public static final SlimefunItemStack CODE_INFINITE = new SlimefunItemStack("FINALTECH_CODE_INFINITE", Material.PAPER, "&b概念<无限>");
     public static final SlimefunItemStack CODE_NULL = new SlimefunItemStack("FINALTECH_CODE_NULL", Material.PAPER, "&b概念<空值>");
     public static final SlimefunItemStack CODE_CREATE = new SlimefunItemStack("FINALTECH_CODE_CREATE", Material.PAPER, "&9高级概念<创造>",
             "&7繁荣的基础");
-//    public static final SlimefunItemStack ORDERED_DUST = new SlimefunItemStack("FINALTECH_ORDERED_DUST", Material.);
-    public static final SlimefunItemStack CODE_FINAL = new SlimefunItemStack("FINALTECH_CODE_FINAL", Material.BOOK, "&f概念<Final>",
+    public static final SlimefunItemStack ORDERED_DUST = new SlimefunItemStack("FINALTECH_ORDERED_DUST", Material.SLIME_BALL, "&f有序尘埃",
+            "&8何以描述有序？");
+    public static final SlimefunItemStack CODE_FINAL = new SlimefunItemStack("FINALTECH_CODE_FINAL", Material.ENCHANTED_BOOK, "&f概念<Final>",
         "&7无数概念交织在一起",
         "&7于是他们无法再创造新事物");
+    public static final SlimefunItemStack CREATION_GENEALOGY = new SlimefunItemStack("FINALTECH_CREATION_GENEALOGY", Material.BOOK,
+            "§x§7§8§7§8§7§8造" +
+            "§x§8§0§8§0§8§0物" +
+            "§x§9§0§9§0§9§0系" +
+            "§x§9§8§9§8§9§8谱");
+    public static final SlimefunItemStack IMAGINARY_TRUTH = new SlimefunItemStack("FINALTECH_IMAGINARY_TRUTH", Material.PAPER,
+            "§x§b§b§b§b§b§b虚" +
+            "§x§b§b§b§b§b§b构" +
+            "§x§b§b§b§b§b§b真" +
+            "§x§b§b§b§b§b§b理");
 
     // basic machines
     public static final SlimefunItemStack BASIC_COBBLE_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_COBBLE_FACTORY", Material.CHISELED_STONE_BRICKS, "&7基础刷石工厂");
@@ -112,11 +125,63 @@ public final class FinalTechItems {
             "&7最大可以直线传输" + Pipe.BLOCK_SEARCH_LIMIT + "格距离",
             "&7需设置搜索模式并通过指向另一个导管或同材质物品以延长其搜索范围",
             "&8即放即用");
+    public static final SlimefunItemStack TRANSFER_LINE = new SlimefunItemStack("FINALTECH_CARGO_TRANSFER_LINE", Material.DROPPER, "&f链",
+            "",
+            "&7沿对应方向线性传输物品");
     public static final SlimefunItemStack TRANSFER_STATION = new SlimefunItemStack("FINALTECH_CARGO_TRANSFER_STATION", Material.TINTED_GLASS, "&f中转器",
             "",
             "&7把自身缓存中的物品输出到指定的输出方向的容器",
             "&7从指定的输入方向的容器输入物品至自身的缓存中",
             "&7设置搜索模式后，可以通过邻接锁链或中转器正向地无限延长其搜索范围");
+    public static final SlimefunItemStack STORAGE_INTERACT_PORT = new SlimefunItemStack("FINALTECH_STORAGE_INTERACT_PORT", Material.BOOKSHELF, "&f存储交互接口");
+    public static final SlimefunItemStack STORAGE_ITEM_WHITE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_WHITE", Material.WHITE_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-白",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_ORANGE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_ORANGE", Material.ORANGE_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-橙",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_MAGENTA = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_MAGENTA", Material.MAGENTA_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-品红",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_LIGHT_BLUE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_LIGHT_BLUE", Material.LIGHT_BLUE_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-淡蓝",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_YELLOW = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_YELLOW", Material.YELLOW_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-黄",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_LIME = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_LIME", Material.LIME_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-黄绿",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_PINK = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_PINK", Material.PINK_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-粉红",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_GRAY = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_GRAY", Material.GRAY_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-灰",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_LIGHT_GRAY = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_LIGHT_GRAY", Material.LIGHT_GRAY_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-淡灰",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_CYAN = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_CYAN", Material.CYAN_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-青",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_PURPLE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_PURPLE", Material.PURPLE_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-紫",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_BLUE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_BLUE", Material.BLUE_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-蓝",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_BROWN = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_BROWN", Material.BROWN_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-棕",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_GREEN = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_GREEN", Material.GREEN_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-绿",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_RED = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_RED", Material.RED_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-红",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
+    public static final SlimefunItemStack STORAGE_ITEM_BLACK = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_BLACK", Material.BLACK_CONCRETE_POWDER, "§x§f§0§f§0§f§0存储卡-黑",
+            StringItemUtil.STACK_ITEM_LORE,
+            "§7未存储物品");
 
     // electric
     public static final SlimefunItemStack BASIC_CHARGE_INCREASE_CAPACITOR = new SlimefunItemStack("FINALTECH_BASIC_CHARGE_INCREASE_CAPACITOR", Material.RED_STAINED_GLASS, "&7基础充电增益电容",
@@ -179,4 +244,13 @@ public final class FinalTechItems {
             "&e供电量 512J");
     public static final SlimefunItemStack MATRIX_GENERATOR = new SlimefunItemStack("FINALTECH_MATRIX_GENERATOR", Material.SEA_LANTERN, "&2矩阵供电机",
             "&e供电量 4096J");
+
+    // tool
+    public static final SlimefunItemStack UNORDERED_SWORD = new SlimefunItemStack("FINALTECH_UNORDERED_SWORD", Material.WOODEN_SWORD, "&f无序剑",
+            "&7无效化受伤触发机制",
+            "&7无视受伤保护机制 I",
+            "&7无敌穿透 V",
+            "&7耐久损耗伤害追加 I",
+            "",
+            "&8本质上是直接减少对方 的生命值");
 }

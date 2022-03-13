@@ -17,6 +17,7 @@ public class BlockSearchMode {
     public static final String VALUE_INHERIT = "inherit";
     public static final String VALUE_PENETRATE = "penetrate";
     public static final String VALUE_RESPECT = "respect";
+    public static final String VALUE_INTERRUPT = "interrupt";
 
     public static final ItemStack ZERO_ICON = new CustomItemStack((Material.PURPLE_STAINED_GLASS), "&7搜索模式",
             "&f零模式",
@@ -37,6 +38,12 @@ public class BlockSearchMode {
             "",
             "&7允许用锁链延长搜索范围",
             "&7搜索到相同类型的方块时停止搜索");
+    public static final ItemStack INTERRUPT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, "&7搜索模式",
+            "&f中断模式",
+            "",
+            "&7搜索到相同类型方块时",
+            "&7中断远程搜索");
+
 
     public static final String next(String blockSearchMode, String id) {
         if(blockSearchMode == null || id == null) {
@@ -62,6 +69,16 @@ public class BlockSearchMode {
                 default:
                     return VALUE_ZERO;
             }
+        } else if(id.equals(FinalTechItems.TRANSFER_LINE.getItemId())) {
+            switch (blockSearchMode) {
+                case VALUE_ZERO:
+                    return VALUE_PENETRATE;
+                case VALUE_PENETRATE:
+                    return VALUE_INTERRUPT;
+                case VALUE_INHERIT:
+                default:
+                    return VALUE_ZERO;
+            }
         }
         return VALUE_ZERO;
     }
@@ -79,6 +96,8 @@ public class BlockSearchMode {
                 return PENETRATE_ICON;
             case VALUE_RESPECT:
                 return RESPECT_ICON;
+            case VALUE_INTERRUPT:
+                return INTERRUPT_ICON;
             default:
                 return Icon.ERROR_ICON;
         }

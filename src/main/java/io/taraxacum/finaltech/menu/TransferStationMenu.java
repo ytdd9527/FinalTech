@@ -2,8 +2,7 @@ package io.taraxacum.finaltech.menu;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.taraxacum.finaltech.abstractItem.machine.AbstractMachine;
-import io.taraxacum.finaltech.abstractItem.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.PositionHelper;
 import io.taraxacum.finaltech.util.cargo.*;
@@ -21,7 +20,7 @@ import java.util.*;
  * @author Final_ROOT
  */
 public class TransferStationMenu extends AbstractMachineMenu {
-    private static final int[] BORDER = new int[] {};
+    private static final int[] BORDER = new int[0];
 
     public static final int[] ITEM_MATCH = new int[] {27, 28, 29, 36, 37, 38, 45, 46, 47};
 
@@ -76,12 +75,12 @@ public class TransferStationMenu extends AbstractMachineMenu {
 
     @Override
     public int[] getInputBorder() {
-        return new int[0];
+        return INPUT_BORDER;
     }
 
     @Override
     public int[] getOutputBorder() {
-        return new int[0];
+        return OUTPUT_BORDER;
     }
 
     @Override
@@ -96,17 +95,9 @@ public class TransferStationMenu extends AbstractMachineMenu {
 
     @Override
     public void init() {
+        super.init();
         ItemStack itemCountIcon = new CustomItemStack(CargoNumber.CARGO_NUMBER_ICON, 64);
         CargoCountMode.setIcon(itemCountIcon, CargoCountMode.VALUE_UNIVERSAL);
-        for(int slot : BORDER) {
-            this.addItem(slot, Icon.BORDER_ICON, ChestMenuUtils.getEmptyClickHandler());
-        }
-        for(int slot : INPUT_BORDER) {
-            this.addItem(slot, Icon.INPUT_BORDER_ICON, ChestMenuUtils.getEmptyClickHandler());
-        }
-        for(int slot : OUTPUT_BORDER) {
-            this.addItem(slot, Icon.OUTPUT_BORDER_ICON, ChestMenuUtils.getEmptyClickHandler());
-        }
         this.addItem(0, new ItemStack(PositionInfo.POSITION_UP_NULL_ICON));
         this.addItem(1, new ItemStack(PositionInfo.POSITION_NORTH_NULL_ICON));
         this.addItem(9, new ItemStack(PositionInfo.POSITION_WEST_NULL_ICON));

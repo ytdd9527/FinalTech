@@ -3,13 +3,9 @@ package io.taraxacum.finaltech.menu;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
-import io.taraxacum.finaltech.abstractItem.machine.AbstractMachine;
-import io.taraxacum.finaltech.abstractItem.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.machine.manual.ManualAncientAltar;
+import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.cargo.Icon;
@@ -24,10 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Final_ROOT
@@ -52,51 +45,44 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     public static final int OUTPUT_SEARCH_SLOT = 17;
     public static final int SEARCH_INFO_SLOT = 16;
 
-//    public static Map<ItemStack, RecipeType> machineMap = null;
-    public static Map<ItemStack, List<MachineRecipe>> recipeMap = null;
-    private static List<RecipeType> recipeTypeList = null;
+    public static final ItemStack SEARCH_INFO_ICON = new CustomItemStack(Material.TARGET, "&7介绍",
+            "",
+            "&7仅支持自动合成部分粘液科技物品",
+            "&7会读取该方块下方一格的容器的物品并尝试合成",
+            "&7仅支持非原版容器",
+            "",
+            "&7在最上面一行放入机器",
+            "&7可以实现多级合成",
+            "",
+            "&7左边=合成原料搜索范围",
+            "&7右边=输出产物搜索范围");
+
+    public static Map<ItemStack, List<MachineRecipe>> RECIPE_MAP = new HashMap<>(10);
+    private static final List<RecipeType> RECIPE_TYPE_LIST = new ArrayList<>(10);
     static {
-        recipeTypeList = new ArrayList<>();
-        recipeTypeList.add(RecipeType.ANCIENT_ALTAR);
-        recipeTypeList.add(RecipeType.ARMOR_FORGE);
-        recipeTypeList.add(RecipeType.COMPRESSOR);
-        recipeTypeList.add(RecipeType.ENHANCED_CRAFTING_TABLE);
-        recipeTypeList.add(RecipeType.GRIND_STONE);
-        recipeTypeList.add(RecipeType.HEATED_PRESSURE_CHAMBER);
-        recipeTypeList.add(RecipeType.JUICER);
-        recipeTypeList.add(RecipeType.MAGIC_WORKBENCH);
-        recipeTypeList.add(RecipeType.ORE_CRUSHER);
-        recipeTypeList.add(RecipeType.PRESSURE_CHAMBER);
-        recipeTypeList.add(RecipeType.SMELTERY);
+        RECIPE_TYPE_LIST.add(RecipeType.ANCIENT_ALTAR);
+        RECIPE_TYPE_LIST.add(RecipeType.ARMOR_FORGE);
+        RECIPE_TYPE_LIST.add(RecipeType.COMPRESSOR);
+        RECIPE_TYPE_LIST.add(RecipeType.ENHANCED_CRAFTING_TABLE);
+        RECIPE_TYPE_LIST.add(RecipeType.GRIND_STONE);
+        RECIPE_TYPE_LIST.add(RecipeType.HEATED_PRESSURE_CHAMBER);
+        RECIPE_TYPE_LIST.add(RecipeType.JUICER);
+        RECIPE_TYPE_LIST.add(RecipeType.MAGIC_WORKBENCH);
+        RECIPE_TYPE_LIST.add(RecipeType.ORE_CRUSHER);
+        RECIPE_TYPE_LIST.add(RecipeType.PRESSURE_CHAMBER);
+        RECIPE_TYPE_LIST.add(RecipeType.SMELTERY);
 
-        recipeMap = new HashMap<>();
-        recipeMap.put(FinalTechItems.MANUAL_ANCIENT_ALTAR, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_ANCIENT_ALTAR));
-        recipeMap.put(FinalTechItems.MANUAL_ARMOR_FORGE, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_ARMOR_FORGE));
-        recipeMap.put(FinalTechItems.MANUAL_COMPRESSOR, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_COMPRESSOR));
-        recipeMap.put(FinalTechItems.MANUAL_ENHANCED_CRAFTING_TABLE, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_ENHANCED_CRAFTING_TABLE));
-        recipeMap.put(FinalTechItems.MANUAL_GRIND_STONE, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_GRIND_STONE));
-        recipeMap.put(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER));
-        recipeMap.put(FinalTechItems.MANUAL_JUICER, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_JUICER));
-        recipeMap.put(FinalTechItems.MANUAL_MAGIC_WORKBENCH, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_MAGIC_WORKBENCH));
-        recipeMap.put(FinalTechItems.MANUAL_ORE_CRUSHER, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_ORE_CRUSHER));
-        recipeMap.put(FinalTechItems.MANUAL_PRESSURE_CHAMBER, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_PRESSURE_CHAMBER));
-        recipeMap.put(FinalTechItems.MANUAL_SMELTERY, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_SMELTERY));
-
-//        machineMap = new HashMap<>();
-//        machineMap.put(SlimefunItems.ENHANCED_AUTO_CRAFTER, RecipeType.ENHANCED_CRAFTING_TABLE);
-//        machineMap.put(SlimefunItems.ARMOR_AUTO_CRAFTER, RecipeType.ARMOR_FORGE);
-//        machineMap.put(SlimefunItems.ANCIENT_ALTAR, RecipeType.ANCIENT_ALTAR);
-//        machineMap.put(FinalTechItems.ADVANCED_AUTO_CRAFT, RecipeType.MAGIC_WORKBENCH);
-//        machineMap.put(FinalTechItems.ADVANCED_ELECTRIC_SMELTERY, RecipeType.SMELTERY);
-//        machineMap.put(FinalTechItems.ADVANCED_ELECTRIC_ORE_GRINDER, RecipeType.GRIND_STONE);
-//        machineMap.put(FinalTechItems.ADVANCED_ELECTRIC_ORE_GRINDER, RecipeType.ORE_CRUSHER);
-//        machineMap.put(FinalTechItems.ADVANCED_ELECTRIC_PRESS, RecipeType.COMPRESSOR);
-//        machineMap.put(FinalTechItems.ADVANCED_GOLD_PAN, RecipeType.GOLD_PAN);
-//        machineMap.put(FinalTechItems.ADVANCED_HEATED_PRESSURE_CHAMBER, RecipeType.HEATED_PRESSURE_CHAMBER);
-//        machineMap.put(FinalTechItems.ADVANCED_HEATED_PRESSURE_CHAMBER, RecipeType.PRESSURE_CHAMBER);
-//        machineMap.put(FinalTechItems.ADVANCED_FOOD_FACTORY, RecipeType.FOOD_COMPOSTER);
-//        machineMap.put(FinalTechItems.ADVANCED_FOOD_FACTORY, RecipeType.FOOD_FABRICATOR);
-//        machineMap.put(FinalTechItems.ADVANCED_FREEZER, RecipeType.FREEZER);
+        RECIPE_MAP.put(FinalTechItems.MANUAL_ANCIENT_ALTAR, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_ANCIENT_ALTAR));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_ARMOR_FORGE, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_ARMOR_FORGE));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_COMPRESSOR, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_COMPRESSOR));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_ENHANCED_CRAFTING_TABLE, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_ENHANCED_CRAFTING_TABLE));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_GRIND_STONE, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_GRIND_STONE));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_JUICER, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_JUICER));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_MAGIC_WORKBENCH, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_MAGIC_WORKBENCH));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_ORE_CRUSHER, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_ORE_CRUSHER));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_PRESSURE_CHAMBER, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_PRESSURE_CHAMBER));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_SMELTERY, getMachineRecipesBySlimefunItemStack(FinalTechItems.MANUAL_SMELTERY));
     }
 
     public AdvancedAutoCraftMenu(@Nonnull String id, @Nonnull String title, AbstractMachine abstractMachine) {
@@ -144,17 +130,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
         this.addItem(OUTPUT_SEARCH_SLOT, SlotSearchSize.INPUTS_ONLY_ICON);
         this.addMenuClickHandler(OUTPUT_SEARCH_SLOT, ChestMenuUtils.getEmptyClickHandler());
 
-        this.addItem(SEARCH_INFO_SLOT, new CustomItemStack(Material.TARGET, "&7介绍",
-                "",
-                "&7仅支持自动合成部分粘液科技物品",
-                "&7会读取该方块下方一格的容器的物品并尝试合成",
-                "&7仅支持非原版容器",
-                "",
-                "&7在最上面一行放入机器",
-                "&7可以实现多级合成",
-                "",
-                "&7左边=合成原料搜索范围",
-                "&7右边=输出产物搜索范围"));
+        this.addItem(SEARCH_INFO_SLOT, SEARCH_INFO_ICON);
         this.addMenuClickHandler(SEARCH_INFO_SLOT, ChestMenuUtils.getEmptyClickHandler());
 
         this.addItem(INFO_SLOT, Icon.QUANTITY_MODULE_ICON);
@@ -185,113 +161,80 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     }
 
     @Override
-    protected void updateMenu(BlockMenu menu, Block block) {
+    protected void updateMenu(BlockMenu blockMenu, Block block) {
         if(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), SlotSearchSize.KEY_INPUT, SlotSearchSize.VALUE_INPUTS_ONLY);
         }
         if(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT, SlotSearchSize.VALUE_OUTPUTS_ONLY);
         }
-        menu.replaceExistingItem(INPUT_SEARCH_SLOT, SlotSearchSize.getIcon(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT)));
-        menu.replaceExistingItem(OUTPUT_SEARCH_SLOT, SlotSearchSize.getIcon(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT)));
-        ItemStack outputItem = menu.getItemInSlot(PARSE_ITEM_SLOT);
+        blockMenu.replaceExistingItem(INPUT_SEARCH_SLOT, SlotSearchSize.getIcon(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT)));
+        blockMenu.replaceExistingItem(OUTPUT_SEARCH_SLOT, SlotSearchSize.getIcon(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT)));
+
+        ItemStack outputItem = blockMenu.getItemInSlot(PARSE_ITEM_SLOT);
         if(ItemStackUtil.isItemNull(outputItem)) {
-            outputItem = menu.getItemInSlot(RESULT_SLOT);
-            if(ItemStackUtil.isItemNull(outputItem) || SlimefunUtils.isItemSimilar(outputItem, Icon.PARSE_FAILED_ICON, true, false)) {
-                setParseFailedMenu(menu);
+            outputItem = blockMenu.getItemInSlot(RESULT_SLOT);
+            if(ItemStackUtil.isItemNull(outputItem) || ItemStackUtil.isItemSimilar(outputItem, Icon.PARSE_FAILED_ICON)) {
+                setParseFailedMenu(blockMenu);
                 return;
             }
         }
         SlimefunItem slimefunItem = SlimefunItem.getByItem(outputItem);
         if(slimefunItem == null) {
-            setParseFailedMenu(menu);
+            setParseFailedMenu(blockMenu);
             return;
         }
         ItemStack[] recipeInputs = null;
-        RecipeType recipeType = slimefunItem.getRecipeType();
-        for(RecipeType type : recipeTypeList) {
+        for(RecipeType type : RECIPE_TYPE_LIST) {
             if(type.equals(slimefunItem.getRecipeType())) {
-                List<ItemStack> list = new ArrayList<>();
-                for(ItemStack recipeItem : slimefunItem.getRecipe()) {
-                    list.add(recipeItem);
-                }
+                List<ItemStack> list = new ArrayList<>(9);
+                Collections.addAll(list, slimefunItem.getRecipe());
                 list = ItemStackUtil.mergeSameItem(list);
                 recipeInputs = ItemStackUtil.toArray(list);
             }
         }
-        if(recipeInputs == null) {
-            setParseFailedMenu(menu);
-        } else {
-            ItemStack[] lastValidRecipeInput = recipeInputs;
-            for(int slot : MACHINE_SLOT) {
-                ItemStack machineItem = menu.getItemInSlot(slot);
-                if(ItemStackUtil.isItemNull(machineItem)) {
+        if(recipeInputs == null || recipeInputs.length == 0) {
+            recipeInputs = new ItemStack[] {outputItem};
+        }
+        ItemStack[] lastValidRecipeInput = recipeInputs;
+        for(int slot : MACHINE_SLOT) {
+            ItemStack machineItem = blockMenu.getItemInSlot(slot);
+            if(ItemStackUtil.isItemNull(machineItem)) {
+                continue;
+            }
+            for(ItemStack machine : RECIPE_MAP.keySet()) {
+                if(!ItemStackUtil.isItemSimilar(machineItem, machine)) {
                     continue;
                 }
-                for(ItemStack machine : recipeMap.keySet()) {
-                    if(!SlimefunUtils.isItemSimilar(machineItem, machine, true, false)) {
-                        continue;
-                    }
-                    List<MachineRecipe> machineRecipeList = recipeMap.get(machine);
-                    int count = 0;
-                    while(count++ < machineItem.getAmount()) {
-                        ItemStack[] result = getMultistageInputByMachineRecipe(recipeInputs, machineRecipeList);
-                        boolean same = true;
-                        if(result.length != recipeInputs.length) {
-                            same = false;
-                        } else  {
-                            for(int i = 0; i < result.length; i++) {
-                                if(result[i].getAmount() != recipeInputs[i].getAmount() || !SlimefunUtils.isItemSimilar(result[i], recipeInputs[i], true, false)) {
-                                    same = false;
-                                    break;
-                                }
+                List<MachineRecipe> machineRecipeList = RECIPE_MAP.get(machine);
+                int count = 0;
+                while(count++ < machineItem.getAmount()) {
+                    ItemStack[] result = ItemStackUtil.mergeSameItem(getMultistageInputByMachineRecipe(recipeInputs, machineRecipeList));
+                    boolean same = true;
+                    if(result.length != recipeInputs.length) {
+                        same = false;
+                    } else {
+                        for(int i = 0; i < result.length; i++) {
+                            if(result[i].getAmount() != recipeInputs[i].getAmount() || !ItemStackUtil.isItemSimilar(result[i], recipeInputs[i])) {
+                                same = false;
+                                break;
                             }
                         }
-                        if(same) {
-                            break;
-                        }
-                        recipeInputs = result;
-                        if(recipeInputs.length <= ITEM_INPUT_SLOT_BIG.length) {
-                            lastValidRecipeInput = recipeInputs;
-                        }
+                    }
+                    if(same) {
+                        break;
+                    }
+                    recipeInputs = result;
+                    if(recipeInputs.length <= ITEM_INPUT_SLOT_BIG.length) {
+                        lastValidRecipeInput = recipeInputs;
                     }
                 }
-//                RecipeType recipeType1 = RecipeType.NULL;
-//                for(ItemStack itemStack : machineMap.keySet()) {
-//                    if(SlimefunUtils.isItemSimilar(machineItem, itemStack, true, false)) {
-//                        recipeType1 = machineMap.get(itemStack);
-//                    }
-//                }
-//                if(RecipeType.NULL.equals(recipeType1)) {
-//                    continue;
-//                }
-//                for(int i = 0; i < machineItem.getAmount(); i++) {
-//                    ItemStack[] result = getMultistageInput(recipeInputs, recipeType1);
-//                    boolean same = true;
-//                    if(result.length != recipeInputs.length) {
-//                        same = false;
-//                    } else  {
-//                        for(int j = 0; j < result.length; j++) {
-//                            if(result[i].getAmount() != recipeInputs[i].getAmount() || !SlimefunUtils.isItemSimilar(result[i], recipeInputs[i], true, false)) {
-//                                same = false;
-//                                break;
-//                            }
-//                        }
-//                    }
-//                    if(same) {
-//                        break;
-//                    }
-//                    recipeInputs = result;
-//                    if(recipeInputs.length <= ITEM_INPUT_SLOT_BIG.length) {
-//                        lastValidRecipeInput = recipeInputs;
-//                    }
-//                }
             }
-            setParseSuccessMenu(menu, lastValidRecipeInput, slimefunItem.getRecipeOutput());
         }
+        setParseSuccessMenu(blockMenu, lastValidRecipeInput, slimefunItem.getRecipeOutput());
     }
 
-    private ItemStack[] getMultistageInputByMachineRecipe(ItemStack[] input, List<MachineRecipe> machineRecipes) {
+    private static ItemStack[] getMultistageInputByMachineRecipe(ItemStack[] input, List<MachineRecipe> machineRecipes) {
         List<ItemStack> list = new ArrayList<>();
         for(ItemStack item : input) {
             boolean match = false;
@@ -300,7 +243,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
                     continue;
                 }
                 ItemStack output = machineRecipe.getOutput()[0];
-                if(item.getAmount() < output.getAmount() || item.getAmount() % output.getAmount() != 0 || !SlimefunUtils.isItemSimilar(item, output, true, false)) {
+                if(item.getAmount() < output.getAmount() || item.getAmount() % output.getAmount() != 0 || !ItemStackUtil.isItemSimilar(item, output)) {
                     continue;
                 }
                 match = true;
@@ -394,11 +337,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
         try {
             Method getMachineRecipes = slimefunItem.getClass().getMethod("getMachineRecipes");
             return (List<MachineRecipe>) getMachineRecipes.invoke(slimefunItem);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return new ArrayList<>();

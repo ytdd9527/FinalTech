@@ -1,11 +1,9 @@
 package io.taraxacum.finaltech.machine.manual;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import io.taraxacum.finaltech.abstractItem.machine.AbstractManualMachine;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import org.bukkit.inventory.ItemStack;
 

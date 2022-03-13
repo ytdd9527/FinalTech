@@ -1,8 +1,7 @@
 package io.taraxacum.finaltech.menu;
 
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.taraxacum.finaltech.abstractItem.machine.AbstractMachine;
-import io.taraxacum.finaltech.abstractItem.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.CapacitorUtil;
 import io.taraxacum.finaltech.util.cargo.Icon;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;

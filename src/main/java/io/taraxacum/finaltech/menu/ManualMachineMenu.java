@@ -2,16 +2,13 @@ package io.taraxacum.finaltech.menu;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
-import io.taraxacum.finaltech.abstractItem.machine.AbstractManualMachine;
-import io.taraxacum.finaltech.abstractItem.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.machine.manual.AbstractManualMachine;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.cargo.Icon;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -125,7 +122,7 @@ public class ManualMachineMenu extends AbstractMachineMenu {
                 for(ItemStack recipeInput : machineRecipe.getInput()) {
                     boolean itemFind = false;
                     for(ItemStack item : list) {
-                        if(SlimefunUtils.isItemSimilar(item, recipeInput, true, true)) {
+                        if(ItemStackUtil.isItemSimilar(item, recipeInput) && item.getAmount() >= recipeInput.getAmount()) {
                             itemFind = true;
                             break;
                         }
@@ -206,7 +203,7 @@ public class ManualMachineMenu extends AbstractMachineMenu {
             for(ItemStack recipeInput : recipe.getInput()) {
                 boolean itemFind = false;
                 for(ItemStack item : list) {
-                    if(SlimefunUtils.isItemSimilar(item, recipeInput, true, true)) {
+                    if(ItemStackUtil.isItemSimilar(item, recipeInput) && item.getAmount() >= recipeInput.getAmount()) {
                         itemFind = true;
                         break;
                     }

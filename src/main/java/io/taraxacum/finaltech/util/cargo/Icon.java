@@ -23,5 +23,8 @@ public class Icon {
     public static final ItemStack INPUT_BORDER_ICON = new CustomItemStack(Material.BLUE_STAINED_GLASS_PANE, "&9输入侧");
     public static final ItemStack OUTPUT_BORDER_ICON = new CustomItemStack(Material.ORANGE_STAINED_GLASS_PANE, "&6输出侧");
 
-    public static final ItemStack ERROR_ICON = new CustomItemStack(Material.BARRIER, "&c错误", "&c你不应该看到此图标", "&c请通知FinalTech的开发者修复该bug");
+    public static final ItemStack ERROR_ICON = new CustomItemStack(Material.BARRIER, "&c错误",
+            "&c你不应该看到此图标",
+            "&c请通知FinalTech的开发者修复该bug",
+            "&c但是在此之前你应该先试着点一下这个图标");
 }

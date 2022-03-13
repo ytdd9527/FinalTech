@@ -1,8 +1,7 @@
 package io.taraxacum.finaltech.core;
 
 import io.github.thebusybiscuit.slimefun4.implementation.operations.CraftingOperation;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
-import io.taraxacum.finaltech.machine.UnOrderedDustFactory;
+import io.taraxacum.finaltech.machine.standard.UnOrderedDustFactory;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +33,7 @@ public class UnOrderedDustCraftingOperation extends CraftingOperation {
             boolean match = true;
             for(int i = 0; i < matchCount; i++) {
                 ItemStack input = inputs[i];
-                if(input != null && SlimefunUtils.isItemSimilar(item, input, true, false)) {
+                if(input != null && ItemStackUtil.isItemSimilar(item, input)) {
                     match = false;
                     break;
                 }

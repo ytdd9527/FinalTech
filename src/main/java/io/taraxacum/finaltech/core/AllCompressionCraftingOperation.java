@@ -2,8 +2,7 @@ package io.taraxacum.finaltech.core;
 
 import io.github.thebusybiscuit.slimefun4.implementation.operations.CraftingOperation;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
-import io.taraxacum.finaltech.machine.AllCompression;
+import io.taraxacum.finaltech.machine.standard.AllCompression;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
@@ -85,12 +84,12 @@ public class AllCompressionCraftingOperation extends CraftingOperation {
             if(ItemStackUtil.isItemNull(item)) {
                 return 0;
             }
-            if(SlimefunUtils.isItemSimilar(item, input, true, false)) {
+            if(ItemStackUtil.isItemSimilar(item, input)) {
                 int count = Math.min(item.getAmount(), this.difficulty - this.count);
                 this.count += count;
                 item.setAmount(item.getAmount() - count);
                 return count;
-            } else if(SlimefunUtils.isItemSimilar(item, FinalTechItems.SINGULARITY, true, false)) {
+            } else if(ItemStackUtil.isItemSimilar(item, FinalTechItems.SINGULARITY)) {
                 int count = Math.min(item.getAmount(), this.difficulty - this.count);
                 count = Math.min(count, this.difficulty - 1 );
                 this.count += count;

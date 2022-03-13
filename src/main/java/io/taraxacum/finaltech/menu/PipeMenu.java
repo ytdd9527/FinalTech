@@ -2,8 +2,7 @@ package io.taraxacum.finaltech.menu;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.taraxacum.finaltech.abstractItem.machine.AbstractMachine;
-import io.taraxacum.finaltech.abstractItem.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.cargo.*;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -47,6 +46,8 @@ public class PipeMenu extends AbstractMachineMenu {
 
     private static final int CARGO_MODE_SLOT = 13;
 
+    private static final int ITEM_MODE_SLOT = 14;
+
     private static final int ITEM_COUNT_LIMIT = 3456;
 
     public PipeMenu(@Nonnull String id, @Nonnull String title, AbstractMachine machine) {
@@ -80,13 +81,8 @@ public class PipeMenu extends AbstractMachineMenu {
 
     @Override
     public void init() {
-        for (int slot : BORDER) {
-            this.addItem(slot, Icon.BORDER_ICON);
-            this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
-        }
-        for (int slot : new int[]{14}) {
-            this.addItem(slot, new CustomItemStack(Material.GRAY_STAINED_GLASS, "&7暂未实现的功能", "&7尽情期待"), ChestMenuUtils.getEmptyClickHandler());
-        }
+        super.init();
+        this.addItem(ITEM_MODE_SLOT, CargoItemMode.ALL_ICON);
         this.addItem(1, new CustomItemStack(Material.WATER_BUCKET, "&9输入侧设置"), ChestMenuUtils.getEmptyClickHandler());
         this.addItem(7, new CustomItemStack(Material.LAVA_BUCKET, "&6输出侧设置"), ChestMenuUtils.getEmptyClickHandler());
 
@@ -109,7 +105,7 @@ public class PipeMenu extends AbstractMachineMenu {
 
     @Override
     public void newInstance(BlockMenu blockMenu, Block block) {
-        updateMenu(blockMenu, block);
+        super.newInstance(blockMenu, block);
         blockMenu.addMenuClickHandler(ITEM_COUNT_SUB_SLOT, (player, i, itemStack, clickAction) -> {
             int itemCount = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), CargoNumber.KEY));
             itemCount = (itemCount - 2 + ITEM_COUNT_LIMIT) % ITEM_COUNT_LIMIT + 1;
@@ -172,6 +168,12 @@ public class PipeMenu extends AbstractMachineMenu {
             BlockStorage.addBlockInfo(block.getLocation(), CargoMode.KEY, cargoMode);
             return false;
         });
+        blockMenu.addMenuClickHandler(ITEM_MODE_SLOT, ((player, i, itemStack, clickAction) -> {
+            String cargoItemMode = CargoItemMode.next(BlockStorage.getLocationInfo(block.getLocation(), CargoItemMode.KEY));
+            blockMenu.replaceExistingItem(ITEM_MODE_SLOT, CargoItemMode.getIcon(cargoItemMode));
+            BlockStorage.addBlockInfo(block.getLocation(), CargoItemMode.KEY, cargoItemMode);
+            return false;
+        }));
     }
 
     @Override
@@ -222,5 +224,6 @@ public class PipeMenu extends AbstractMachineMenu {
         blockMenu.replaceExistingItem(CARGO_MODE_SLOT, CargoMode.getIcon(BlockStorage.getLocationInfo(block.getLocation(), CargoMode.KEY)));
         blockMenu.replaceExistingItem(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.getIcon(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_INPUT)));
         blockMenu.replaceExistingItem(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.getIcon(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_OUTPUT)));
+        blockMenu.replaceExistingItem(ITEM_MODE_SLOT, CargoItemMode.getIcon(BlockStorage.getLocationInfo(block.getLocation(), CargoItemMode.KEY)));
     }
 }

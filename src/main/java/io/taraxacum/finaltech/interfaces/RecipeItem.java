@@ -2,6 +2,7 @@ package io.taraxacum.finaltech.interfaces;
 
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.taraxacum.finaltech.core.RandomMachineRecipe;
+import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -33,8 +34,16 @@ public interface RecipeItem extends RecipeDisplayItem {
         this.getMachineRecipes().add(recipe);
     }
 
+    default void registerDescriptiveRecipe(ItemStack item) {
+        this.registerRecipe(new MachineRecipe(0, new ItemStack[] {item}, new ItemStack[] {ItemStackUtil.AIR}));
+    }
+
     default void registerRecipe(int seconds, ItemStack[] input, ItemStack[] output) {
         this.registerRecipe(new MachineRecipe(seconds, input, output));
+    }
+
+    default void registerRecipe(ItemStack[] input, ItemStack[] output) {
+        this.registerRecipe(new MachineRecipe(0, input, output));
     }
 
     default void registerRecipe(int seconds, ItemStack input, ItemStack output) {

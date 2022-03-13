@@ -9,6 +9,7 @@ import java.util.Random;
 /**
  * @author Final_ROOT
  */
+@Deprecated
 public class RandomMachineRecipe extends MachineRecipe {
     private final boolean randomOutput;
     private static final Random random = new Random();
