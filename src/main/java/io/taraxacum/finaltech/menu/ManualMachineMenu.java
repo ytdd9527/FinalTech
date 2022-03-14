@@ -4,18 +4,23 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.manual.AbstractManualMachine;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.ItemStackWithWrapper;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.cargo.Icon;
+import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
+import org.checkerframework.checker.units.qual.K;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Final_ROOT
@@ -37,7 +42,10 @@ public class ManualMachineMenu extends AbstractMachineMenu {
     private static final int[] OUTPUT_SLOTS = new int[] {
             27, 28, 29,             33, 34, 35,
             36, 37, 38,             42, 43, 44,
-            45, 46, 47,             51, 52, 53
+            45, 46, 47,             51, 52, 53,
+            0,  1,  2,  3,  4,  5,  6,  7,  8,
+            9, 10, 11, 12, 13, 14, 15, 16, 17,
+            18, 19, 20, 21, 22, 23, 24, 25, 26
     };
     private static final int STOCK_SLOT = 40;
     private static final int CRAFT_SLOT = 49;
@@ -48,6 +56,16 @@ public class ManualMachineMenu extends AbstractMachineMenu {
     private static final int NEXT_SLOT = 32;
 
     public static final String KEY = "offset";
+
+    private static final ItemStack INFO_ICON = new CustomItemStack(Material.TARGET, "&f介绍",
+            "&f在最上面三行放入合成材料",
+            "&f点击合成即可进行合成",
+            "",
+            "&f目标合成产物的显示可能略有延迟",
+            "&f这不会影响实际合成效果",
+            "",
+            "&f点击上面三行任意位置",
+            "&f会尝试刷新显示的目标合成产物");
 
     private List<MachineRecipe> machineRecipes;
     public ManualMachineMenu(@Nonnull String id, @Nonnull String title, AbstractManualMachine machine) {
@@ -106,46 +124,68 @@ public class ManualMachineMenu extends AbstractMachineMenu {
             return false;
         }));
         blockMenu.addMenuClickHandler(CRAFT_SLOT, ((player, i, itemStack, clickAction) -> {
-            List<ItemStack> list = new ArrayList<>();
+            List<ItemStackWithWrapper> list = new ArrayList<>(INPUT_SLOTS.length);
+            Map<Integer, ItemStackWithWrapper> inputItemWithWrapperMap = new HashMap<>(INPUT_SLOTS.length);
             for(int slot : CONTAIN) {
                 ItemStack item = blockMenu.getItemInSlot(slot);
                 if(!ItemStackUtil.isItemNull(item)) {
-                    list.add(item);
+                    inputItemWithWrapperMap.put(slot, new ItemStackWithWrapper(item));
                 }
             }
-            int amount = clickAction.isShiftClicked() ? 3456 : 64;
+            int amount = clickAction.isShiftClicked() ? (Integer.MAX_VALUE / 2) : 64;
             int value = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY));
             int offset = 0;
             boolean work = false;
+            Map<ItemStackWithWrapper, List<Integer>> searchMap = new HashMap<>(INPUT_SLOTS.length);
             for(MachineRecipe machineRecipe : machineRecipes) {
-                int find = 0;
-                for(ItemStack recipeInput : machineRecipe.getInput()) {
-                    boolean itemFind = false;
-                    for(ItemStack item : list) {
-                        if(ItemStackUtil.isItemSimilar(item, recipeInput) && item.getAmount() >= recipeInput.getAmount()) {
-                            itemFind = true;
-                            break;
+                int count = amount;
+                List<ItemStackWithWrapper> recipeInputItemList = ItemStackUtil.parseItemWithAmount(machineRecipe.getInput());
+                for(ItemStackWithWrapper recipeInputItemWithWrapper : recipeInputItemList) {
+                    int itemMatchAmount = 0;
+                    for(Map.Entry<Integer, ItemStackWithWrapper> entry : inputItemWithWrapperMap.entrySet()) {
+                        if(entry.getValue().getItemStack().getAmount() >= recipeInputItemWithWrapper.getAmount() && ItemStackUtil.isItemSimilar(entry.getValue().getItemStackWrapper(), recipeInputItemWithWrapper.getItemStackWrapper())) {
+                            itemMatchAmount += entry.getValue().getItemStack().getAmount();
+                            List<Integer> slotList = searchMap.get(recipeInputItemWithWrapper);
+                            if(slotList == null) {
+                                slotList = new ArrayList<>(INPUT_SLOTS.length);
+                                searchMap.put(recipeInputItemWithWrapper, slotList);
+                            }
+                            slotList.add(entry.getKey());
+                            if(itemMatchAmount / recipeInputItemWithWrapper.getAmount() > count) {
+                                break;
+                            }
                         }
                     }
-                    if(itemFind) {
-                        find++;
+                    count = Math.min(count, itemMatchAmount / recipeInputItemWithWrapper.getAmount());
+                    if(count == 0) {
+                        break;
                     }
                 }
-                if(find == machineRecipe.getInput().length) {
+                if(count > 0) {
                     if(offset++ < value) {
                         continue;
                     }
-                    MachineRecipe resultRecipe = MachineUtil.matchRecipe(list, machineRecipe, blockMenu.toInventory(), OUTPUT_SLOTS, amount);
-                    if(resultRecipe != null) {
-                        for(ItemStack item : resultRecipe.getOutput()) {
+                    count = MachineUtil.maxMatch(blockMenu.toInventory(), OUTPUT_SLOTS, machineRecipe.getOutput(), count);
+                    if(count > 0) {
+                        work = true;
+                        for(Map.Entry<ItemStackWithWrapper, List<Integer>> searchItem : searchMap.entrySet()) {
+                            int number = searchItem.getKey().getAmount() * count;
+                            for(Integer n : searchItem.getValue()) {
+                                ItemStack item = blockMenu.getItemInSlot(n);
+                                int l = Math.min(item.getAmount(), number);
+                                item.setAmount(item.getAmount() - l);
+                                number -= l;
+                            }
+                        }
+                        for(ItemStack item : ItemStackUtil.enlargeItemArray(machineRecipe.getOutput(), count)) {
                             blockMenu.pushItem(item, OUTPUT_SLOTS);
                         }
-                        work = true;
                         if(!clickAction.isRightClicked()) {
                             break;
                         }
                     }
                 }
+                searchMap.clear();
             }
             if(work) {
                 BlockStorage.addBlockInfo(block.getLocation(), AbstractManualMachine.KEY, AbstractManualMachine.VALUE_ALLOW);
@@ -182,38 +222,36 @@ public class ManualMachineMenu extends AbstractMachineMenu {
 
     @Override
     public void updateMenu(BlockMenu blockMenu, Block block) {
-        if(AbstractManualMachine.VALUE_DENY.equals(BlockStorage.getLocationInfo(block.getLocation(), AbstractManualMachine.KEY))) {
+        Config config = BlockStorage.getLocationInfo(block.getLocation());
+        if(AbstractManualMachine.VALUE_DENY.equals(config.getValue(AbstractManualMachine.KEY).toString())) {
             return;
         } else {
-            BlockStorage.addBlockInfo(block.getLocation(), AbstractManualMachine.KEY, AbstractManualMachine.VALUE_DENY);
+            config.setValue(AbstractManualMachine.KEY, AbstractManualMachine.VALUE_DENY);
         }
-        List<ItemStack> list = new ArrayList<>();
+        List<ItemStackWithWrapper> inputItemWithWrapperList = new ArrayList<>(INPUT_SLOTS.length);
         for(int slot : getInputSlots()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if(!ItemStackUtil.isItemNull(item)) {
-                list.add(item);
+                inputItemWithWrapperList.add(new ItemStackWithWrapper(item));
             }
         }
         int offset = 0;
-        ItemStack showItem = Icon.BORDER_ICON;
-        String s = BlockStorage.getLocationInfo(block.getLocation(), KEY);
-        int value = s == null ? 0 : Integer.parseInt(s);
+        ItemStack showItem = INFO_ICON;
+        Object s = config.getValue(KEY);
+        int value = s == null ? 0 : Integer.parseInt(s.toString());
         for(MachineRecipe recipe : this.machineRecipes) {
             int find = 0;
-            for(ItemStack recipeInput : recipe.getInput()) {
-                boolean itemFind = false;
-                for(ItemStack item : list) {
-                    if(ItemStackUtil.isItemSimilar(item, recipeInput) && item.getAmount() >= recipeInput.getAmount()) {
-                        itemFind = true;
+            for(ItemStack recipeInputItem : recipe.getInput()) {
+                ItemStackWithWrapper recipeInputItemWhitWrapper = new ItemStackWithWrapper(recipeInputItem);
+                for(ItemStackWithWrapper inputItemWithWrapper : inputItemWithWrapperList) {
+                    if(inputItemWithWrapper.getItemStack().getAmount() >= recipeInputItem.getAmount() && ItemStackUtil.isItemSimilar(inputItemWithWrapper.getItemStackWrapper(), recipeInputItemWhitWrapper.getItemStackWrapper())) {
+                        find++;
                         break;
                     }
                 }
-                if(itemFind) {
-                    find++;
-                }
             }
             if(find == recipe.getInput().length) {
-                showItem = new ItemStack(recipe.getOutput()[0]);
+                showItem = recipe.getOutput()[0].clone();
                 if(offset < value) {
                     offset++;
                     continue;
@@ -223,7 +261,7 @@ public class ManualMachineMenu extends AbstractMachineMenu {
                 return;
             }
         }
-        BlockStorage.addBlockInfo(block.getLocation(), KEY, String.valueOf(Math.max(offset - 1, 0)));
+        config.setValue(KEY, String.valueOf(Math.max(offset - 1, 0)));
         blockMenu.replaceExistingItem(ManualMachineMenu.INFO_SLOT, showItem);
     }
 

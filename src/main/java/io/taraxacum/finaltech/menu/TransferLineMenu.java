@@ -103,7 +103,7 @@ public class TransferLineMenu extends AbstractMachineMenu {
         this.addMenuClickHandler(ITEM_COUNT_SLOT, ChestMenuUtils.getEmptyClickHandler());
         this.addItem(ITEM_COUNT_ADD_SLOT, CargoNumber.CARGO_NUMBER_ADD_ICON);
 
-        this.addItem(CARGO_MODE_SLOT, CargoMode.INPUT_MAIN_ICON);
+        this.addItem(CARGO_MODE_SLOT, CargoMode.SYMMETRY_ICON);
 
         this.addItem(FILTER_MODE_SLOT, FilterMode.FILTER_MODE_BLACK_ICON);
 

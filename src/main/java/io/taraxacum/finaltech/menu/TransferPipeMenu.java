@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 /**
  * @author Final_ROOT
  */
-public class PipeMenu extends AbstractMachineMenu {
+public class TransferPipeMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[] {
              0,      2,              6,      8,
                                 14,
@@ -50,7 +50,7 @@ public class PipeMenu extends AbstractMachineMenu {
 
     private static final int ITEM_COUNT_LIMIT = 3456;
 
-    public PipeMenu(@Nonnull String id, @Nonnull String title, AbstractMachine machine) {
+    public TransferPipeMenu(@Nonnull String id, @Nonnull String title, AbstractMachine machine) {
         super(id, title, machine);
     }
 
@@ -100,7 +100,7 @@ public class PipeMenu extends AbstractMachineMenu {
 
         this.addItem(FILTER_MODE_SLOT, FilterMode.getIcon(FilterMode.VALUE_BLACK));
 
-        this.addItem(CARGO_MODE_SLOT, CargoMode.getIcon(CargoMode.VALUE_INPUT_MAIN));
+        this.addItem(CARGO_MODE_SLOT, CargoMode.getIcon(CargoMode.VALUE_SYMMETRY));
     }
 
     @Override
@@ -133,7 +133,7 @@ public class PipeMenu extends AbstractMachineMenu {
             return false;
         });
         blockMenu.addMenuClickHandler(INPUT_BLOCK_SEARCH_MODE_SLOT, (player, i, itemStack, clickAction) -> {
-            String inputSearch = BlockSearchMode.next(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_INPUT), FinalTechItems.PIPE.getItemId());
+            String inputSearch = BlockSearchMode.next(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_INPUT), FinalTechItems.TRANSFER_PIPE.getItemId());
             blockMenu.replaceExistingItem(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.getIcon(inputSearch));
             BlockStorage.addBlockInfo(block.getLocation(), BlockSearchMode.KEY_INPUT, inputSearch);
             return false;
@@ -151,7 +151,7 @@ public class PipeMenu extends AbstractMachineMenu {
             return false;
         });
         blockMenu.addMenuClickHandler(OUTPUT_BLOCK_SEARCH_MODE_SLOT, (player, i, itemStack, clickAction) -> {
-            String outputSearch = BlockSearchMode.next(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_OUTPUT), FinalTechItems.PIPE.getItemId());
+            String outputSearch = BlockSearchMode.next(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_OUTPUT), FinalTechItems.TRANSFER_PIPE.getItemId());
             blockMenu.replaceExistingItem(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.getIcon(outputSearch));
             BlockStorage.addBlockInfo(block.getLocation(), BlockSearchMode.KEY_OUTPUT, outputSearch);
             return false;

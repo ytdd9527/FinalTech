@@ -42,6 +42,7 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
     public final List<MachineRecipe> recipes = new ArrayList<>();
     public AdvancedAutoCraft(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+        this.registerDefaultRecipes();
     }
 
     @Nonnull

@@ -6,11 +6,12 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.taraxacum.finaltech.item.CopyCardItem;
 import io.taraxacum.finaltech.item.StorageCardItem;
+import io.taraxacum.finaltech.item.UnOrderSword;
+import io.taraxacum.finaltech.machine.capacitor.expanded.*;
 import io.taraxacum.finaltech.machine.cargo.*;
 import io.taraxacum.finaltech.machine.capacitor.*;
-import io.taraxacum.finaltech.enchantment.NullEnchantment;
-import io.taraxacum.finaltech.item.UnOrderSword;
 import io.taraxacum.finaltech.machine.*;
 import io.taraxacum.finaltech.machine.standard.advanced.*;
 import io.taraxacum.finaltech.machine.standard.basic.*;
@@ -18,7 +19,7 @@ import io.taraxacum.finaltech.machine.manual.*;
 import io.taraxacum.finaltech.machine.standard.AllCompression;
 import io.taraxacum.finaltech.machine.standard.AllFactory;
 import io.taraxacum.finaltech.machine.standard.BasicFrameMachine;
-import io.taraxacum.finaltech.machine.standard.UnOrderedDustFactory;
+import io.taraxacum.finaltech.machine.standard.OrderedDustFactory;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.setup.FinalTechMenus;
 import io.taraxacum.finaltech.setup.FinalTechRecipes;
@@ -51,27 +52,27 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         FinalTechMenus.MENU_ELECTRIC.setTier(0);
         FinalTechMenus.MENU_TOOL.setTier(0);
 
-        FinalTechItems.QUANTITY_MODULE_CORE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.CODE_CREATE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.CREATION_GENEALOGY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.IMAGINARY_TRUTH.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+//        FinalTechItems.CODE_CREATE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+//        FinalTechItems.CREATION_GENEALOGY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+//        FinalTechItems.IMAGINARY_TRUTH.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
 
         // register items
         new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.GEARWHEEL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.GEARWHEEL, new SlimefunItemStack(FinalTechItems.GEARWHEEL, 4)).register(this);
-        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.UNORDERED_DUST,  FinalTechRecipes.RECIPE_TYPE_UNORDERED_DUST_FACTORY, new ItemStack[] {}).register(this);
+        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.UNORDERED_DUST,  FinalTechRecipes.RECIPE_TYPE_ORDERED_DUST_FACTORY, new ItemStack[] {}).register(this);
         new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.QUANTITY_MODULE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.QUANTITY_MODULE).register(this);
-        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.QUANTITY_MODULE_CORE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.QUANTITY_MODULE_CORE).register(this);
-        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.SINGULARITY, FinalTechRecipes.RECIPE_TYPE_ALL_COMPRESSION, new ItemStack[] {null, null, null, null, new CustomItemStack(Material.BOOK, "&f合成方式", "&7对已经压缩过的物品", "&7再进行一次压缩")}).register(this);
-        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.BUG, RecipeType.NULL, new ItemStack[] {}).register(this);
-        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_ADDITION, RecipeType.NULL, new ItemStack[] {}).register(this);
-        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_SYMMETRY, RecipeType.NULL, new ItemStack[] {}).register(this);
-        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_RANDOM, RecipeType.NULL, new ItemStack[] {}).register(this);
-        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_NULL, RecipeType.NULL, new ItemStack[] {}).register(this);
-        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_CREATE, RecipeType.NULL, new ItemStack[] {}).register(this);
-        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.ORDERED_DUST, RecipeType.NULL, new ItemStack[] {}).register(this);
-        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_FINAL, RecipeType.NULL, new ItemStack[] {}).register(this);
-        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CREATION_GENEALOGY, RecipeType.NULL, new ItemStack[] {}).register(this);
-        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.IMAGINARY_TRUTH, RecipeType.NULL, new ItemStack[] {}).register(this);
+        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.QUANTITY_MODULE_V2, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.QUANTITY_MODULE_V2).register(this);
+        new CopyCardItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.COPY_CARD, FinalTechRecipes.RECIPE_TYPE_ALL_COMPRESSION, new ItemStack[] {null, null, null, null, new CustomItemStack(Material.BOOK, "&f合成方式", "&f压缩" + CopyCardItem.DIFFICULTY + "个相同物品以获得")}).register(this);
+        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.SINGULARITY, FinalTechRecipes.RECIPE_TYPE_ALL_COMPRESSION, new ItemStack[] {null, null, null, null, new CustomItemStack(Material.BOOK, "&f合成方式", "&f对已经压缩过的物品", "&f再进行一次压缩")}).register(this);
+//        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.BUG, RecipeType.NULL, new ItemStack[] {}).register(this);
+//        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_ADDITION, RecipeType.NULL, new ItemStack[] {}).register(this);
+//        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_SYMMETRY, RecipeType.NULL, new ItemStack[] {}).register(this);
+//        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_RANDOM, RecipeType.NULL, new ItemStack[] {}).register(this);
+//        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_NULL, RecipeType.NULL, new ItemStack[] {}).register(this);
+//        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_CREATE, RecipeType.NULL, new ItemStack[] {}).register(this);
+//        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.ORDERED_DUST, RecipeType.NULL, new ItemStack[] {}).register(this);
+//        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CODE_FINAL, RecipeType.NULL, new ItemStack[] {}).register(this);
+//        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.CREATION_GENEALOGY, RecipeType.NULL, new ItemStack[] {}).register(this);
+//        new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.IMAGINARY_TRUTH, RecipeType.NULL, new ItemStack[] {}).register(this);
 
         // register machines
         new BasicCobbleFactory(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.BASIC_COBBLE_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_COBBLE_FACTORY).register(this);
@@ -89,7 +90,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         new ManualJuicer(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.MANUAL_JUICER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MANUAL_JUICER).register(this);
         new ManualAncientAltar(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.MANUAL_ANCIENT_ALTAR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MANUAL_ANCIENT_ALTAR).register(this);
         new ManualHeatedPressureChamber(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MANUAL_HEATED_PRESSURE_CHAMBER).register(this);
-        new UnOrderedDustFactory(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.UNORDERED_DUST_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.UNORDERED_DUST_FACTORY).register(this);
+        new OrderedDustFactory(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.ORDERED_DUST_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ORDERED_DUST_FACTORY).register(this);
 
 
         // register advanced machines
@@ -122,7 +123,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         new BasicNormalStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.BASIC_NORMAL_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_NORMAL_STORAGE_UNIT).register(this);
         new BasicLinkedStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.BASIC_LINKED_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_LINKED_STORAGE_UNIT).register(this);
         new BasicChargeableStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.BASIC_CHARGEABLE_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_CHARGEABLE_STORAGE_UNIT).register(this);
-        new Pipe(FinalTechMenus.MENU_CARGO, FinalTechItems.PIPE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.PIPE).register(this);
+        new TransferPipe(FinalTechMenus.MENU_CARGO, FinalTechItems.TRANSFER_PIPE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.TRANSFER_PIPE).register(this);
         new TransferLine(FinalTechMenus.MENU_CARGO, FinalTechItems.TRANSFER_LINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.TRANSFER_LINE).register(this);
         new TransferStation(FinalTechMenus.MENU_CARGO, FinalTechItems.TRANSFER_STATION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.TRANSFER_STATION).register(this);
         new StorageInteractPort(FinalTechMenus.MENU_CARGO, FinalTechItems.STORAGE_INTERACT_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_INTERACT_PORT).register(this);
@@ -164,7 +165,6 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
         // register tool
         new UnOrderSword(FinalTechMenus.MENU_TOOL, FinalTechItems.UNORDERED_SWORD, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.UNORDERED_SWORD).register(this);
-
     }
 
     @Override

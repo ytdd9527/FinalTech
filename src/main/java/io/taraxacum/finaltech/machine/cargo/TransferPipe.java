@@ -8,12 +8,14 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
+import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.PipeMenu;
+import io.taraxacum.finaltech.menu.TransferPipeMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.finaltech.util.cargo.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
@@ -32,16 +34,18 @@ import java.util.*;
 /**
  * @author Final_ROOT
  */
-public class Pipe extends AbstractCargo {
+public class TransferPipe extends AbstractCargo implements RecipeItem {
     public static final int BLOCK_SEARCH_LIMIT = 8;
-    public Pipe(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public static final List<MachineRecipe> RECIPE = new ArrayList<>();
+    public TransferPipe(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+        this.registerDefaultRecipes();
     }
 
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new PipeMenu(this.getId(), this.getItemName(), this);
+        return new TransferPipeMenu(this.getId(), this.getItemName(), this);
     }
 
     @Nonnull
@@ -54,7 +58,7 @@ public class Pipe extends AbstractCargo {
                 if (inv != null) {
                     inv.dropItems(block.getLocation(), getInputSlots());
                     inv.dropItems(block.getLocation(), getOutputSlots());
-                    inv.dropItems(block.getLocation(), PipeMenu.ITEM_MATCH);
+                    inv.dropItems(block.getLocation(), TransferPipeMenu.ITEM_MATCH);
                     BlockStorage.clearBlockInfo(block.getLocation());
                 }
             }
@@ -76,7 +80,7 @@ public class Pipe extends AbstractCargo {
                 BlockStorage.addBlockInfo(location, SlotSearchSize.KEY_OUTPUT, SlotSearchSize.VALUE_INPUTS_ONLY);
                 BlockStorage.addBlockInfo(location, SlotSearchOrder.KEY_OUTPUT, SlotSearchOrder.VALUE_ASCENT);
                 BlockStorage.addBlockInfo(location, FilterMode.KEY, FilterMode.VALUE_BLACK);
-                BlockStorage.addBlockInfo(location, CargoMode.KEY, CargoMode.VALUE_INPUT_MAIN);
+                BlockStorage.addBlockInfo(location, CargoMode.KEY, CargoMode.VALUE_SYMMETRY);
                 BlockStorage.addBlockInfo(location, BlockSearchMode.KEY_INPUT, BlockSearchMode.VALUE_ZERO);
                 BlockStorage.addBlockInfo(location, BlockSearchMode.KEY_OUTPUT, BlockSearchMode.VALUE_ZERO);
                 BlockStorage.addBlockInfo(location, CargoItemMode.KEY, CargoItemMode.VALUE_ALL);
@@ -120,7 +124,7 @@ public class Pipe extends AbstractCargo {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         Inventory blockInv = blockMenu.toInventory();
 
-        CargoUtil.doCargo(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoItemMode, filterMode, blockInv, PipeMenu.ITEM_MATCH, cargoMode);
+        CargoUtil.doCargo(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoItemMode, filterMode, blockInv, TransferPipeMenu.ITEM_MATCH, cargoMode);
     }
 
     public static Block searchBlockPiPe(@Nonnull Block begin, String searchMode, BlockFace blockFace, boolean input) {
@@ -131,13 +135,13 @@ public class Pipe extends AbstractCargo {
         }
         List<Location> locationList = new ArrayList<>();
         while(true) {
-            if(BlockStorage.hasInventory(result) && !result.getType().equals(FinalTechItems.PIPE.getType())) {
+            if(BlockStorage.hasInventory(result) && !result.getType().equals(FinalTechItems.TRANSFER_PIPE.getType())) {
                 break;
             }
             if(PaperLib.getBlockState(result, false).getState() instanceof InventoryHolder) {
                 break;
             }
-            if (result.getType() == FinalTechItems.PIPE.getType()) {
+            if (result.getType() == FinalTechItems.TRANSFER_PIPE.getType()) {
                 count = 0;
                 for(Location location : locationList) {
                     if(location.equals(result.getLocation())) {
@@ -161,5 +165,67 @@ public class Pipe extends AbstractCargo {
             }
         }
         return result;
+    }
+
+    /**
+     * 获取机器工作配方列表
+     *
+     * @return
+     */
+    @Override
+    public List<MachineRecipe> getMachineRecipes() {
+        return RECIPE;
+    }
+
+    /**
+     * 默认的配方注册方法
+     * 继承了该接口的实现类应该重写该方法
+     * 并在该方法内实现注册机器的工作配方
+     */
+    @Override
+    public void registerDefaultRecipes() {
+        this.registerDescriptiveRecipe("&f基础功能",
+                "",
+                "&f该机器会不断把物品",
+                "&f从输入侧方块的容器",
+                "&f传输到输出侧方块的容器");
+        this.registerDescriptiveRecipe("&f相关概念",
+                "",
+                "&f输入侧",
+                "&f该机器尾部所指向的方块",
+                "&f该方块的物品将被取出",
+                "",
+                "&f输出侧",
+                "&f该机器头部所指向的方块",
+                "&f该方块将被传入物品");
+        this.registerDescriptiveRecipe("&f传输模式",
+                "",
+                "&f对称传输",
+                "&f会把物品按照在输入侧容器的格子顺序",
+                "&f传输到输出侧容器对应的格子位置上",
+                "",
+                "&f主输入侧",
+                "&f尝试把输入侧的物品一个一个地",
+                "&f传输到输出侧容器的各个格子上",
+                "",
+                "&f主输出侧",
+                "&f尝试按照输出侧容器的格子顺序",
+                "&f一个一个地从输入侧容器取出物品");
+        this.registerDescriptiveRecipe("&f搜索模式",
+                "",
+                "&f零模式",
+                "&f输入侧/输出侧锁定为该机器头部/尾部指向的相邻一格的方块",
+                "",
+                "&f继承模式",
+                "&f当该机器头部/尾部指向了同材质（末地烛）方块",
+                "&f继承其头部/尾部的方向",
+                "&f重置最大搜索距离并继续搜索",
+                "",
+                "&f穿透模式",
+                "&f当该机器头部/尾部指向了同材质（末地烛）方块",
+                "&f无视其头部/尾部的方向",
+                "&f重置最大搜索距离并继续搜索",
+                "",
+                "&f最大搜索距离为" + BLOCK_SEARCH_LIMIT + "格");
     }
 }

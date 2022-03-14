@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  */
 public class BasicSelfGenerateCapacitor extends AbstractElectricCapacitor {
-    public static final int CAPACITOR = 2097152;
+    public static final int CAPACITOR = 524288;
     public static final int EFFICIENT = 1024;
     public BasicSelfGenerateCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -23,7 +23,6 @@ public class BasicSelfGenerateCapacitor extends AbstractElectricCapacitor {
 
     @Override
     public int getCapacity() {
-        // todo
         return CAPACITOR;
     }
 

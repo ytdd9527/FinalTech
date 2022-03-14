@@ -359,7 +359,6 @@ public final class MachineUtil {
         }
     }
 
-    // todo
     public static int maxMatch(@Nonnull Inventory inventory, int[] slots, @Nonnull ItemStack[] items, int count) {
         List<ItemStackWithWrapper> matchList = ItemStackUtil.parseItemWithAmount(items);
         List<ItemStackWithWrapper> itemList = new ArrayList<>(slots.length);
@@ -404,6 +403,8 @@ public final class MachineUtil {
         int amount = 1;
         if(ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE)) {
             amount = item.getAmount();
+        } else if(ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE_V2)) {
+            amount = item.getAmount() * (item.getAmount() + 1) / 2;
         }
         ItemStack infoItem = blockMenu.getItemInSlot(infoSlot);
         if(!infoItem.hasItemMeta()) {

@@ -10,6 +10,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
@@ -29,6 +31,7 @@ public class UnOrderSword extends SlimefunItem {
         super.preRegister();
         this.addItemHandler(new WeaponUseHandler() {
             @Override
+            @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
             public void onHit(@Nonnull EntityDamageByEntityEvent entityDamageByEntityEvent, @Nonnull Player player, @Nonnull ItemStack itemStack) {
                 entityDamageByEntityEvent.setCancelled(true);
                 if(!SlimefunUtil.hasPermission(entityDamageByEntityEvent.getEntity(), player)) {
@@ -43,7 +46,7 @@ public class UnOrderSword extends SlimefunItem {
                 damage += itemStack.getDurability();
                 Entity entity = entityDamageByEntityEvent.getEntity();
                 if(entity instanceof LivingEntity) {
-                    ((LivingEntity) entity).setHealth(((LivingEntity) entity).getHealth() - damage >= 0 ? ((LivingEntity) entity).getHealth() - damage : 0);
+                    ((LivingEntity) entity).setHealth(Math.max(((LivingEntity) entity).getHealth() - damage, 0.01));
                 }
             }
         });

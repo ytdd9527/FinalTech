@@ -21,12 +21,13 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public class UnOrderedDustFactory extends AbstractStandardMachine {
+public class OrderedDustFactory extends AbstractStandardMachine {
     private static final int MATCH_DIFFICULTY = 16;
     private static final int INPUT_DIFFICULTY = 1024;
 
-    public UnOrderedDustFactory(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public OrderedDustFactory(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -83,5 +84,11 @@ public class UnOrderedDustFactory extends AbstractStandardMachine {
     }
 
     @Override
-    public void registerDefaultRecipes() { }
+    public void registerDefaultRecipes() {
+        this.registerDescriptiveRecipe("&f制造无序尘埃",
+                "",
+                "&f输入共" + MATCH_DIFFICULTY + "种物品",
+                "&f输入共" + INPUT_DIFFICULTY + "个物品",
+                "&f满足以上两个条件时生成一个无序尘埃");
+    }
 }

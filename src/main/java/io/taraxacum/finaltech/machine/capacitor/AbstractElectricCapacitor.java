@@ -73,37 +73,4 @@ public abstract class AbstractElectricCapacitor extends AbstractMachine implemen
     public final EnergyNetComponentType getEnergyComponentType() {
         return EnergyNetComponentType.CAPACITOR;
     }
-
-    @Override
-    public abstract int getCapacity();
-
-    @Override
-    public boolean isChargeable() {
-        return EnergyNetComponent.super.isChargeable();
-    }
-
-    @Override
-    public int getCharge(@Nonnull Location l) {
-        return EnergyNetComponent.super.getCharge(l);
-    }
-
-    @Override
-    public int getCharge(@Nonnull Location l, @Nonnull Config data) {
-        return EnergyNetComponent.super.getCharge(l, data);
-    }
-
-    @Override
-    public void setCharge(@Nonnull Location l, int charge) {
-        EnergyNetComponent.super.setCharge(l, charge);
-    }
-
-    @Override
-    public void addCharge(@Nonnull Location l, int charge) {
-        EnergyNetComponent.super.addCharge(l, charge);
-    }
-
-    @Override
-    public void removeCharge(@Nonnull Location l, int charge) {
-        EnergyNetComponent.super.removeCharge(l, charge);
-    }
 }

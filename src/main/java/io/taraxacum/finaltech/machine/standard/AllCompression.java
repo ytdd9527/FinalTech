@@ -6,8 +6,9 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.taraxacum.finaltech.item.CopyCardItem;
 import io.taraxacum.finaltech.menu.standard.AbstractStandardMachineMenu;
-import io.taraxacum.finaltech.core.AllCompressionCraftingOperation;
+import io.taraxacum.finaltech.core.CopyCardItemCraftingOperation;
 import io.taraxacum.finaltech.menu.standard.AllCompressionMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
@@ -15,25 +16,25 @@ import io.taraxacum.finaltech.util.cargo.Icon;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Final_ROOT
  */
 public class AllCompression extends AbstractStandardMachine {
-    public static final int DIFFICULTY = 16777216;
-    public static final int SINGULARITY_DIFFICULTY = 256;
     public static final CustomItemStack NULL_INFO_ICON = new CustomItemStack(Material.REDSTONE, "&f完成进度", "&7暂未输入物品");
     public static final String BLOCK_STORAGE_ITEM_KEY = "item";
-    public static final String BLOCK_STORAGE_COUNT_KEY = "count";
+    public static final String BLOCK_STORAGE_AMOUNT_KEY = "amount";
 
     public AllCompression(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -45,17 +46,22 @@ public class AllCompression extends AbstractStandardMachine {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu inv = BlockStorage.getInventory(block);
-        AllCompressionCraftingOperation currentOperation = (AllCompressionCraftingOperation)this.getMachineProcessor().getOperation(block);
-        // todo
-//        if(currentOperation == null) {
-//            String itemString = config.getString(BLOCK_STORAGE_ITEM_KEY);
-//            if(itemString != null && !"".equals(itemString)) {
-//                ItemStack item = ItemStackUtil.stringToItemStack(itemString);
-//                int count =  Integer.parseInt(config.getString(BLOCK_STORAGE_COUNT_KEY));
-//                item.setAmount(1);
-//                this.getMachineProcessor().startOperation(block, new AllCompressionCraftingOperation(item));
-//            }
-//        }
+
+        CopyCardItemCraftingOperation currentOperation = (CopyCardItemCraftingOperation)this.getMachineProcessor().getOperation(block);
+
+        ItemStack stringItem;
+
+        if(currentOperation == null && config.contains(BLOCK_STORAGE_ITEM_KEY)) {
+            String itemString = config.getValue(BLOCK_STORAGE_ITEM_KEY).toString();
+            stringItem = ItemStackUtil.stringToItemStack(itemString);
+            if(!ItemStackUtil.isItemNull(stringItem) && !ItemStackUtil.isItemSimilar(stringItem, FinalTechItems.SINGULARITY)) {
+                int amount =  Integer.parseInt(config.getString(BLOCK_STORAGE_AMOUNT_KEY));
+                stringItem.setAmount(1);
+                currentOperation = new CopyCardItemCraftingOperation(stringItem);
+                currentOperation.setAmount(amount);
+                this.getMachineProcessor().startOperation(block, currentOperation);
+            }
+        }
 
         for (int slot : this.getInputSlots()) {
             ItemStack inputItem = inv.getItemInSlot(slot);
@@ -63,79 +69,71 @@ public class AllCompression extends AbstractStandardMachine {
                 continue;
             }
             if(currentOperation == null) {
-                if(unAllowedItem(inputItem)) {
-                    continue;
+                if(isAllowedItem(inputItem)) {
+                    stringItem = inputItem.clone();
+                    stringItem.setAmount(1);
+                    currentOperation = new CopyCardItemCraftingOperation(inputItem);
+                    this.getMachineProcessor().startOperation(block, currentOperation);
+                    int amount = currentOperation.matchItem(inputItem);
+                    currentOperation.setAmount(amount);
+                    inv.consumeItem(slot, amount);
                 }
-                this.getMachineProcessor().startOperation(block, new AllCompressionCraftingOperation(inputItem));
-                currentOperation = (AllCompressionCraftingOperation)this.getMachineProcessor().getOperation(block);
             } else {
-                currentOperation.addItem(inputItem);
+                int amount = currentOperation.matchItem(inputItem);
+                if(amount > 0) {
+                    currentOperation.addAmount(amount);
+                    inv.consumeItem(slot, amount);
+                }
             }
         }
+
         if (currentOperation != null && currentOperation.isFinished() && InvUtils.fits(inv.toInventory(), currentOperation.getOutput(), this.getOutputSlots())) {
             inv.pushItem(currentOperation.getOutput(), this.getOutputSlots());
             this.getMachineProcessor().endOperation(block);
+            currentOperation = null;
+            BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_ITEM_KEY, null);
+            BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_AMOUNT_KEY, null);
         }
 
-        ItemStack progress;
+        ItemStack progressItem;
         if (currentOperation != null) {
-            progress = inv.getItemInSlot(AllCompressionMenu.PROGRESS_SLOT);
-            if(ItemStackUtil.isItemSimilar(progress, Icon.BORDER_ICON) || ItemStackUtil.isItemSimilar(progress, NULL_INFO_ICON)) {
-                ItemStack item = currentOperation.getInput();
-                String name = "";
-                if(item.hasItemMeta()) {
-                    ItemMeta itemMeta = item.getItemMeta();
-                    name = itemMeta.hasLocalizedName() ? itemMeta.getLocalizedName() : itemMeta.getDisplayName();
-                }
-                progress = new CustomItemStack(currentOperation.getInput().getType(), "§7完成进度",
-                        "§7物品名称=" + name,
-                        "§7完成进度=" + currentOperation.getCount() + "/" + currentOperation.getDifficulty());
+            progressItem = inv.getItemInSlot(AllCompressionMenu.PROGRESS_SLOT);
+            if(ItemStackUtil.isItemSimilar(progressItem, Icon.BORDER_ICON) || ItemStackUtil.isItemSimilar(progressItem, NULL_INFO_ICON)) {
+                progressItem = new CustomItemStack(currentOperation.getInput().getType(), "§7完成进度",
+                        "§7物品名称= " + ItemStackUtil.getItemName(currentOperation.getInput()),
+                        "§7完成进度= " + currentOperation.getAmount() + "§8 / §7" + currentOperation.getDifficulty());
             } else {
-                ItemStackUtil.setLastLore(progress, "§7完成进度=" + currentOperation.getCount() + "/" + currentOperation.getDifficulty());
+                ItemStackUtil.setLastLore(progressItem, "§7完成进度= " + currentOperation.getAmount() + "§8 / §7" + currentOperation.getDifficulty());
+            }
+            if(!currentOperation.isSingularity()) {
+                BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_ITEM_KEY, ItemStackUtil.itemStackToString(currentOperation.getInput()));
+                BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_AMOUNT_KEY, String.valueOf(currentOperation.getAmount()));
             }
         } else {
-            progress = NULL_INFO_ICON;
+            progressItem = NULL_INFO_ICON;
         }
-        inv.replaceExistingItem(AllCompressionMenu.PROGRESS_SLOT, progress);
+        inv.replaceExistingItem(AllCompressionMenu.PROGRESS_SLOT, progressItem);
     }
 
-    private static boolean unAllowedItem(ItemStack item) {
-        switch (item.getType()) {
-            case SHULKER_BOX:
-            case BLACK_SHULKER_BOX:
-            case BLUE_SHULKER_BOX:
-            case BROWN_SHULKER_BOX:
-            case CYAN_SHULKER_BOX:
-            case GRAY_SHULKER_BOX:
-            case GREEN_SHULKER_BOX:
-            case LIGHT_BLUE_SHULKER_BOX:
-            case LIGHT_GRAY_SHULKER_BOX:
-            case LIME_SHULKER_BOX:
-            case MAGENTA_SHULKER_BOX:
-            case ORANGE_SHULKER_BOX:
-            case PINK_SHULKER_BOX:
-            case PURPLE_SHULKER_BOX:
-            case RED_SHULKER_BOX:
-            case WHITE_SHULKER_BOX:
-            case YELLOW_SHULKER_BOX:
-            case BUNDLE:
-                return true;
+    private boolean isAllowedItem(@Nullable ItemStack item) {
+        if(ItemStackUtil.isItemSimilar(item, FinalTechItems.SINGULARITY)) {
+            return false;
         }
-        return ItemStackUtil.isItemSimilar(item, FinalTechItems.SINGULARITY);
+        return true;
     }
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(new CustomItemStack(Material.BOOK, "&d生产带签名的物品",
+        this.registerDescriptiveRecipe("&f制造复制卡",
                 "",
-                "&7输入" + DIFFICULTY + "个相同物品",
-                "&7输出1个带有签名的该物品",
-                "&d无法输入以下物品->潜影盒 收纳袋 奇点"));
+                "&f输入" + CopyCardItem.DIFFICULTY + "个相同物品",
+                "&f输出1个该物品的复制卡",
+                "&f无法生产 奇点 的复制卡");
 
-        this.registerDescriptiveRecipe(new CustomItemStack(Material.BOOK, "&d生产奇点",
+        this.registerDescriptiveRecipe("&f制造奇点",
                 "",
-                "&7输入任意" + SINGULARITY_DIFFICULTY + "个带有签名的物品",
+                "&7输入任意" + CopyCardItem.SINGULARITY_DIFFICULTY + "个复制卡",
                 "&7输出1个奇点",
-                "&d允许使用多种带有签名的物品"));
+                "&f允许使用多种物品的复制卡");
     }
 }

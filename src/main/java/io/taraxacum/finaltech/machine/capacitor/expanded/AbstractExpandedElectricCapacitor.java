@@ -1,10 +1,11 @@
-package io.taraxacum.finaltech.machine.capacitor;
+package io.taraxacum.finaltech.machine.capacitor.expanded;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.taraxacum.finaltech.machine.capacitor.AbstractElectricCapacitor;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.ElectricCapacitorMenu;
 import io.taraxacum.finaltech.util.CapacitorUtil;
@@ -53,7 +54,7 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
     protected void tick(Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         int electric = getCharge(block.getLocation());
         int capacity = getCapacity();
-        int stack = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY));
+        int stack = Integer.parseInt(config.getValue(KEY).toString());
         if(electric < capacity / 4 && stack > 0) {
             electric += capacity / 2;
             stack--;

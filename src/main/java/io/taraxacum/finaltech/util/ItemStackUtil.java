@@ -7,6 +7,7 @@ import io.taraxacum.finaltech.core.RandomMachineRecipe;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -520,6 +521,15 @@ public final class ItemStackUtil {
             return null;
         }
         return lore.get(lore.size() - 1);
+    }
+
+    public static void setLore(@Nonnull ItemStack item, String... lore) {
+        if(!item.hasItemMeta()) {
+            return;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        itemMeta.setLore(Arrays.stream(lore).toList());
+        item.setItemMeta(itemMeta);
     }
 
     /**

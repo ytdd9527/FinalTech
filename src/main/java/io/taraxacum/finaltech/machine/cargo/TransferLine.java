@@ -7,12 +7,14 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBreakHandler;
+import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.TransferLineMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.JavaUtil;
 import io.taraxacum.finaltech.util.cargo.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
@@ -30,9 +32,11 @@ import java.util.List;
 /**
  * @author Final_ROOT
  */
-public class TransferLine extends AbstractCargo {
+public class TransferLine extends AbstractCargo implements RecipeItem {
+    public static final List<MachineRecipe> RECIPE = new ArrayList<>();
     public TransferLine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -73,7 +77,7 @@ public class TransferLine extends AbstractCargo {
                 BlockStorage.addBlockInfo(location, BlockSearchMode.KEY, BlockSearchMode.VALUE_ZERO);
                 BlockStorage.addBlockInfo(location, BlockSearchOrder.KEY, BlockSearchOrder.VALUE_POSITIVE);
                 BlockStorage.addBlockInfo(location, BlockSearchSelf.KEY, BlockSearchSelf.VALUE_FALSE);
-                BlockStorage.addBlockInfo(location, CargoMode.KEY, CargoMode.VALUE_INPUT_MAIN);
+                BlockStorage.addBlockInfo(location, CargoMode.KEY, CargoMode.VALUE_SYMMETRY);
                 BlockStorage.addBlockInfo(location, FilterMode.KEY, FilterMode.VALUE_BLACK);
                 BlockStorage.addBlockInfo(location, SlotSearchSize.KEY_INPUT, SlotSearchSize.VALUE_OUTPUTS_ONLY);
                 BlockStorage.addBlockInfo(location, SlotSearchOrder.KEY_INPUT, SlotSearchOrder.VALUE_ASCENT);
@@ -170,5 +174,62 @@ public class TransferLine extends AbstractCargo {
             block = block.getRelative(blockFace);
         }
         return list;
+    }
+
+    @Override
+    public List<MachineRecipe> getMachineRecipes() {
+        return RECIPE;
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        this.registerDescriptiveRecipe("&f基础功能",
+                "",
+                "&f该机器会不断把物品",
+                "&f从输入侧方块的容器",
+                "&f传输到输出侧方块的容器");
+        this.registerDescriptiveRecipe("&f相关概念",
+                "",
+                "&f输入侧",
+                "&f该机器搜索方向上的某一方块",
+                "&f该方块的物品将被取出",
+                "",
+                "&f输出侧",
+                "&f该机器搜索方向上的下一方块",
+                "&f该方块将被传入物品");
+        this.registerDescriptiveRecipe("&f传输模式",
+                "",
+                "&f对称传输",
+                "&f会把物品按照在输入侧容器的格子顺序",
+                "&f传输到输出侧容器对应的格子位置上",
+                "",
+                "&f主输入侧",
+                "&f尝试把输入侧的物品一个一个地",
+                "&f传输到输出侧容器的各个格子上",
+                "",
+                "&f主输出侧",
+                "&f尝试按照输出侧容器的格子顺序",
+                "&f一个一个地从输入侧容器取出物品");
+        this.registerDescriptiveRecipe("&f搜索模式",
+                "",
+                "&f零模式",
+                "&f搜索范围锁定为自身前方两格的方块",
+                "",
+                "&f中断模式",
+                "&f当该机器指向了相同机器方块",
+                "&f在其所在位置处停止搜索",
+                "",
+                "&f穿透模式",
+                "&f当该机器指向了相同机器方块",
+                "&f跨过其所在位置",
+                "&f并继续搜索");
+        this.registerDescriptiveRecipe("&f运输模式",
+                "",
+                "&f首尾循环运输",
+                "&f让搜索方向上的最后一个方块",
+                "&f与第一个方块进行运输",
+                "",
+                "&f自运输",
+                "&f是否将自身加入到搜索范围中");
     }
 }

@@ -49,7 +49,7 @@ public class BlockSearchMode {
         if(blockSearchMode == null || id == null) {
             return VALUE_ZERO;
         }
-        if(id.equals(FinalTechItems.PIPE.getItemId())) {
+        if(id.equals(FinalTechItems.TRANSFER_PIPE.getItemId())) {
             switch (blockSearchMode) {
                 case VALUE_ZERO:
                     return VALUE_INHERIT;

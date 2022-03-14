@@ -1,9 +1,7 @@
 package io.taraxacum.finaltech.setup;
 
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -13,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 public final class FinalTechRecipes {
 
     // RecipesType
-    public static final RecipeType RECIPE_TYPE_UNORDERED_DUST_FACTORY = new RecipeType(FinalTechItems.UNORDERED_DUST_FACTORY, "FINALTECH_UNORDERED_DUST_FACTORY");
+    public static final RecipeType RECIPE_TYPE_ORDERED_DUST_FACTORY = new RecipeType(FinalTechItems.ORDERED_DUST_FACTORY, "FINALTECH_UNORDERED_DUST_FACTORY");
     public static final RecipeType RECIPE_TYPE_ALL_COMPRESSION = new RecipeType(FinalTechItems.ALL_COMPRESSION, "FINALTECH_ALL_COMPRESSION");
 
     // items
@@ -27,7 +25,7 @@ public final class FinalTechRecipes {
             SlimefunItems.ANDROID_INTERFACE_FUEL, SlimefunItems.ANDROID_MEMORY_CORE, SlimefunItems.ANDROID_INTERFACE_ITEMS,
             new ItemStack(Material.AMETHYST_BLOCK), SlimefunItems.STEEL_THRUSTER, new ItemStack(Material.SNOW_BLOCK)
     };
-    public static final ItemStack[] QUANTITY_MODULE_CORE = new ItemStack[] {
+    public static final ItemStack[] QUANTITY_MODULE_V2 = new ItemStack[] {
             FinalTechItems.QUANTITY_MODULE, FinalTechItems.QUANTITY_MODULE, FinalTechItems.QUANTITY_MODULE,
             FinalTechItems.QUANTITY_MODULE, FinalTechItems.UNORDERED_DUST, FinalTechItems.QUANTITY_MODULE,
             FinalTechItems.QUANTITY_MODULE, FinalTechItems.QUANTITY_MODULE, FinalTechItems.QUANTITY_MODULE
@@ -124,7 +122,7 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
 
-    public static final ItemStack[] UNORDERED_DUST_FACTORY = new ItemStack[] {
+    public static final ItemStack[] ORDERED_DUST_FACTORY = new ItemStack[] {
             SlimefunItems.TRASH_CAN, SlimefunItems.TRASH_CAN, SlimefunItems.TRASH_CAN,
             SlimefunItems.TRASH_CAN, new ItemStack(Material.DIRT), SlimefunItems.TRASH_CAN,
             SlimefunItems.TRASH_CAN, SlimefunItems.TRASH_CAN, SlimefunItems.TRASH_CAN
@@ -283,7 +281,7 @@ public final class FinalTechRecipes {
             new ItemStack(Material.GLASS), new ItemStack(Material.CHEST), new ItemStack(Material.GLASS),
     };
 
-    public static final ItemStack[] PIPE = new ItemStack[] {
+    public static final ItemStack[] TRANSFER_PIPE = new ItemStack[] {
             new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN), new ItemStack(Material.TRIPWIRE_HOOK),
             new ItemStack(Material.ENDER_PEARL), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.ENDER_PEARL),
             new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN), new ItemStack(Material.TRIPWIRE_HOOK)
@@ -296,8 +294,8 @@ public final class FinalTechRecipes {
     };
 
     public static final ItemStack[] TRANSFER_LINE = new ItemStack[] {
-            new ItemStack(Material.DROPPER), new ItemStack(Material.CHAIN), new ItemStack(Material.DROPPER),
-            new ItemStack(Material.CHAIN), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.CHAIN),
+            new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.SLIME_BALL),
+            new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.TRIPWIRE_HOOK), FinalTechItems.BASIC_FRAME_MACHINE,
             new ItemStack(Material.CHEST), new ItemStack(Material.CHEST), new ItemStack(Material.CHEST)
     };
 
@@ -308,121 +306,121 @@ public final class FinalTechRecipes {
     };
 
     public static final ItemStack[] STORAGE_ITEM_WHITE = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.WHITE_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.WHITE_CONCRETE_POWDER), new ItemStack(Material.WHITE_CONCRETE_POWDER),
+            new ItemStack(Material.WHITE_CONCRETE_POWDER), new ItemStack(Material.WHITE_CONCRETE_POWDER), new ItemStack(Material.WHITE_CONCRETE),
+            new ItemStack(Material.WHITE_CONCRETE), new ItemStack(Material.WHITE_CONCRETE), new ItemStack(Material.WHITE_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_ORANGE = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.ORANGE_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.ORANGE_CONCRETE_POWDER), new ItemStack(Material.ORANGE_CONCRETE_POWDER),
+            new ItemStack(Material.ORANGE_CONCRETE_POWDER), new ItemStack(Material.ORANGE_CONCRETE_POWDER), new ItemStack(Material.ORANGE_CONCRETE),
+            new ItemStack(Material.ORANGE_CONCRETE), new ItemStack(Material.ORANGE_CONCRETE), new ItemStack(Material.ORANGE_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_MAGENTA = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.MAGENTA_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.MAGENTA_CONCRETE_POWDER), new ItemStack(Material.MAGENTA_CONCRETE_POWDER),
+            new ItemStack(Material.MAGENTA_CONCRETE_POWDER), new ItemStack(Material.MAGENTA_CONCRETE_POWDER), new ItemStack(Material.MAGENTA_CONCRETE),
+            new ItemStack(Material.MAGENTA_CONCRETE), new ItemStack(Material.MAGENTA_CONCRETE), new ItemStack(Material.MAGENTA_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_LIGHT_BLUE = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.LIGHT_BLUE_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.LIGHT_BLUE_CONCRETE_POWDER), new ItemStack(Material.LIGHT_BLUE_CONCRETE_POWDER),
+            new ItemStack(Material.LIGHT_BLUE_CONCRETE_POWDER), new ItemStack(Material.LIGHT_BLUE_CONCRETE_POWDER), new ItemStack(Material.LIGHT_BLUE_CONCRETE),
+            new ItemStack(Material.LIGHT_BLUE_CONCRETE), new ItemStack(Material.LIGHT_BLUE_CONCRETE), new ItemStack(Material.LIGHT_BLUE_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_YELLOW = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.YELLOW_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.YELLOW_CONCRETE_POWDER), new ItemStack(Material.YELLOW_CONCRETE_POWDER),
+            new ItemStack(Material.YELLOW_CONCRETE_POWDER), new ItemStack(Material.YELLOW_CONCRETE_POWDER), new ItemStack(Material.YELLOW_CONCRETE),
+            new ItemStack(Material.YELLOW_CONCRETE), new ItemStack(Material.YELLOW_CONCRETE), new ItemStack(Material.YELLOW_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_LIME = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.LIME_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.LIME_CONCRETE_POWDER), new ItemStack(Material.LIME_CONCRETE_POWDER),
+            new ItemStack(Material.LIME_CONCRETE_POWDER), new ItemStack(Material.LIME_CONCRETE_POWDER), new ItemStack(Material.LIME_CONCRETE),
+            new ItemStack(Material.LIME_CONCRETE), new ItemStack(Material.LIME_CONCRETE), new ItemStack(Material.LIME_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_PINK = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.PINK_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.PINK_CONCRETE_POWDER), new ItemStack(Material.PINK_CONCRETE_POWDER),
+            new ItemStack(Material.PINK_CONCRETE_POWDER), new ItemStack(Material.PINK_CONCRETE_POWDER), new ItemStack(Material.PINK_CONCRETE),
+            new ItemStack(Material.PINK_CONCRETE), new ItemStack(Material.PINK_CONCRETE), new ItemStack(Material.PINK_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_GRAY = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.GRAY_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.GRAY_CONCRETE_POWDER), new ItemStack(Material.GRAY_CONCRETE_POWDER),
+            new ItemStack(Material.GRAY_CONCRETE_POWDER), new ItemStack(Material.GRAY_CONCRETE_POWDER), new ItemStack(Material.GRAY_CONCRETE),
+            new ItemStack(Material.GRAY_CONCRETE), new ItemStack(Material.GRAY_CONCRETE), new ItemStack(Material.GRAY_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_LIGHT_GRAY = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.LIGHT_GRAY_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.LIGHT_GRAY_CONCRETE_POWDER), new ItemStack(Material.LIGHT_GRAY_CONCRETE_POWDER),
+            new ItemStack(Material.LIGHT_GRAY_CONCRETE_POWDER), new ItemStack(Material.LIGHT_GRAY_CONCRETE_POWDER), new ItemStack(Material.LIGHT_GRAY_CONCRETE),
+            new ItemStack(Material.LIGHT_GRAY_CONCRETE), new ItemStack(Material.LIGHT_GRAY_CONCRETE), new ItemStack(Material.LIGHT_GRAY_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_CYAN = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.CYAN_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.CYAN_CONCRETE_POWDER), new ItemStack(Material.CYAN_CONCRETE_POWDER),
+            new ItemStack(Material.CYAN_CONCRETE_POWDER), new ItemStack(Material.CYAN_CONCRETE_POWDER), new ItemStack(Material.CYAN_CONCRETE),
+            new ItemStack(Material.CYAN_CONCRETE), new ItemStack(Material.CYAN_CONCRETE), new ItemStack(Material.CYAN_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_PURPLE = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.PURPLE_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.PURPLE_CONCRETE_POWDER), new ItemStack(Material.PURPLE_CONCRETE_POWDER),
+            new ItemStack(Material.PURPLE_CONCRETE_POWDER), new ItemStack(Material.PURPLE_CONCRETE_POWDER), new ItemStack(Material.PURPLE_CONCRETE),
+            new ItemStack(Material.PURPLE_CONCRETE), new ItemStack(Material.PURPLE_CONCRETE), new ItemStack(Material.PURPLE_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_BLUE = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.BLUE_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.BLUE_CONCRETE_POWDER), new ItemStack(Material.BLUE_CONCRETE_POWDER),
+            new ItemStack(Material.BLUE_CONCRETE_POWDER), new ItemStack(Material.BLUE_CONCRETE_POWDER), new ItemStack(Material.BLUE_CONCRETE),
+            new ItemStack(Material.BLUE_CONCRETE), new ItemStack(Material.BLUE_CONCRETE), new ItemStack(Material.BLUE_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_BROWN = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.BROWN_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.BROWN_CONCRETE_POWDER), new ItemStack(Material.BROWN_CONCRETE_POWDER),
+            new ItemStack(Material.BROWN_CONCRETE_POWDER), new ItemStack(Material.BROWN_CONCRETE_POWDER), new ItemStack(Material.BROWN_CONCRETE),
+            new ItemStack(Material.BROWN_CONCRETE), new ItemStack(Material.BROWN_CONCRETE), new ItemStack(Material.BROWN_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_GREEN = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.GREEN_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.GREEN_CONCRETE_POWDER), new ItemStack(Material.GREEN_CONCRETE_POWDER),
+            new ItemStack(Material.GREEN_CONCRETE_POWDER), new ItemStack(Material.GREEN_CONCRETE_POWDER), new ItemStack(Material.GREEN_CONCRETE),
+            new ItemStack(Material.GREEN_CONCRETE), new ItemStack(Material.GREEN_CONCRETE), new ItemStack(Material.GREEN_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_RED = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.RED_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.RED_CONCRETE_POWDER), new ItemStack(Material.RED_CONCRETE_POWDER),
+            new ItemStack(Material.RED_CONCRETE_POWDER), new ItemStack(Material.RED_CONCRETE_POWDER), new ItemStack(Material.RED_CONCRETE),
+            new ItemStack(Material.RED_CONCRETE), new ItemStack(Material.RED_CONCRETE), new ItemStack(Material.RED_CONCRETE)
     };
 
     public static final ItemStack[] STORAGE_ITEM_BLACK = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL,
-            new ItemStack(Material.CHEST), new ItemStack(Material.BLACK_DYE), new ItemStack(Material.CHEST),
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.CHEST), FinalTechItems.GEARWHEEL
+            FinalTechItems.UNORDERED_DUST, new ItemStack(Material.BLACK_CONCRETE_POWDER), new ItemStack(Material.BLACK_CONCRETE_POWDER),
+            new ItemStack(Material.BLACK_CONCRETE_POWDER), new ItemStack(Material.BLACK_CONCRETE_POWDER), new ItemStack(Material.BLACK_CONCRETE),
+            new ItemStack(Material.BLACK_CONCRETE), new ItemStack(Material.BLACK_CONCRETE), new ItemStack(Material.BLACK_CONCRETE)
     };
 
     // electric
     public static final ItemStack[] BASIC_CHARGE_INCREASE_CAPACITOR = new ItemStack[] {
-            FinalTechItems.UNORDERED_DUST, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REINFORCED_ALLOY_CHESTPLATE,
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REINFORCED_PLATE,
             FinalTechItems.GEARWHEEL, SlimefunItems.ENERGIZED_CAPACITOR, FinalTechItems.GEARWHEEL,
-            SlimefunItems.REINFORCED_ALLOY_CHESTPLATE, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REINFORCED_ALLOY_CHESTPLATE
+            SlimefunItems.REINFORCED_PLATE, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REINFORCED_PLATE
     };
     public static final ItemStack[] BASIC_CONSUME_REDUCE_CAPACITOR = new ItemStack[] {
-            SlimefunItems.REINFORCED_ALLOY_CHESTPLATE, SlimefunItems.REDSTONE_ALLOY, FinalTechItems.UNORDERED_DUST,
+            SlimefunItems.REINFORCED_PLATE, SlimefunItems.REDSTONE_ALLOY, FinalTechItems.UNORDERED_DUST,
             FinalTechItems.GEARWHEEL, SlimefunItems.ENERGIZED_CAPACITOR, FinalTechItems.GEARWHEEL,
-            SlimefunItems.REINFORCED_ALLOY_CHESTPLATE, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REINFORCED_ALLOY_CHESTPLATE
+            SlimefunItems.REINFORCED_PLATE, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REINFORCED_PLATE
     };
     public static final ItemStack[] BASIC_SELF_GENERATE_CAPACITOR = new ItemStack[] {
-            SlimefunItems.REINFORCED_ALLOY_CHESTPLATE, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REINFORCED_ALLOY_CHESTPLATE,
+            SlimefunItems.REINFORCED_PLATE, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REINFORCED_PLATE,
             FinalTechItems.GEARWHEEL, SlimefunItems.ENERGIZED_CAPACITOR, FinalTechItems.GEARWHEEL,
-            FinalTechItems.UNORDERED_DUST, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REINFORCED_ALLOY_CHESTPLATE
+            FinalTechItems.UNORDERED_DUST, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REINFORCED_PLATE
     };
     public static final ItemStack[] BASIC_VOID_GENERATE_CAPACITOR = new ItemStack[] {
-            SlimefunItems.REINFORCED_ALLOY_CHESTPLATE, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REINFORCED_ALLOY_CHESTPLATE,
+            SlimefunItems.REINFORCED_PLATE, SlimefunItems.REDSTONE_ALLOY, SlimefunItems.REINFORCED_PLATE,
             FinalTechItems.GEARWHEEL, SlimefunItems.ENERGIZED_CAPACITOR, FinalTechItems.GEARWHEEL,
-            SlimefunItems.REINFORCED_ALLOY_CHESTPLATE, SlimefunItems.REDSTONE_ALLOY, FinalTechItems.UNORDERED_DUST
+            SlimefunItems.REINFORCED_PLATE, SlimefunItems.REDSTONE_ALLOY, FinalTechItems.UNORDERED_DUST
     };
 
     public static final ItemStack[] SMALL_EXPANDED_CAPACITOR = new ItemStack[] {

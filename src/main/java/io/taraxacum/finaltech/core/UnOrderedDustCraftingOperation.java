@@ -1,7 +1,7 @@
 package io.taraxacum.finaltech.core;
 
 import io.github.thebusybiscuit.slimefun4.implementation.operations.CraftingOperation;
-import io.taraxacum.finaltech.machine.standard.UnOrderedDustFactory;
+import io.taraxacum.finaltech.machine.standard.OrderedDustFactory;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.inventory.ItemStack;
@@ -43,8 +43,8 @@ public class UnOrderedDustCraftingOperation extends CraftingOperation {
             }
         }
         this.inputCount += item.getAmount();
-        if(this.inputCount > UnOrderedDustFactory.getInputDifficulty()) {
-            this.inputCount = UnOrderedDustFactory.getInputDifficulty();
+        if(this.inputCount > OrderedDustFactory.getInputDifficulty()) {
+            this.inputCount = OrderedDustFactory.getInputDifficulty();
         }
     }
 
@@ -58,6 +58,6 @@ public class UnOrderedDustCraftingOperation extends CraftingOperation {
 
     @Override
     public boolean isFinished() {
-        return (this.inputCount >= UnOrderedDustFactory.getInputDifficulty() && this.matchCount >= UnOrderedDustFactory.getMatchDifficulty());
+        return (this.inputCount >= OrderedDustFactory.getInputDifficulty() && this.matchCount >= OrderedDustFactory.getMatchDifficulty());
     }
 }

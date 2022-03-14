@@ -10,6 +10,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBreakHandler;
+import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.AdvancedAutoCraftMenu;
@@ -17,6 +18,7 @@ import io.taraxacum.finaltech.menu.OverclockFrameMachineMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -27,14 +29,17 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Final_ROOT
  */
-public class OverclockFrameMachine extends AbstractMachine implements EnergyNetComponent {
+public class OverclockFrameMachine extends AbstractMachine implements EnergyNetComponent, RecipeItem {
+    public static final List<MachineRecipe> RECIPE = new ArrayList<>();
     public OverclockFrameMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -120,5 +125,30 @@ public class OverclockFrameMachine extends AbstractMachine implements EnergyNetC
     @Override
     public int getCapacity() {
         return 536870912;
+    }
+
+    @Override
+    public List<MachineRecipe> getMachineRecipes() {
+        return RECIPE;
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        this.registerDescriptiveRecipe("&f工作方式",
+                "",
+                "&f在该机器下方放置需要超频的工作机器",
+                "&f在该机器中放入相同的机器物品",
+                "&f当放入的机器物品数量大于1个时",
+                "&f将提高其每粘液刻的工作次数");
+        this.registerDescriptiveRecipe("&f适用范围",
+                "",
+                "&f兼容绝大部分机器",
+                "&f包括来自其他粘液科技附属的机器",
+                "&f但是不适用于发电机");
+        this.registerDescriptiveRecipe("&f超频供电",
+                "",
+                "&f部分机器由于其特性每次工作都会耗电",
+                "&f为了避免超频期间供电不足",
+                "&f请给该机器充电");
     }
 }

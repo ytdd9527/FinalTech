@@ -6,19 +6,15 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
-import io.taraxacum.finaltech.interfaces.RecipeItem;
+import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Final_ROOT
- */
-public class StorageCardItem extends SlimefunItem implements RecipeItem {
-    private static final List<MachineRecipe> RECIPE = new ArrayList<>();
+public class CopyCardItem extends SlimefunItem {
     public static final String ITEM_LORE = "§x§f§f§0§0§0§0已" +
             "§x§f§f§3§3§0§0经" +
             "§x§f§f§6§6§0§0由" +
@@ -38,30 +34,32 @@ public class StorageCardItem extends SlimefunItem implements RecipeItem {
             "§x§0§0§2§2§f§f许" +
             "§x§0§0§0§0§f§f进" +
             "§x§3§3§0§0§f§f行" +
-            "§x§6§6§0§0§f§f存" +
-            "§x§9§9§0§0§f§f储";
-    public static final String ITEM_LORE_WITHOUT_COLOR = "已经由Final_ROOT签名认证并允许进行存储";
+            "§x§6§6§0§0§f§f复" +
+            "§x§9§9§0§0§f§f制";
+    public static final String ITEM_LORE_WITHOUT_COLOR = "已经由Final_ROOT签名认证并允许进行复制";
+    public static final int DIFFICULTY = 16777216;
+    public static final int SINGULARITY_DIFFICULTY = 256;
 
-    public StorageCardItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public CopyCardItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.addItemHandler(MachineUtil.BLOCK_PLACE_HANDLER_DENY);
         this.addItemHandler((ItemUseHandler) PlayerRightClickEvent::cancel);
     }
 
-    @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return RECIPE;
-    }
-
-    @Override
-    public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe("&f介绍",
-                "",
-                "&f需通过存储交互接口",
-                "&f存入或取出物品",
-                "",
-                "&f一个存储卡只能存入一种物品",
-                "&f但是可存入物品的数量是无限的",
-                "&f各色存储卡之间并无区别");
+    public static boolean isCopyCardItem(ItemStack itemStack) {
+        if(ItemStackUtil.isItemNull(itemStack)) {
+            return false;
+        }
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        List<String> lore = itemMeta.getLore();
+        if(lore == null) {
+            return false;
+        }
+        for(String l : lore) {
+            if(CopyCardItem.ITEM_LORE_WITHOUT_COLOR.equals(ChatColor.stripColor(l))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

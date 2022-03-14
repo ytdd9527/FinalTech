@@ -61,7 +61,6 @@ public abstract class AbstractManualMachine extends AbstractMachine implements R
                 if (inv != null) {
                     inv.dropItems(block.getLocation(), getInputSlots());
                     inv.dropItems(block.getLocation(), getOutputSlots());
-                    BlockStorage.clearBlockInfo(block.getLocation());
                 }
             }
         };

@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.machine.capacitor;
+package io.taraxacum.finaltech.machine.capacitor.expanded;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -8,10 +8,10 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Final_ROOT
  */
-public class EnergizedExpandedCapacitor extends AbstractExpandedElectricCapacitor {
-    public static final int CAPACITY = 536870912;
-    public static final int STACK = 10080;
-    public EnergizedExpandedCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class LargeExpandedCapacitor extends AbstractExpandedElectricCapacitor {
+    public static final int CAPACITY = 8388608;
+    public static final int STACK = 240;
+    public LargeExpandedCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
