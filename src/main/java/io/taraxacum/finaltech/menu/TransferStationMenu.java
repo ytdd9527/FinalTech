@@ -3,7 +3,7 @@ package io.taraxacum.finaltech.menu;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.AbstractMachine;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.PositionHelper;
 import io.taraxacum.finaltech.util.cargo.*;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;

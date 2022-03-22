@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.setup;
+package io.taraxacum.finaltech.setup.register;
 
 import io.github.thebusybiscuit.slimefun4.api.items.groups.NestedItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.SubItemGroup;

@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.MachineProcessHolder;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.core.machines.MachineOperation;
 import io.github.thebusybiscuit.slimefun4.core.machines.MachineProcessor;
 import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.operations.CraftingOperation;
@@ -29,8 +30,8 @@ import java.util.List;
 /**
  * @author Final_ROOT
  */
-public abstract class AbstractStandardMachine extends AbstractMachine implements MachineProcessHolder<CraftingOperation>, RecipeItem {
-    private final MachineProcessor<CraftingOperation> processor;
+public abstract class AbstractStandardMachine extends AbstractMachine implements MachineProcessHolder<MachineOperation>, RecipeItem {
+    private final MachineProcessor<MachineOperation> processor;
     private final List<MachineRecipe> recipes = new ArrayList<>();
 
     public AbstractStandardMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -73,7 +74,7 @@ public abstract class AbstractStandardMachine extends AbstractMachine implements
 
     @Nonnull
     @Override
-    public final MachineProcessor<CraftingOperation> getMachineProcessor() {
+    public final MachineProcessor<MachineOperation> getMachineProcessor() {
         return this.processor;
     }
 

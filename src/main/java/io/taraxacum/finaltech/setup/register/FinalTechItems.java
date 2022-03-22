@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.setup;
+package io.taraxacum.finaltech.setup.register;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
@@ -17,6 +17,9 @@ public final class FinalTechItems {
     public static final SlimefunItemStack GEARWHEEL = new SlimefunItemStack("FINALTECH_GEARWHEEL", Material.REDSTONE, "&7齿轮");
     public static final SlimefunItemStack UNORDERED_DUST = new SlimefunItemStack("FINALTECH_UNORDERED_DUST", Material.WHEAT_SEEDS, "&f无序尘埃",
             "&8它被感知到了");
+    public static final SlimefunItemStack ORDERED_DUST = new SlimefunItemStack("FINALTECH_ORDERED_DUST", Material.SLIME_BALL, "&f有序尘埃",
+            "&8至此",
+            "&8万物将被重构");
     public static final SlimefunItemStack QUANTITY_MODULE = new SlimefunItemStack("FINALTECH_QUANTITY_MODULE", Material.AMETHYST_SHARD, "&3数量组件",
             "&8线性改变机器效率");
     public static final SlimefunItemStack QUANTITY_MODULE_V2 = new SlimefunItemStack("FINALTECH_QUANTITY_MODULE_V2", Material.AMETHYST_SHARD, "&3数量组件v2",
@@ -24,6 +27,15 @@ public final class FinalTechItems {
     public static final SlimefunItemStack SINGULARITY = new SlimefunItemStack("FINALTECH_SINGULARITY", Material.NETHER_STAR, "&e奇点",
             "&7纯粹意义上的奇点",
             "&d数量&7的堆积物");
+    public static final SlimefunItemStack SPIROCHETE = new SlimefunItemStack("FINALTECH_SPIROCHETE", Material.ARMOR_STAND, "&e螺旋体",
+            "&7凝聚着多种物质",
+            "&d结构&7的聚合物");
+    public static final SlimefunItemStack SHELL = new SlimefunItemStack("FINALTECH_SHELL", Material.PRISMARINE_SHARD, "&e壳",
+            "&7内在空白之物",
+            "&7具备&d转化&7为其他物质的可能");
+    public static final SlimefunItemStack FAKE = new SlimefunItemStack("FINALTECH_FAKE", Material.END_CRYSTAL, "§x§f§0§f§0§f§0伪物",
+            "&7模仿&d世界&7之物",
+            "&7蕴含&d创造&7的可能");
     public static final SlimefunItemStack BUG = new SlimefunItemStack("FINALTECH_BUG", Material.INFESTED_COBBLESTONE, "&8BUG",
             "&8??!");
     public static final SlimefunItemStack CODE_ADDITION = new SlimefunItemStack("FINALTECH_CODE_ADDITION0", Material.PAPER, "&b概念<加法>");
@@ -32,9 +44,6 @@ public final class FinalTechItems {
     public static final SlimefunItemStack CODE_NULL = new SlimefunItemStack("FINALTECH_CODE_NULL", Material.PAPER, "&b概念<空值>");
     public static final SlimefunItemStack CODE_CREATE = new SlimefunItemStack("FINALTECH_CODE_CREATE", Material.PAPER, "&9高级概念<创造>",
             "&7繁荣的基础");
-    public static final SlimefunItemStack ORDERED_DUST = new SlimefunItemStack("FINALTECH_ORDERED_DUST", Material.SLIME_BALL, "&f有序尘埃",
-            "&8至此",
-            "&8万物将被重构");
     public static final SlimefunItemStack CODE_FINAL = new SlimefunItemStack("FINALTECH_CODE_FINAL", Material.ENCHANTED_BOOK, "&f概念<Final>",
         "&7无数概念交织在一起",
         "&7于是他们无法再创造新事物");

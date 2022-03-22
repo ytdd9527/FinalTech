@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.ItemUtils;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -37,6 +37,18 @@ public final class MachineUtil {
             blockPlaceEvent.setCancelled(true);
         }
     };
+
+    public static int itemCount(@Nonnull Inventory inventory, int[] slots) {
+        ItemStack itemStack;
+        int count = 0;
+        for(int slot : slots) {
+            itemStack = inventory.getItem(slot);
+            if(!ItemStackUtil.isItemNull(itemStack)) {
+                count++;
+            }
+        }
+        return count;
+    }
 
     public static boolean isFull(@Nonnull Inventory inventory, int[] slots) {
         ItemStack itemStack;

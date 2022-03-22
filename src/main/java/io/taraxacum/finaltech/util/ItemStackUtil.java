@@ -1,13 +1,11 @@
 package io.taraxacum.finaltech.util;
 
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.nms.ItemNameAdapter;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.core.RandomMachineRecipe;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -22,6 +20,10 @@ import java.util.*;
 public final class ItemStackUtil {
     public static final ItemStack AIR = new ItemStack(Material.AIR);
     public static final ItemNameAdapter itemNameAdapter = ItemNameAdapter.get();
+
+    public static ItemStack cloneItem(ItemStack item) {
+        return item instanceof ItemStackWrapper ? new ItemStack(item) : item.clone();
+    }
 
     /**
      * 判断输入的物品是否为实际意义上的空物品
@@ -48,6 +50,23 @@ public final class ItemStackUtil {
             return isItemMetaSame(item1.getItemMeta(), item2.getItemMeta());
         }
         return !item1.hasItemMeta() && !item2.hasItemMeta();
+    }
+
+    public static boolean isItemSimilar(@Nonnull ItemStackWithWrapper itemStackWithWrapper1, @Nonnull ItemStackWithWrapper itemStackWithWrapper2) {
+        boolean itemNull1 = isItemNull(itemStackWithWrapper1.getItemStack());
+        boolean itemNull2 = isItemNull(itemStackWithWrapper2.getItemStack());
+        if(itemNull1 && itemNull2) {
+            return true;
+        } else if(itemNull1 || itemNull2) {
+            return false;
+        }
+        if(!itemStackWithWrapper1.getItemStack().getType().equals(itemStackWithWrapper2.getItemStack().getType())) {
+            return false;
+        }
+        if(itemStackWithWrapper1.getItemStackWrapper().hasItemMeta() && itemStackWithWrapper2.getItemStackWrapper().hasItemMeta()) {
+            return isItemMetaSame(itemStackWithWrapper1.getItemStackWrapper().getItemMeta(), itemStackWithWrapper2.getItemStackWrapper().getItemMeta());
+        }
+        return !itemStackWithWrapper1.getItemStackWrapper().hasItemMeta() && !itemStackWithWrapper2.getItemStackWrapper().hasItemMeta();
     }
 
     public static boolean isItemSimilar(@Nullable ItemStack item1, @Nullable ItemStack item2) {
@@ -166,7 +185,7 @@ public final class ItemStackUtil {
                 }
             }
             if(amount != 0) {
-                ItemStack itemstack = item.clone();
+                ItemStack itemstack = ItemStackUtil.cloneItem(item);
                 itemstack.setAmount(amount);
                 resultList.add(new ItemStackWithWrapper(itemstack, itemStackWrapper));
             }

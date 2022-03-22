@@ -1,7 +1,7 @@
 package io.taraxacum.finaltech.util.cargo;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

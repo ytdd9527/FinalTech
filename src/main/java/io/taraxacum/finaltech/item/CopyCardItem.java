@@ -1,20 +1,19 @@
 package io.taraxacum.finaltech.item;
 
-import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.MachineUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class CopyCardItem extends SlimefunItem {
+/**
+ * @author Final_ROOT
+ */
+public class CopyCardItem extends UnusableSlimefunItem {
     public static final String ITEM_LORE = "§x§f§f§0§0§0§0已" +
             "§x§f§f§3§3§0§0经" +
             "§x§f§f§6§6§0§0由" +
@@ -37,17 +36,16 @@ public class CopyCardItem extends SlimefunItem {
             "§x§6§6§0§0§f§f复" +
             "§x§9§9§0§0§f§f制";
     public static final String ITEM_LORE_WITHOUT_COLOR = "已经由Final_ROOT签名认证并允许进行复制";
-    public static final int DIFFICULTY = 16777216;
-    public static final int SINGULARITY_DIFFICULTY = 256;
+    public static int COPY_CARD_DIFFICULTY = 16777216;
+    public static int SINGULARITY_DIFFICULTY = 128;
+    public static int SPIROCHETE_DIFFICULTY = 32;
 
     public CopyCardItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.addItemHandler(MachineUtil.BLOCK_PLACE_HANDLER_DENY);
-        this.addItemHandler((ItemUseHandler) PlayerRightClickEvent::cancel);
     }
 
     public static boolean isCopyCardItem(ItemStack itemStack) {
-        if(ItemStackUtil.isItemNull(itemStack)) {
+        if(ItemStackUtil.isItemNull(itemStack) || !itemStack.hasItemMeta()) {
             return false;
         }
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -61,5 +59,10 @@ public class CopyCardItem extends SlimefunItem {
             }
         }
         return false;
+    }
+
+    public static void initDifficulty(int singularityDifficulty, int spirocheteDifficulty) {
+        SINGULARITY_DIFFICULTY = singularityDifficulty;
+        SPIROCHETE_DIFFICULTY = spirocheteDifficulty;
     }
 }

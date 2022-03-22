@@ -6,11 +6,10 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.taraxacum.finaltech.machine.standard.AbstractStandardMachine;
 import io.taraxacum.finaltech.menu.standard.AbstractStandardMachineMenu;
-import io.taraxacum.finaltech.core.UnOrderedDustCraftingOperation;
-import io.taraxacum.finaltech.menu.standard.UnOrderedDustFactoryMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.core.operation.OrderedDustOperation;
+import io.taraxacum.finaltech.menu.standard.OrderedDustFactoryMenu;
+import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -22,8 +21,8 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 public class OrderedDustFactory extends AbstractStandardMachine {
-    private static final int MATCH_DIFFICULTY = 16;
-    private static final int INPUT_DIFFICULTY = 1024;
+    public static final int TYPE_DIFFICULTY = 16;
+    public static final int AMOUNT_DIFFICULTY = 1024;
 
     public OrderedDustFactory(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -33,13 +32,13 @@ public class OrderedDustFactory extends AbstractStandardMachine {
     @Nonnull
     @Override
     protected AbstractStandardMachineMenu setMachineMenu() {
-        return new UnOrderedDustFactoryMenu(this.getId(), this.getItemName(), this);
+        return new OrderedDustFactoryMenu(this.getId(), this.getItemName(), this);
     }
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu inv = BlockStorage.getInventory(block);
-        UnOrderedDustCraftingOperation currentOperation = (UnOrderedDustCraftingOperation)this.getMachineProcessor().getOperation(block);
+        OrderedDustOperation operation = (OrderedDustOperation)this.getMachineProcessor().getOperation(block);
 
         for(int slot : this.getInputSlots()) {
             ItemStack inputItem = inv.getItemInSlot(slot);
@@ -47,48 +46,47 @@ public class OrderedDustFactory extends AbstractStandardMachine {
                 continue;
             }
 
-            if(currentOperation == null) {
-                this.getMachineProcessor().startOperation(block, new UnOrderedDustCraftingOperation(new MachineRecipe(0, new ItemStack[MATCH_DIFFICULTY], new ItemStack[] {new ItemStack(FinalTechItems.UNORDERED_DUST)})));
-                currentOperation = (UnOrderedDustCraftingOperation)this.getMachineProcessor().getOperation(block);
+            if(operation == null) {
+                operation = new OrderedDustOperation();
+                this.getMachineProcessor().startOperation(block, operation);
             }
-            currentOperation.addItem(inputItem);
+            operation.addItem(inputItem);
 
-            if(currentOperation.isFinished()) {
-                if(InvUtils.fitAll(inv.toInventory(), currentOperation.getResults(), this.getOutputSlots())) {
-                    for(ItemStack item : currentOperation.getResults()) {
-                        inv.pushItem(item, this.getOutputSlots());
-                    }
+            if(operation.isFinished()) {
+                if(operation.isOrderedDust() && InvUtils.fitAll(inv.toInventory(), new ItemStack[] {FinalTechItems.ORDERED_DUST}, this.getOutputSlots())) {
+                    inv.pushItem(new ItemStack(FinalTechItems.ORDERED_DUST), this.getOutputSlots());
                     this.getMachineProcessor().endOperation(block);
-                    currentOperation = null;
+                    operation = null;
+                } else if(InvUtils.fitAll(inv.toInventory(), new ItemStack[] {FinalTechItems.UNORDERED_DUST}, this.getOutputSlots())) {
+                    inv.pushItem(new ItemStack(FinalTechItems.UNORDERED_DUST), this.getOutputSlots());
+                    this.getMachineProcessor().endOperation(block);
+                    operation = null;
                 }
             }
             inv.consumeItem(slot, inputItem.getAmount());
         }
 
-        if(currentOperation == null) {
-            this.getMachineProcessor().startOperation(block, new UnOrderedDustCraftingOperation(new MachineRecipe(0, new ItemStack[MATCH_DIFFICULTY], new ItemStack[] {new ItemStack(FinalTechItems.UNORDERED_DUST)})));
-            currentOperation = (UnOrderedDustCraftingOperation)this.getMachineProcessor().getOperation(block);
+        if(operation == null) {
+            operation = new OrderedDustOperation();
+            this.getMachineProcessor().startOperation(block, operation);
         }
         CustomItemStack progress = new CustomItemStack(Material.REDSTONE, "&f完成进度",
-                "&7匹配的物品种类" + currentOperation.getMatchCount() + "/" + MATCH_DIFFICULTY,
-                "&7输入的物品总数" + currentOperation.getInputCount() + "/" + INPUT_DIFFICULTY);
+                "&7匹配的物品种类" + operation.getTypeCount() + "/" + TYPE_DIFFICULTY,
+                "&7输入的物品总数" + operation.getAmountCount() + "/" + AMOUNT_DIFFICULTY);
         inv.replaceExistingItem(22, progress);
-    }
-
-    public static int getMatchDifficulty() {
-        return MATCH_DIFFICULTY;
-    }
-
-    public static int getInputDifficulty() {
-        return INPUT_DIFFICULTY;
     }
 
     @Override
     public void registerDefaultRecipes() {
         this.registerDescriptiveRecipe("&f制造无序尘埃",
                 "",
-                "&f输入共" + MATCH_DIFFICULTY + "种物品",
-                "&f输入共" + INPUT_DIFFICULTY + "个物品",
+                "&f输入至少" + TYPE_DIFFICULTY + "种物品",
+                "&f输入至少" + AMOUNT_DIFFICULTY + "个物品",
                 "&f满足以上两个条件时生成一个无序尘埃");
+        this.registerDescriptiveRecipe("&f制造有序尘埃",
+                "",
+                "&f输入恰好" + TYPE_DIFFICULTY + "种物品",
+                "&f输入恰好" + AMOUNT_DIFFICULTY + "个物品",
+                "&f满足以上两个条件时生成一个有序尘埃");
     }
 }

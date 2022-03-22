@@ -6,7 +6,6 @@ import io.taraxacum.finaltech.machine.manual.AbstractManualMachine;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.ItemStackWithWrapper;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.cargo.Icon;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -14,7 +13,6 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
-import org.checkerframework.checker.units.qual.K;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -251,7 +249,7 @@ public class ManualMachineMenu extends AbstractMachineMenu {
                 }
             }
             if(find == recipe.getInput().length) {
-                showItem = recipe.getOutput()[0].clone();
+                showItem = ItemStackUtil.cloneItem(recipe.getOutput()[0]);
                 if(offset < value) {
                     offset++;
                     continue;

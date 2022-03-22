@@ -30,7 +30,7 @@ import java.util.*;
  * @author Final_ROOT
  */
 public class StorageInteractPort extends AbstractCargo implements RecipeItem {
-    private static final int SEARCH_LIMIT = 9;
+    private static final int SEARCH_LIMIT = 3;
     public static final List<MachineRecipe> RECIPE = new ArrayList<>();
 
     public StorageInteractPort(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -54,13 +54,20 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
                 Inventory inventory = ((InventoryHolder) blockState).getInventory();
                 LinkedList<ItemStackWrapper> unPushItem = new LinkedList<>();
                 LinkedList<ItemStackWrapper> unStackItem = new LinkedList<>();
-                boolean isFull = MachineUtil.isFull(blockMenu.toInventory(), getOutputSlots());
-                boolean isEmpty = MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlots());
-                MachineUtil.stockSlots(blockMenu, getOutputSlots());
-                MachineUtil.stockSlots(blockMenu, getInputSlots());
+                boolean isFull = MachineUtil.isFull(blockMenu.toInventory(), getOutputSlots()) || MachineUtil.itemCount(blockMenu.toInventory(), getOutputSlots()) >= getOutputSlots().length / 2;
+                boolean isEmpty = MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlots()) || MachineUtil.itemCount(blockMenu.toInventory(), getInputSlots()) < getInputSlots().length / 2;
+                if(isFull && isEmpty) {
+                    return;
+                }
+                if(!isFull) {
+                    MachineUtil.stockSlots(blockMenu, getOutputSlots());
+                }
+                if(!isEmpty) {
+                    MachineUtil.stockSlots(blockMenu, getInputSlots());
+                }
                 int pushItemAmount = 0;
                 Map<ItemStack, ItemMeta> map = new HashMap<>(inventory.getSize());
-                for(int i = 0; i < Math.min(inventory.getSize(), SEARCH_LIMIT); i++) {
+                for(int i = 0, size = Math.min(inventory.getSize(), SEARCH_LIMIT); i < size; i++) {
                     ItemStack item = inventory.getItem(i);
                     if(ItemStackUtil.isItemNull(item) || !item.hasItemMeta()) {
                         continue;

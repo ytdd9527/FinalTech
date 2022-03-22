@@ -2,6 +2,7 @@ package io.taraxacum.finaltech.machine.standard.basic;
 
 import io.github.thebusybiscuit.slimefun4.api.items.*;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.machines.MachineOperation;
 import io.github.thebusybiscuit.slimefun4.implementation.operations.CraftingOperation;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
@@ -42,9 +43,9 @@ public abstract class AbstractBasicMachine extends AbstractStandardMachine {
     @Override
     protected final void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        CraftingOperation currentOperation = this.getMachineProcessor().getOperation(block);
-
         int offset = config.contains(OFFSET_KEY) ? Integer.parseInt(config.getString(OFFSET_KEY)) : 0;
+
+        CraftingOperation currentOperation = (CraftingOperation) this.getMachineProcessor().getOperation(block);
 
         if(currentOperation == null) {
             MachineUtil.stockSlots(blockMenu, this.getInputSlots());
@@ -53,11 +54,7 @@ public abstract class AbstractBasicMachine extends AbstractStandardMachine {
                 if(machineRecipe.getTicks() == 0) {
                     ItemStack[] outputItems = machineRecipe.getOutput();
                     for(ItemStack output : outputItems) {
-                        if(output instanceof ItemStackWrapper) {
-                            blockMenu.pushItem(new ItemStack(output), this.getOutputSlots());
-                        } else {
-                            blockMenu.pushItem(output.clone(), this.getOutputSlots());
-                        }
+                        blockMenu.pushItem(ItemStackUtil.cloneItem(output), this.getOutputSlots());
                     }
                 } else {
                     this.getMachineProcessor().startOperation(block, new CraftingOperation(machineRecipe));

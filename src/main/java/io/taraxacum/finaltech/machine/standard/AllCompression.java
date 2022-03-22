@@ -6,23 +6,20 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.taraxacum.finaltech.core.operation.AllCompressionOperation;
 import io.taraxacum.finaltech.item.CopyCardItem;
 import io.taraxacum.finaltech.menu.standard.AbstractStandardMachineMenu;
-import io.taraxacum.finaltech.core.CopyCardItemCraftingOperation;
+import io.taraxacum.finaltech.core.operation.ItemCopyCardOperation;
 import io.taraxacum.finaltech.menu.standard.AllCompressionMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.cargo.Icon;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * @author Final_ROOT
@@ -47,19 +44,18 @@ public class AllCompression extends AbstractStandardMachine {
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu inv = BlockStorage.getInventory(block);
 
-        CopyCardItemCraftingOperation currentOperation = (CopyCardItemCraftingOperation)this.getMachineProcessor().getOperation(block);
+        AllCompressionOperation operation = (AllCompressionOperation) this.getMachineProcessor().getOperation(block);
 
-        ItemStack stringItem;
-
-        if(currentOperation == null && config.contains(BLOCK_STORAGE_ITEM_KEY)) {
+        if(operation == null && config.contains(BLOCK_STORAGE_ITEM_KEY)) {
             String itemString = config.getValue(BLOCK_STORAGE_ITEM_KEY).toString();
-            stringItem = ItemStackUtil.stringToItemStack(itemString);
-            if(!ItemStackUtil.isItemNull(stringItem) && !ItemStackUtil.isItemSimilar(stringItem, FinalTechItems.SINGULARITY)) {
-                int amount =  Integer.parseInt(config.getString(BLOCK_STORAGE_AMOUNT_KEY));
-                stringItem.setAmount(1);
-                currentOperation = new CopyCardItemCraftingOperation(stringItem);
-                currentOperation.setAmount(amount);
-                this.getMachineProcessor().startOperation(block, currentOperation);
+            ItemStack stringItem = ItemStackUtil.stringToItemStack(itemString);
+            if(!ItemStackUtil.isItemNull(stringItem) && AllCompressionOperation.getType(stringItem) == AllCompressionOperation.COPY_CARD) {
+                operation = AllCompressionOperation.newInstance(stringItem);
+                if(operation != null) {
+                    this.getMachineProcessor().startOperation(block, operation);
+                    int amount =  Integer.parseInt(config.getString(BLOCK_STORAGE_AMOUNT_KEY));
+                    ((ItemCopyCardOperation)operation).setCount(amount);
+                }
             }
         }
 
@@ -68,72 +64,71 @@ public class AllCompression extends AbstractStandardMachine {
             if(ItemStackUtil.isItemNull(inputItem)) {
                 continue;
             }
-            if(currentOperation == null) {
-                if(isAllowedItem(inputItem)) {
-                    stringItem = inputItem.clone();
-                    stringItem.setAmount(1);
-                    currentOperation = new CopyCardItemCraftingOperation(inputItem);
-                    this.getMachineProcessor().startOperation(block, currentOperation);
-                    int amount = currentOperation.matchItem(inputItem);
-                    currentOperation.setAmount(amount);
-                    inv.consumeItem(slot, amount);
+            if(operation == null) {
+                operation = AllCompressionOperation.newInstance(inputItem);
+                if(operation != null) {
+                    this.getMachineProcessor().startOperation(block, operation);
                 }
             } else {
-                int amount = currentOperation.matchItem(inputItem);
-                if(amount > 0) {
-                    currentOperation.addAmount(amount);
-                    inv.consumeItem(slot, amount);
-                }
+                operation.addItem(inputItem);
             }
         }
 
-        if (currentOperation != null && currentOperation.isFinished() && InvUtils.fits(inv.toInventory(), currentOperation.getOutput(), this.getOutputSlots())) {
-            inv.pushItem(currentOperation.getOutput(), this.getOutputSlots());
+        if (operation != null && operation.isFinished() && InvUtils.fits(inv.toInventory(), operation.getResult(), this.getOutputSlots())) {
+            inv.pushItem(operation.getResult(), this.getOutputSlots());
             this.getMachineProcessor().endOperation(block);
-            currentOperation = null;
+            operation = null;
             BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_ITEM_KEY, null);
             BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_AMOUNT_KEY, null);
         }
 
-        ItemStack progressItem;
-        if (currentOperation != null) {
-            progressItem = inv.getItemInSlot(AllCompressionMenu.PROGRESS_SLOT);
-            if(ItemStackUtil.isItemSimilar(progressItem, Icon.BORDER_ICON) || ItemStackUtil.isItemSimilar(progressItem, NULL_INFO_ICON)) {
-                progressItem = new CustomItemStack(currentOperation.getInput().getType(), "§7完成进度",
-                        "§7物品名称= " + ItemStackUtil.getItemName(currentOperation.getInput()),
-                        "§7完成进度= " + currentOperation.getAmount() + "§8 / §7" + currentOperation.getDifficulty());
-            } else {
-                ItemStackUtil.setLastLore(progressItem, "§7完成进度= " + currentOperation.getAmount() + "§8 / §7" + currentOperation.getDifficulty());
-            }
-            if(!currentOperation.isSingularity()) {
-                BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_ITEM_KEY, ItemStackUtil.itemStackToString(currentOperation.getInput()));
-                BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_AMOUNT_KEY, String.valueOf(currentOperation.getAmount()));
+        ItemStack showItem;
+        if (operation != null) {
+            operation.updateShowItem();
+            showItem = operation.getShowItem();
+            if(operation.getType() == AllCompressionOperation.COPY_CARD) {
+                BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_ITEM_KEY, ItemStackUtil.itemStackToString(((ItemCopyCardOperation)operation).getMatchItem()));
+                BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_AMOUNT_KEY, String.valueOf(((ItemCopyCardOperation)operation).getCount()));
             }
         } else {
-            progressItem = NULL_INFO_ICON;
+            showItem = NULL_INFO_ICON;
         }
-        inv.replaceExistingItem(AllCompressionMenu.PROGRESS_SLOT, progressItem);
-    }
-
-    private boolean isAllowedItem(@Nullable ItemStack item) {
-        if(ItemStackUtil.isItemSimilar(item, FinalTechItems.SINGULARITY)) {
-            return false;
-        }
-        return true;
+        inv.replaceExistingItem(AllCompressionMenu.PROGRESS_SLOT, showItem);
     }
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe("&f制造复制卡",
+        this.registerDescriptiveRecipe("&f制造[复制卡]",
                 "",
-                "&f输入" + CopyCardItem.DIFFICULTY + "个相同物品",
-                "&f输出1个该物品的复制卡",
-                "&f无法生产 奇点 的复制卡");
-
-        this.registerDescriptiveRecipe("&f制造奇点",
+                "&f输入" + CopyCardItem.COPY_CARD_DIFFICULTY + "个相同物品",
+                "&f输出一个该物品的[复制卡]",
+                "&f无法制造 奇点、螺旋体、伪物 的复制卡");
+        this.registerDescriptiveRecipe("&f制造[奇点]",
                 "",
-                "&7输入任意" + CopyCardItem.SINGULARITY_DIFFICULTY + "个复制卡",
-                "&7输出1个奇点",
-                "&f允许使用多种物品的复制卡");
+                "&f输入任意" + CopyCardItem.SINGULARITY_DIFFICULTY + "个[复制卡]",
+                "&f输出一个[奇点]",
+                "",
+                "&f制造[奇点]所需[复制卡]的基础数量为128",
+                "&f然后再加上总共的粘液科技物品个数取根号后的数字",
+                "&f即为最终所需要的[复制卡]的个数");
+        this.registerDescriptiveRecipe("&f制造[螺旋体]",
+                "",
+                "&f输入任意" + CopyCardItem.SPIROCHETE_DIFFICULTY + "种不同的[复制卡]",
+                "&f输出一个[螺旋体]",
+                "",
+                "&f制造[螺旋体]所需[复制卡]的基础种数为32",
+                "&f每个已有的粘液科技附属使其+1");
+        this.registerDescriptiveRecipe("&f制造[伪物]",
+                "",
+                "&f输入的复制卡同时满足",
+                "&f制造[奇点]和制造[螺旋体]的条件",
+                "&f输出一个[伪物]");
+        this.registerDescriptiveRecipe("&f提示",
+                "",
+                "&f[伪物]可以在压缩过程中代替任何物品制造[复制卡]");
+        this.registerDescriptiveRecipe("&f提示",
+                "",
+                "&f也可以在增强型工作台",
+                "&f使用一个[奇点]和一个[螺旋体]合成[伪物]");
     }
 }

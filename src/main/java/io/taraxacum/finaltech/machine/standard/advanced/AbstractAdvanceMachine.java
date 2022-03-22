@@ -71,7 +71,7 @@ public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
     @Override
     protected final void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        CraftingOperation currentOperation = this.getMachineProcessor().getOperation(block);
+        CraftingOperation currentOperation = (CraftingOperation) this.getMachineProcessor().getOperation(block);
 
         int offset = config.contains(OFFSET_KEY) ? Integer.parseInt(config.getString(OFFSET_KEY)) : 0;
 
@@ -115,39 +115,39 @@ public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
 
     protected MachineRecipe matchRecipe(BlockMenu blockMenu, int offset) {
         int quantityModule = MachineUtil.updateQuantityModule(blockMenu, AdvancedMachineMenu.MODULE_SLOT, AdvancedMachineMenu.INFO_SLOT);
+
         if(MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlots()) || MachineUtil.isFull(blockMenu.toInventory(), getOutputSlots())) {
+            BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, null);
             return null;
         }
-        Map<Integer, ItemStackWithWrapper> inputItemSlotMap = new HashMap<>(getInputSlots().length);
+
+        Map<Integer, ItemStackWithWrapper> invInputItemSlotMap = new HashMap<>(getInputSlots().length);
         for (int slot : this.getInputSlots()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (!ItemStackUtil.isItemNull(item)) {
-                inputItemSlotMap.put(slot, new ItemStackWithWrapper(item));
+                invInputItemSlotMap.put(slot, new ItemStackWithWrapper(item));
             }
         }
 
-        int length = this.getMachineRecipes().size();
-        Map<ItemStackWithWrapper, List<Integer>> searchMap = new HashMap<>(12);
-        for(int i = 0; i < length; i++) {
+        List<List<Integer>> searchList = new ArrayList<>(getInputSlots().length);
+
+        for(int i = 0, length = this.getMachineRecipes().size(); i < length; i++) {
             MachineRecipe machineRecipe = getMachineRecipes().get((i + offset) % length);
-            List<ItemStackWithWrapper> recipeInputItems = ItemStackUtil.parseItemWithAmount(machineRecipe.getInput());
             int count = quantityModule;
-            for(ItemStackWithWrapper recipeInputItem : recipeInputItems) {
+            for(ItemStack recipeInputItem : machineRecipe.getInput()) {
+                ItemStackWithWrapper recipeInputItemWithWrapper = new ItemStackWithWrapper(recipeInputItem);
                 int itemMatchAmount = 0;
-                for(Map.Entry<Integer, ItemStackWithWrapper> inputMap : inputItemSlotMap.entrySet()) {
-                    if(ItemStackUtil.isItemSimilar(inputMap.getValue().getItemStackWrapper(), recipeInputItem.getItemStackWrapper())) {
+                List<Integer> slotList = new ArrayList<>(getInputSlots().length);
+                for(Map.Entry<Integer, ItemStackWithWrapper> inputMap : invInputItemSlotMap.entrySet()) {
+                    if(ItemStackUtil.isItemSimilar(inputMap.getValue().getItemStackWrapper(), recipeInputItemWithWrapper.getItemStackWrapper())) {
                         itemMatchAmount += inputMap.getValue().getAmount();
-                        List<Integer> slotList = searchMap.get(recipeInputItem);
-                        if(slotList == null) {
-                            slotList = new ArrayList<>(getInputSlots().length);
-                            searchMap.put(recipeInputItem, slotList);
-                        }
                         slotList.add(inputMap.getKey());
                         if(itemMatchAmount / recipeInputItem.getAmount() > count) {
                             break;
                         }
                     }
                 }
+                searchList.add(slotList);
                 count = Math.min(count, itemMatchAmount / recipeInputItem.getAmount());
                 if(count == 0) {
                     break;
@@ -163,20 +163,21 @@ public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
                         recipeInputs = ItemStackUtil.enlargeItemArray(machineRecipe.getInput(), count);
                         recipeOutputs = ItemStackUtil.enlargeItemArray(machineRecipe.getOutput(), count);
                     }
-                    for(Map.Entry<ItemStackWithWrapper, List<Integer>> searchItem : searchMap.entrySet()) {
-                        int number = searchItem.getKey().getAmount() * count;
-                        for(Integer n : searchItem.getValue()) {
-                            ItemStack item = blockMenu.getItemInSlot(n);
-                            int l = Math.min(item.getAmount(), number);
-                            item.setAmount(item.getAmount() - l);
-                            number -= l;
+                    for(int j = 0, recipeSize = machineRecipe.getInput().length; j < recipeSize ; j++) {
+                        int amount = count * machineRecipe.getInput()[j].getAmount();
+                        for(Integer slot : searchList.get(j)) {
+                            ItemStack item = invInputItemSlotMap.get(slot).getItemStack();
+                            int l = Math.min(item.getAmount(), amount);
+                            blockMenu.consumeItem(slot, l);
+                            amount -= l;
                         }
                     }
                     return new MachineRecipe(machineRecipe.getTicks(), recipeInputs, recipeOutputs);
                 }
             }
-            searchMap.clear();
+            searchList.clear();
         }
+        BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, null);
         return null;
     }
 }

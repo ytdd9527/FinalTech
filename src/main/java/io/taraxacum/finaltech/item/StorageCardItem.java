@@ -1,13 +1,9 @@
 package io.taraxacum.finaltech.item;
 
-import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
-import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,7 +13,7 @@ import java.util.List;
 /**
  * @author Final_ROOT
  */
-public class StorageCardItem extends SlimefunItem implements RecipeItem {
+public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem {
     private static final List<MachineRecipe> RECIPE = new ArrayList<>();
     public static final String ITEM_LORE = "§x§f§f§0§0§0§0已" +
             "§x§f§f§3§3§0§0经" +
@@ -44,8 +40,6 @@ public class StorageCardItem extends SlimefunItem implements RecipeItem {
 
     public StorageCardItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.addItemHandler(MachineUtil.BLOCK_PLACE_HANDLER_DENY);
-        this.addItemHandler((ItemUseHandler) PlayerRightClickEvent::cancel);
     }
 
     @Override

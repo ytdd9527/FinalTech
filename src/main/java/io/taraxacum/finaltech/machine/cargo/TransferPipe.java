@@ -11,7 +11,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.TransferPipeMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.finaltech.util.cargo.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;

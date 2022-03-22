@@ -10,7 +10,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBre
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.TransferLineMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.JavaUtil;
 import io.taraxacum.finaltech.util.cargo.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -101,18 +101,13 @@ public class TransferLine extends AbstractCargo implements RecipeItem {
         if(blockFace == null) {
             return;
         }
-        String blockSearchMode = config.getString(BlockSearchMode.KEY);
         List<Block> blockList = new ArrayList<>();
-        String blockSearchSelf = config.getString(BlockSearchSelf.KEY);
-        if(BlockSearchSelf.VALUE_TRUE.equals(blockSearchSelf)) {
+        if(BlockSearchSelf.VALUE_TRUE.equals(config.getString(BlockSearchSelf.KEY))) {
             blockList.add(0, block);
         }
-        for(Block searchBlock : searchBlock(block, blockSearchMode, blockFace)) {
-            blockList.add(searchBlock);
-        }
+        blockList.addAll(searchBlock(block, config.getString(BlockSearchMode.KEY), blockFace));
 
-        String blockSearchOrder = config.getString(BlockSearchOrder.KEY);
-        if(BlockSearchOrder.VALUE_REVERSE.equals(blockSearchOrder)) {
+        if(BlockSearchOrder.VALUE_REVERSE.equals(config.getString(BlockSearchOrder.KEY))) {
             blockList = new JavaUtil<Block>().reserve(blockList);
         }
 
@@ -149,17 +144,17 @@ public class TransferLine extends AbstractCargo implements RecipeItem {
 
     public static List<Block> searchBlock(@Nonnull Block begin, String blockSearchMode, BlockFace blockFace) {
         List<Block> list = new ArrayList<>();
+        Block block = begin.getRelative(blockFace);
         if(BlockSearchMode.VALUE_ZERO.equals(blockSearchMode)) {
-            if(CargoUtil.hasInventory(begin.getRelative(blockFace))) {
-                list.add(begin.getRelative(blockFace));
+            if(CargoUtil.hasInventory(block)) {
+                list.add(block);
             }
-            Block block = begin.getRelative(blockFace).getRelative(blockFace);
+            block = block.getRelative(blockFace);
             if(CargoUtil.hasInventory(block)) {
                 list.add(block);
             }
             return list;
         }
-        Block block = begin.getRelative(blockFace);
         while (CargoUtil.hasInventory(block)) {
             if (BlockStorage.hasInventory(block) && BlockStorage.getInventory(block).getPreset().getID().equals(FinalTechItems.TRANSFER_LINE.getItemId())) {
                 if(BlockSearchMode.VALUE_PENETRATE.equals(blockSearchMode)) {
