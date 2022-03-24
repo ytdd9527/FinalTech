@@ -1,26 +1,23 @@
-package io.taraxacum.finaltech.menu;
+package io.taraxacum.finaltech.menu.storage;
 
 import io.taraxacum.finaltech.machine.AbstractMachine;
+import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.block.Block;
 
 import javax.annotation.Nonnull;
 
-/**
- * @author Final_ROOT
- */
-public class BasicNormalStorageUnitMenu extends AbstractMachineMenu {
-    public static final int[] CONTAIN = new int[]{
-             0,  1,  2,  3,  4,  5,  6,  7,  8,
-             9, 10, 11, 12, 13, 14, 15, 16, 17,
+public class StorageInsertPortMenu extends AbstractMachineMenu {
+    public static final int[] INPUT_SLOT = new int[]{
+            0,  1,  2,  3,  4,  5,  6,  7,  8,
+            9, 10, 11, 12, 13, 14, 15, 16, 17,
             18, 19, 20, 21, 22, 23, 24, 25, 26,
             27, 28, 29, 30, 31, 32, 33, 34, 35,
             36, 37, 38, 39, 40, 41, 42, 43, 44,
             45, 46, 47, 48, 49, 50, 51, 52, 53
     };
 
-    public BasicNormalStorageUnitMenu(@Nonnull String id, @Nonnull String title, @Nonnull AbstractMachine machine) {
+    public StorageInsertPortMenu(@Nonnull String id, @Nonnull String title, AbstractMachine machine) {
         super(id, title, machine);
     }
 
@@ -41,25 +38,22 @@ public class BasicNormalStorageUnitMenu extends AbstractMachineMenu {
 
     @Override
     public int[] getInputSlots() {
-        return CONTAIN;
+        return INPUT_SLOT;
     }
 
     @Override
     public int[] getOutputSlots() {
-        return CONTAIN;
+        return new int[0];
     }
 
     @Override
     public void init() {
         super.init();
-        setSize(54);
+        this.setSize(54);
     }
 
     @Override
-    public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
-        return CONTAIN;
-    }
+    protected void updateMenu(BlockMenu menu, Block block) {
 
-    @Override
-    protected void updateMenu(BlockMenu menu, Block block) {}
+    }
 }

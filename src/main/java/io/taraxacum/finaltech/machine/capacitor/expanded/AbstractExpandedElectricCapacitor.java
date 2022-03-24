@@ -9,6 +9,7 @@ import io.taraxacum.finaltech.machine.capacitor.AbstractElectricCapacitor;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.ElectricCapacitorMenu;
 import io.taraxacum.finaltech.util.CapacitorUtil;
+import io.taraxacum.finaltech.util.StringNumberUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -48,25 +49,25 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
     @Override
     public abstract int getCapacity();
 
-    public abstract int getMaxStack();
+    public abstract String getMaxStack();
 
     @Override
     protected void tick(Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         int electric = getCharge(block.getLocation());
         int capacity = getCapacity();
-        int stack = Integer.parseInt(config.getValue(KEY).toString());
-        if(electric < capacity / 4 && stack > 0) {
+        String stack = config.getValue(KEY).toString();
+        if(electric < capacity / 4 && StringNumberUtil.easilyCompare(stack, "0") > 0) {
             electric += capacity / 2;
-            stack--;
-            BlockStorage.addBlockInfo(block.getLocation(), KEY, String.valueOf(stack));
-        } else if(electric > capacity / 4 * 3 && stack < getMaxStack()) {
+            stack = StringNumberUtil.sub(stack);
+            BlockStorage.addBlockInfo(block.getLocation(), KEY, stack);
+        } else if(electric > capacity / 4 * 3 && StringNumberUtil.easilyCompare(stack, getMaxStack()) < 0) {
             electric -= capacity / 2;
-            stack++;
-            BlockStorage.addBlockInfo(block.getLocation(), KEY, String.valueOf(stack));
+            stack = StringNumberUtil.add(stack);
+            BlockStorage.addBlockInfo(block.getLocation(), KEY, stack);
         }
         setCharge(block.getLocation(), electric);
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         ItemStack item = blockMenu.getItemInSlot(ElectricCapacitorMenu.INFO_SLOT);
-        CapacitorUtil.setIcon(item, String.valueOf((long) electric + (long) stack * getCapacity() / 2));
+        CapacitorUtil.setIcon(item, electric, stack);
     }
 }

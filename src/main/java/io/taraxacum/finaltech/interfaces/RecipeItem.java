@@ -31,10 +31,6 @@ public interface RecipeItem extends RecipeDisplayItem {
         this.getMachineRecipes().add(recipe);
     }
 
-    default void registerRecipe(RandomMachineRecipe recipe) {
-        this.getMachineRecipes().add(recipe);
-    }
-
     default void registerDescriptiveRecipe(ItemStack item) {
         this.registerRecipe(new MachineRecipe(0, new ItemStack[] {item}, new ItemStack[] {ItemStackUtil.AIR}));
     }

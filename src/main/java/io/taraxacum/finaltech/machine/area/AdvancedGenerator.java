@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.machine.generator;
+package io.taraxacum.finaltech.machine.area;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -8,13 +8,20 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Final_ROOT
  */
-public class AdvancedGenerator extends AbstractElectricGenerator {
+public class AdvancedGenerator extends AbstractAreaElectricGenerator {
+    public final static int ELECTRICITY = 4;
+    public final static int RANGE = 5;
     public AdvancedGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
-    public int getCapacity() {
-        return 4;
+    int getElectricity() {
+        return ELECTRICITY;
+    }
+
+    @Override
+    int getRange() {
+        return RANGE;
     }
 }

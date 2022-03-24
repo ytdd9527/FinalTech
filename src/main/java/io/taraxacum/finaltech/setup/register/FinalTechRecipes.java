@@ -310,6 +310,18 @@ public final class FinalTechRecipes {
             new ItemStack(Material.STONE), new ItemStack(Material.STONE), new ItemStack(Material.STONE)
     };
 
+    public static final ItemStack[] STORAGE_INSERT_PORT = new ItemStack[] {
+            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+            new ItemStack(Material.STONE), new ItemStack(Material.STONE), new ItemStack(Material.STONE),
+            new ItemStack(Material.STONE), new ItemStack(Material.STONE), new ItemStack(Material.STONE)
+    };
+
+    public static final ItemStack[] STORAGE_WITHDRAW_PORT = new ItemStack[] {
+            new ItemStack(Material.STONE), new ItemStack(Material.STONE), new ItemStack(Material.STONE),
+            new ItemStack(Material.STONE), new ItemStack(Material.STONE), new ItemStack(Material.STONE),
+            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
+    };
+
     public static final ItemStack[] STORAGE_ITEM_WHITE = new ItemStack[] {
             FinalTechItems.ORDERED_DUST, new ItemStack(Material.WHITE_CONCRETE_POWDER), new ItemStack(Material.WHITE_CONCRETE_POWDER),
             new ItemStack(Material.WHITE_CONCRETE_POWDER), new ItemStack(Material.WHITE_CONCRETE_POWDER), new ItemStack(Material.WHITE_CONCRETE),
@@ -460,32 +472,44 @@ public final class FinalTechRecipes {
 
     public static final ItemStack[] ENERGIZED_EXPANDED_CAPACITOR = new ItemStack[] {
             SlimefunItems.CARBONADO, FinalTechItems.QUANTITY_MODULE, SlimefunItems.CARBONADO,
-            FinalTechItems.FAKE, FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, FinalTechItems.FAKE,
+            FinalTechItems.ORDERED_DUST_GENERATOR, FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, FinalTechItems.ORDERED_DUST_GENERATOR,
             SlimefunItems.CARBONADO, FinalTechItems.QUANTITY_MODULE, SlimefunItems.CARBONADO
+    };
+
+    public static final ItemStack[] MATRIX_EXPANDED_CAPACITOR = new ItemStack[] {
+            FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, FinalTechItems.QUANTITY_MODULE, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR,
+            FinalTechItems.FAKE, FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, FinalTechItems.FAKE,
+            FinalTechItems.BASIC_SELF_GENERATE_CAPACITOR, FinalTechItems.QUANTITY_MODULE, FinalTechItems.BASIC_VOID_GENERATE_CAPACITOR
+    };
+
+    public static final ItemStack[] ORDERED_DUST_GENERATOR = new ItemStack[] {
+            FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST,
+            FinalTechItems.UNORDERED_DUST, null, FinalTechItems.UNORDERED_DUST,
+            FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST
     };
 
     public static final ItemStack[] BASIC_GENERATOR = new ItemStack[] {
             new ItemStack(Material.GLOWSTONE), new ItemStack(Material.GLOWSTONE), new ItemStack(Material.GLOWSTONE),
-            SlimefunItems.SOLAR_GENERATOR, SlimefunItems.SOLAR_GENERATOR, SlimefunItems.SOLAR_GENERATOR,
-            null, SlimefunItems.SOLAR_GENERATOR, null
+            SlimefunItems.SOLAR_PANEL, FinalTechItems.ORDERED_DUST, SlimefunItems.SOLAR_PANEL,
+            null, SlimefunItems.SOLAR_PANEL, null
     };
 
     public static final ItemStack[] ADVANCED_GENERATOR = new ItemStack[] {
-            FinalTechItems.BASIC_GENERATOR, new ItemStack(Material.CHAIN), FinalTechItems.BASIC_GENERATOR,
-            new ItemStack(Material.CHAIN), new ItemStack(Material.REDSTONE), new ItemStack(Material.CHAIN),
-            FinalTechItems.BASIC_GENERATOR, new ItemStack(Material.CHAIN), FinalTechItems.BASIC_GENERATOR
+            FinalTechItems.BASIC_GENERATOR, FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_GENERATOR,
+            FinalTechItems.GEARWHEEL, new ItemStack(Material.REDSTONE), FinalTechItems.GEARWHEEL,
+            FinalTechItems.BASIC_GENERATOR, FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_GENERATOR
     };
 
     public static final ItemStack[] REINFORCED_GENERATOR = new ItemStack[] {
-            FinalTechItems.ADVANCED_GENERATOR, new ItemStack(Material.CHAIN), FinalTechItems.ADVANCED_GENERATOR,
-            new ItemStack(Material.CHAIN), SlimefunItems.REINFORCED_ALLOY_INGOT, new ItemStack(Material.CHAIN),
-            FinalTechItems.ADVANCED_GENERATOR, new ItemStack(Material.CHAIN), FinalTechItems.ADVANCED_GENERATOR
+            FinalTechItems.ADVANCED_GENERATOR, FinalTechItems.GEARWHEEL, FinalTechItems.ADVANCED_GENERATOR,
+            FinalTechItems.GEARWHEEL, SlimefunItems.REINFORCED_ALLOY_INGOT, FinalTechItems.GEARWHEEL,
+            FinalTechItems.ADVANCED_GENERATOR, FinalTechItems.GEARWHEEL, FinalTechItems.ADVANCED_GENERATOR
     };
 
     public static final ItemStack[] CARBONADO_GENERATOR = new ItemStack[] {
-            FinalTechItems.REINFORCED_GENERATOR, new ItemStack(Material.CHAIN), FinalTechItems.REINFORCED_GENERATOR,
-            new ItemStack(Material.CHAIN), SlimefunItems.CARBONADO, new ItemStack(Material.CHAIN),
-            FinalTechItems.REINFORCED_GENERATOR, new ItemStack(Material.CHAIN), FinalTechItems.REINFORCED_GENERATOR
+            FinalTechItems.REINFORCED_GENERATOR, FinalTechItems.GEARWHEEL, FinalTechItems.REINFORCED_GENERATOR,
+            FinalTechItems.GEARWHEEL, SlimefunItems.CARBONADO, FinalTechItems.GEARWHEEL,
+            FinalTechItems.REINFORCED_GENERATOR, FinalTechItems.GEARWHEEL, FinalTechItems.REINFORCED_GENERATOR
     };
 
     public static final ItemStack[] ENERGIZED_GENERATOR = new ItemStack[] {
@@ -495,9 +519,9 @@ public final class FinalTechRecipes {
     };
 
     public static final ItemStack[] MATRIX_GENERATOR = new ItemStack[] {
-            FinalTechItems.ENERGIZED_GENERATOR, SlimefunItems.SOLAR_GENERATOR_4, FinalTechItems.ENERGIZED_GENERATOR,
-            SlimefunItems.SOLAR_GENERATOR_4, FinalTechItems.ORDERED_DUST, SlimefunItems.SOLAR_GENERATOR_4,
-            FinalTechItems.ENERGIZED_GENERATOR, SlimefunItems.SOLAR_GENERATOR_4, FinalTechItems.ENERGIZED_GENERATOR
+            FinalTechItems.FAKE, FinalTechItems.FAKE, FinalTechItems.FAKE,
+            FinalTechItems.ENERGIZED_GENERATOR, FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, FinalTechItems.ENERGIZED_GENERATOR,
+            null, FinalTechItems.ENERGIZED_GENERATOR, null
     };
 
     // tool

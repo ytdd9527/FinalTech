@@ -181,7 +181,7 @@ public class CargoUtil {
                     if (inputItem.getAmount() == 0) {
                         break;
                     }
-                } else if (ItemStackUtil.isItemSimilar(inputItemWithWrapper.getItemStackWrapper(), outputItem) && outputItem.getMaxStackSize() > outputItem.getAmount()) {
+                } else if (outputItem.getAmount() < outputItem.getMaxStackSize() && ItemStackUtil.isItemSimilar(inputItemWithWrapper.getItemStackWrapper(), outputItem)) {
                     if (typeItem == null) {
                         typeItem = new ItemStackWithWrapper(inputItem.clone(), inputItemWithWrapper.getItemStackWrapper());
                     }

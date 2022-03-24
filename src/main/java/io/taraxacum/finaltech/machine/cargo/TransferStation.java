@@ -201,7 +201,7 @@ public class TransferStation extends AbstractCargo implements RecipeItem {
                 "&f输出侧",
                 "&f该机器搜索方向上的某一方块",
                 "&f该方块将被传入物品",
-                "&f需通过设置方向以指定输入侧容器位置");
+                "&f需通过设置方向以指定输出侧容器位置");
         this.registerDescriptiveRecipe("&f传输模式",
                 "",
                 "&f对称传输",

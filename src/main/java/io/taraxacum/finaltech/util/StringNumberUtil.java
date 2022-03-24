@@ -7,6 +7,8 @@ import javax.annotation.Nonnull;
  */
 public final class StringNumberUtil {
     private static final String RELATIVE = "-";
+    public static final String VALUE_MAX = "MAX";
+    public static final String VALUE_MIN = "MIN";
 
     /**
      * 比较两个非负整数大小
@@ -19,6 +21,20 @@ public final class StringNumberUtil {
      */
     @Deprecated
     public static int easilyCompare(String stringNumber1, String stringNumber2) {
+        if(VALUE_MAX.equals(stringNumber1) && VALUE_MAX.equals(stringNumber2)) {
+            return 0;
+        } else if(VALUE_MAX.equals(stringNumber1)) {
+            return 1;
+        } else if(VALUE_MAX.equals(stringNumber2)) {
+            return -1;
+        }
+        if(VALUE_MIN.equals(stringNumber1) && VALUE_MIN.equals(stringNumber2)) {
+            return 0;
+        } else if(VALUE_MIN.equals(stringNumber1)) {
+            return -1;
+        } else if(VALUE_MIN.equals(stringNumber2)) {
+            return 1;
+        }
         if(stringNumber1.length() < stringNumber2.length()) {
             return -1;
         } else if(stringNumber1.length() > stringNumber2.length()) {

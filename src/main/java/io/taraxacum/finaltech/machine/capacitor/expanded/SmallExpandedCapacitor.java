@@ -21,7 +21,7 @@ public class SmallExpandedCapacitor extends AbstractExpandedElectricCapacitor {
     }
 
     @Override
-    public int getMaxStack() {
-        return STACK - 2;
+    public String getMaxStack() {
+        return String.valueOf(STACK - 2);
     }
 }

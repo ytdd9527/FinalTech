@@ -1,6 +1,7 @@
-package io.taraxacum.finaltech.menu;
+package io.taraxacum.finaltech.menu.storage;
 
 import io.taraxacum.finaltech.machine.AbstractMachine;
+import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.block.Block;
@@ -10,7 +11,7 @@ import javax.annotation.Nonnull;
 /**
  * @author Final_ROOT
  */
-public class StorageInteractPortMenu extends AbstractMachineMenu{
+public class StorageInteractPortMenu extends AbstractMachineMenu {
     public static final int[] INPUT_SLOT = new int[] {
         0,  1,  2,  3,  4,  5,  6,  7,  8,
         9, 10, 11, 12, 13, 14, 15, 16, 17

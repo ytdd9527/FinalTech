@@ -21,7 +21,7 @@ public class EnergizedExpandedCapacitor extends AbstractExpandedElectricCapacito
     }
 
     @Override
-    public int getMaxStack() {
-        return STACK - 2;
+    public String getMaxStack() {
+        return String.valueOf(STACK - 2);
     }
 }

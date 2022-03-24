@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.machine.cargo;
+package io.taraxacum.finaltech.machine.cargo.storage;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -7,9 +7,9 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
+import io.taraxacum.finaltech.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.BasicLinkedStorageUnitMenu;
-import io.taraxacum.finaltech.menu.StorageInteractPortMenu;
+import io.taraxacum.finaltech.menu.storage.StorageInteractPortMenu;
 import io.taraxacum.finaltech.util.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;

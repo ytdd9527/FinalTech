@@ -188,15 +188,15 @@ public class TransferLineMenu extends AbstractMachineMenu {
             BlockStorage.addBlockInfo(location, SlotSearchOrder.KEY_INPUT, inputOrder);
             return false;
         }));
-        blockMenu.addMenuClickHandler(INPUT_SIZE_SLOT, ((player, i, itemStack, clickAction) -> {
+        blockMenu.addMenuClickHandler(OUTPUT_SIZE_SLOT, ((player, i, itemStack, clickAction) -> {
             String outputSize = SlotSearchSize.next(BlockStorage.getLocationInfo(location, SlotSearchSize.KEY_OUTPUT));
-            blockMenu.replaceExistingItem(INPUT_SIZE_SLOT, SlotSearchSize.getIcon(outputSize));
+            blockMenu.replaceExistingItem(OUTPUT_SIZE_SLOT, SlotSearchSize.getIcon(outputSize));
             BlockStorage.addBlockInfo(location, SlotSearchSize.KEY_OUTPUT, outputSize);
             return false;
         }));
-        blockMenu.addMenuClickHandler(INPUT_ORDER_SLOT, ((player, i, itemStack, clickAction) -> {
+        blockMenu.addMenuClickHandler(OUTPUT_ORDER_SLOT, ((player, i, itemStack, clickAction) -> {
             String outputOrder = SlotSearchOrder.next(BlockStorage.getLocationInfo(location, SlotSearchOrder.KEY_OUTPUT));
-            blockMenu.replaceExistingItem(INPUT_ORDER_SLOT, SlotSearchOrder.getIcon(outputOrder));
+            blockMenu.replaceExistingItem(OUTPUT_ORDER_SLOT, SlotSearchOrder.getIcon(outputOrder));
             BlockStorage.addBlockInfo(location, SlotSearchOrder.KEY_OUTPUT, outputOrder);
             return false;
         }));
