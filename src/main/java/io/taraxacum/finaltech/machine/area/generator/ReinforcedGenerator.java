@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.machine.area;
+package io.taraxacum.finaltech.machine.area.generator;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -16,12 +16,12 @@ public class ReinforcedGenerator extends AbstractAreaElectricGenerator {
     }
 
     @Override
-    int getElectricity() {
+    protected int getElectricity() {
         return ELECTRICITY;
     }
 
     @Override
-    int getRange() {
+    protected int getRange() {
         return RANGE;
     }
 }

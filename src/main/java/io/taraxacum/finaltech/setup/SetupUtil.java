@@ -10,7 +10,9 @@ import io.taraxacum.finaltech.item.CopyCardItem;
 import io.taraxacum.finaltech.item.StorageCardItem;
 import io.taraxacum.finaltech.item.UnusableSlimefunItem;
 import io.taraxacum.finaltech.machine.OverclockFrameMachine;
-import io.taraxacum.finaltech.machine.area.*;
+import io.taraxacum.finaltech.machine.area.OverloadCoreMachine;
+import io.taraxacum.finaltech.machine.area.Stacker;
+import io.taraxacum.finaltech.machine.area.generator.*;
 import io.taraxacum.finaltech.machine.capacitor.BasicChargeIncreaseCapacitor;
 import io.taraxacum.finaltech.machine.capacitor.BasicConsumeReduceCapacitor;
 import io.taraxacum.finaltech.machine.capacitor.BasicSelfGenerateCapacitor;
@@ -116,6 +118,7 @@ public final class SetupUtil {
         new AllCompression(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.ALL_COMPRESSION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_COMPRESSION).register(slimefunAddon);
         new AllFactory(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.ALL_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_FACTORY).register(slimefunAddon);
         new OverclockFrameMachine(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.OVERCLOCK_FRAME_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.OVERCLOCK_FRAME_MACHINE).register(slimefunAddon);
+        new OverloadCoreMachine(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.OVERLOAD_CORE_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.OVERLOAD_CORE_MACHINE).register(slimefunAddon);
 
         new BasicFrameMachine(FinalTechMenus.MENU_CARGO, FinalTechItems.BASIC_FRAME_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_FRAME_MACHINE).register(slimefunAddon);
         new BasicNormalStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.BASIC_NORMAL_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_NORMAL_STORAGE_UNIT).register(slimefunAddon);
@@ -124,6 +127,7 @@ public final class SetupUtil {
         new TransferPipe(FinalTechMenus.MENU_CARGO, FinalTechItems.TRANSFER_PIPE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.TRANSFER_PIPE).register(slimefunAddon);
         new TransferLine(FinalTechMenus.MENU_CARGO, FinalTechItems.TRANSFER_LINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.TRANSFER_LINE).register(slimefunAddon);
         new TransferStation(FinalTechMenus.MENU_CARGO, FinalTechItems.TRANSFER_STATION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.TRANSFER_STATION).register(slimefunAddon);
+//        new Stacker(FinalTechMenus.MENU_CARGO, FinalTechItems.STACKER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STACKER).register(slimefunAddon);
         // register storage system
         new StorageInteractPort(FinalTechMenus.MENU_CARGO, FinalTechItems.STORAGE_INTERACT_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_INTERACT_PORT).register(slimefunAddon);
         new StorageInsertPort(FinalTechMenus.MENU_CARGO, FinalTechItems.STORAGE_INSERT_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_INSERT_PORT).register(slimefunAddon);

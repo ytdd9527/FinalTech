@@ -15,6 +15,7 @@ import io.taraxacum.finaltech.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.AdvancedAutoCraftMenu;
 import io.taraxacum.finaltech.menu.OverclockFrameMachineMenu;
+import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -79,7 +80,7 @@ public class OverclockFrameMachine extends AbstractMachine implements EnergyNetC
         }
         Block blockMachine = block.getRelative(BlockFace.DOWN);
         String id = BlockStorage.getLocationInfo(blockMachine.getLocation(), "id");
-        if(!slimefunItem.getId().equals(id)) {
+        if(id == null || "".equals(id) || id.contains("OVER") || !slimefunItem.getId().equals(id)) {
             return;
         }
         BlockTicker blockTicker = slimefunItem.getBlockTicker();
@@ -89,9 +90,7 @@ public class OverclockFrameMachine extends AbstractMachine implements EnergyNetC
         }
         for(int i = 1; i < item.getAmount(); i++) {
             if(blockTicker.isSynchronized()) {
-                Slimefun.runSync(() -> {
-                    blockTicker.tick(blockMachine, slimefunItem, BlockStorage.getLocationInfo(blockMachine.getLocation()));
-                });
+                Slimefun.runSync(() -> blockTicker.tick(blockMachine, slimefunItem, BlockStorage.getLocationInfo(blockMachine.getLocation())));
             } else {
                 blockTicker.tick(blockMachine, slimefunItem, BlockStorage.getLocationInfo(blockMachine.getLocation()));
             }
@@ -140,11 +139,11 @@ public class OverclockFrameMachine extends AbstractMachine implements EnergyNetC
                 "&f在该机器中放入相同的机器物品",
                 "&f当放入的机器物品数量大于1个时",
                 "&f将提高其每粘液刻的工作次数");
-        this.registerDescriptiveRecipe("&f适用范围",
+        this.registerDescriptiveRecipe("&f可生效的机器",
                 "",
                 "&f兼容绝大部分机器",
                 "&f包括来自其他粘液科技附属的机器",
-                "&f但是不适用于发电机");
+                "&f不适用于[" + FinalTechItems.OVERCLOCK_FRAME_MACHINE.getDisplayName() + "&f]、[" + FinalTechItems.OVERLOAD_CORE_MACHINE.getDisplayName() + "&f]");
         this.registerDescriptiveRecipe("&f超频供电",
                 "",
                 "&f部分机器由于其特性每次工作都会耗电",

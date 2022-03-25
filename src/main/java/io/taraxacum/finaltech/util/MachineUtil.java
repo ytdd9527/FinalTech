@@ -78,7 +78,7 @@ public final class MachineUtil {
      * @param slots 指定范围
      */
     public static void stockSlots(@Nonnull BlockMenu menu, int[] slots) {
-        LinkedList<ItemStack> items = new LinkedList<>();
+        List<ItemStack> items = new ArrayList<>(slots.length);
         for(int slot : slots) {
             ItemStack item1 = menu.getItemInSlot(slot);
             if(ItemStackUtil.isItemNull(item1)) {
@@ -92,283 +92,34 @@ public final class MachineUtil {
             }
             if(item1.getAmount() > 0 && item1.getAmount() < item1.getMaxStackSize()) {
                 items.add(item1);
-            } else {
-                items.remove(item1);
+            }
+        }
+    }
+    public static void stockSlots(@Nonnull Inventory inventory, int[] slots) {
+        List<ItemStackWithWrapper> items = new ArrayList<>(slots.length);
+        for(int slot : slots) {
+            ItemStack item1 = inventory.getItem(slot);
+            if(ItemStackUtil.isItemNull(item1)) {
+                continue;
+            }
+            for (ItemStackWithWrapper item2 : items) {
+                ItemStackUtil.stack(item1, item2);
+            }
+            if(item1.getAmount() > 0 && item1.getAmount() < item1.getMaxStackSize()) {
+                items.add(new ItemStackWithWrapper(item1));
             }
         }
     }
 
-    /**
-     * 效率更高的检测配方是否匹配的方法
-     * @param items
-     * @param machineRecipe
-     * @return
-     */
-    public static boolean isMatchRecipe(@Nonnull List<ItemStack> items, @Nonnull MachineRecipe machineRecipe) {
-        Map<ItemStack, ItemStackWrapper> map = ItemStackUtil.wrap(items);
-        boolean match = false;
-        for(ItemStack recipeItem : machineRecipe.getInput()) {
-            ItemStackWrapper recipeItemWrap = ItemStackWrapper.wrap(recipeItem);
-            for(Map.Entry<ItemStack, ItemStackWrapper> entry : map.entrySet()) {
-                if(entry.getKey().getAmount() >= recipeItem.getAmount() && ItemStackUtil.isItemSimilar(entry.getValue(), recipeItemWrap)){
-                    match = true;
-                }
-            }
-            if(!match) {
-                return false;
+    public static Map<Integer, ItemStackWithWrapper> parseItemWithSlot(@Nonnull Inventory inventory, int[] slots) {
+        Map<Integer, ItemStackWithWrapper> itemMap = new HashMap<>(slots.length);
+        for(int slot : slots) {
+            ItemStack item = inventory.getItem(slot);
+            if(!ItemStackUtil.isItemNull(item)) {
+                itemMap.put(slot, new ItemStackWithWrapper(item));
             }
         }
-        return true;
-    }
-
-    @Nullable
-    public static MachineRecipe matchRecipe(@Nonnull List<ItemStack> items, @Nonnull List<MachineRecipe> machineRecipes, int offset) {
-        Map<ItemStack, ItemStackWrapper> map = ItemStackUtil.wrap(items);
-        if(map.size() == 0) {
-            return null;
-        }
-        if(offset < 0) {
-            offset = 0;
-        }
-        int count;
-        MachineRecipe machineRecipe;
-        int length = machineRecipes.size();
-        boolean match;
-        for(int i = 0; i < length; i++) {
-            machineRecipe = machineRecipes.get((i + offset) % length);
-            count = 0;
-            for(ItemStack recipeItem : machineRecipe.getInput()) {
-                match = false;
-                ItemStackWrapper recipeItemWrap = ItemStackWrapper.wrap(recipeItem);
-                for(Map.Entry<ItemStack, ItemStackWrapper> entry : map.entrySet()) {
-                    if(entry.getKey().getAmount() >= recipeItem.getAmount() && ItemStackUtil.isItemSimilar(entry.getValue(), recipeItemWrap)){
-                        match = true;
-                        count++;
-                    }
-                }
-                if(!match) {
-                    break;
-                }
-            }
-            if(count == machineRecipe.getInput().length) {
-                return machineRecipe;
-            }
-        }
-        return null;
-    }
-
-    @Nullable
-    public static MachineRecipe matchRecipe(@Nonnull List<ItemStack> items, @Nonnull List<MachineRecipe> machineRecipes) {
-        return matchRecipe(items, machineRecipes, 0);
-    }
-
-    public static MachineRecipe matchRecipe(@Nonnull List<ItemStack> items, @Nonnull List<MachineRecipe> machineRecipes, int offset, @Nonnull Inventory inventory, int[] slots, int maxCount) {
-        Map<ItemStack, ItemStackWrapper> map = ItemStackUtil.wrap(items);
-        int length = machineRecipes.size();
-        if(offset < 0) {
-            offset = 0;
-        }
-        for(int i = 0; i < length; i++) {
-            MachineRecipe machineRecipe = machineRecipes.get((i + offset) % length);
-            int matchAmount = maxCount;
-            for(ItemStack inputItem : machineRecipe.getInput()) {
-                int matchItemAmount = 0;
-                ItemStackWrapper inputItemWrap = ItemStackWrapper.wrap(inputItem);
-                for(Map.Entry<ItemStack, ItemStackWrapper> entry : map.entrySet()) {
-                    if(ItemStackUtil.isItemSimilar(entry.getValue(), inputItemWrap)) {
-                        matchItemAmount += entry.getKey().getAmount();
-                    }
-                }
-                matchAmount = Math.min(matchAmount, matchItemAmount / inputItem.getAmount());
-                if(matchAmount == 0) {
-                    break;
-                }
-            }
-            ItemStack[] outputItems = machineRecipe.getOutput();
-            if(matchAmount != 0 && (matchAmount == 1 || InvUtils.fitAll(inventory, outputItems, slots))) {
-                while (matchAmount > 0) {
-                    int outputSlots = 0;
-                    for(ItemStack outputItem : outputItems) {
-                        outputSlots += 1 + outputItem.getAmount() * matchAmount / outputItem.getMaxStackSize();
-                        if(outputItem.getAmount() * matchAmount % outputItem.getMaxStackSize() == 0) {
-                            outputSlots--;
-                        }
-                    }
-                    if(outputSlots > slots.length) {
-                        matchAmount--;
-                        continue;
-                    }
-                    ItemStack[] resultOutputs = new ItemStack[outputSlots];
-                    int outputPointer = 0;
-                    for(ItemStack outputItem : outputItems) {
-                        int resultAmount = outputItem.getAmount() * matchAmount;
-                        while (resultAmount > outputItem.getMaxStackSize()) {
-                            resultOutputs[outputPointer] = new ItemStack(outputItem);
-                            resultOutputs[outputPointer++].setAmount(outputItem.getMaxStackSize());
-                            resultAmount -= outputItem.getMaxStackSize();
-                        }
-                        if(resultAmount != 0) {
-                            resultOutputs[outputPointer] = new ItemStack(outputItem);
-                            resultOutputs[outputPointer++].setAmount(resultAmount);
-                        }
-                    }
-                    if(InvUtils.fitAll(inventory, resultOutputs, slots)) {
-                        int inputSlots = 0;
-                        for(ItemStack item : machineRecipe.getInput()) {
-                            inputSlots = inputSlots + 1 + item.getAmount() * matchAmount / item.getMaxStackSize();
-                            if(item.getAmount() * matchAmount % item.getMaxStackSize() == 0) {
-                                inputSlots--;
-                            }
-                        }
-                        ItemStack[]  resultInputs = new ItemStack[inputSlots];
-                        int inputPointer = 0;
-                        for (ItemStack item : machineRecipe.getInput()) {
-                            int resultAmount = item.getAmount() * matchAmount;
-                            while(resultAmount > item.getMaxStackSize()) {
-                                resultInputs[inputPointer] = new ItemStack(item);
-                                resultInputs[inputPointer++].setAmount(item.getMaxStackSize());
-                                resultAmount -= item.getMaxStackSize();
-                            }
-                            if(resultAmount != 0) {
-                                resultInputs[inputPointer] = new ItemStack(item);
-                                resultInputs[inputPointer++].setAmount(resultAmount);
-                            }
-                        }
-                        return new MachineRecipe(machineRecipe.getTicks(), resultInputs, resultOutputs);
-                    }
-                    matchAmount--;
-                }
-            }
-        }
-        return null;
-    }
-
-    public static MachineRecipe matchRecipe(@Nonnull List<ItemStack> items, @Nonnull List<MachineRecipe> machineRecipes, @Nonnull Inventory inventory, int[] slots, int maxCount) {
-        return matchRecipe(items, machineRecipes, 0, inventory, slots, maxCount);
-    }
-
-    /**
-     * 根据指定的输入物品、工作配方、输出槽大小，计算最大可以处理的次数
-     * 匹配成功时，物品会被消耗
-     * @param items 输入物品
-     * @param machineRecipe 需要匹配的工作配方
-     * @param inv 输出的容器
-     * @param slots 输出容器的可输出范围
-     * @param maxCount 最大可以处理的次数不超过此数值
-     * @return 根据可匹配数量，提高了输入和输出物品数量的工作配方
-     */
-    @Nullable
-    @Deprecated
-    public static MachineRecipe matchRecipe(@Nonnull List<ItemStack> items, @Nonnull MachineRecipe machineRecipe, @Nonnull Inventory inv, int[] slots, int maxCount) {
-        int matchAmount = maxCount;
-        for(ItemStack inputItem : machineRecipe.getInput()) {
-            int matchItemAmount = 0;
-            for(ItemStack item : items) {
-                if(ItemStackUtil.isItemSimilar(item, inputItem)) {
-                    matchItemAmount += item.getAmount();
-                }
-            }
-            matchAmount = Math.min(matchAmount, matchItemAmount / inputItem.getAmount());
-            if(matchItemAmount == 0) {
-                return null;
-            }
-        }
-        ItemStack[] outputItems = machineRecipe.getOutput();
-        if(matchAmount != 0 && (matchAmount == 1 || InvUtils.fitAll(inv, outputItems, slots))) {
-            while (matchAmount > 0) {
-                int outputSlots = 0;
-                for(ItemStack outputItem : outputItems) {
-                    outputSlots += 1 + outputItem.getAmount() * matchAmount / outputItem.getMaxStackSize();
-                    if(outputItem.getAmount() * matchAmount % outputItem.getMaxStackSize() == 0) {
-                        outputSlots--;
-                    }
-                }
-                if(outputSlots > slots.length) {
-                    matchAmount--;
-                    continue;
-                }
-                ItemStack[] resultOutputs = new ItemStack[outputSlots];
-                int outputPointer = 0;
-                for(ItemStack outputItem : outputItems) {
-                    int resultAmount = outputItem.getAmount() * matchAmount;
-                    while (resultAmount > outputItem.getMaxStackSize()) {
-                        resultOutputs[outputPointer++] = new CustomItemStack(outputItem, outputItem.getMaxStackSize());
-                        resultAmount -= outputItem.getMaxStackSize();
-                    }
-                    if(resultAmount != 0) {
-                        resultOutputs[outputPointer++] = new CustomItemStack(outputItem, resultAmount);
-                    }
-                }
-                if(InvUtils.fitAll(inv, resultOutputs, slots)) {
-                    int inputSlots = 0;
-                    for(ItemStack item : machineRecipe.getInput()) {
-                        inputSlots = inputSlots + 1 + item.getAmount() * matchAmount / item.getMaxStackSize();
-                        if(item.getAmount() * matchAmount % item.getMaxStackSize() == 0) {
-                            inputSlots--;
-                        }
-                    }
-                    ItemStack[]  resultInputs = new ItemStack[inputSlots];
-                    int inputPointer = 0;
-                    for (ItemStack item : machineRecipe.getInput()) {
-                        int resultAmount = item.getAmount() * matchAmount;
-                        while(resultAmount > item.getMaxStackSize()) {
-                            resultInputs[inputPointer++] = new CustomItemStack(item, item.getMaxStackSize());
-                            resultAmount -= item.getMaxStackSize();
-                        }
-                        if(resultAmount != 0) {
-                            resultInputs[inputPointer++] = new CustomItemStack(item, resultAmount);
-                        }
-                    }
-                    for (ItemStack inputItem : machineRecipe.getInput()) {
-                        int consumeAmount = inputItem.getAmount() * matchAmount;
-                        for (ItemStack item : items) {
-                            if (ItemStackUtil.isItemSimilar(item, inputItem)) {
-                                if (item.getAmount() <= consumeAmount) {
-                                    consumeAmount -= item.getAmount();
-                                    ItemUtils.consumeItem(item, item.getAmount(), false);
-                                } else {
-                                    ItemUtils.consumeItem(item, consumeAmount, false);
-                                    consumeAmount = 0;
-                                }
-                            }
-                            if (consumeAmount == 0) {
-                                break;
-                            }
-                        }
-                    }
-                    return new MachineRecipe(machineRecipe.getTicks(), resultInputs, resultOutputs);
-                }
-                matchAmount--;
-            }
-        }
-        return null;
-    }
-
-    public static void consumeItem(@Nonnull List<ItemStack> items, @Nonnull ItemStack[] matchItems) {
-        List<ItemStackWithWrapper> itemList = new ArrayList<>(items.size());
-        List<ItemStackWithWrapper> matchItemList = ItemStackUtil.parseItemWithAmount(matchItems);
-        for(ItemStack item : items) {
-            itemList.add(new ItemStackWithWrapper(item));
-        }
-        for(ItemStackWithWrapper matchItem : matchItemList) {
-            int amount = matchItem.getAmount();
-            for(ItemStackWithWrapper item : itemList) {
-                if(item.getItemStack().getAmount() == 0) {
-                    continue;
-                }
-                if(ItemStackUtil.isItemSimilar(item.getItemStackWrapper(), matchItem.getItemStackWrapper())) {
-                    int count = Math.min(amount, item.getItemStack().getAmount());
-                    item.getItemStack().setAmount(item.getItemStack().getAmount() - count);
-                    if(item.getItemStack().getAmount() == 0) {
-                        item.updateItemStackWrapper();
-                    }
-                    amount -= count;
-                    if(amount == 0) {
-                        break;
-                    }
-                }
-            }
-        }
+        return itemMap;
     }
 
     public static int maxMatch(@Nonnull Inventory inventory, int[] slots, @Nonnull ItemStack[] items, int count) {

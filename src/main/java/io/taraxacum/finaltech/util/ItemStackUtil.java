@@ -2,7 +2,6 @@ package io.taraxacum.finaltech.util;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.nms.ItemNameAdapter;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.core.RandomMachineRecipe;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -25,11 +24,6 @@ public final class ItemStackUtil {
         return item instanceof ItemStackWrapper ? new ItemStack(item) : item.clone();
     }
 
-    /**
-     * 判断输入的物品是否为实际意义上的空物品
-     * @param item 输入的物品
-     * @return 是否为空物品
-     */
     public static boolean isItemNull(ItemStack item) {
         return item == null || item.getType().equals(Material.AIR) || item.getAmount() == 0;
     }
@@ -193,11 +187,6 @@ public final class ItemStackUtil {
         return ItemStackWithWrapper.toItemList(resultList);
     }
 
-    /**
-     * 把输入的数组中，相同的物品进行合并
-     * @param items 输入的数组
-     * @return 合并后的数组
-     */
     @Nonnull
     public static ItemStack[] mergeSameItem(@Nonnull ItemStack[] items) {
         List<ItemStack> list = mergeSameItem(Arrays.stream(items).toList());
@@ -208,13 +197,6 @@ public final class ItemStackUtil {
         return result;
     }
 
-    /**
-     * 把输入的两个列表，合并为一个列表
-     * 会合并其中相同的物品
-     * @param items1 输入的第一个列表
-     * @param items2 输入的第二个列表
-     * @return 合并后的列表
-     */
     @Nonnull
     public static ItemStack[] mergeArray(@Nonnull ItemStack[] items1, @Nonnull ItemStack[] items2) {
         List<ItemStack> list = new ArrayList<>(items1.length + items2.length);
@@ -237,49 +219,21 @@ public final class ItemStackUtil {
                 slot--;
             }
         }
-        ItemStack[]  result = new ItemStack[slot];
+        ItemStack[] result = new ItemStack[slot];
         int pointer = 0;
         for (ItemStack item : items) {
             int resultAmount = item.getAmount() * amount;
             while(resultAmount > item.getMaxStackSize()) {
-                result[pointer] = new ItemStack(item);
+                result[pointer] = ItemStackUtil.cloneItem(item);
                 result[pointer++].setAmount(item.getMaxStackSize());
                 resultAmount -= item.getMaxStackSize();
             }
             if(resultAmount != 0) {
-                result[pointer] = new ItemStack(item);
+                result[pointer] = ItemStackUtil.cloneItem(item);
                 result[pointer++].setAmount(resultAmount);
             }
         }
         return result;
-    }
-
-    @Deprecated
-    public static Map<ItemStack, ItemStackWrapper> wrap(@Nonnull List<ItemStack> list) {
-        Map<ItemStack, ItemStackWrapper> map = new HashMap<>(list.size());
-        for(ItemStack item : list) {
-            if(!ItemStackUtil.isItemNull(item)) {
-                if(item instanceof ItemStackWrapper) {
-                    item = new ItemStack(item);
-                }
-                map.put(item, ItemStackWrapper.wrap(item));
-            }
-        }
-        return map;
-    }
-
-    @Deprecated
-    public static Map<ItemStack, ItemStackWrapper> wrap(@Nonnull ItemStack[] list) {
-        Map<ItemStack, ItemStackWrapper> map = new HashMap<>(list.length);
-        for(ItemStack item : list) {
-            if(!ItemStackUtil.isItemNull(item)) {
-                if(item instanceof ItemStackWrapper) {
-                    item = new ItemStack(item);
-                }
-                map.put(item, ItemStackWrapper.wrap(item));
-            }
-        }
-        return map;
     }
 
     /**
@@ -441,7 +395,7 @@ public final class ItemStackUtil {
     }
 
     public static void addLoreToLast(@Nonnull ItemStack item, @Nonnull String s) {
-        if(!item.hasItemMeta()) {
+        if(isItemNull(item)) {
             return;
         }
         ItemMeta itemMeta = item.getItemMeta();
@@ -486,13 +440,8 @@ public final class ItemStackUtil {
         itemMeta.setLore(lore);
     }
 
-    /**
-     * 设置物品的最后一行lore
-     * @param item 需要设置lore的物品
-     * @param s 需要设置的lore
-     */
     public static void setLastLore(@Nonnull ItemStack item, @Nonnull String s) {
-        if(!item.hasItemMeta()) {
+        if(isItemNull(item)) {
             return;
         }
         ItemMeta itemMeta = item.getItemMeta();
@@ -517,13 +466,8 @@ public final class ItemStackUtil {
         itemMeta.setLore(lore);
     }
 
-    /**
-     * 读取物品的最后一行lore
-     * @param item 需要读取的物品
-     * @return 物品最后一行lore
-     */
     public static String getLastLore(@Nonnull ItemStack item) {
-        if(!item.hasItemMeta()) {
+        if(isItemNull(item)) {
             return "null";
         }
         ItemMeta itemMeta = item.getItemMeta();
@@ -543,7 +487,7 @@ public final class ItemStackUtil {
     }
 
     public static void setLore(@Nonnull ItemStack item, String... lore) {
-        if(!item.hasItemMeta()) {
+        if(isItemNull(item)) {
             return;
         }
         ItemMeta itemMeta = item.getItemMeta();
@@ -551,12 +495,6 @@ public final class ItemStackUtil {
         item.setItemMeta(itemMeta);
     }
 
-    /**
-     * 获取物品在烘干后的形式
-     * 这个过程不会消耗物品
-     * @param item 需要解析的物品
-     * @return 解析后获得的物品
-     */
     public static ItemStack getDried(@Nonnull ItemStack item) {
         if(item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
             return null;
@@ -573,33 +511,6 @@ public final class ItemStackUtil {
             default:
                 return null;
         }
-    }
-
-    /**
-     * 根据给定的输入和输出，生成工作配方
-     * @param inputs 输入物品
-     * @param outputs 输出物品
-     * @return
-     */
-    public static final RandomMachineRecipe createRandomMachineRecipe(List<ItemStack> inputs, List<ItemStack> outputs) {
-        boolean randomOutput = false;
-        for(int m = 0; m < inputs.size(); m++) {
-            for(int n = m+1; n < inputs.size(); n++) {
-                if(ItemStackUtil.isItemSimilar(inputs.get(m), inputs.get(n)) && inputs.get(m).getAmount() == inputs.get(n).getAmount()) {
-                    randomOutput = true;
-                }
-                if(randomOutput) {
-                    break;
-                }
-            }
-            if(randomOutput) {
-                break;
-            }
-        }
-        if(inputs.size() == 0) {
-            randomOutput = true;
-        }
-        return new RandomMachineRecipe(0, ItemStackUtil.toArray(inputs), ItemStackUtil.toArray(outputs), randomOutput);
     }
 
     public static String itemStackToString(ItemStack itemStack) {

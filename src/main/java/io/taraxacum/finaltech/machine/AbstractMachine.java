@@ -69,7 +69,7 @@ public abstract class AbstractMachine extends SlimefunItem {
         this.addItemHandler(this.onBlockPlace());
         this.addItemHandler(new BlockTicker() {
             @Override
-            public void tick(@Nonnull Block block, SlimefunItem slimefunItem, Config config) {
+            public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
                 AbstractMachine.this.tick(block, slimefunItem, config);
             }
 

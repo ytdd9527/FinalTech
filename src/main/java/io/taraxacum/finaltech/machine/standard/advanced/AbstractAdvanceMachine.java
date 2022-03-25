@@ -13,6 +13,7 @@ import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.machine.standard.AbstractStandardMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.standard.AdvancedMachineMenu;
+import io.taraxacum.finaltech.util.AdvancedCraftUtil;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.ItemStackWithWrapper;
 import io.taraxacum.finaltech.util.MachineUtil;
@@ -116,66 +117,19 @@ public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
     protected MachineRecipe matchRecipe(BlockMenu blockMenu, int offset) {
         int quantityModule = MachineUtil.updateQuantityModule(blockMenu, AdvancedMachineMenu.MODULE_SLOT, AdvancedMachineMenu.INFO_SLOT);
 
-        if(MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlots()) || MachineUtil.isFull(blockMenu.toInventory(), getOutputSlots())) {
+        if (MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlots()) || MachineUtil.isFull(blockMenu.toInventory(), getOutputSlots())) {
             BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, null);
             return null;
         }
 
-        Map<Integer, ItemStackWithWrapper> invInputItemSlotMap = new HashMap<>(getInputSlots().length);
-        for (int slot : this.getInputSlots()) {
-            ItemStack item = blockMenu.getItemInSlot(slot);
-            if (!ItemStackUtil.isItemNull(item)) {
-                invInputItemSlotMap.put(slot, new ItemStackWithWrapper(item));
+        AdvancedCraftUtil craft = AdvancedCraftUtil.calCraft(blockMenu, getInputSlots(), this.getMachineRecipes(), quantityModule, offset);
+        if (craft != null) {
+            craft.setMatchCount(MachineUtil.maxMatch(blockMenu.toInventory(), this.getOutputSlots(), craft.getMachineRecipe().getOutput(), craft.getMatchCount()));
+            if (craft.getMatchCount() > 0) {
+                BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, String.valueOf(this.getMachineRecipes().indexOf(craft.getMachineRecipe())));
+                craft.consumeItem(blockMenu.toInventory());
+                return craft.calEnlargeMachineRecipe();
             }
-        }
-
-        List<List<Integer>> searchList = new ArrayList<>(getInputSlots().length);
-
-        for(int i = 0, length = this.getMachineRecipes().size(); i < length; i++) {
-            MachineRecipe machineRecipe = getMachineRecipes().get((i + offset) % length);
-            int count = quantityModule;
-            for(ItemStack recipeInputItem : machineRecipe.getInput()) {
-                ItemStackWithWrapper recipeInputItemWithWrapper = new ItemStackWithWrapper(recipeInputItem);
-                int itemMatchAmount = 0;
-                List<Integer> slotList = new ArrayList<>(getInputSlots().length);
-                for(Map.Entry<Integer, ItemStackWithWrapper> inputMap : invInputItemSlotMap.entrySet()) {
-                    if(ItemStackUtil.isItemSimilar(inputMap.getValue().getItemStackWrapper(), recipeInputItemWithWrapper.getItemStackWrapper())) {
-                        itemMatchAmount += inputMap.getValue().getAmount();
-                        slotList.add(inputMap.getKey());
-                        if(itemMatchAmount / recipeInputItem.getAmount() > count) {
-                            break;
-                        }
-                    }
-                }
-                searchList.add(slotList);
-                count = Math.min(count, itemMatchAmount / recipeInputItem.getAmount());
-                if(count == 0) {
-                    break;
-                }
-            }
-            if(count > 0) {
-                count = MachineUtil.maxMatch(blockMenu.toInventory(), getOutputSlots(), machineRecipe.getOutput(), count);
-                if(count > 0) {
-                    BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, String.valueOf((i + offset) % length));
-                    ItemStack[] recipeInputs = machineRecipe.getInput();
-                    ItemStack[] recipeOutputs = machineRecipe.getOutput();
-                    if(count > 1) {
-                        recipeInputs = ItemStackUtil.enlargeItemArray(machineRecipe.getInput(), count);
-                        recipeOutputs = ItemStackUtil.enlargeItemArray(machineRecipe.getOutput(), count);
-                    }
-                    for(int j = 0, recipeSize = machineRecipe.getInput().length; j < recipeSize ; j++) {
-                        int amount = count * machineRecipe.getInput()[j].getAmount();
-                        for(Integer slot : searchList.get(j)) {
-                            ItemStack item = invInputItemSlotMap.get(slot).getItemStack();
-                            int l = Math.min(item.getAmount(), amount);
-                            blockMenu.consumeItem(slot, l);
-                            amount -= l;
-                        }
-                    }
-                    return new MachineRecipe(machineRecipe.getTicks(), recipeInputs, recipeOutputs);
-                }
-            }
-            searchList.clear();
         }
         BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, null);
         return null;

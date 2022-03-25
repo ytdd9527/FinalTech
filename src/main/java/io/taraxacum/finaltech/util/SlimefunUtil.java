@@ -74,54 +74,6 @@ public class SlimefunUtil {
         }
     }
 
-    public static void registerRecipeByDisplayRecipe(@Nonnull RecipeItem item, List<ItemStack> displayRecipes) {
-        List<MachineRecipe> recipes = item.getMachineRecipes();
-        List<ItemStack> inputs = new ArrayList<>();
-        List<ItemStack> outputs = new ArrayList<>();
-        ItemStack inputItem;
-        ItemStack outputItem;
-        int i = 0;
-        do{
-            inputItem = i*2 < displayRecipes.size() ? displayRecipes.get(i*2) : null;
-            outputItem = i*2+1 < displayRecipes.size() ? displayRecipes.get(i*2+1) : null;
-            if(ItemStackUtil.isItemNull(inputItem) && ItemStackUtil.isItemNull(outputItem)) {
-                continue;
-            }
-            boolean sameInput = false;
-            boolean sameOutput = false;
-            if((inputs.size() > 0 || outputs.size() > 0) && i > 0) {
-                sameInput = ItemStackUtil.isItemSimilar(displayRecipes.get(i*2 - 2), inputItem) && displayRecipes.get(i*2 - 2).getAmount() == inputItem.getAmount();
-                sameOutput = (ItemStackUtil.isItemSimilar(displayRecipes.get(i*2 - 1), outputItem) && displayRecipes.get(i*2 - 1).getAmount() == outputItem.getAmount()) || (ItemStackUtil.isItemNull(outputItem) && ItemStackUtil.isItemNull(displayRecipes.get(i*2 - 1)));
-            }
-            boolean newRecipe = !sameInput && !sameOutput;
-            if((inputs.size() > 0 || outputs.size() > 0) && i > 0) {
-                if(ItemStackUtil.isItemNull(displayRecipes.get(i*2 - 2)) && !ItemStackUtil.isItemNull(displayRecipes.get(i*2 - 1)) && ItemStackUtil.isItemNull(inputItem) && !ItemStackUtil.isItemNull(outputItem)) {
-                    newRecipe = false;
-                }
-                if(!ItemStackUtil.isItemNull(displayRecipes.get(i*2 - 2)) && ItemStackUtil.isItemNull(displayRecipes.get(i*2 - 1)) && !ItemStackUtil.isItemNull(inputItem)) {
-                    newRecipe = false;
-                }
-                if(!ItemStackUtil.isItemNull(displayRecipes.get(i*2 - 2)) && !ItemStackUtil.isItemNull(displayRecipes.get(i*2 - 1)) && !ItemStackUtil.isItemNull(inputItem) && ItemStackUtil.isItemNull(outputItem)) {
-                    newRecipe = true;
-                }
-            }
-            if(newRecipe) {
-                if(inputs.size() > 0 || outputs.size() > 0) {
-                    recipes.add(ItemStackUtil.createRandomMachineRecipe(inputs, outputs));
-                }
-                inputs = new ArrayList<>();
-                outputs = new ArrayList<>();
-            }
-            if(!sameInput && !ItemStackUtil.isItemNull(inputItem)) {
-                inputs.add(inputItem);
-            }
-            if(!sameOutput && !ItemStackUtil.isItemNull(outputItem)) {
-                outputs.add(outputItem);
-            }
-        } while (++i*2<displayRecipes.size());
-        recipes.add(ItemStackUtil.createRandomMachineRecipe(inputs, outputs));
-    }
-
     public static final boolean hasPermission(@Nonnull Block block, @Nonnull String uuid) {
         OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
         return player.isOnline() && Slimefun.getProtectionManager().hasPermission(player, block, Interaction.INTERACT_BLOCK);

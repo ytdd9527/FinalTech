@@ -12,12 +12,11 @@ import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.ManualMachineMenu;
-import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
-import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -27,21 +26,14 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.bukkit.Bukkit.getServer;
-
 /**
  * @author Final_ROOT
  */
 public abstract class AbstractManualMachine extends AbstractMachine implements RecipeItem {
-    private final List<MachineRecipe> recipes;
+    private final List<MachineRecipe> machineRecipeList = new ArrayList<>();
     private ManualMachineMenu menu;
-    public static final String KEY = "update";
-    public static final String VALUE_ALLOW = "1";
-    public static final String VALUE_DENY = "0";
-    public static final String VALUE_UPDATE = "2";
     public AbstractManualMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        recipes = new ArrayList<>();
     }
 
     @Nonnull
@@ -72,7 +64,6 @@ public abstract class AbstractManualMachine extends AbstractMachine implements R
         return new BlockPlaceHandler(false) {
             @Override
             public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {
-                BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), KEY, VALUE_ALLOW);
                 BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), ManualMachineMenu.KEY, "0");
             }
         };
@@ -82,16 +73,15 @@ public abstract class AbstractManualMachine extends AbstractMachine implements R
     public void register(@Nonnull SlimefunAddon addon) {
         this.addon = addon;
         super.register(addon);
-        getServer().getScheduler().runTask((Plugin)addon, this::registerDefaultRecipes);
-        this.menu.setMachineRecipes(this.recipes);
+        Bukkit.getServer().getScheduler().runTask((Plugin)addon, this::registerDefaultRecipes);
+
+        this.menu.setMachineRecipeList(this.machineRecipeList);
     }
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, Config config) {
-        String update = config.getString(KEY);
-        if(VALUE_DENY.equals(update)) {
-            config.setValue(KEY, VALUE_ALLOW);
-        } else if(VALUE_UPDATE.equals(update)) {
+        BlockMenu blockMenu = BlockStorage.getInventory(block);
+        if(!blockMenu.toInventory().getViewers().isEmpty()) {
             menu.updateMenu(BlockStorage.getInventory(block.getLocation()), block);
         }
     }
@@ -103,6 +93,6 @@ public abstract class AbstractManualMachine extends AbstractMachine implements R
 
     @Override
     public List<MachineRecipe> getMachineRecipes() {
-        return this.recipes;
+        return this.machineRecipeList;
     }
 }

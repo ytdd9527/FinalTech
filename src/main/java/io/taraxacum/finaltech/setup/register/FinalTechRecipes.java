@@ -261,6 +261,12 @@ public final class FinalTechRecipes {
             null, FinalTechItems.FAKE, null
     };
 
+    public static final ItemStack[] OVERLOAD_CORE_MACHINE = new ItemStack[] {
+            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE,
+            FinalTechItems.GEARWHEEL, FinalTechItems.FAKE, FinalTechItems.GEARWHEEL,
+            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE
+    };
+
     // cargos
     public static final ItemStack[] BASIC_FRAME_MACHINE = new ItemStack[] {
             new ItemStack(Material.STONE), new ItemStack(Material.CHAIN), new ItemStack(Material.STONE),
@@ -302,6 +308,12 @@ public final class FinalTechRecipes {
             new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.SLIME_BALL),
             new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.TRIPWIRE_HOOK), FinalTechItems.BASIC_FRAME_MACHINE,
             new ItemStack(Material.CHEST), new ItemStack(Material.CHEST), new ItemStack(Material.CHEST)
+    };
+
+    public static final ItemStack[] STACKER = new ItemStack[] {
+            FinalTechItems.TRANSFER_LINE, FinalTechItems.TRANSFER_PIPE, FinalTechItems.TRANSFER_LINE,
+            FinalTechItems.TRANSFER_PIPE, FinalTechItems.TRANSFER_STATION, FinalTechItems.TRANSFER_PIPE,
+            FinalTechItems.TRANSFER_LINE, FinalTechItems.TRANSFER_PIPE, FinalTechItems.TRANSFER_LINE
     };
 
     public static final ItemStack[] STORAGE_INTERACT_PORT = new ItemStack[] {

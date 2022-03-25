@@ -23,6 +23,7 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -125,13 +126,7 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
         int[] inputSlots = inputMap.getSlots();
         int[] outputSlots = outputMap.getSlots();
         Inventory containerInv = containerMenu.toInventory();
-        Map<Integer, ItemStackWithWrapper> itemMap = new HashMap<>(inputSlots.length);
-        for(int slot : inputSlots) {
-            ItemStack item = containerInv.getItem(slot);
-            if(!ItemStackUtil.isItemNull(item)) {
-                itemMap.put(slot, new ItemStackWithWrapper(item));
-            }
-        }
+        Map<Integer, ItemStackWithWrapper> itemMap = MachineUtil.parseItemWithSlot(containerInv, inputSlots);
         Map<ItemStackWithWrapper, List<Integer>> searchMap = new HashMap<>(itemMap.size());
 
         int count = MachineUtil.updateQuantityModule(blockMenu, AdvancedAutoCraftMenu.MODULE_SLOT, AdvancedAutoCraftMenu.INFO_SLOT);

@@ -3,7 +3,7 @@ package io.taraxacum.finaltech.setup.register;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
 import io.taraxacum.finaltech.item.StorageCardItem;
-import io.taraxacum.finaltech.machine.area.*;
+import io.taraxacum.finaltech.machine.area.generator.*;
 import io.taraxacum.finaltech.machine.capacitor.expanded.*;
 import io.taraxacum.finaltech.machine.capacitor.*;
 import io.taraxacum.finaltech.machine.generator.OrderedDustGenerator;
@@ -103,6 +103,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack COPY_CARD = new SlimefunItemStack("FINALTECH_COPY_CARD", Material.PAPER, "&4复制卡");
     public static final SlimefunItemStack OVERCLOCK_FRAME_MACHINE = new SlimefunItemStack("FINALTECH_OVERCLOCK_FRAME_MACHINE", Material.LECTERN, "&9超频框架",
             "&6最大可存储电量 &e" + 536870912 + "J");
+    public static final SlimefunItemStack OVERLOAD_CORE_MACHINE = new SlimefunItemStack("FINALTECH_OVERLOAD_CORE_MACHINE", Material.TARGET, "&9超载核心");
 
     // cargos
     public static final SlimefunItemStack BASIC_FRAME_MACHINE = new SlimefunItemStack("FINALTECH_BASIC_FRAME_MACHINE", Material.STONE, "&f基础机器框架", "&8可放置");
@@ -114,6 +115,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack TRANSFER_LINE = new SlimefunItemStack("FINALTECH_CARGO_TRANSFER_LINE", Material.DROPPER, "&f支架",
             "&8即放即用");
     public static final SlimefunItemStack TRANSFER_STATION = new SlimefunItemStack("FINALTECH_CARGO_TRANSFER_STATION", Material.TINTED_GLASS, "&f中转器");
+    public static final SlimefunItemStack STACKER = new SlimefunItemStack("FINALTECH_STACKER", Material.LODESTONE, "&f广域堆叠器");
     public static final SlimefunItemStack STORAGE_INTERACT_PORT = new SlimefunItemStack("FINALTECH_STORAGE_INTERACT_PORT", Material.BOOKSHELF, "&f存储交互接口");
     public static final SlimefunItemStack STORAGE_INSERT_PORT = new SlimefunItemStack("FINALTECH_STORAGE_INSERT_PORT", Material.BOOKSHELF, "&f高速存入接口");
     public static final SlimefunItemStack STORAGE_WITHDRAW_PORT = new SlimefunItemStack("FINALTECH_STORAGE_WITHDRAW_PORT", Material.BOOKSHELF, "&f高速取出接口");
