@@ -5,8 +5,11 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +17,7 @@ import java.util.List;
  * @author Final_ROOT
  */
 public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem {
-    private static final List<MachineRecipe> RECIPE = new ArrayList<>();
+    private final List<MachineRecipe> RECIPE = new ArrayList<>();
     public static final String ITEM_LORE = "§x§f§f§0§0§0§0已" +
             "§x§f§f§3§3§0§0经" +
             "§x§f§f§6§6§0§0由" +
@@ -57,5 +60,20 @@ public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem 
                 "&f一个存储卡只能存入一种物品",
                 "&f但是可存入物品的数量是无限的",
                 "&f各色存储卡之间并无区别");
+    }
+
+    public static boolean isStorageCardItem(@Nonnull ItemStack item) {
+        if(item.hasItemMeta()) {
+            return isStorageCardItem(item.getItemMeta());
+        }
+        return false;
+    }
+
+    public static boolean isStorageCardItem(@Nonnull ItemMeta itemMeta) {
+        if(!itemMeta.hasLore()) {
+            return false;
+        }
+        List<String> lore = itemMeta.getLore();
+        return !lore.isEmpty() && StorageCardItem.ITEM_LORE_WITHOUT_COLOR.equals(ChatColor.stripColor(lore.get(0)));
     }
 }

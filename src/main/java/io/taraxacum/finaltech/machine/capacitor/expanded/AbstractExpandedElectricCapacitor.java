@@ -11,7 +11,6 @@ import io.taraxacum.finaltech.menu.ElectricCapacitorMenu;
 import io.taraxacum.finaltech.util.CapacitorUtil;
 import io.taraxacum.finaltech.util.StringNumberUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.block.Block;
@@ -21,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 /**
- * @author LJC
+ * @author Final_ROOT
  */
 public abstract class AbstractExpandedElectricCapacitor extends AbstractElectricCapacitor {
     protected static final String KEY = "stack";
@@ -56,6 +55,9 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
         int electric = getCharge(block.getLocation());
         int capacity = getCapacity();
         String stack = config.getValue(KEY).toString();
+        if("".equals(stack)) {
+            stack = "0";
+        }
         if(electric < capacity / 4 && StringNumberUtil.easilyCompare(stack, "0") > 0) {
             electric += capacity / 2;
             stack = StringNumberUtil.sub(stack);

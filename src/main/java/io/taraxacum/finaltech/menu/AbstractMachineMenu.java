@@ -104,5 +104,5 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
      * @param menu
      * @param block
      */
-    protected abstract void updateMenu(BlockMenu menu, Block block);
+    public abstract void updateMenu(BlockMenu menu, Block block);
 }

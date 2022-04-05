@@ -161,7 +161,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     }
 
     @Override
-    protected void updateMenu(BlockMenu blockMenu, Block block) {
+    public void updateMenu(BlockMenu blockMenu, Block block) {
         if(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), SlotSearchSize.KEY_INPUT, SlotSearchSize.VALUE_INPUTS_ONLY);
         }

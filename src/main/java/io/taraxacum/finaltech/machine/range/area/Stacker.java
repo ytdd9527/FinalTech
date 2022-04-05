@@ -1,6 +1,7 @@
-package io.taraxacum.finaltech.machine.area;
+package io.taraxacum.finaltech.machine.range.area;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
@@ -14,6 +15,7 @@ import io.taraxacum.finaltech.util.cargo.SlotSearchOrder;
 import io.taraxacum.finaltech.util.cargo.SlotSearchSize;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -23,13 +25,18 @@ import java.util.List;
 /**
  * @author Final_ROOT
  */
-public class Stacker extends AbstractAreaMachine{
+@Deprecated
+public abstract class Stacker extends AbstractCubeMachine {
     private static final int RANGE = 16;
     public Stacker(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
+    protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+
+    }
+
     protected void function(@Nonnull Location location, @Nonnull Config config) {
         InvWithSlots invWithSlots = CargoUtil.getInv(location.getBlock(), SlotSearchSize.VALUE_OUTPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT);
         if(invWithSlots != null && invWithSlots.getInventory() != null && invWithSlots.getSlots() != null) {
@@ -41,7 +48,6 @@ public class Stacker extends AbstractAreaMachine{
         }
     }
 
-    @Override
     protected int getRange() {
         return RANGE;
     }

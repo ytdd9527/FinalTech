@@ -19,8 +19,8 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             // You could start an Auto-Updater for example
         }
 
-        SetupUtil.setupMenus(this);
         SetupUtil.init(this);
+        SetupUtil.setupMenus(this);
         SetupUtil.setupItems(this);
     }
 

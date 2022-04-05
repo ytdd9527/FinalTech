@@ -2,7 +2,6 @@ package io.taraxacum.finaltech.util;
 
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.item.StorageCardItem;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Inventory;
@@ -59,12 +58,12 @@ public class StringItemUtil {
                     count += maxStackSize;
                     inventory.setItem(slot, stack);
                     amount = StringNumberUtil.sub(amount, maxStack);
-                } else if(StringNumberUtil.easilyCompare(amount, "0") == 1) {
+                } else if(StringNumberUtil.easilyCompare(amount, StringNumberUtil.ZERO) == 1) {
                     stack = stringItem.getItemStack().clone();
                     stack.setAmount(Integer.parseInt(amount));
                     count += Integer.parseInt(amount);
                     inventory.setItem(slot, stack);
-                    amount = "0";
+                    amount = StringNumberUtil.ZERO;
                     break;
                 }
             } else if(stack.getMaxStackSize() > stack.getAmount() && ItemStackUtil.isItemSimilar(stack, stringItem.getItemStackWrapper())) {
@@ -76,15 +75,15 @@ public class StringItemUtil {
                 } else {
                     stack.setAmount(stack.getAmount() + Integer.parseInt(amount));
                     count += Integer.parseInt(amount);
-                    amount = "0";
+                    amount = StringNumberUtil.ZERO;
                     break;
                 }
             }
-            if("0".equals(amount)) {
+            if(StringNumberUtil.ZERO.equals(amount)) {
                 break;
             }
         }
-        if("0".equals(amount)) {
+        if(StringNumberUtil.ZERO.equals(amount)) {
             persistentDataContainer.remove(ITEM_KEY);
             persistentDataContainer.remove(AMOUNT_KEY);
         } else {
@@ -115,7 +114,7 @@ public class StringItemUtil {
 
     public static int storageItemToCard(@Nonnull ItemMeta itemMeta, @Nullable ItemStackWithWrapper stringItem, int size, @Nonnull Inventory inventory, @Nonnull int[] slots) {
         PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-        String amount = "0";
+        String amount = StringNumberUtil.ZERO;
         if(persistentDataContainer.has(AMOUNT_KEY, PersistentDataType.STRING)) {
             amount = persistentDataContainer.get(AMOUNT_KEY, PersistentDataType.STRING);
         } else {
@@ -146,31 +145,24 @@ public class StringItemUtil {
                 count += itemAmount * size;
             }
         }
-        if(!"0".equals(amount)) {
+        if(!StringNumberUtil.ZERO.equals(amount)) {
             persistentDataContainer.set(AMOUNT_KEY, PersistentDataType.STRING, amount);
         }
         return count;
     }
 
     @Nullable
-    public static ItemStack parseItemInCard(@Nonnull ItemStack item) {
-        if(!item.hasItemMeta()) {
+    public static ItemStack parseItemInCard(@Nonnull ItemStack cardItem) {
+        if(!cardItem.hasItemMeta()) {
             return null;
         }
-        ItemMeta itemMeta = item.getItemMeta();
-        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-        if(persistentDataContainer.has(ITEM_KEY, PersistentDataType.STRING)) {
-            String itemString = persistentDataContainer.get(ITEM_KEY, PersistentDataType.STRING);
-            ItemStack stringItem = ItemStackUtil.stringToItemStack(itemString);
-            stringItem.setAmount(1);
-            return stringItem;
-        }
-        return null;
+        ItemMeta itemMeta = cardItem.getItemMeta();
+        return parseItemInCard(itemMeta);
     }
 
     @Nullable
-    public static ItemStack parseItemInCard(@Nonnull ItemMeta itemMeta) {
-        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+    public static ItemStack parseItemInCard(@Nonnull ItemMeta cardItemMeta) {
+        PersistentDataContainer persistentDataContainer = cardItemMeta.getPersistentDataContainer();
         if(persistentDataContainer.has(ITEM_KEY, PersistentDataType.STRING)) {
             String itemString = persistentDataContainer.get(ITEM_KEY, PersistentDataType.STRING);
             ItemStack stringItem = ItemStackUtil.stringToItemStack(itemString);
@@ -180,35 +172,54 @@ public class StringItemUtil {
         return null;
     }
 
+    @Nonnull
+    public static String parseAmountInCard(@Nonnull ItemStack cardItem) {
+        if(!cardItem.hasItemMeta()) {
+            return null;
+        }
+        ItemMeta itemMeta = cardItem.getItemMeta();
+        return parseAmountInCard(itemMeta);
+    }
+
+    @Nonnull
+    public static String parseAmountInCard(@Nonnull ItemMeta cardItemMeta) {
+        PersistentDataContainer persistentDataContainer = cardItemMeta.getPersistentDataContainer();
+        if(persistentDataContainer.has(AMOUNT_KEY, PersistentDataType.STRING)) {
+            return persistentDataContainer.get(AMOUNT_KEY, PersistentDataType.STRING);
+        }
+        return StringNumberUtil.ZERO;
+    }
+
     public static void setItemInCard(@Nonnull ItemStack cardItem, @Nonnull ItemStack item, @Nonnull int amount) {
+        setItemInCard(cardItem, item, String.valueOf(amount));
+    }
+
+    public static void setItemInCard(@Nonnull ItemStack cardItem, @Nonnull ItemStack item, @Nonnull String amount) {
         if(!cardItem.hasItemMeta()) {
             return;
         }
         ItemMeta itemMeta = cardItem.getItemMeta();
         PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
         persistentDataContainer.set(ITEM_KEY, PersistentDataType.STRING, ItemStackUtil.itemStackToString(item));
-        persistentDataContainer.set(AMOUNT_KEY, PersistentDataType.STRING, String.valueOf(amount));
+        persistentDataContainer.set(AMOUNT_KEY, PersistentDataType.STRING, amount);
         cardItem.setItemMeta(itemMeta);
     }
 
-    /**
-     * judge an item if it can store other item
-     * @param item
-     * @return
-     */
-    public static boolean canStorage(@Nonnull ItemStack item) {
-        if(item.hasItemMeta()) {
-            return canStorage(item.getItemMeta());
+    public static void setAmountInCard(@Nonnull ItemStack cardItem, String amount) {
+        if(!cardItem.hasItemMeta()) {
+            return;
         }
-        return false;
-    }
-
-    public static boolean canStorage(@Nonnull ItemMeta itemMeta) {
-        if(!itemMeta.hasLore()) {
-            return false;
+        ItemMeta cardItemMeta = cardItem.getItemMeta();
+        PersistentDataContainer persistentDataContainer = cardItemMeta.getPersistentDataContainer();
+        if(persistentDataContainer.has(ITEM_KEY, PersistentDataType.STRING) && persistentDataContainer.has(AMOUNT_KEY, PersistentDataType.STRING)) {
+            if(StringNumberUtil.easilyCompare(amount, StringNumberUtil.ZERO) == 0) {
+                persistentDataContainer.remove(ITEM_KEY);
+                persistentDataContainer.remove(AMOUNT_KEY);
+            } else {
+                persistentDataContainer.set(AMOUNT_KEY, PersistentDataType.STRING, amount);
+            }
         }
-        List<String> lore = itemMeta.getLore();
-        return !lore.isEmpty() && StorageCardItem.ITEM_LORE_WITHOUT_COLOR.equals(ChatColor.stripColor(lore.get(0)));
+        cardItem.setItemMeta(cardItemMeta);
     }
 
     public static void updateStorageCardLore(@Nonnull ItemStack item) {
@@ -261,7 +272,11 @@ public class StringItemUtil {
         }
     }
 
-    public static void updateStorageItemType(@Nonnull ItemStack item, @Nonnull ItemMeta itemMeta) {
+    public static void updateStorageCardType(@Nonnull ItemStack item) {
+        updateStorageCardType(item, item.getItemMeta());
+    }
+
+    public static void updateStorageCardType(@Nonnull ItemStack item, @Nonnull ItemMeta itemMeta) {
         PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
         if(persistentDataContainer.has(AMOUNT_KEY, PersistentDataType.STRING)) {
             Material type = item.getType();

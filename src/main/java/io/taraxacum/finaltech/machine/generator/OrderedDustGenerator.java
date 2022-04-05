@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderedDustGenerator extends AbstractElectricGeneratorV2 implements RecipeItem {
+public class OrderedDustGenerator extends AbstractElectricGenerator implements RecipeItem {
     public static final String KEY_COUNT = "count";
     public static final String KEY_MAX = "max";
     public static final int LIMIT = Integer.MAX_VALUE / 4;

@@ -401,7 +401,7 @@ public class CargoUtil {
                     slots = new int[insert.length + withdraw.length];
                     i = 0;
                     for (; i < withdraw.length; i++) {
-                        slots[i] = insert[i];
+                        slots[i] = withdraw[i];
                     }
                     System.arraycopy(insert, 0, slots, i, insert.length);
                     break;

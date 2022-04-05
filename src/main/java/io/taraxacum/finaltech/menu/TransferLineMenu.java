@@ -209,7 +209,7 @@ public class TransferLineMenu extends AbstractMachineMenu {
     }
 
     @Override
-    protected void updateMenu(BlockMenu blockMenu, Block block) {
+    public void updateMenu(BlockMenu blockMenu, Block block) {
         blockMenu.replaceExistingItem(BLOCK_CARGO_ORDER_SLOT, BlockCargoOrder.getIcon(BlockStorage.getLocationInfo(block.getLocation(), BlockCargoOrder.KEY)));
         blockMenu.replaceExistingItem(BLOCK_SEARCH_CYCLE_SLOT, BlockSearchCycle.getIcon(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchCycle.KEY)));
         blockMenu.replaceExistingItem(BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.getIcon(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY)));

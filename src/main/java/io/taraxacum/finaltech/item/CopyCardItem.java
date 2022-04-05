@@ -3,7 +3,9 @@ package io.taraxacum.finaltech.item;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.StringItemUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -44,6 +46,11 @@ public class CopyCardItem extends UnusableSlimefunItem {
         super(itemGroup, item, recipeType, recipe);
     }
 
+    public static void initDifficulty(int singularityDifficulty, int spirocheteDifficulty) {
+        SINGULARITY_DIFFICULTY = singularityDifficulty;
+        SPIROCHETE_DIFFICULTY = spirocheteDifficulty;
+    }
+
     public static boolean isCopyCardItem(ItemStack itemStack) {
         if(ItemStackUtil.isItemNull(itemStack) || !itemStack.hasItemMeta()) {
             return false;
@@ -61,8 +68,11 @@ public class CopyCardItem extends UnusableSlimefunItem {
         return false;
     }
 
-    public static void initDifficulty(int singularityDifficulty, int spirocheteDifficulty) {
-        SINGULARITY_DIFFICULTY = singularityDifficulty;
-        SPIROCHETE_DIFFICULTY = spirocheteDifficulty;
+    public static ItemStack newCopyCardItem(ItemStack stringItem, String amount) {
+        ItemStack result = new ItemStack(FinalTechItems.COPY_CARD);
+        result.setAmount(1);
+        StringItemUtil.setItemInCard(result, stringItem, amount);
+        ItemStackUtil.setLore(result, CopyCardItem.ITEM_LORE, "§7物品= " + ItemStackUtil.getItemName(stringItem), "§7数量= " + amount);
+        return result;
     }
 }

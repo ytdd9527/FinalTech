@@ -3,25 +3,17 @@ package io.taraxacum.finaltech.menu;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.machine.manual.AbstractManualMachine;
+import io.taraxacum.finaltech.machine.manual.craft.AbstractCraftManualMachine;
 import io.taraxacum.finaltech.util.AdvancedCraftUtil;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.ItemStackWithWrapper;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -69,7 +61,7 @@ public class ManualMachineMenu extends AbstractMachineMenu {
     public static final String KEY = "offset";
 
     private List<MachineRecipe> machineRecipeList = new ArrayList<>();
-    public ManualMachineMenu(@Nonnull String id, @Nonnull String title, AbstractManualMachine machine) {
+    public ManualMachineMenu(@Nonnull String id, @Nonnull String title, AbstractCraftManualMachine machine) {
         super(id, title, machine);
     }
 

@@ -3,10 +3,13 @@ package io.taraxacum.finaltech.util;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.nms.ItemNameAdapter;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -93,7 +96,7 @@ public final class ItemStackUtil {
         } else if(itemMeta1.hasDisplayName() || itemMeta2.hasDisplayName()) {
             return false;
         }
-        return isLoreSame(itemMeta1, itemMeta2);
+        return isLoreSame(itemMeta1, itemMeta2) && checkContainer(itemMeta1, itemMeta2);
     }
 
     public static boolean isLoreSame(@Nonnull ItemMeta itemMeta1, @Nonnull ItemMeta itemMeta2) {
@@ -110,6 +113,25 @@ public final class ItemStackUtil {
             }
             return true;
         } return !itemMeta1.hasLore() && !itemMeta2.hasLore();
+    }
+
+    public static boolean checkContainer(@Nonnull ItemMeta itemMetaOne, @Nonnull ItemMeta itemMetaTwo) {
+        PersistentDataContainer persistentDataContainer1 = itemMetaOne.getPersistentDataContainer();
+        PersistentDataContainer persistentDataContainer2 = itemMetaTwo.getPersistentDataContainer();
+        Set<NamespacedKey> keys1 = persistentDataContainer1.getKeys();
+        Set<NamespacedKey> keys2 = persistentDataContainer2.getKeys();
+        if(keys1.size() != keys2.size()) {
+            return false;
+        }
+        for(NamespacedKey namespacedKey : keys1) {
+            if(!persistentDataContainer2.has(namespacedKey, PersistentDataType.STRING)) {
+                return false;
+            }
+            if(!persistentDataContainer1.get(namespacedKey, PersistentDataType.STRING).equals(persistentDataContainer2.get(namespacedKey, PersistentDataType.STRING))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

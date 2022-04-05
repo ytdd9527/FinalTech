@@ -27,8 +27,8 @@ import java.util.List;
 /**
  * @author Final_ROOT
  */
-public abstract class AbstractElectricGeneratorV2 extends AbstractMachine implements EnergyNetProvider {
-    public AbstractElectricGeneratorV2(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public abstract class AbstractElectricGenerator extends AbstractMachine implements EnergyNetProvider {
+    public AbstractElectricGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 

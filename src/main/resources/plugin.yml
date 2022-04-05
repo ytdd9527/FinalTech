@@ -5,7 +5,7 @@ name: FinalTech
 author: Final_ROOT
 
 ## CHANGE this to a meaninful but short description of your plugin.
-description: Slimefun4-Addon made by Final_ROOT, trying to make the world balanced wiht all other Slimefun addons.
+description: About make the world better
 
 ## CHANGE this to the path of the class that extends JavaPlugin.
 main: io.taraxacum.finaltech.FinalTech

@@ -13,6 +13,9 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
+/**
+ * @author Final_ROOT
+ */
 public class OrderDustGeneratorMenu extends AbstractMachineMenu{
     public static final int[] INPUT_SLOT = new int[] {21, 22, 23};
     public static final int[] INPUT_BORDER = new int[] {11, 12, 13, 14, 15, 20, 24, 29, 30, 31, 32, 33};

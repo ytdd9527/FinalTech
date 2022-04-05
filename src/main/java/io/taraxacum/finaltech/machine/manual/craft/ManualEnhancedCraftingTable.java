@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.machine.manual;
+package io.taraxacum.finaltech.machine.manual.craft;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -9,13 +9,13 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Final_ROOT
  */
-public class ManualHeatedPressureChamber extends AbstractManualMachine {
-    public ManualHeatedPressureChamber(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class ManualEnhancedCraftingTable extends AbstractCraftManualMachine {
+    public ManualEnhancedCraftingTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerRecipeByRecipeType(this, RecipeType.HEATED_PRESSURE_CHAMBER);
+        SlimefunUtil.registerRecipeByRecipeType(this, RecipeType.ENHANCED_CRAFTING_TABLE);
     }
 }

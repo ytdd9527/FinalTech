@@ -3,10 +3,13 @@ package io.taraxacum.finaltech.setup.register;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
 import io.taraxacum.finaltech.item.StorageCardItem;
-import io.taraxacum.finaltech.machine.area.generator.*;
+import io.taraxacum.finaltech.machine.range.area.EscapeCapacitor;
+import io.taraxacum.finaltech.machine.range.area.cube.*;
 import io.taraxacum.finaltech.machine.capacitor.expanded.*;
 import io.taraxacum.finaltech.machine.capacitor.*;
 import io.taraxacum.finaltech.machine.generator.OrderedDustGenerator;
+import io.taraxacum.finaltech.machine.range.ray.EnergizedElectricityShootPile;
+import io.taraxacum.finaltech.machine.range.ray.ExcessLoadElectricityShootPile;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -76,6 +79,8 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MANUAL_ANCIENT_ALTAR = new SlimefunItemStack("FINALTECH_MANUAL_ANCIENT_ALTAR", Material.ENCHANTING_TABLE, "&6快捷古代祭坛");
     public static final SlimefunItemStack MANUAL_HEATED_PRESSURE_CHAMBER = new SlimefunItemStack("FINALTECH_MANUAL_HEATED_PRESSURE_CHAMBER", Material.LIGHT_GRAY_STAINED_GLASS, "&6快捷加热压力舱");
     public static final SlimefunItemStack ORDERED_DUST_FACTORY = new SlimefunItemStack("FINALTECH_ORDERED_DUST_FACTORY", Material.DIRT, "&7尘埃制造机");
+    public static final SlimefunItemStack ORDERED_DUST_FACTORY_V2 = new SlimefunItemStack("FINALTECH_ORDERED_DUST_FACTORY_V2", Material.COBBLESTONE, "&7尘埃制造机");
+    public static final SlimefunItemStack CARD_OPERATION_PORT = new SlimefunItemStack("FINALTECH_CARD_OPERATION_PORT", Material.CARTOGRAPHY_TABLE, "&f物品卡操作台");
 
     // advanced machines
     public static final SlimefunItemStack ADVANCED_ELECTRIC_FURANCE = new SlimefunItemStack("FINALTECH_ADVANCED_ELECTRIC_FURANCE", Material.FURNACE, "&c高级电炉");
@@ -177,6 +182,10 @@ public final class FinalTechItems {
             "&6最大可存储电量 &e" + BasicSelfGenerateCapacitor.CAPACITOR + "J");
     public static final SlimefunItemStack BASIC_VOID_GENERATE_CAPACITOR = new SlimefunItemStack("FINALTECH_BASIC_VOID_GENERATE_CAPACITOR", Material.RED_STAINED_GLASS, "&7基础空发电电容",
             "&6最大可存储电量 &e" + BasicVoidGenerateCapacitor.CAPACITOR + "J");
+    public static final SlimefunItemStack ENERGIZED_ELECTRICITY_SHOOT_PILE = new SlimefunItemStack("FINALTECH_ENERGIZED_ELECTRICITY_SHOOT_PILE", Material.DISPENSER, "&e充能射电桩",
+            "&6传输半径&b " + EnergizedElectricityShootPile.RANGE + "格");
+    public static final SlimefunItemStack EXCESS_LOAD_ELECTRICITY_SHOOT_PILE = new SlimefunItemStack("FINALTECH_EXCESS_LOAD_ELECTRICITY_SHOOT_PILE", Material.DISPENSER, "&e过载射电桩",
+            "&6传输半径&b " + ExcessLoadElectricityShootPile.RANGE + "格");
 
     public static final SlimefunItemStack SMALL_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_SMALL_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, "&a小型扩展电容",
             "",
@@ -208,33 +217,44 @@ public final class FinalTechItems {
             "&6单组流转电量&e " + EnergizedExpandedCapacitor.CAPACITY + "J",
             "&6电容组数&3 " + EnergizedExpandedCapacitor.STACK + "组",
             "&6实际最大存储电量&e " + (long) EnergizedExpandedCapacitor.CAPACITY * EnergizedExpandedCapacitor.STACK + "J");
+    public static final SlimefunItemStack ENERGIZED_STACK_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_ENERGIZED_STACK_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, "&a终极扩展电容组",
+            "",
+            "&6单组流转电量&e " + EnergizedStackExpandedCapacitor.CAPACITY + "J",
+            "&6电容组数&3 " + EnergizedStackExpandedCapacitor.STACK + "组",
+            "&6实际最大存储电量&e " + (long) EnergizedStackExpandedCapacitor.CAPACITY * EnergizedStackExpandedCapacitor.STACK + "J");
     public static final SlimefunItemStack MATRIX_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_MATRIX_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, "&a矩阵电容",
             "",
             "&6单组流转电量&e " + MatrixExpandedCapacitor.CAPACITY + "J",
             "&6电容组数&3 " + "∞" + "组",
             "&6实际最大存储电量&e " + "∞" + "J");
+    public static final SlimefunItemStack ESCAPE_CAPACITOR = new SlimefunItemStack("FINALTECH_ESCAPE_CAPACITOR", Material.GREEN_STAINED_GLASS, "&a逸散电容",
+            "&6最大存储电量&e " + EscapeCapacitor.CAPACITOR + "J",
+            "&6传输半径&b " + EscapeCapacitor.RANGE + "格",
+            "&6传输损耗&c " + ((1 - (1 / EscapeCapacitor.LOSS)) * 100) + "%");
 
     public static final SlimefunItemStack ORDERED_DUST_GENERATOR = new SlimefunItemStack("FINALTECH_ORDERED_DUST_GENERATOR", Material.BROWN_MUSHROOM_BLOCK, "&7尘埃发电机",
-            "&e最大发电量 " + OrderedDustGenerator.LIMIT + "J");
+            "&6最大发电量&e " + OrderedDustGenerator.LIMIT + "J");
 
     public static final SlimefunItemStack BASIC_GENERATOR = new SlimefunItemStack("FINALTECH_BASIC_GENERATOR", Material.GLOWSTONE, "&2基础供电机",
-            "&e供电量 " + BasicGenerator.ELECTRICITY + "J",
-            "&b传输半径 " + BasicGenerator.RANGE + "格");
+            "&6供电量&e " + BasicGenerator.ELECTRICITY + "J",
+            "&6传输半径&b " + BasicGenerator.RANGE + "格");
     public static final SlimefunItemStack ADVANCED_GENERATOR = new SlimefunItemStack("FINALTECH_ADVANCED_GENERATOR", Material.GLOWSTONE, "&2高级供电机",
-            "&e供电量 " + AdvancedGenerator.ELECTRICITY + "J",
-            "&b传输半径 " + AdvancedGenerator.RANGE + "格");
+            "&6供电量&e " + AdvancedGenerator.ELECTRICITY + "J",
+            "&6传输半径&b " + AdvancedGenerator.RANGE + "格");
     public static final SlimefunItemStack REINFORCED_GENERATOR = new SlimefunItemStack("FINALTECH_REINFORCED_GENERATOR", Material.GLOWSTONE, "&2强化合金供电机",
-            "&e供电量 " + ReinforcedGenerator.ELECTRICITY + "J",
-            "&b传输半径 " + ReinforcedGenerator.RANGE + "格");
+            "&6供电量&e " + ReinforcedGenerator.ELECTRICITY + "J",
+            "&6传输半径&b " + ReinforcedGenerator.RANGE + "格");
     public static final SlimefunItemStack CARBONADO_GENERATOR = new SlimefunItemStack("FINALTECH_CARBONADO_GENERATOR", Material.GLOWSTONE, "&2黑金刚石供电机",
-            "&e供电量 " + CarbonadoGenerator.ELECTRICITY + "J",
-            "&b传输半径 " + CarbonadoGenerator.RANGE + "格");
+            "&6供电量&e " + CarbonadoGenerator.ELECTRICITY + "J",
+            "&6传输半径&b " + CarbonadoGenerator.RANGE + "格");
     public static final SlimefunItemStack ENERGIZED_GENERATOR = new SlimefunItemStack("FINALTECH_ENERGIZED_GENERATOR", Material.GLOWSTONE, "&2充能供电机",
-            "&e供电量 " + EnergizedGenerator.ELECTRICITY + "J",
-            "&b传输半径 " + EnergizedGenerator.RANGE + "格");
+            "&6供电量&e " + EnergizedGenerator.ELECTRICITY + "J",
+            "&6传输半径&b " + EnergizedGenerator.RANGE + "格");
+    public static final SlimefunItemStack ENERGIZED_STACK_GENERATOR = new SlimefunItemStack("FINALTECH_ENERGIZED_STACK_GENERATOR", Material.GLOWSTONE, "&2充能供电机组",
+            "&6供电量&e " + EnergizedStackGenerator.ELECTRICITY + "J",
+            "&6传输半径&b " + EnergizedStackGenerator.RANGE + "格");
     public static final SlimefunItemStack MATRIX_GENERATOR = new SlimefunItemStack("FINALTECH_MATRIX_GENERATOR", Material.SEA_LANTERN, "&2矩阵供电机",
-            "&e供电量 " + MatrixGenerator.ELECTRICITY + "J",
-            "&b传输半径 " + MatrixGenerator.RANGE + "格");
+            "&6传输半径&b " + MatrixGenerator.RANGE + "格");
 
     // tool
     public static final SlimefunItemStack UNORDERED_SWORD = new SlimefunItemStack("FINALTECH_UNORDERED_SWORD", Material.WOODEN_SWORD, "&f无序剑",

@@ -44,7 +44,7 @@ public abstract class AbstractMachine extends SlimefunItem {
      * @return
      */
     @Nonnull
-    protected final int[] getInputSlots() {
+    public final int[] getInputSlots() {
         return menu.getInputSlots();
     }
 
@@ -53,7 +53,7 @@ public abstract class AbstractMachine extends SlimefunItem {
      * @return
      */
     @Nonnull
-    protected final int[] getOutputSlots() {
+    public final int[] getOutputSlots() {
         return menu.getOutputSlots();
     }
 

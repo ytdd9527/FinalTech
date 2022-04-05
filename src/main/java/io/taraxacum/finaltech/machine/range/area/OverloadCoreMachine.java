@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.machine.area;
+package io.taraxacum.finaltech.machine.range.area;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -9,14 +9,19 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.VoidMenu;
+import io.taraxacum.finaltech.menu.StatusMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
+import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -27,41 +32,12 @@ import java.util.List;
 /**
  * @author Final_ROOT
  */
-public class OverloadCoreMachine extends AbstractAreaMachine implements RecipeItem {
+public class OverloadCoreMachine extends AbstractCubeMachine implements RecipeItem {
     private static final int RANGE = 16;
     private final List<MachineRecipe> machineRecipeList = new ArrayList<>();
     public OverloadCoreMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.registerDefaultRecipes();
-    }
-
-    @Override
-    protected int getRange() {
-        return RANGE;
-    }
-
-    @Override
-    protected void function(@Nonnull Location location, @Nonnull Config config) {
-        if(BlockStorage.hasBlockInfo(location)) {
-            Config locationInfo = BlockStorage.getLocationInfo(location);
-            if(locationInfo.contains("id")) {
-                String id = locationInfo.getString("id");
-                if(id.contains("OVER")) {
-                    return;
-                }
-                SlimefunItem item = SlimefunItem.getById(id);
-                if(item != null) {
-                    BlockTicker blockTicker = item.getBlockTicker();
-                    Location l = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ());
-                    if(blockTicker == null) {
-                    } else if (blockTicker.isSynchronized()) {
-                        Slimefun.runSync(() -> blockTicker.tick(l.getBlock(), item, locationInfo));
-                    } else {
-                        blockTicker.tick(l.getBlock(), item, locationInfo);
-                    }
-                }
-            }
-        }
     }
 
     @Nonnull
@@ -83,12 +59,50 @@ public class OverloadCoreMachine extends AbstractAreaMachine implements RecipeIt
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new VoidMenu(this.getId(), this.getItemName(), this);
+        return new StatusMenu(this.getId(), this.getItemName(), this);
+    }
+
+    @Override
+    protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+        int count = this.function(block, RANGE, location -> {
+            if(BlockStorage.hasBlockInfo(location)) {
+                Config locationInfo = BlockStorage.getLocationInfo(location);
+                if(locationInfo.contains(SlimefunUtil.KEY_ID)) {
+                    String id = locationInfo.getString(SlimefunUtil.KEY_ID);
+                    if(id.contains("OVER")) {
+                        return 0;
+                    }
+                    SlimefunItem item = SlimefunItem.getById(id);
+                    if(item != null) {
+                        BlockTicker blockTicker = item.getBlockTicker();
+                        if(blockTicker == null) {
+                        } else if (blockTicker.isSynchronized()) {
+                            Location l = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ());
+                            Slimefun.runSync(() -> blockTicker.tick(l.getBlock(), item, locationInfo));
+                            return 1;
+                        } else {
+                            Location l = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ());
+                            blockTicker.tick(l.getBlock(), item, locationInfo);
+                            return 1;
+                        }
+                    }
+                }
+            }
+            return 0;
+        });
+        BlockMenu blockMenu = BlockStorage.getInventory(block);
+        ItemStack item = blockMenu.getItemInSlot(StatusMenu.CENTER_SLOT);
+        ItemStackUtil.setLore(item, "§7当前生效的机器= " + count);
+        if (count == 0) {
+            item.setType(Material.YELLOW_STAINED_GLASS_PANE);
+        } else {
+            item.setType(Material.GREEN_STAINED_GLASS_PANE);
+        }
     }
 
     @Override
     protected boolean isSynchronized() {
-        return false;
+        return true;
     }
 
     @Override

@@ -9,6 +9,8 @@ public final class StringNumberUtil {
     private static final String RELATIVE = "-";
     public static final String VALUE_MAX = "MAX";
     public static final String VALUE_MIN = "MIN";
+    public static final String ZERO = "0";
+    public static final String INTEGER_MAX_VALUE = String.valueOf(Integer.MAX_VALUE);
 
     /**
      * 比较两个非负整数大小
@@ -50,6 +52,15 @@ public final class StringNumberUtil {
             }
         }
         return 0;
+    }
+
+    public static String min(String stringNumber1, String stringNumber2) {
+        int i = easilyCompare(stringNumber1, stringNumber2);
+        if(i >= 0) {
+            return stringNumber2;
+        } else {
+            return stringNumber1;
+        }
     }
 
     /**
@@ -219,7 +230,7 @@ public final class StringNumberUtil {
     }
 
     public static String add(String stringNumber) {
-        if(stringNumber.equals(RELATIVE)) {
+        if(stringNumber.indexOf(RELATIVE) == 0) {
             return RELATIVE + easilySub(stringNumber.substring(1));
         } else {
             return easilyAdd(stringNumber);

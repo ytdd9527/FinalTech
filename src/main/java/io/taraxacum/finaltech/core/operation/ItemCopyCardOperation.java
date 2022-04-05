@@ -25,10 +25,7 @@ public class ItemCopyCardOperation implements AllCompressionOperation {
     protected ItemCopyCardOperation(ItemStack item) {
         this.matchItem = item.clone();
         this.matchItem.setAmount(1);
-        this.copyCardItem = new ItemStack(FinalTechItems.COPY_CARD);
-        this.copyCardItem.setAmount(1);
-        StringItemUtil.setItemInCard(this.copyCardItem, this.matchItem, 1);
-        ItemStackUtil.setLore(this.copyCardItem, CopyCardItem.ITEM_LORE, "§7物品= " + ItemStackUtil.getItemName(this.matchItem), "§7数量= 1");
+        this.copyCardItem = CopyCardItem.newCopyCardItem(this.matchItem, "1");
         this.count = item.getAmount();
         this.difficulty = CopyCardItem.COPY_CARD_DIFFICULTY;
         this.showItem = new CustomItemStack(item.getType(), "§f完成进度", "§f物品名称= " + ItemStackUtil.getItemName(item), "§f压缩数量= " + this.count + "/" + this.difficulty);

@@ -1,6 +1,7 @@
 package io.taraxacum.finaltech.util;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
@@ -8,8 +9,11 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
+import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -28,6 +32,8 @@ import java.util.UUID;
  * @author Final_ROOT
  */
 public class SlimefunUtil {
+    public static final String KEY_ID = "id";
+
     /**
      * 从粘液科技本体注册的物品中搜索指定ID的机器
      * 读取其工作配方
@@ -72,6 +78,18 @@ public class SlimefunUtil {
         for(int i = 0; i < displayRecipes.size(); i+= 2) {
             item.registerRecipe(0, ItemStackWrapper.wrap(displayRecipes.get(i)), ItemStackWrapper.wrap(displayRecipes.get(i+1)));
         }
+    }
+
+    public static String getCharge(@Nonnull Location location) {
+        return BlockStorage.hasBlockInfo(location) ? getCharge(BlockStorage.getLocationInfo(location)) : "0";
+    }
+
+    public static String getCharge(@Nonnull Config config) {
+        return config.contains("energy-charge") ? config.getString("energy-charge") : StringNumberUtil.ZERO;
+    }
+
+    public static void setCharge(@Nonnull Location location, String energy) {
+        BlockStorage.addBlockInfo(location, "energy-charge", energy);
     }
 
     public static final boolean hasPermission(@Nonnull Block block, @Nonnull String uuid) {

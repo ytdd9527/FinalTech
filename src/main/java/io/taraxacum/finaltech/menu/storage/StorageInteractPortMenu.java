@@ -76,5 +76,5 @@ public class StorageInteractPortMenu extends AbstractMachineMenu {
     }
 
     @Override
-    protected void updateMenu(BlockMenu menu, Block block) {}
+    public void updateMenu(BlockMenu menu, Block block) {}
 }

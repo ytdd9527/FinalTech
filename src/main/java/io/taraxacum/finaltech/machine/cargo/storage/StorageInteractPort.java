@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
+import io.taraxacum.finaltech.item.StorageCardItem;
 import io.taraxacum.finaltech.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.storage.StorageInteractPortMenu;
@@ -73,7 +74,7 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
                         continue;
                     }
                     ItemMeta itemMeta = item.getItemMeta();
-                    if(StringItemUtil.canStorage(itemMeta)) {
+                    if(StorageCardItem.isStorageCardItem(itemMeta)) {
                         map.put(item, itemMeta);
                         if(item.getAmount() == 1) {
                             pushItemAmount++;
@@ -143,7 +144,7 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
                     if(pushCount != 0 || stackCount != 0) {
                         StringItemUtil.updateStorageCardLore(itemMeta, stringItem.getItemStack());
                         entry.getKey().setItemMeta(itemMeta);
-                        StringItemUtil.updateStorageItemType(entry.getKey(), itemMeta);
+                        StringItemUtil.updateStorageCardType(entry.getKey(), itemMeta);
                     }
                 }
             }
