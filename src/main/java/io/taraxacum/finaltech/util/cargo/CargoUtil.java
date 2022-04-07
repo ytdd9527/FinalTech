@@ -80,6 +80,7 @@ public class CargoUtil {
                 outputItem = inputItem.clone();
                 outputItem.setAmount(count);
                 outputInv.setItem(outputSlots[i], outputItem);
+                outputItem = outputInv.getItem(outputSlots[i]);
                 inputItem.setAmount(inputItem.getAmount() - count);
             } else {
                 count = ItemStackUtil.stack(inputItemWithWrapper, outputItem, cargoNumber);
@@ -289,6 +290,7 @@ public class CargoUtil {
                     outputItem = inputItem.clone();
                     outputItem.setAmount(count);
                     outputInv.setItem(outputSlot, outputItem);
+                    outputItem = outputInv.getItem(outputSlot);
                     outputItemWithWrapper = new ItemStackWithWrapper(outputItem, inputItemWithWrapper.getItemStackWrapper());
                     inputItem.setAmount(inputItem.getAmount() - count);
                     cargoNumber -= count;

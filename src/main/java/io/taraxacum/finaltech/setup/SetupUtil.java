@@ -123,7 +123,7 @@ public final class SetupUtil {
 
         new AllCompression(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.ALL_COMPRESSION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_COMPRESSION).register(slimefunAddon);
         new AllFactory(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.ALL_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_FACTORY).register(slimefunAddon);
-//        new OverclockFrameMachine(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.OVERCLOCK_FRAME_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.OVERCLOCK_FRAME_MACHINE).register(slimefunAddon);
+        new OverclockFrameMachine(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.OVERCLOCK_FRAME_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.OVERCLOCK_FRAME_MACHINE).register(slimefunAddon);
 //        new OverloadCoreMachine(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.OVERLOAD_CORE_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.OVERLOAD_CORE_MACHINE).register(slimefunAddon);
 
         new BasicFrameMachine(FinalTechMenus.MENU_CARGO, FinalTechItems.BASIC_FRAME_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_FRAME_MACHINE).register(slimefunAddon);
