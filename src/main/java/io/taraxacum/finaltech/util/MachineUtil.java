@@ -205,8 +205,6 @@ public final class MachineUtil {
         int amount = 1;
         if(ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE)) {
             amount = item.getAmount();
-        } else if(ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE_V2)) {
-            amount = item.getAmount() * (item.getAmount() + 1) / 2;
         }
         ItemStack infoItem = blockMenu.getItemInSlot(infoSlot);
         if(!infoItem.hasItemMeta()) {
