@@ -1,10 +1,11 @@
 package io.taraxacum.finaltech.menu;
 
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.AbstractMachine;
-import io.taraxacum.finaltech.util.CapacitorUtil;
 import io.taraxacum.finaltech.util.cargo.Icon;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,6 +17,9 @@ import javax.annotation.Nonnull;
 public class ElectricCapacitorMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[] {0, 1, 2, 3, 5, 6, 7, 8};
     public static final int INFO_SLOT = 4;
+
+    public static final ItemStack CAPACITOR_ICON = new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, "&e存电量",
+            "&7当前存电量= &60J");
 
     public ElectricCapacitorMenu(@Nonnull String id, @Nonnull String title, AbstractMachine machine) {
         super(id, title, machine);
@@ -48,7 +52,7 @@ public class ElectricCapacitorMenu extends AbstractMachineMenu {
 
     @Override
     public void init() {
-        this.addItem(INFO_SLOT, new ItemStack(CapacitorUtil.CAPACITOR_ICON));
+        this.addItem(INFO_SLOT, CAPACITOR_ICON);
         this.addMenuClickHandler(INFO_SLOT, ChestMenuUtils.getEmptyClickHandler());
         for(int slot : BORDER) {
             this.addItem(slot, Icon.BORDER_ICON);

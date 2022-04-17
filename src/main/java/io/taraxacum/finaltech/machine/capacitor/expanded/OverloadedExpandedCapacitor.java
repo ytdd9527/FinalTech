@@ -8,12 +8,12 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Final_ROOT
  */
-public class SmallExpandedCapacitor extends AbstractExpandedElectricCapacitor {
-    public static final int CAPACITY = 128;
-    public static final int STACK = 128;
-    public static final double CHARGE_INCREASE = 1.05;
-    public static final double CONSUME_REDUCE = 0.975;
-    public SmallExpandedCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class OverloadedExpandedCapacitor extends AbstractExpandedElectricCapacitor{
+    public static final int CAPACITY = 524288;
+    public static final int STACK = 524288;
+    public static final double CHARGE_INCREASE = 2;
+    public static final double CONSUME_REDUCE = 0.5;
+    public OverloadedExpandedCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 

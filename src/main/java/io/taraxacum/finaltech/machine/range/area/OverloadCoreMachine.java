@@ -32,9 +32,9 @@ import java.util.List;
 /**
  * @author Final_ROOT
  */
+@Deprecated
 public class OverloadCoreMachine extends AbstractCubeMachine implements RecipeItem {
     private static final int RANGE = 16;
-    private final List<MachineRecipe> machineRecipeList = new ArrayList<>();
     public OverloadCoreMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.registerDefaultRecipes();
@@ -103,11 +103,6 @@ public class OverloadCoreMachine extends AbstractCubeMachine implements RecipeIt
     @Override
     protected boolean isSynchronized() {
         return true;
-    }
-
-    @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return this.machineRecipeList;
     }
 
     @Override

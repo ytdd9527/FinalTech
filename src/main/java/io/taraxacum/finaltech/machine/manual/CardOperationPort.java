@@ -11,21 +11,17 @@ import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.CardOperationPortMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Final_ROOT
  */
 public class CardOperationPort extends AbstractManualMachine implements RecipeItem {
-    private final List<MachineRecipe> machineRecipeList = new ArrayList<>();
     public CardOperationPort(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.registerDefaultRecipes();
@@ -40,7 +36,7 @@ public class CardOperationPort extends AbstractManualMachine implements RecipeIt
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.easyBlockBreakerHandler(this);
+        return MachineUtil.simpleBlockBreakerHandler(this);
     }
 
     @Override
@@ -54,11 +50,6 @@ public class CardOperationPort extends AbstractManualMachine implements RecipeIt
     @Override
     protected AbstractMachineMenu newMachineMenu() {
         return new CardOperationPortMenu(this.getId(), this.getItemName(), this);
-    }
-
-    @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return this.machineRecipeList;
     }
 
     @Override

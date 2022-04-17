@@ -11,19 +11,17 @@ import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponen
 import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.ElectricCapacitorMenu;
-import io.taraxacum.finaltech.util.CapacitorUtil;
+import io.taraxacum.finaltech.menu.StatusMenu;
+import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 /**
  * @author Final_ROOT
@@ -35,32 +33,26 @@ public abstract class AbstractElectricCapacitor extends AbstractMachine implemen
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new ElectricCapacitorMenu(this.getId(), this.getItemName(), this);
+        return new StatusMenu(this.getId(), this.getItemName(), this);
     }
 
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return new BlockBreakHandler(false, false) {
-            @Override
-            public void onPlayerBreak(BlockBreakEvent blockBreakEvent, ItemStack itemStack, List<ItemStack> list) {
-
-            }
-        };
+        return MachineUtil.simpleBlockBreakerHandler();
     }
 
     @Nonnull
     @Override
     protected BlockPlaceHandler onBlockPlace() {
-        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_ALLOW;
+        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_DENY;
     }
-
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         ItemStack item = blockMenu.getItemInSlot(ElectricCapacitorMenu.INFO_SLOT);
-        CapacitorUtil.setIcon(item, getCharge(block.getLocation()));
+        this.updateMenu(item, config);
     }
 
     @Override
@@ -72,5 +64,11 @@ public abstract class AbstractElectricCapacitor extends AbstractMachine implemen
     @Override
     public final EnergyNetComponentType getEnergyComponentType() {
         return EnergyNetComponentType.CAPACITOR;
+    }
+
+    protected void updateMenu(@Nonnull ItemStack item, @Nonnull Config config) {
+        String charge = SlimefunUtil.getCharge(config);
+        //todo 说明优化
+        ItemStackUtil.setLore(item, "§7当前流转电量= §6" + charge + "J");
     }
 }

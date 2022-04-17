@@ -15,10 +15,8 @@ import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -26,19 +24,16 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Final_ROOT
  */
+@Deprecated
 public class EnergizedElectricityShootPile extends AbstractRayMachine implements RecipeItem {
-    public static final int RANGE = 128;
-    private final List<MachineRecipe> machineRecipeList = new ArrayList<>();
+    public static final int RANGE = 16;
     public EnergizedElectricityShootPile(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -50,7 +45,7 @@ public class EnergizedElectricityShootPile extends AbstractRayMachine implements
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.easyBlockBreakerHandler(this);
+        return MachineUtil.simpleBlockBreakerHandler(this);
     }
 
     @Nonnull
@@ -71,10 +66,15 @@ public class EnergizedElectricityShootPile extends AbstractRayMachine implements
                 if(config.contains(SlimefunUtil.KEY_ID)) {
                     SlimefunItem capacitorItem = SlimefunItem.getById(capacitorConfig.getString(SlimefunUtil.KEY_ID));
                     if(capacitorItem instanceof EnergyNetComponent && EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) capacitorItem).getEnergyComponentType())) {
+                        // todo 转字符串形式
                         transferEnergy = Integer.parseInt(SlimefunUtil.getCharge(capacitorConfig));
                         AtomicInteger charge = new AtomicInteger(transferEnergy);
+
                         count = this.function(block, RANGE, location -> {
-                            if(charge.get() > 0 && BlockStorage.hasBlockInfo(location)) {
+                            if(charge.get() > 0) {
+                                return -1;
+                            }
+                            if(BlockStorage.hasBlockInfo(location)) {
                                 Config energyComponentConfig = BlockStorage.getLocationInfo(location);
                                 if(energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
                                     SlimefunItem energyComponentItem = SlimefunItem.getById(energyComponentConfig.getString(SlimefunUtil.KEY_ID));
@@ -109,17 +109,12 @@ public class EnergizedElectricityShootPile extends AbstractRayMachine implements
     }
 
     @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return this.machineRecipeList;
-    }
-
-    @Override
     public void registerDefaultRecipes() {
         this.registerDescriptiveRecipe("&f工作原理",
                 "",
                 "&f背对电容机器生效",
                 "&f将该电容内的电量按照从近至远的顺序",
-                "&f不断传输到机器自身所面向方向的" + RANGE + "格机器",
+                "&f持续传输到机器自身所面向方向的" + RANGE + "格机器",
                 "",
                 "&f电力无法传输给电容类机器");
     }

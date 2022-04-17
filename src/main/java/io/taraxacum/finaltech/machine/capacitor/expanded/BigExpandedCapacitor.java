@@ -9,8 +9,10 @@ import org.bukkit.inventory.ItemStack;
  * @author Final_ROOT
  */
 public class BigExpandedCapacitor extends AbstractExpandedElectricCapacitor {
-    public static final int CAPACITY = 1048576;
-    public static final int STACK = 48;
+    public static final int CAPACITY = 1024;
+    public static final int STACK = 1024;
+    public static final double CHARGE_INCREASE = 1.2;
+    public static final double CONSUME_REDUCE = 0.9;
     public BigExpandedCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -23,5 +25,15 @@ public class BigExpandedCapacitor extends AbstractExpandedElectricCapacitor {
     @Override
     public String getMaxStack() {
         return String.valueOf(STACK - 2);
+    }
+
+    @Override
+    public double chargeIncrease() {
+        return CHARGE_INCREASE;
+    }
+
+    @Override
+    public double consumeReduce() {
+        return CONSUME_REDUCE;
     }
 }

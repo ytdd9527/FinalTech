@@ -464,13 +464,19 @@ public final class FinalTechRecipes {
             SlimefunItems.REINFORCED_PLATE, SlimefunItems.REDSTONE_ALLOY, FinalTechItems.ORDERED_DUST
     };
 
+    public static final ItemStack[] NORMAL_ELECTRICITY_SHOOT_PILE = new ItemStack[] {
+            FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, FinalTechItems.UNORDERED_DUST, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR,
+            FinalTechItems.UNORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.UNORDERED_DUST,
+            FinalTechItems.BASIC_SELF_GENERATE_CAPACITOR, FinalTechItems.UNORDERED_DUST, FinalTechItems.BASIC_VOID_GENERATE_CAPACITOR
+    };
+
     public static final ItemStack[] ENERGIZED_ELECTRICITY_SHOOT_PILE = new ItemStack[] {
             FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, FinalTechItems.UNORDERED_DUST, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR,
             FinalTechItems.UNORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.UNORDERED_DUST,
             FinalTechItems.BASIC_SELF_GENERATE_CAPACITOR, FinalTechItems.UNORDERED_DUST, FinalTechItems.BASIC_VOID_GENERATE_CAPACITOR
     };
 
-    public static final ItemStack[] EXCESS_LOAD_ELECTRICITY_SHOOT_PILE = new ItemStack[] {
+    public static final ItemStack[] OVERLOADED_ELECTRICITY_SHOOT_PILE = new ItemStack[] {
             FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, FinalTechItems.ORDERED_DUST, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR,
             FinalTechItems.ORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.ORDERED_DUST,
             FinalTechItems.BASIC_SELF_GENERATE_CAPACITOR, FinalTechItems.ORDERED_DUST, FinalTechItems.BASIC_VOID_GENERATE_CAPACITOR
@@ -548,16 +554,16 @@ public final class FinalTechRecipes {
             FinalTechItems.BASIC_GENERATOR, FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_GENERATOR
     };
 
-    public static final ItemStack[] REINFORCED_GENERATOR = new ItemStack[] {
+    public static final ItemStack[] OVERLOADED_GENERATOR = new ItemStack[] {
             FinalTechItems.ADVANCED_GENERATOR, FinalTechItems.GEARWHEEL, FinalTechItems.ADVANCED_GENERATOR,
             FinalTechItems.GEARWHEEL, SlimefunItems.REINFORCED_ALLOY_INGOT, FinalTechItems.GEARWHEEL,
             FinalTechItems.ADVANCED_GENERATOR, FinalTechItems.GEARWHEEL, FinalTechItems.ADVANCED_GENERATOR
     };
 
     public static final ItemStack[] CARBONADO_GENERATOR = new ItemStack[] {
-            FinalTechItems.REINFORCED_GENERATOR, FinalTechItems.GEARWHEEL, FinalTechItems.REINFORCED_GENERATOR,
+            FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.GEARWHEEL, FinalTechItems.OVERLOADED_GENERATOR,
             FinalTechItems.GEARWHEEL, SlimefunItems.CARBONADO, FinalTechItems.GEARWHEEL,
-            FinalTechItems.REINFORCED_GENERATOR, FinalTechItems.GEARWHEEL, FinalTechItems.REINFORCED_GENERATOR
+            FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.GEARWHEEL, FinalTechItems.OVERLOADED_GENERATOR
     };
 
     public static final ItemStack[] ENERGIZED_GENERATOR = new ItemStack[] {

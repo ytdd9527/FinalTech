@@ -13,7 +13,6 @@ import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.block.Block;
@@ -27,7 +26,6 @@ import java.util.List;
  * @author Final_ROOT
  */
 public class OrderedDustFactoryV2 extends AbstractMachine implements RecipeItem {
-    private final List<MachineRecipe> machineRecipeList = new ArrayList<>();
     public OrderedDustFactoryV2(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.registerDefaultRecipes();
@@ -42,7 +40,7 @@ public class OrderedDustFactoryV2 extends AbstractMachine implements RecipeItem 
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.easyBlockBreakerHandler(this);
+        return MachineUtil.simpleBlockBreakerHandler(this);
     }
 
     @Nonnull
@@ -77,11 +75,6 @@ public class OrderedDustFactoryV2 extends AbstractMachine implements RecipeItem 
     @Override
     protected boolean isSynchronized() {
         return false;
-    }
-
-    @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return machineRecipeList;
     }
 
     @Override

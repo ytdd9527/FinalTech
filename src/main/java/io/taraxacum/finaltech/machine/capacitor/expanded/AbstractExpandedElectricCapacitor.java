@@ -8,11 +8,14 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.machine.capacitor.AbstractElectricCapacitor;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.ElectricCapacitorMenu;
-import io.taraxacum.finaltech.util.CapacitorUtil;
+import io.taraxacum.finaltech.menu.StatusMenu;
+import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.finaltech.util.StringNumberUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -23,7 +26,8 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  */
 public abstract class AbstractExpandedElectricCapacitor extends AbstractElectricCapacitor {
-    protected static final String KEY = "stack";
+    private static final String KEY = "stack";
+
     public AbstractExpandedElectricCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -31,7 +35,7 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new ElectricCapacitorMenu(this.getId(), this.getItemName(), this);
+        return new StatusMenu(this.getId(), this.getItemName(), this);
     }
 
     @Nonnull
@@ -40,9 +44,101 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
         return new BlockPlaceHandler(false) {
             @Override
             public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {
-                BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), KEY, "0");
+                BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), KEY, StringNumberUtil.ZERO);
             }
         };
+    }
+
+    @Override
+    protected void tick(Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+        int energy = Integer.parseInt(SlimefunUtil.getCharge(config));
+        int capacity = this.getCapacity();
+        int generateEnergy = 0;
+        String energyStack = config.getValue(KEY).toString();
+        boolean updateEnergy = false;
+        boolean updateStack = false;
+
+        if("".equals(energyStack)) {
+            energyStack = StringNumberUtil.ZERO;
+        } else if (StringNumberUtil.easilyCompare(energyStack, StringNumberUtil.INTEGER_MAX_VALUE) < 0) {
+            generateEnergy = Integer.parseInt(energyStack);
+            if(generateEnergy >= capacity / 2) {
+                if(StringNumberUtil.easilyCompare(energyStack, this.getMaxStack()) < 0) {
+                    generateEnergy -= capacity / 2;
+                    energyStack = StringNumberUtil.add(energyStack);
+                    updateStack = true;
+                }
+            }
+            int transferEnergy = Math.min(capacity - energy, generateEnergy);
+            energy += transferEnergy;
+            generateEnergy -= transferEnergy;
+            updateEnergy = true;
+        } else if (StringNumberUtil.easilyCompare(energyStack, StringNumberUtil.INTEGER_MAX_VALUE) >= 0) {
+            energyStack = StringNumberUtil.add(energyStack);
+            updateStack = true;
+        }
+
+        if(energy < capacity / 4 && StringNumberUtil.easilyCompare(energyStack, StringNumberUtil.ZERO) > 0) {
+            energy += capacity / 2;
+            updateEnergy = true;
+            energyStack = StringNumberUtil.sub(energyStack);
+            updateStack = true;
+        } else if(energy > capacity / 4 * 3 && StringNumberUtil.easilyCompare(energyStack, this.getMaxStack()) < 0) {
+            energy -= capacity / 2;
+            updateEnergy = true;
+            energyStack = StringNumberUtil.add(energyStack);
+            updateStack = true;
+        }
+
+        if(generateEnergy > 0) {
+            generateEnergy = Math.min(capacity - energy, generateEnergy);
+            energy += generateEnergy;
+            updateEnergy = true;
+        }
+
+        if(updateEnergy) {
+            SlimefunUtil.setCharge(block.getLocation(), String.valueOf(energy));
+        }
+        if(updateStack) {
+            BlockStorage.addBlockInfo(block.getLocation(), KEY, energyStack);
+        }
+        BlockMenu blockMenu = BlockStorage.getInventory(block);
+        ItemStack item = blockMenu.getItemInSlot(ElectricCapacitorMenu.INFO_SLOT);
+
+        //todo 说明优化
+        ItemStackUtil.setLore(item,
+                "§7当前流转电量= §6" + energy + "J",
+                "§7当前存电组数= §e" + energyStack);
+    }
+
+    @Override
+    public void setCharge(@Nonnull Location l, int charge) {
+        int oldCharge = this.getCharge(l);
+        int difference = charge - oldCharge;
+        if(difference > 0) {
+            difference *= this.chargeIncrease();
+            if(oldCharge / 2 + difference / 2 > Integer.MAX_VALUE / 2) {
+                difference = Integer.MAX_VALUE - oldCharge;
+            }
+        } else if(difference < 0) {
+            difference *= this.consumeReduce();
+        } else {
+            return;
+        }
+        charge = oldCharge + difference;
+        super.setCharge(l, charge);
+    }
+
+    @Override
+    public void addCharge(@Nonnull Location l, int charge) {
+        charge *= this.chargeIncrease();
+        super.addCharge(l, charge);
+    }
+
+    @Override
+    public void removeCharge(@Nonnull Location l, int charge) {
+        charge *= this.consumeReduce();
+        super.removeCharge(l, charge);
     }
 
     @Override
@@ -50,26 +146,7 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
 
     public abstract String getMaxStack();
 
-    @Override
-    protected void tick(Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        int electric = getCharge(block.getLocation());
-        int capacity = getCapacity();
-        String stack = config.getValue(KEY).toString();
-        if("".equals(stack)) {
-            stack = "0";
-        }
-        if(electric < capacity / 4 && StringNumberUtil.easilyCompare(stack, "0") > 0) {
-            electric += capacity / 2;
-            stack = StringNumberUtil.sub(stack);
-            BlockStorage.addBlockInfo(block.getLocation(), KEY, stack);
-        } else if(electric > capacity / 4 * 3 && StringNumberUtil.easilyCompare(stack, getMaxStack()) < 0) {
-            electric -= capacity / 2;
-            stack = StringNumberUtil.add(stack);
-            BlockStorage.addBlockInfo(block.getLocation(), KEY, stack);
-        }
-        setCharge(block.getLocation(), electric);
-        BlockMenu blockMenu = BlockStorage.getInventory(block);
-        ItemStack item = blockMenu.getItemInSlot(ElectricCapacitorMenu.INFO_SLOT);
-        CapacitorUtil.setIcon(item, electric, stack);
-    }
+    public abstract double chargeIncrease();
+
+    public abstract double consumeReduce();
 }

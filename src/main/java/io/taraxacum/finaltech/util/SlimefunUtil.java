@@ -92,6 +92,10 @@ public class SlimefunUtil {
         BlockStorage.addBlockInfo(location, "energy-charge", energy);
     }
 
+    public static void setCharge(@Nonnull Config config, String energy) {
+        config.setValue("energy-charge", energy);
+    }
+
     public static final boolean hasPermission(@Nonnull Block block, @Nonnull String uuid) {
         OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
         return player.isOnline() && Slimefun.getProtectionManager().hasPermission(player, block, Interaction.INTERACT_BLOCK);

@@ -21,9 +21,13 @@ import javax.annotation.Nonnull;
 public abstract class AbstractMachineMenu extends BlockMenuPreset {
     private final AbstractMachine machine;
 
-    protected AbstractMachineMenu(@Nonnull String id, @Nonnull String title, AbstractMachine machine) {
+    public AbstractMachineMenu(@Nonnull String id, @Nonnull String title, @Nonnull AbstractMachine machine) {
         super(id, title);
         this.machine = machine;
+    }
+
+    public AbstractMachineMenu(@Nonnull AbstractMachine machine) {
+        this(machine.getId(), machine.getItemName(), machine);
     }
 
     /**

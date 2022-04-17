@@ -32,7 +32,6 @@ import java.util.*;
  */
 public class StorageInteractPort extends AbstractCargo implements RecipeItem {
     private static final int SEARCH_LIMIT = 3;
-    public static final List<MachineRecipe> RECIPE = new ArrayList<>();
 
     public StorageInteractPort(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -149,11 +148,6 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
                 }
             }
         }
-    }
-
-    @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return RECIPE;
     }
 
     @Override

@@ -15,7 +15,6 @@ import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
@@ -23,8 +22,6 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -34,7 +31,6 @@ public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetCom
     public final static int RANGE = 8;
     public static final int CAPACITOR = Integer.MAX_VALUE / 2;
     public final static double LOSS = 16;
-    private final List<MachineRecipe> machineRecipeList = new ArrayList<>();
     public EscapeCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.registerDefaultRecipes();
@@ -49,7 +45,7 @@ public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetCom
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.easyBlockBreakerHandler(this);
+        return MachineUtil.simpleBlockBreakerHandler(this);
     }
 
     @Nonnull
@@ -121,12 +117,8 @@ public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetCom
     }
 
     @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return machineRecipeList;
-    }
-
-    @Override
     public void registerDefaultRecipes() {
+        //todo 说明优化
         this.registerDescriptiveRecipe("&f工作原理",
                 "",
                 "&f搜索范围内的所有机器",

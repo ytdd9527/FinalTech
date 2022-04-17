@@ -34,7 +34,6 @@ import java.util.List;
  * @author Final_ROOT
  */
 public class TransferStation extends AbstractCargo implements RecipeItem {
-    public static final List<MachineRecipe> RECIPE = new ArrayList<>();
     public TransferStation(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.registerDefaultRecipes();
@@ -176,11 +175,6 @@ public class TransferStation extends AbstractCargo implements RecipeItem {
             break;
         }
         return result;
-    }
-
-    @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return RECIPE;
     }
 
     @Override

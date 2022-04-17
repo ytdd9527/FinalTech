@@ -1,12 +1,9 @@
 package io.taraxacum.finaltech.machine.range.area;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.machine.range.AbstractRangeMachine;
-import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -33,13 +30,18 @@ public abstract class AbstractCubeMachine extends AbstractRangeMachine {
         int maxX = location.getBlockX() + range;
         int maxY  = Math.min(location.getBlockY() + range, world.getMaxHeight());
         int maxZ = location.getBlockZ() + range;
+        int result;
         for(int x = minX; x <= maxX; x++) {
             location.setX(x);
             for(int y = minY; y <= maxY; y++) {
                 location.setY(y);
                 for(int z = minZ; z <= maxZ; z++) {
                     location.setZ(z);
-                    count += function.function(location);
+                    result = function.function(location);
+                    if(result == -1) {
+                        return count;
+                    }
+                    count += result;
                 }
             }
         }

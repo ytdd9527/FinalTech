@@ -17,7 +17,6 @@ import java.util.List;
  * @author Final_ROOT
  */
 public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem {
-    private final List<MachineRecipe> RECIPE = new ArrayList<>();
     public static final String ITEM_LORE = "§x§f§f§0§0§0§0已" +
             "§x§f§f§3§3§0§0经" +
             "§x§f§f§6§6§0§0由" +
@@ -43,11 +42,6 @@ public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem 
 
     public StorageCardItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-    }
-
-    @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return RECIPE;
     }
 
     @Override

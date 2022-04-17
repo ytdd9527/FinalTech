@@ -1,8 +1,9 @@
-# FinalTECH
-An addon about making the world better
+# FinalTECH 无限加速
+An addon about making the world faster
+
+这个版本将以多样化提高玩家的机器效率为主要更新
 
 ---------------------------------
-It will have a big change soon.
-I not recommend you use this version now.
+This is a test version.
 
-汉译：这个插件会发生一个大变化，在这之前，我不建议你使用该插件。
+这是一个测试版本

@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core;
+package io.taraxacum.finaltech.api;
 
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.inventory.ItemStack;

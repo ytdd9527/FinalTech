@@ -15,7 +15,6 @@ import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
@@ -25,16 +24,14 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Final_ROOT
  */
+@Deprecated
 public class ExcessLoadElectricityShootPile extends AbstractRayMachine implements RecipeItem {
     public static final int RANGE = 512;
-    private final List<MachineRecipe> machineRecipeList = new ArrayList<>();
     public ExcessLoadElectricityShootPile(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.registerDefaultRecipes();
@@ -49,7 +46,7 @@ public class ExcessLoadElectricityShootPile extends AbstractRayMachine implement
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.easyBlockBreakerHandler(this);
+        return MachineUtil.simpleBlockBreakerHandler(this);
     }
 
     @Nonnull
@@ -105,11 +102,6 @@ public class ExcessLoadElectricityShootPile extends AbstractRayMachine implement
     @Override
     protected boolean isSynchronized() {
         return false;
-    }
-
-    @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return this.machineRecipeList;
     }
 
     @Override

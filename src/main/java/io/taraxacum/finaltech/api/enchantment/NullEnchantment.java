@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.enchantment;
+package io.taraxacum.finaltech.api.enchantment;
 
 import io.taraxacum.finaltech.FinalTech;
 import org.bukkit.NamespacedKey;

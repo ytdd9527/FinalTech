@@ -30,7 +30,6 @@ public class OrderedDustGenerator extends AbstractElectricGenerator implements R
     public static final String KEY_MAX = "max";
     public static final int LIMIT = Integer.MAX_VALUE / 4;
     private OrderDustGeneratorMenu menu;
-    private static List<MachineRecipe> RECIPE = new ArrayList<>();
 
     public OrderedDustGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -132,11 +131,6 @@ public class OrderedDustGenerator extends AbstractElectricGenerator implements R
     @Override
     public int getCapacity() {
         return LIMIT;
-    }
-
-    @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return RECIPE;
     }
 
     @Override

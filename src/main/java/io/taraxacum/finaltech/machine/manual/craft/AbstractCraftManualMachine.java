@@ -7,15 +7,12 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
-import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBreakHandler;
-import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.machine.manual.AbstractManualMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.ManualMachineMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Bukkit;
@@ -25,14 +22,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Final_ROOT
  */
 public abstract class AbstractCraftManualMachine extends AbstractManualMachine implements RecipeItem {
-    private final List<MachineRecipe> machineRecipeList = new ArrayList<>();
     public AbstractCraftManualMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -46,7 +40,7 @@ public abstract class AbstractCraftManualMachine extends AbstractManualMachine i
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.easyBlockBreakerHandler(this);
+        return MachineUtil.simpleBlockBreakerHandler(this);
     }
 
     @Nonnull
@@ -66,7 +60,7 @@ public abstract class AbstractCraftManualMachine extends AbstractManualMachine i
         super.register(addon);
         Bukkit.getServer().getScheduler().runTask((Plugin)addon, this::registerDefaultRecipes);
 
-        ((ManualMachineMenu)this.getMachineMenu()).setMachineRecipeList(this.machineRecipeList);
+        ((ManualMachineMenu)this.getMachineMenu()).setMachineRecipeList(this.getMachineRecipes());
     }
 
     @Override
@@ -75,10 +69,5 @@ public abstract class AbstractCraftManualMachine extends AbstractManualMachine i
         if(!blockMenu.toInventory().getViewers().isEmpty()) {
             this.getMachineMenu().updateMenu(BlockStorage.getInventory(block.getLocation()), block);
         }
-    }
-
-    @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return this.machineRecipeList;
     }
 }

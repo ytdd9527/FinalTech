@@ -10,12 +10,10 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.machines.MachineOperation;
 import io.github.thebusybiscuit.slimefun4.core.machines.MachineProcessor;
 import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBreakHandler;
-import io.github.thebusybiscuit.slimefun4.implementation.operations.CraftingOperation;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.cargo.Icon;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
@@ -24,15 +22,12 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Final_ROOT
  */
 public abstract class AbstractStandardMachine extends AbstractMachine implements MachineProcessHolder<MachineOperation>, RecipeItem {
     private final MachineProcessor<MachineOperation> processor;
-    private final List<MachineRecipe> recipes = new ArrayList<>();
 
     public AbstractStandardMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -76,10 +71,5 @@ public abstract class AbstractStandardMachine extends AbstractMachine implements
     @Override
     public final MachineProcessor<MachineOperation> getMachineProcessor() {
         return this.processor;
-    }
-
-    @Override
-    public final List<MachineRecipe> getMachineRecipes() {
-        return this.recipes;
     }
 }

@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.machine.range.area.cube;
+package io.taraxacum.finaltech.machine.range.area.generator;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -10,23 +10,21 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.machine.range.area.AbstractCubeMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.menu.StatusL2Menu;
 import io.taraxacum.finaltech.menu.StatusMenu;
+import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.finaltech.util.StringNumberUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -34,24 +32,15 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine implements RecipeItem {
     protected static final String KEY = "energy-charge";
-    private final List<MachineRecipe> RECIPE = new ArrayList<>();
     public AbstractCubeElectricGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.registerDefaultRecipes();
     }
 
-    protected abstract String getElectricity();
-
-    protected abstract int getRange();
-
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return new BlockBreakHandler(false, false) {
-            @Override
-            public void onPlayerBreak(@Nonnull BlockBreakEvent blockBreakEvent, @Nonnull ItemStack itemStack, @Nonnull List<ItemStack> list) {
-            }
-        };
+        return MachineUtil.simpleBlockBreakerHandler();
     }
 
     @Nonnull
@@ -63,31 +52,43 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new StatusMenu(this.getId(), this.getItemName(), this);
+        return new StatusL2Menu(this);
     }
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        AtomicReference<String> electric = new AtomicReference<>(StringNumberUtil.ZERO);
-        int count = this.function(block, getRange(), location -> {
+        BlockMenu blockMenu = BlockStorage.getInventory(block);
+        String extraEnergy = this.getElectricity();
+        for(int slot : this.getInputSlots()) {
+            ItemStack item = blockMenu.getItemInSlot(slot);
+            if(!ItemStackUtil.isItemNull(item) && ItemStackUtil.isItemSimilar(item, this.getItem())) {
+                //todo
+                for(int i = 0; i < item.getAmount(); i++) {
+                    extraEnergy = StringNumberUtil.add(extraEnergy, this.getElectricity());
+                }
+            }
+        }
+        AtomicReference<String> energyCharge = new AtomicReference<>(StringNumberUtil.ZERO);
+        String finalExtraEnergy = extraEnergy;
+        int count = this.function(block, this.getRange(), location -> {
             if(BlockStorage.hasBlockInfo(location)) {
-                Config locationInfo = BlockStorage.getLocationInfo(location);
-                if(locationInfo.contains(SlimefunUtil.KEY_ID)) {
-                    SlimefunItem item = SlimefunItem.getById(locationInfo.getString(SlimefunUtil.KEY_ID));
+                Config energyComponentConfig = BlockStorage.getLocationInfo(location);
+                if(energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
+                    SlimefunItem item = SlimefunItem.getById(energyComponentConfig.getString(SlimefunUtil.KEY_ID));
                     if(item instanceof EnergyNetComponent) {
-                        int capacity = ((EnergyNetComponent) item).getCapacity();
-                        if(capacity == 0) {
+                        int componentCapacity = ((EnergyNetComponent) item).getCapacity();
+                        if(componentCapacity == 0) {
                             return 0;
                         }
-                        String charge = locationInfo.contains(KEY) ? locationInfo.getString(KEY) : StringNumberUtil.ZERO;
-                        if(StringNumberUtil.easilyCompare(charge, String.valueOf(capacity)) >= 0) {
+                        String componentEnergy = energyComponentConfig.contains(KEY) ? energyComponentConfig.getString(KEY) : StringNumberUtil.ZERO;
+                        if(StringNumberUtil.easilyCompare(componentEnergy, String.valueOf(componentCapacity)) >= 0) {
                             return 0;
                         }
-                        String e = StringNumberUtil.min(StringNumberUtil.sub(String.valueOf(capacity), charge), getElectricity());
-                        if(StringNumberUtil.easilyCompare(e, StringNumberUtil.ZERO) > 0) {
-                            charge = StringNumberUtil.add(charge, e);
-                            electric.set(StringNumberUtil.add(electric.get(), e));
-                            BlockStorage.addBlockInfo(location, KEY, String.valueOf(charge));
+                        String transferEnergy = StringNumberUtil.min(StringNumberUtil.sub(String.valueOf(componentCapacity), componentEnergy), finalExtraEnergy);
+                        if(StringNumberUtil.easilyCompare(transferEnergy, StringNumberUtil.ZERO) > 0) {
+                            componentEnergy = StringNumberUtil.add(componentEnergy, transferEnergy);
+                            energyCharge.set(StringNumberUtil.add(energyCharge.get(), transferEnergy));
+                            SlimefunUtil.setCharge(energyComponentConfig, componentEnergy);
                             return 1;
                         }
                     }
@@ -95,13 +96,13 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
             }
             return 0;
         });
-        BlockMenu blockMenu = BlockStorage.getInventory(block);
+        blockMenu = BlockStorage.getInventory(block);
         ItemStack item = blockMenu.getItemInSlot(StatusMenu.CENTER_SLOT);
         ItemStackUtil.setLore(item,
                 "§7当前生效的机器= " + count,
-                "§7实际发电量= " + electric + "J");
+                "§7实际发电量= " + energyCharge + "J");
         if (count == 0) {
-            item.setType(Material.YELLOW_STAINED_GLASS_PANE);
+            item.setType(Material.RED_STAINED_GLASS_PANE);
         } else {
             item.setType(Material.GREEN_STAINED_GLASS_PANE);
         }
@@ -113,12 +114,8 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
     }
 
     @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return RECIPE;
-    }
-
-    @Override
     public void registerDefaultRecipes() {
+        //todo 优化说明
         registerDescriptiveRecipe("&f供电量",
                 "",
                 "&f供电量=" + this.getElectricity() + "J/t",
@@ -130,4 +127,8 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
                 "&f即以自身为中心",
                 "&f边长" + (this.getRange() * 2 + 1) + "格（含）的正方体区域");
     }
+
+    protected abstract String getElectricity();
+
+    protected abstract int getRange();
 }

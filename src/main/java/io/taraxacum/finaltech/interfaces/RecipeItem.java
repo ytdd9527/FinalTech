@@ -2,9 +2,11 @@ package io.taraxacum.finaltech.interfaces;
 
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.taraxacum.finaltech.core.RandomMachineRecipe;
+import io.taraxacum.finaltech.api.RandomMachineRecipe;
+import io.taraxacum.finaltech.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,13 +20,15 @@ import java.util.List;
 public interface RecipeItem extends RecipeDisplayItem {
 
     /**
-     * 获取机器工作配方列表
+     * Get the machineRecipes for it
      * @return
      */
-    List<MachineRecipe> getMachineRecipes();
+    default List<MachineRecipe> getMachineRecipes() {
+        return MachineRecipeFactory.getRecipe(this.getClass());
+    };
 
     /**
-     * 注册一条机器的工作配方
+     * register a machineRecipes for itself
      * @param recipe
      */
     default void registerRecipe(MachineRecipe recipe) {

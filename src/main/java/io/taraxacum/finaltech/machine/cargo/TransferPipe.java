@@ -36,7 +36,6 @@ import java.util.*;
  */
 public class TransferPipe extends AbstractCargo implements RecipeItem {
     public static final int BLOCK_SEARCH_LIMIT = 8;
-    public static final List<MachineRecipe> RECIPE = new ArrayList<>();
     public TransferPipe(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.registerDefaultRecipes();
@@ -165,16 +164,6 @@ public class TransferPipe extends AbstractCargo implements RecipeItem {
             }
         }
         return result;
-    }
-
-    /**
-     * 获取机器工作配方列表
-     *
-     * @return
-     */
-    @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return RECIPE;
     }
 
     /**

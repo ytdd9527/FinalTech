@@ -1,17 +1,22 @@
 package io.taraxacum.finaltech;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.taraxacum.finaltech.setup.SetupUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
 
 /**
  * @author Final_ROOT
  */
 public class FinalTech extends JavaPlugin implements SlimefunAddon {
+    private static int timeCount = 0;
 
     @Override
     public void onEnable() {
+        super.onEnable();
         Config cfg = new Config(this);
 
         if (cfg.getBoolean("options.auto-update")) {
@@ -22,25 +27,30 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         SetupUtil.init(this);
         SetupUtil.setupMenus(this);
         SetupUtil.setupItems(this);
+
+        this.init();
     }
 
     @Override
     public void onDisable() {
-        // Logic for disabling the plugin...
     }
 
     @Override
     public String getBugTrackerURL() {
-        // You can return a link to your Bug Tracker instead of null here
         return null;
     }
 
     @Override
     public JavaPlugin getJavaPlugin() {
-        /*
-         * You will need to return a reference to your Plugin here.
-         * If you are using your main class for this, simply return "this".
-         */
         return this;
+    }
+
+    private void init() {
+        BukkitScheduler scheduler = Bukkit.getScheduler();
+        scheduler.runTaskTimerAsynchronously(this, () -> FinalTech.timeCount++, 0, Slimefun.getTickerTask().getTickRate());
+    }
+
+    public static int getTimeCount() {
+        return timeCount;
     }
 }

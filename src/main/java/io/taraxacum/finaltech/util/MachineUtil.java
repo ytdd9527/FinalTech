@@ -2,13 +2,8 @@ package io.taraxacum.finaltech.util;
 
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.ItemUtils;
-import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
@@ -19,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -28,12 +22,16 @@ import java.util.*;
 public final class MachineUtil {
     public static final BlockPlaceHandler BLOCK_PLACE_HANDLER_PLACER_ALLOW = new BlockPlaceHandler(true) {
         @Override
-        public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {}
+        public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {
+
+        }
     };
 
     public static final BlockPlaceHandler BLOCK_PLACE_HANDLER_PLACER_DENY = new BlockPlaceHandler(false) {
         @Override
-        public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {}
+        public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {
+
+        }
     };
 
     public static final BlockPlaceHandler BLOCK_PLACE_HANDLER_DENY = new BlockPlaceHandler(false) {
@@ -43,7 +41,15 @@ public final class MachineUtil {
         }
     };
 
-    public static BlockBreakHandler easyBlockBreakerHandler(@Nonnull AbstractMachine abstractMachine) {
+    public static BlockBreakHandler simpleBlockBreakerHandler() {
+        return new BlockBreakHandler(false, false) {
+            @Override
+            public void onPlayerBreak(BlockBreakEvent blockBreakEvent, ItemStack itemStack, List<ItemStack> list) {
+
+            }
+        };
+    }
+    public static BlockBreakHandler simpleBlockBreakerHandler(@Nonnull AbstractMachine abstractMachine) {
         return new BlockBreakHandler(false, false) {
             @Override
             public void onPlayerBreak(BlockBreakEvent blockBreakEvent, ItemStack itemStack, List<ItemStack> list) {
@@ -54,24 +60,24 @@ public final class MachineUtil {
             }
         };
     }
-    public static BlockBreakHandler easyBlockBreakerHandler(@Nonnull AbstractMachine abstractMachine, int... slot) {
+    public static BlockBreakHandler simpleBlockBreakerHandler(@Nonnull int... slot) {
         return new BlockBreakHandler(false, false) {
             @Override
             public void onPlayerBreak(BlockBreakEvent blockBreakEvent, ItemStack itemStack, List<ItemStack> list) {
                 Location location = blockBreakEvent.getBlock().getLocation();
                 BlockMenu blockMenu = BlockStorage.getInventory(location);
-                blockMenu.dropItems(location, abstractMachine.getInputSlots());
-                blockMenu.dropItems(location, abstractMachine.getOutputSlots());
                 blockMenu.dropItems(location, slot);
             }
         };
     }
-    public static BlockBreakHandler easyBlockBreakerHandler(@Nonnull int... slot) {
+    public static BlockBreakHandler simpleBlockBreakerHandler(@Nonnull AbstractMachine abstractMachine, int... slot) {
         return new BlockBreakHandler(false, false) {
             @Override
             public void onPlayerBreak(BlockBreakEvent blockBreakEvent, ItemStack itemStack, List<ItemStack> list) {
                 Location location = blockBreakEvent.getBlock().getLocation();
                 BlockMenu blockMenu = BlockStorage.getInventory(location);
+                blockMenu.dropItems(location, abstractMachine.getInputSlots());
+                blockMenu.dropItems(location, abstractMachine.getOutputSlots());
                 blockMenu.dropItems(location, slot);
             }
         };

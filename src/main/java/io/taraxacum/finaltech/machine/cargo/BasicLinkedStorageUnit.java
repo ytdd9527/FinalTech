@@ -20,7 +20,6 @@ import java.util.List;
  * @author Final_ROOT
  */
 public class BasicLinkedStorageUnit extends AbstractCargo implements RecipeItem {
-    public static final List<MachineRecipe> RECIPE = new ArrayList<>();
     public BasicLinkedStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.registerDefaultRecipes();
@@ -33,11 +32,8 @@ public class BasicLinkedStorageUnit extends AbstractCargo implements RecipeItem 
     }
 
     @Override
-    protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {}
+    protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
 
-    @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return RECIPE;
     }
 
     @Override

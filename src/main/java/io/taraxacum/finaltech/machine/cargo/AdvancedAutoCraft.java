@@ -40,7 +40,6 @@ import java.util.Map;
  * @author Final_ROOT
  */
 public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
-    public final List<MachineRecipe> recipes = new ArrayList<>();
     public AdvancedAutoCraft(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.registerDefaultRecipes();
@@ -185,11 +184,6 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
                 }
             }
         }
-    }
-
-    @Override
-    public List<MachineRecipe> getMachineRecipes() {
-        return recipes;
     }
 
     @Override
