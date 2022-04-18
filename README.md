@@ -7,3 +7,6 @@ An addon about making the world faster
 This is a test version.
 
 这是一个测试版本
+
+不要用这个版本！！！！！！！！！！！！！！！！！！！！！！！！！！！
+还在开发中！！！！！！！！！！！！！！！！！！！！！！
