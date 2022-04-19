@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
+import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.finaltech.util.StringNumberUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -41,7 +42,7 @@ public class OverloadedElectricityShootPile extends AbstractElectricityShootPile
                 Config energyComponentConfig = BlockStorage.getLocationInfo(location);
                 if(energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
                     SlimefunItem energyComponentItem = SlimefunItem.getById(energyComponentConfig.getString(SlimefunUtil.KEY_ID));
-                    if(energyComponentItem instanceof EnergyNetComponent) {
+                    if(energyComponentItem instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) energyComponentItem).getEnergyComponentType())) {
                         int componentEnergy = Integer.parseInt(SlimefunUtil.getCharge(energyComponentConfig));
                         int componentCapacity = Integer.MAX_VALUE;
                         int transferEnergy = Math.max(componentCapacity - componentEnergy, 0) / 2;

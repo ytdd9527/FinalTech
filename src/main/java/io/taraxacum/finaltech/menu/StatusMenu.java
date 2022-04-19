@@ -18,6 +18,10 @@ public class StatusMenu extends AbstractMachineMenu{
     private static final int[] BORDER = new int[] {0, 1, 2, 3, 5 ,6 ,7, 8};
     public static final int CENTER_SLOT = 4;
     private static final ItemStack STATUS_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, "&7状态"," ");
+    public StatusMenu(@Nonnull AbstractMachine machine) {
+        super(machine);
+    }
+    @Deprecated
     public StatusMenu(@Nonnull String id, @Nonnull String title, AbstractMachine machine) {
         super(id, title, machine);
     }

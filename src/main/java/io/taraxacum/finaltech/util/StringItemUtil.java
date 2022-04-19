@@ -1,7 +1,7 @@
 package io.taraxacum.finaltech.util;
 
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.item.StorageCardItem;
+import io.taraxacum.finaltech.item.unusable.StorageCardItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Inventory;

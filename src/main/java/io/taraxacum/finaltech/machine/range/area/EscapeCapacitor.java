@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Final_ROOT
  */
 public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetComponent, RecipeItem {
-    public final static int RANGE = 8;
+    public final static int RANGE = 6;
     public static final int CAPACITOR = Integer.MAX_VALUE / 2;
     public final static double LOSS = 16;
     public EscapeCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -45,7 +45,7 @@ public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetCom
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.simpleBlockBreakerHandler(this);
+        return MachineUtil.simpleBlockBreakerHandler();
     }
 
     @Nonnull
@@ -57,7 +57,7 @@ public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetCom
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         Location blockLocation = block.getLocation();
-        int charge = this.getCharge(blockLocation);
+        int charge = Integer.parseInt(SlimefunUtil.getCharge(config));
         int count = 0;
         AtomicInteger maxEnergy = new AtomicInteger();
         AtomicInteger totalEnergy = new AtomicInteger();
@@ -65,21 +65,20 @@ public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetCom
         if(charge > 0) {
             count = this.function(block, RANGE, location -> {
                 if(BlockStorage.hasBlockInfo(location)) {
-                    Config locationInfo = BlockStorage.getLocationInfo(location);
-                    if(locationInfo.contains(SlimefunUtil.KEY_ID)) {
-                        String id = locationInfo.getString(SlimefunUtil.KEY_ID);
-                        SlimefunItem item = SlimefunItem.getById(id);
+                    Config energyComponentConfig = BlockStorage.getLocationInfo(location);
+                    if(energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
+                        SlimefunItem item = SlimefunItem.getById(energyComponentConfig.getString(SlimefunUtil.KEY_ID));
                         if(item instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) item).getEnergyComponentType())) {
-                            int capacity = ((EnergyNetComponent) item).getCapacity();
-                            if(capacity == 0) {
+                            int componentCapacity = ((EnergyNetComponent) item).getCapacity();
+                            if(componentCapacity == 0) {
                                 return 0;
                             }
-                            int energy = Integer.parseInt(SlimefunUtil.getCharge(locationInfo));
-                            int e = Math.min(capacity - energy, validCharge);
-                            if(e > 0) {
-                                SlimefunUtil.setCharge(location, String.valueOf(e + energy));
-                                maxEnergy.set(Math.max(maxEnergy.get(), e));
-                                totalEnergy.addAndGet(e);
+                            int componentEnergy = Integer.parseInt(SlimefunUtil.getCharge(energyComponentConfig));
+                            int transferEnergy = Math.min(componentCapacity - componentEnergy, validCharge);
+                            if(transferEnergy > 0) {
+                                SlimefunUtil.setCharge(location, String.valueOf(transferEnergy + componentEnergy));
+                                maxEnergy.set(Math.max(maxEnergy.get(), transferEnergy));
+                                totalEnergy.addAndGet(transferEnergy);
                                 return 1;
                             }
                         }

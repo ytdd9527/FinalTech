@@ -12,7 +12,6 @@ import io.taraxacum.finaltech.machine.range.area.AbstractCubeMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.StatusL2Menu;
 import io.taraxacum.finaltech.menu.StatusMenu;
-import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
@@ -40,7 +39,7 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.simpleBlockBreakerHandler();
+        return MachineUtil.simpleBlockBreakerHandler(this);
     }
 
     @Nonnull

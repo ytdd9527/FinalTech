@@ -7,7 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.api.operation.AllCompressionOperation;
-import io.taraxacum.finaltech.item.CopyCardItem;
+import io.taraxacum.finaltech.item.unusable.CopyCardItem;
 import io.taraxacum.finaltech.menu.standard.AbstractStandardMachineMenu;
 import io.taraxacum.finaltech.api.operation.ItemCopyCardOperation;
 import io.taraxacum.finaltech.menu.standard.AllCompressionMenu;

@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.item;
+package io.taraxacum.finaltech.item.unusable;
 
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;

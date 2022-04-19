@@ -584,10 +584,76 @@ public final class FinalTechRecipes {
             null, FinalTechItems.ENERGIZED_GENERATOR, null
     };
 
+    public static final ItemStack[] ENERGIZED_ACCELERATOR = new ItemStack[] {
+            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE,
+            FinalTechItems.GEARWHEEL, FinalTechItems.FAKE, FinalTechItems.GEARWHEEL,
+            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE
+    };
+
+    public static final ItemStack[] OVERLOADED_ACCELERATOR = new ItemStack[] {
+            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE,
+            FinalTechItems.GEARWHEEL, FinalTechItems.FAKE, FinalTechItems.GEARWHEEL,
+            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE
+    };
+
+    public static final ItemStack[] MATRIX_ACCELERATOR = new ItemStack[] {
+            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE,
+            FinalTechItems.GEARWHEEL, FinalTechItems.FAKE, FinalTechItems.GEARWHEEL,
+            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE
+    };
+
     // tool
     public static final ItemStack[] UNORDERED_SWORD = new ItemStack[] {
             null, FinalTechItems.ORDERED_DUST, null,
             null, FinalTechItems.ORDERED_DUST, null,
             null, FinalTechItems.GEARWHEEL, null
+    };
+
+    public static final ItemStack[] MACHINE_CHARGE_CARD_L1 = new ItemStack[] {
+
+    };
+
+    public static final ItemStack[] MACHINE_CHARGE_CARD_L2 = new ItemStack[] {
+
+    };
+
+    public static final ItemStack[] MACHINE_CHARGE_CARD_L3 = new ItemStack[] {
+
+    };
+
+    public static final ItemStack[] MACHINE_ACCELERATE_CARD_L1 = new ItemStack[] {
+
+    };
+
+    public static final ItemStack[] MACHINE_ACCELERATE_CARD_L2 = new ItemStack[] {
+
+    };
+
+    public static final ItemStack[] MACHINE_ACCELERATE_CARD_L3 = new ItemStack[] {
+
+    };
+
+    public static final ItemStack[] MACHINE_ACTIVATE_CARD_L1 = new ItemStack[] {
+
+    };
+
+    public static final ItemStack[] MACHINE_ACTIVATE_CARD_L2 = new ItemStack[] {
+
+    };
+
+    public static final ItemStack[] MACHINE_ACTIVATE_CARD_L3 = new ItemStack[] {
+
+    };
+
+    public static final ItemStack[] MACHINE_ACTIVATE_CARD_L4 = new ItemStack[] {
+
+    };
+
+    public static final ItemStack[] MACHINE_CHARGE_CARD_INFINITY = new ItemStack[] {
+
+    };
+
+    public static final ItemStack[] MACHINE_ACCELERATE_CARD_INFINITY = new ItemStack[] {
+
     };
 }

@@ -11,6 +11,7 @@ import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
+import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -22,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.io.ObjectInputFilter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -91,9 +93,19 @@ public class SlimefunUtil {
     public static void setCharge(@Nonnull Location location, String energy) {
         BlockStorage.addBlockInfo(location, "energy-charge", energy);
     }
-
     public static void setCharge(@Nonnull Config config, String energy) {
         config.setValue("energy-charge", energy);
+    }
+    public static void setCharge(@Nonnull Config config, int energy) {
+        config.setValue("energy-charge", String.valueOf(energy));
+    }
+
+    public static void runBlockTicker(@Nonnull BlockTicker blockTicker, @Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+        if(blockTicker.isSynchronized()) {
+            Slimefun.runSync(() -> blockTicker.tick(block, slimefunItem, config));
+        } else {
+            blockTicker.tick(block, slimefunItem, config);
+        }
     }
 
     public static final boolean hasPermission(@Nonnull Block block, @Nonnull String uuid) {

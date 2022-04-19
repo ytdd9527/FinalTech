@@ -2,13 +2,12 @@ package io.taraxacum.finaltech.setup.register;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
-import io.taraxacum.finaltech.item.StorageCardItem;
+import io.taraxacum.finaltech.item.unusable.StorageCardItem;
 import io.taraxacum.finaltech.machine.range.area.EscapeCapacitor;
 import io.taraxacum.finaltech.machine.range.area.generator.*;
 import io.taraxacum.finaltech.machine.capacitor.expanded.*;
 import io.taraxacum.finaltech.machine.capacitor.*;
 import io.taraxacum.finaltech.machine.generator.OrderedDustGenerator;
-import io.taraxacum.finaltech.machine.range.ray.ExcessLoadElectricityShootPile;
 import io.taraxacum.finaltech.machine.range.ray.shooter.EnergizedElectricityShootPile;
 import io.taraxacum.finaltech.machine.range.ray.shooter.NormalElectricityShootPile;
 import io.taraxacum.finaltech.machine.range.ray.shooter.OverloadedElectricityShootPile;
@@ -260,10 +259,23 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MATRIX_GENERATOR = new SlimefunItemStack("FINALTECH_MATRIX_GENERATOR", Material.SEA_LANTERN, "&2矩阵供电机",
             "&6传输半径&b " + MatrixGenerator.RANGE + "格");
 
+    public static final SlimefunItemStack ENERGIZED_ACCELERATOR = new SlimefunItemStack("FINALTECH_ENERGY_ACCELERATOR", Material.TARGET, "&2充能加速器");
+    public static final SlimefunItemStack OVERLOADED_ACCELERATOR = new SlimefunItemStack("FINALTECH_OVERLOADED_ACCELERATOR", Material.TARGET, "&2过载加速器");
+    public static final SlimefunItemStack MATRIX_ACCELERATOR = new SlimefunItemStack("FINALTECH_MATRIX_ACCELERATOR", Material.TARGET, "&2矩阵加速器");
+
     // tool
-    public static final SlimefunItemStack UNORDERED_SWORD = new SlimefunItemStack("FINALTECH_UNORDERED_SWORD", Material.WOODEN_SWORD, "&f无序剑",
-            "&7无效化受伤触发机制",
-            "&7无视受伤保护机制 I",
-            "&7无敌穿透 V",
-            "&7耐久损耗伤害追加 I");
+    public static final SlimefunItemStack UNORDERED_SWORD = new SlimefunItemStack("FINALTECH_UNORDERED_SWORD", Material.WOODEN_SWORD, "&f无序剑");
+
+    public static final SlimefunItemStack MACHINE_CHARGE_CARD_L1 = new SlimefunItemStack("FINALTECH_MACHINE_CHARGE_CARD_L1", Material.PAPER, "&f充能卡L1");
+    public static final SlimefunItemStack MACHINE_CHARGE_CARD_L2 = new SlimefunItemStack("FINALTECH_MACHINE_CHARGE_CARD_L2", Material.PAPER, "&f充能卡L2");
+    public static final SlimefunItemStack MACHINE_CHARGE_CARD_L3 = new SlimefunItemStack("FINALTECH_MACHINE_CHARGE_CARD_L3", Material.PAPER, "&f充能卡L3");
+    public static final SlimefunItemStack MACHINE_ACCELERATE_CARD_L1 = new SlimefunItemStack("FINALTECH_MACHINE_ACCELERATE_CARD_L1", Material.PAPER, "&f过载卡L1");
+    public static final SlimefunItemStack MACHINE_ACCELERATE_CARD_L2 = new SlimefunItemStack("FINALTECH_MACHINE_ACCELERATE_CARD_L2", Material.PAPER, "&f过载卡L2");
+    public static final SlimefunItemStack MACHINE_ACCELERATE_CARD_L3 = new SlimefunItemStack("FINALTECH_MACHINE_ACCELERATE_CARD_L3", Material.PAPER, "&f过载卡L3");
+    public static final SlimefunItemStack MACHINE_ACTIVATE_CARD_L1 = new SlimefunItemStack("FINALTECH_MACHINE_ACTIVATE_CARD_L1", Material.PAPER, "&f带电超频卡L1");
+    public static final SlimefunItemStack MACHINE_ACTIVATE_CARD_L2 = new SlimefunItemStack("FINALTECH_MACHINE_ACTIVATE_CARD_L2", Material.PAPER, "&f带电超频卡L2");
+    public static final SlimefunItemStack MACHINE_ACTIVATE_CARD_L3 = new SlimefunItemStack("FINALTECH_MACHINE_ACTIVATE_CARD_L3", Material.PAPER, "&f带电超频卡L3");
+    public static final SlimefunItemStack MACHINE_ACTIVATE_CARD_L4 = new SlimefunItemStack("FINALTECH_MACHINE_ACTIVATE_CARD_L4", Material.PAPER, "&f带电超频卡L4");
+    public static final SlimefunItemStack MACHINE_CHARGE_CARD_INFINITY = new SlimefunItemStack("FINALTECH_MACHINE_CHARGE_CARD_L4", Material.PAPER, "&f无限充能卡");
+    public static final SlimefunItemStack MACHINE_ACCELERATE_CARD_INFINITY = new SlimefunItemStack("FINALTECH_MACHINE_ACCELERATE_CARD_L4", Material.PAPER, "&f无限过载卡");
 }

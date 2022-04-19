@@ -6,11 +6,15 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.taraxacum.finaltech.item.CopyCardItem;
-import io.taraxacum.finaltech.item.StorageCardItem;
-import io.taraxacum.finaltech.item.UnusableSlimefunItem;
+import io.taraxacum.finaltech.item.unusable.CopyCardItem;
+import io.taraxacum.finaltech.item.unusable.StorageCardItem;
+import io.taraxacum.finaltech.item.unusable.UnusableSlimefunItem;
+import io.taraxacum.finaltech.item.usable.accelerate.*;
 import io.taraxacum.finaltech.machine.OrderedDustFactoryV2;
 import io.taraxacum.finaltech.machine.OverclockFrameMachine;
+import io.taraxacum.finaltech.machine.range.area.EnergizedAccelerator;
+import io.taraxacum.finaltech.machine.range.area.MatrixAccelerator;
+import io.taraxacum.finaltech.machine.range.area.OverloadedAccelerator;
 import io.taraxacum.finaltech.machine.range.area.EscapeCapacitor;
 import io.taraxacum.finaltech.machine.range.area.generator.*;
 import io.taraxacum.finaltech.machine.capacitor.BasicChargeIncreaseCapacitor;
@@ -182,5 +186,22 @@ public final class SetupUtil {
         new EnergizedStackGenerator(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.ENERGIZED_STACK_GENERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ENERGIZED_STACK_GENERATOR).register();
         new OverloadedGenerator(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.OVERLOADED_GENERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.OVERLOADED_GENERATOR).register();
         new MatrixGenerator(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.MATRIX_GENERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MATRIX_GENERATOR).register();
+        new EnergizedAccelerator(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.ENERGIZED_ACCELERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ENERGIZED_ACCELERATOR).register();
+        new OverloadedAccelerator(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.OVERLOADED_ACCELERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.OVERLOADED_ACCELERATOR).register();
+        new MatrixAccelerator(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.MATRIX_ACCELERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ACCELERATOR).register();
+
+        // now register tools
+        new MachineChargeCardL1(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_CHARGE_CARD_L1, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_CHARGE_CARD_L1).register(slimefunAddon);
+        new MachineChargeCardL2(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_CHARGE_CARD_L2, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_CHARGE_CARD_L2).register(slimefunAddon);
+        new MachineChargeCardL3(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_CHARGE_CARD_L3, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_CHARGE_CARD_L3).register(slimefunAddon);
+        new MachineAccelerateCardL1(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_ACCELERATE_CARD_L1, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACCELERATE_CARD_L1).register(slimefunAddon);
+        new MachineAccelerateCardL2(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_ACCELERATE_CARD_L2, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACCELERATE_CARD_L2).register(slimefunAddon);
+        new MachineAccelerateCardL3(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_ACCELERATE_CARD_L3, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACCELERATE_CARD_L3).register(slimefunAddon);
+        new MachineActivateCardL1(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_ACTIVATE_CARD_L1, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACTIVATE_CARD_L1).register(slimefunAddon);
+        new MachineActivateCardL2(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_ACTIVATE_CARD_L2, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACTIVATE_CARD_L2).register(slimefunAddon);
+        new MachineActivateCardL3(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_ACTIVATE_CARD_L3, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACTIVATE_CARD_L3).register(slimefunAddon);
+        new MachineActivateCardL4(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_ACTIVATE_CARD_L4, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACTIVATE_CARD_L4).register(slimefunAddon);
+        new MachineChargeCardMatrix(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_CHARGE_CARD_INFINITY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_CHARGE_CARD_INFINITY).register(slimefunAddon);
+        new MachineAccelerateCardMatrix(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_ACCELERATE_CARD_INFINITY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACCELERATE_CARD_INFINITY).register(slimefunAddon);
     }
 }

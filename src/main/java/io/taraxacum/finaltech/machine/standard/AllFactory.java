@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.taraxacum.finaltech.item.CopyCardItem;
+import io.taraxacum.finaltech.item.unusable.CopyCardItem;
 import io.taraxacum.finaltech.menu.standard.AbstractStandardMachineMenu;
 import io.taraxacum.finaltech.menu.standard.AllFactoryMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;

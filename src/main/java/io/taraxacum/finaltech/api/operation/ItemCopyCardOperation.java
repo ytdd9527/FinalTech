@@ -1,7 +1,7 @@
 package io.taraxacum.finaltech.api.operation;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.taraxacum.finaltech.item.CopyCardItem;
+import io.taraxacum.finaltech.item.unusable.CopyCardItem;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import org.bukkit.inventory.ItemStack;
