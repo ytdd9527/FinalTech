@@ -16,6 +16,9 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
+/**
+ * @author Final_ROOT
+ */
 public class BasicFrameMachine extends AbstractStandardMachine {
     public BasicFrameMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -24,7 +27,7 @@ public class BasicFrameMachine extends AbstractStandardMachine {
     @Nonnull
     @Override
     protected AbstractStandardMachineMenu setMachineMenu() {
-        return new BasicFrameMachineMenu(this.getId(), this.getItemName(), this);
+        return new BasicFrameMachineMenu(this);
     }
 
     @Override
@@ -32,13 +35,13 @@ public class BasicFrameMachine extends AbstractStandardMachine {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         int[] inputSlots = this.getInputSlots();
         int[] outputSlots = this.getOutputSlots();
-        for(int i = 0; i < inputSlots.length && i < outputSlots.length; i++) {
+        for (int i = 0; i < inputSlots.length && i < outputSlots.length; i++) {
             ItemStack inputItem = blockMenu.getItemInSlot(inputSlots[i]);
             ItemStack outputItem = blockMenu.getItemInSlot(outputSlots[i]);
-            if(ItemStackUtil.isItemNull(inputItem)) {
+            if (ItemStackUtil.isItemNull(inputItem)) {
                 continue;
             }
-            if(ItemStackUtil.isItemNull(outputItem)) {
+            if (ItemStackUtil.isItemNull(outputItem)) {
                 blockMenu.toInventory().setItem(outputSlots[i], new CustomItemStack(inputItem, inputItem.getAmount()));
                 blockMenu.consumeItem(inputSlots[i], inputItem.getAmount());
             } else {
@@ -48,5 +51,7 @@ public class BasicFrameMachine extends AbstractStandardMachine {
     }
 
     @Override
-    public void registerDefaultRecipes() {}
+    public void registerDefaultRecipes() {
+
+    }
 }

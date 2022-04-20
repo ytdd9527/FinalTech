@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 /**
  * @author Final_ROOT
  */
-public class ItemCopyCardOperation implements AllCompressionOperation {
+public class ItemCopyCardOperation implements ItemSerializationConstructorOperation {
     private int count = 0;
     private final int difficulty;
 
@@ -44,7 +44,7 @@ public class ItemCopyCardOperation implements AllCompressionOperation {
 
     @Override
     public int getType() {
-        return AllCompressionOperation.COPY_CARD;
+        return ItemSerializationConstructorOperation.COPY_CARD;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ItemCopyCardOperation implements AllCompressionOperation {
 
     @Override
     public int addItem(@Nullable ItemStack item) {
-        if(!this.isFinished()) {
+        if (!this.isFinished()) {
             if (ItemStackUtil.isItemSimilar(item, this.matchItem) || ItemStackUtil.isItemSimilar(item, FinalTechItems.FAKE)) {
                 int amount = Math.min(item.getAmount(), this.difficulty - this.count);
                 item.setAmount(item.getAmount() - amount);

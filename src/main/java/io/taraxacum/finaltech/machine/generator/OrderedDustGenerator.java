@@ -33,7 +33,6 @@ public class OrderedDustGenerator extends AbstractElectricGenerator implements R
 
     public OrderedDustGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -78,24 +77,24 @@ public class OrderedDustGenerator extends AbstractElectricGenerator implements R
         int oldCount = count;
         int oldMax = max;
         boolean work = false;
-        for(int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlots()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(ItemStackUtil.isItemSimilar(item, FinalTechItems.UNORDERED_DUST)) {
+            if (ItemStackUtil.isItemSimilar(item, FinalTechItems.UNORDERED_DUST)) {
                 item.setAmount(item.getAmount() - 1);
                 count = Math.min(count + 1, LIMIT);
-                if(count > max) {
+                if (count > max) {
                     max = count;
                 }
                 work = true;
                 break;
-            } else if(ItemStackUtil.isItemSimilar(item, FinalTechItems.ORDERED_DUST)) {
+            } else if (ItemStackUtil.isItemSimilar(item, FinalTechItems.ORDERED_DUST)) {
                 item.setAmount(item.getAmount() - 1);
-                if(count < max) {
+                if (count < max) {
                     count = (count + max) / 2;
                     max = count;
                 } else {
                     count = Math.min(count + 1, LIMIT);
-                    if(count > max) {
+                    if (count > max) {
                         max = count;
                     }
                 }
@@ -103,20 +102,20 @@ public class OrderedDustGenerator extends AbstractElectricGenerator implements R
                 break;
             }
         }
-        if(!work) {
+        if (!work) {
             count = 0;
         }
 
-        if(max != oldMax || count != oldCount) {
-            if(max != oldMax) {
+        if (max != oldMax || count != oldCount) {
+            if (max != oldMax) {
                 BlockStorage.addBlockInfo(location, KEY_MAX, String.valueOf(max));
             }
-            if(count != oldCount) {
+            if (count != oldCount) {
                 BlockStorage.addBlockInfo(location, KEY_COUNT, String.valueOf(count));
             }
             menu.updateMenu(blockMenu, block);
         }
-        if(count > 0) {
+        if (count > 0) {
             this.addCharge(location, count);
         }
     }

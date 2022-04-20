@@ -12,7 +12,7 @@ import io.taraxacum.finaltech.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.LocationWithConfig;
+import io.taraxacum.finaltech.dto.LocationWithConfig;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -58,9 +58,9 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements AntiAc
         Map<Integer, List<LocationWithConfig>> componentConfigMap = new HashMap<>(RANGE * 3);
         Location blockLocation = block.getLocation();
         int count = this.function(block, RANGE, location -> {
-            if(BlockStorage.hasBlockInfo(location)) {
+            if (BlockStorage.hasBlockInfo(location)) {
                 Config componentConfig = BlockStorage.getLocationInfo(location);
-                if(componentConfig.contains(SlimefunUtil.KEY_ID)) {
+                if (componentConfig.contains(SlimefunUtil.KEY_ID)) {
                     int distance = Math.abs(location.getBlockX() - blockLocation.getBlockX()) + Math.abs(location.getBlockY() - blockLocation.getBlockY()) + Math.abs(location.getBlockZ() - blockLocation.getBlockZ());
                     List<LocationWithConfig> componentConfigList = componentConfigMap.computeIfAbsent(distance, d -> new ArrayList(d * d * 4 + 2));
                     componentConfigList.add(new LocationWithConfig(location.clone(), componentConfig));
@@ -74,27 +74,27 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements AntiAc
         int accelerateTimeCount = 0;
         int accelerateMachineCount = 0;
 
-        for(int distance = 1; distance <= RANGE * 3; distance++) {
+        for (int distance = 1; distance <= RANGE * 3; distance++) {
             List<LocationWithConfig> locationConfigList = componentConfigMap.get(distance);
-            if(locationConfigList != null) {
+            if (locationConfigList != null) {
                 Collections.shuffle(locationConfigList);
-                for(LocationWithConfig locationConfig : locationConfigList) {
+                for (LocationWithConfig locationConfig : locationConfigList) {
                     Config componentConfig = locationConfig.getConfig();
                     SlimefunItem item = SlimefunItem.getById(componentConfig.getString(SlimefunUtil.KEY_ID));
-                    if(item instanceof EnergyNetComponent) {
+                    if (item instanceof EnergyNetComponent) {
                         int componentCapacity = ((EnergyNetComponent) item).getCapacity();
-                        if(componentCapacity > 0) {
+                        if (componentCapacity > 0) {
                             accelerateMachineCount++;
                             int componentEnergy = Integer.parseInt(SlimefunUtil.getCharge(componentConfig));
-                            if(componentEnergy > componentCapacity) {
+                            if (componentEnergy > componentCapacity) {
                                 BlockTicker blockTicker = item.getBlockTicker();
-                                if(blockTicker != null) {
+                                if (blockTicker != null) {
                                     Block componentBlock = locationConfig.getLocation().getBlock();
                                     while (componentEnergy > componentCapacity) {
                                         accelerateTimeCount++;
-                                        if(blockTicker.isSynchronized()) {
+                                        if (blockTicker.isSynchronized()) {
                                             Slimefun.runSync(() -> blockTicker.tick(componentBlock, item, componentConfig));
-                                        } else if(!blockTicker.isSynchronized()) {
+                                        } else if (!blockTicker.isSynchronized()) {
                                             blockTicker.tick(componentBlock, item, componentConfig);
                                         }
                                         componentEnergy = Integer.parseInt(SlimefunUtil.getCharge(componentConfig));

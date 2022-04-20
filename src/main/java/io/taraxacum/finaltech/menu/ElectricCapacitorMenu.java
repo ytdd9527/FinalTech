@@ -3,7 +3,7 @@ package io.taraxacum.finaltech.menu;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.AbstractMachine;
-import io.taraxacum.finaltech.util.cargo.Icon;
+import io.taraxacum.finaltech.util.menu.Icon;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -54,7 +54,7 @@ public class ElectricCapacitorMenu extends AbstractMachineMenu {
     public void init() {
         this.addItem(INFO_SLOT, CAPACITOR_ICON);
         this.addMenuClickHandler(INFO_SLOT, ChestMenuUtils.getEmptyClickHandler());
-        for(int slot : BORDER) {
+        for (int slot : BORDER) {
             this.addItem(slot, Icon.BORDER_ICON);
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }

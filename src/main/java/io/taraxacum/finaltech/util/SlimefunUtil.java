@@ -1,14 +1,13 @@
 package io.taraxacum.finaltech.util;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
+import io.taraxacum.common.util.StringNumberUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
@@ -18,15 +17,12 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.ObjectInputFilter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,15 +44,15 @@ public class SlimefunUtil {
         try {
             Method method = slimefunItem.getClass().getMethod("getMachineRecipes");
             List<MachineRecipe> recipes = (List<MachineRecipe>)method.invoke(slimefunItem);
-            if(recipes != null) {
-                for(MachineRecipe recipe : recipes) {
-                    machine.registerRecipe(new MachineRecipe(0, ItemStackWrapper.wrapArray(ItemStackUtil.mergeSameItem(recipe.getInput())), ItemStackWrapper.wrapArray(recipe.getOutput())));
+            if (recipes != null) {
+                for (MachineRecipe recipe : recipes) {
+                    machine.registerRecipe(new MachineRecipe(0, ItemStackWrapper.wrapArray(ItemStackUtil.calMergeItemList(recipe.getInput())), ItemStackWrapper.wrapArray(recipe.getOutput())));
                 }
             }
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             Bukkit.getLogger().info("[FinalTECH]§e无法为本附属中ID为" + machine.getId() + "的机器从ID为" + slimefunId + "的物品读取对应的方法以注册机器的工作配方");
             Bukkit.getLogger().info("[FinalTECH]§b但是我们有备用方案!");
-            if(slimefunItem instanceof RecipeDisplayItem) {
+            if (slimefunItem instanceof RecipeDisplayItem) {
                 List<ItemStack> displayRecipes = ((RecipeDisplayItem) slimefunItem).getDisplayRecipes();
                 registerRecipeBySimpleDisplayRecipe(machine, displayRecipes);
                 Bukkit.getLogger().info("[FinalTECH]§a备用方案成功了!");
@@ -69,15 +65,15 @@ public class SlimefunUtil {
 
     public static void registerRecipeByRecipeType(@Nonnull RecipeItem item, @Nonnull RecipeType recipeType) {
         List<SlimefunItem> list = Slimefun.getRegistry().getEnabledSlimefunItems();
-        for(SlimefunItem slimefunItem : list) {
-            if(recipeType.equals(slimefunItem.getRecipeType())) {
-                item.registerRecipe(0, ItemStackWrapper.wrapArray(ItemStackUtil.mergeSameItem(slimefunItem.getRecipe())), new ItemStack[] {slimefunItem.getRecipeOutput()});
+        for (SlimefunItem slimefunItem : list) {
+            if (recipeType.equals(slimefunItem.getRecipeType())) {
+                item.registerRecipe(0, ItemStackWrapper.wrapArray(ItemStackUtil.calMergeItemList(slimefunItem.getRecipe())), new ItemStack[] {slimefunItem.getRecipeOutput()});
             }
         }
     }
 
     public static void registerRecipeBySimpleDisplayRecipe(@Nonnull RecipeItem item, List<ItemStack> displayRecipes) {
-        for(int i = 0; i < displayRecipes.size(); i+= 2) {
+        for (int i = 0; i < displayRecipes.size(); i+= 2) {
             item.registerRecipe(0, ItemStackWrapper.wrap(displayRecipes.get(i)), ItemStackWrapper.wrap(displayRecipes.get(i+1)));
         }
     }
@@ -101,7 +97,7 @@ public class SlimefunUtil {
     }
 
     public static void runBlockTicker(@Nonnull BlockTicker blockTicker, @Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        if(blockTicker.isSynchronized()) {
+        if (blockTicker.isSynchronized()) {
             Slimefun.runSync(() -> blockTicker.tick(block, slimefunItem, config));
         } else {
             blockTicker.tick(block, slimefunItem, config);

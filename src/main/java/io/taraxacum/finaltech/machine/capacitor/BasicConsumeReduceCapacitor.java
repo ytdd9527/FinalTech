@@ -33,7 +33,7 @@ public class BasicConsumeReduceCapacitor extends AbstractElectricCapacitor {
     @Override
     public void setCharge(@Nonnull Location l, int charge) {
         int difference = charge - getCharge(l);
-        if(difference < 0) {
+        if (difference < 0) {
             charge -= difference;
             difference *= 1 / (1 + (EFFICIENT - 1) * ((getCapacity() - getCharge(l)) / (double) getCapacity()));
             charge += difference;

@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.AbstractMachine;
-import io.taraxacum.finaltech.util.cargo.Icon;
+import io.taraxacum.finaltech.util.menu.Icon;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
@@ -68,15 +68,15 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
 
     @Override
     public void init() {
-        for(int slot : getBorder()) {
+        for (int slot : getBorder()) {
             this.addItem(slot, Icon.BORDER_ICON);
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
-        for(int slot : getInputBorder()) {
+        for (int slot : getInputBorder()) {
             this.addItem(slot, Icon.INPUT_BORDER_ICON);
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
-        for(int slot : getOutputBorder()) {
+        for (int slot : getOutputBorder()) {
             this.addItem(slot, Icon.OUTPUT_BORDER_ICON);
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
@@ -91,7 +91,7 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
     public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
         if (itemTransportFlow.equals(ItemTransportFlow.WITHDRAW)) {
             return getOutputSlots();
-        } else if(itemTransportFlow.equals(ItemTransportFlow.INSERT)) {
+        } else if (itemTransportFlow.equals(ItemTransportFlow.INSERT)) {
             return getInputSlots();
         }
         return new int[0];

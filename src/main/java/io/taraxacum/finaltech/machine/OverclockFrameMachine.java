@@ -62,32 +62,32 @@ public class OverclockFrameMachine extends AbstractMachine implements EnergyNetC
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem sfItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         ItemStack item = blockMenu.getItemInSlot(OverclockFrameMachineMenu.MACHINE_SLOT);
-        if(ItemStackUtil.isItemNull(item) || item.getAmount() == 1) {
+        if (ItemStackUtil.isItemNull(item) || item.getAmount() == 1) {
             return;
         }
         SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
-        if(slimefunItem == null || slimefunItem.getBlockTicker() == null) {
+        if (slimefunItem == null || slimefunItem.getBlockTicker() == null) {
             return;
         }
         Block blockMachine = block.getRelative(BlockFace.DOWN);
         String id = BlockStorage.getLocationInfo(blockMachine.getLocation(), "id");
-        if(id == null || "".equals(id) || id.contains("OVER") || !slimefunItem.getId().equals(id)) {
+        if (id == null || "".equals(id) || id.contains("OVER") || !slimefunItem.getId().equals(id)) {
             return;
         }
         BlockTicker blockTicker = slimefunItem.getBlockTicker();
         int capacity = 0;
-        if(slimefunItem instanceof EnergyNetComponent && ((EnergyNetComponent) slimefunItem).getEnergyComponentType().equals(EnergyNetComponentType.CONSUMER)) {
+        if (slimefunItem instanceof EnergyNetComponent && ((EnergyNetComponent) slimefunItem).getEnergyComponentType().equals(EnergyNetComponentType.CONSUMER)) {
             capacity = ((EnergyNetComponent) slimefunItem).getCapacity();
         }
-        for(int i = 1; i < item.getAmount(); i++) {
-            if(blockTicker.isSynchronized()) {
+        for (int i = 1; i < item.getAmount(); i++) {
+            if (blockTicker.isSynchronized()) {
                 Slimefun.runSync(() -> blockTicker.tick(blockMachine, slimefunItem, BlockStorage.getLocationInfo(blockMachine.getLocation())));
             } else {
                 blockTicker.tick(blockMachine, slimefunItem, BlockStorage.getLocationInfo(blockMachine.getLocation()));
             }
-            if(capacity != 0) {
+            if (capacity != 0) {
                 int count = Math.min(capacity - ((EnergyNetComponent) slimefunItem).getCharge(blockMachine.getLocation()), this.getCharge(block.getLocation()));
-                if(count <= 0) {
+                if (count <= 0) {
                     continue;
                 }
                 ((EnergyNetComponent) slimefunItem).addCharge(blockMachine.getLocation(), count);

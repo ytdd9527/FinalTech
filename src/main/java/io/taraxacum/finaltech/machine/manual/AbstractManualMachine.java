@@ -31,7 +31,7 @@ public abstract class AbstractManualMachine extends AbstractMachine {
     }
 
     protected final AbstractMachineMenu getMachineMenu() {
-        if(this.menu == null) {
+        if (this.menu == null) {
             this.menu = this.newMachineMenu();
         }
         return this.menu;

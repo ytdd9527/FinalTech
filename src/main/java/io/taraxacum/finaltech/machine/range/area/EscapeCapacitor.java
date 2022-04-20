@@ -33,7 +33,6 @@ public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetCom
     public final static double LOSS = 16;
     public EscapeCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -62,20 +61,20 @@ public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetCom
         AtomicInteger maxEnergy = new AtomicInteger();
         AtomicInteger totalEnergy = new AtomicInteger();
         int validCharge = (int)(charge / LOSS);
-        if(charge > 0) {
+        if (charge > 0) {
             count = this.function(block, RANGE, location -> {
-                if(BlockStorage.hasBlockInfo(location)) {
+                if (BlockStorage.hasBlockInfo(location)) {
                     Config energyComponentConfig = BlockStorage.getLocationInfo(location);
-                    if(energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
+                    if (energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
                         SlimefunItem item = SlimefunItem.getById(energyComponentConfig.getString(SlimefunUtil.KEY_ID));
-                        if(item instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) item).getEnergyComponentType())) {
+                        if (item instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) item).getEnergyComponentType())) {
                             int componentCapacity = ((EnergyNetComponent) item).getCapacity();
-                            if(componentCapacity == 0) {
+                            if (componentCapacity == 0) {
                                 return 0;
                             }
                             int componentEnergy = Integer.parseInt(SlimefunUtil.getCharge(energyComponentConfig));
                             int transferEnergy = Math.min(componentCapacity - componentEnergy, validCharge);
-                            if(transferEnergy > 0) {
+                            if (transferEnergy > 0) {
                                 SlimefunUtil.setCharge(location, String.valueOf(transferEnergy + componentEnergy));
                                 maxEnergy.set(Math.max(maxEnergy.get(), transferEnergy));
                                 totalEnergy.addAndGet(transferEnergy);

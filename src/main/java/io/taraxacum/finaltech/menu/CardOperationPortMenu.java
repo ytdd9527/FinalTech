@@ -8,8 +8,8 @@ import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.StringItemUtil;
-import io.taraxacum.finaltech.util.StringNumberUtil;
-import io.taraxacum.finaltech.util.cargo.Icon;
+import io.taraxacum.common.util.StringNumberUtil;
+import io.taraxacum.finaltech.util.menu.Icon;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -92,7 +92,7 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
     public void newInstance(BlockMenu menu, Block block) {
         super.newInstance(menu, block);
         menu.addMenuClickHandler(CRAFT_SLOT, ((player, i, itemStack, clickAction) -> {
-            if(!ItemStackUtil.isItemNull(menu.getItemInSlot(OUTPUT_SLOT[0])) || ItemStackUtil.isItemNull(menu.getItemInSlot(INPUT_SLOT[0])) || ItemStackUtil.isItemNull(menu.getItemInSlot(INPUT_SLOT[1]))) {
+            if (!ItemStackUtil.isItemNull(menu.getItemInSlot(OUTPUT_SLOT[0])) || ItemStackUtil.isItemNull(menu.getItemInSlot(INPUT_SLOT[0])) || ItemStackUtil.isItemNull(menu.getItemInSlot(INPUT_SLOT[1]))) {
                 return false;
             }
             ItemStack inputItem1 = menu.getItemInSlot(INPUT_SLOT[0]);
@@ -102,11 +102,11 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
 
             boolean isStorageCardItem1 = StorageCardItem.isStorageCardItem(itemMeta1);
             boolean isStorageCardItem2 = StorageCardItem.isStorageCardItem(itemMeta2);
-            if(isStorageCardItem1 && isStorageCardItem2) {
+            if (isStorageCardItem1 && isStorageCardItem2) {
                 ItemStack stringItem1 = StringItemUtil.parseItemInCard(itemMeta1);
                 ItemStack stringItem2 = StringItemUtil.parseItemInCard(itemMeta2);
                 boolean similar = ItemStackUtil.isItemSimilar(stringItem1, stringItem2);
-                if(similar) {
+                if (similar) {
                     String amount1 = StringItemUtil.parseAmountInCard(itemMeta1);
                     String amount2 = StringItemUtil.parseAmountInCard(itemMeta2);
                     ItemStack outputItem = new ItemStack(randomOutputStorageCardItem[(int)(Math.random() * randomOutputStorageCardItem.length)]);
@@ -118,11 +118,11 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
                     menu.replaceExistingItem(OUTPUT_SLOT[0], outputItem);
                 }
                 return false;
-            } else if(isStorageCardItem1 || isStorageCardItem2) {
+            } else if (isStorageCardItem1 || isStorageCardItem2) {
                 boolean hasAllCompression = isStorageCardItem1 ? ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.ALL_COMPRESSION) : ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.ALL_COMPRESSION);
-                if(hasAllCompression) {
+                if (hasAllCompression) {
                     String amount = StringItemUtil.parseAmountInCard(isStorageCardItem1 ? itemMeta1 : itemMeta2);
-                    if(StringNumberUtil.easilyCompare(amount, String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)) >= 0) {
+                    if (StringNumberUtil.easilyCompare(amount, String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)) >= 0) {
                         ItemStack stringItem = StringItemUtil.parseItemInCard(isStorageCardItem1 ? itemMeta1 : itemMeta2);
                         ItemStack outputItem = CopyCardItem.newCopyCardItem(stringItem, "1");
                         StringItemUtil.setAmountInCard(isStorageCardItem1 ? inputItem1 : inputItem2, StringNumberUtil.sub(amount, String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)));
@@ -136,14 +136,14 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
 
             boolean isPartOfItemFake1 = ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SINGULARITY) || ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SPIROCHETE);
             boolean isPartOfItemFake2 = ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SINGULARITY) || ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SPIROCHETE);
-            if(isPartOfItemFake1 || isPartOfItemFake2) {
+            if (isPartOfItemFake1 || isPartOfItemFake2) {
                 ItemStack outputItem = new ItemStack(FinalTechItems.SHELL);
                 int amount = 0;
-                if(isPartOfItemFake1) {
+                if (isPartOfItemFake1) {
                     inputItem1.setAmount(inputItem1.getAmount() - 1);
                     amount++;
                 }
-                if(isPartOfItemFake2) {
+                if (isPartOfItemFake2) {
                     inputItem2.setAmount(inputItem2.getAmount() - 1);
                     amount++;
                 }
@@ -156,9 +156,9 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
             boolean isCopyCardItem2 = CopyCardItem.isCopyCardItem(inputItem2);
             boolean isShell1 = !isCopyCardItem1 && ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SHELL);
             boolean isShell2 = !isCopyCardItem2 && ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SHELL);
-            if((isCopyCardItem1 && isShell2) || (isCopyCardItem2 && isShell1)) {
+            if ((isCopyCardItem1 && isShell2) || (isCopyCardItem2 && isShell1)) {
                 ItemStack outputItem;
-                if(isCopyCardItem1) {
+                if (isCopyCardItem1) {
                     outputItem = new ItemStack(inputItem1);
                     inputItem2.setAmount(inputItem2.getAmount() - 1);
                 } else {
@@ -176,7 +176,7 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
 
     @Override
     public void updateMenu(BlockMenu menu, Block block) {
-        if(!ItemStackUtil.isItemNull(menu.getItemInSlot(OUTPUT_SLOT[0])) || ItemStackUtil.isItemNull(menu.getItemInSlot(INPUT_SLOT[0])) || ItemStackUtil.isItemNull(menu.getItemInSlot(INPUT_SLOT[1]))) {
+        if (!ItemStackUtil.isItemNull(menu.getItemInSlot(OUTPUT_SLOT[0])) || ItemStackUtil.isItemNull(menu.getItemInSlot(INPUT_SLOT[0])) || ItemStackUtil.isItemNull(menu.getItemInSlot(INPUT_SLOT[1]))) {
             menu.replaceExistingItem(CRAFT_SLOT, ERROR_ICON);
             return;
         }
@@ -187,19 +187,19 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
 
         boolean isStorageCardItem1 = StorageCardItem.isStorageCardItem(itemMeta1);
         boolean isStorageCardItem2 = StorageCardItem.isStorageCardItem(itemMeta2);
-        if(isStorageCardItem1 && isStorageCardItem2) {
+        if (isStorageCardItem1 && isStorageCardItem2) {
             ItemStack stringItem1 = StringItemUtil.parseItemInCard(itemMeta1);
             ItemStack stringItem2 = StringItemUtil.parseItemInCard(itemMeta2);
             boolean similar = ItemStackUtil.isItemSimilar(stringItem1, stringItem2);
-            if(similar) {
+            if (similar) {
                 menu.replaceExistingItem(CRAFT_SLOT, MERGE_ICON);
             }
             return;
-        } else if(isStorageCardItem1 || isStorageCardItem2) {
+        } else if (isStorageCardItem1 || isStorageCardItem2) {
             boolean hasAllCompression = isStorageCardItem1 ? ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.ALL_COMPRESSION) : ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.ALL_COMPRESSION);
-            if(hasAllCompression) {
+            if (hasAllCompression) {
                 String amount = StringItemUtil.parseAmountInCard(isStorageCardItem1 ? itemMeta1 : itemMeta2);
-                if(StringNumberUtil.easilyCompare(amount, String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)) >= 0) {
+                if (StringNumberUtil.easilyCompare(amount, String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)) >= 0) {
                     menu.replaceExistingItem(CRAFT_SLOT, CRAFT_COPY_CARD_ICON);
                 }
             }
@@ -208,7 +208,7 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
 
         boolean isPartOfItemFake1 = ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SINGULARITY) || ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SPIROCHETE);
         boolean isPartOfItemFake2 = ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SINGULARITY) || ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SPIROCHETE);
-        if(isPartOfItemFake1 || isPartOfItemFake2) {
+        if (isPartOfItemFake1 || isPartOfItemFake2) {
             menu.replaceExistingItem(CRAFT_SLOT, CRAFT_SHELL_ICON);
             return;
         }
@@ -217,7 +217,7 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
         boolean isCopyCardItem2 = CopyCardItem.isCopyCardItem(inputItem2);
         boolean isShell1 = !isCopyCardItem1 && ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SHELL);
         boolean isShell2 = !isCopyCardItem2 && ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SHELL);
-        if((isCopyCardItem1 && isShell2) || (isCopyCardItem2 && isShell1)) {
+        if ((isCopyCardItem1 && isShell2) || (isCopyCardItem2 && isShell1)) {
             menu.replaceExistingItem(CRAFT_SLOT, COPY_COPY_CARD_ICON);
             return;
         }

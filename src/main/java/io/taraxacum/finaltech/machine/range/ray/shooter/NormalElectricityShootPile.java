@@ -7,7 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
-import io.taraxacum.finaltech.util.StringNumberUtil;
+import io.taraxacum.common.util.StringNumberUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.inventory.ItemStack;
@@ -35,17 +35,17 @@ public class NormalElectricityShootPile extends AbstractElectricityShootPile{
     @Override
     protected Function doFunction(Summary summary) {
         return location -> {
-            if(summary.getCapacitorEnergy() <= 0) {
+            if (summary.getCapacitorEnergy() <= 0) {
                 return -1;
             }
-            if(BlockStorage.hasBlockInfo(location)) {
+            if (BlockStorage.hasBlockInfo(location)) {
                 Config energyComponentConfig = BlockStorage.getLocationInfo(location);
-                if(energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
+                if (energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
                     SlimefunItem energyComponentItem = SlimefunItem.getById(energyComponentConfig.getString(SlimefunUtil.KEY_ID));
-                    if(energyComponentItem instanceof EnergyNetComponent) {
+                    if (energyComponentItem instanceof EnergyNetComponent) {
                         int componentEnergy = Integer.parseInt(SlimefunUtil.getCharge(energyComponentConfig));
                         int componentCapacity = ((EnergyNetComponent) energyComponentItem).getCapacity();
-                        if(componentEnergy >= componentCapacity) {
+                        if (componentEnergy >= componentCapacity) {
                             return -1;
                         }
                         int transferEnergy = Math.min(summary.getCapacitorEnergy(), componentCapacity - componentEnergy);

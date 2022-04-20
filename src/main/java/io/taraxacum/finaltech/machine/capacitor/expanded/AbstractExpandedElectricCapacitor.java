@@ -11,7 +11,7 @@ import io.taraxacum.finaltech.menu.ElectricCapacitorMenu;
 import io.taraxacum.finaltech.menu.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
-import io.taraxacum.finaltech.util.StringNumberUtil;
+import io.taraxacum.common.util.StringNumberUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -58,12 +58,12 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
         boolean updateEnergy = false;
         boolean updateStack = false;
 
-        if("".equals(energyStack)) {
+        if ("".equals(energyStack)) {
             energyStack = StringNumberUtil.ZERO;
         } else if (StringNumberUtil.easilyCompare(energyStack, StringNumberUtil.INTEGER_MAX_VALUE) < 0) {
             generateEnergy = Integer.parseInt(energyStack);
-            if(generateEnergy >= capacity / 2) {
-                if(StringNumberUtil.easilyCompare(energyStack, this.getMaxStack()) < 0) {
+            if (generateEnergy >= capacity / 2) {
+                if (StringNumberUtil.easilyCompare(energyStack, this.getMaxStack()) < 0) {
                     generateEnergy -= capacity / 2;
                     energyStack = StringNumberUtil.add(energyStack);
                     updateStack = true;
@@ -78,28 +78,28 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
             updateStack = true;
         }
 
-        if(energy < capacity / 4 && StringNumberUtil.easilyCompare(energyStack, StringNumberUtil.ZERO) > 0) {
+        if (energy < capacity / 4 && StringNumberUtil.easilyCompare(energyStack, StringNumberUtil.ZERO) > 0) {
             energy += capacity / 2;
             updateEnergy = true;
             energyStack = StringNumberUtil.sub(energyStack);
             updateStack = true;
-        } else if(energy > capacity / 4 * 3 && StringNumberUtil.easilyCompare(energyStack, this.getMaxStack()) < 0) {
+        } else if (energy > capacity / 4 * 3 && StringNumberUtil.easilyCompare(energyStack, this.getMaxStack()) < 0) {
             energy -= capacity / 2;
             updateEnergy = true;
             energyStack = StringNumberUtil.add(energyStack);
             updateStack = true;
         }
 
-        if(generateEnergy > 0) {
+        if (generateEnergy > 0) {
             generateEnergy = Math.min(capacity - energy, generateEnergy);
             energy += generateEnergy;
             updateEnergy = true;
         }
 
-        if(updateEnergy) {
+        if (updateEnergy) {
             SlimefunUtil.setCharge(block.getLocation(), String.valueOf(energy));
         }
-        if(updateStack) {
+        if (updateStack) {
             BlockStorage.addBlockInfo(block.getLocation(), KEY, energyStack);
         }
         BlockMenu blockMenu = BlockStorage.getInventory(block);
@@ -115,12 +115,12 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
     public void setCharge(@Nonnull Location l, int charge) {
         int oldCharge = this.getCharge(l);
         int difference = charge - oldCharge;
-        if(difference > 0) {
+        if (difference > 0) {
             difference *= this.chargeIncrease();
-            if(oldCharge / 2 + difference / 2 > Integer.MAX_VALUE / 2) {
+            if (oldCharge / 2 + difference / 2 > Integer.MAX_VALUE / 2) {
                 difference = Integer.MAX_VALUE - oldCharge;
             }
-        } else if(difference < 0) {
+        } else if (difference < 0) {
             difference *= this.consumeReduce();
         } else {
             return;

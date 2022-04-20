@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
+import io.taraxacum.finaltech.dto.ItemStackWithWrapper;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.item.unusable.StorageCardItem;
 import io.taraxacum.finaltech.machine.cargo.AbstractCargo;
@@ -34,7 +35,6 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
 
     public StorageInteractPort(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -47,7 +47,7 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
     protected void tick(Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         Block targetBlock = block.getRelative(BlockFace.UP);
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(!BlockStorage.hasInventory(targetBlock)) {
+        if (!BlockStorage.hasInventory(targetBlock)) {
             BlockState blockState = PaperLib.getBlockState(targetBlock, false).getState();
             if (blockState instanceof InventoryHolder) {
                 Inventory inventory = ((InventoryHolder) blockState).getInventory();
@@ -55,32 +55,32 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
                 LinkedList<ItemStackWrapper> unStackItem = new LinkedList<>();
                 boolean isFull = MachineUtil.isFull(blockMenu.toInventory(), getOutputSlots()) || MachineUtil.itemCount(blockMenu.toInventory(), getOutputSlots()) >= getOutputSlots().length / 2;
                 boolean isEmpty = MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlots()) || MachineUtil.itemCount(blockMenu.toInventory(), getInputSlots()) < getInputSlots().length / 2;
-                if(isFull && isEmpty) {
+                if (isFull && isEmpty) {
                     return;
                 }
-                if(!isFull) {
+                if (!isFull) {
                     MachineUtil.stockSlots(blockMenu, getOutputSlots());
                 }
-                if(!isEmpty) {
+                if (!isEmpty) {
                     MachineUtil.stockSlots(blockMenu, getInputSlots());
                 }
                 int pushItemAmount = 0;
                 Map<ItemStack, ItemMeta> map = new HashMap<>(inventory.getSize());
-                for(int i = 0, size = Math.min(inventory.getSize(), SEARCH_LIMIT); i < size; i++) {
+                for (int i = 0, size = Math.min(inventory.getSize(), SEARCH_LIMIT); i < size; i++) {
                     ItemStack item = inventory.getItem(i);
-                    if(ItemStackUtil.isItemNull(item) || !item.hasItemMeta()) {
+                    if (ItemStackUtil.isItemNull(item) || !item.hasItemMeta()) {
                         continue;
                     }
                     ItemMeta itemMeta = item.getItemMeta();
-                    if(StorageCardItem.isStorageCardItem(itemMeta)) {
+                    if (StorageCardItem.isStorageCardItem(itemMeta)) {
                         map.put(item, itemMeta);
-                        if(item.getAmount() == 1) {
+                        if (item.getAmount() == 1) {
                             pushItemAmount++;
                         }
                     }
                 }
-                for(Map.Entry<ItemStack, ItemMeta> entry : map.entrySet()) {
-                    if(isEmpty && isFull) {
+                for (Map.Entry<ItemStack, ItemMeta> entry : map.entrySet()) {
+                    if (isEmpty && isFull) {
                         continue;
                     }
                     ItemMeta itemMeta = entry.getValue();
@@ -89,57 +89,57 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
                     boolean work = true;
                     int pushCount = 0;
                     int stackCount = 0;
-                    if(!isFull && entry.getKey().getAmount() == 1 && stringItem != null) {
-                        for(ItemStackWrapper unWorkItem : unPushItem) {
-                            if(ItemStackUtil.isItemSimilar(stringItem.getItemStackWrapper(), unWorkItem)) {
+                    if (!isFull && entry.getKey().getAmount() == 1 && stringItem != null) {
+                        for (ItemStackWrapper unWorkItem : unPushItem) {
+                            if (ItemStackUtil.isItemSimilar(stringItem.getItemStackWrapper(), unWorkItem)) {
                                 work = false;
                                 break;
                             }
                         }
-                        if(work) {
+                        if (work) {
                             pushItemAmount--;
                             pushCount = StringItemUtil.pushItemFromCard(itemMeta, stringItem, blockMenu.toInventory(), getOutputSlots());
-                            if(pushCount == 0) {
+                            if (pushCount == 0) {
                                 unPushItem.add(stringItem.getItemStackWrapper());
                             } else {
                                 isFull = MachineUtil.isFull(blockMenu.toInventory(), getOutputSlots());
-                                if(!isFull) {
+                                if (!isFull) {
                                     MachineUtil.stockSlots(blockMenu, getOutputSlots());
                                 }
                             }
-                            if(pushItemAmount == 0) {
+                            if (pushItemAmount == 0) {
                                 isFull = true;
                             }
                         }
                     }
-                    if(!isEmpty){
+                    if (!isEmpty) {
                         work = true;
-                        if(stringItem != null) {
-                            for(ItemStackWrapper unWorkItem : unStackItem) {
-                                if(ItemStackUtil.isItemSimilar(stringItem.getItemStackWrapper(), unWorkItem)) {
+                        if (stringItem != null) {
+                            for (ItemStackWrapper unWorkItem : unStackItem) {
+                                if (ItemStackUtil.isItemSimilar(stringItem.getItemStackWrapper(), unWorkItem)) {
                                     work = false;
                                     break;
                                 }
                             }
                         }
-                        if(work) {
+                        if (work) {
                             stackCount = StringItemUtil.storageItemToCard(itemMeta, stringItem, entry.getKey().getAmount(), blockMenu.toInventory(), getInputSlots());
-                            if(stackCount == 0) {
-                                if(stringItem != null) {
+                            if (stackCount == 0) {
+                                if (stringItem != null) {
                                     unStackItem.add(stringItem.getItemStackWrapper());
                                 }
                             } else {
                                 isEmpty = MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlots());
-                                if(!isEmpty) {
+                                if (!isEmpty) {
                                     MachineUtil.stockSlots(blockMenu, getInputSlots());
                                 }
-                                if(stringItem == null) {
+                                if (stringItem == null) {
                                     stringItem = new ItemStackWithWrapper(StringItemUtil.parseItemInCard(itemMeta));
                                 }
                             }
                         }
                     }
-                    if(pushCount != 0 || stackCount != 0) {
+                    if (pushCount != 0 || stackCount != 0) {
                         StringItemUtil.updateStorageCardLore(itemMeta, stringItem.getItemStack());
                         entry.getKey().setItemMeta(itemMeta);
                         StringItemUtil.updateStorageCardType(entry.getKey(), itemMeta);

@@ -32,8 +32,8 @@ import io.taraxacum.finaltech.machine.manual.craft.*;
 import io.taraxacum.finaltech.machine.range.ray.shooter.EnergizedElectricityShootPile;
 import io.taraxacum.finaltech.machine.range.ray.shooter.NormalElectricityShootPile;
 import io.taraxacum.finaltech.machine.range.ray.shooter.OverloadedElectricityShootPile;
-import io.taraxacum.finaltech.machine.standard.AllCompression;
-import io.taraxacum.finaltech.machine.standard.AllFactory;
+import io.taraxacum.finaltech.machine.standard.ItemSerializationConstructor;
+import io.taraxacum.finaltech.machine.standard.ItemDeserializeParser;
 import io.taraxacum.finaltech.machine.standard.BasicFrameMachine;
 import io.taraxacum.finaltech.machine.standard.OrderedDustFactory;
 import io.taraxacum.finaltech.machine.standard.advanced.*;
@@ -125,8 +125,8 @@ public final class SetupUtil {
         new AdvancedFarmFactory(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_FARM_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_FARM_FACTORY).register();
         new AdvancedAutoCraft(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_AUTO_CRAFT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_AUTO_CRAFT).register();
 
-        new AllCompression(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.ALL_COMPRESSION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_COMPRESSION).register();
-        new AllFactory(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.ALL_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_FACTORY).register();
+        new ItemSerializationConstructor(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.ALL_COMPRESSION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_COMPRESSION).register();
+        new ItemDeserializeParser(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.ALL_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_FACTORY).register();
         new OverclockFrameMachine(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.OVERCLOCK_FRAME_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.OVERCLOCK_FRAME_MACHINE).register();
 //        new OverloadCoreMachine(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.OVERLOAD_CORE_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.OVERLOAD_CORE_MACHINE).register();
 

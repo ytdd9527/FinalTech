@@ -11,11 +11,11 @@ import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.TransferStationMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
+import io.taraxacum.finaltech.util.CargoUtil;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.PositionHelper;
-import io.taraxacum.finaltech.util.cargo.*;
+import io.taraxacum.finaltech.dto.PositionHelper;
+import io.taraxacum.finaltech.util.menu.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
@@ -27,8 +27,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Final_ROOT
@@ -36,7 +34,6 @@ import java.util.List;
 public class TransferStation extends AbstractCargo implements RecipeItem {
     public TransferStation(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -106,30 +103,30 @@ public class TransferStation extends AbstractCargo implements RecipeItem {
         String outputItemMode = config.getString(CargoItemMode.KEY_OUTPUT);
         String[] outputs = positionHelper.getOutputs();
 
-        for(String outputPosition : outputs) {
+        for (String outputPosition : outputs) {
             BlockFace blockFace = PositionInfo.getBlockFaceByPosition(outputPosition);
             Block outputBlock = searchBlock(block, config.getString(BlockSearchMode.KEY_OUTPUT), blockFace);
-            if(outputBlock == null) {
+            if (outputBlock == null) {
                 continue;
             }
             int cargoNumber = outputCargoNumber;
             int result = CargoUtil.doCargoInputMain(block, outputBlock, SlotSearchSize.VALUE_OUTPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, outputSize, outputOrder, cargoNumber, outputItemMode, filterMode, blockInv, TransferStationMenu.ITEM_MATCH);
-            if(CargoCountMode.VALUE_UNIVERSAL.equals(outputCountMode)) {
+            if (CargoCountMode.VALUE_UNIVERSAL.equals(outputCountMode)) {
                 outputCargoNumber -= result;
             }
         }
 
         // do move
-        for(int i = 0; i < TransferStationMenu.INPUT_SLOTS.length; i++) {
+        for (int i = 0; i < TransferStationMenu.INPUT_SLOTS.length; i++) {
             ItemStack inputItem = blockMenu.getItemInSlot(TransferStationMenu.INPUT_SLOTS[i]);
-            if(inputItem == null) {
+            if (inputItem == null) {
                 continue;
             }
             ItemStack outputItem = blockMenu.getItemInSlot(TransferStationMenu.OUTPUT_SLOTS[i]);
-            if(outputItem == null) {
+            if (outputItem == null) {
                 blockMenu.toInventory().setItem(TransferStationMenu.OUTPUT_SLOTS[i], new ItemStack(inputItem));
                 inputItem.setAmount(0);
-            } else if(ItemStackUtil.isItemSimilar(inputItem, outputItem)) {
+            } else if (ItemStackUtil.isItemSimilar(inputItem, outputItem)) {
                 int count = Math.min(inputItem.getAmount(), outputItem.getMaxStackSize() - outputItem.getAmount());
                 inputItem.setAmount(inputItem.getAmount() - count);
                 outputItem.setAmount(outputItem.getAmount() + count);
@@ -144,15 +141,15 @@ public class TransferStation extends AbstractCargo implements RecipeItem {
         String inputItemMode = config.getString(CargoItemMode.KEY_INPUT);
         String[] inputs = positionHelper.getInputs();
 
-        for(String inputPosition : inputs) {
+        for (String inputPosition : inputs) {
             BlockFace blockFace = PositionInfo.getBlockFaceByPosition(inputPosition);
             Block inputBlock = searchBlock(block, config.getString(BlockSearchMode.KEY_INPUT), blockFace);
-            if(inputBlock == null) {
+            if (inputBlock == null) {
                 continue;
             }
             int cargoNumber = inputCargoNumber;
             int result = CargoUtil.doCargoOutputMain(inputBlock, block, inputSize, inputOrder, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, cargoNumber, inputItemMode, filterMode, blockInv, TransferStationMenu.ITEM_MATCH);
-            if(CargoCountMode.VALUE_UNIVERSAL.equals(inputItemCountMode)) {
+            if (CargoCountMode.VALUE_UNIVERSAL.equals(inputItemCountMode)) {
                 inputCargoNumber -= result;
             }
         }
@@ -160,15 +157,15 @@ public class TransferStation extends AbstractCargo implements RecipeItem {
 
     public static Block searchBlock(@Nonnull Block begin, String searchMode, BlockFace blockFace) {
         Block result = begin.getRelative(blockFace);
-        if(BlockSearchMode.VALUE_ZERO.equals(searchMode)) {
+        if (BlockSearchMode.VALUE_ZERO.equals(searchMode)) {
             return result;
         }
         while(true) {
-            if(result.getType() == Material.CHAIN) {
+            if (result.getType() == Material.CHAIN) {
                 result = result.getRelative(blockFace);
                 continue;
             }
-            if(BlockSearchMode.VALUE_PENETRATE.equals(searchMode) && BlockStorage.hasInventory(result) && BlockStorage.getInventory(result).getPreset().getID().equals(FinalTechItems.TRANSFER_STATION.getItemId())) {
+            if (BlockSearchMode.VALUE_PENETRATE.equals(searchMode) && BlockStorage.hasInventory(result) && BlockStorage.getInventory(result).getPreset().getID().equals(FinalTechItems.TRANSFER_STATION.getItemId())) {
                 result = result.getRelative(blockFace);
                 continue;
             }

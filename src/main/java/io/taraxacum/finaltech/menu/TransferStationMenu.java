@@ -4,8 +4,8 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
-import io.taraxacum.finaltech.util.PositionHelper;
-import io.taraxacum.finaltech.util.cargo.*;
+import io.taraxacum.finaltech.dto.PositionHelper;
+import io.taraxacum.finaltech.util.menu.*;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
@@ -257,46 +257,46 @@ public class TransferStationMenu extends AbstractMachineMenu {
 
     @Override
     public void updateMenu(BlockMenu blockMenu, Block block) {
-        if(BlockStorage.getLocationInfo(block.getLocation(), CargoNumber.KEY_INPUT) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), CargoNumber.KEY_INPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), CargoNumber.KEY_INPUT, "64");
         }
-        if(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), SlotSearchSize.KEY_INPUT, SlotSearchSize.VALUE_OUTPUTS_ONLY);
         }
-        if(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchOrder.KEY_INPUT) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), SlotSearchOrder.KEY_INPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), SlotSearchOrder.KEY_INPUT, SlotSearchOrder.VALUE_ASCENT);
         }
-        if(BlockStorage.getLocationInfo(block.getLocation(), CargoCountMode.KEY_INPUT) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), CargoCountMode.KEY_INPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), CargoCountMode.KEY_INPUT, CargoCountMode.VALUE_UNIVERSAL);
         }
-        if(BlockStorage.getLocationInfo(block.getLocation(), CargoItemMode.KEY_INPUT) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), CargoItemMode.KEY_INPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), CargoItemMode.KEY_INPUT, CargoItemMode.VALUE_ALL);
         }
-        if(BlockStorage.getLocationInfo(block.getLocation(), CargoNumber.KEY_OUTPUT) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), CargoNumber.KEY_OUTPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), CargoNumber.KEY_OUTPUT, "64");
         }
-        if(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT, SlotSearchSize.VALUE_INPUTS_ONLY);
         }
-        if(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchOrder.KEY_OUTPUT) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), SlotSearchOrder.KEY_OUTPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), SlotSearchOrder.KEY_OUTPUT, SlotSearchOrder.VALUE_ASCENT);
         }
-        if(BlockStorage.getLocationInfo(block.getLocation(), CargoCountMode.KEY_OUTPUT) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), CargoCountMode.KEY_OUTPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), CargoCountMode.KEY_OUTPUT, CargoCountMode.VALUE_UNIVERSAL);
         }
-        if(BlockStorage.getLocationInfo(block.getLocation(), CargoItemMode.KEY_OUTPUT) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), CargoItemMode.KEY_OUTPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), CargoItemMode.KEY_OUTPUT, CargoItemMode.VALUE_ALL);
         }
-        if(BlockStorage.getLocationInfo(block.getLocation(), FilterMode.KEY) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), FilterMode.KEY) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), FilterMode.KEY, FilterMode.VALUE_BLACK);
         }
-        if(BlockStorage.getLocationInfo(block.getLocation(), PositionInfo.KEY) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), PositionInfo.KEY) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), PositionInfo.KEY, "");
         }
-        if(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_INPUT) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_INPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), BlockSearchMode.KEY_INPUT, BlockSearchMode.VALUE_ZERO);
         }
-        if(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_INPUT) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), BlockSearchMode.KEY_INPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), BlockSearchMode.KEY_INPUT, BlockSearchMode.VALUE_ZERO);
         }
         CargoNumber.setIcon(blockMenu.getItemInSlot(INPUT_ITEM_COUNT_SLOT), Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), CargoNumber.KEY_INPUT)));

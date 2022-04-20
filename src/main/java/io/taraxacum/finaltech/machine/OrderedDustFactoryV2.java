@@ -28,7 +28,6 @@ import java.util.List;
 public class OrderedDustFactoryV2 extends AbstractMachine implements RecipeItem {
     public OrderedDustFactoryV2(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -53,19 +52,19 @@ public class OrderedDustFactoryV2 extends AbstractMachine implements RecipeItem 
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         List<Integer> amountList = new ArrayList<>(this.getInputSlots().length);
-        for(int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlots()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(ItemStackUtil.isItemNull(item)) {
+            if (ItemStackUtil.isItemNull(item)) {
                 return;
             }
-            if(!amountList.contains(item.getAmount())) {
+            if (!amountList.contains(item.getAmount())) {
                 amountList.add(item.getAmount());
             }
         }
-        for(int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlots()) {
             blockMenu.replaceExistingItem(slot, ItemStackUtil.AIR);
         }
-        if(amountList.size() == this.getInputSlots().length) {
+        if (amountList.size() == this.getInputSlots().length) {
             blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), this.getOutputSlots());
         } else {
             blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), this.getOutputSlots());

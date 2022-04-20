@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.cargo.Icon;
+import io.taraxacum.finaltech.util.menu.Icon;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
@@ -59,7 +59,7 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
     public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
         if (itemTransportFlow.equals(ItemTransportFlow.WITHDRAW)) {
             return getOutputSlots();
-        } else if(itemTransportFlow.equals(ItemTransportFlow.INSERT)) {
+        } else if (itemTransportFlow.equals(ItemTransportFlow.INSERT)) {
             return getInputSlots();
         }
         return new int[0];
@@ -69,7 +69,7 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
     public int[] getSlotsAccessedByItemTransport(DirtyChestMenu menu, ItemTransportFlow flow, ItemStack item) {
         if (flow.equals(ItemTransportFlow.WITHDRAW)) {
             return getOutputSlots();
-        } else if(flow == null) {
+        } else if (flow == null) {
             return new int[0];
         }
 
@@ -77,17 +77,17 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
         ArrayList<Integer> nullList = new ArrayList<>();
 
         int full = 0;
-        if(menu.getItemInSlot(QUANTITY_SLOT) == null) {
+        if (menu.getItemInSlot(QUANTITY_SLOT) == null) {
             menu.addItem(QUANTITY_SLOT, new CustomItemStack(Icon.MACHINE_MAX_STACK_ICON));
         }
-        if(menu.getItemInSlot(QUANTITY_SLOT).getType().equals(Material.CHEST)) {
+        if (menu.getItemInSlot(QUANTITY_SLOT).getType().equals(Material.CHEST)) {
             return getInputSlots();
         }
 
         int inputLimit = menu.getItemInSlot(QUANTITY_SLOT).getAmount();
         for (int slot : getInputSlots()) {
             ItemStack existedItem = menu.getItemInSlot(slot);
-            if(existedItem == null) {
+            if (existedItem == null) {
                 nullList.add(slot);
             } else if (ItemStackUtil.isItemSimilar(item, existedItem)) {
                 if (existedItem.getAmount() < existedItem.getMaxStackSize()) {
@@ -111,12 +111,12 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
 
     @Override
     public void updateMenu(BlockMenu blockMenu, Block block) {
-        if(BlockStorage.getLocationInfo(block.getLocation(), Icon.MACHINE_MAX_STACK) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), Icon.MACHINE_MAX_STACK) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), Icon.MACHINE_MAX_STACK, "0");
         }
         int quantity = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), Icon.MACHINE_MAX_STACK));
         ItemStack item = blockMenu.getItemInSlot(QUANTITY_SLOT);
-        if(quantity == 0) {
+        if (quantity == 0) {
             item.setType(Material.CHEST);
             item.setAmount(1);
             ItemStackUtil.setLastLore(item, "§7未限制");

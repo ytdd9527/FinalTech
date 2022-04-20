@@ -3,6 +3,8 @@ package io.taraxacum.finaltech;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
+import io.taraxacum.finaltech.command.GetItemFake;
+import io.taraxacum.finaltech.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.setup.SetupUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,6 +31,14 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         SetupUtil.setupItems(this);
 
         this.init();
+
+        Bukkit.getLogger().info("[FinalTECH]开始压入配方缓存");
+        MachineRecipeFactory.initAdvancedRecipeMap();
+        Bukkit.getLogger().info("[FinalTECH]配方缓存压入完毕");
+
+        this.getCommand("test").setExecutor(new GetItemFake());
+
+
     }
 
     @Override

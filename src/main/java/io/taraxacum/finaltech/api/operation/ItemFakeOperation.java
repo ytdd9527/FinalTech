@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Final_ROOT
  */
-public class ItemFakeOperation implements AllCompressionOperation {
+public class ItemFakeOperation implements ItemSerializationConstructorOperation {
     private int itemTypeCount;
     private int itemAmountCount;
     private final int itemTypeDifficulty;
@@ -38,7 +38,7 @@ public class ItemFakeOperation implements AllCompressionOperation {
 
     @Override
     public int getType() {
-        return AllCompressionOperation.ITEM_FAKE;
+        return ItemSerializationConstructorOperation.ITEM_FAKE;
     }
 
     @Override
@@ -53,15 +53,15 @@ public class ItemFakeOperation implements AllCompressionOperation {
 
     @Override
     public int addItem(@Nullable ItemStack item) {
-        if(ItemStackUtil.isItemNull(item) || !CopyCardItem.isCopyCardItem(item)) {
+        if (ItemStackUtil.isItemNull(item) || !CopyCardItem.isCopyCardItem(item)) {
             return 0;
         }
 
         this.itemTypeCount++;
-        if(this.itemTypeCount <= this.itemTypeDifficulty) {
+        if (this.itemTypeCount <= this.itemTypeDifficulty) {
             ItemStackWrapper itemWrapper = ItemStackWrapper.wrap(item);
-            for(ItemStackWrapper itemTypeWrapper : itemTypeList) {
-                if(ItemStackUtil.isItemSimilar(itemWrapper, itemTypeWrapper)) {
+            for (ItemStackWrapper itemTypeWrapper : itemTypeList) {
+                if (ItemStackUtil.isItemSimilar(itemWrapper, itemTypeWrapper)) {
                     this.itemTypeCount--;
                     break;
                 }
@@ -86,13 +86,13 @@ public class ItemFakeOperation implements AllCompressionOperation {
     @Nonnull
     @Override
     public ItemStack getResult() {
-        if(this.itemAmountCount >= this.itemAmountDifficulty && this.itemTypeCount >= this.itemTypeDifficulty) {
+        if (this.itemAmountCount >= this.itemAmountDifficulty && this.itemTypeCount >= this.itemTypeDifficulty) {
             return new ItemStack(FinalTechItems.FAKE);
         }
-        if(this.itemAmountCount >= this.itemAmountDifficulty) {
+        if (this.itemAmountCount >= this.itemAmountDifficulty) {
             return new ItemStack(FinalTechItems.SINGULARITY);
         }
-        if(this.itemTypeCount >= this.itemTypeDifficulty) {
+        if (this.itemTypeCount >= this.itemTypeDifficulty) {
             return new ItemStack(FinalTechItems.SPIROCHETE);
         }
         return ItemStackUtil.AIR;

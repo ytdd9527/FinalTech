@@ -30,7 +30,7 @@ public abstract class AbstractMachine extends SlimefunItem {
     public AbstractMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.menu = this.setMachineMenu();
-        if(this instanceof RecipeItem) {
+        if (this instanceof RecipeItem) {
             ((RecipeItem) this).registerDefaultRecipes();
         }
     }
@@ -40,11 +40,11 @@ public abstract class AbstractMachine extends SlimefunItem {
         super.preRegister();
         this.addItemHandler(this.onBlockBreak());
         this.addItemHandler(this.onBlockPlace());
-        if(this instanceof AntiAccelerationMachine) {
+        if (this instanceof AntiAccelerationMachine) {
             this.addItemHandler(new BlockTicker() {
                 @Override
                 public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-                    if(((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
+                    if (((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
                         return;
                     }
                     AbstractMachine.this.tick(block, slimefunItem, config);

@@ -52,16 +52,16 @@ public class CopyCardItem extends UnusableSlimefunItem {
     }
 
     public static boolean isCopyCardItem(ItemStack itemStack) {
-        if(ItemStackUtil.isItemNull(itemStack) || !itemStack.hasItemMeta()) {
+        if (ItemStackUtil.isItemNull(itemStack) || !itemStack.hasItemMeta()) {
             return false;
         }
         ItemMeta itemMeta = itemStack.getItemMeta();
         List<String> lore = itemMeta.getLore();
-        if(lore == null) {
+        if (lore == null) {
             return false;
         }
-        for(String l : lore) {
-            if(CopyCardItem.ITEM_LORE_WITHOUT_COLOR.equals(ChatColor.stripColor(l))) {
+        for (String l : lore) {
+            if (CopyCardItem.ITEM_LORE_WITHOUT_COLOR.equals(ChatColor.stripColor(l))) {
                 return true;
             }
         }

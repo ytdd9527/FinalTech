@@ -24,7 +24,6 @@ import javax.annotation.Nonnull;
 public class CardOperationPort extends AbstractManualMachine implements RecipeItem {
     public CardOperationPort(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -42,7 +41,7 @@ public class CardOperationPort extends AbstractManualMachine implements RecipeIt
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(!blockMenu.toInventory().getViewers().isEmpty()) {
+        if (!blockMenu.toInventory().getViewers().isEmpty()) {
             this.getMachineMenu().updateMenu(BlockStorage.getInventory(block.getLocation()), block);
         }
     }

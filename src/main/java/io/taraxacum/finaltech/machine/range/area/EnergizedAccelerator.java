@@ -12,7 +12,7 @@ import io.taraxacum.finaltech.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.LocationWithConfig;
+import io.taraxacum.finaltech.dto.LocationWithConfig;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -59,9 +59,9 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements AntiAcc
         Map<Integer, List<LocationWithConfig>> machineConfigMap = new HashMap<>(RANGE * 3);
         Location blockLocation = block.getLocation();
         int count = this.function(block, RANGE, location -> {
-            if(BlockStorage.hasBlockInfo(location)) {
+            if (BlockStorage.hasBlockInfo(location)) {
                 Config machineConfig = BlockStorage.getLocationInfo(location);
-                if(machineConfig.contains(SlimefunUtil.KEY_ID)) {
+                if (machineConfig.contains(SlimefunUtil.KEY_ID)) {
                     int distance = Math.abs(location.getBlockX() - blockLocation.getBlockX()) + Math.abs(location.getBlockY() - blockLocation.getBlockY()) + Math.abs(location.getBlockZ() - blockLocation.getBlockZ());
                     List<LocationWithConfig> machineConfigList = machineConfigMap.computeIfAbsent(distance, d -> new ArrayList(d * d * 4 + 2));
                     machineConfigList.add(new LocationWithConfig(location.clone(), machineConfig));
@@ -73,7 +73,7 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements AntiAcc
 
         BlockMenu blockMenu = BlockStorage.getInventory(blockLocation);
         int machineEnergy = Integer.parseInt(SlimefunUtil.getCharge(config));
-        if(count <= 1) {
+        if (count <= 1) {
             this.updateMenu(blockMenu, machineEnergy, 0, 0, 0);
             return;
         }

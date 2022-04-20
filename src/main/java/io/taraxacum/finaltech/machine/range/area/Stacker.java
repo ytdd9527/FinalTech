@@ -8,11 +8,11 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.VoidMenu;
-import io.taraxacum.finaltech.util.InvWithSlots;
+import io.taraxacum.finaltech.dto.InvWithSlots;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.cargo.CargoUtil;
-import io.taraxacum.finaltech.util.cargo.SlotSearchOrder;
-import io.taraxacum.finaltech.util.cargo.SlotSearchSize;
+import io.taraxacum.finaltech.util.CargoUtil;
+import io.taraxacum.finaltech.util.menu.SlotSearchOrder;
+import io.taraxacum.finaltech.util.menu.SlotSearchSize;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -39,11 +39,11 @@ public abstract class Stacker extends AbstractCubeMachine {
 
     protected void function(@Nonnull Location location, @Nonnull Config config) {
         InvWithSlots invWithSlots = CargoUtil.getInv(location.getBlock(), SlotSearchSize.VALUE_OUTPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT);
-        if(invWithSlots != null && invWithSlots.getInventory() != null && invWithSlots.getSlots() != null) {
+        if (invWithSlots != null && invWithSlots.getInventory() != null && invWithSlots.getSlots() != null) {
             MachineUtil.stockSlots(invWithSlots.getInventory(), invWithSlots.getSlots());
         }
         invWithSlots = CargoUtil.getInv(location.getBlock(), SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT);
-        if(invWithSlots != null && invWithSlots.getInventory() != null && invWithSlots.getSlots() != null) {
+        if (invWithSlots != null && invWithSlots.getInventory() != null && invWithSlots.getSlots() != null) {
             MachineUtil.stockSlots(invWithSlots.getInventory(), invWithSlots.getSlots());
         }
     }

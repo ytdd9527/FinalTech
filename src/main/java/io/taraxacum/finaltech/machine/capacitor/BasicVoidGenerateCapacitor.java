@@ -29,7 +29,7 @@ public class BasicVoidGenerateCapacitor extends AbstractElectricCapacitor {
     @Override
     protected void tick(Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         Location location = block.getLocation();
-        if(getCharge(location) == 0) {
+        if (getCharge(location) == 0) {
             setCharge(location, getCapacity() / EFFICIENT);
         }
         super.tick(block, slimefunItem, config);

@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
-import io.taraxacum.finaltech.util.cargo.*;
+import io.taraxacum.finaltech.util.menu.*;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
@@ -83,7 +83,7 @@ public class TransferLineMenu extends AbstractMachineMenu {
     public void init() {
         super.init();
         setSize(54);
-        for(int slot : SPECIAL_BORDER) {
+        for (int slot : SPECIAL_BORDER) {
             this.addItem(slot, new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, " "));
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }

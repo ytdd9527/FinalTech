@@ -15,7 +15,7 @@ public interface AntiAccelerationMachine {
      * @return
      */
     default boolean isAccelerated(Config config) {
-        if(config.contains(KEY) && Integer.parseInt(config.getValue(KEY).toString()) == FinalTech.getTimeCount()) {
+        if (config.contains(KEY) && Integer.parseInt(config.getValue(KEY).toString()) == FinalTech.getTimeCount()) {
             return true;
         }
         config.setValue(KEY, String.valueOf(FinalTech.getTimeCount()));

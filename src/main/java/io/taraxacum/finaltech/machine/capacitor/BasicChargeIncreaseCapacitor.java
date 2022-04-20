@@ -32,7 +32,7 @@ public class BasicChargeIncreaseCapacitor extends AbstractElectricCapacitor {
     @Override
     public void setCharge(@Nonnull Location l, int charge) {
         int difference = charge - getCharge(l);
-        if(difference > 0) {
+        if (difference > 0) {
             charge -= difference;
             difference *= EFFICIENT * (getCapacity() - getCharge(l)) / (double) getCapacity();
             charge += difference;

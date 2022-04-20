@@ -22,7 +22,6 @@ import java.util.List;
 public class BasicLinkedStorageUnit extends AbstractCargo implements RecipeItem {
     public BasicLinkedStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerDefaultRecipes();
     }
 
     @Nonnull

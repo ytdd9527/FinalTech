@@ -11,10 +11,10 @@ import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.TransferLineMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
-import io.taraxacum.finaltech.util.JavaUtil;
-import io.taraxacum.finaltech.util.cargo.*;
+import io.taraxacum.common.util.JavaUtil;
+import io.taraxacum.finaltech.util.CargoUtil;
+import io.taraxacum.finaltech.util.menu.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
@@ -35,7 +35,6 @@ import java.util.List;
 public class TransferLine extends AbstractCargo implements RecipeItem {
     public TransferLine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -94,19 +93,19 @@ public class TransferLine extends AbstractCargo implements RecipeItem {
 
         BlockFace blockFace = null;
         BlockData blockData = block.getState().getBlockData();
-        if(blockData instanceof Directional) {
+        if (blockData instanceof Directional) {
             blockFace = ((Directional) blockData).getFacing();
         }
-        if(blockFace == null) {
+        if (blockFace == null) {
             return;
         }
         List<Block> blockList = new ArrayList<>();
-        if(BlockSearchSelf.VALUE_TRUE.equals(config.getString(BlockSearchSelf.KEY))) {
+        if (BlockSearchSelf.VALUE_TRUE.equals(config.getString(BlockSearchSelf.KEY))) {
             blockList.add(0, block);
         }
         blockList.addAll(searchBlock(block, config.getString(BlockSearchMode.KEY), blockFace));
 
-        if(BlockSearchOrder.VALUE_REVERSE.equals(config.getString(BlockSearchOrder.KEY))) {
+        if (BlockSearchOrder.VALUE_REVERSE.equals(config.getString(BlockSearchOrder.KEY))) {
             blockList = new JavaUtil<Block>().reserve(blockList);
         }
 
@@ -124,18 +123,18 @@ public class TransferLine extends AbstractCargo implements RecipeItem {
         for (int i = 0; i < size - 1; i++) {
             Block inputBlock = blockList.get(i);
             Block outputBlock = blockList.get((i + 1) % size);
-            if(BlockCargoOrder.VALUE_POSITIVE.equals(blockCargoOrder)) {
+            if (BlockCargoOrder.VALUE_POSITIVE.equals(blockCargoOrder)) {
                 CargoUtil.doCargo(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoItemMode, filterMode, blockMenu.toInventory(), TransferLineMenu.ITEM_MATCH, cargoMode);
-            } else if(BlockCargoOrder.VALUE_REVERSE.equals(blockCargoOrder)) {
+            } else if (BlockCargoOrder.VALUE_REVERSE.equals(blockCargoOrder)) {
                 CargoUtil.doCargo(outputBlock, inputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoItemMode, filterMode, blockMenu.toInventory(), TransferLineMenu.ITEM_MATCH, cargoMode);
             }
         }
 
         String blockSearchCycle = config.getString(BlockSearchCycle.KEY);
-        if(BlockSearchCycle.VALUE_TRUE.equals(blockSearchCycle)) {
-            if(BlockCargoOrder.VALUE_POSITIVE.equals(blockCargoOrder)) {
+        if (BlockSearchCycle.VALUE_TRUE.equals(blockSearchCycle)) {
+            if (BlockCargoOrder.VALUE_POSITIVE.equals(blockCargoOrder)) {
                 CargoUtil.doCargo(blockList.get(size - 1), blockList.get(0), inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoItemMode, filterMode, blockMenu.toInventory(), TransferLineMenu.ITEM_MATCH, cargoMode);
-            } else if(BlockCargoOrder.VALUE_REVERSE.equals(blockCargoOrder)) {
+            } else if (BlockCargoOrder.VALUE_REVERSE.equals(blockCargoOrder)) {
                 CargoUtil.doCargo(blockList.get(0), blockList.get(size - 1), inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoItemMode, filterMode, blockMenu.toInventory(), TransferLineMenu.ITEM_MATCH, cargoMode);
             }
         }
@@ -144,22 +143,22 @@ public class TransferLine extends AbstractCargo implements RecipeItem {
     public static List<Block> searchBlock(@Nonnull Block begin, String blockSearchMode, BlockFace blockFace) {
         List<Block> list = new ArrayList<>();
         Block block = begin.getRelative(blockFace);
-        if(BlockSearchMode.VALUE_ZERO.equals(blockSearchMode)) {
-            if(CargoUtil.hasInventory(block)) {
+        if (BlockSearchMode.VALUE_ZERO.equals(blockSearchMode)) {
+            if (CargoUtil.hasInventory(block)) {
                 list.add(block);
             }
             block = block.getRelative(blockFace);
-            if(CargoUtil.hasInventory(block)) {
+            if (CargoUtil.hasInventory(block)) {
                 list.add(block);
             }
             return list;
         }
         while (CargoUtil.hasInventory(block)) {
             if (BlockStorage.hasInventory(block) && BlockStorage.getInventory(block).getPreset().getID().equals(FinalTechItems.TRANSFER_LINE.getItemId())) {
-                if(BlockSearchMode.VALUE_PENETRATE.equals(blockSearchMode)) {
+                if (BlockSearchMode.VALUE_PENETRATE.equals(blockSearchMode)) {
                     block = block.getRelative(blockFace);
                     continue;
-                } else if(BlockSearchMode.VALUE_INTERRUPT.equals(blockSearchMode)) {
+                } else if (BlockSearchMode.VALUE_INTERRUPT.equals(blockSearchMode)) {
                     list.add(block);
                     break;
                 }

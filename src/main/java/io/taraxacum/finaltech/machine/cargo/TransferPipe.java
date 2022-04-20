@@ -12,10 +12,10 @@ import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.TransferPipeMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
+import io.taraxacum.finaltech.util.CargoUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
-import io.taraxacum.finaltech.util.cargo.*;
+import io.taraxacum.finaltech.util.menu.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
@@ -38,7 +38,6 @@ public class TransferPipe extends AbstractCargo implements RecipeItem {
     public static final int BLOCK_SEARCH_LIMIT = 8;
     public TransferPipe(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -110,8 +109,8 @@ public class TransferPipe extends AbstractCargo implements RecipeItem {
         }
 
         String uuid = config.getString("UUID");
-        if(uuid != null) {
-            if(!SlimefunUtil.hasPermission(inputBlock, uuid) || !SlimefunUtil.hasPermission(outputBlock, uuid)) {
+        if (uuid != null) {
+            if (!SlimefunUtil.hasPermission(inputBlock, uuid) || !SlimefunUtil.hasPermission(outputBlock, uuid)) {
                 return;
             }
         }
@@ -129,37 +128,37 @@ public class TransferPipe extends AbstractCargo implements RecipeItem {
     public static Block searchBlockPiPe(@Nonnull Block begin, String searchMode, BlockFace blockFace, boolean input) {
         Block result = begin.getRelative(blockFace);
         int count = 1;
-        if(BlockSearchMode.VALUE_ZERO.equals(searchMode)) {
+        if (BlockSearchMode.VALUE_ZERO.equals(searchMode)) {
             return result;
         }
         List<Location> locationList = new ArrayList<>();
         while(true) {
-            if(BlockStorage.hasInventory(result) && !result.getType().equals(FinalTechItems.TRANSFER_PIPE.getType())) {
+            if (BlockStorage.hasInventory(result) && !result.getType().equals(FinalTechItems.TRANSFER_PIPE.getType())) {
                 break;
             }
-            if(PaperLib.getBlockState(result, false).getState() instanceof InventoryHolder) {
+            if (PaperLib.getBlockState(result, false).getState() instanceof InventoryHolder) {
                 break;
             }
             if (result.getType() == FinalTechItems.TRANSFER_PIPE.getType()) {
                 count = 0;
-                for(Location location : locationList) {
-                    if(location.equals(result.getLocation())) {
+                for (Location location : locationList) {
+                    if (location.equals(result.getLocation())) {
                         return result;
                     }
                 }
                 locationList.add(result.getLocation());
-                if(BlockSearchMode.VALUE_INHERIT.equals(searchMode)){
+                if (BlockSearchMode.VALUE_INHERIT.equals(searchMode)) {
                     BlockData blockData = result.getState().getBlockData();
-                    if(blockData instanceof Directional) {
+                    if (blockData instanceof Directional) {
                         blockFace = ((Directional) blockData).getFacing();
-                        if(input) {
+                        if (input) {
                             blockFace = blockFace.getOppositeFace();
                         }
                     }
                 }
             }
             result = result.getRelative(blockFace);
-            if(count++ > BLOCK_SEARCH_LIMIT) {
+            if (count++ > BLOCK_SEARCH_LIMIT) {
                 return null;
             }
         }

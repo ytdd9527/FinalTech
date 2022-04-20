@@ -19,24 +19,24 @@ public class OrderedDustOperation implements MachineOperation {
     }
 
     public void addItem(ItemStack item) {
-        if(ItemStackUtil.isItemNull(item)) {
+        if (ItemStackUtil.isItemNull(item)) {
             return;
         }
-        if(this.typeCount <= OrderedDustFactory.TYPE_DIFFICULTY) {
+        if (this.typeCount <= OrderedDustFactory.TYPE_DIFFICULTY) {
             boolean newItem = true;
-            for(int i = 0; i < this.typeCount; i++) {
+            for (int i = 0; i < this.typeCount; i++) {
                 ItemStack input = this.matchItemList[i];
-                if(ItemStackUtil.isItemSimilar(item, input)) {
+                if (ItemStackUtil.isItemSimilar(item, input)) {
                     newItem = false;
                     break;
                 }
             }
-            if(newItem == true) {
+            if (newItem == true) {
                 matchItemList[typeCount++] = ItemStackWrapper.wrap(item);
             }
         }
         this.amountCount += item.getAmount();
-        if(this.amountCount > OrderedDustFactory.AMOUNT_DIFFICULTY + 1) {
+        if (this.amountCount > OrderedDustFactory.AMOUNT_DIFFICULTY + 1) {
             this.amountCount = OrderedDustFactory.AMOUNT_DIFFICULTY + 1;
         }
     }

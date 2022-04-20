@@ -37,7 +37,7 @@ public class AdvancedElectricDustWasher extends AbstractAdvanceMachine {
         for (int slot : getInputSlots()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (ItemStackUtil.isItemSimilar(item, SlimefunItems.SIFTED_ORE)) {
-                if(item.getAmount() < amount) {
+                if (item.getAmount() < amount) {
                     amount = item.getAmount();
                 }
                 ItemStack output = new ItemStack(oreWasher.getRandomDust());
@@ -45,11 +45,11 @@ public class AdvancedElectricDustWasher extends AbstractAdvanceMachine {
                 input.setAmount(amount);
                 output.setAmount(amount);
                 MachineRecipe recipe = new MachineRecipe(0, new ItemStack[] { input}, new ItemStack[] { output});
-                if(output.getType() != Material.AIR && InvUtils.fitAll(blockMenu.toInventory(), recipe.getOutput(), this.getOutputSlots())) {
+                if (output.getType() != Material.AIR && InvUtils.fitAll(blockMenu.toInventory(), recipe.getOutput(), this.getOutputSlots())) {
                     blockMenu.consumeItem(slot, amount);
                     return recipe;
                 }
-            } else if(ItemStackUtil.isItemSimilar(item, SlimefunItems.PULVERIZED_ORE)) {
+            } else if (ItemStackUtil.isItemSimilar(item, SlimefunItems.PULVERIZED_ORE)) {
                 // todo
             }
         }

@@ -65,7 +65,7 @@ public class BasicLinkedStorageUnitMenu extends AbstractMachineMenu {
 
     @Override
     public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
-        if(itemTransportFlow == null) {
+        if (itemTransportFlow == null) {
             return new int[0];
         }
         switch (itemTransportFlow) {

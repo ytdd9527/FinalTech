@@ -10,25 +10,23 @@ import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBre
 import io.github.thebusybiscuit.slimefun4.implementation.operations.CraftingOperation;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
+import io.taraxacum.finaltech.dto.AdvancedCraftV2;
+import io.taraxacum.finaltech.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.machine.standard.AbstractStandardMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.standard.AdvancedMachineMenu;
-import io.taraxacum.finaltech.util.AdvancedCraftUtil;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.ItemStackWithWrapper;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
-import java.util.*;
-
-import static org.bukkit.Bukkit.getServer;
 
 /**
  * @author Final_ROOT
@@ -66,7 +64,10 @@ public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
     @Override
     public void register(@Nonnull SlimefunAddon addon) {
         super.register(addon);
-        getServer().getScheduler().runTask((Plugin)addon, this::registerDefaultRecipes);
+        Bukkit.getServer().getScheduler().runTask((Plugin)addon, () -> {
+            AbstractAdvanceMachine.this.registerDefaultRecipes();
+            MachineRecipeFactory.initAdvancedRecipeMap(AbstractAdvanceMachine.this.getClass());
+        });
     }
 
     @Override
@@ -76,18 +77,14 @@ public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
 
         int offset = config.contains(OFFSET_KEY) ? Integer.parseInt(config.getString(OFFSET_KEY)) : 0;
 
-        if(currentOperation == null) {
+        if (currentOperation == null) {
             MachineUtil.stockSlots(blockMenu, this.getInputSlots());
             MachineRecipe machineRecipe = this.matchRecipe(blockMenu, offset);
             if (machineRecipe != null) {
-                if(machineRecipe.getTicks() == 0) {
+                if (machineRecipe.getTicks() == 0) {
                     ItemStack[] outputItems = machineRecipe.getOutput();
                     for (ItemStack output : outputItems) {
-                        if(output instanceof ItemStackWrapper) {
-                            blockMenu.pushItem(new ItemStack(output), this.getOutputSlots());
-                        } else {
-                            blockMenu.pushItem(output.clone(), this.getOutputSlots());
-                        }
+                        blockMenu.pushItem(ItemStackUtil.cloneItem(output), this.getOutputSlots());
                     }
                     MachineUtil.stockSlots(blockMenu, this.getOutputSlots());
                 } else {
@@ -97,9 +94,9 @@ public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
         } else {
             if (currentOperation.isFinished()) {
                 ItemStack[] outputItems = currentOperation.getResults();
-                if(InvUtils.fitAll(blockMenu.toInventory(), outputItems, getOutputSlots())) {
+                if (InvUtils.fitAll(blockMenu.toInventory(), outputItems, getOutputSlots())) {
                     for (ItemStack output : outputItems) {
-                        if(output instanceof ItemStackWrapper) {
+                        if (output instanceof ItemStackWrapper) {
                             blockMenu.pushItem(new ItemStack(output), this.getOutputSlots());
                         } else {
                             blockMenu.pushItem(output.clone(), this.getOutputSlots());
@@ -117,18 +114,18 @@ public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
     protected MachineRecipe matchRecipe(BlockMenu blockMenu, int offset) {
         int quantityModule = MachineUtil.updateQuantityModule(blockMenu, AdvancedMachineMenu.MODULE_SLOT, AdvancedMachineMenu.INFO_SLOT);
 
-        if (MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlots()) || MachineUtil.isFull(blockMenu.toInventory(), getOutputSlots())) {
-            BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, null);
-            return null;
-        }
+//        if (MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlots()) || MachineUtil.isFull(blockMenu.toInventory(), getOutputSlots())) {
+//            BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, null);
+//            return null;
+//        }
 
-        AdvancedCraftUtil craft = AdvancedCraftUtil.calCraft(blockMenu, getInputSlots(), this.getMachineRecipes(), quantityModule, offset);
-        if (craft != null) {
-            craft.setMatchCount(MachineUtil.maxMatch(blockMenu.toInventory(), this.getOutputSlots(), craft.getMachineRecipe().getOutput(), craft.getMatchCount()));
-            if (craft.getMatchCount() > 0) {
-                BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, String.valueOf(this.getMachineRecipes().indexOf(craft.getMachineRecipe())));
-                craft.consumeItem(blockMenu.toInventory());
-                return craft.calEnlargeMachineRecipe();
+        AdvancedCraftV2 craft = AdvancedCraftV2.craft(blockMenu, this.getInputSlots(), MachineRecipeFactory.getAdvancedRecipe(this.getClass()), quantityModule, offset);
+        if(craft != null) {
+            craft.setMatchCount(Math.min(craft.getMatchCount(), MachineUtil.calMaxMatch(blockMenu, this.getOutputSlots(), craft.getOutputItemList())));
+            if(craft.getMatchCount() > 0) {
+                BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, String.valueOf(craft.getOffset()));
+                craft.consumeItem(blockMenu);
+                return craft.calMachineRecipe(this.getMachineRecipes().get(offset).getTicks());
             }
         }
         BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, null);

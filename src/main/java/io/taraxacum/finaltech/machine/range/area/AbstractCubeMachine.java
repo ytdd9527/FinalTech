@@ -31,14 +31,14 @@ public abstract class AbstractCubeMachine extends AbstractRangeMachine {
         int maxY  = Math.min(location.getBlockY() + range, world.getMaxHeight());
         int maxZ = location.getBlockZ() + range;
         int result;
-        for(int x = minX; x <= maxX; x++) {
+        for (int x = minX; x <= maxX; x++) {
             location.setX(x);
-            for(int y = minY; y <= maxY; y++) {
+            for (int y = minY; y <= maxY; y++) {
                 location.setY(y);
-                for(int z = minZ; z <= maxZ; z++) {
+                for (int z = minZ; z <= maxZ; z++) {
                     location.setZ(z);
                     result = function.function(location);
-                    if(result == -1) {
+                    if (result == -1) {
                         return count;
                     }
                     count += result;

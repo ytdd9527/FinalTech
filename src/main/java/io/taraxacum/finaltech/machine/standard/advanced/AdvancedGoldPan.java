@@ -40,7 +40,7 @@ public class AdvancedGoldPan extends AbstractAdvanceMachine {
             ItemStack item = inv.getItemInSlot(slot);
 
             if (ItemStackUtil.isItemSimilar(item, GRAVEL)) {
-                if(item.getAmount() < amount) {
+                if (item.getAmount() < amount) {
                     amount = item.getAmount();
                 }
                 ItemStack input = new ItemStack(GRAVEL);
@@ -52,12 +52,12 @@ public class AdvancedGoldPan extends AbstractAdvanceMachine {
                 }, new ItemStack[] {
                         output
                 });
-                if(InvUtils.fitAll(inv.toInventory(), recipe.getOutput(), this.getOutputSlots())) {
+                if (InvUtils.fitAll(inv.toInventory(), recipe.getOutput(), this.getOutputSlots())) {
                     inv.consumeItem(slot, amount);
                     return recipe;
                 }
             } else if (ItemStackUtil.isItemSimilar(item, SOUL_SAND)) {
-                if(item.getAmount() < amount) {
+                if (item.getAmount() < amount) {
                     amount = item.getAmount();
                 }
                 ItemStack input = new ItemStack(SOUL_SAND);

@@ -25,7 +25,6 @@ public class OrderedDustFactory extends AbstractStandardMachine {
 
     public OrderedDustFactory(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -39,24 +38,24 @@ public class OrderedDustFactory extends AbstractStandardMachine {
         BlockMenu inv = BlockStorage.getInventory(block);
         OrderedDustOperation operation = (OrderedDustOperation)this.getMachineProcessor().getOperation(block);
 
-        for(int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlots()) {
             ItemStack inputItem = inv.getItemInSlot(slot);
-            if(inputItem == null) {
+            if (inputItem == null) {
                 continue;
             }
 
-            if(operation == null) {
+            if (operation == null) {
                 operation = new OrderedDustOperation();
                 this.getMachineProcessor().startOperation(block, operation);
             }
             operation.addItem(inputItem);
 
-            if(operation.isFinished()) {
-                if(operation.isOrderedDust() && InvUtils.fitAll(inv.toInventory(), new ItemStack[] {FinalTechItems.ORDERED_DUST}, this.getOutputSlots())) {
+            if (operation.isFinished()) {
+                if (operation.isOrderedDust() && InvUtils.fitAll(inv.toInventory(), new ItemStack[] {FinalTechItems.ORDERED_DUST}, this.getOutputSlots())) {
                     inv.pushItem(new ItemStack(FinalTechItems.ORDERED_DUST), this.getOutputSlots());
                     this.getMachineProcessor().endOperation(block);
                     operation = null;
-                } else if(InvUtils.fitAll(inv.toInventory(), new ItemStack[] {FinalTechItems.UNORDERED_DUST}, this.getOutputSlots())) {
+                } else if (InvUtils.fitAll(inv.toInventory(), new ItemStack[] {FinalTechItems.UNORDERED_DUST}, this.getOutputSlots())) {
                     inv.pushItem(new ItemStack(FinalTechItems.UNORDERED_DUST), this.getOutputSlots());
                     this.getMachineProcessor().endOperation(block);
                     operation = null;
@@ -65,7 +64,7 @@ public class OrderedDustFactory extends AbstractStandardMachine {
             inv.consumeItem(slot, inputItem.getAmount());
         }
 
-        if(operation == null) {
+        if (operation == null) {
             operation = new OrderedDustOperation();
             this.getMachineProcessor().startOperation(block, operation);
         }

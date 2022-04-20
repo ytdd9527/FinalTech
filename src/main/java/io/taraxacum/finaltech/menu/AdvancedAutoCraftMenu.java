@@ -8,8 +8,8 @@ import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.cargo.Icon;
-import io.taraxacum.finaltech.util.cargo.SlotSearchSize;
+import io.taraxacum.finaltech.util.menu.Icon;
+import io.taraxacum.finaltech.util.menu.SlotSearchSize;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -117,7 +117,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     @Override
     public void init() {
         super.init();
-        for(int slot : ITEM_INPUT_SLOT) {
+        for (int slot : ITEM_INPUT_SLOT) {
             this.addItem(slot, Icon.PARSE_FAILED_ICON);
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
@@ -162,70 +162,70 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
 
     @Override
     public void updateMenu(BlockMenu blockMenu, Block block) {
-        if(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), SlotSearchSize.KEY_INPUT, SlotSearchSize.VALUE_INPUTS_ONLY);
         }
-        if(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT) == null) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT, SlotSearchSize.VALUE_OUTPUTS_ONLY);
         }
         blockMenu.replaceExistingItem(INPUT_SEARCH_SLOT, SlotSearchSize.getIcon(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT)));
         blockMenu.replaceExistingItem(OUTPUT_SEARCH_SLOT, SlotSearchSize.getIcon(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT)));
 
         ItemStack outputItem = blockMenu.getItemInSlot(PARSE_ITEM_SLOT);
-        if(ItemStackUtil.isItemNull(outputItem)) {
+        if (ItemStackUtil.isItemNull(outputItem)) {
             outputItem = blockMenu.getItemInSlot(RESULT_SLOT);
-            if(ItemStackUtil.isItemNull(outputItem) || ItemStackUtil.isItemSimilar(outputItem, Icon.PARSE_FAILED_ICON)) {
+            if (ItemStackUtil.isItemNull(outputItem) || ItemStackUtil.isItemSimilar(outputItem, Icon.PARSE_FAILED_ICON)) {
                 setParseFailedMenu(blockMenu);
                 return;
             }
         }
         SlimefunItem slimefunItem = SlimefunItem.getByItem(outputItem);
-        if(slimefunItem == null) {
+        if (slimefunItem == null) {
             setParseFailedMenu(blockMenu);
             return;
         }
         ItemStack[] recipeInputs = null;
-        for(RecipeType type : RECIPE_TYPE_LIST) {
-            if(type.equals(slimefunItem.getRecipeType())) {
+        for (RecipeType type : RECIPE_TYPE_LIST) {
+            if (type.equals(slimefunItem.getRecipeType())) {
                 List<ItemStack> list = new ArrayList<>(9);
                 Collections.addAll(list, slimefunItem.getRecipe());
-                list = ItemStackUtil.mergeSameItem(list);
-                recipeInputs = ItemStackUtil.toArray(list);
+                list = ItemStackUtil.calMergeItemList(list);
+                recipeInputs = ItemStackUtil.calNoNullItemArray(list);
             }
         }
-        if(recipeInputs == null || recipeInputs.length == 0) {
+        if (recipeInputs == null || recipeInputs.length == 0) {
             recipeInputs = new ItemStack[] {outputItem};
         }
         ItemStack[] lastValidRecipeInput = recipeInputs;
-        for(int slot : MACHINE_SLOT) {
+        for (int slot : MACHINE_SLOT) {
             ItemStack machineItem = blockMenu.getItemInSlot(slot);
-            if(ItemStackUtil.isItemNull(machineItem)) {
+            if (ItemStackUtil.isItemNull(machineItem)) {
                 continue;
             }
-            for(ItemStack machine : RECIPE_MAP.keySet()) {
-                if(!ItemStackUtil.isItemSimilar(machineItem, machine)) {
+            for (ItemStack machine : RECIPE_MAP.keySet()) {
+                if (!ItemStackUtil.isItemSimilar(machineItem, machine)) {
                     continue;
                 }
                 List<MachineRecipe> machineRecipeList = RECIPE_MAP.get(machine);
                 int count = 0;
                 while(count++ < machineItem.getAmount()) {
-                    ItemStack[] result = ItemStackUtil.mergeSameItem(getMultistageInputByMachineRecipe(recipeInputs, machineRecipeList));
+                    ItemStack[] result = ItemStackUtil.calMergeItemList(getMultistageInputByMachineRecipe(recipeInputs, machineRecipeList));
                     boolean same = true;
-                    if(result.length != recipeInputs.length) {
+                    if (result.length != recipeInputs.length) {
                         same = false;
                     } else {
-                        for(int i = 0; i < result.length; i++) {
-                            if(result[i].getAmount() != recipeInputs[i].getAmount() || !ItemStackUtil.isItemSimilar(result[i], recipeInputs[i])) {
+                        for (int i = 0; i < result.length; i++) {
+                            if (result[i].getAmount() != recipeInputs[i].getAmount() || !ItemStackUtil.isItemSimilar(result[i], recipeInputs[i])) {
                                 same = false;
                                 break;
                             }
                         }
                     }
-                    if(same) {
+                    if (same) {
                         break;
                     }
                     recipeInputs = result;
-                    if(recipeInputs.length <= ITEM_INPUT_SLOT_BIG.length) {
+                    if (recipeInputs.length <= ITEM_INPUT_SLOT_BIG.length) {
                         lastValidRecipeInput = recipeInputs;
                     }
                 }
@@ -236,19 +236,19 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
 
     private static ItemStack[] getMultistageInputByMachineRecipe(ItemStack[] input, List<MachineRecipe> machineRecipes) {
         List<ItemStack> list = new ArrayList<>();
-        for(ItemStack item : input) {
+        for (ItemStack item : input) {
             boolean match = false;
-            for(MachineRecipe machineRecipe : machineRecipes) {
-                if(machineRecipe.getOutput().length != 1) {
+            for (MachineRecipe machineRecipe : machineRecipes) {
+                if (machineRecipe.getOutput().length != 1) {
                     continue;
                 }
                 ItemStack output = machineRecipe.getOutput()[0];
-                if(item.getAmount() < output.getAmount() || item.getAmount() % output.getAmount() != 0 || !ItemStackUtil.isItemSimilar(item, output)) {
+                if (item.getAmount() < output.getAmount() || item.getAmount() % output.getAmount() != 0 || !ItemStackUtil.isItemSimilar(item, output)) {
                     continue;
                 }
                 match = true;
                 int amount = item.getAmount() / output.getAmount();
-                for(ItemStack recipeInput : machineRecipe.getInput()) {
+                for (ItemStack recipeInput : machineRecipe.getInput()) {
                     int itemAmount = recipeInput.getAmount() * amount;
                     while (itemAmount > recipeInput.getMaxStackSize()) {
                         list.add(new CustomItemStack(recipeInput, recipeInput.getMaxStackSize()));
@@ -257,11 +257,11 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
                     list.add(new CustomItemStack(recipeInput, itemAmount));
                 }
             }
-            if(!match) {
+            if (!match) {
                 list.add(item);
             }
         }
-        return ItemStackUtil.toArray(ItemStackUtil.mergeSameItem(list));
+        return ItemStackUtil.calNoNullItemArray(ItemStackUtil.calMergeItemList(list));
     }
 
     private ItemStack[] getMultistageInput(ItemStack[] input, RecipeType recipeType) {
@@ -270,12 +270,12 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
             SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
             if (slimefunItem != null && slimefunItem.getRecipeType().equals(recipeType)) {
                 int amount = itemStack.getAmount() / slimefunItem.getRecipeOutput().getAmount();
-                if(amount == 0 || itemStack.getAmount() % slimefunItem.getRecipeOutput().getAmount() != 0) {
+                if (amount == 0 || itemStack.getAmount() % slimefunItem.getRecipeOutput().getAmount() != 0) {
                     list.add(itemStack);
                     continue;
                 }
                 for (ItemStack item : slimefunItem.getRecipe()) {
-                    if(ItemStackUtil.isItemNull(item)) {
+                    if (ItemStackUtil.isItemNull(item)) {
                         continue;
                     }
                     int itemAmount = item.getAmount() * amount;
@@ -289,15 +289,15 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
                 list.add(itemStack);
             }
         }
-        return ItemStackUtil.toArray(ItemStackUtil.mergeSameItem(list));
+        return ItemStackUtil.calNoNullItemArray(ItemStackUtil.calMergeItemList(list));
     }
 
     private void setParseFailedMenu(BlockMenu blockMenu) {
-        for(int slot : ITEM_INPUT_SLOT) {
+        for (int slot : ITEM_INPUT_SLOT) {
             blockMenu.replaceExistingItem(slot, Icon.PARSE_FAILED_ICON);
         }
         blockMenu.replaceExistingItem(RESULT_SLOT, Icon.PARSE_FAILED_ICON);
-        for(int slot : INPUT_BORDER) {
+        for (int slot : INPUT_BORDER) {
             blockMenu.replaceExistingItem(slot, Icon.INPUT_BORDER_ICON);
         }
     }
@@ -306,26 +306,26 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
         int i;
         item = new ItemStack(item);
 //        ItemStackUtil.addLore(item, "§8合成产物");
-        if(items.length <= ITEM_INPUT_SLOT.length) {
-            for(i = 0; i < items.length; i++) {
+        if (items.length <= ITEM_INPUT_SLOT.length) {
+            for (i = 0; i < items.length; i++) {
                 ItemStack showItem = new ItemStack(items[i]);
 //                ItemStackUtil.addLore(showItem, "§8合成原料");
                 blockMenu.replaceExistingItem(ITEM_INPUT_SLOT[i], showItem);
             }
-            for(int j = i; j < ITEM_INPUT_SLOT.length; j++) {
+            for (int j = i; j < ITEM_INPUT_SLOT.length; j++) {
                 blockMenu.replaceExistingItem(ITEM_INPUT_SLOT[j], Icon.PARSE_NULL_ICON);
             }
-            for(int slot : INPUT_BORDER) {
+            for (int slot : INPUT_BORDER) {
                 blockMenu.replaceExistingItem(slot, Icon.INPUT_BORDER_ICON);
             }
             blockMenu.replaceExistingItem(RESULT_SLOT, item);
-        } else if(items.length <= ITEM_INPUT_SLOT.length + INPUT_BORDER.length) {
-            for(i = 0; i < items.length; i++) {
+        } else if (items.length <= ITEM_INPUT_SLOT.length + INPUT_BORDER.length) {
+            for (i = 0; i < items.length; i++) {
                 ItemStack showItem = new ItemStack(items[i]);
 //                ItemStackUtil.addLore(showItem, "§8合成原料");
                 blockMenu.replaceExistingItem(ITEM_INPUT_SLOT_BIG[i], showItem);
             }
-            for(int j = i; j < ITEM_INPUT_SLOT_BIG.length; j++) {
+            for (int j = i; j < ITEM_INPUT_SLOT_BIG.length; j++) {
                 blockMenu.replaceExistingItem(ITEM_INPUT_SLOT_BIG[j], Icon.PARSE_NULL_ICON);
             }
             blockMenu.replaceExistingItem(RESULT_SLOT, item);

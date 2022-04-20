@@ -8,7 +8,7 @@ import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.StatusL2Menu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.StringNumberUtil;
+import io.taraxacum.common.util.StringNumberUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -41,9 +41,9 @@ public class MatrixExpandedCapacitor extends AbstractExpandedElectricCapacitor{
     protected void tick(Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         Location location = block.getLocation();
         BlockMenu blockMenu = BlockStorage.getInventory(location);
-        for(int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlots()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(!ItemStackUtil.isItemNull(item) && ItemStackUtil.isItemSimilar(item, FinalTechItems.FAKE)) {
+            if (!ItemStackUtil.isItemNull(item) && ItemStackUtil.isItemSimilar(item, FinalTechItems.FAKE)) {
                 String energyStack = String.valueOf(config.getValue(KEY));
                 energyStack = StringNumberUtil.add(energyStack, energyStack);
                 BlockStorage.addBlockInfo(location, KEY, energyStack);

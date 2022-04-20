@@ -66,7 +66,7 @@ public abstract class AbstractCraftManualMachine extends AbstractManualMachine i
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(!blockMenu.toInventory().getViewers().isEmpty()) {
+        if (!blockMenu.toInventory().getViewers().isEmpty()) {
             this.getMachineMenu().updateMenu(BlockStorage.getInventory(block.getLocation()), block);
         }
     }

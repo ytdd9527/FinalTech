@@ -35,7 +35,6 @@ public class OverloadCoreMachine extends AbstractCubeMachine implements RecipeIt
     private static final int RANGE = 16;
     public OverloadCoreMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -63,17 +62,17 @@ public class OverloadCoreMachine extends AbstractCubeMachine implements RecipeIt
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         int count = this.function(block, RANGE, location -> {
-            if(BlockStorage.hasBlockInfo(location)) {
+            if (BlockStorage.hasBlockInfo(location)) {
                 Config locationInfo = BlockStorage.getLocationInfo(location);
-                if(locationInfo.contains(SlimefunUtil.KEY_ID)) {
+                if (locationInfo.contains(SlimefunUtil.KEY_ID)) {
                     String id = locationInfo.getString(SlimefunUtil.KEY_ID);
-                    if(id.contains("OVER")) {
+                    if (id.contains("OVER")) {
                         return 0;
                     }
                     SlimefunItem item = SlimefunItem.getById(id);
-                    if(item != null) {
+                    if (item != null) {
                         BlockTicker blockTicker = item.getBlockTicker();
-                        if(blockTicker == null) {
+                        if (blockTicker == null) {
                         } else if (blockTicker.isSynchronized()) {
                             Location l = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ());
                             Slimefun.runSync(() -> blockTicker.tick(l.getBlock(), item, locationInfo));

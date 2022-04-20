@@ -55,14 +55,14 @@ public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem 
     }
 
     public static boolean isStorageCardItem(@Nonnull ItemStack item) {
-        if(item.hasItemMeta()) {
+        if (item.hasItemMeta()) {
             return isStorageCardItem(item.getItemMeta());
         }
         return false;
     }
 
     public static boolean isStorageCardItem(@Nonnull ItemMeta itemMeta) {
-        if(!itemMeta.hasLore()) {
+        if (!itemMeta.hasLore()) {
             return false;
         }
         List<String> lore = itemMeta.getLore();

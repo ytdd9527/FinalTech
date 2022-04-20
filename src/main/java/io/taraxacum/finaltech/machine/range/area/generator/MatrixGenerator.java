@@ -13,7 +13,7 @@ import io.taraxacum.finaltech.menu.StatusMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
-import io.taraxacum.finaltech.util.StringNumberUtil;
+import io.taraxacum.common.util.StringNumberUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -52,9 +52,9 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator implements An
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         World world = block.getWorld();
         int extraRange = 0;
-        for(int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlots()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(!ItemStackUtil.isItemNull(item) && ItemStackUtil.isItemSimilar(item, FinalTechItems.FAKE)) {
+            if (!ItemStackUtil.isItemNull(item) && ItemStackUtil.isItemSimilar(item, FinalTechItems.FAKE)) {
                 int amount = item.getAmount() / 2;
                 while (amount > 0) {
                     extraRange++;
@@ -64,40 +64,40 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator implements An
         }
         AtomicReference<String> energyCharge = new AtomicReference<>(StringNumberUtil.ZERO);
         int count = this.function(block, extraRange + this.getRange(), location -> {
-            if(BlockStorage.hasBlockInfo(location)) {
+            if (BlockStorage.hasBlockInfo(location)) {
                 Config energyComponentConfig = BlockStorage.getLocationInfo(location);
-                if(energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
+                if (energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
                     String slimefunItemId = energyComponentConfig.getString(SlimefunUtil.KEY_ID);
-                    if(slimefunItemId.equals(this.getId()) && !location.equals(block.getLocation())) {
+                    if (slimefunItemId.equals(this.getId()) && !location.equals(block.getLocation())) {
                         Slimefun.runSync(() -> {
                             List<ItemStack> dropItemList = new ArrayList<>(this.getInputSlots().length + 1);
-                            for(int slot : MatrixGenerator.this.getInputSlots()) {
+                            for (int slot : MatrixGenerator.this.getInputSlots()) {
                                 ItemStack item = blockMenu.getItemInSlot(slot);
-                                if(!ItemStackUtil.isItemNull(item)) {
+                                if (!ItemStackUtil.isItemNull(item)) {
                                     dropItemList.add(blockMenu.getItemInSlot(slot));
                                 }
                             }
                             dropItemList.add(this.getItem());
                             block.setType(Material.AIR);
                             BlockStorage.clearBlockInfo(block.getLocation());
-                            for(ItemStack item : dropItemList) {
+                            for (ItemStack item : dropItemList) {
                                 block.getWorld().dropItem(block.getLocation(), item);
                             }
                         });
                         return -1;
                     }
                     SlimefunItem item = SlimefunItem.getById(energyComponentConfig.getString(SlimefunUtil.KEY_ID));
-                    if(item instanceof EnergyNetComponent) {
+                    if (item instanceof EnergyNetComponent) {
                         int componentCapacity = ((EnergyNetComponent) item).getCapacity();
-                        if(componentCapacity == 0) {
+                        if (componentCapacity == 0) {
                             return 0;
                         }
                         String componentEnergy = energyComponentConfig.contains(KEY) ? energyComponentConfig.getString(KEY) : StringNumberUtil.ZERO;
-                        if(StringNumberUtil.easilyCompare(componentEnergy, String.valueOf(componentCapacity)) >= 0) {
+                        if (StringNumberUtil.easilyCompare(componentEnergy, String.valueOf(componentCapacity)) >= 0) {
                             return 0;
                         }
                         String transferEnergy = StringNumberUtil.min(StringNumberUtil.sub(String.valueOf(componentCapacity), componentEnergy), this.getElectricity());
-                        if(StringNumberUtil.easilyCompare(transferEnergy, StringNumberUtil.ZERO) > 0) {
+                        if (StringNumberUtil.easilyCompare(transferEnergy, StringNumberUtil.ZERO) > 0) {
                             componentEnergy = StringNumberUtil.add(componentEnergy, transferEnergy);
                             energyCharge.set(StringNumberUtil.add(energyCharge.get(), transferEnergy));
                             SlimefunUtil.setCharge(energyComponentConfig, componentEnergy);

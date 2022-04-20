@@ -15,7 +15,7 @@ import io.taraxacum.finaltech.menu.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
-import io.taraxacum.finaltech.util.StringNumberUtil;
+import io.taraxacum.common.util.StringNumberUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -33,7 +33,6 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
     protected static final String KEY = "energy-charge";
     public AbstractCubeElectricGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -58,11 +57,11 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         String extraEnergy = this.getElectricity();
-        for(int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlots()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(!ItemStackUtil.isItemNull(item) && ItemStackUtil.isItemSimilar(item, this.getItem())) {
+            if (!ItemStackUtil.isItemNull(item) && ItemStackUtil.isItemSimilar(item, this.getItem())) {
                 //todo
-                for(int i = 0; i < item.getAmount(); i++) {
+                for (int i = 0; i < item.getAmount(); i++) {
                     extraEnergy = StringNumberUtil.add(extraEnergy, this.getElectricity());
                 }
             }
@@ -70,21 +69,21 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
         AtomicReference<String> energyCharge = new AtomicReference<>(StringNumberUtil.ZERO);
         String finalExtraEnergy = extraEnergy;
         int count = this.function(block, this.getRange(), location -> {
-            if(BlockStorage.hasBlockInfo(location)) {
+            if (BlockStorage.hasBlockInfo(location)) {
                 Config energyComponentConfig = BlockStorage.getLocationInfo(location);
-                if(energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
+                if (energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
                     SlimefunItem item = SlimefunItem.getById(energyComponentConfig.getString(SlimefunUtil.KEY_ID));
-                    if(item instanceof EnergyNetComponent) {
+                    if (item instanceof EnergyNetComponent) {
                         int componentCapacity = ((EnergyNetComponent) item).getCapacity();
-                        if(componentCapacity == 0) {
+                        if (componentCapacity == 0) {
                             return 0;
                         }
                         String componentEnergy = energyComponentConfig.contains(KEY) ? energyComponentConfig.getString(KEY) : StringNumberUtil.ZERO;
-                        if(StringNumberUtil.easilyCompare(componentEnergy, String.valueOf(componentCapacity)) >= 0) {
+                        if (StringNumberUtil.easilyCompare(componentEnergy, String.valueOf(componentCapacity)) >= 0) {
                             return 0;
                         }
                         String transferEnergy = StringNumberUtil.min(StringNumberUtil.sub(String.valueOf(componentCapacity), componentEnergy), finalExtraEnergy);
-                        if(StringNumberUtil.easilyCompare(transferEnergy, StringNumberUtil.ZERO) > 0) {
+                        if (StringNumberUtil.easilyCompare(transferEnergy, StringNumberUtil.ZERO) > 0) {
                             componentEnergy = StringNumberUtil.add(componentEnergy, transferEnergy);
                             energyCharge.set(StringNumberUtil.add(energyCharge.get(), transferEnergy));
                             SlimefunUtil.setCharge(energyComponentConfig, componentEnergy);

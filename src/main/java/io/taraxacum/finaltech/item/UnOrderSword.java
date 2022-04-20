@@ -34,10 +34,10 @@ public class UnOrderSword extends SlimefunItem {
             @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
             public void onHit(@Nonnull EntityDamageByEntityEvent entityDamageByEntityEvent, @Nonnull Player player, @Nonnull ItemStack itemStack) {
                 entityDamageByEntityEvent.setCancelled(true);
-                if(!SlimefunUtil.hasPermission(entityDamageByEntityEvent.getEntity(), player)) {
+                if (!SlimefunUtil.hasPermission(entityDamageByEntityEvent.getEntity(), player)) {
                     return;
                 }
-                if(!Material.WOODEN_SWORD.equals(itemStack.getType())) {
+                if (!Material.WOODEN_SWORD.equals(itemStack.getType())) {
                     return;
                 }
                 double damage = entityDamageByEntityEvent.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE);
@@ -45,7 +45,7 @@ public class UnOrderSword extends SlimefunItem {
                 damage = Math.max(damage, entityDamageByEntityEvent.getFinalDamage());
                 damage += itemStack.getDurability();
                 Entity entity = entityDamageByEntityEvent.getEntity();
-                if(entity instanceof LivingEntity) {
+                if (entity instanceof LivingEntity) {
                     ((LivingEntity) entity).setHealth(Math.max(((LivingEntity) entity).getHealth() - damage, 0.01));
                 }
             }

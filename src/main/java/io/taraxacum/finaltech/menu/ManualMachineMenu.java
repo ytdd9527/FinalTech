@@ -4,9 +4,9 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.manual.craft.AbstractCraftManualMachine;
-import io.taraxacum.finaltech.util.AdvancedCraftUtil;
+import io.taraxacum.finaltech.dto.AdvancedCraftUtil;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.ItemStackWithWrapper;
+import io.taraxacum.finaltech.dto.ItemStackWithWrapper;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
@@ -110,9 +110,9 @@ public class ManualMachineMenu extends AbstractMachineMenu {
         }));
         blockMenu.addMenuClickHandler(CRAFT_SLOT, ((player, i, itemStack, clickAction) -> {
             Map<Integer, ItemStackWithWrapper> itemWithWrapperMap = new HashMap<>(INPUT_SLOTS.length);
-            for(int slot : INPUT_SLOTS) {
+            for (int slot : INPUT_SLOTS) {
                 ItemStack item = blockMenu.getItemInSlot(slot);
-                if(!ItemStackUtil.isItemNull(item)) {
+                if (!ItemStackUtil.isItemNull(item)) {
                     itemWithWrapperMap.put(slot, new ItemStackWithWrapper(item));
                 }
             }
@@ -120,40 +120,40 @@ public class ManualMachineMenu extends AbstractMachineMenu {
             int offsetAbs = 0;
             List<AdvancedCraftUtil> craftList = new ArrayList<>(this.machineRecipeList.size());
             AdvancedCraftUtil craft = null;
-            for(int offset = 0, offsetValue = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY)); offset <= offsetValue; offset++) {
+            for (int offset = 0, offsetValue = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY)); offset <= offsetValue; offset++) {
                 craft = AdvancedCraftUtil.calCraft(blockMenu, INPUT_SLOTS, this.machineRecipeList, amount, offsetAbs);
-                if(craft == null) {
+                if (craft == null) {
                     updateMenu(blockMenu, block);
                     return false;
                 }
-                if(offsetAbs >= this.machineRecipeList.indexOf(craft.getMachineRecipe())) {
+                if (offsetAbs >= this.machineRecipeList.indexOf(craft.getMachineRecipe())) {
                     break;
                 }
                 offsetAbs = this.machineRecipeList.indexOf(craft.getMachineRecipe()) + 1;
                 craftList.add(craft);
             }
-            if(craft == null) {
+            if (craft == null) {
                 updateMenu(blockMenu, block);
                 return false;
             }
             craft.setMatchCount(MachineUtil.maxMatch(blockMenu.toInventory(), OUTPUT_SLOTS, craft.getMachineRecipe().getOutput(), craft.getMatchCount()));
-            if(craft.getMatchCount() > 0) {
+            if (craft.getMatchCount() > 0) {
                 craft.consumeItem(blockMenu.toInventory());
-                for(ItemStack outputItem : craft.calEnlargeMachineRecipe().getOutput()) {
+                for (ItemStack outputItem : craft.calEnlargeMachineRecipe().getOutput()) {
                     blockMenu.pushItem(ItemStackUtil.cloneItem(outputItem), OUTPUT_SLOTS);
                 }
                 amount -= craft.getMatchCount();
             }
-            if(clickAction.isRightClicked()) {
+            if (clickAction.isRightClicked()) {
                 while (amount > 0) {
                     craft = AdvancedCraftUtil.calCraft(blockMenu, INPUT_SLOTS, this.machineRecipeList, amount, offsetAbs);
-                    if(craft == null) {
+                    if (craft == null) {
                         break;
                     }
                     craft.setMatchCount(MachineUtil.maxMatch(blockMenu.toInventory(), OUTPUT_SLOTS, craft.getMachineRecipe().getOutput(), craft.getMatchCount()));
-                    if(craft.getMatchCount() > 0) {
+                    if (craft.getMatchCount() > 0) {
                         craft.consumeItem(blockMenu.toInventory());
-                        for(ItemStack outputItem : craft.calEnlargeMachineRecipe().getOutput()) {
+                        for (ItemStack outputItem : craft.calEnlargeMachineRecipe().getOutput()) {
                             blockMenu.pushItem(ItemStackUtil.cloneItem(outputItem), OUTPUT_SLOTS);
                         }
                         amount -= craft.getMatchCount();
@@ -197,29 +197,29 @@ public class ManualMachineMenu extends AbstractMachineMenu {
     public void updateMenu(BlockMenu blockMenu, Block block) {
         Config config = BlockStorage.getLocationInfo(block.getLocation());
         List<ItemStackWithWrapper> itemWithWrapperList = new ArrayList<>(INPUT_SLOTS.length);
-        for(int slot : INPUT_SLOTS) {
+        for (int slot : INPUT_SLOTS) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(!ItemStackUtil.isItemNull(item)) {
+            if (!ItemStackUtil.isItemNull(item)) {
                 itemWithWrapperList.add(new ItemStackWithWrapper(item));
             }
         }
         int offset = 0;
         ItemStack showItem = INFO_ICON;
         int offsetValue = Integer.parseInt(config.getValue(KEY).toString());
-        for(MachineRecipe recipe : this.machineRecipeList) {
+        for (MachineRecipe recipe : this.machineRecipeList) {
             int find = 0;
-            for(ItemStack recipeInputItem : recipe.getInput()) {
+            for (ItemStack recipeInputItem : recipe.getInput()) {
                 ItemStackWithWrapper recipeInputItemWhitWrapper = new ItemStackWithWrapper(recipeInputItem);
-                for(ItemStackWithWrapper itemWithWrapper : itemWithWrapperList) {
-                    if(itemWithWrapper.getItemStack().getAmount() >= recipeInputItem.getAmount() && ItemStackUtil.isItemSimilar(itemWithWrapper.getItemStackWrapper(), recipeInputItemWhitWrapper.getItemStackWrapper())) {
+                for (ItemStackWithWrapper itemWithWrapper : itemWithWrapperList) {
+                    if (itemWithWrapper.getItemStack().getAmount() >= recipeInputItem.getAmount() && ItemStackUtil.isItemSimilar(itemWithWrapper.getItemStackWrapper(), recipeInputItemWhitWrapper.getItemStackWrapper())) {
                         find++;
                         break;
                     }
                 }
             }
-            if(find == recipe.getInput().length) {
+            if (find == recipe.getInput().length) {
                 showItem = ItemStackUtil.cloneItem(recipe.getOutput()[0]);
-                if(offset < offsetValue) {
+                if (offset < offsetValue) {
                     offset++;
                     continue;
                 }
