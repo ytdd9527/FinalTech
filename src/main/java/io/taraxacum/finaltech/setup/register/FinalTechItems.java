@@ -7,7 +7,7 @@ import io.taraxacum.finaltech.machine.range.area.EscapeCapacitor;
 import io.taraxacum.finaltech.machine.range.area.generator.*;
 import io.taraxacum.finaltech.machine.capacitor.expanded.*;
 import io.taraxacum.finaltech.machine.capacitor.*;
-import io.taraxacum.finaltech.machine.generator.OrderedDustGenerator;
+import io.taraxacum.finaltech.machine.DustGenerator;
 import io.taraxacum.finaltech.machine.range.ray.shooter.EnergizedElectricityShootPile;
 import io.taraxacum.finaltech.machine.range.ray.shooter.NormalElectricityShootPile;
 import io.taraxacum.finaltech.machine.range.ray.shooter.OverloadedElectricityShootPile;
@@ -19,6 +19,9 @@ import org.bukkit.inventory.ItemStack;
  */
 public final class FinalTechItems {
     // items
+    public static final SlimefunItemStack WATER_CARD = new SlimefunItemStack("FINALTECH_WATER_CARD", Material.PAPER, "&7水卡");
+    public static final SlimefunItemStack LAVA_CARD = new SlimefunItemStack("FINALTECH_LAVAL_CARD", Material.PAPER, "&7岩浆卡");
+    public static final SlimefunItemStack MILK_CARD = new SlimefunItemStack("FINALTECH_MILK_CARD", Material.PAPER, "&7牛奶卡");
     public static final SlimefunItemStack GEARWHEEL = new SlimefunItemStack("FINALTECH_GEARWHEEL", Material.REDSTONE, "&7齿轮");
     public static final SlimefunItemStack UNORDERED_DUST = new SlimefunItemStack("FINALTECH_UNORDERED_DUST", Material.WHEAT_SEEDS, "&f无序尘埃",
             "&8它被感知到了");
@@ -236,7 +239,7 @@ public final class FinalTechItems {
             "&6传输损耗&c " + ((1 - (1 / EscapeCapacitor.LOSS)) * 100) + "%");
 
     public static final SlimefunItemStack ORDERED_DUST_GENERATOR = new SlimefunItemStack("FINALTECH_ORDERED_DUST_GENERATOR", Material.BROWN_MUSHROOM_BLOCK, "&7尘埃发电机",
-            "&6最大发电量&e " + OrderedDustGenerator.LIMIT + "J");
+            "&6最大发电量&e " + DustGenerator.LIMIT + "J");
 
     public static final SlimefunItemStack BASIC_GENERATOR = new SlimefunItemStack("FINALTECH_BASIC_GENERATOR", Material.GLOWSTONE, "&2基础供电机",
             "&6供电量&e " + BasicGenerator.ELECTRICITY + "J",

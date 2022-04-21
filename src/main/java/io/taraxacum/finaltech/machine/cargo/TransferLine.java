@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBreakHandler;
+import io.taraxacum.finaltech.interfaces.PerformanceLimitMachine;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.function.TransferLineMenu;
@@ -32,7 +33,7 @@ import java.util.List;
 /**
  * @author Final_ROOT
  */
-public class TransferLine extends AbstractCargo implements RecipeItem {
+public class TransferLine extends AbstractCargo implements RecipeItem, PerformanceLimitMachine {
     public TransferLine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -53,8 +54,8 @@ public class TransferLine extends AbstractCargo implements RecipeItem {
                 BlockMenu inv = BlockStorage.getInventory(block);
                 if (inv != null) {
                     inv.dropItems(inv.getLocation(), TransferLineMenu.ITEM_MATCH);
-                    inv.dropItems(inv.getLocation(), TransferLineMenu.INPUT_SLOTS);
-                    inv.dropItems(inv.getLocation(), TransferLineMenu.OUTPUT_SLOTS);
+                    inv.dropItems(inv.getLocation(), TransferLineMenu.INPUT_SLOT);
+                    inv.dropItems(inv.getLocation(), TransferLineMenu.OUTPUT_SLOT);
                     BlockStorage.clearBlockInfo(block.getLocation());
                 }
             }

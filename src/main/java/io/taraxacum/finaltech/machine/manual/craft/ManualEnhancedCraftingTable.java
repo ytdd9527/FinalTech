@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Final_ROOT
  */
-public class ManualEnhancedCraftingTable extends AbstractCraftManualMachine {
+public class ManualEnhancedCraftingTable extends AbstractManualCraftMachine {
     public ManualEnhancedCraftingTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }

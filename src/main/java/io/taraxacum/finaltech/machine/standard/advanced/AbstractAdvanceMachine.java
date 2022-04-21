@@ -50,15 +50,6 @@ public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
     }
 
     @Override
-    public void register(@Nonnull SlimefunAddon addon) {
-        super.register(addon);
-        Bukkit.getServer().getScheduler().runTask((Plugin)addon, () -> {
-            AbstractAdvanceMachine.this.registerDefaultRecipes();
-            MachineRecipeFactory.initAdvancedRecipeMap(AbstractAdvanceMachine.this.getClass());
-        });
-    }
-
-    @Override
     protected final void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         CraftingOperation currentOperation = (CraftingOperation) this.getMachineProcessor().getOperation(block);
@@ -102,12 +93,7 @@ public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
     protected MachineRecipe matchRecipe(BlockMenu blockMenu, int offset) {
         int quantityModule = MachineUtil.updateQuantityModule(blockMenu, AdvancedMachineMenu.MODULE_SLOT, AdvancedMachineMenu.STATUS_SLOT);
 
-//        if (MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlots()) || MachineUtil.isFull(blockMenu.toInventory(), getOutputSlots())) {
-//            BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, null);
-//            return null;
-//        }
-
-        AdvancedCraftV2 craft = AdvancedCraftV2.craft(blockMenu, this.getInputSlots(), MachineRecipeFactory.getAdvancedRecipe(this.getClass()), quantityModule, offset);
+        AdvancedCraftV2 craft = AdvancedCraftV2.craftAsc(blockMenu, this.getInputSlots(), MachineRecipeFactory.getAdvancedRecipe(this.getClass()), quantityModule, offset);
         if(craft != null) {
             craft.setMatchCount(Math.min(craft.getMatchCount(), MachineUtil.calMaxMatch(blockMenu, this.getOutputSlots(), craft.getOutputItemList())));
             if(craft.getMatchCount() > 0) {

@@ -1,6 +1,5 @@
 package io.taraxacum.finaltech.machine.manual.craft;
 
-import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -8,33 +7,28 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.machine.manual.AbstractManualMachine;
-import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
-import io.taraxacum.finaltech.menu.function.ManualMachineMenu;
+import io.taraxacum.finaltech.menu.manual.AbstractManualMachineMenu;
+import io.taraxacum.finaltech.menu.manual.ManualCraftMachineMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
  */
-public abstract class AbstractCraftManualMachine extends AbstractManualMachine implements RecipeItem {
-    public AbstractCraftManualMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
-        super(itemGroup, item, recipeType, recipe);
-    }
+public abstract class AbstractManualCraftMachine extends AbstractManualMachine implements RecipeItem {
+    public static final String KEY_CURRENT = "current-millis";
+    public static final String KEY_COUNT = "count";
 
-    @Nonnull
-    @Override
-    protected AbstractMachineMenu newMachineMenu() {
-        return new ManualMachineMenu(this.getId(), this.getItemName(), this);
+    public AbstractManualCraftMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+        super(itemGroup, item, recipeType, recipe);
     }
 
     @Nonnull
@@ -49,25 +43,23 @@ public abstract class AbstractCraftManualMachine extends AbstractManualMachine i
         return new BlockPlaceHandler(false) {
             @Override
             public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {
-                BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), ManualMachineMenu.KEY, "0");
+                BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), ManualCraftMachineMenu.KEY, "0");
             }
         };
     }
 
+    @Nonnull
     @Override
-    public void register(@Nonnull SlimefunAddon addon) {
-        this.addon = addon;
-        super.register(addon);
-        Bukkit.getServer().getScheduler().runTask((Plugin)addon, this::registerDefaultRecipes);
-
-        ((ManualMachineMenu)this.getMachineMenu()).setMachineRecipeList(this.getMachineRecipes());
+    protected AbstractManualMachineMenu newMachineMenu() {
+        return new ManualCraftMachineMenu(this);
     }
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if (!blockMenu.toInventory().getViewers().isEmpty()) {
-            this.getMachineMenu().updateMenu(BlockStorage.getInventory(block.getLocation()), block);
+        if (blockMenu.hasViewer()) {
+            this.getMachineMenu().updateMenu(blockMenu, block);
         }
+        config.setValue(KEY_COUNT, "0");
     }
 }

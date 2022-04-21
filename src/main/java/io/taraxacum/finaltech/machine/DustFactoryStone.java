@@ -25,8 +25,8 @@ import java.util.List;
 /**
  * @author Final_ROOT
  */
-public class OrderedDustFactoryV2 extends AbstractMachine implements RecipeItem {
-    public OrderedDustFactoryV2(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class DustFactoryStone extends AbstractMachine implements RecipeItem {
+    public DustFactoryStone(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 

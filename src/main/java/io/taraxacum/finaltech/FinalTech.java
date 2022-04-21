@@ -10,11 +10,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 /**
  * @author Final_ROOT
  */
 public class FinalTech extends JavaPlugin implements SlimefunAddon {
     private static int timeCount = 0;
+    private static long mspt = 1;
+    public static final String name = "FinalTech";
 
     @Override
     public void onEnable() {
@@ -32,15 +36,12 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
         this.init();
 
-        Bukkit.getLogger().info("[FinalTECH]开始压入配方缓存");
-        MachineRecipeFactory.initAdvancedRecipeMap();
-        Bukkit.getLogger().info("[FinalTECH]配方缓存压入完毕");
-
         this.getCommand("test").setExecutor(new GetItemFake());
     }
 
     @Override
     public void onDisable() {
+
     }
 
     @Override
@@ -55,10 +56,23 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
     private void init() {
         BukkitScheduler scheduler = Bukkit.getScheduler();
-        scheduler.runTaskTimerAsynchronously(this, () -> FinalTech.timeCount++, 0, Slimefun.getTickerTask().getTickRate());
+        AtomicLong lastTimeMillis = new AtomicLong(System.currentTimeMillis());
+        int tickRate = Slimefun.getTickerTask().getTickRate();
+        long t = 50000L * tickRate;
+        AtomicLong currentTimeMillis = new AtomicLong();
+        scheduler.runTaskTimerAsynchronously(this, () -> {
+            currentTimeMillis.set(System.currentTimeMillis());
+            FinalTech.mspt = t / (currentTimeMillis.get() - lastTimeMillis.get());
+            lastTimeMillis.set(currentTimeMillis.get());
+            FinalTech.timeCount++;
+        }, 0, tickRate);
     }
 
     public static int getTimeCount() {
         return timeCount;
+    }
+
+    public static long getMspt() {
+        return mspt;
     }
 }

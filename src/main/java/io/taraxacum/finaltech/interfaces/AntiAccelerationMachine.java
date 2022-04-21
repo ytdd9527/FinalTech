@@ -10,7 +10,7 @@ public interface AntiAccelerationMachine {
     String KEY = "anti-acceleration";
 
     /**
-     * If it can work
+     * If it is accelerated in one sf tick
      * @param config
      * @return
      */

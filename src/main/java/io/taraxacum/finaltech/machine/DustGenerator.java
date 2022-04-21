@@ -1,38 +1,38 @@
-package io.taraxacum.finaltech.machine.generator;
+package io.taraxacum.finaltech.machine;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetProvider;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.special.OrderDustGeneratorMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 /**
  * @author Final_ROOT
  */
-public class OrderedDustGenerator extends AbstractElectricGenerator implements RecipeItem {
+public class DustGenerator extends AbstractMachine implements RecipeItem, EnergyNetProvider {
     public static final String KEY_COUNT = "count";
     public static final String KEY_MAX = "max";
     public static final int LIMIT = Integer.MAX_VALUE / 4;
-    private OrderDustGeneratorMenu menu;
 
-    public OrderedDustGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public DustGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -51,21 +51,13 @@ public class OrderedDustGenerator extends AbstractElectricGenerator implements R
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return new BlockBreakHandler(false, false) {
-            @Override
-            public void onPlayerBreak(BlockBreakEvent blockBreakEvent, ItemStack itemStack, List<ItemStack> list) {
-                Block block = blockBreakEvent.getBlock();
-                BlockMenu blockMenu = BlockStorage.getInventory(block);
-                blockMenu.dropItems(block.getLocation(), OrderedDustGenerator.this.getInputSlots());
-            }
-        };
+        return MachineUtil.simpleBlockBreakerHandler(this);
     }
 
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        this.menu = new OrderDustGeneratorMenu(this);
-        return this.menu;
+        return new OrderDustGeneratorMenu(this);
     }
 
     @Override
@@ -114,11 +106,22 @@ public class OrderedDustGenerator extends AbstractElectricGenerator implements R
             if (count != oldCount) {
                 BlockStorage.addBlockInfo(location, KEY_COUNT, String.valueOf(count));
             }
-            menu.updateMenu(blockMenu, block);
+            this.updateMenu(blockMenu, block);
         }
         if (count > 0) {
             this.addCharge(location, count);
         }
+    }
+
+    @Override
+    protected boolean isSynchronized() {
+        return false;
+    }
+
+    @Nonnull
+    @Override
+    public EnergyNetComponentType getEnergyComponentType() {
+        return EnergyNetComponentType.GENERATOR;
     }
 
     @Override
@@ -148,5 +151,12 @@ public class OrderedDustGenerator extends AbstractElectricGenerator implements R
                 "",
                 "&f如果某次未输入任何有效物品",
                 "&f重置其发电量为 0");
+    }
+
+    private void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
+        ItemStack item = blockMenu.getItemInSlot(OrderDustGeneratorMenu.STATUS_SLOT);
+        ItemStackUtil.setLore(item,
+                "§7当前发电量= §e" + BlockStorage.getLocationInfo(block.getLocation(), DustGenerator.KEY_COUNT) + "J/t",
+                "§7最大发电量= §e" + BlockStorage.getLocationInfo(block.getLocation(), DustGenerator.KEY_MAX) + "J/t");
     }
 }

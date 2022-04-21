@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Final_ROOT
  */
-public class ManualMagicWorkbench extends AbstractCraftManualMachine {
+public class ManualMagicWorkbench extends AbstractManualCraftMachine {
     public ManualMagicWorkbench(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }

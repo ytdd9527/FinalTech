@@ -8,7 +8,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.menu.standard.AbstractStandardMachineMenu;
 import io.taraxacum.finaltech.api.operation.OrderedDustOperation;
-import io.taraxacum.finaltech.menu.standard.OrderedDustFactoryMenu;
+import io.taraxacum.finaltech.menu.standard.DustFactoryMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -19,18 +19,21 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public class OrderedDustFactory extends AbstractStandardMachine {
+/**
+ * @author Final_ROOT
+ */
+public class DustFactoryDirt extends AbstractStandardMachine {
     public static final int TYPE_DIFFICULTY = 16;
     public static final int AMOUNT_DIFFICULTY = 1024;
 
-    public OrderedDustFactory(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public DustFactoryDirt(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Nonnull
     @Override
     protected AbstractStandardMachineMenu setMachineMenu() {
-        return new OrderedDustFactoryMenu(this);
+        return new DustFactoryMenu(this);
     }
 
     @Override

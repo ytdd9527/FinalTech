@@ -2,7 +2,9 @@ package io.taraxacum.finaltech.util;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.nms.ItemNameAdapter;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.dto.ItemStackWithWrapper;
+import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -170,11 +172,11 @@ public final class ItemStackUtil {
     public static ItemStack[] calNoNullItemArray(@Nonnull List<ItemStack> itemList) {
         List<ItemStack> noNullItemList = new ArrayList<>(itemList.size());
         for (ItemStack item : itemList) {
-            if (ItemStackUtil.isItemNull(item)) {
+            if (!ItemStackUtil.isItemNull(item)) {
                 noNullItemList.add(item);
             }
         }
-        return noNullItemList.toArray(new ItemStack[0]);
+        return calItemArray(noNullItemList);
     }
     @Nonnull
     public static ItemStack[] calItemArray(@Nonnull List<ItemStack> itemList) {
@@ -550,6 +552,22 @@ public final class ItemStackUtil {
             default:
                 return null;
         }
+    }
+
+    @Nullable
+    public static ItemStack getLiquidCard(@Nullable ItemStack item) {
+        if (isItemNull(item)) {
+            return null;
+        }
+        if(item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
+            return null;
+        }
+        return switch (item.getType()) {
+            case WATER_BUCKET, POTION -> new ItemStack(FinalTechItems.WATER_CARD);
+            case LAVA_BUCKET -> new ItemStack(FinalTechItems.LAVA_CARD);
+            case MILK_BUCKET -> new ItemStack(FinalTechItems.MILK_CARD);
+            default -> null;
+        };
     }
 
     public static String itemStackToString(ItemStack itemStack) {

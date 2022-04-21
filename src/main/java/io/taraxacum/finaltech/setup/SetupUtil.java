@@ -6,11 +6,12 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.item.unusable.CopyCardItem;
 import io.taraxacum.finaltech.item.unusable.StorageCardItem;
 import io.taraxacum.finaltech.item.unusable.UnusableSlimefunItem;
 import io.taraxacum.finaltech.item.usable.accelerate.*;
-import io.taraxacum.finaltech.machine.OrderedDustFactoryV2;
+import io.taraxacum.finaltech.machine.DustFactoryStone;
 import io.taraxacum.finaltech.machine.cargo.unit.ChargeableStorageUnit;
 import io.taraxacum.finaltech.machine.cargo.unit.DividedStorageUnit;
 import io.taraxacum.finaltech.machine.cargo.unit.NormalStorageUnit;
@@ -28,7 +29,7 @@ import io.taraxacum.finaltech.machine.cargo.*;
 import io.taraxacum.finaltech.machine.cargo.storage.StorageInsertPort;
 import io.taraxacum.finaltech.machine.cargo.storage.StorageInteractPort;
 import io.taraxacum.finaltech.machine.cargo.storage.StorageWithdrawPort;
-import io.taraxacum.finaltech.machine.generator.OrderedDustGenerator;
+import io.taraxacum.finaltech.machine.DustGenerator;
 import io.taraxacum.finaltech.machine.manual.CardOperationPort;
 import io.taraxacum.finaltech.machine.manual.craft.*;
 import io.taraxacum.finaltech.machine.range.ray.shooter.EnergizedElectricityShootPile;
@@ -37,7 +38,7 @@ import io.taraxacum.finaltech.machine.range.ray.shooter.OverloadedElectricitySho
 import io.taraxacum.finaltech.machine.standard.ItemSerializationConstructor;
 import io.taraxacum.finaltech.machine.standard.ItemDeserializeParser;
 import io.taraxacum.finaltech.machine.standard.BasicFrameMachine;
-import io.taraxacum.finaltech.machine.standard.OrderedDustFactory;
+import io.taraxacum.finaltech.machine.standard.DustFactoryDirt;
 import io.taraxacum.finaltech.machine.standard.advanced.*;
 import io.taraxacum.finaltech.machine.standard.basic.BasicCobbleFactory;
 import io.taraxacum.finaltech.machine.standard.basic.BasicDustFactory;
@@ -78,6 +79,9 @@ public final class SetupUtil {
 
     public static void setupItems(SlimefunAddon slimefunAddon) {
 
+        new UnusableSlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.WATER_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {}).register(slimefunAddon);
+        new UnusableSlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.LAVA_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {}).register(slimefunAddon);
+        new UnusableSlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.MILK_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, new ItemStack[] {}).register(slimefunAddon);
         new SlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.GEARWHEEL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.GEARWHEEL, new SlimefunItemStack(FinalTechItems.GEARWHEEL, 4)).register(slimefunAddon);
         new UnusableSlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.UNORDERED_DUST,  FinalTechRecipes.RECIPE_TYPE_ORDERED_DUST_FACTORY, new ItemStack[] {}).register(slimefunAddon);
         new UnusableSlimefunItem(FinalTechMenus.MENU_MATERIAL, FinalTechItems.ORDERED_DUST, FinalTechRecipes.RECIPE_TYPE_ORDERED_DUST_FACTORY, new ItemStack[] {}).register(slimefunAddon);
@@ -104,8 +108,8 @@ public final class SetupUtil {
         new ManualJuicer(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.MANUAL_JUICER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MANUAL_JUICER).register();
         new ManualAncientAltar(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.MANUAL_ANCIENT_ALTAR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MANUAL_ANCIENT_ALTAR).register();
         new ManualHeatedPressureChamber(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MANUAL_HEATED_PRESSURE_CHAMBER).register();
-        new OrderedDustFactory(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.ORDERED_DUST_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ORDERED_DUST_FACTORY).register();
-        new OrderedDustFactoryV2(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.ORDERED_DUST_FACTORY_V2, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ORDERED_DUST_FACTORY_V2).register();
+        new DustFactoryDirt(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.ORDERED_DUST_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ORDERED_DUST_FACTORY).register();
+        new DustFactoryStone(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.ORDERED_DUST_FACTORY_V2, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ORDERED_DUST_FACTORY_V2).register();
         new CardOperationPort(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.CARD_OPERATION_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CARD_OPERATION_PORT).register();
 
         new AdvancedElectricFurance(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_FURANCE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_FURANCE).register();
@@ -180,7 +184,7 @@ public final class SetupUtil {
         new MatrixExpandedCapacitor(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.MATRIX_EXPANDED_CAPACITOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MATRIX_EXPANDED_CAPACITOR).register();
         new EscapeCapacitor(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.ESCAPE_CAPACITOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ESCAPE_CAPACITOR).register();
         // now register generator
-        new OrderedDustGenerator(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.ORDERED_DUST_GENERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ORDERED_DUST_GENERATOR).register();
+        new DustGenerator(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.ORDERED_DUST_GENERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ORDERED_DUST_GENERATOR).register();
         new BasicGenerator(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.BASIC_GENERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_GENERATOR).register();
         new AdvancedGenerator(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.ADVANCED_GENERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_GENERATOR).register();
         new CarbonadoGenerator(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.CARBONADO_GENERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CARBONADO_GENERATOR).register();

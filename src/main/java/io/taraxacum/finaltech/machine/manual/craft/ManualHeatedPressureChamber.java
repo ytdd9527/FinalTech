@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Final_ROOT
  */
-public class ManualHeatedPressureChamber extends AbstractCraftManualMachine {
+public class ManualHeatedPressureChamber extends AbstractManualCraftMachine {
     public ManualHeatedPressureChamber(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }

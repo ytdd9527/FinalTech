@@ -2,7 +2,7 @@ package io.taraxacum.finaltech.api.operation;
 
 import io.github.thebusybiscuit.slimefun4.core.machines.MachineOperation;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.machine.standard.OrderedDustFactory;
+import io.taraxacum.finaltech.machine.standard.DustFactoryDirt;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import org.bukkit.inventory.ItemStack;
 
@@ -13,7 +13,7 @@ public class OrderedDustOperation implements MachineOperation {
     private int typeCount = 0;
     private int amountCount = 0;
 
-    private ItemStackWrapper[] matchItemList = new ItemStackWrapper[OrderedDustFactory.TYPE_DIFFICULTY + 1];
+    private ItemStackWrapper[] matchItemList = new ItemStackWrapper[DustFactoryDirt.TYPE_DIFFICULTY + 1];
 
     public OrderedDustOperation() {
     }
@@ -22,7 +22,7 @@ public class OrderedDustOperation implements MachineOperation {
         if (ItemStackUtil.isItemNull(item)) {
             return;
         }
-        if (this.typeCount <= OrderedDustFactory.TYPE_DIFFICULTY) {
+        if (this.typeCount <= DustFactoryDirt.TYPE_DIFFICULTY) {
             boolean newItem = true;
             for (int i = 0; i < this.typeCount; i++) {
                 ItemStack input = this.matchItemList[i];
@@ -36,8 +36,8 @@ public class OrderedDustOperation implements MachineOperation {
             }
         }
         this.amountCount += item.getAmount();
-        if (this.amountCount > OrderedDustFactory.AMOUNT_DIFFICULTY + 1) {
-            this.amountCount = OrderedDustFactory.AMOUNT_DIFFICULTY + 1;
+        if (this.amountCount > DustFactoryDirt.AMOUNT_DIFFICULTY + 1) {
+            this.amountCount = DustFactoryDirt.AMOUNT_DIFFICULTY + 1;
         }
     }
 
@@ -51,11 +51,11 @@ public class OrderedDustOperation implements MachineOperation {
 
     @Override
     public boolean isFinished() {
-        return (this.amountCount >= OrderedDustFactory.AMOUNT_DIFFICULTY && this.typeCount >= OrderedDustFactory.TYPE_DIFFICULTY);
+        return (this.amountCount >= DustFactoryDirt.AMOUNT_DIFFICULTY && this.typeCount >= DustFactoryDirt.TYPE_DIFFICULTY);
     }
 
     public boolean isOrderedDust() {
-        return this.amountCount == OrderedDustFactory.AMOUNT_DIFFICULTY && this.typeCount == OrderedDustFactory.TYPE_DIFFICULTY;
+        return this.amountCount == DustFactoryDirt.AMOUNT_DIFFICULTY && this.typeCount == DustFactoryDirt.TYPE_DIFFICULTY;
     }
 
     @Deprecated

@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
+import io.taraxacum.finaltech.interfaces.PerformanceLimitMachine;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.function.TransferPipeMenu;
@@ -34,7 +35,7 @@ import java.util.*;
 /**
  * @author Final_ROOT
  */
-public class TransferPipe extends AbstractCargo implements RecipeItem {
+public class TransferPipe extends AbstractCargo implements RecipeItem, PerformanceLimitMachine {
     public static final int BLOCK_SEARCH_LIMIT = 8;
     public TransferPipe(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

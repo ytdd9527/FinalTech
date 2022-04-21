@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.menu.function;
+package io.taraxacum.finaltech.menu.manual;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * @author Final_ROOT
  */
-public class CardOperationPortMenu extends AbstractMachineMenu {
+public class CardOperationPortMenu extends AbstractManualMachineMenu {
     private static final int[] BORDER = new int[] {3, 4, 5, 12, 14, 21, 22, 23, 27, 28, 29, 33, 34, 35, 36, 37, 38, 42, 43, 44, 45, 46, 47, 51, 52, 53};
     private static final int[] INPUT_BORDER = new int[] {0, 1, 2, 6, 7, 8, 9, 11, 15, 17, 18, 19, 20, 24, 25, 26};
     private static final int[] OUTPUT_BORDER = new int[] {30, 31, 32, 39, 41, 48, 49, 50};
@@ -54,8 +54,8 @@ public class CardOperationPortMenu extends AbstractMachineMenu {
     private static final ItemStack CRAFT_SHELL_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, "&a制造壳");
     private static final ItemStack COPY_COPY_CARD_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, "&a复制复制卡");
 
-    public CardOperationPortMenu(@Nonnull String id, @Nonnull String title, AbstractMachine machine) {
-        super(id, title, machine);
+    public CardOperationPortMenu(@Nonnull AbstractMachine machine) {
+        super(machine);
     }
 
     @Override

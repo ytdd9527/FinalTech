@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Final_ROOT
  */
-public class ManualOreCrusher extends AbstractCraftManualMachine {
+public class ManualOreCrusher extends AbstractManualCraftMachine {
     public ManualOreCrusher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }

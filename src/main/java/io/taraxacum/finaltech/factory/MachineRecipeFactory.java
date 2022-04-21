@@ -34,6 +34,9 @@ public class MachineRecipeFactory {
 
     public static void initAdvancedRecipeMap(Class<?> clazz) {
         List<MachineRecipe> machineRecipeList = RECIPE_MAP.get(clazz);
+        if(machineRecipeList == null) {
+            return;
+        }
         List<AdvancedMachineRecipe> advancedMachineRecipeList = new ArrayList<>(machineRecipeList.size());
         for (MachineRecipe machineRecipe : machineRecipeList) {
             ItemStack[] inputItems = machineRecipe.getInput();

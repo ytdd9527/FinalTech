@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBreakHandler;
+import io.taraxacum.finaltech.interfaces.PerformanceLimitMachine;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.menu.function.TransferStationMenu;
@@ -31,7 +32,7 @@ import javax.annotation.Nonnull;
 /**
  * @author Final_ROOT
  */
-public class TransferStation extends AbstractCargo implements RecipeItem {
+public class TransferStation extends AbstractCargo implements RecipeItem, PerformanceLimitMachine {
     public TransferStation(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -52,8 +53,8 @@ public class TransferStation extends AbstractCargo implements RecipeItem {
                 BlockMenu inv = BlockStorage.getInventory(block);
                 if (inv != null) {
                     inv.dropItems(inv.getLocation(), TransferStationMenu.ITEM_MATCH);
-                    inv.dropItems(inv.getLocation(), TransferStationMenu.INPUT_SLOTS);
-                    inv.dropItems(inv.getLocation(), TransferStationMenu.OUTPUT_SLOTS);
+                    inv.dropItems(inv.getLocation(), TransferStationMenu.INPUT_SLOT);
+                    inv.dropItems(inv.getLocation(), TransferStationMenu.OUTPUT_SLOT);
                     BlockStorage.clearBlockInfo(block.getLocation());
                 }
             }
@@ -117,14 +118,14 @@ public class TransferStation extends AbstractCargo implements RecipeItem {
         }
 
         // do move
-        for (int i = 0; i < TransferStationMenu.INPUT_SLOTS.length; i++) {
-            ItemStack inputItem = blockMenu.getItemInSlot(TransferStationMenu.INPUT_SLOTS[i]);
+        for (int i = 0; i < TransferStationMenu.INPUT_SLOT.length; i++) {
+            ItemStack inputItem = blockMenu.getItemInSlot(TransferStationMenu.INPUT_SLOT[i]);
             if (inputItem == null) {
                 continue;
             }
-            ItemStack outputItem = blockMenu.getItemInSlot(TransferStationMenu.OUTPUT_SLOTS[i]);
+            ItemStack outputItem = blockMenu.getItemInSlot(TransferStationMenu.OUTPUT_SLOT[i]);
             if (outputItem == null) {
-                blockMenu.toInventory().setItem(TransferStationMenu.OUTPUT_SLOTS[i], new ItemStack(inputItem));
+                blockMenu.toInventory().setItem(TransferStationMenu.OUTPUT_SLOT[i], new ItemStack(inputItem));
                 inputItem.setAmount(0);
             } else if (ItemStackUtil.isItemSimilar(inputItem, outputItem)) {
                 int count = Math.min(inputItem.getAmount(), outputItem.getMaxStackSize() - outputItem.getAmount());

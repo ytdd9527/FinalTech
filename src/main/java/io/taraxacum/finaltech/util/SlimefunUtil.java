@@ -4,6 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
@@ -14,6 +15,7 @@ import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -23,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,25 +39,25 @@ public class SlimefunUtil {
      * 从粘液科技本体注册的物品中搜索指定ID的机器
      * 读取其工作配方
      * 并注册到指定的机器中
-     * @param machine 被注册工作配方的机器
+     * @param recipeItem 被注册工作配方的机器
      * @param slimefunId 粘液科技机器ID
      */
-    public static void registerRecipeBySlimefunId(@Nonnull RecipeItem machine, @Nonnull String slimefunId) {
+    public static void registerRecipeBySlimefunId(@Nonnull RecipeItem recipeItem, @Nonnull String slimefunId) {
         final SlimefunItem slimefunItem = SlimefunItem.getById(slimefunId);
         try {
             Method method = slimefunItem.getClass().getMethod("getMachineRecipes");
             List<MachineRecipe> recipes = (List<MachineRecipe>)method.invoke(slimefunItem);
             if (recipes != null) {
                 for (MachineRecipe recipe : recipes) {
-                    machine.registerRecipe(new MachineRecipe(0, ItemStackWrapper.wrapArray(ItemStackUtil.calMergeItemList(recipe.getInput())), ItemStackWrapper.wrapArray(recipe.getOutput())));
+                    recipeItem.registerRecipeInCard(0, recipe.getInput(), recipe.getOutput());
                 }
             }
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            Bukkit.getLogger().info("[FinalTECH]§e无法为本附属中ID为" + machine.getId() + "的机器从ID为" + slimefunId + "的物品读取对应的方法以注册机器的工作配方");
+            Bukkit.getLogger().info("[FinalTECH]§e无法为本附属中ID为" + recipeItem.getId() + "的机器从ID为" + slimefunId + "的物品读取对应的方法以注册机器的工作配方");
             Bukkit.getLogger().info("[FinalTECH]§b但是我们有备用方案!");
             if (slimefunItem instanceof RecipeDisplayItem) {
                 List<ItemStack> displayRecipes = ((RecipeDisplayItem) slimefunItem).getDisplayRecipes();
-                registerRecipeBySimpleDisplayRecipe(machine, displayRecipes);
+                registerRecipeBySimpleDisplayRecipe(recipeItem, displayRecipes);
                 Bukkit.getLogger().info("[FinalTECH]§a备用方案成功了!");
             } else {
                 Bukkit.getLogger().info("[FinalTECH]§c备用方案失败了!");
@@ -63,18 +66,18 @@ public class SlimefunUtil {
         }
     }
 
-    public static void registerRecipeByRecipeType(@Nonnull RecipeItem item, @Nonnull RecipeType recipeType) {
+    public static void registerRecipeByRecipeType(@Nonnull RecipeItem recipeItem, @Nonnull RecipeType recipeType) {
         List<SlimefunItem> list = Slimefun.getRegistry().getEnabledSlimefunItems();
         for (SlimefunItem slimefunItem : list) {
             if (recipeType.equals(slimefunItem.getRecipeType())) {
-                item.registerRecipe(0, ItemStackWrapper.wrapArray(ItemStackUtil.calMergeItemList(slimefunItem.getRecipe())), new ItemStack[] {slimefunItem.getRecipeOutput()});
+                recipeItem.registerRecipeInCard(0, slimefunItem);
             }
         }
     }
 
-    public static void registerRecipeBySimpleDisplayRecipe(@Nonnull RecipeItem item, List<ItemStack> displayRecipes) {
+    public static void registerRecipeBySimpleDisplayRecipe(@Nonnull RecipeItem recipeItem, List<ItemStack> displayRecipes) {
         for (int i = 0; i < displayRecipes.size(); i+= 2) {
-            item.registerRecipe(0, ItemStackWrapper.wrap(displayRecipes.get(i)), ItemStackWrapper.wrap(displayRecipes.get(i+1)));
+            recipeItem.registerRecipeInCard(0, new ItemStack[] {displayRecipes.get(i)}, new ItemStack[] {displayRecipes.get(i+1)});
         }
     }
 

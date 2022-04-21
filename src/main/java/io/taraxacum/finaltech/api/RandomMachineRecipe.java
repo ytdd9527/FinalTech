@@ -1,5 +1,6 @@
 package io.taraxacum.finaltech.api;
 
+import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.inventory.ItemStack;
 
@@ -29,7 +30,7 @@ public class RandomMachineRecipe extends MachineRecipe {
                 r -= randomOutput.getWeight();
                 continue;
             }
-            return randomOutput.getOutputItem().toArray(new ItemStack[0]);
+            return ItemStackUtil.calItemArray(randomOutput.getOutputItem());
         }
         return new ItemStack[0];
     }
@@ -39,7 +40,7 @@ public class RandomMachineRecipe extends MachineRecipe {
         for (RandomOutput randomOutput : this.randomOutputList) {
             itemList.addAll(randomOutput.outputItem);
         }
-        return itemList.toArray(new ItemStack[0]);
+        return ItemStackUtil.calItemArray(itemList);
     }
 
     public List<RandomOutput> getRandomOutputList() {

@@ -7,8 +7,8 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
-import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.function.CardOperationPortMenu;
+import io.taraxacum.finaltech.menu.manual.CardOperationPortMenu;
+import io.taraxacum.finaltech.menu.manual.AbstractManualMachineMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -47,8 +47,8 @@ public class CardOperationPort extends AbstractManualMachine implements RecipeIt
     }
 
     @Override
-    protected AbstractMachineMenu newMachineMenu() {
-        return new CardOperationPortMenu(this.getId(), this.getItemName(), this);
+    protected AbstractManualMachineMenu newMachineMenu() {
+        return new CardOperationPortMenu(this);
     }
 
     @Override

@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Final_ROOT
  */
-public class ManualCompressor extends AbstractCraftManualMachine {
+public class ManualCompressor extends AbstractManualCraftMachine {
     public ManualCompressor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
