@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.storage.StorageWithdrawPortMenu;
+import io.taraxacum.finaltech.menu.simple.AllOutputStorageUnitMenu;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -20,6 +20,6 @@ public class StorageWithdrawPort extends StorageInteractPort{
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new StorageWithdrawPortMenu(this.getId(), this.getItemName(), this);
+        return new AllOutputStorageUnitMenu(this);
     }
 }

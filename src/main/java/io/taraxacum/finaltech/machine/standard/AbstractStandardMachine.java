@@ -12,6 +12,7 @@ import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.menu.Icon;
+import io.taraxacum.finaltech.util.menu.MaxStackHelper;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +36,7 @@ public abstract class AbstractStandardMachine extends AbstractMachine implements
         return new BlockPlaceHandler(false) {
             @Override
             public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {
-                BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), Icon.MACHINE_MAX_STACK, "0");
+                BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), MaxStackHelper.KEY, "0");
             }
         };
     }

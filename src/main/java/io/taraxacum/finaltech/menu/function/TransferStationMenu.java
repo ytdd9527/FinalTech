@@ -1,8 +1,9 @@
-package io.taraxacum.finaltech.menu;
+package io.taraxacum.finaltech.menu.function;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.AbstractMachine;
+import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.dto.PositionHelper;
 import io.taraxacum.finaltech.util.menu.*;
@@ -24,9 +25,9 @@ public class TransferStationMenu extends AbstractMachineMenu {
 
     public static final int[] ITEM_MATCH = new int[] {27, 28, 29, 36, 37, 38, 45, 46, 47};
 
-    public static final int[] INPUT_SLOTS = new int[] {6, 7, 8, 15, 16, 17, 24, 25, 26};
+    public static final int[] INPUT_SLOT = new int[] {6, 7, 8, 15, 16, 17, 24, 25, 26};
 
-    public static final int[] OUTPUT_SLOTS = new int[] {33, 34, 35, 42, 43, 44, 51, 52, 53};
+    public static final int[] OUTPUT_SLOT = new int[] {33, 34, 35, 42, 43, 44, 51, 52, 53};
 
     private static final int FILTER_MODE_SLOT = 10;
 
@@ -69,28 +70,28 @@ public class TransferStationMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public int[] getBorder() {
+    protected int[] getBorder() {
         return BORDER;
     }
 
     @Override
-    public int[] getInputBorder() {
+    protected int[] getInputBorder() {
         return INPUT_BORDER;
     }
 
     @Override
-    public int[] getOutputBorder() {
+    protected int[] getOutputBorder() {
         return OUTPUT_BORDER;
     }
 
     @Override
-    public int[] getInputSlots() {
-        return INPUT_SLOTS;
+    public int[] getInputSlot() {
+        return INPUT_SLOT;
     }
 
     @Override
-    public int[] getOutputSlots() {
-        return OUTPUT_SLOTS;
+    public int[] getOutputSlot() {
+        return OUTPUT_SLOT;
     }
 
     @Override
@@ -126,7 +127,7 @@ public class TransferStationMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public void newInstance(BlockMenu blockMenu, Block block) {
+    public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         updateMenu(blockMenu, block);
         blockMenu.addMenuClickHandler(INPUT_ITEM_COUNT_ADD_SLOT, (player, i, itemStack, clickAction) -> {
             int itemCount = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), CargoNumber.KEY_INPUT));
@@ -242,9 +243,9 @@ public class TransferStationMenu extends AbstractMachineMenu {
     public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
         switch (itemTransportFlow) {
             case WITHDRAW:
-                return OUTPUT_SLOTS;
+                return OUTPUT_SLOT;
             case INSERT:
-                return INPUT_SLOTS;
+                return INPUT_SLOT;
             default:
                 return ITEM_MATCH;
         }
@@ -256,7 +257,7 @@ public class TransferStationMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public void updateMenu(BlockMenu blockMenu, Block block) {
+    public void updateMenu(@Nonnull BlockMenu blockMenu, Block block) {
         if (BlockStorage.getLocationInfo(block.getLocation(), CargoNumber.KEY_INPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), CargoNumber.KEY_INPUT, "64");
         }

@@ -34,7 +34,7 @@ public class AdvancedGoldPan extends AbstractAdvanceMachine {
         GoldPan goldPan = SlimefunItems.GOLD_PAN.getItem(GoldPan.class);
         NetherGoldPan netherGoldPan = SlimefunItems.NETHER_GOLD_PAN.getItem(NetherGoldPan.class);
 
-        int amount = MachineUtil.updateQuantityModule(inv, AdvancedMachineMenu.MODULE_SLOT, AdvancedMachineMenu.INFO_SLOT);
+        int amount = MachineUtil.updateQuantityModule(inv, AdvancedMachineMenu.MODULE_SLOT, AdvancedMachineMenu.STATUS_SLOT);
 
         for (int slot : getInputSlots()) {
             ItemStack item = inv.getItemInSlot(slot);

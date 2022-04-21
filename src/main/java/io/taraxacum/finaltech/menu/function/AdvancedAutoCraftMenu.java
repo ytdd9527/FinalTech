@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.menu;
+package io.taraxacum.finaltech.menu.function;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.AbstractMachine;
+import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.menu.Icon;
@@ -26,9 +27,9 @@ import java.util.*;
  * @author Final_ROOT
  */
 public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
-    private static final int[] BORDER = new int[]{9, 27, 45, 52};
-    private static final int[] INPUT_BORDER = new int[]{10, 11, 12, 13, 14, 19, 23, 28, 32, 37, 41, 46, 47, 48, 49, 50};
-    private static final int[] OUTPUT_BORDER = new int[]{24, 25, 26, 33, 35, 42, 43, 44};
+    private static final int[] BORDER = new int[] {9, 27, 45, 52};
+    private static final int[] INPUT_BORDER = new int[] {10, 11, 12, 13, 14, 19, 23, 28, 32, 37, 41, 46, 47, 48, 49, 50};
+    private static final int[] OUTPUT_BORDER = new int[] {24, 25, 26, 33, 35, 42, 43, 44};
     public static final int[] MACHINE_SLOT = new int[] {0, 1, 2, 3,4 ,5 ,6 ,7 ,8};
 
     public static final int[] ITEM_INPUT_SLOT = new int[] {20, 21, 22, 29, 30, 31, 38, 39, 40};
@@ -90,27 +91,27 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public int[] getBorder() {
+    protected int[] getBorder() {
         return BORDER;
     }
 
     @Override
-    public int[] getInputBorder() {
+    protected int[] getInputBorder() {
         return INPUT_BORDER;
     }
 
     @Override
-    public int[] getOutputBorder() {
+    protected int[] getOutputBorder() {
         return OUTPUT_BORDER;
     }
 
     @Override
-    public int[] getInputSlots() {
+    public int[] getInputSlot() {
         return new int[0];
     }
 
     @Override
-    public int[] getOutputSlots() {
+    public int[] getOutputSlot() {
         return new int[0];
     }
 
@@ -138,7 +139,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public void newInstance(BlockMenu blockMenu, Block block) {
+    public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
         blockMenu.addMenuClickHandler(PARSE_SLOT, ((player, i, itemStack, clickAction) -> {
             updateMenu(blockMenu, block);
@@ -161,7 +162,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public void updateMenu(BlockMenu blockMenu, Block block) {
+    public void updateMenu(@Nonnull BlockMenu blockMenu, Block block) {
         if (BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), SlotSearchSize.KEY_INPUT, SlotSearchSize.VALUE_INPUTS_ONLY);
         }

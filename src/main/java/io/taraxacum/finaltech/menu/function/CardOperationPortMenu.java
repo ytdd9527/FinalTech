@@ -1,10 +1,11 @@
-package io.taraxacum.finaltech.menu;
+package io.taraxacum.finaltech.menu.function;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.item.unusable.CopyCardItem;
 import io.taraxacum.finaltech.item.unusable.StorageCardItem;
 import io.taraxacum.finaltech.machine.AbstractMachine;
+import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.StringItemUtil;
@@ -21,12 +22,13 @@ import javax.annotation.Nonnull;
 /**
  * @author Final_ROOT
  */
-public class CardOperationPortMenu extends AbstractMachineMenu{
+public class CardOperationPortMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[] {3, 4, 5, 12, 14, 21, 22, 23, 27, 28, 29, 33, 34, 35, 36, 37, 38, 42, 43, 44, 45, 46, 47, 51, 52, 53};
     private static final int[] INPUT_BORDER = new int[] {0, 1, 2, 6, 7, 8, 9, 11, 15, 17, 18, 19, 20, 24, 25, 26};
     private static final int[] OUTPUT_BORDER = new int[] {30, 31, 32, 39, 41, 48, 49, 50};
     private static final int[] INPUT_SLOT = new int[] {10, 16};
     private static final int[] OUTPUT_SLOT = new int[] {40};
+
     private static final int CRAFT_SLOT = 13;
     private static final ItemStack[] randomOutputStorageCardItem = new ItemStack[] {
             new ItemStack(FinalTechItems.STORAGE_ITEM_WHITE),
@@ -57,27 +59,27 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
     }
 
     @Override
-    public int[] getBorder() {
+    protected int[] getBorder() {
         return BORDER;
     }
 
     @Override
-    public int[] getInputBorder() {
+    protected int[] getInputBorder() {
         return INPUT_BORDER;
     }
 
     @Override
-    public int[] getOutputBorder() {
+    protected int[] getOutputBorder() {
         return OUTPUT_BORDER;
     }
 
     @Override
-    public int[] getInputSlots() {
+    public int[] getInputSlot() {
         return INPUT_SLOT;
     }
 
     @Override
-    public int[] getOutputSlots() {
+    public int[] getOutputSlot() {
         return OUTPUT_SLOT;
     }
 
@@ -89,14 +91,14 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
     }
 
     @Override
-    public void newInstance(BlockMenu menu, Block block) {
-        super.newInstance(menu, block);
-        menu.addMenuClickHandler(CRAFT_SLOT, ((player, i, itemStack, clickAction) -> {
-            if (!ItemStackUtil.isItemNull(menu.getItemInSlot(OUTPUT_SLOT[0])) || ItemStackUtil.isItemNull(menu.getItemInSlot(INPUT_SLOT[0])) || ItemStackUtil.isItemNull(menu.getItemInSlot(INPUT_SLOT[1]))) {
+    public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
+        super.newInstance(blockMenu, block);
+        blockMenu.addMenuClickHandler(CRAFT_SLOT, ((player, i, itemStack, clickAction) -> {
+            if (!ItemStackUtil.isItemNull(blockMenu.getItemInSlot(OUTPUT_SLOT[0])) || ItemStackUtil.isItemNull(blockMenu.getItemInSlot(INPUT_SLOT[0])) || ItemStackUtil.isItemNull(blockMenu.getItemInSlot(INPUT_SLOT[1]))) {
                 return false;
             }
-            ItemStack inputItem1 = menu.getItemInSlot(INPUT_SLOT[0]);
-            ItemStack inputItem2 = menu.getItemInSlot(INPUT_SLOT[1]);
+            ItemStack inputItem1 = blockMenu.getItemInSlot(INPUT_SLOT[0]);
+            ItemStack inputItem2 = blockMenu.getItemInSlot(INPUT_SLOT[1]);
             ItemMeta itemMeta1 = inputItem1.getItemMeta();
             ItemMeta itemMeta2 = inputItem2.getItemMeta();
 
@@ -115,7 +117,7 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
                     StringItemUtil.updateStorageCardType(outputItem);
                     inputItem1.setAmount(inputItem1.getAmount() - 1);
                     inputItem2.setAmount(inputItem2.getAmount() - 1);
-                    menu.replaceExistingItem(OUTPUT_SLOT[0], outputItem);
+                    blockMenu.replaceExistingItem(OUTPUT_SLOT[0], outputItem);
                 }
                 return false;
             } else if (isStorageCardItem1 || isStorageCardItem2) {
@@ -128,7 +130,7 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
                         StringItemUtil.setAmountInCard(isStorageCardItem1 ? inputItem1 : inputItem2, StringNumberUtil.sub(amount, String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)));
                         StringItemUtil.updateStorageCardLore(isStorageCardItem1 ? inputItem1 : inputItem2);
                         StringItemUtil.updateStorageCardType(isStorageCardItem1 ? inputItem1 : inputItem2);
-                        menu.replaceExistingItem(OUTPUT_SLOT[0], outputItem);
+                        blockMenu.replaceExistingItem(OUTPUT_SLOT[0], outputItem);
                     }
                 }
                 return false;
@@ -148,7 +150,7 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
                     amount++;
                 }
                 outputItem.setAmount(amount);
-                menu.replaceExistingItem(OUTPUT_SLOT[0], outputItem);
+                blockMenu.replaceExistingItem(OUTPUT_SLOT[0], outputItem);
                 return false;
             }
 
@@ -166,7 +168,7 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
                     inputItem1.setAmount(inputItem1.getAmount() - 1);
                 }
                 outputItem.setAmount(1);
-                menu.replaceExistingItem(OUTPUT_SLOT[0], outputItem);
+                blockMenu.replaceExistingItem(OUTPUT_SLOT[0], outputItem);
                 return false;
             }
 
@@ -175,13 +177,13 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
     }
 
     @Override
-    public void updateMenu(BlockMenu menu, Block block) {
-        if (!ItemStackUtil.isItemNull(menu.getItemInSlot(OUTPUT_SLOT[0])) || ItemStackUtil.isItemNull(menu.getItemInSlot(INPUT_SLOT[0])) || ItemStackUtil.isItemNull(menu.getItemInSlot(INPUT_SLOT[1]))) {
-            menu.replaceExistingItem(CRAFT_SLOT, ERROR_ICON);
+    public void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
+        if (!ItemStackUtil.isItemNull(blockMenu.getItemInSlot(OUTPUT_SLOT[0])) || ItemStackUtil.isItemNull(blockMenu.getItemInSlot(INPUT_SLOT[0])) || ItemStackUtil.isItemNull(blockMenu.getItemInSlot(INPUT_SLOT[1]))) {
+            blockMenu.replaceExistingItem(CRAFT_SLOT, ERROR_ICON);
             return;
         }
-        ItemStack inputItem1 = menu.getItemInSlot(INPUT_SLOT[0]);
-        ItemStack inputItem2 = menu.getItemInSlot(INPUT_SLOT[1]);
+        ItemStack inputItem1 = blockMenu.getItemInSlot(INPUT_SLOT[0]);
+        ItemStack inputItem2 = blockMenu.getItemInSlot(INPUT_SLOT[1]);
         ItemMeta itemMeta1 = inputItem1.getItemMeta();
         ItemMeta itemMeta2 = inputItem2.getItemMeta();
 
@@ -192,7 +194,7 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
             ItemStack stringItem2 = StringItemUtil.parseItemInCard(itemMeta2);
             boolean similar = ItemStackUtil.isItemSimilar(stringItem1, stringItem2);
             if (similar) {
-                menu.replaceExistingItem(CRAFT_SLOT, MERGE_ICON);
+                blockMenu.replaceExistingItem(CRAFT_SLOT, MERGE_ICON);
             }
             return;
         } else if (isStorageCardItem1 || isStorageCardItem2) {
@@ -200,7 +202,7 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
             if (hasAllCompression) {
                 String amount = StringItemUtil.parseAmountInCard(isStorageCardItem1 ? itemMeta1 : itemMeta2);
                 if (StringNumberUtil.easilyCompare(amount, String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)) >= 0) {
-                    menu.replaceExistingItem(CRAFT_SLOT, CRAFT_COPY_CARD_ICON);
+                    blockMenu.replaceExistingItem(CRAFT_SLOT, CRAFT_COPY_CARD_ICON);
                 }
             }
             return;
@@ -209,7 +211,7 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
         boolean isPartOfItemFake1 = ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SINGULARITY) || ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SPIROCHETE);
         boolean isPartOfItemFake2 = ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SINGULARITY) || ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SPIROCHETE);
         if (isPartOfItemFake1 || isPartOfItemFake2) {
-            menu.replaceExistingItem(CRAFT_SLOT, CRAFT_SHELL_ICON);
+            blockMenu.replaceExistingItem(CRAFT_SLOT, CRAFT_SHELL_ICON);
             return;
         }
 
@@ -218,10 +220,10 @@ public class CardOperationPortMenu extends AbstractMachineMenu{
         boolean isShell1 = !isCopyCardItem1 && ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SHELL);
         boolean isShell2 = !isCopyCardItem2 && ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SHELL);
         if ((isCopyCardItem1 && isShell2) || (isCopyCardItem2 && isShell1)) {
-            menu.replaceExistingItem(CRAFT_SLOT, COPY_COPY_CARD_ICON);
+            blockMenu.replaceExistingItem(CRAFT_SLOT, COPY_COPY_CARD_ICON);
             return;
         }
 
-        menu.replaceExistingItem(CRAFT_SLOT, ERROR_ICON);
+        blockMenu.replaceExistingItem(CRAFT_SLOT, ERROR_ICON);
     }
 }

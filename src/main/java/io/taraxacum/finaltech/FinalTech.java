@@ -37,8 +37,6 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         Bukkit.getLogger().info("[FinalTECH]配方缓存压入完毕");
 
         this.getCommand("test").setExecutor(new GetItemFake());
-
-
     }
 
     @Override

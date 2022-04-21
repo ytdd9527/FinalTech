@@ -8,11 +8,10 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.OrderDustGeneratorMenu;
+import io.taraxacum.finaltech.menu.special.OrderDustGeneratorMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
@@ -22,9 +21,11 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Final_ROOT
+ */
 public class OrderedDustGenerator extends AbstractElectricGenerator implements RecipeItem {
     public static final String KEY_COUNT = "count";
     public static final String KEY_MAX = "max";
@@ -63,7 +64,7 @@ public class OrderedDustGenerator extends AbstractElectricGenerator implements R
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        this.menu = new OrderDustGeneratorMenu(this.getId(), this.getItemName(), this);
+        this.menu = new OrderDustGeneratorMenu(this);
         return this.menu;
     }
 

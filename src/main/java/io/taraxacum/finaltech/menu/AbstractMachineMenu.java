@@ -27,43 +27,14 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
     }
 
     public AbstractMachineMenu(@Nonnull AbstractMachine machine) {
-        this(machine.getId(), machine.getItemName(), machine);
+        super(machine.getId(), machine.getItemName());
+        this.machine = machine;
     }
 
-    /**
-     * 机器边框位置
-     * @return
-     */
-    public abstract int[] getBorder();
-
-    /**
-     * 机器的输入侧边框位置
-     * @return
-     */
-    public abstract int[] getInputBorder();
-
-    /**
-     * 机器的输出侧边框位置
-     * @return
-     */
-    public abstract int[] getOutputBorder();
-
-    /**
-     * 机器的输入槽位置
-     * @return
-     */
-    public abstract int[] getInputSlots();
-
-    /**
-     * 机器的输出槽位置
-     * @return
-     */
-    public abstract int[] getOutputSlots();
-
     @Override
-    public void newInstance(BlockMenu menu, Block block) {
-        super.newInstance(menu, block);
-        updateMenu(menu, block);
+    public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
+        super.newInstance(blockMenu, block);
+        this.updateMenu(blockMenu, block);
     }
 
     @Override
@@ -90,23 +61,62 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
     @Override
     public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
         if (itemTransportFlow.equals(ItemTransportFlow.WITHDRAW)) {
-            return getOutputSlots();
+            return this.getOutputSlot();
         } else if (itemTransportFlow.equals(ItemTransportFlow.INSERT)) {
-            return getInputSlots();
+            return this.getInputSlot();
         }
         return new int[0];
     }
 
     @Override
     public int[] getSlotsAccessedByItemTransport(DirtyChestMenu menu, ItemTransportFlow flow, ItemStack item) {
-        return getSlotsAccessedByItemTransport(flow);
+        return this.getSlotsAccessedByItemTransport(flow);
     }
 
     /**
-     * 更新机器菜单内容
-     * 通常，在服务器重启时、放下方块时，会调用该方法
-     * @param menu
+     * The border of the menu
+     * These are slots that may have no function.
+     * @return
+     */
+    protected abstract int[] getBorder();
+
+    /**
+     * The input border of the menu
+     * These are slots that surround the input slots
+     * so that player will know where is input slots
+     * @return
+     */
+    protected abstract int[] getInputBorder();
+
+    /**
+     * The output border of the menu
+     * These are slots that surround the output slots
+     * so that player will know where is output slots
+     * @return
+     */
+    protected abstract int[] getOutputBorder();
+
+    /**
+     * The input slot of the menu
+     * These are slots that player may insert item
+     * so that the machine of the menu can work
+     * @return
+     */
+    public abstract int[] getInputSlot();
+
+    /**
+     * The output slot of the menu
+     * These are slots that player may withdraw item
+     * to get the output result of the machine
+     * @return
+     */
+    public abstract int[] getOutputSlot();
+
+    /**
+     * Update the menu
+     * May be used in some specific machine
+     * @param blockMenu
      * @param block
      */
-    public abstract void updateMenu(BlockMenu menu, Block block);
+    public abstract void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block);
 }

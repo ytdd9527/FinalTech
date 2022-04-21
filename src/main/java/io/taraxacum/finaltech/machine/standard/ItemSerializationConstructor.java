@@ -96,7 +96,7 @@ public class ItemSerializationConstructor extends AbstractStandardMachine {
         } else {
             showItem = NULL_INFO_ICON;
         }
-        inv.replaceExistingItem(ItemSerializationConstructorMenu.PROGRESS_SLOT, showItem);
+        inv.replaceExistingItem(ItemSerializationConstructorMenu.STATUS_SLOT, showItem);
     }
 
     @Override

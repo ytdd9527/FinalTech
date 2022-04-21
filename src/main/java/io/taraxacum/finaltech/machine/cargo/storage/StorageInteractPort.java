@@ -11,7 +11,7 @@ import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.item.unusable.StorageCardItem;
 import io.taraxacum.finaltech.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.storage.StorageInteractPortMenu;
+import io.taraxacum.finaltech.menu.special.StorageInteractPortMenu;
 import io.taraxacum.finaltech.util.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -40,7 +40,7 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new StorageInteractPortMenu(this.getId(), this.getItemName(), this);
+        return new StorageInteractPortMenu(this);
     }
 
     @Override

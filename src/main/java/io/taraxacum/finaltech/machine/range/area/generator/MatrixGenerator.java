@@ -8,8 +8,8 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.StatusL2Menu;
-import io.taraxacum.finaltech.menu.StatusMenu;
+import io.taraxacum.finaltech.menu.simple.StatusL2Menu;
+import io.taraxacum.finaltech.menu.simple.StatusMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
@@ -110,7 +110,7 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator implements An
             return 0;
         });
         //todo 说明优化
-        ItemStack item = blockMenu.getItemInSlot(StatusMenu.CENTER_SLOT);
+        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
         ItemStackUtil.setLore(item,
                 "§7当前生效的机器= " + count,
                 "§7实际发电量= " + energyCharge + "J");

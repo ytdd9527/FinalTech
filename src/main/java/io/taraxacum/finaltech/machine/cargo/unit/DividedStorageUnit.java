@@ -1,33 +1,31 @@
-package io.taraxacum.finaltech.machine.cargo;
+package io.taraxacum.finaltech.machine.cargo.unit;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
+import io.taraxacum.finaltech.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.storage.BasicLinkedStorageUnitMenu;
+import io.taraxacum.finaltech.menu.simple.DividedStorageUnitMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Final_ROOT
  */
-public class BasicLinkedStorageUnit extends AbstractCargo implements RecipeItem {
-    public BasicLinkedStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class DividedStorageUnit extends AbstractCargo implements RecipeItem {
+    public DividedStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new BasicLinkedStorageUnitMenu(this.getId(), this.getItemName(), this);
+        return new DividedStorageUnitMenu(this);
     }
 
     @Override
@@ -37,9 +35,6 @@ public class BasicLinkedStorageUnit extends AbstractCargo implements RecipeItem 
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe("&f兼容模式",
-                "",
-                "&f上面三行被识别为输入槽",
-                "&f下面三行被识别为输出槽");
+
     }
 }

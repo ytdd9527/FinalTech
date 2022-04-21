@@ -10,7 +10,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.taraxacum.finaltech.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.StatusMenu;
+import io.taraxacum.finaltech.menu.simple.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.dto.LocationWithConfig;
 import io.taraxacum.finaltech.util.MachineUtil;
@@ -124,7 +124,7 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements AntiAcc
     }
 
     private void updateMenu(@Nonnull BlockMenu blockMenu, int machineEnergy, int accelerateMachine, int accelerateEachTime, int accelerateTime) {
-        ItemStack item = blockMenu.getItemInSlot(StatusMenu.CENTER_SLOT);
+        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
         ItemStackUtil.setLore(item,
                 "§7当前电量= " + machineEnergy,
                 "§7加速机器个数= " + accelerateMachine,

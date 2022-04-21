@@ -10,7 +10,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBre
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.TransferPipeMenu;
+import io.taraxacum.finaltech.menu.function.TransferPipeMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.CargoUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;

@@ -1,10 +1,11 @@
-package io.taraxacum.finaltech.menu;
+package io.taraxacum.finaltech.menu.function;
 
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.manual.craft.AbstractCraftManualMachine;
 import io.taraxacum.finaltech.dto.AdvancedCraftUtil;
+import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.dto.ItemStackWithWrapper;
 import io.taraxacum.finaltech.util.MachineUtil;
@@ -27,7 +28,7 @@ import java.util.Map;
  */
 public class ManualMachineMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[] {32, 39, 41, 48, 50};
-    private static final int[] INPUT_SLOTS = new int[] {
+    private static final int[] INPUT_SLOT = new int[] {
             0,  1,  2,  3,  4,  5,  6,  7,  8,
             9, 10, 11, 12, 13, 14, 15, 16, 17,
             18, 19, 20, 21, 22, 23, 24, 25, 26,
@@ -35,7 +36,7 @@ public class ManualMachineMenu extends AbstractMachineMenu {
             36, 37, 38,             42, 43, 44,
             45, 46, 47,             51, 52, 53
     };
-    private static final int[] OUTPUT_SLOTS = new int[] {
+    private static final int[] OUTPUT_SLOT = new int[] {
             27, 28, 29,             33, 34, 35,
             36, 37, 38,             42, 43, 44,
             45, 46, 47,             51, 52, 53,
@@ -85,7 +86,7 @@ public class ManualMachineMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public void newInstance(BlockMenu blockMenu, Block block) {
+    public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
         blockMenu.addMenuOpeningHandler((player -> {
             updateMenu(blockMenu, block);
@@ -105,12 +106,12 @@ public class ManualMachineMenu extends AbstractMachineMenu {
             return false;
         }));
         blockMenu.addMenuClickHandler(STOCK_SLOT, ((player, i, itemStack, clickAction) -> {
-            MachineUtil.stockSlots(blockMenu, INPUT_SLOTS);
+            MachineUtil.stockSlots(blockMenu, INPUT_SLOT);
             return false;
         }));
         blockMenu.addMenuClickHandler(CRAFT_SLOT, ((player, i, itemStack, clickAction) -> {
-            Map<Integer, ItemStackWithWrapper> itemWithWrapperMap = new HashMap<>(INPUT_SLOTS.length);
-            for (int slot : INPUT_SLOTS) {
+            Map<Integer, ItemStackWithWrapper> itemWithWrapperMap = new HashMap<>(INPUT_SLOT.length);
+            for (int slot : INPUT_SLOT) {
                 ItemStack item = blockMenu.getItemInSlot(slot);
                 if (!ItemStackUtil.isItemNull(item)) {
                     itemWithWrapperMap.put(slot, new ItemStackWithWrapper(item));
@@ -121,7 +122,7 @@ public class ManualMachineMenu extends AbstractMachineMenu {
             List<AdvancedCraftUtil> craftList = new ArrayList<>(this.machineRecipeList.size());
             AdvancedCraftUtil craft = null;
             for (int offset = 0, offsetValue = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY)); offset <= offsetValue; offset++) {
-                craft = AdvancedCraftUtil.calCraft(blockMenu, INPUT_SLOTS, this.machineRecipeList, amount, offsetAbs);
+                craft = AdvancedCraftUtil.calCraft(blockMenu, INPUT_SLOT, this.machineRecipeList, amount, offsetAbs);
                 if (craft == null) {
                     updateMenu(blockMenu, block);
                     return false;
@@ -136,25 +137,25 @@ public class ManualMachineMenu extends AbstractMachineMenu {
                 updateMenu(blockMenu, block);
                 return false;
             }
-            craft.setMatchCount(MachineUtil.maxMatch(blockMenu.toInventory(), OUTPUT_SLOTS, craft.getMachineRecipe().getOutput(), craft.getMatchCount()));
+            craft.setMatchCount(MachineUtil.maxMatch(blockMenu.toInventory(), OUTPUT_SLOT, craft.getMachineRecipe().getOutput(), craft.getMatchCount()));
             if (craft.getMatchCount() > 0) {
                 craft.consumeItem(blockMenu.toInventory());
                 for (ItemStack outputItem : craft.calEnlargeMachineRecipe().getOutput()) {
-                    blockMenu.pushItem(ItemStackUtil.cloneItem(outputItem), OUTPUT_SLOTS);
+                    blockMenu.pushItem(ItemStackUtil.cloneItem(outputItem), OUTPUT_SLOT);
                 }
                 amount -= craft.getMatchCount();
             }
             if (clickAction.isRightClicked()) {
                 while (amount > 0) {
-                    craft = AdvancedCraftUtil.calCraft(blockMenu, INPUT_SLOTS, this.machineRecipeList, amount, offsetAbs);
+                    craft = AdvancedCraftUtil.calCraft(blockMenu, INPUT_SLOT, this.machineRecipeList, amount, offsetAbs);
                     if (craft == null) {
                         break;
                     }
-                    craft.setMatchCount(MachineUtil.maxMatch(blockMenu.toInventory(), OUTPUT_SLOTS, craft.getMachineRecipe().getOutput(), craft.getMatchCount()));
+                    craft.setMatchCount(MachineUtil.maxMatch(blockMenu.toInventory(), OUTPUT_SLOT, craft.getMachineRecipe().getOutput(), craft.getMatchCount()));
                     if (craft.getMatchCount() > 0) {
                         craft.consumeItem(blockMenu.toInventory());
                         for (ItemStack outputItem : craft.calEnlargeMachineRecipe().getOutput()) {
-                            blockMenu.pushItem(ItemStackUtil.cloneItem(outputItem), OUTPUT_SLOTS);
+                            blockMenu.pushItem(ItemStackUtil.cloneItem(outputItem), OUTPUT_SLOT);
                         }
                         amount -= craft.getMatchCount();
                     } else {
@@ -169,35 +170,35 @@ public class ManualMachineMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public int[] getBorder() {
+    protected int[] getBorder() {
         return BORDER;
     }
 
     @Override
-    public int[] getInputBorder() {
+    protected int[] getInputBorder() {
         return new int[0];
     }
 
     @Override
-    public int[] getOutputBorder() {
+    protected int[] getOutputBorder() {
         return new int[0];
     }
 
     @Override
-    public int[] getInputSlots() {
-        return INPUT_SLOTS;
+    public int[] getInputSlot() {
+        return INPUT_SLOT;
     }
 
     @Override
-    public int[] getOutputSlots() {
-        return OUTPUT_SLOTS;
+    public int[] getOutputSlot() {
+        return OUTPUT_SLOT;
     }
 
     @Override
-    public void updateMenu(BlockMenu blockMenu, Block block) {
+    public void updateMenu(@Nonnull BlockMenu blockMenu, Block block) {
         Config config = BlockStorage.getLocationInfo(block.getLocation());
-        List<ItemStackWithWrapper> itemWithWrapperList = new ArrayList<>(INPUT_SLOTS.length);
-        for (int slot : INPUT_SLOTS) {
+        List<ItemStackWithWrapper> itemWithWrapperList = new ArrayList<>(INPUT_SLOT.length);
+        for (int slot : INPUT_SLOT) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (!ItemStackUtil.isItemNull(item)) {
                 itemWithWrapperList.add(new ItemStackWithWrapper(item));

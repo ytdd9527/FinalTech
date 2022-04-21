@@ -32,7 +32,7 @@ public class AdvancedElectricDustWasher extends AbstractAdvanceMachine {
     protected MachineRecipe matchRecipe(BlockMenu blockMenu, int index) {
         OreWasher oreWasher = SlimefunItems.ORE_WASHER.getItem(OreWasher.class);
 
-        int amount = MachineUtil.updateQuantityModule(blockMenu, AdvancedMachineMenu.MODULE_SLOT, AdvancedMachineMenu.INFO_SLOT);
+        int amount = MachineUtil.updateQuantityModule(blockMenu, AdvancedMachineMenu.MODULE_SLOT, AdvancedMachineMenu.STATUS_SLOT);
 
         for (int slot : getInputSlots()) {
             ItemStack item = blockMenu.getItemInSlot(slot);

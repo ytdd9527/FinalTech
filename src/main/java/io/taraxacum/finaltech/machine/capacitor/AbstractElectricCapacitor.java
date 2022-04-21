@@ -10,8 +10,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.ElectricCapacitorMenu;
-import io.taraxacum.finaltech.menu.StatusMenu;
+import io.taraxacum.finaltech.menu.simple.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
@@ -30,10 +29,11 @@ public abstract class AbstractElectricCapacitor extends AbstractMachine implemen
     public AbstractElectricCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
+
     @Nonnull
     @Override
-    protected AbstractMachineMenu setMachineMenu() {
-        return new StatusMenu(this.getId(), this.getItemName(), this);
+    protected BlockPlaceHandler onBlockPlace() {
+        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_DENY;
     }
 
     @Nonnull
@@ -44,14 +44,14 @@ public abstract class AbstractElectricCapacitor extends AbstractMachine implemen
 
     @Nonnull
     @Override
-    protected BlockPlaceHandler onBlockPlace() {
-        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_DENY;
+    protected AbstractMachineMenu setMachineMenu() {
+        return new StatusMenu(this);
     }
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        ItemStack item = blockMenu.getItemInSlot(ElectricCapacitorMenu.INFO_SLOT);
+        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
         this.updateMenu(item, config);
     }
 

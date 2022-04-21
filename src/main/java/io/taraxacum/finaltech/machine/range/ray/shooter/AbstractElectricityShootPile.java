@@ -12,7 +12,7 @@ import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.machine.range.AbstractRangeMachine;
 import io.taraxacum.finaltech.machine.range.ray.AbstractRayMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.StatusMenu;
+import io.taraxacum.finaltech.menu.simple.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
@@ -50,7 +50,7 @@ public abstract class AbstractElectricityShootPile extends AbstractRayMachine im
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new StatusMenu(this.getId(), this.getItemName(), this);
+        return new StatusMenu(this);
     }
 
     @Override
@@ -73,7 +73,7 @@ public abstract class AbstractElectricityShootPile extends AbstractRayMachine im
             }
         }
 
-        this.updateMenu(BlockStorage.getInventory(block).getItemInSlot(StatusMenu.CENTER_SLOT), count, summary);
+        this.updateMenu(BlockStorage.getInventory(block).getItemInSlot(StatusMenu.STATUS_SLOT), count, summary);
     }
 
     @Override

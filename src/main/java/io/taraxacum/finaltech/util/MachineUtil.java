@@ -121,13 +121,13 @@ public final class MachineUtil {
 
     /**
      * 堆叠指定容器指定范围的物品
-     * @param menu 容器
+     * @param blockMenu 容器
      * @param slots 指定范围
      */
-    public static void stockSlots(@Nonnull BlockMenu menu, int[] slots) {
+    public static void stockSlots(@Nonnull BlockMenu blockMenu, int[] slots) {
         List<ItemStackWithWrapper> items = new ArrayList<>(slots.length);
         for (int slot : slots) {
-            ItemStack item1 = menu.getItemInSlot(slot);
+            ItemStack item1 = blockMenu.getItemInSlot(slot);
             if (ItemStackUtil.isItemNull(item1) || item1.getAmount() >= item1.getMaxStackSize()) {
                 continue;
             }

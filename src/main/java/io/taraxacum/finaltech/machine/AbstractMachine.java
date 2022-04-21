@@ -13,11 +13,9 @@ import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
-import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitScheduler;
 
 import javax.annotation.Nonnull;
 
@@ -90,12 +88,12 @@ public abstract class AbstractMachine extends SlimefunItem {
 
     @Nonnull
     public final int[] getInputSlots() {
-        return this.menu.getInputSlots();
+        return this.menu.getInputSlot();
     }
 
     @Nonnull
     public final int[] getOutputSlots() {
-        return this.menu.getOutputSlots();
+        return this.menu.getOutputSlot();
     }
 
     protected abstract void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config);

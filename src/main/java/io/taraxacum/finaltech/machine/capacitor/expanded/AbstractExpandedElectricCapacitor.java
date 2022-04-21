@@ -7,8 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.machine.capacitor.AbstractElectricCapacitor;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.ElectricCapacitorMenu;
-import io.taraxacum.finaltech.menu.StatusMenu;
+import io.taraxacum.finaltech.menu.simple.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.common.util.StringNumberUtil;
@@ -34,12 +33,6 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
 
     @Nonnull
     @Override
-    protected AbstractMachineMenu setMachineMenu() {
-        return new StatusMenu(this.getId(), this.getItemName(), this);
-    }
-
-    @Nonnull
-    @Override
     protected BlockPlaceHandler onBlockPlace() {
         return new BlockPlaceHandler(false) {
             @Override
@@ -47,6 +40,12 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
                 BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), KEY, StringNumberUtil.ZERO);
             }
         };
+    }
+
+    @Nonnull
+    @Override
+    protected AbstractMachineMenu setMachineMenu() {
+        return new StatusMenu(this);
     }
 
     @Override
@@ -103,7 +102,7 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
             BlockStorage.addBlockInfo(block.getLocation(), KEY, energyStack);
         }
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        ItemStack item = blockMenu.getItemInSlot(ElectricCapacitorMenu.INFO_SLOT);
+        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
 
         //todo 说明优化
         ItemStackUtil.setLore(item,

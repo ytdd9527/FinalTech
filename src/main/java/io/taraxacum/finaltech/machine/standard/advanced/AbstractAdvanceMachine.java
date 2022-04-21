@@ -6,7 +6,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
-import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.operations.CraftingOperation;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
@@ -41,24 +40,13 @@ public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
     @Nonnull
     @Override
     protected final AbstractMachineMenu setMachineMenu() {
-        return new AdvancedMachineMenu(this.getId(), this.getItemName(), this);
+        return new AdvancedMachineMenu(this);
     }
 
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return new SimpleBlockBreakHandler() {
-            @Override
-            public void onBlockBreak(@Nonnull Block block) {
-                BlockMenu inv = BlockStorage.getInventory(block);
-                if (inv != null) {
-                    inv.dropItems(block.getLocation(), getInputSlots());
-                    inv.dropItems(block.getLocation(), getOutputSlots());
-                    inv.dropItems(block.getLocation(), AdvancedMachineMenu.MODULE_SLOT);
-                }
-                AbstractAdvanceMachine.this.getMachineProcessor().endOperation(block);
-            }
-        };
+        return MachineUtil.simpleBlockBreakerHandler(this, AdvancedMachineMenu.MODULE_SLOT);
     }
 
     @Override
@@ -112,7 +100,7 @@ public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
     }
 
     protected MachineRecipe matchRecipe(BlockMenu blockMenu, int offset) {
-        int quantityModule = MachineUtil.updateQuantityModule(blockMenu, AdvancedMachineMenu.MODULE_SLOT, AdvancedMachineMenu.INFO_SLOT);
+        int quantityModule = MachineUtil.updateQuantityModule(blockMenu, AdvancedMachineMenu.MODULE_SLOT, AdvancedMachineMenu.STATUS_SLOT);
 
 //        if (MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlots()) || MachineUtil.isFull(blockMenu.toInventory(), getOutputSlots())) {
 //            BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, null);

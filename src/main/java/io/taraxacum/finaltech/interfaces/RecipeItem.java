@@ -77,7 +77,7 @@ public interface RecipeItem extends RecipeDisplayItem {
     }
 
     default void registerRecipe(int seconds, ItemStack input, ItemStack output) {
-        this.registerRecipe(new MachineRecipe(seconds, new ItemStack[]{input}, new ItemStack[]{output}));
+        this.registerRecipe(new MachineRecipe(seconds, new ItemStack[] {input}, new ItemStack[] {output}));
     }
 
     /**

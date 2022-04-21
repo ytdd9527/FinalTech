@@ -1,8 +1,9 @@
-package io.taraxacum.finaltech.menu;
+package io.taraxacum.finaltech.menu.function;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.AbstractMachine;
+import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.menu.*;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -27,7 +28,7 @@ public class TransferPipeMenu extends AbstractMachineMenu {
             36, 37, 38,             42, 43, 44,
             45, 46, 47,             51, 52, 53
     };
-    public static final int[] ITEM_MATCH = new int[]{30, 31, 32, 39, 40, 41, 48, 49, 50};
+    public static final int[] ITEM_MATCH = new int[] {30, 31, 32, 39, 40, 41, 48, 49, 50};
 
     private static final int ITEM_COUNT_SUB_SLOT = 3;
     private static final int ITEM_COUNT_SLOT = 4;
@@ -55,27 +56,27 @@ public class TransferPipeMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public int[] getBorder() {
+    protected int[] getBorder() {
         return BORDER;
     }
 
     @Override
-    public int[] getInputBorder() {
+    protected int[] getInputBorder() {
         return new int[0];
     }
 
     @Override
-    public int[] getOutputBorder() {
+    protected int[] getOutputBorder() {
         return new int[0];
     }
 
     @Override
-    public int[] getInputSlots() {
+    public int[] getInputSlot() {
         return ITEM_MATCH;
     }
 
     @Override
-    public int[] getOutputSlots() {
+    public int[] getOutputSlot() {
         return ITEM_MATCH;
     }
 
@@ -104,7 +105,7 @@ public class TransferPipeMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public void newInstance(BlockMenu blockMenu, Block block) {
+    public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
         blockMenu.addMenuClickHandler(ITEM_COUNT_SUB_SLOT, (player, i, itemStack, clickAction) -> {
             int itemCount = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), CargoNumber.KEY));
@@ -187,7 +188,7 @@ public class TransferPipeMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public void updateMenu(BlockMenu blockMenu, Block block) {
+    public void updateMenu(@Nonnull BlockMenu blockMenu, Block block) {
         if (BlockStorage.getLocationInfo(block.getLocation(), CargoNumber.KEY) == null) {
             BlockStorage.addBlockInfo(block, CargoNumber.KEY, "64");
         }

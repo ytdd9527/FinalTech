@@ -11,7 +11,7 @@ import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponen
 import io.taraxacum.finaltech.dto.LocationWithConfig;
 import io.taraxacum.finaltech.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.StatusL2Menu;
+import io.taraxacum.finaltech.menu.simple.StatusL2Menu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.*;
 import io.taraxacum.common.util.StringNumberUtil;
@@ -211,7 +211,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements AntiAccele
     }
 
     private void updateMenu(@Nonnull BlockMenu blockMenu, int accelerateTimeCount, int accelerateMachineCount, String accelerateEnergy) {
-        ItemStack item = blockMenu.getItemInSlot(StatusL2Menu.CENTER_SLOT);
+        ItemStack item = blockMenu.getItemInSlot(StatusL2Menu.STATUS_SLOT);
         ItemStackUtil.setLore(item,
                 "§7生效的机器= " + accelerateMachineCount,
                 "§7生效的总次数= " + accelerateTimeCount,

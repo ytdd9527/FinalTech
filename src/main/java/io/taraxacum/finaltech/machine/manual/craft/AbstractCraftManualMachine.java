@@ -10,7 +10,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.machine.manual.AbstractManualMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
-import io.taraxacum.finaltech.menu.ManualMachineMenu;
+import io.taraxacum.finaltech.menu.function.ManualMachineMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;

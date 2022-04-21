@@ -10,7 +10,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.StatusMenu;
+import io.taraxacum.finaltech.menu.simple.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
@@ -50,7 +50,7 @@ public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetCom
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new StatusMenu(this.getId(), this.getItemName(), this);
+        return new StatusMenu(this);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetCom
             });
         }
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        ItemStack item = blockMenu.getItemInSlot(StatusMenu.CENTER_SLOT);
+        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
         ItemStackUtil.setLore(item,
                 "§7当前存储电量= " + charge,
                 "§7当前生效的机器= " + count,

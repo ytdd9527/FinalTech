@@ -2,10 +2,11 @@ package io.taraxacum.finaltech.menu.standard;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
+import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.machine.AbstractMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.menu.Icon;
+import io.taraxacum.finaltech.util.menu.MaxStackHelper;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
@@ -21,79 +22,71 @@ import java.util.ArrayList;
  * @author Final_ROOT
  */
 public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
-    public static final int QUANTITY_SLOT = 13;
+    public static final int MACHINE_MAX_STACK_SLOT = 13;
 
-    public AbstractStandardMachineMenu(@Nonnull String id, @Nonnull String title, AbstractMachine abstractMachine) {
-        super(id, title, abstractMachine);
+    public AbstractStandardMachineMenu(@Nonnull AbstractMachine abstractMachine) {
+        super(abstractMachine);
     }
 
     @Override
     public void init() {
         super.init();
-        this.addItem(QUANTITY_SLOT, new CustomItemStack(Icon.MACHINE_MAX_STACK_ICON));
-        this.addMenuClickHandler(QUANTITY_SLOT, ChestMenuUtils.getEmptyClickHandler());
+        this.addItem(MACHINE_MAX_STACK_SLOT, MaxStackHelper.ICON);
+        this.addMenuClickHandler(MACHINE_MAX_STACK_SLOT, ChestMenuUtils.getEmptyClickHandler());
     }
 
     @Override
-    public void newInstance(BlockMenu blockMenu, Block block) {
+    public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
-        blockMenu.addMenuClickHandler(QUANTITY_SLOT, (player, i, itemStack, clickAction) -> {
-            int quantity = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), Icon.MACHINE_MAX_STACK));
-            quantity = (quantity + 1) % (getInputSlots().length / 2 + 1);
-            ItemStack item = blockMenu.getItemInSlot(QUANTITY_SLOT);
-            if (quantity == 0) {
-                ItemStackUtil.setLastLore(item, "§7未限制");
-                item.setType(Material.CHEST);
-                item.setAmount(1);
+        blockMenu.addMenuClickHandler(MACHINE_MAX_STACK_SLOT, (player, i, itemStack, clickAction) -> {
+            int quantity = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), MaxStackHelper.KEY));
+            if(clickAction.isShiftClicked()) {
+                quantity = 0;
             } else {
-                ItemStackUtil.setLastLore(item, "§7限制数量=" + quantity);
-                item.setType(Material.HOPPER);
-                item.setAmount(quantity);
+                if(clickAction.isRightClicked()) {
+                    quantity = (quantity - 1) % (this.getInputSlot().length / 2 + 1);
+                } else {
+                    quantity = (quantity + 1) % (this.getInputSlot().length / 2 + 1);
+                }
             }
-            BlockStorage.addBlockInfo(block, Icon.MACHINE_MAX_STACK, String.valueOf(quantity));
+            MaxStackHelper.setIcon(blockMenu.getItemInSlot(MACHINE_MAX_STACK_SLOT), quantity);
+            BlockStorage.addBlockInfo(block, MaxStackHelper.KEY, String.valueOf(quantity));
             return false;
         });
     }
 
     @Override
-    public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
-        if (itemTransportFlow.equals(ItemTransportFlow.WITHDRAW)) {
-            return getOutputSlots();
-        } else if (itemTransportFlow.equals(ItemTransportFlow.INSERT)) {
-            return getInputSlots();
-        }
-        return new int[0];
-    }
-
-    @Override
     public int[] getSlotsAccessedByItemTransport(DirtyChestMenu menu, ItemTransportFlow flow, ItemStack item) {
-        if (flow.equals(ItemTransportFlow.WITHDRAW)) {
-            return getOutputSlots();
+        if (ItemTransportFlow.WITHDRAW.equals(flow)) {
+            return this.getOutputSlot();
         } else if (flow == null) {
             return new int[0];
         }
 
+        int full = 0;
+        if (menu.getItemInSlot(MACHINE_MAX_STACK_SLOT) == null) {
+            menu.addItem(MACHINE_MAX_STACK_SLOT, MaxStackHelper.ICON);
+        }
+        if (menu.getItemInSlot(MACHINE_MAX_STACK_SLOT).getType().equals(Material.CHEST)) {
+            return this.getInputSlot();
+        }
+
         ArrayList<Integer> itemList = new ArrayList<>();
         ArrayList<Integer> nullList = new ArrayList<>();
-
-        int full = 0;
-        if (menu.getItemInSlot(QUANTITY_SLOT) == null) {
-            menu.addItem(QUANTITY_SLOT, new CustomItemStack(Icon.MACHINE_MAX_STACK_ICON));
-        }
-        if (menu.getItemInSlot(QUANTITY_SLOT).getType().equals(Material.CHEST)) {
-            return getInputSlots();
-        }
-
-        int inputLimit = menu.getItemInSlot(QUANTITY_SLOT).getAmount();
-        for (int slot : getInputSlots()) {
+        ItemStackWrapper itemStackWrapper = ItemStackWrapper.wrap(item);
+        int inputLimit = menu.getItemInSlot(MACHINE_MAX_STACK_SLOT).getAmount();
+        for (int slot : this.getInputSlot()) {
             ItemStack existedItem = menu.getItemInSlot(slot);
-            if (existedItem == null) {
+            if (ItemStackUtil.isItemNull(existedItem)) {
                 nullList.add(slot);
-            } else if (ItemStackUtil.isItemSimilar(item, existedItem)) {
+            } else if (ItemStackUtil.isItemSimilar(itemStackWrapper, existedItem)) {
                 if (existedItem.getAmount() < existedItem.getMaxStackSize()) {
                     itemList.add(slot);
                 } else {
                     full++;
+                }
+                if(itemList.size() + full >= inputLimit) {
+                    break;
                 }
             }
         }
@@ -110,20 +103,12 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public void updateMenu(BlockMenu blockMenu, Block block) {
-        if (BlockStorage.getLocationInfo(block.getLocation(), Icon.MACHINE_MAX_STACK) == null) {
-            BlockStorage.addBlockInfo(block.getLocation(), Icon.MACHINE_MAX_STACK, "0");
+    public void updateMenu(@Nonnull BlockMenu blockMenu, Block block) {
+        if (BlockStorage.getLocationInfo(block.getLocation(), MaxStackHelper.KEY) == null) {
+            BlockStorage.addBlockInfo(block.getLocation(), MaxStackHelper.KEY, "0");
         }
-        int quantity = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), Icon.MACHINE_MAX_STACK));
-        ItemStack item = blockMenu.getItemInSlot(QUANTITY_SLOT);
-        if (quantity == 0) {
-            item.setType(Material.CHEST);
-            item.setAmount(1);
-            ItemStackUtil.setLastLore(item, "§7未限制");
-        } else {
-            item.setType(Material.HOPPER);
-            item.setAmount(quantity);
-            ItemStackUtil.setLastLore(item, "§7限制数量=" + quantity);
-        }
+        int quantity = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), MaxStackHelper.KEY));
+        ItemStack item = blockMenu.getItemInSlot(MACHINE_MAX_STACK_SLOT);
+        MaxStackHelper.setIcon(item, quantity);
     }
 }

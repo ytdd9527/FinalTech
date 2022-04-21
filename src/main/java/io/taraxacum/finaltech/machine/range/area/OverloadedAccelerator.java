@@ -10,7 +10,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.StatusMenu;
+import io.taraxacum.finaltech.menu.simple.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.dto.LocationWithConfig;
 import io.taraxacum.finaltech.util.MachineUtil;
@@ -111,7 +111,7 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements AntiAc
         }
 
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        ItemStack item = blockMenu.getItemInSlot(StatusMenu.CENTER_SLOT);
+        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
         ItemStackUtil.setLore(item,
                 "§7检测到的机器个数= " + accelerateMachineCount,
                 "§7加速次数= " + accelerateTimeCount);

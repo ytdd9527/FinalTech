@@ -30,7 +30,7 @@ public class OrderedDustFactory extends AbstractStandardMachine {
     @Nonnull
     @Override
     protected AbstractStandardMachineMenu setMachineMenu() {
-        return new OrderedDustFactoryMenu(this.getId(), this.getItemName(), this);
+        return new OrderedDustFactoryMenu(this);
     }
 
     @Override

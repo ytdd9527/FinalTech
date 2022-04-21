@@ -10,7 +10,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBre
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
-import io.taraxacum.finaltech.menu.AdvancedAutoCraftMenu;
+import io.taraxacum.finaltech.menu.function.AdvancedAutoCraftMenu;
 import io.taraxacum.finaltech.dto.InvWithSlots;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.dto.ItemStackWithWrapper;

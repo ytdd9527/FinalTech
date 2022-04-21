@@ -10,8 +10,8 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
 import io.taraxacum.finaltech.machine.range.area.AbstractCubeMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.menu.StatusL2Menu;
-import io.taraxacum.finaltech.menu.StatusMenu;
+import io.taraxacum.finaltech.menu.simple.StatusL2Menu;
+import io.taraxacum.finaltech.menu.simple.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
@@ -95,7 +95,7 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
             return 0;
         });
         blockMenu = BlockStorage.getInventory(block);
-        ItemStack item = blockMenu.getItemInSlot(StatusMenu.CENTER_SLOT);
+        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
         ItemStackUtil.setLore(item,
                 "§7当前生效的机器= " + count,
                 "§7实际发电量= " + energyCharge + "J");

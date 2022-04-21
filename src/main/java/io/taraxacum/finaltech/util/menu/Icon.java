@@ -8,8 +8,6 @@ import org.bukkit.inventory.ItemStack;
  * @author Final_ROOT
  */
 public class Icon {
-    public static final String MACHINE_MAX_STACK = "max-stack";
-    public static final ItemStack MACHINE_MAX_STACK_ICON = new CustomItemStack(Material.CHEST, "&7输入数量限制", "&7未限制");
 
     public static final ItemStack QUANTITY_MODULE_ICON = new CustomItemStack(Material.REDSTONE, "&f可升级模块", "&7该机器可以通过添加[数量组件]进行升级", "&7当前效率=1");
 
