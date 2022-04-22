@@ -18,6 +18,12 @@ This version is stable, I will only fix bugs if existed.
 But before 2.0 version come out,
 I not recommend you to use this.
 
-这个版本已经稳定，我将只会修复其bug
+这个版本已经稳定，我将只会修复严重bug
 
 在2.0版本放出之前，我不建议你使用该插件。
+
+Do not try this version if you are maintaining a running server
+Many item in this version will be invalid in new version.
+
+如果你打算长期开设游戏服务器
+大部分该版本的物品会在新版本中失效
