@@ -78,7 +78,7 @@ public interface RecipeItem extends RecipeDisplayItem {
     }
 
     default void registerRecipeInCard(int seconds, SlimefunItem slimefunItem) {
-        this.registerRecipeInCard(seconds, slimefunItem.getRecipe(), new ItemStack[] {slimefunItem.getItem()});
+        this.registerRecipeInCard(seconds, slimefunItem.getRecipe(), new ItemStack[] {slimefunItem.getRecipeOutput()});
     }
 
     default void registerRecipeInCard(int seconds, ItemStack[] input, ItemStack[] output) {

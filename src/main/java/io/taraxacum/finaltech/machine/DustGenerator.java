@@ -70,7 +70,7 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
         int oldCount = count;
         int oldMax = max;
         boolean work = false;
-        for (int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (ItemStackUtil.isItemSimilar(item, FinalTechItems.UNORDERED_DUST)) {
                 item.setAmount(item.getAmount() - 1);

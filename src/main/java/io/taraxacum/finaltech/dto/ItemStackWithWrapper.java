@@ -82,6 +82,14 @@ public class ItemStackWithWrapper {
         return result;
     }
 
+    public static ItemStack[] toItemArray(List<ItemStackWithWrapper> list) {
+        ItemStack[] result = new ItemStack[list.size()];
+        for(int i = 0; i < result.length; i++) {
+            result[i] = list.get(i).getItemStack();
+        }
+        return result;
+    }
+
     public static List<ItemStackWrapper> toItemWrapperList(List<ItemStackWithWrapper> list) {
         ArrayList<ItemStackWrapper> result = new ArrayList<>(list.size());
         for (ItemStackWithWrapper itemStackWithWrapper : list) {

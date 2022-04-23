@@ -55,8 +55,8 @@ public class TransferPipe extends AbstractCargo implements RecipeItem, Performan
             public void onBlockBreak(@Nonnull Block block) {
                 BlockMenu inv = BlockStorage.getInventory(block);
                 if (inv != null) {
-                    inv.dropItems(block.getLocation(), getInputSlots());
-                    inv.dropItems(block.getLocation(), getOutputSlots());
+                    inv.dropItems(block.getLocation(), getInputSlot());
+                    inv.dropItems(block.getLocation(), getOutputSlot());
                     inv.dropItems(block.getLocation(), TransferPipeMenu.ITEM_MATCH);
                     BlockStorage.clearBlockInfo(block.getLocation());
                 }

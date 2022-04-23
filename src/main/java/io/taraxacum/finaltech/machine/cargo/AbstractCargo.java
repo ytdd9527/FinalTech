@@ -31,8 +31,8 @@ public abstract class AbstractCargo extends AbstractMachine {
             public void onBlockBreak(@Nonnull Block block) {
                 BlockMenu inv = BlockStorage.getInventory(block);
                 if (inv != null) {
-                    inv.dropItems(block.getLocation(), getInputSlots());
-                    inv.dropItems(block.getLocation(), getOutputSlots());
+                    inv.dropItems(block.getLocation(), getInputSlot());
+                    inv.dropItems(block.getLocation(), getOutputSlot());
                 }
             }
         };

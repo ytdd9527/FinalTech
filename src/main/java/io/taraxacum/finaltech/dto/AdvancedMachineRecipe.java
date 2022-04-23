@@ -1,5 +1,7 @@
 package io.taraxacum.finaltech.dto;
 
+import org.bukkit.inventory.ItemStack;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,14 @@ public class AdvancedMachineRecipe {
             return advancedRandomOutput.getOutputItem();
         }
         return new ArrayList<>();
+    }
+
+    public List<AdvancedRandomOutput> getOutputList() {
+        return outputList;
+    }
+
+    public int getWeightSum() {
+        return weightSum;
     }
 
     public static class AdvancedRandomOutput {

@@ -57,8 +57,8 @@ public final class MachineUtil {
             public void onPlayerBreak(BlockBreakEvent blockBreakEvent, ItemStack itemStack, List<ItemStack> list) {
                 Location location = blockBreakEvent.getBlock().getLocation();
                 BlockMenu blockMenu = BlockStorage.getInventory(location);
-                blockMenu.dropItems(location, abstractMachine.getInputSlots());
-                blockMenu.dropItems(location, abstractMachine.getOutputSlots());
+                blockMenu.dropItems(location, abstractMachine.getInputSlot());
+                blockMenu.dropItems(location, abstractMachine.getOutputSlot());
             }
         };
     }
@@ -78,8 +78,8 @@ public final class MachineUtil {
             public void onPlayerBreak(BlockBreakEvent blockBreakEvent, ItemStack itemStack, List<ItemStack> list) {
                 Location location = blockBreakEvent.getBlock().getLocation();
                 BlockMenu blockMenu = BlockStorage.getInventory(location);
-                blockMenu.dropItems(location, abstractMachine.getInputSlots());
-                blockMenu.dropItems(location, abstractMachine.getOutputSlots());
+                blockMenu.dropItems(location, abstractMachine.getInputSlot());
+                blockMenu.dropItems(location, abstractMachine.getOutputSlot());
                 blockMenu.dropItems(location, slot);
             }
         };

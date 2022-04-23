@@ -112,6 +112,10 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
      */
     public abstract int[] getOutputSlot();
 
+    protected AbstractMachine getMachine() {
+        return machine;
+    }
+
     /**
      * Update the menu
      * May be used in some specific machine

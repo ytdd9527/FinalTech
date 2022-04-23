@@ -54,7 +54,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
     private static final String ORDER_VALUE_DESC = "desc";
     private static final String ORDER_VALUE_ASC = "asc";
 
-    private static final long UPDATE_TIME_LIMIT = 250;
+    private static final long UPDATE_TIME_LIMIT = 50;
 
     private AbstractMachine abstractMachine;
 

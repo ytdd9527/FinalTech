@@ -57,7 +57,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements AntiAccele
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         Location blockLocation = block.getLocation();
         BlockMenu blockMenu = BlockStorage.getInventory(blockLocation);
-        ItemStack matchItem = blockMenu.getItemInSlot(this.getInputSlots()[0]);
+        ItemStack matchItem = blockMenu.getItemInSlot(this.getInputSlot()[0]);
 
         int accelerate = 0;
         int range = RANGE;

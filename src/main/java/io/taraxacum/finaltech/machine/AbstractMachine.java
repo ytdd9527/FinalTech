@@ -132,12 +132,12 @@ public abstract class AbstractMachine extends SlimefunItem {
     protected abstract AbstractMachineMenu setMachineMenu();
 
     @Nonnull
-    public final int[] getInputSlots() {
+    public final int[] getInputSlot() {
         return this.menu.getInputSlot();
     }
 
     @Nonnull
-    public final int[] getOutputSlots() {
+    public final int[] getOutputSlot() {
         return this.menu.getOutputSlot();
     }
 

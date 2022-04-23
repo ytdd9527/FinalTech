@@ -23,7 +23,6 @@ import javax.annotation.Nonnull;
 /**
  * This is a slimefun machine
  * it will be used in gameplay
- *
  * It's not a function class!
  * @author Final_ROOT
  */
@@ -42,13 +41,13 @@ public class ItemDeserializeParser extends AbstractStandardMachine {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        for (int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (CopyCardItem.isCopyCardItem(item)) {
                 ItemStack stringItem = StringItemUtil.parseItemInCard(item);
                 if (!ItemStackUtil.isItemNull(stringItem)) {
                     stringItem.setAmount(item.getAmount());
-                    blockMenu.pushItem(stringItem, this.getOutputSlots());
+                    blockMenu.pushItem(stringItem, this.getOutputSlot());
                 }
             }
         }

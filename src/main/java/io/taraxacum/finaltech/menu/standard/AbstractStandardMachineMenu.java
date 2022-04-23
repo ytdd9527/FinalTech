@@ -103,7 +103,7 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public void updateMenu(@Nonnull BlockMenu blockMenu, Block block) {
+    protected void updateMenu(@Nonnull BlockMenu blockMenu, Block block) {
         if (BlockStorage.getLocationInfo(block.getLocation(), MaxStackHelper.KEY) == null) {
             BlockStorage.addBlockInfo(block.getLocation(), MaxStackHelper.KEY, "0");
         }

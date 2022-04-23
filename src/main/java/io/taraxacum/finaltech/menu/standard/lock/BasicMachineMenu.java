@@ -1,13 +1,14 @@
-package io.taraxacum.finaltech.menu.standard;
+package io.taraxacum.finaltech.menu.standard.lock;
 
 import io.taraxacum.finaltech.machine.AbstractMachine;
+import io.taraxacum.finaltech.menu.standard.AbstractStandardMachineMenu;
 
 import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
  */
-public class BasicMachineMenu extends AbstractStandardMachineMenu {
+public class BasicMachineMenu extends AbstractLockMachineMenu {
     private static final int[] BORDER = new int[] {3, 4, 5, 12, 14, 21, 22, 23, 30, 31, 32, 39, 40, 41, 48, 49, 50};
     private static final int[] INPUT_BORDER = new int[] {2, 11, 20, 29, 38, 47};
     private static final int[] OUTPUT_BORDER = new int[] {6, 15, 24, 33, 42, 51};

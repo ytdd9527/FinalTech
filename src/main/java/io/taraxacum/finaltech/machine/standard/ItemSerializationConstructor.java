@@ -24,7 +24,6 @@ import javax.annotation.Nonnull;
 /**
  * This is a slimefun machine
  * it will be used in gameplay
- *
  * It's not a function class!
  * @author Final_ROOT
  */
@@ -62,7 +61,7 @@ public class ItemSerializationConstructor extends AbstractStandardMachine {
             }
         }
 
-        for (int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlot()) {
             ItemStack inputItem = inv.getItemInSlot(slot);
             if (ItemStackUtil.isItemNull(inputItem)) {
                 continue;
@@ -77,8 +76,8 @@ public class ItemSerializationConstructor extends AbstractStandardMachine {
             }
         }
 
-        if (operation != null && operation.isFinished() && InvUtils.fits(inv.toInventory(), operation.getResult(), this.getOutputSlots())) {
-            inv.pushItem(operation.getResult(), this.getOutputSlots());
+        if (operation != null && operation.isFinished() && InvUtils.fits(inv.toInventory(), operation.getResult(), this.getOutputSlot())) {
+            inv.pushItem(operation.getResult(), this.getOutputSlot());
             this.getMachineProcessor().endOperation(block);
             operation = null;
             BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_ITEM_KEY, null);

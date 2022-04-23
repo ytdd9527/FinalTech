@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.machine.standard.advanced;
+package io.taraxacum.finaltech.machine.manual.craft;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -19,8 +19,8 @@ import java.util.Set;
 /**
  * @author Final_ROOT
  */
-public class AdvancedGoldPan extends AbstractAdvanceMachine {
-    public AdvancedGoldPan(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class ManualGoldPan extends AbstractManualCraftMachine{
+    public ManualGoldPan(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 

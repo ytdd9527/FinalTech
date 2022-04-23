@@ -41,7 +41,7 @@ public class MatrixExpandedCapacitor extends AbstractExpandedElectricCapacitor{
     protected void tick(Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         Location location = block.getLocation();
         BlockMenu blockMenu = BlockStorage.getInventory(location);
-        for (int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (!ItemStackUtil.isItemNull(item) && ItemStackUtil.isItemSimilar(item, FinalTechItems.FAKE)) {
                 String energyStack = String.valueOf(config.getValue(KEY));

@@ -52,7 +52,7 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator implements An
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         World world = block.getWorld();
         int extraRange = 0;
-        for (int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (!ItemStackUtil.isItemNull(item) && ItemStackUtil.isItemSimilar(item, FinalTechItems.FAKE)) {
                 int amount = item.getAmount() / 2;
@@ -70,8 +70,8 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator implements An
                     String slimefunItemId = energyComponentConfig.getString(SlimefunUtil.KEY_ID);
                     if (slimefunItemId.equals(this.getId()) && !location.equals(block.getLocation())) {
                         Slimefun.runSync(() -> {
-                            List<ItemStack> dropItemList = new ArrayList<>(this.getInputSlots().length + 1);
-                            for (int slot : MatrixGenerator.this.getInputSlots()) {
+                            List<ItemStack> dropItemList = new ArrayList<>(this.getInputSlot().length + 1);
+                            for (int slot : MatrixGenerator.this.getInputSlot()) {
                                 ItemStack item = blockMenu.getItemInSlot(slot);
                                 if (!ItemStackUtil.isItemNull(item)) {
                                     dropItemList.add(blockMenu.getItemInSlot(slot));

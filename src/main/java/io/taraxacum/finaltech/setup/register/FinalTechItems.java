@@ -23,54 +23,24 @@ public final class FinalTechItems {
     public static final SlimefunItemStack LAVA_CARD = new SlimefunItemStack("FINALTECH_LAVAL_CARD", Material.PAPER, "&7岩浆卡");
     public static final SlimefunItemStack MILK_CARD = new SlimefunItemStack("FINALTECH_MILK_CARD", Material.PAPER, "&7牛奶卡");
     public static final SlimefunItemStack GEARWHEEL = new SlimefunItemStack("FINALTECH_GEARWHEEL", Material.REDSTONE, "&7齿轮");
-    public static final SlimefunItemStack UNORDERED_DUST = new SlimefunItemStack("FINALTECH_UNORDERED_DUST", Material.WHEAT_SEEDS, "&f无序尘埃",
-            "&8它被感知到了");
-    public static final SlimefunItemStack ORDERED_DUST = new SlimefunItemStack("FINALTECH_ORDERED_DUST", Material.SLIME_BALL, "&f有序尘埃",
-            "&8至此",
-            "&8万物将被重构");
+    public static final SlimefunItemStack UNORDERED_DUST = new SlimefunItemStack("FINALTECH_UNORDERED_DUST", Material.WHEAT_SEEDS, "&f无序尘埃");
+    public static final SlimefunItemStack ORDERED_DUST = new SlimefunItemStack("FINALTECH_ORDERED_DUST", Material.SLIME_BALL, "&f有序尘埃");
     public static final SlimefunItemStack QUANTITY_MODULE = new SlimefunItemStack("FINALTECH_QUANTITY_MODULE", Material.AMETHYST_SHARD, "&3数量组件",
-            "&8线性改变机器效率");
-    public static final SlimefunItemStack QUANTITY_MODULE_V2 = new SlimefunItemStack("FINALTECH_QUANTITY_MODULE_V2", Material.AMETHYST_SHARD, "&3数量组件v2",
-            "&8递归地改变机器效率");
-    public static final SlimefunItemStack SINGULARITY = new SlimefunItemStack("FINALTECH_SINGULARITY", Material.NETHER_STAR, "&e奇点",
-            "&7纯粹意义上的奇点",
-            "&d数量&7的堆积物");
-    public static final SlimefunItemStack SPIROCHETE = new SlimefunItemStack("FINALTECH_SPIROCHETE", Material.ARMOR_STAND, "&e螺旋体",
-            "&7凝聚着多种物质",
-            "&d结构&7的聚合物");
-    public static final SlimefunItemStack SHELL = new SlimefunItemStack("FINALTECH_SHELL", Material.PRISMARINE_SHARD, "&e壳",
-            "&7内在空白之物",
-            "&7具备&d转化&7为其他物质的可能");
-    public static final SlimefunItemStack FAKE = new SlimefunItemStack("FINALTECH_FAKE", Material.END_CRYSTAL, "§x§f§0§f§0§f§0伪物",
-            "&7模仿&d世界&7之物",
-            "&7蕴含&d创造&7的可能");
-    public static final SlimefunItemStack BUG = new SlimefunItemStack("FINALTECH_BUG", Material.INFESTED_COBBLESTONE, "&8BUG",
-            "&8??!");
-    public static final SlimefunItemStack CODE_ADDITION = new SlimefunItemStack("FINALTECH_CODE_ADDITION0", Material.PAPER, "&b概念<加法>");
-    public static final SlimefunItemStack CODE_SYMMETRY = new SlimefunItemStack("FINALTECH_CODE_SYMMETRY", Material.PAPER, "&b概念<对称>");
-    public static final SlimefunItemStack CODE_RANDOM = new SlimefunItemStack("FINALTECH_CODE_RANDOM", Material.PAPER, "&b概念<随机>");
-    public static final SlimefunItemStack CODE_NULL = new SlimefunItemStack("FINALTECH_CODE_NULL", Material.PAPER, "&b概念<空值>");
-    public static final SlimefunItemStack CODE_CREATE = new SlimefunItemStack("FINALTECH_CODE_CREATE", Material.PAPER, "&9高级概念<创造>",
-            "&7繁荣的基础");
-    public static final SlimefunItemStack CODE_FINAL = new SlimefunItemStack("FINALTECH_CODE_FINAL", Material.ENCHANTED_BOOK, "&f概念<Final>",
-        "&7无数概念交织在一起",
-        "&7于是他们无法再创造新事物");
-    public static final SlimefunItemStack CREATION_GENEALOGY = new SlimefunItemStack("FINALTECH_CREATION_GENEALOGY", Material.BOOK,
-            "§x§7§8§7§8§7§8造" +
-            "§x§8§0§8§0§8§0物" +
-            "§x§9§0§9§0§9§0系" +
-            "§x§9§8§9§8§9§8谱");
-    public static final SlimefunItemStack IMAGINARY_TRUTH = new SlimefunItemStack("FINALTECH_IMAGINARY_TRUTH", Material.PAPER,
-            "§x§b§b§b§b§b§b虚" +
-            "§x§b§b§b§b§b§b构" +
-            "§x§b§b§b§b§b§b真" +
-            "§x§b§b§b§b§b§b理");
+            "&8改变机器效率");
+    public static final SlimefunItemStack QUANTITY_MODULE_INFINITY = new SlimefunItemStack("FINALTECH_QUANTITY_MODULE_INFINITY", Material.AMETHYST_SHARD, "&3数量组件-无限");
+    public static final SlimefunItemStack COPY_CARD = new SlimefunItemStack("FINALTECH_COPY_CARD", Material.PAPER, "&4复制卡");
+    public static final SlimefunItemStack ANNULAR = new SlimefunItemStack("FINALTECH_ANNULAR", Material.PAPER, "&7环");
+    public static final SlimefunItemStack SINGULARITY = new SlimefunItemStack("FINALTECH_SINGULARITY", Material.NETHER_STAR, "&e奇点");
+    public static final SlimefunItemStack SPIROCHETE = new SlimefunItemStack("FINALTECH_SPIROCHETE", Material.ARMOR_STAND, "&e螺旋体");
+    public static final SlimefunItemStack SHELL = new SlimefunItemStack("FINALTECH_SHELL", Material.PRISMARINE_SHARD, "&e壳");
+    public static final SlimefunItemStack FAKE = new SlimefunItemStack("FINALTECH_FAKE", Material.END_CRYSTAL, "§x§f§0§f§0§f§0伪物");
 
     // basic machines
     public static final SlimefunItemStack BASIC_COBBLE_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_COBBLE_FACTORY", Material.CHISELED_STONE_BRICKS, "&7基础刷石工厂");
     public static final SlimefunItemStack BASIC_ORE_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_ORE_FACTORY", Material.CHISELED_DEEPSLATE, "&7基础矿石工厂");
     public static final SlimefunItemStack BASIC_DUST_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_DUST_FACTORY", Material.POLISHED_DEEPSLATE, "&7基础矿粉工厂");
     public static final SlimefunItemStack BASIC_FARM_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_FARM_FACTORY", Material.MOSS_BLOCK, "&7基础作物工厂");
+    public static final SlimefunItemStack MANUAL_CRAFTING_TABLE = new SlimefunItemStack("FINALTECH_MANUAL_CRAFTING_TABLE", Material.CRAFTING_TABLE, "&6快捷原版工作台");
     public static final SlimefunItemStack MANUAL_ENHANCED_CRAFTING_TABLE = new SlimefunItemStack("FINALTECH_MANUAL_ENHANCED_CRAFTING_TABLE", Material.CRAFTING_TABLE, "&6快捷增强型工作台");
     public static final SlimefunItemStack MANUAL_GRIND_STONE = new SlimefunItemStack("FINALTECH_MANUAL_GRIND_STONE", Material.DISPENSER, "&6快捷磨石");
     public static final SlimefunItemStack MANUAL_ARMOR_FORGE = new SlimefunItemStack("FINALTECH_MANUAL_ARMOR_FORGE", Material.IRON_BLOCK, "&6快捷盔甲锻造台");
@@ -79,15 +49,21 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MANUAL_SMELTERY = new SlimefunItemStack("FINALTECH_MANUAL_SMELTERY", Material.BLAST_FURNACE, "&6快捷冶炼炉");
     public static final SlimefunItemStack MANUAL_PRESSURE_CHAMBER = new SlimefunItemStack("FINALTECH_MANUAL_PRESSURE_CHAMBER", Material.STICKY_PISTON, "&6快捷压力机");
     public static final SlimefunItemStack MANUAL_MAGIC_WORKBENCH = new SlimefunItemStack("FINALTECH_MANUAL_MAGIC_WORKBENCH", Material.BOOKSHELF, "&6快捷魔法工作台");
+    public static final SlimefunItemStack MANUAL_ORE_WASHER = new SlimefunItemStack("FINALTECH_MANUAL_ORE_WASHER", Material.CRAFTING_TABLE, "&6快捷洗矿机");
+    public static final SlimefunItemStack MANUAL_COMPOSTER = new SlimefunItemStack("FINALTECH_MANUAL_COMPOSTER", Material.CRAFTING_TABLE, "&6快捷搅拌机");
+    public static final SlimefunItemStack MANUAL_GOLD_PAN = new SlimefunItemStack("FINALTECH_MANUAL_GOLD_PAN", Material.CRAFTING_TABLE, "&6快捷淘金机");
+    public static final SlimefunItemStack MANUAL_CRUCIBLE = new SlimefunItemStack("FINALTECH_CRUCIBLE", Material.CRAFTING_TABLE, "&6快捷坩埚");
     public static final SlimefunItemStack MANUAL_JUICER = new SlimefunItemStack("FINALTECH_MANUAL_JUICER", Material.GLASS, "&6快捷榨汁机");
     public static final SlimefunItemStack MANUAL_ANCIENT_ALTAR = new SlimefunItemStack("FINALTECH_MANUAL_ANCIENT_ALTAR", Material.ENCHANTING_TABLE, "&6快捷古代祭坛");
     public static final SlimefunItemStack MANUAL_HEATED_PRESSURE_CHAMBER = new SlimefunItemStack("FINALTECH_MANUAL_HEATED_PRESSURE_CHAMBER", Material.LIGHT_GRAY_STAINED_GLASS, "&6快捷加热压力舱");
-    public static final SlimefunItemStack ORDERED_DUST_FACTORY = new SlimefunItemStack("FINALTECH_ORDERED_DUST_FACTORY", Material.DIRT, "&7尘埃制造机");
-    public static final SlimefunItemStack ORDERED_DUST_FACTORY_V2 = new SlimefunItemStack("FINALTECH_ORDERED_DUST_FACTORY_V2", Material.COBBLESTONE, "&7尘埃制造机");
+    public static final SlimefunItemStack ORDERED_DUST_FACTORY_DIRT = new SlimefunItemStack("FINALTECH_ORDERED_DUST_FACTORY_DIRT", Material.DIRT, "&7尘埃制造机");
+    public static final SlimefunItemStack ORDERED_DUST_FACTORY_STONE = new SlimefunItemStack("FINALTECH_ORDERED_DUST_FACTORY_STONE", Material.COBBLESTONE, "&7尘埃制造机");
     public static final SlimefunItemStack CARD_OPERATION_PORT = new SlimefunItemStack("FINALTECH_CARD_OPERATION_PORT", Material.CARTOGRAPHY_TABLE, "&f物品卡操作台");
 
     // advanced machines
-    public static final SlimefunItemStack ADVANCED_ELECTRIC_FURANCE = new SlimefunItemStack("FINALTECH_ADVANCED_ELECTRIC_FURANCE", Material.FURNACE, "&c高级电炉");
+    public static final SlimefunItemStack ADVANCED_COMPOSTER = new SlimefunItemStack("FINALTECH_COMPOSTER", Material.CRAFTING_TABLE, "&c高级搅拌机");
+    public static final SlimefunItemStack ADVANCED_JUICER = new SlimefunItemStack("FINALTECH_JUICER", Material.CRAFTING_TABLE, "&c高级榨汁机");
+    public static final SlimefunItemStack ADVANCED_ELECTRIC_FURNACE = new SlimefunItemStack("FINALTECH_ADVANCED_ELECTRIC_FURNACE", Material.FURNACE, "&c高级电炉");
     public static final SlimefunItemStack ADVANCED_GOLD_PAN = new SlimefunItemStack("FINALTECH_ADVANCED_GOLD_PAN", Material.BROWN_TERRACOTTA, "&c高级淘金机");
     public static final SlimefunItemStack ADVANCED_ELECTRIC_DUST_WASHER = new SlimefunItemStack("FINALTECH_ADVANCED_DUST_WASHER", Material.BLUE_STAINED_GLASS, "&c高级洗矿机");
     public static final SlimefunItemStack ADVANCED_ELECTRIC_INGOT_FACTORY = new SlimefunItemStack("FINALTECH_ADVANCED_ELECTRIC_INGOT_FACTORY", Material.RED_TERRACOTTA, "&c高级铸锭机");
@@ -107,24 +83,17 @@ public final class FinalTechItems {
     public static final SlimefunItemStack ADVANCED_AUTO_CRAFT = new SlimefunItemStack("FINALTECH_ADVANCED_AUTO_CRAFT", Material.BEACON, "&c高级自动合成机");
 
     // best machines
-    public static final SlimefunItemStack ALL_COMPRESSION = new SlimefunItemStack("FINALTECH_ALL_COMPRESSION", Material.AMETHYST_BLOCK, "&9万物压缩器");
-    public static final SlimefunItemStack ALL_FACTORY = new SlimefunItemStack("FINALTECH_ALL_FACTORY", Material.BUDDING_AMETHYST, "&9万物工厂");
-    public static final SlimefunItemStack COPY_CARD = new SlimefunItemStack("FINALTECH_COPY_CARD", Material.PAPER, "&4复制卡");
-    public static final SlimefunItemStack OVERCLOCK_FRAME_MACHINE = new SlimefunItemStack("FINALTECH_OVERCLOCK_FRAME_MACHINE", Material.LECTERN, "&9超频框架",
-            "&6最大可存储电量 &e" + 536870912 + "J");
-    public static final SlimefunItemStack OVERLOAD_CORE_MACHINE = new SlimefunItemStack("FINALTECH_OVERLOAD_CORE_MACHINE", Material.TARGET, "&9超载核心");
+    public static final SlimefunItemStack ALL_COMPRESSION = new SlimefunItemStack("FINALTECH_ALL_COMPRESSION", Material.AMETHYST_BLOCK, "&9序列化构造器");
+    public static final SlimefunItemStack ALL_FACTORY = new SlimefunItemStack("FINALTECH_ALL_FACTORY", Material.BUDDING_AMETHYST, "&9反序列化解析器");
 
     // cargos
     public static final SlimefunItemStack BASIC_FRAME_MACHINE = new SlimefunItemStack("FINALTECH_BASIC_FRAME_MACHINE", Material.STONE, "&f基础机器框架", "&8可放置");
     public static final SlimefunItemStack BASIC_NORMAL_STORAGE_UNIT = new SlimefunItemStack("FINALTECH_BASIC_NORMAL_STORAGE_UNIT", Material.GLASS, "&f普通存储单元");
     public static final SlimefunItemStack BASIC_LINKED_STORAGE_UNIT = new SlimefunItemStack("FINALTECH_BASIC_LINKED_STORAGE_UNIT", Material.GLASS, "&f可识别存储单元");
     public static final SlimefunItemStack BASIC_CHARGEABLE_STORAGE_UNIT = new SlimefunItemStack("FINALTECH_BASIC_CHARGEABLE_STORAGE_UNIT", Material.GLASS, "&f可充电存储单元");
-    public static final SlimefunItemStack TRANSFER_PIPE = new SlimefunItemStack("FINALTECH_CARGO_TRANSFER_PIPE", Material.END_ROD, "&f导管",
-            "&8即放即用");
-    public static final SlimefunItemStack TRANSFER_LINE = new SlimefunItemStack("FINALTECH_CARGO_TRANSFER_LINE", Material.DROPPER, "&f支架",
-            "&8即放即用");
+    public static final SlimefunItemStack TRANSFER_PIPE = new SlimefunItemStack("FINALTECH_CARGO_TRANSFER_PIPE", Material.END_ROD, "&f导管", "&8即放即用");
+    public static final SlimefunItemStack TRANSFER_LINE = new SlimefunItemStack("FINALTECH_CARGO_TRANSFER_LINE", Material.DROPPER, "&f支架", "&8即放即用");
     public static final SlimefunItemStack TRANSFER_STATION = new SlimefunItemStack("FINALTECH_CARGO_TRANSFER_STATION", Material.TINTED_GLASS, "&f中转器");
-    public static final SlimefunItemStack STACKER = new SlimefunItemStack("FINALTECH_STACKER", Material.LODESTONE, "&f广域堆叠器");
     public static final SlimefunItemStack STORAGE_INTERACT_PORT = new SlimefunItemStack("FINALTECH_STORAGE_INTERACT_PORT", Material.BOOKSHELF, "&f存储交互接口");
     public static final SlimefunItemStack STORAGE_INSERT_PORT = new SlimefunItemStack("FINALTECH_STORAGE_INSERT_PORT", Material.BOOKSHELF, "&f高速存入接口");
     public static final SlimefunItemStack STORAGE_WITHDRAW_PORT = new SlimefunItemStack("FINALTECH_STORAGE_WITHDRAW_PORT", Material.BOOKSHELF, "&f高速取出接口");
@@ -182,10 +151,10 @@ public final class FinalTechItems {
             "&6最大可存储电量 &e" + BasicChargeIncreaseCapacitor.CAPACITOR + "J");
     public static final SlimefunItemStack BASIC_CONSUME_REDUCE_CAPACITOR = new SlimefunItemStack("FINALTECH_BASIC_CONSUME_REDUCE_CAPACITOR", Material.RED_STAINED_GLASS, "&7基础耗电减免电容",
             "&6最大可存储电量 &e" + BasicConsumeReduceCapacitor.CAPACITOR + "J");
-    public static final SlimefunItemStack BASIC_SELF_GENERATE_CAPACITOR = new SlimefunItemStack("FINALTECH_BASIC_SELF_GENERATE_CAPACITOR", Material.RED_STAINED_GLASS, "&7基础自发电电容",
-            "&6最大可存储电量 &e" + BasicSelfGenerateCapacitor.CAPACITOR + "J");
-    public static final SlimefunItemStack BASIC_VOID_GENERATE_CAPACITOR = new SlimefunItemStack("FINALTECH_BASIC_VOID_GENERATE_CAPACITOR", Material.RED_STAINED_GLASS, "&7基础空发电电容",
-            "&6最大可存储电量 &e" + BasicVoidGenerateCapacitor.CAPACITOR + "J");
+    public static final SlimefunItemStack ADVANCED_CHARGE_INCREASE_CAPACITOR = new SlimefunItemStack("FINALTECH_ADVANCED_CHARGE_INCREASE_CAPACITOR", Material.RED_STAINED_GLASS, "&7高级充电增益电容",
+            "&6最大可存储电量 &e" + BasicChargeIncreaseCapacitor.CAPACITOR + "J");
+    public static final SlimefunItemStack ADVANCED_CONSUME_REDUCE_CAPACITOR = new SlimefunItemStack("FINALTECH_ADVANCED_CONSUME_REDUCE_CAPACITOR", Material.RED_STAINED_GLASS, "&7高级耗电减免电容",
+            "&6最大可存储电量 &e" + BasicConsumeReduceCapacitor.CAPACITOR + "J");
     public static final SlimefunItemStack NORMAL_ELECTRICITY_SHOOT_PILE = new SlimefunItemStack("FINALTECH_NORMAL_ELECTRICITY_SHOOT_PILE", Material.DISPENSER, "&e普通射电桩",
             "&6传输半径&b " + NormalElectricityShootPile.RANGE + "格");
     public static final SlimefunItemStack ENERGIZED_ELECTRICITY_SHOOT_PILE = new SlimefunItemStack("FINALTECH_ENERGIZED_ELECTRICITY_SHOOT_PILE", Material.DISPENSER, "&e充能射电桩",
@@ -228,6 +197,11 @@ public final class FinalTechItems {
             "&6单组流转电量&e " + EnergizedStackExpandedCapacitor.CAPACITY + "J",
             "&6电容组数&3 " + EnergizedStackExpandedCapacitor.STACK + "组",
             "&6实际最大存储电量&e " + (long) EnergizedStackExpandedCapacitor.CAPACITY * EnergizedStackExpandedCapacitor.STACK + "J");
+    public static final SlimefunItemStack OVERLOADED_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_OVERLOADED_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, "&a过载扩展电容",
+            "",
+            "&6单组流转电量&e " + EnergizedStackExpandedCapacitor.CAPACITY + "J",
+            "&6电容组数&3 " + EnergizedStackExpandedCapacitor.STACK + "组",
+            "&6实际最大存储电量&e " + (long) EnergizedStackExpandedCapacitor.CAPACITY * EnergizedStackExpandedCapacitor.STACK + "J");
     public static final SlimefunItemStack MATRIX_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_MATRIX_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, "&a矩阵电容",
             "",
             "&6单组流转电量&e " + MatrixExpandedCapacitor.CAPACITY + "J",
@@ -256,7 +230,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack ENERGIZED_STACK_GENERATOR = new SlimefunItemStack("FINALTECH_ENERGIZED_STACK_GENERATOR", Material.GLOWSTONE, "&2充能供电机组",
             "&6供电量&e " + EnergizedStackGenerator.ELECTRICITY + "J",
             "&6传输半径&b " + EnergizedStackGenerator.RANGE + "格");
-    public static final SlimefunItemStack OVERLOADED_GENERATOR = new SlimefunItemStack("FINALTECH_REINFORCED_GENERATOR", Material.GLOWSTONE, "&2过载供电机",
+    public static final SlimefunItemStack OVERLOADED_GENERATOR = new SlimefunItemStack("FINALTECH_OVERLOADED_GENERATOR", Material.GLOWSTONE, "&2过载供电机",
             "&6供电量&e " + OverloadedGenerator.ELECTRICITY + "J",
             "&6传输半径&b " + OverloadedGenerator.RANGE + "格");
     public static final SlimefunItemStack MATRIX_GENERATOR = new SlimefunItemStack("FINALTECH_MATRIX_GENERATOR", Material.SEA_LANTERN, "&2矩阵供电机",
@@ -279,6 +253,6 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MACHINE_ACTIVATE_CARD_L2 = new SlimefunItemStack("FINALTECH_MACHINE_ACTIVATE_CARD_L2", Material.PAPER, "&f带电超频卡L2");
     public static final SlimefunItemStack MACHINE_ACTIVATE_CARD_L3 = new SlimefunItemStack("FINALTECH_MACHINE_ACTIVATE_CARD_L3", Material.PAPER, "&f带电超频卡L3");
     public static final SlimefunItemStack MACHINE_ACTIVATE_CARD_L4 = new SlimefunItemStack("FINALTECH_MACHINE_ACTIVATE_CARD_L4", Material.PAPER, "&f带电超频卡L4");
-    public static final SlimefunItemStack MACHINE_CHARGE_CARD_INFINITY = new SlimefunItemStack("FINALTECH_MACHINE_CHARGE_CARD_L4", Material.PAPER, "&f无限充能卡");
-    public static final SlimefunItemStack MACHINE_ACCELERATE_CARD_INFINITY = new SlimefunItemStack("FINALTECH_MACHINE_ACCELERATE_CARD_L4", Material.PAPER, "&f无限过载卡");
+    public static final SlimefunItemStack MACHINE_CHARGE_CARD_INFINITY = new SlimefunItemStack("FINALTECH_MACHINE_CHARGE_CARD_INFINITY", Material.PAPER, "&f无限充能卡");
+    public static final SlimefunItemStack MACHINE_ACCELERATE_CARD_INFINITY = new SlimefunItemStack("FINALTECH_MACHINE_ACCELERATE_CARD_INFINITY", Material.PAPER, "&f无限过载卡");
 }

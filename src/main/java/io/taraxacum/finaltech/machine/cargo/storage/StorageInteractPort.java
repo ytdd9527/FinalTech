@@ -53,16 +53,16 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
                 Inventory inventory = ((InventoryHolder) blockState).getInventory();
                 LinkedList<ItemStackWrapper> unPushItem = new LinkedList<>();
                 LinkedList<ItemStackWrapper> unStackItem = new LinkedList<>();
-                boolean isFull = MachineUtil.isFull(blockMenu.toInventory(), getOutputSlots()) || MachineUtil.itemCount(blockMenu.toInventory(), getOutputSlots()) >= getOutputSlots().length / 2;
-                boolean isEmpty = MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlots()) || MachineUtil.itemCount(blockMenu.toInventory(), getInputSlots()) < getInputSlots().length / 2;
+                boolean isFull = MachineUtil.isFull(blockMenu.toInventory(), getOutputSlot()) || MachineUtil.itemCount(blockMenu.toInventory(), getOutputSlot()) >= getOutputSlot().length / 2;
+                boolean isEmpty = MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlot()) || MachineUtil.itemCount(blockMenu.toInventory(), getInputSlot()) < getInputSlot().length / 2;
                 if (isFull && isEmpty) {
                     return;
                 }
                 if (!isFull) {
-                    MachineUtil.stockSlots(blockMenu, getOutputSlots());
+                    MachineUtil.stockSlots(blockMenu, getOutputSlot());
                 }
                 if (!isEmpty) {
-                    MachineUtil.stockSlots(blockMenu, getInputSlots());
+                    MachineUtil.stockSlots(blockMenu, getInputSlot());
                 }
                 int pushItemAmount = 0;
                 Map<ItemStack, ItemMeta> map = new HashMap<>(inventory.getSize());
@@ -98,13 +98,13 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
                         }
                         if (work) {
                             pushItemAmount--;
-                            pushCount = StringItemUtil.pushItemFromCard(itemMeta, stringItem, blockMenu.toInventory(), getOutputSlots());
+                            pushCount = StringItemUtil.pushItemFromCard(itemMeta, stringItem, blockMenu.toInventory(), getOutputSlot());
                             if (pushCount == 0) {
                                 unPushItem.add(stringItem.getItemStackWrapper());
                             } else {
-                                isFull = MachineUtil.isFull(blockMenu.toInventory(), getOutputSlots());
+                                isFull = MachineUtil.isFull(blockMenu.toInventory(), getOutputSlot());
                                 if (!isFull) {
-                                    MachineUtil.stockSlots(blockMenu, getOutputSlots());
+                                    MachineUtil.stockSlots(blockMenu, getOutputSlot());
                                 }
                             }
                             if (pushItemAmount == 0) {
@@ -123,15 +123,15 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
                             }
                         }
                         if (work) {
-                            stackCount = StringItemUtil.storageItemToCard(itemMeta, stringItem, entry.getKey().getAmount(), blockMenu.toInventory(), getInputSlots());
+                            stackCount = StringItemUtil.storageItemToCard(itemMeta, stringItem, entry.getKey().getAmount(), blockMenu.toInventory(), getInputSlot());
                             if (stackCount == 0) {
                                 if (stringItem != null) {
                                     unStackItem.add(stringItem.getItemStackWrapper());
                                 }
                             } else {
-                                isEmpty = MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlots());
+                                isEmpty = MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlot());
                                 if (!isEmpty) {
-                                    MachineUtil.stockSlots(blockMenu, getInputSlots());
+                                    MachineUtil.stockSlots(blockMenu, getInputSlot());
                                 }
                                 if (stringItem == null) {
                                     stringItem = new ItemStackWithWrapper(StringItemUtil.parseItemInCard(itemMeta));

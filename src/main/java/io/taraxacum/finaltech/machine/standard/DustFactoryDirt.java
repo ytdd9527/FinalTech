@@ -20,6 +20,10 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 /**
+ * Be used to make dust
+ * input 16 kinds of item and 1024 items in total to make a dust
+ * if you input more than 16 kinds of item or more than 1024 item in total
+ * it will output unordered dust
  * @author Final_ROOT
  */
 public class DustFactoryDirt extends AbstractStandardMachine {
@@ -41,7 +45,7 @@ public class DustFactoryDirt extends AbstractStandardMachine {
         BlockMenu inv = BlockStorage.getInventory(block);
         OrderedDustOperation operation = (OrderedDustOperation)this.getMachineProcessor().getOperation(block);
 
-        for (int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlot()) {
             ItemStack inputItem = inv.getItemInSlot(slot);
             if (inputItem == null) {
                 continue;
@@ -54,12 +58,12 @@ public class DustFactoryDirt extends AbstractStandardMachine {
             operation.addItem(inputItem);
 
             if (operation.isFinished()) {
-                if (operation.isOrderedDust() && InvUtils.fitAll(inv.toInventory(), new ItemStack[] {FinalTechItems.ORDERED_DUST}, this.getOutputSlots())) {
-                    inv.pushItem(new ItemStack(FinalTechItems.ORDERED_DUST), this.getOutputSlots());
+                if (operation.isOrderedDust() && InvUtils.fitAll(inv.toInventory(), new ItemStack[] {FinalTechItems.ORDERED_DUST}, this.getOutputSlot())) {
+                    inv.pushItem(new ItemStack(FinalTechItems.ORDERED_DUST), this.getOutputSlot());
                     this.getMachineProcessor().endOperation(block);
                     operation = null;
-                } else if (InvUtils.fitAll(inv.toInventory(), new ItemStack[] {FinalTechItems.UNORDERED_DUST}, this.getOutputSlots())) {
-                    inv.pushItem(new ItemStack(FinalTechItems.UNORDERED_DUST), this.getOutputSlots());
+                } else if (InvUtils.fitAll(inv.toInventory(), new ItemStack[] {FinalTechItems.UNORDERED_DUST}, this.getOutputSlot())) {
+                    inv.pushItem(new ItemStack(FinalTechItems.UNORDERED_DUST), this.getOutputSlot());
                     this.getMachineProcessor().endOperation(block);
                     operation = null;
                 }

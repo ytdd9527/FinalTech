@@ -5,6 +5,7 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecip
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -16,6 +17,14 @@ public class RandomMachineRecipe extends MachineRecipe {
 
     public RandomMachineRecipe(MachineRecipe machineRecipe, List<RandomOutput> randomOutputList) {
         super(machineRecipe.getTicks(), machineRecipe.getInput(), machineRecipe.getOutput());
+        this.randomOutputList = randomOutputList;
+        for (RandomOutput randomOutput : this.randomOutputList) {
+            this.weightSum += randomOutput.weight;
+        }
+    }
+
+    public RandomMachineRecipe(int ticks, ItemStack[] input, List<RandomOutput> randomOutputList) {
+        super(ticks, input, new ItemStack[0]);
         this.randomOutputList = randomOutputList;
         for (RandomOutput randomOutput : this.randomOutputList) {
             this.weightSum += randomOutput.weight;
@@ -53,6 +62,16 @@ public class RandomMachineRecipe extends MachineRecipe {
 
         public RandomOutput(List<ItemStack> outputItem, int weight) {
             this.outputItem = outputItem;
+            this.weight = weight;
+        }
+
+        public RandomOutput(ItemStack[] outputItem, int weight) {
+            this.outputItem = Arrays.stream(outputItem).toList();
+            this.weight = weight;
+        }
+
+        public RandomOutput(ItemStack outputItem, int weight) {
+            this.outputItem = Arrays.asList(outputItem);
             this.weight = weight;
         }
 

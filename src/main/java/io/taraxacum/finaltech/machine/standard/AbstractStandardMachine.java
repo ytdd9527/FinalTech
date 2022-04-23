@@ -20,6 +20,8 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 /**
+ * A machine which will need player input something
+ * then it will output something
  * @author Final_ROOT
  */
 public abstract class AbstractStandardMachine extends AbstractMachine implements MachineProcessHolder<MachineOperation>, RecipeItem {

@@ -1,8 +1,9 @@
-package io.taraxacum.finaltech.menu.standard;
+package io.taraxacum.finaltech.menu.standard.lock;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.AbstractMachine;
+import io.taraxacum.finaltech.menu.standard.AbstractStandardMachineMenu;
 import io.taraxacum.finaltech.util.menu.Icon;
 
 import javax.annotation.Nonnull;
@@ -10,7 +11,7 @@ import javax.annotation.Nonnull;
 /**
  * @author Final_ROOT
  */
-public class AdvancedMachineMenu extends AbstractStandardMachineMenu {
+public class AdvancedMachineMenu extends AbstractLockMachineMenu {
     private static final int[] BORDER = new int[] {3, 4, 5, 12, 14, 21, 23, 30, 32, 39, 40, 41, 48, 49, 50};
     private static final int[] INPUT_BORDER = new int[] {2, 11, 20, 29, 38, 47};
     private static final int[] OUTPUT_BORDER = new int[] {6, 15, 24, 33, 42, 51};

@@ -51,8 +51,8 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        List<Integer> amountList = new ArrayList<>(this.getInputSlots().length);
-        for (int slot : this.getInputSlots()) {
+        List<Integer> amountList = new ArrayList<>(this.getInputSlot().length);
+        for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (ItemStackUtil.isItemNull(item)) {
                 return;
@@ -61,13 +61,13 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
                 amountList.add(item.getAmount());
             }
         }
-        for (int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlot()) {
             blockMenu.replaceExistingItem(slot, ItemStackUtil.AIR);
         }
-        if (amountList.size() == this.getInputSlots().length) {
-            blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), this.getOutputSlots());
+        if (amountList.size() == this.getInputSlot().length) {
+            blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), this.getOutputSlot());
         } else {
-            blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), this.getOutputSlots());
+            blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), this.getOutputSlot());
         }
     }
 
@@ -80,12 +80,12 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
     public void registerDefaultRecipes() {
         this.registerDescriptiveRecipe("&f制造无序尘埃",
                 "",
-                "&f在机器界面左侧所有的" + this.getInputSlots().length + "格上都放有物品",
+                "&f在机器界面左侧所有的" + this.getInputSlot().length + "格上都放有物品",
                 "&f然后会消耗其上的所有物品",
                 "&f并生产一个无序尘埃");
         this.registerDescriptiveRecipe("&f制造有序尘埃",
                 "",
-                "&f在机器界面左侧所有的" + this.getInputSlots().length + "格上都放有物品",
+                "&f在机器界面左侧所有的" + this.getInputSlot().length + "格上都放有物品",
                 "&f并且各个格子上的物品数量各不相同",
                 "&f然后会消耗其上的所有物品",
                 "&f并生产一个有序尘埃");

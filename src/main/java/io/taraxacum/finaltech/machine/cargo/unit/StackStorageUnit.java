@@ -33,6 +33,6 @@ public class StackStorageUnit extends AbstractCargo {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        MachineUtil.stockSlots(blockMenu, this.getInputSlots());
+        MachineUtil.stockSlots(blockMenu, this.getInputSlot());
     }
 }

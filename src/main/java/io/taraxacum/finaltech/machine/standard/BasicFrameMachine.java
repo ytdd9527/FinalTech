@@ -18,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 /**
+ * Transfer item in it's input slots to it's output slots
  * @author Final_ROOT
  */
 public class BasicFrameMachine extends AbstractStandardMachine {
@@ -34,21 +35,21 @@ public class BasicFrameMachine extends AbstractStandardMachine {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        MachineUtil.stockSlots(blockMenu, this.getInputSlots());
-        for (int i = 0; i < this.getInputSlots().length && i < this.getOutputSlots().length; i++) {
-            ItemStack inputItem = blockMenu.getItemInSlot(this.getInputSlots()[i]);
-            ItemStack outputItem = blockMenu.getItemInSlot(this.getOutputSlots()[i]);
+        MachineUtil.stockSlots(blockMenu, this.getInputSlot());
+        for (int i = 0; i < this.getInputSlot().length && i < this.getOutputSlot().length; i++) {
+            ItemStack inputItem = blockMenu.getItemInSlot(this.getInputSlot()[i]);
+            ItemStack outputItem = blockMenu.getItemInSlot(this.getOutputSlot()[i]);
             if (ItemStackUtil.isItemNull(inputItem)) {
                 continue;
             }
             if (ItemStackUtil.isItemNull(outputItem)) {
-                blockMenu.toInventory().setItem(this.getOutputSlots()[i], new CustomItemStack(inputItem, inputItem.getAmount()));
-                blockMenu.consumeItem(this.getInputSlots()[i], inputItem.getAmount());
+                blockMenu.toInventory().setItem(this.getOutputSlot()[i], new CustomItemStack(inputItem, inputItem.getAmount()));
+                blockMenu.consumeItem(this.getInputSlot()[i], inputItem.getAmount());
             } else {
                 ItemStackUtil.stack(inputItem, outputItem);
             }
         }
-        MachineUtil.stockSlots(blockMenu, this.getOutputSlots());
+        MachineUtil.stockSlots(blockMenu, this.getOutputSlot());
     }
 
     @Override

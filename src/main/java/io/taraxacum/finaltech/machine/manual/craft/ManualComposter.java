@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.machine.standard.advanced;
+package io.taraxacum.finaltech.machine.manual.craft;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -10,13 +10,13 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Final_ROOT
  */
-public class AdvancedElectricFurance extends AbstractAdvanceMachine {
-    public AdvancedElectricFurance(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class ManualComposter extends AbstractManualCraftMachine{
+    public ManualComposter(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerRecipeBySlimefunId(this, SlimefunItems.ELECTRIC_FURNACE.getItemId());
+        SlimefunUtil.registerRecipeBySlimefunId(this, SlimefunItems.COMPOSTER.getItemId());
     }
 }

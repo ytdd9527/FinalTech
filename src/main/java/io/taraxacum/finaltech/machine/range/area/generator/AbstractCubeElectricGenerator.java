@@ -57,7 +57,7 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         String extraEnergy = this.getElectricity();
-        for (int slot : this.getInputSlots()) {
+        for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (!ItemStackUtil.isItemNull(item) && ItemStackUtil.isItemSimilar(item, this.getItem())) {
                 //todo

@@ -420,6 +420,7 @@ public final class ItemStackUtil {
         if (isItemNull(item)) {
             return "null";
         }
+        item = new ItemStack(item);
         if (item.hasItemMeta()) {
             ItemMeta itemMeta = item.getItemMeta();
             if (itemMeta.hasDisplayName()) {
@@ -430,6 +431,7 @@ public final class ItemStackUtil {
                 return itemNameAdapter.getName(item);
             } catch (InvocationTargetException | IllegalAccessException e) {
                 e.printStackTrace();
+                return "unknown";
             }
         }
         return "unknown";
@@ -533,6 +535,15 @@ public final class ItemStackUtil {
         }
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.setLore(Arrays.stream(lore).toList());
+        item.setItemMeta(itemMeta);
+    }
+
+    public static void setLore(@Nonnull ItemStack item, List<String> lore) {
+        if (isItemNull(item)) {
+            return;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
     }
 
