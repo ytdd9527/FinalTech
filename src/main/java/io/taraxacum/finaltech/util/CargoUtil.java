@@ -16,6 +16,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -43,15 +44,15 @@ public class CargoUtil {
      */
     public static int doCargo(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String itemMode, @Nonnull String filterMode, @Nonnull Inventory filterInv, int[] filterSlots, @Nonnull String cargoMode) {
         return switch (cargoMode) {
-            case CargoMode.VALUE_INPUT_MAIN -> doCargoInputMain(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
-            case CargoMode.VALUE_OUTPUT_MAIN -> doCargoOutputMain(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
-            case CargoMode.VALUE_SYMMETRY -> doCargoSymmetry(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
+            case CargoMode.VALUE_INPUT_MAIN -> CargoUtil.doCargoInputMain(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
+            case CargoMode.VALUE_OUTPUT_MAIN -> CargoUtil.doCargoOutputMain(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
+            case CargoMode.VALUE_SYMMETRY -> CargoUtil.doCargoStrongSymmetry(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
             default -> 0;
         };
     }
-    public static int doCargoSymmetry(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String itemMode, @Nonnull String filterMode, @Nonnull Inventory filterInv, int[] filterSlots) {
-        InvWithSlots inputMap = getInv(inputBlock, inputSize, inputOrder);
-        InvWithSlots outputMap = getInv(outputBlock, outputSize, outputOrder);
+    public static int doCargoStrongSymmetry(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String itemMode, @Nonnull String filterMode, @Nonnull Inventory filterInv, int[] filterSlots) {
+        InvWithSlots inputMap = CargoUtil.getInv(inputBlock, inputSize, inputOrder);
+        InvWithSlots outputMap = CargoUtil.getInv(outputBlock, outputSize, outputOrder);
         if (inputMap == null || outputMap == null) {
             return 0;
         }
@@ -63,6 +64,7 @@ public class CargoUtil {
         ItemStackWithWrapper typeItem = null;
         int number = 0;
         int length = Math.min(inputSlots.length, outputSlots.length);
+        // todo 移到 MachineUtil
         List<ItemStackWithWrapper> filterItemList = FilterMode.getMatchList(filterInv, filterSlots);
         for (int i = 0; i < length; i++) {
             ItemStack inputItem = inputInv.getItem(inputSlots[i]);
@@ -102,8 +104,61 @@ public class CargoUtil {
         }
         return number;
     }
+    public static int doCargoWeakSymmetry(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String itemMode, @Nonnull String filterMode, @Nonnull Inventory filterInv, int[] filterSlots) {
+        InvWithSlots inputMap = CargoUtil.getInv(inputBlock, inputSize, inputOrder);
+        InvWithSlots outputMap = CargoUtil.getInv(outputBlock, outputSize, outputOrder);
+        if (inputMap == null || outputMap == null) {
+            return 0;
+        }
+        Inventory inputInv = inputMap.getInventory();
+        int[] inputSlots = inputMap.getSlots();
+        Inventory outputInv = outputMap.getInventory();
+        int[] outputSlots = outputMap.getSlots();
+
+        ItemStackWithWrapper typeItem = null;
+        int number = 0;
+        int length = Math.max(inputSlots.length, outputSlots.length);
+        List<ItemStackWithWrapper> filterItemList = FilterMode.getMatchList(filterInv, filterSlots);
+        for (int i = 0; i < length; i++) {
+            ItemStack inputItem = inputInv.getItem(inputSlots[i % length]);
+            if (ItemStackUtil.isItemNull(inputItem)) {
+                continue;
+            }
+            ItemStackWithWrapper inputItemWithWrapper = new ItemStackWithWrapper(inputItem);
+            if (!FilterMode.ifMatch(inputItemWithWrapper, filterItemList, filterMode)) {
+                continue;
+            }
+            if (!CargoItemMode.VALUE_ALL.equals(itemMode) && typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWithWrapper.getItemStackWrapper(), typeItem.getItemStackWrapper())) {
+                continue;
+            }
+            ItemStack outputItem = outputInv.getItem(outputSlots[i % length]);
+            int count;
+            if (ItemStackUtil.isItemNull(outputItem)) {
+                count = Math.min(inputItem.getAmount(), cargoNumber);
+                outputItem = inputItem.clone();
+                outputItem.setAmount(count);
+                outputInv.setItem(outputSlots[i], outputItem);
+                outputItem = outputInv.getItem(outputSlots[i]);
+                inputItem.setAmount(inputItem.getAmount() - count);
+            } else {
+                count = ItemStackUtil.stack(inputItemWithWrapper, outputItem, cargoNumber);
+                if (count == 0) {
+                    continue;
+                }
+            }
+            if (typeItem == null) {
+                typeItem = new ItemStackWithWrapper(inputItem.clone());
+            }
+            cargoNumber -= count;
+            number += count;
+            if (CargoItemMode.VALUE_STACK.equals(itemMode)) {
+                cargoNumber = outputItem.getMaxStackSize() - outputItem.getAmount();
+            }
+        }
+        return number;
+    }
     public static int doCargoInputMain(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String itemMode, @Nonnull String filterMode, @Nonnull Inventory filterInv, int[] filterSlots) {
-        InvWithSlots inputMap = getInv(inputBlock, inputSize, inputOrder);
+        InvWithSlots inputMap = CargoUtil.getInv(inputBlock, inputSize, inputOrder);
         if (inputMap == null) {
             return 0;
         }
@@ -115,44 +170,42 @@ public class CargoUtil {
         InvWithSlots outputMap = null;
         boolean isVanillaBlock = !BlockStorage.hasInventory(outputBlock) && PaperLib.getBlockState(outputBlock, false).getState() instanceof InventoryHolder;
         if (isVanillaBlock) {
-            outputMap = getInv(outputBlock, outputSize, outputOrder);
+            outputMap = CargoUtil.getInv(outputBlock, outputSize, outputOrder);
             if (outputMap == null || outputMap.getSlots().length == 0) {
                 return 0;
             }
         }
-        List<ItemStackWithWrapper> skipItems = new ArrayList<>(inputSlots.length);
+        List<ItemStackWithWrapper> skipItemList = new ArrayList<>(inputSlots.length);
         List<ItemStackWithWrapper> filterItemList = FilterMode.getMatchList(filterInv, filterSlots);
-        Map<ItemStackWithWrapper, InvWithSlots> searchMap = new HashMap<>(SEARCH_MAP_LIMIT);
+        List<ItemStackWithWrapper> searchItemList = new ArrayList<>(SEARCH_MAP_LIMIT);
+        List<InvWithSlots> searchInvList = new ArrayList<>(SEARCH_MAP_LIMIT);
         ItemStackWithWrapper typeItem = null;
         int number = 0;
         for (int inputSlot : inputSlots) {
-            if (cargoNumber == 0) {
-                break;
-            }
             ItemStack inputItem = inputInv.getItem(inputSlot);
             if (ItemStackUtil.isItemNull(inputItem)) {
                 continue;
             }
             ItemStackWithWrapper inputItemWithWrapper = new ItemStackWithWrapper(inputItem);
-            if (!CargoItemMode.VALUE_ALL.equals(itemMode) && typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWithWrapper.getItemStackWrapper(), typeItem.getItemStackWrapper())) {
+            if (typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
                 continue;
             }
             if (!FilterMode.ifMatch(inputItemWithWrapper, filterItemList, filterMode)) {
                 continue;
             }
-            if (FilterMode.ifMatch(inputItemWithWrapper, skipItems, FilterMode.VALUE_WHITE)) {
+            if (FilterMode.ifMatch(inputItemWithWrapper, skipItemList, FilterMode.VALUE_WHITE)) {
                 continue;
             }
             if (!isVanillaBlock) {
                 outputMap = null;
-                for (ItemStackWithWrapper item : searchMap.keySet()) {
-                    if (ItemStackUtil.isItemSimilar(inputItemWithWrapper.getItemStackWrapper(), item.getItemStackWrapper())) {
-                        outputMap = searchMap.get(item);
+                for(int i = 0; i < searchItemList.size(); i++) {
+                    if(ItemStackUtil.isItemSimilar(inputItemWithWrapper, searchItemList.get(i))) {
+                        outputMap = searchInvList.get(i);
                         break;
                     }
                 }
                 if (outputMap == null) {
-                    outputMap = getInv(outputBlock, outputSize, outputOrder, inputItem);
+                    outputMap = CargoUtil.getInv(outputBlock, outputSize, outputOrder, inputItem);
                     if (outputMap == null) {
                         continue;
                     }
@@ -162,58 +215,59 @@ public class CargoUtil {
             int[] outputSlots = outputMap.getSlots();
             boolean work = false;
             for (int outputSlot : outputSlots) {
-                if (cargoNumber == 0) {
-                    break;
-                }
                 ItemStack outputItem = outputInv.getItem(outputSlot);
                 if (ItemStackUtil.isItemNull(outputItem)) {
-                    if (typeItem == null) {
-                        typeItem = new ItemStackWithWrapper(inputItem.clone(), inputItemWithWrapper.getItemStackWrapper());
+                    if (typeItem == null && !CargoItemMode.VALUE_ALL.equals(itemMode)) {
+                        typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
                     }
                     int count = Math.min(inputItem.getAmount(), cargoNumber);
-                    outputItem = inputItem.clone();
+                    outputItem = ItemStackUtil.cloneItem(inputItem);
                     outputItem.setAmount(count);
                     outputInv.setItem(outputSlot, outputItem);
                     inputItem.setAmount(inputItem.getAmount() - count);
                     cargoNumber -= count;
                     number += count;
+                    work = true;
                     if (CargoItemMode.VALUE_STACK.equals(itemMode)) {
                         cargoNumber = outputItem.getMaxStackSize() - outputItem.getAmount();
                         break;
                     }
-                    work = true;
-                    if (inputItem.getAmount() == 0) {
+                    if (inputItem.getAmount() == 0 || cargoNumber == 0) {
                         break;
                     }
-                } else if (outputItem.getAmount() < outputItem.getMaxStackSize() && ItemStackUtil.isItemSimilar(inputItemWithWrapper.getItemStackWrapper(), outputItem)) {
-                    if (typeItem == null) {
-                        typeItem = new ItemStackWithWrapper(inputItem.clone(), inputItemWithWrapper.getItemStackWrapper());
+                } else if (outputItem.getAmount() < outputItem.getMaxStackSize() && ItemStackUtil.isItemSimilar(inputItemWithWrapper, outputItem)) {
+                    if (typeItem == null && !CargoItemMode.VALUE_ALL.equals(itemMode)) {
+                        typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
                     }
                     int count = ItemStackUtil.stack(inputItemWithWrapper, outputItem, cargoNumber);
                     cargoNumber -= count;
                     number += count;
+                    work = true;
                     if (CargoItemMode.VALUE_STACK.equals(itemMode)) {
                         cargoNumber = outputItem.getMaxStackSize() - outputItem.getAmount();
                         break;
                     }
-                    work = true;
-                    if (inputItem.getAmount() == 0) {
+                    if (inputItem.getAmount() == 0 || cargoNumber == 0) {
                         break;
                     }
                 }
             }
+            if (cargoNumber == 0) {
+                break;
+            }
             if (work) {
-                if (searchMap.size() < SEARCH_MAP_LIMIT) {
-                    searchMap.put(new ItemStackWithWrapper(inputItem.clone()), outputMap);
+                if (searchItemList.size() < SEARCH_MAP_LIMIT) {
+                    searchItemList.add(inputItemWithWrapper);
+                    searchInvList.add(inputMap);
                 }
             } else {
-                skipItems.add(new ItemStackWithWrapper(inputItem));
+                skipItemList.add(inputItemWithWrapper);
             }
         }
         return number;
     }
     public static int doCargoOutputMain(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, @Nonnull int cargoNumber, @Nonnull String itemMode, @Nonnull String filterMode, @Nonnull Inventory filterInv, int[] filterSlots) {
-        InvWithSlots outputMap = getInv(outputBlock, outputSize, outputOrder);
+        InvWithSlots outputMap = CargoUtil.getInv(outputBlock, outputSize, outputOrder);
         if (outputMap == null) {
             return 0;
         }
@@ -230,23 +284,24 @@ public class CargoUtil {
                 return 0;
             }
         }
-        List<ItemStackWithWrapper> skipItems = new ArrayList<>(outputMap.getSlots().length);
+        List<ItemStackWithWrapper> skipItemList = new ArrayList<>(outputMap.getSlots().length);
         List<ItemStackWithWrapper> filterList = FilterMode.getMatchList(filterInv, filterSlots);
-        Map<ItemStackWithWrapper, InvWithSlots> searchMap = new LinkedHashMap<>(SEARCH_MAP_LIMIT);
+        List<ItemStackWithWrapper> searchItemList = new ArrayList<>(SEARCH_MAP_LIMIT);
+        List<InvWithSlots> searchInvList = new ArrayList<>(SEARCH_MAP_LIMIT);
         ItemStackWithWrapper typeItem = null;
         int number = 0;
         for (int outputSlot : outputSlots) {
             ItemStack outputItem = outputInv.getItem(outputSlot);
             ItemStackWithWrapper outputItemWithWrapper;
             if (!ItemStackUtil.isItemNull(outputItem)) {
-                if (outputItem.getMaxStackSize() == outputItem.getAmount()) {
+                if (outputItem.getAmount() >= outputItem.getMaxStackSize()) {
                     continue;
                 }
                 outputItemWithWrapper = new ItemStackWithWrapper(outputItem);
                 if (!FilterMode.ifMatch(outputItemWithWrapper, filterList, filterMode)) {
                     continue;
                 }
-                if (FilterMode.ifMatch(outputItemWithWrapper, skipItems, FilterMode.VALUE_WHITE)) {
+                if (FilterMode.ifMatch(outputItemWithWrapper, skipItemList, FilterMode.VALUE_WHITE)) {
                     continue;
                 }
             } else {
@@ -254,9 +309,9 @@ public class CargoUtil {
             }
             if (!isVanillaBlock) {
                 inputMap = null;
-                for (ItemStackWithWrapper item : searchMap.keySet()) {
-                    if (ItemStackUtil.isItemSimilar(outputItemWithWrapper.getItemStackWrapper(), item.getItemStackWrapper())) {
-                        inputMap = searchMap.get(item);
+                for (int i = 0; i < searchItemList.size(); i++) {
+                    if(ItemStackUtil.isItemSimilar(outputItemWithWrapper, searchItemList.get(i))) {
+                        inputMap = searchInvList.get(i);
                         break;
                     }
                 }
@@ -271,9 +326,6 @@ public class CargoUtil {
             int[] inputSlots = inputMap.getSlots();
             boolean work = false;
             for (int inputSlot : inputSlots) {
-                if (cargoNumber == 0) {
-                    break;
-                }
                 ItemStack inputItem = inputInv.getItem(inputSlot);
                 if (ItemStackUtil.isItemNull(inputItem)) {
                     continue;
@@ -282,12 +334,12 @@ public class CargoUtil {
                 if (!FilterMode.ifMatch(inputItemWithWrapper, filterList, filterMode)) {
                     continue;
                 }
-                if (!CargoItemMode.VALUE_ALL.equals(itemMode) && typeItem != null && !work && !ItemStackUtil.isItemSimilar(inputItemWithWrapper.getItemStackWrapper(), typeItem.getItemStackWrapper())) {
+                if (typeItem != null && !work && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
                     continue;
                 }
                 if (ItemStackUtil.isItemNull(outputItem)) {
-                    if (typeItem == null) {
-                        typeItem = new ItemStackWithWrapper(inputItem.clone(), inputItemWithWrapper.getItemStackWrapper());
+                    if (typeItem == null && !CargoItemMode.VALUE_ALL.equals(itemMode)) {
+                        typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
                     }
                     int count = Math.min(inputItem.getAmount(), cargoNumber);
                     outputItem = inputItem.clone();
@@ -302,9 +354,12 @@ public class CargoUtil {
                         cargoNumber = outputItem.getMaxStackSize() - outputItem.getAmount();
                     }
                     work = true;
+                    if (outputItem.getAmount() >= outputItem.getMaxStackSize() || cargoNumber == 0) {
+                        break;
+                    }
                 } else if (outputItem.getMaxStackSize() > outputItem.getAmount() && ItemStackUtil.isItemSimilar(inputItemWithWrapper.getItemStackWrapper(), outputItemWithWrapper.getItemStackWrapper())) {
-                    if (typeItem == null) {
-                        typeItem = new ItemStackWithWrapper(inputItem.clone(), inputItemWithWrapper.getItemStackWrapper());
+                    if (typeItem == null && !CargoItemMode.VALUE_ALL.equals(itemMode)) {
+                        typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
                     }
                     int count = ItemStackUtil.stack(inputItemWithWrapper, outputItemWithWrapper, cargoNumber);
                     cargoNumber -= count;
@@ -313,14 +368,18 @@ public class CargoUtil {
                         cargoNumber = outputItem.getMaxStackSize() - outputItem.getAmount();
                     }
                     work = true;
+                    if (outputItem.getAmount() >= outputItem.getMaxStackSize() || cargoNumber == 0) {
+                        break;
+                    }
                 }
             }
             if (work) {
-                if (searchMap.size() < SEARCH_MAP_LIMIT) {
-                    searchMap.put(new ItemStackWithWrapper(outputItemWithWrapper.getItemStack(), outputItemWithWrapper.getItemStackWrapper()), inputMap);
+                if (searchItemList.size() <= SEARCH_MAP_LIMIT) {
+                    searchItemList.add(outputItemWithWrapper);
+                    searchInvList.add(inputMap);
                 }
             } else {
-                skipItems.add(outputItemWithWrapper);
+                skipItemList.add(outputItemWithWrapper);
             }
         }
         return number;
@@ -334,10 +393,10 @@ public class CargoUtil {
      * @param order 搜索顺序 {@link SlotSearchOrder}
      * @return 容器和物品槽位 {@link InvWithSlots}
      */
-    public static InvWithSlots getInv(@Nonnull Block block, String size, String order) {
-        return getInv(block, size, order, new ItemStack(Material.AIR));
+    public static InvWithSlots getInv(@Nonnull Block block, @Nonnull String size, @Nonnull String order) {
+        return getInv(block, size, order, ItemStackUtil.AIR);
     }
-    public static InvWithSlots getInv(@Nonnull Block block, String size, String order, ItemStack item) {
+    public static InvWithSlots getInv(@Nonnull Block block, @Nonnull String size, @Nonnull String order, @Nullable ItemStack item) {
         Inventory inventory = null;
         int[] slots = null;
 

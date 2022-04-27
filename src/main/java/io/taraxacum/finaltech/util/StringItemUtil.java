@@ -17,10 +17,22 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * We should make suer that
+ * one item will have "item" key and "amount" key in the same time
+ * or one item will not have only on of them.
+ */
 public class StringItemUtil {
     public static final NamespacedKey ITEM_KEY = new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "item");
     public static final NamespacedKey AMOUNT_KEY = new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "amount");
 
+    /**
+     * get and push item to the inventory
+     * @param item
+     * @param inventory
+     * @param slots ths slot of the inventory that the item will push it's stored items
+     * @return the amount it pushed in real
+     */
     public static int pushItemFromCard(@Nonnull ItemStack item, @Nonnull Inventory inventory, @Nonnull int[] slots) {
         if (!item.hasItemMeta()) {
             return 0;
@@ -29,17 +41,23 @@ public class StringItemUtil {
             return 0;
         }
         ItemMeta itemMeta = item.getItemMeta();
-        int count = pushItemFromCard(itemMeta, inventory, slots);
+        int count = StringItemUtil.pushItemFromCard(itemMeta, inventory, slots);
         item.setItemMeta(itemMeta);
         return count;
     }
-
+    /**
+     * Set itemMete after using this to save data
+     * @param itemMeta
+     * @param inventory
+     * @param slots
+     * @return
+     */
     public static int pushItemFromCard(@Nonnull ItemMeta itemMeta, @Nonnull Inventory inventory, @Nonnull int[] slots) {
         PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
         if (persistentDataContainer.has(ITEM_KEY, PersistentDataType.STRING)) {
             String itemString = persistentDataContainer.get(ITEM_KEY, PersistentDataType.STRING);
             ItemStackWithWrapper stringItem = new ItemStackWithWrapper(ItemStackUtil.stringToItemStack(itemString));
-            return pushItemFromCard(itemMeta, stringItem, inventory, slots);
+            return StringItemUtil.pushItemFromCard(itemMeta, stringItem, inventory, slots);
         }
         return 0;
     }
@@ -233,6 +251,10 @@ public class StringItemUtil {
         item.setItemMeta(itemMeta);
     }
 
+    /**
+     * Use ItemStack.setItemMeta() after use this
+     * @param itemMeta
+     */
     public static void updateStorageCardLore(@Nonnull ItemMeta itemMeta) {
         PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
         ItemStack stringItem = null;

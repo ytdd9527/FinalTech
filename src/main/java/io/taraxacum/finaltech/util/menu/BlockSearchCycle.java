@@ -10,6 +10,8 @@ public class BlockSearchCycle {
     public static final String VALUE_FALSE = "false";
     public static final String VALUE_TRUE = "true";
 
+    public static final String DEFAULT_VALUE = VALUE_FALSE;
+
     public static final ItemStack FALSE_ICON = new CustomItemStack(Material.MINECART, "&7首尾循环运输-否");
     public static final ItemStack TRUE_ICON = new CustomItemStack(Material.CHEST_MINECART, "&7首尾循环运输-是");
 

@@ -4,6 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
+import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -37,6 +38,25 @@ public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem 
             "§x§6§6§0§0§f§f存" +
             "§x§9§9§0§0§f§f储";
     public static final String ITEM_LORE_WITHOUT_COLOR = "已经由Final_ROOT签名认证并允许进行存储";
+
+    public static final ItemStack[] RANDOM_STORAGE_CARD_ITEM = new ItemStack[] {
+            new ItemStack(FinalTechItems.STORAGE_ITEM_WHITE),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_ORANGE),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_MAGENTA),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_LIGHT_BLUE),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_YELLOW),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_LIME),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_PINK),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_GRAY),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_LIGHT_GRAY),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_CYAN),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_PURPLE),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_BLUE),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_BROWN),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_GREEN),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_RED),
+            new ItemStack(FinalTechItems.STORAGE_ITEM_BLACK),
+    };
 
     public StorageCardItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

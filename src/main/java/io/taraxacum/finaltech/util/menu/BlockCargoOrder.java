@@ -13,6 +13,8 @@ public class BlockCargoOrder {
     public static final String VALUE_POSITIVE = "positive";
     public static final String VALUE_REVERSE = "reverse";
 
+    public static final String DEFAULT_VALUE = VALUE_POSITIVE;
+
     public static final ItemStack POSITIVE_ICON = new CustomItemStack(Material.CRIMSON_DOOR, "&7传输顺序",
             "&f正向传输");
     public static final ItemStack REVERSE_ICON = new CustomItemStack(Material.CRIMSON_DOOR, "&7传输顺序",

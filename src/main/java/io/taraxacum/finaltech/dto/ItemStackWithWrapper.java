@@ -4,6 +4,7 @@ import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,25 +18,25 @@ public class ItemStackWithWrapper {
     private ItemStackWrapper itemStackWrapper;
     private int amount;
 
-    public ItemStackWithWrapper (ItemStack itemStack) {
+    public ItemStackWithWrapper (@Nonnull ItemStack itemStack) {
         this.itemStack = itemStack;
         this.itemStackWrapper = ItemStackWrapper.wrap(itemStack);
         this.amount = itemStack.getAmount();
     }
 
-    public ItemStackWithWrapper (ItemStack itemStack, ItemStackWrapper itemStackWrapper) {
+    public ItemStackWithWrapper (@Nonnull ItemStack itemStack, @Nonnull ItemStackWrapper itemStackWrapper) {
         this.itemStack = itemStack;
         this.itemStackWrapper = itemStackWrapper;
         this.amount = itemStack.getAmount();
     }
 
-    public ItemStackWithWrapper (ItemStack itemStack, int amount) {
+    public ItemStackWithWrapper (@Nonnull ItemStack itemStack, int amount) {
         this.itemStack = itemStack;
         this.itemStackWrapper = ItemStackWrapper.wrap(itemStack);
         this.amount = amount;
     }
 
-    public ItemStackWithWrapper (ItemStack itemStack, ItemStackWrapper itemStackWrapper, int amount) {
+    public ItemStackWithWrapper (@Nonnull ItemStack itemStack, @Nonnull ItemStackWrapper itemStackWrapper, int amount) {
         this.itemStack = itemStack;
         this.itemStackWrapper = itemStackWrapper;
         this.amount = amount;

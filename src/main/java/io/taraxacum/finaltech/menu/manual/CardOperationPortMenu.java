@@ -3,21 +3,25 @@ package io.taraxacum.finaltech.menu.manual;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.item.unusable.CopyCardItem;
+import io.taraxacum.finaltech.item.unusable.ItemFake;
 import io.taraxacum.finaltech.item.unusable.StorageCardItem;
 import io.taraxacum.finaltech.machine.AbstractMachine;
-import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.StringItemUtil;
 import io.taraxacum.common.util.StringNumberUtil;
-import io.taraxacum.finaltech.util.menu.Icon;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Final_ROOT
@@ -30,29 +34,255 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
     private static final int[] OUTPUT_SLOT = new int[] {40};
 
     private static final int CRAFT_SLOT = 13;
-    private static final ItemStack[] randomOutputStorageCardItem = new ItemStack[] {
-            new ItemStack(FinalTechItems.STORAGE_ITEM_WHITE),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_ORANGE),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_MAGENTA),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_LIGHT_BLUE),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_YELLOW),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_LIME),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_PINK),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_GRAY),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_LIGHT_GRAY),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_CYAN),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_PURPLE),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_BLUE),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_BROWN),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_GREEN),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_RED),
-            new ItemStack(FinalTechItems.STORAGE_ITEM_BLACK),
-    };
-    private static final ItemStack ERROR_ICON = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, "&c无法操作");
-    private static final ItemStack MERGE_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, "&a合并复制卡");
-    private static final ItemStack CRAFT_COPY_CARD_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, "&a制造复制卡");
-    private static final ItemStack CRAFT_SHELL_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, "&a制造壳");
-    private static final ItemStack COPY_COPY_CARD_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, "&a复制复制卡");
+    private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, "&c无法操作");
+
+    private static final List<Craft> CRAFT_LIST = new ArrayList<>();
+    static {
+        CRAFT_LIST.add(new Craft() {
+            @Override
+            public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
+                if(!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2) && StorageCardItem.isStorageCardItem(item1) && StorageCardItem.isStorageCardItem(item2)) {
+                    ItemStack stringItem1 = StringItemUtil.parseItemInCard(item1);
+                    ItemStack stringItem2 = StringItemUtil.parseItemInCard(item2);
+                    return ItemStackUtil.isItemSimilar(stringItem1, stringItem2);
+                }
+                return false;
+            }
+
+            @Override
+            public void doUpdateIcon(@Nonnull ItemStack iconItem) {
+                iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
+                ItemStackUtil.setLore(iconItem,
+                        "§7合并存储卡");
+            }
+
+            @Override
+            public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+                if(!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2) && item1.hasItemMeta() && item2.hasItemMeta()) {
+                    ItemMeta itemMeta1 = item1.getItemMeta();
+                    ItemMeta itemMeta2 = item1.getItemMeta();
+                    if(StorageCardItem.isStorageCardItem(itemMeta1) && StorageCardItem.isStorageCardItem(itemMeta2)) {
+                        ItemStack stringItem1 = StringItemUtil.parseItemInCard(itemMeta1);
+                        ItemStack stringItem2 = StringItemUtil.parseItemInCard(itemMeta2);
+                        if(ItemStackUtil.isItemSimilar(stringItem1, stringItem2)) {
+                            String amount1 = StringItemUtil.parseAmountInCard(itemMeta1);
+                            String amount2 = StringItemUtil.parseAmountInCard(itemMeta2);
+                            ItemStack outputItem = new ItemStack(StorageCardItem.RANDOM_STORAGE_CARD_ITEM[(int)(Math.random() * StorageCardItem.RANDOM_STORAGE_CARD_ITEM.length)]);
+                            StringItemUtil.setItemInCard(outputItem, stringItem1, StringNumberUtil.add(amount1, amount2));
+                            StringItemUtil.updateStorageCardLore(outputItem);
+                            StringItemUtil.updateStorageCardType(outputItem);
+                            item1.setAmount(item1.getAmount() - 1);
+                            item2.setAmount(item2.getAmount() - 1);
+                            blockMenu.replaceExistingItem(outputSlot, outputItem);
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+        CRAFT_LIST.add(new Craft() {
+            @Override
+            public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
+                if(!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2)) {
+                    if(StorageCardItem.isStorageCardItem(item1) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)) >= 0) {
+                        return ItemStackUtil.isItemSimilar(item2, FinalTechItems.ALL_COMPRESSION);
+                    } else if (StorageCardItem.isStorageCardItem(item2) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item2), String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)) >= 0) {
+                        return ItemStackUtil.isItemSimilar(item1, FinalTechItems.ALL_COMPRESSION);
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public void doUpdateIcon(@Nonnull ItemStack iconItem) {
+                iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
+                ItemStackUtil.setLore(iconItem,
+                        "§7制造复制卡");
+            }
+
+            @Override
+            public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+                if(!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2)) {
+                    ItemStack storageCardItem = null;
+                    ItemMeta storageCardItemMeta = null;
+                    if(StorageCardItem.isStorageCardItem(item1) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)) >= 0) {
+                        if(ItemStackUtil.isItemSimilar(item2, FinalTechItems.ALL_COMPRESSION)) {
+                            storageCardItem = item1;
+                            storageCardItemMeta = item1.getItemMeta();
+                        }
+                    } else if (StorageCardItem.isStorageCardItem(item2) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item2), String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)) >= 0) {
+                        if(ItemStackUtil.isItemSimilar(item1, FinalTechItems.ALL_COMPRESSION)) {
+                            storageCardItem = item2;
+                            storageCardItemMeta = item2.getItemMeta();
+                        }
+                    }
+                    if(storageCardItem != null && storageCardItemMeta != null) {
+                        ItemStack stringItem = StringItemUtil.parseItemInCard(storageCardItemMeta);
+                        ItemStack outputItem = CopyCardItem.newCopyCardItem(stringItem, "1");
+                        outputItem.setAmount(storageCardItem.getAmount());
+                        StringItemUtil.setAmountInCard(storageCardItem, StringNumberUtil.sub(StringItemUtil.parseAmountInCard(storageCardItemMeta), String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)));
+                        StringItemUtil.updateStorageCardLore(storageCardItem);
+                        StringItemUtil.updateStorageCardType(storageCardItem);
+                        blockMenu.replaceExistingItem(outputSlot, outputItem);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        CRAFT_LIST.add(new Craft() {
+            @Override
+            public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
+                if(ItemFake.isSingularity(item1) && ItemFake.isSpirochete(item2)) {
+                    return true;
+                } else if(ItemFake.isSpirochete(item1) && ItemFake.isSingularity(item2)) {
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public void doUpdateIcon(@Nonnull ItemStack iconItem) {
+                iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
+                ItemStackUtil.setLore(iconItem,
+                        "§7制作伪物");
+            }
+
+            @Override
+            public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+                if(this.canCraft(item1, item2)) {
+                    item1.setAmount(item1.getAmount() - 1);
+                    item2.setAmount(item2.getAmount() - 1);
+                    Player player = null;
+                    for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                        if(humanEntity instanceof Player) {
+                            player = (Player) humanEntity;
+                            break;
+                        }
+                    }
+                    blockMenu.replaceExistingItem(outputSlot, ItemFake.newItemFake(item1, item2, player));
+                }
+                return false;
+            }
+        });
+        CRAFT_LIST.add(new Craft() {
+            @Override
+            public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
+                if(!ItemStackUtil.isItemNull(item1) && CopyCardItem.isCopyCardItem(item1) && ItemStackUtil.isItemSimilar(item2, FinalTechItems.SHELL)) {
+                    return true;
+                } else if(!ItemStackUtil.isItemNull(item2) && CopyCardItem.isCopyCardItem(item2) && ItemStackUtil.isItemSimilar(item1, FinalTechItems.SHELL)) {
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public void doUpdateIcon(@Nonnull ItemStack iconItem) {
+                iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
+                ItemStackUtil.setLore(iconItem,
+                        "§7复制复制卡");
+            }
+
+            @Override
+            public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+                if(!ItemStackUtil.isItemNull(item1) && CopyCardItem.isCopyCardItem(item1) && ItemStackUtil.isItemSimilar(item2, FinalTechItems.SHELL)) {
+                    item2.setAmount(item2.getAmount() - 1);
+                    ItemStack outputItem = ItemStackUtil.cloneItem(item1);
+                    outputItem.setAmount(1);
+                    blockMenu.replaceExistingItem(outputSlot, outputItem);
+                } else if(!ItemStackUtil.isItemNull(item2) && CopyCardItem.isCopyCardItem(item2) && ItemStackUtil.isItemSimilar(item1, FinalTechItems.SHELL)) {
+                    item1.setAmount(item1.getAmount() - 1);
+                    ItemStack outputItem = ItemStackUtil.cloneItem(item2);
+                    outputItem.setAmount(1);
+                    blockMenu.replaceExistingItem(outputSlot, outputItem);
+                    return true;
+                }
+                return false;
+            }
+        });
+        CRAFT_LIST.add(new Craft() {
+            @Override
+            public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
+                if(ItemFake.isSingularity(item1) || ItemFake.isSingularity(item2) || ItemFake.isSpirochete(item1) || ItemFake.isSpirochete(item2)) {
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public void doUpdateIcon(@Nonnull ItemStack iconItem) {
+                iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
+                ItemStackUtil.setLore(iconItem,
+                        "§7制造壳");
+            }
+
+            @Override
+            public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+                if(ItemFake.isSingularity(item1) || ItemFake.isSpirochete(item1)) {
+                    item1.setAmount(item1.getAmount() - 1);
+                    Player player = null;
+                    for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                        if(humanEntity instanceof Player) {
+                            player = (Player) humanEntity;
+                            break;
+                        }
+                    }
+                    ItemStack outputItem = ItemFake.newShell(item1, player);
+                } else if(ItemFake.isSingularity(item2) || ItemFake.isSpirochete(item2)) {
+                    item2.setAmount(item2.getAmount() - 1);
+                    Player player = null;
+                    for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                        if(humanEntity instanceof Player) {
+                            player = (Player) humanEntity;
+                            break;
+                        }
+                    }
+                    ItemStack outputItem = ItemFake.newShell(item2, player);
+                }
+                return false;
+            }
+        });
+        CRAFT_LIST.add(new Craft() {
+            @Override
+            public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
+                return CopyCardItem.isCopyCardItem(item1) || CopyCardItem.isCopyCardItem(item2);
+            }
+
+            @Override
+            public void doUpdateIcon(@Nonnull ItemStack iconItem) {
+                iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
+                ItemStackUtil.setLore(iconItem,
+                        "§7制造环");
+            }
+
+            @Override
+            public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+                if(CopyCardItem.isCopyCardItem(item1)) {
+                    item1.setAmount(item1.getAmount() - 1);
+                    Player player = null;
+                    for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                        if(humanEntity instanceof Player) {
+                            player = (Player) humanEntity;
+                            break;
+                        }
+                    }
+                    blockMenu.replaceExistingItem(outputSlot, ItemFake.newAnnular(item1, player));
+                } else if(CopyCardItem.isCopyCardItem(item2)) {
+                    item2.setAmount(item2.getAmount() - 1);
+                    Player player = null;
+                    for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                        if(humanEntity instanceof Player) {
+                            player = (Player) humanEntity;
+                            break;
+                        }
+                    }
+                    blockMenu.replaceExistingItem(outputSlot, ItemFake.newAnnular(item2, player));
+                }
+                return false;
+            }
+        });
+    }
 
     public CardOperationPortMenu(@Nonnull AbstractMachine machine) {
         super(machine);
@@ -86,7 +316,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
     @Override
     public void init() {
         super.init();
-        this.addItem(CRAFT_SLOT, Icon.AUTO_CRAFT_PARSE_ICON);
+        this.addItem(CRAFT_SLOT, CRAFT_ICON);
         this.addMenuClickHandler(CRAFT_SLOT, ChestMenuUtils.getEmptyClickHandler());
     }
 
@@ -94,136 +324,44 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
     public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
         blockMenu.addMenuClickHandler(CRAFT_SLOT, ((player, i, itemStack, clickAction) -> {
-            if (!ItemStackUtil.isItemNull(blockMenu.getItemInSlot(OUTPUT_SLOT[0])) || ItemStackUtil.isItemNull(blockMenu.getItemInSlot(INPUT_SLOT[0])) || ItemStackUtil.isItemNull(blockMenu.getItemInSlot(INPUT_SLOT[1]))) {
-                return false;
-            }
+            //todo 操作频繁验证
             ItemStack inputItem1 = blockMenu.getItemInSlot(INPUT_SLOT[0]);
             ItemStack inputItem2 = blockMenu.getItemInSlot(INPUT_SLOT[1]);
-            ItemMeta itemMeta1 = inputItem1.getItemMeta();
-            ItemMeta itemMeta2 = inputItem2.getItemMeta();
-
-            boolean isStorageCardItem1 = StorageCardItem.isStorageCardItem(itemMeta1);
-            boolean isStorageCardItem2 = StorageCardItem.isStorageCardItem(itemMeta2);
-            if (isStorageCardItem1 && isStorageCardItem2) {
-                ItemStack stringItem1 = StringItemUtil.parseItemInCard(itemMeta1);
-                ItemStack stringItem2 = StringItemUtil.parseItemInCard(itemMeta2);
-                boolean similar = ItemStackUtil.isItemSimilar(stringItem1, stringItem2);
-                if (similar) {
-                    String amount1 = StringItemUtil.parseAmountInCard(itemMeta1);
-                    String amount2 = StringItemUtil.parseAmountInCard(itemMeta2);
-                    ItemStack outputItem = new ItemStack(randomOutputStorageCardItem[(int)(Math.random() * randomOutputStorageCardItem.length)]);
-                    StringItemUtil.setItemInCard(outputItem, stringItem1, StringNumberUtil.add(amount1, amount2));
-                    StringItemUtil.updateStorageCardLore(outputItem);
-                    StringItemUtil.updateStorageCardType(outputItem);
-                    inputItem1.setAmount(inputItem1.getAmount() - 1);
-                    inputItem2.setAmount(inputItem2.getAmount() - 1);
-                    blockMenu.replaceExistingItem(OUTPUT_SLOT[0], outputItem);
-                }
-                return false;
-            } else if (isStorageCardItem1 || isStorageCardItem2) {
-                boolean hasAllCompression = isStorageCardItem1 ? ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.ALL_COMPRESSION) : ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.ALL_COMPRESSION);
-                if (hasAllCompression) {
-                    String amount = StringItemUtil.parseAmountInCard(isStorageCardItem1 ? itemMeta1 : itemMeta2);
-                    if (StringNumberUtil.easilyCompare(amount, String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)) >= 0) {
-                        ItemStack stringItem = StringItemUtil.parseItemInCard(isStorageCardItem1 ? itemMeta1 : itemMeta2);
-                        ItemStack outputItem = CopyCardItem.newCopyCardItem(stringItem, "1");
-                        StringItemUtil.setAmountInCard(isStorageCardItem1 ? inputItem1 : inputItem2, StringNumberUtil.sub(amount, String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)));
-                        StringItemUtil.updateStorageCardLore(isStorageCardItem1 ? inputItem1 : inputItem2);
-                        StringItemUtil.updateStorageCardType(isStorageCardItem1 ? inputItem1 : inputItem2);
-                        blockMenu.replaceExistingItem(OUTPUT_SLOT[0], outputItem);
-                    }
-                }
+            if(ItemStackUtil.isItemNull(inputItem1) && ItemStackUtil.isItemNull(inputItem2)) {
                 return false;
             }
-
-            boolean isPartOfItemFake1 = ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SINGULARITY) || ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SPIROCHETE);
-            boolean isPartOfItemFake2 = ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SINGULARITY) || ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SPIROCHETE);
-            if (isPartOfItemFake1 || isPartOfItemFake2) {
-                ItemStack outputItem = new ItemStack(FinalTechItems.SHELL);
-                int amount = 0;
-                if (isPartOfItemFake1) {
-                    inputItem1.setAmount(inputItem1.getAmount() - 1);
-                    amount++;
+            for(Craft craft : CRAFT_LIST) {
+                if(craft.doCraft(inputItem1, inputItem2, blockMenu, OUTPUT_SLOT[0])) {
+                    break;
                 }
-                if (isPartOfItemFake2) {
-                    inputItem2.setAmount(inputItem2.getAmount() - 1);
-                    amount++;
-                }
-                outputItem.setAmount(amount);
-                blockMenu.replaceExistingItem(OUTPUT_SLOT[0], outputItem);
-                return false;
             }
-
-            boolean isCopyCardItem1 = CopyCardItem.isCopyCardItem(inputItem1);
-            boolean isCopyCardItem2 = CopyCardItem.isCopyCardItem(inputItem2);
-            boolean isShell1 = !isCopyCardItem1 && ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SHELL);
-            boolean isShell2 = !isCopyCardItem2 && ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SHELL);
-            if ((isCopyCardItem1 && isShell2) || (isCopyCardItem2 && isShell1)) {
-                ItemStack outputItem;
-                if (isCopyCardItem1) {
-                    outputItem = new ItemStack(inputItem1);
-                    inputItem2.setAmount(inputItem2.getAmount() - 1);
-                } else {
-                    outputItem = new ItemStack(inputItem2);
-                    inputItem1.setAmount(inputItem1.getAmount() - 1);
-                }
-                outputItem.setAmount(1);
-                blockMenu.replaceExistingItem(OUTPUT_SLOT[0], outputItem);
-                return false;
-            }
-
             return false;
         }));
     }
 
     @Override
     public void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-        if (!ItemStackUtil.isItemNull(blockMenu.getItemInSlot(OUTPUT_SLOT[0])) || ItemStackUtil.isItemNull(blockMenu.getItemInSlot(INPUT_SLOT[0])) || ItemStackUtil.isItemNull(blockMenu.getItemInSlot(INPUT_SLOT[1]))) {
-            blockMenu.replaceExistingItem(CRAFT_SLOT, ERROR_ICON);
-            return;
-        }
         ItemStack inputItem1 = blockMenu.getItemInSlot(INPUT_SLOT[0]);
         ItemStack inputItem2 = blockMenu.getItemInSlot(INPUT_SLOT[1]);
-        ItemMeta itemMeta1 = inputItem1.getItemMeta();
-        ItemMeta itemMeta2 = inputItem2.getItemMeta();
-
-        boolean isStorageCardItem1 = StorageCardItem.isStorageCardItem(itemMeta1);
-        boolean isStorageCardItem2 = StorageCardItem.isStorageCardItem(itemMeta2);
-        if (isStorageCardItem1 && isStorageCardItem2) {
-            ItemStack stringItem1 = StringItemUtil.parseItemInCard(itemMeta1);
-            ItemStack stringItem2 = StringItemUtil.parseItemInCard(itemMeta2);
-            boolean similar = ItemStackUtil.isItemSimilar(stringItem1, stringItem2);
-            if (similar) {
-                blockMenu.replaceExistingItem(CRAFT_SLOT, MERGE_ICON);
+        ItemStack iconItem = blockMenu.getItemInSlot(CRAFT_SLOT);
+        boolean work = false;
+        for(Craft craft : CRAFT_LIST) {
+            if(craft.canCraft(inputItem1, inputItem2)) {
+                craft.doUpdateIcon(iconItem);
+                work = true;
+                break;
             }
-            return;
-        } else if (isStorageCardItem1 || isStorageCardItem2) {
-            boolean hasAllCompression = isStorageCardItem1 ? ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.ALL_COMPRESSION) : ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.ALL_COMPRESSION);
-            if (hasAllCompression) {
-                String amount = StringItemUtil.parseAmountInCard(isStorageCardItem1 ? itemMeta1 : itemMeta2);
-                if (StringNumberUtil.easilyCompare(amount, String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)) >= 0) {
-                    blockMenu.replaceExistingItem(CRAFT_SLOT, CRAFT_COPY_CARD_ICON);
-                }
-            }
-            return;
         }
-
-        boolean isPartOfItemFake1 = ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SINGULARITY) || ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SPIROCHETE);
-        boolean isPartOfItemFake2 = ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SINGULARITY) || ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SPIROCHETE);
-        if (isPartOfItemFake1 || isPartOfItemFake2) {
-            blockMenu.replaceExistingItem(CRAFT_SLOT, CRAFT_SHELL_ICON);
-            return;
+        if(!work) {
+            blockMenu.replaceExistingItem(CRAFT_SLOT, CRAFT_ICON);
         }
+    }
 
-        boolean isCopyCardItem1 = CopyCardItem.isCopyCardItem(inputItem1);
-        boolean isCopyCardItem2 = CopyCardItem.isCopyCardItem(inputItem2);
-        boolean isShell1 = !isCopyCardItem1 && ItemStackUtil.isItemSimilar(inputItem1, FinalTechItems.SHELL);
-        boolean isShell2 = !isCopyCardItem2 && ItemStackUtil.isItemSimilar(inputItem2, FinalTechItems.SHELL);
-        if ((isCopyCardItem1 && isShell2) || (isCopyCardItem2 && isShell1)) {
-            blockMenu.replaceExistingItem(CRAFT_SLOT, COPY_COPY_CARD_ICON);
-            return;
-        }
+    private interface Craft {
+        boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2);
 
-        blockMenu.replaceExistingItem(CRAFT_SLOT, ERROR_ICON);
+        void doUpdateIcon(@Nonnull ItemStack iconItem);
+
+        boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot);
     }
 }

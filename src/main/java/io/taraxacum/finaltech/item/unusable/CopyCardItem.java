@@ -10,6 +10,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -51,7 +53,7 @@ public class CopyCardItem extends UnusableSlimefunItem {
         SPIROCHETE_DIFFICULTY = spirocheteDifficulty;
     }
 
-    public static boolean isCopyCardItem(ItemStack itemStack) {
+    public static boolean isCopyCardItem(@Nullable ItemStack itemStack) {
         if (ItemStackUtil.isItemNull(itemStack) || !itemStack.hasItemMeta()) {
             return false;
         }
@@ -68,7 +70,7 @@ public class CopyCardItem extends UnusableSlimefunItem {
         return false;
     }
 
-    public static ItemStack newCopyCardItem(ItemStack stringItem, String amount) {
+    public static ItemStack newCopyCardItem(@Nonnull ItemStack stringItem, @Nonnull String amount) {
         ItemStack result = new ItemStack(FinalTechItems.COPY_CARD);
         result.setAmount(1);
         StringItemUtil.setItemInCard(result, stringItem, amount);

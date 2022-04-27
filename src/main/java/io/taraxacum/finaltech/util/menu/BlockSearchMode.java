@@ -19,6 +19,8 @@ public class BlockSearchMode {
     public static final String VALUE_RESPECT = "respect";
     public static final String VALUE_INTERRUPT = "interrupt";
 
+    public static final String DEFAULT_VALUE = VALUE_ZERO;
+
     public static final ItemStack ZERO_ICON = new CustomItemStack((Material.PURPLE_STAINED_GLASS), "&7搜索模式",
             "&f零模式",
             "",

@@ -56,34 +56,34 @@ public class FilterMode {
         return filterList;
     }
 
-    public static boolean ifMatch(@Nonnull ItemStack item, @Nonnull List<ItemStackWithWrapper> list, String filterMode) {
+    public static boolean ifMatch(@Nonnull ItemStack item, @Nonnull List<ItemStackWithWrapper> list, @Nonnull String filterMode) {
         if (ItemStackUtil.isItemNull(item)) {
             return VALUE_BLACK.equals(filterMode);
         }
         ItemStackWithWrapper itemStackWithWrapper = new ItemStackWithWrapper(item);
         for (ItemStackWithWrapper filterItem : list) {
-            if (ItemStackUtil.isItemSimilar(itemStackWithWrapper.getItemStackWrapper(), filterItem.getItemStackWrapper())) {
+            if (ItemStackUtil.isItemSimilar(itemStackWithWrapper, filterItem)) {
                 return VALUE_WHITE.equals(filterMode);
             }
         }
         return VALUE_BLACK.equals(filterMode);
     }
 
-    public static boolean ifMatch(@Nonnull ItemStackWithWrapper itemStackWithWrapper, @Nonnull List<ItemStackWithWrapper> list, String filterMode) {
+    public static boolean ifMatch(@Nonnull ItemStackWithWrapper itemStackWithWrapper, @Nonnull List<ItemStackWithWrapper> list, @Nonnull String filterMode) {
         for (ItemStackWithWrapper filterItem : list) {
-            if (ItemStackUtil.isItemSimilar(itemStackWithWrapper.getItemStackWrapper(), filterItem.getItemStackWrapper())) {
+            if (ItemStackUtil.isItemSimilar(itemStackWithWrapper, filterItem)) {
                 return VALUE_WHITE.equals(filterMode);
             }
         }
         return VALUE_BLACK.equals(filterMode);
     }
 
-    public static boolean ifMatch(@Nonnull ItemStack itemStack, BlockMenu blockMenu, String filterMode, int[] filterSlots) {
+    public static boolean ifMatch(@Nonnull ItemStack itemStack, @Nonnull BlockMenu blockMenu, @Nonnull String filterMode, int[] filterSlots) {
         return ifMatch(itemStack, blockMenu.toInventory(), filterMode, filterSlots);
     }
 
     // todo
-    public static boolean ifMatch(@Nonnull ItemStack itemStack, Inventory inv, String filterMode, int[] filterSlots) {
+    public static boolean ifMatch(@Nonnull ItemStack itemStack, @Nonnull Inventory inv, @Nonnull String filterMode, int[] filterSlots) {
         for (int slot : filterSlots) {
             boolean itemSimilar = !ItemStackUtil.isItemNull(inv.getItem(slot)) && ItemStackUtil.isItemSimilar(itemStack, inv.getItem(slot));
             if (itemSimilar) {
