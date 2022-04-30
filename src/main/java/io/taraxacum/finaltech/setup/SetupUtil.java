@@ -1,16 +1,17 @@
 package io.taraxacum.finaltech.setup;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.item.unusable.CopyCardItem;
 import io.taraxacum.finaltech.item.unusable.StorageCardItem;
 import io.taraxacum.finaltech.item.unusable.UnusableSlimefunItem;
+import io.taraxacum.finaltech.item.usable.MenuViewer;
 import io.taraxacum.finaltech.item.usable.accelerate.*;
 import io.taraxacum.finaltech.machine.DustFactoryStone;
+import io.taraxacum.finaltech.machine.ItemDismantleTable;
+import io.taraxacum.finaltech.machine.MatrixReactor;
 import io.taraxacum.finaltech.machine.capacitor.AdvancedChargeIncreaseCapacitor;
 import io.taraxacum.finaltech.machine.capacitor.AdvancedConsumeReduceCapacitor;
 import io.taraxacum.finaltech.machine.cargo.unit.ChargeableStorageUnit;
@@ -29,7 +30,7 @@ import io.taraxacum.finaltech.machine.cargo.storage.StorageInsertPort;
 import io.taraxacum.finaltech.machine.cargo.storage.StorageInteractPort;
 import io.taraxacum.finaltech.machine.cargo.storage.StorageWithdrawPort;
 import io.taraxacum.finaltech.machine.DustGenerator;
-import io.taraxacum.finaltech.machine.manual.CardOperationPort;
+import io.taraxacum.finaltech.machine.manual.CardOperationTable;
 import io.taraxacum.finaltech.machine.manual.craft.*;
 import io.taraxacum.finaltech.machine.range.ray.shooter.EnergizedElectricityShootPile;
 import io.taraxacum.finaltech.machine.range.ray.shooter.NormalElectricityShootPile;
@@ -46,7 +47,6 @@ import io.taraxacum.finaltech.machine.standard.basic.BasicOreFactory;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.setup.register.FinalTechMenus;
 import io.taraxacum.finaltech.setup.register.FinalTechRecipes;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -110,7 +110,8 @@ public final class SetupUtil {
         new ManualHeatedPressureChamber(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MANUAL_HEATED_PRESSURE_CHAMBER).register();
         new DustFactoryDirt(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.ORDERED_DUST_FACTORY_DIRT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ORDERED_DUST_FACTORY).register();
         new DustFactoryStone(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.ORDERED_DUST_FACTORY_STONE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ORDERED_DUST_FACTORY_V2).register();
-        new CardOperationPort(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.CARD_OPERATION_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CARD_OPERATION_PORT).register();
+        new CardOperationTable(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.CARD_OPERATION_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CARD_OPERATION_PORT).register();
+        new ItemDismantleTable(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.ITEM_DISMANTLE_TABLE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ITEM_DISMANTLE_TABLE).register();
 
         new AdvancedComposter(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_COMPOSTER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_COMPOSTER).register();
         new AdvancedJuicer(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_JUICER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_JUICER).register();
@@ -135,6 +136,7 @@ public final class SetupUtil {
 
         new ItemSerializationConstructor(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.ALL_COMPRESSION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_COMPRESSION).register();
         new ItemDeserializeParser(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.ALL_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_FACTORY).register();
+        new MatrixReactor(FinalTechMenus.MENU_FINAL_MACHINE, FinalTechItems.MATRIX_REACTOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MATRIX_REACTOR).register();
 
         new BasicFrameMachine(FinalTechMenus.MENU_CARGO, FinalTechItems.BASIC_FRAME_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_FRAME_MACHINE).register();
         new NormalStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.BASIC_NORMAL_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_NORMAL_STORAGE_UNIT).register();
@@ -197,6 +199,7 @@ public final class SetupUtil {
         new MatrixAccelerator(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.MATRIX_ACCELERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ACCELERATOR).register();
 
         // now register tools
+        new MenuViewer(FinalTechMenus.MENU_TOOL, FinalTechItems.MENU_VIEWER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MENU_VIEWER).register();
         new MachineChargeCardL1(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_CHARGE_CARD_L1, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_CHARGE_CARD_L1).register(slimefunAddon);
         new MachineChargeCardL2(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_CHARGE_CARD_L2, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_CHARGE_CARD_L2).register(slimefunAddon);
         new MachineChargeCardL3(FinalTechMenus.MENU_TOOL, FinalTechItems.MACHINE_CHARGE_CARD_L3, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_CHARGE_CARD_L3).register(slimefunAddon);

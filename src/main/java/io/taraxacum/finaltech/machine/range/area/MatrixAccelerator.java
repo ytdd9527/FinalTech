@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
 import java.util.*;
 
 /**
- * @author LJC
+ * @author Final_ROOT
  */
 public class MatrixAccelerator extends AbstractCubeMachine implements AntiAccelerationMachine {
     public static final int RANGE = 2;

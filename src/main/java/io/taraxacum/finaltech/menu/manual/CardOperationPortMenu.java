@@ -60,7 +60,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
                 if(!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2) && item1.hasItemMeta() && item2.hasItemMeta()) {
                     ItemMeta itemMeta1 = item1.getItemMeta();
-                    ItemMeta itemMeta2 = item1.getItemMeta();
+                    ItemMeta itemMeta2 = item2.getItemMeta();
                     if(StorageCardItem.isStorageCardItem(itemMeta1) && StorageCardItem.isStorageCardItem(itemMeta2)) {
                         ItemStack stringItem1 = StringItemUtil.parseItemInCard(itemMeta1);
                         ItemStack stringItem2 = StringItemUtil.parseItemInCard(itemMeta2);
@@ -229,6 +229,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                         }
                     }
                     ItemStack outputItem = ItemFake.newShell(item1, player);
+                    blockMenu.replaceExistingItem(outputSlot, outputItem);
                 } else if(ItemFake.isSingularity(item2) || ItemFake.isSpirochete(item2)) {
                     item2.setAmount(item2.getAmount() - 1);
                     Player player = null;
@@ -239,6 +240,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                         }
                     }
                     ItemStack outputItem = ItemFake.newShell(item2, player);
+                    blockMenu.replaceExistingItem(outputSlot, outputItem);
                 }
                 return false;
             }

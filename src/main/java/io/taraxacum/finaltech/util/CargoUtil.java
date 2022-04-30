@@ -215,6 +215,9 @@ public class CargoUtil {
             int[] outputSlots = outputMap.getSlots();
             boolean work = false;
             for (int outputSlot : outputSlots) {
+                if (inputItem.getAmount() == 0 || cargoNumber == 0) {
+                    break;
+                }
                 ItemStack outputItem = outputInv.getItem(outputSlot);
                 if (ItemStackUtil.isItemNull(outputItem)) {
                     if (typeItem == null && !CargoItemMode.VALUE_ALL.equals(itemMode)) {
@@ -305,7 +308,8 @@ public class CargoUtil {
                     continue;
                 }
             } else {
-                outputItemWithWrapper = new ItemStackWithWrapper(NULL_ITEM.clone());
+                outputItem = NULL_ITEM;
+                outputItemWithWrapper = new ItemStackWithWrapper(outputItem);
             }
             if (!isVanillaBlock) {
                 inputMap = null;
@@ -316,7 +320,7 @@ public class CargoUtil {
                     }
                 }
                 if (inputMap == null) {
-                    inputMap = getInv(inputBlock, inputSize, inputOrder, outputItem);
+                    inputMap = CargoUtil.getInv(inputBlock, inputSize, inputOrder, outputItem);
                     if (inputMap == null) {
                         continue;
                     }
@@ -326,6 +330,9 @@ public class CargoUtil {
             int[] inputSlots = inputMap.getSlots();
             boolean work = false;
             for (int inputSlot : inputSlots) {
+                if (cargoNumber == 0) {
+                    break;
+                }
                 ItemStack inputItem = inputInv.getItem(inputSlot);
                 if (ItemStackUtil.isItemNull(inputItem)) {
                     continue;
@@ -354,7 +361,7 @@ public class CargoUtil {
                         cargoNumber = outputItem.getMaxStackSize() - outputItem.getAmount();
                     }
                     work = true;
-                    if (outputItem.getAmount() >= outputItem.getMaxStackSize() || cargoNumber == 0) {
+                    if(outputItem.getAmount() >= outputItem.getMaxStackSize()) {
                         break;
                     }
                 } else if (outputItem.getMaxStackSize() > outputItem.getAmount() && ItemStackUtil.isItemSimilar(inputItemWithWrapper.getItemStackWrapper(), outputItemWithWrapper.getItemStackWrapper())) {
@@ -368,10 +375,13 @@ public class CargoUtil {
                         cargoNumber = outputItem.getMaxStackSize() - outputItem.getAmount();
                     }
                     work = true;
-                    if (outputItem.getAmount() >= outputItem.getMaxStackSize() || cargoNumber == 0) {
+                    if(outputItem.getAmount() >= outputItem.getMaxStackSize()) {
                         break;
                     }
                 }
+            }
+            if(cargoNumber == 0) {
+                break;
             }
             if (work) {
                 if (searchItemList.size() <= SEARCH_MAP_LIMIT) {

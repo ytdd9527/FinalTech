@@ -12,7 +12,6 @@ import io.taraxacum.finaltech.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.interfaces.PerformanceLimitMachine;
 import io.taraxacum.finaltech.interfaces.RecipeItem;
-import io.taraxacum.finaltech.machine.standard.advanced.AbstractAdvanceMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
@@ -123,15 +122,6 @@ public abstract class AbstractMachine extends SlimefunItem {
     }
 
     @Nonnull
-    protected abstract BlockPlaceHandler onBlockPlace();
-
-    @Nonnull
-    protected abstract BlockBreakHandler onBlockBreak();
-
-    @Nonnull
-    protected abstract AbstractMachineMenu setMachineMenu();
-
-    @Nonnull
     public final int[] getInputSlot() {
         return this.menu.getInputSlot();
     }
@@ -140,6 +130,15 @@ public abstract class AbstractMachine extends SlimefunItem {
     public final int[] getOutputSlot() {
         return this.menu.getOutputSlot();
     }
+
+    @Nonnull
+    protected abstract BlockPlaceHandler onBlockPlace();
+
+    @Nonnull
+    protected abstract BlockBreakHandler onBlockBreak();
+
+    @Nonnull
+    protected abstract AbstractMachineMenu setMachineMenu();
 
     protected abstract void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config);
 

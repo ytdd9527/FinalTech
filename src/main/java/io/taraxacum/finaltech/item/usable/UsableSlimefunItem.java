@@ -21,7 +21,7 @@ public abstract class UsableSlimefunItem extends SlimefunItem {
     public UsableSlimefunItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.addItemHandler(MachineUtil.BLOCK_PLACE_HANDLER_DENY);
-        this.addItemHandler((ItemUseHandler) playerRightClickEvent -> UsableSlimefunItem.this.function(playerRightClickEvent));
+        this.addItemHandler((ItemUseHandler) UsableSlimefunItem.this::function);
     }
 
     public void register() {

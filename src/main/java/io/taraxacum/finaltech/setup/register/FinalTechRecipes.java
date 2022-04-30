@@ -225,6 +225,12 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, null
     };
 
+    public static final ItemStack[] ITEM_DISMANTLE_TABLE = new ItemStack[] {
+            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, null,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, null,
+            null, null, null
+    };
+
     // advanced machines
     public static final ItemStack[] ADVANCED_COMPOSTER = new ItemStack[] {
             null, null, null,
@@ -359,10 +365,10 @@ public final class FinalTechRecipes {
             FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST
     };
 
-    public static final ItemStack[] OVERCLOCK_FRAME_MACHINE = new ItemStack[] {
+    public static final ItemStack[] MATRIX_REACTOR = new ItemStack[] {
             FinalTechItems.FAKE, FinalTechItems.FAKE, FinalTechItems.FAKE,
-            null, FinalTechItems.BASIC_FRAME_MACHINE, null,
-            null, FinalTechItems.FAKE, null
+            FinalTechItems.FAKE, FinalTechItems.FAKE, FinalTechItems.FAKE,
+            FinalTechItems.FAKE, FinalTechItems.FAKE, FinalTechItems.FAKE
     };
 
     public static final ItemStack[] OVERLOAD_CORE_MACHINE = new ItemStack[] {
@@ -705,6 +711,12 @@ public final class FinalTechRecipes {
             null, FinalTechItems.ORDERED_DUST, null,
             null, FinalTechItems.ORDERED_DUST, null,
             null, FinalTechItems.GEARWHEEL, null
+    };
+
+    public static final ItemStack[] MENU_VIEWER = new ItemStack[] {
+            null, FinalTechItems.GEARWHEEL, null,
+            null, new ItemStack(Material.SPYGLASS), null,
+            null, null, null
     };
 
     public static final ItemStack[] MACHINE_CHARGE_CARD_L1 = new ItemStack[] {

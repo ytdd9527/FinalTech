@@ -3,7 +3,11 @@ package io.taraxacum.finaltech.menu.special;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.machine.AbstractMachine;
+import io.taraxacum.finaltech.machine.MatrixReactor;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.util.ItemStackUtil;
+import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -63,6 +67,5 @@ public class OrderDustGeneratorMenu extends AbstractMachineMenu {
 
     @Override
     public void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-
     }
 }

@@ -97,11 +97,33 @@ public final class MachineUtil {
         return count;
     }
 
+    public static boolean isFull(@Nonnull BlockMenu blockMenu, int[] slots) {
+        ItemStack itemStack;
+        for (int slot : slots) {
+            itemStack = blockMenu.getItemInSlot(slot);
+            if (ItemStackUtil.isItemNull(itemStack) || itemStack.getAmount() < itemStack.getMaxStackSize()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static boolean isFull(@Nonnull Inventory inventory, int[] slots) {
         ItemStack itemStack;
         for (int slot : slots) {
             itemStack = inventory.getItem(slot);
             if (ItemStackUtil.isItemNull(itemStack) || itemStack.getAmount() < itemStack.getMaxStackSize()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isEmpty(@Nonnull BlockMenu blockMenu, int[] slots) {
+        ItemStack itemStack;
+        for (int slot : slots) {
+            itemStack = blockMenu.getItemInSlot(slot);
+            if (!ItemStackUtil.isItemNull(itemStack)) {
                 return false;
             }
         }

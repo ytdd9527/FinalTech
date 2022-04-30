@@ -21,8 +21,8 @@ import javax.annotation.Nonnull;
 /**
  * @author Final_ROOT
  */
-public class CardOperationPort extends AbstractManualMachine implements RecipeItem {
-    public CardOperationPort(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class CardOperationTable extends AbstractManualMachine implements RecipeItem {
+    public CardOperationTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -46,6 +46,7 @@ public class CardOperationPort extends AbstractManualMachine implements RecipeIt
         }
     }
 
+    @Nonnull
     @Override
     protected AbstractManualMachineMenu newMachineMenu() {
         return new CardOperationPortMenu(this);

@@ -76,8 +76,7 @@ public final class StringNumberUtil {
         for (i = 0; i < minLength; i++) {
             r = s1[s1.length - i - 1] + s2[s2.length - i - 1] + add - DOUBLE_OF_ZERO_CHAR_VALUE;
             add = r / 10;
-            r %= 10;
-            stringBuilder.append(r);
+            stringBuilder.append(r % 10);
         }
         int n1;
         int n2;
@@ -86,8 +85,7 @@ public final class StringNumberUtil {
             n2 = s2.length > i ? s2[s2.length - i - 1] : ZERO_CHAR_VALUE;
             r = n1 + n2 + add - DOUBLE_OF_ZERO_CHAR_VALUE;
             add = r / 10;
-            r %= 10;
-            stringBuilder.append(r);
+            stringBuilder.append(r % 10);
         }
         if (add != 0) {
             stringBuilder.append(add);
@@ -198,21 +196,33 @@ public final class StringNumberUtil {
     }
 
     public static String min(String stringNumber1, String stringNumber2) {
-        int i = easilyCompare(stringNumber1, stringNumber2);
-        if (i >= 0) {
-            return stringNumber2;
-        } else {
+        boolean r1 = stringNumber1.startsWith(RELATIVE);
+        boolean r2 = stringNumber2.startsWith(RELATIVE);
+        if(r1 && !r2) {
             return stringNumber1;
+        } else if(!r1 && r2) {
+            return stringNumber2;
+        } else if(r1) {
+            String s1 = stringNumber1.substring(1);
+            String s2 = stringNumber2.substring(1);
+            return easilyCompare(s1, s2) > 0 ? s1 : s2;
         }
+        return easilyCompare(stringNumber1, stringNumber2) > 0 ? stringNumber2 : stringNumber1;
     }
 
     public static String max(String stringNumber1, String stringNumber2) {
-        int i = easilyCompare(stringNumber1, stringNumber2);
-        if (i >= 0) {
-            return stringNumber1;
-        } else {
+        boolean r1 = stringNumber1.startsWith(RELATIVE);
+        boolean r2 = stringNumber2.startsWith(RELATIVE);
+        if(r1 && !r2) {
             return stringNumber2;
+        } else if(!r1 && r2) {
+            return stringNumber1;
+        } else if(r1) {
+            String s1 = stringNumber1.substring(1);
+            String s2 = stringNumber2.substring(1);
+            return easilyCompare(s1, s2) > 0 ? s2 : s1;
         }
+        return easilyCompare(stringNumber1, stringNumber2) > 0 ? stringNumber1 : stringNumber2;
     }
 
     public static String add(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
