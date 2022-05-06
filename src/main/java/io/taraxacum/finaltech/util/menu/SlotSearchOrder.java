@@ -15,12 +15,13 @@ public class SlotSearchOrder {
     public static final String VALUE_DESCEND = "desc";
     public static final String VALUE_FIRST_ONLY = "first-only";
     public static final String VALUE_LAST_ONLY = "last-only";
-
+    public static final String VALUE_RANDOM = "random";
 
     public static final ItemStack ASCENT_ICON = new CustomItemStack(Material.BLUE_WOOL, "&9顺序搜索","&7按照正向顺序搜索物品");
     public static final ItemStack DESCEND_ICON = new CustomItemStack(Material.ORANGE_WOOL, "&6逆序搜索","&7按照逆向顺序搜索物品");
     public static final ItemStack FIRST_ONLY_ICON = new CustomItemStack(Material.BLUE_CARPET, "&9仅搜索第一格");
     public static final ItemStack LAST_ONLY_ICON = new CustomItemStack(Material.ORANGE_CARPET, "&6仅搜索最后一格");
+    public static final ItemStack RANDOM_ICON = new CustomItemStack(Material.PAPER, "&a随机");
 
 
     public static final String next(String order) {

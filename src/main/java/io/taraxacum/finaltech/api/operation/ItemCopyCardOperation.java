@@ -1,7 +1,7 @@
 package io.taraxacum.finaltech.api.operation;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.taraxacum.finaltech.item.unusable.CopyCardItem;
+import io.taraxacum.finaltech.items.unusable.CopyCardItem;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +24,7 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
     protected ItemCopyCardOperation(ItemStack item) {
         this.matchItem = item.clone();
         this.matchItem.setAmount(1);
-        this.copyCardItem = CopyCardItem.newCopyCardItem(this.matchItem, "1");
+        this.copyCardItem = CopyCardItem.newItem(this.matchItem, "1");
         this.count = item.getAmount();
         this.difficulty = CopyCardItem.COPY_CARD_DIFFICULTY;
         this.showItem = new CustomItemStack(item.getType(), "§f完成进度", "§f物品名称= " + ItemStackUtil.getItemName(item), "§f压缩数量= " + this.count + "/" + this.difficulty);
@@ -60,7 +60,7 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
     @Override
     public int addItem(@Nullable ItemStack item) {
         if (!this.isFinished()) {
-            if (ItemStackUtil.isItemSimilar(item, this.matchItem) || ItemStackUtil.isItemSimilar(item, FinalTechItems.FAKE)) {
+            if (ItemStackUtil.isItemSimilar(item, this.matchItem) || ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY)) {
                 int amount = Math.min(item.getAmount(), this.difficulty - this.count);
                 item.setAmount(item.getAmount() - amount);
                 this.count += amount;

@@ -1,16 +1,17 @@
 package io.taraxacum.finaltech.setup.register;
 
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
-import io.taraxacum.finaltech.item.unusable.StorageCardItem;
-import io.taraxacum.finaltech.machine.range.area.EscapeCapacitor;
-import io.taraxacum.finaltech.machine.range.area.generator.*;
-import io.taraxacum.finaltech.machine.capacitor.expanded.*;
-import io.taraxacum.finaltech.machine.capacitor.*;
-import io.taraxacum.finaltech.machine.DustGenerator;
-import io.taraxacum.finaltech.machine.range.ray.shooter.EnergizedElectricityShootPile;
-import io.taraxacum.finaltech.machine.range.ray.shooter.NormalElectricityShootPile;
-import io.taraxacum.finaltech.machine.range.ray.shooter.OverloadedElectricityShootPile;
+import io.taraxacum.finaltech.items.unusable.StorageCardItem;
+import io.taraxacum.finaltech.items.machine.range.area.EscapeCapacitor;
+import io.taraxacum.finaltech.items.machine.range.area.generator.*;
+import io.taraxacum.finaltech.items.machine.capacitor.expanded.*;
+import io.taraxacum.finaltech.items.machine.capacitor.*;
+import io.taraxacum.finaltech.items.machine.DustGenerator;
+import io.taraxacum.finaltech.items.machine.range.ray.shooter.EnergizedElectricityShootPile;
+import io.taraxacum.finaltech.items.machine.range.ray.shooter.NormalElectricityShootPile;
+import io.taraxacum.finaltech.items.machine.range.ray.shooter.OverloadedElectricityShootPile;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -33,7 +34,8 @@ public final class FinalTechItems {
     public static final SlimefunItemStack SINGULARITY = new SlimefunItemStack("FINALTECH_SINGULARITY", Material.NETHER_STAR, "§e奇点");
     public static final SlimefunItemStack SPIROCHETE = new SlimefunItemStack("FINALTECH_SPIROCHETE", Material.ARMOR_STAND, "§e螺旋体");
     public static final SlimefunItemStack SHELL = new SlimefunItemStack("FINALTECH_SHELL", Material.PRISMARINE_SHARD, "§e壳");
-    public static final SlimefunItemStack FAKE = new SlimefunItemStack("FINALTECH_FAKE", Material.END_CRYSTAL, "§x§f§0§f§0§f§0伪物");
+    public static final SlimefunItemStack PHONY = new SlimefunItemStack("FINALTECH_PHONY", Material.END_CRYSTAL, "§x§f§0§f§0§f§0伪物");
+    public static final SlimefunItemStack BUG = new SlimefunItemStack("FINALTECH_BUG", Material.STICK, "§x§8§8§a§a§d§d锟斤拷");
 
     // basic machines
     public static final SlimefunItemStack BASIC_COBBLE_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_COBBLE_FACTORY", Material.CHISELED_STONE_BRICKS, "§7基础刷石工厂");
@@ -60,6 +62,8 @@ public final class FinalTechItems {
     public static final SlimefunItemStack ORDERED_DUST_FACTORY_STONE = new SlimefunItemStack("FINALTECH_ORDERED_DUST_FACTORY_STONE", Material.COBBLESTONE, "§7尘埃制造机");
     public static final SlimefunItemStack CARD_OPERATION_PORT = new SlimefunItemStack("FINALTECH_CARD_OPERATION_PORT", Material.CARTOGRAPHY_TABLE, "§f物品卡操作台");
     public static final SlimefunItemStack ITEM_DISMANTLE_TABLE = new SlimefunItemStack("FINALTECH_ITEM_DISMANTLE_TABLE", Material.CUT_COPPER, "§7物品拆解台");
+    public static final SlimefunItemStack MATRIX_CRAFTING_TABLE = new SlimefunItemStack("FINALTECH_MATRIX_CRAFTING_TABLE", Material.CONDUIT, "§7矩阵合成台");
+    public static final SlimefunItemStack EQUIVALENT_EXCHANGE_TABLE = new SlimefunItemStack("FINALTECH_EQUIVALENT_EXCHANGE_TABLE", Material.REDSTONE_LAMP, "§7等价交换台");
 
     // advanced machines
     public static final SlimefunItemStack ADVANCED_COMPOSTER = new SlimefunItemStack("FINALTECH_COMPOSTER", Material.CRAFTING_TABLE, "§c高级搅拌机");

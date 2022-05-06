@@ -2,7 +2,7 @@ package io.taraxacum.finaltech.api.operation;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.item.unusable.CopyCardItem;
+import io.taraxacum.finaltech.items.unusable.CopyCardItem;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import org.bukkit.inventory.ItemStack;
@@ -33,7 +33,7 @@ public class ItemFakeOperation implements ItemSerializationConstructorOperation 
         this.itemTypeDifficulty = CopyCardItem.SPIROCHETE_DIFFICULTY;
         this.itemAmountDifficulty = CopyCardItem.SINGULARITY_DIFFICULTY;
 
-        this.showItem = new CustomItemStack(FinalTechItems.FAKE.getType(), "§f完成进度", "§f物品个数= " + this.itemAmountCount + "/" + this.itemAmountDifficulty, "§f物品种数= " + this.itemTypeCount + "/" + this.itemTypeDifficulty);
+        this.showItem = new CustomItemStack(FinalTechItems.PHONY.getType(), "§f完成进度", "§f物品个数= " + this.itemAmountCount + "/" + this.itemAmountDifficulty, "§f物品种数= " + this.itemTypeCount + "/" + this.itemTypeDifficulty);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ItemFakeOperation implements ItemSerializationConstructorOperation 
 
     @Override
     public int addItem(@Nullable ItemStack item) {
-        if (ItemStackUtil.isItemNull(item) || !CopyCardItem.isCopyCardItem(item)) {
+        if (ItemStackUtil.isItemNull(item) || !CopyCardItem.isValid(item)) {
             return 0;
         }
 
@@ -87,7 +87,7 @@ public class ItemFakeOperation implements ItemSerializationConstructorOperation 
     @Override
     public ItemStack getResult() {
         if (this.itemAmountCount >= this.itemAmountDifficulty && this.itemTypeCount >= this.itemTypeDifficulty) {
-            return new ItemStack(FinalTechItems.FAKE);
+            return new ItemStack(FinalTechItems.PHONY);
         }
         if (this.itemAmountCount >= this.itemAmountDifficulty) {
             return new ItemStack(FinalTechItems.SINGULARITY);

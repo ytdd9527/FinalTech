@@ -2,7 +2,7 @@ package io.taraxacum.finaltech.menu.function;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.taraxacum.finaltech.machine.AbstractMachine;
+import io.taraxacum.finaltech.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.menu.*;
@@ -104,7 +104,7 @@ public class TransferLineMenu extends AbstractMachineMenu {
         this.addMenuClickHandler(ITEM_COUNT_SLOT, ChestMenuUtils.getEmptyClickHandler());
         this.addItem(ITEM_COUNT_ADD_SLOT, CargoNumber.CARGO_NUMBER_ADD_ICON);
 
-        this.addItem(CARGO_MODE_SLOT, CargoMode.SYMMETRY_ICON);
+        this.addItem(CARGO_MODE_SLOT, CargoMode.HELPER.getIcon(CargoMode.VALUE_STRONG_SYMMETRY));
 
         this.addItem(FILTER_MODE_SLOT, FilterMode.FILTER_MODE_BLACK_ICON);
 
@@ -166,8 +166,8 @@ public class TransferLineMenu extends AbstractMachineMenu {
             return false;
         }));
         blockMenu.addMenuClickHandler(CARGO_MODE_SLOT, ((player, i, itemStack, clickAction) -> {
-            String cargoMode = CargoMode.next(BlockStorage.getLocationInfo(location, CargoMode.KEY));
-            blockMenu.replaceExistingItem(CARGO_MODE_SLOT, CargoMode.getIcon(cargoMode));
+            String cargoMode = CargoMode.HELPER.nextValue(BlockStorage.getLocationInfo(location, CargoMode.KEY));
+            blockMenu.replaceExistingItem(CARGO_MODE_SLOT, CargoMode.HELPER.getIcon(cargoMode));
             BlockStorage.addBlockInfo(location, CargoMode.KEY, cargoMode);
             return false;
         }));
@@ -218,7 +218,7 @@ public class TransferLineMenu extends AbstractMachineMenu {
         blockMenu.replaceExistingItem(BLOCK_SEARCH_SELF_SLOT, BlockSearchSelf.getIcon(BlockStorage.getLocationInfo(block.getLocation(), BlockSearchSelf.KEY)));
         blockMenu.replaceExistingItem(INPUT_SIZE_SLOT, SlotSearchSize.getIcon(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_INPUT)));
         blockMenu.replaceExistingItem(INPUT_ORDER_SLOT, SlotSearchOrder.getIcon(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchOrder.KEY_INPUT)));
-        blockMenu.replaceExistingItem(CARGO_MODE_SLOT, CargoMode.getIcon(BlockStorage.getLocationInfo(block.getLocation(), CargoMode.KEY)));
+        blockMenu.replaceExistingItem(CARGO_MODE_SLOT, CargoMode.HELPER.getIcon(BlockStorage.getLocationInfo(block.getLocation(), CargoMode.KEY)));
         blockMenu.replaceExistingItem(OUTPUT_SIZE_SLOT, SlotSearchSize.getIcon(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchSize.KEY_OUTPUT)));
         blockMenu.replaceExistingItem(OUTPUT_ORDER_SLOT, SlotSearchOrder.getIcon(BlockStorage.getLocationInfo(block.getLocation(), SlotSearchOrder.KEY_OUTPUT)));
         blockMenu.replaceExistingItem(FILTER_MODE_SLOT, FilterMode.getIcon(BlockStorage.getLocationInfo(block.getLocation(), FilterMode.KEY)));

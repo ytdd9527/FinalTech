@@ -1,6 +1,8 @@
 package io.taraxacum.finaltech.util.menu;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import org.bukkit.inventory.ItemStack;
 
@@ -65,6 +67,9 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
             ItemStackUtil.setLore(iconItem, "§cERROR");
             return false;
         }
+    }
+    public boolean setIcon(@Nonnull ItemStack iconItem, @Nullable String value, @Nonnull AbstractMachine abstractMachine) {
+        return this.setIcon(iconItem, value);
     }
 
     public static boolean setIcon(@Nonnull String id, @Nonnull String key, @Nonnull ItemStack iconItem, @Nullable String value) {

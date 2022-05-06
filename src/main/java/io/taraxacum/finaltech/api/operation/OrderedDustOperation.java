@@ -2,7 +2,7 @@ package io.taraxacum.finaltech.api.operation;
 
 import io.github.thebusybiscuit.slimefun4.core.machines.MachineOperation;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.machine.standard.DustFactoryDirt;
+import io.taraxacum.finaltech.items.machine.standard.DustFactoryDirt;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import org.bukkit.inventory.ItemStack;
 

@@ -1,9 +1,8 @@
 package io.taraxacum.finaltech.menu.standard;
 
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.machine.AbstractMachine;
+import io.taraxacum.finaltech.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.menu.MaxStackHelper;
@@ -38,21 +37,7 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
     @Override
     public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
-        blockMenu.addMenuClickHandler(MACHINE_MAX_STACK_SLOT, (player, i, itemStack, clickAction) -> {
-            int quantity = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), MaxStackHelper.KEY));
-            if(clickAction.isShiftClicked()) {
-                quantity = 0;
-            } else {
-                if(clickAction.isRightClicked()) {
-                    quantity = (quantity - 1) % (this.getInputSlot().length / 2 + 1);
-                } else {
-                    quantity = (quantity + 1) % (this.getInputSlot().length / 2 + 1);
-                }
-            }
-            MaxStackHelper.setIcon(blockMenu.getItemInSlot(MACHINE_MAX_STACK_SLOT), quantity);
-            BlockStorage.addBlockInfo(block, MaxStackHelper.KEY, String.valueOf(quantity));
-            return false;
-        });
+        blockMenu.addMenuClickHandler(MACHINE_MAX_STACK_SLOT, MaxStackHelper.getHandler(blockMenu, block, this, MACHINE_MAX_STACK_SLOT));
     }
 
     @Override
@@ -64,9 +49,6 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
         }
 
         int full = 0;
-        if (menu.getItemInSlot(MACHINE_MAX_STACK_SLOT) == null) {
-            menu.addItem(MACHINE_MAX_STACK_SLOT, MaxStackHelper.ICON);
-        }
         if (menu.getItemInSlot(MACHINE_MAX_STACK_SLOT).getType().equals(Material.CHEST)) {
             return this.getInputSlot();
         }
@@ -103,12 +85,10 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
     }
 
     @Override
-    protected void updateMenu(@Nonnull BlockMenu blockMenu, Block block) {
-        if (BlockStorage.getLocationInfo(block.getLocation(), MaxStackHelper.KEY) == null) {
-            BlockStorage.addBlockInfo(block.getLocation(), MaxStackHelper.KEY, "0");
-        }
-        int quantity = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), MaxStackHelper.KEY));
+    protected void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
+        MaxStackHelper.HELPER.checkOrSetBlockStorage(block.getLocation());
+        String quantity = MaxStackHelper.HELPER.getValue(block.getLocation());
         ItemStack item = blockMenu.getItemInSlot(MACHINE_MAX_STACK_SLOT);
-        MaxStackHelper.setIcon(item, quantity);
+        MaxStackHelper.HELPER.setIcon(item, quantity);
     }
 }

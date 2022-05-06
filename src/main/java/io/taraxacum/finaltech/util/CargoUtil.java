@@ -1,9 +1,10 @@
 package io.taraxacum.finaltech.util;
 
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
+import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.dto.InvWithSlots;
-import io.taraxacum.finaltech.dto.ItemStackWithWrapper;
 import io.taraxacum.common.util.JavaUtil;
+import io.taraxacum.finaltech.dto.ItemStackWithWrapper;
 import io.taraxacum.finaltech.util.menu.*;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -18,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Final_ROOT
@@ -46,7 +48,8 @@ public class CargoUtil {
         return switch (cargoMode) {
             case CargoMode.VALUE_INPUT_MAIN -> CargoUtil.doCargoInputMain(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
             case CargoMode.VALUE_OUTPUT_MAIN -> CargoUtil.doCargoOutputMain(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
-            case CargoMode.VALUE_SYMMETRY -> CargoUtil.doCargoStrongSymmetry(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
+            case CargoMode.VALUE_STRONG_SYMMETRY -> CargoUtil.doCargoStrongSymmetry(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
+            case CargoMode.VALUE_WEAK_SYMMETRY -> CargoUtil.doCargoWeakSymmetry(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
             default -> 0;
         };
     }
@@ -61,21 +64,20 @@ public class CargoUtil {
         Inventory outputInv = outputMap.getInventory();
         int[] outputSlots = outputMap.getSlots();
 
-        ItemStackWithWrapper typeItem = null;
+        ItemStackWrapper typeItem = null;
         int number = 0;
-        int length = Math.min(inputSlots.length, outputSlots.length);
         // todo 移到 MachineUtil
-        List<ItemStackWithWrapper> filterItemList = FilterMode.getMatchList(filterInv, filterSlots);
-        for (int i = 0; i < length; i++) {
+        List<ItemStackWithWrapper> filterItemList = MachineUtil.getItemList(filterInv, filterSlots);
+        for (int i = 0, length = Math.min(inputSlots.length, outputSlots.length); i < length; i++) {
             ItemStack inputItem = inputInv.getItem(inputSlots[i]);
             if (ItemStackUtil.isItemNull(inputItem)) {
                 continue;
             }
             ItemStackWithWrapper inputItemWithWrapper = new ItemStackWithWrapper(inputItem);
-            if (!FilterMode.ifMatch(inputItemWithWrapper, filterItemList, filterMode)) {
+            if (!CargoUtil.isMatch(inputItemWithWrapper, filterItemList, filterMode)) {
                 continue;
             }
-            if (!CargoItemMode.VALUE_ALL.equals(itemMode) && typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWithWrapper.getItemStackWrapper(), typeItem.getItemStackWrapper())) {
+            if (typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
                 continue;
             }
             ItemStack outputItem = outputInv.getItem(outputSlots[i]);
@@ -93,11 +95,14 @@ public class CargoUtil {
                     continue;
                 }
             }
-            if (typeItem == null) {
-                typeItem = new ItemStackWithWrapper(inputItem.clone());
+            if (typeItem == null && !CargoItemMode.VALUE_ALL.equals(itemMode)) {
+                typeItem = ItemStackWrapper.wrap(inputItem);
             }
             cargoNumber -= count;
             number += count;
+            if(cargoNumber == 0) {
+                break;
+            }
             if (CargoItemMode.VALUE_STACK.equals(itemMode)) {
                 cargoNumber = outputItem.getMaxStackSize() - outputItem.getAmount();
             }
@@ -115,23 +120,22 @@ public class CargoUtil {
         Inventory outputInv = outputMap.getInventory();
         int[] outputSlots = outputMap.getSlots();
 
-        ItemStackWithWrapper typeItem = null;
+        ItemStackWrapper typeItem = null;
         int number = 0;
-        int length = Math.max(inputSlots.length, outputSlots.length);
-        List<ItemStackWithWrapper> filterItemList = FilterMode.getMatchList(filterInv, filterSlots);
-        for (int i = 0; i < length; i++) {
-            ItemStack inputItem = inputInv.getItem(inputSlots[i % length]);
+        List<ItemStackWithWrapper> filterItemList = MachineUtil.getItemList(filterInv, filterSlots);
+        for (int i = 0, length = Math.max(inputSlots.length, outputSlots.length); i < length; i++) {
+            ItemStack inputItem = inputInv.getItem(inputSlots[i % inputSlots.length]);
             if (ItemStackUtil.isItemNull(inputItem)) {
                 continue;
             }
             ItemStackWithWrapper inputItemWithWrapper = new ItemStackWithWrapper(inputItem);
-            if (!FilterMode.ifMatch(inputItemWithWrapper, filterItemList, filterMode)) {
+            if (!CargoUtil.isMatch(inputItemWithWrapper, filterItemList, filterMode)) {
                 continue;
             }
-            if (!CargoItemMode.VALUE_ALL.equals(itemMode) && typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWithWrapper.getItemStackWrapper(), typeItem.getItemStackWrapper())) {
+            if (typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
                 continue;
             }
-            ItemStack outputItem = outputInv.getItem(outputSlots[i % length]);
+            ItemStack outputItem = outputInv.getItem(outputSlots[i % outputSlots.length]);
             int count;
             if (ItemStackUtil.isItemNull(outputItem)) {
                 count = Math.min(inputItem.getAmount(), cargoNumber);
@@ -146,11 +150,14 @@ public class CargoUtil {
                     continue;
                 }
             }
-            if (typeItem == null) {
-                typeItem = new ItemStackWithWrapper(inputItem.clone());
+            if (typeItem == null && !CargoItemMode.VALUE_ALL.equals(itemMode)) {
+                typeItem = ItemStackWrapper.wrap(inputItem);
             }
             cargoNumber -= count;
             number += count;
+            if(cargoNumber == 0) {
+                break;
+            }
             if (CargoItemMode.VALUE_STACK.equals(itemMode)) {
                 cargoNumber = outputItem.getMaxStackSize() - outputItem.getAmount();
             }
@@ -176,7 +183,7 @@ public class CargoUtil {
             }
         }
         List<ItemStackWithWrapper> skipItemList = new ArrayList<>(inputSlots.length);
-        List<ItemStackWithWrapper> filterItemList = FilterMode.getMatchList(filterInv, filterSlots);
+        List<ItemStackWithWrapper> filterItemList = MachineUtil.getItemList(filterInv, filterSlots);
         List<ItemStackWithWrapper> searchItemList = new ArrayList<>(SEARCH_MAP_LIMIT);
         List<InvWithSlots> searchInvList = new ArrayList<>(SEARCH_MAP_LIMIT);
         ItemStackWithWrapper typeItem = null;
@@ -190,10 +197,10 @@ public class CargoUtil {
             if (typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
                 continue;
             }
-            if (!FilterMode.ifMatch(inputItemWithWrapper, filterItemList, filterMode)) {
+            if (!CargoUtil.isMatch(inputItemWithWrapper, filterItemList, filterMode)) {
                 continue;
             }
-            if (FilterMode.ifMatch(inputItemWithWrapper, skipItemList, FilterMode.VALUE_WHITE)) {
+            if (CargoUtil.isMatch(inputItemWithWrapper, skipItemList, FilterMode.VALUE_WHITE)) {
                 continue;
             }
             if (!isVanillaBlock) {
@@ -288,7 +295,7 @@ public class CargoUtil {
             }
         }
         List<ItemStackWithWrapper> skipItemList = new ArrayList<>(outputMap.getSlots().length);
-        List<ItemStackWithWrapper> filterList = FilterMode.getMatchList(filterInv, filterSlots);
+        List<ItemStackWithWrapper> filterList = MachineUtil.getItemList(filterInv, filterSlots);
         List<ItemStackWithWrapper> searchItemList = new ArrayList<>(SEARCH_MAP_LIMIT);
         List<InvWithSlots> searchInvList = new ArrayList<>(SEARCH_MAP_LIMIT);
         ItemStackWithWrapper typeItem = null;
@@ -301,14 +308,14 @@ public class CargoUtil {
                     continue;
                 }
                 outputItemWithWrapper = new ItemStackWithWrapper(outputItem);
-                if (!FilterMode.ifMatch(outputItemWithWrapper, filterList, filterMode)) {
+                if (!CargoUtil.isMatch(outputItemWithWrapper, filterList, filterMode)) {
                     continue;
                 }
-                if (FilterMode.ifMatch(outputItemWithWrapper, skipItemList, FilterMode.VALUE_WHITE)) {
+                if (CargoUtil.isMatch(outputItemWithWrapper, skipItemList, FilterMode.VALUE_WHITE)) {
                     continue;
                 }
             } else {
-                outputItem = NULL_ITEM;
+                outputItem = ItemStackUtil.AIR;
                 outputItemWithWrapper = new ItemStackWithWrapper(outputItem);
             }
             if (!isVanillaBlock) {
@@ -338,7 +345,7 @@ public class CargoUtil {
                     continue;
                 }
                 ItemStackWithWrapper inputItemWithWrapper = new ItemStackWithWrapper(inputItem);
-                if (!FilterMode.ifMatch(inputItemWithWrapper, filterList, filterMode)) {
+                if (!CargoUtil.isMatch(inputItemWithWrapper, filterList, filterMode)) {
                     continue;
                 }
                 if (typeItem != null && !work && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
@@ -395,6 +402,15 @@ public class CargoUtil {
         return number;
     }
 
+    public static boolean isMatch(@Nonnull ItemStackWithWrapper itemStackWithWrapper, @Nonnull List<ItemStackWithWrapper> list, @Nonnull String filterMode) {
+        for (ItemStackWithWrapper filterItem : list) {
+            if (ItemStackUtil.isItemSimilar(itemStackWithWrapper, filterItem)) {
+                return FilterMode.VALUE_WHITE.equals(filterMode);
+            }
+        }
+        return FilterMode.VALUE_BLACK.equals(filterMode);
+    }
+
     /**
      * 按照指定格式
      * 获取指定方块位置的容器
@@ -421,7 +437,7 @@ public class CargoUtil {
                     if (ItemStackUtil.isItemNull(item)) {
                         slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.INSERT);
                         if (slots.length == 0) {
-                            slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, NULL_ITEM);
+                            slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, ItemStackUtil.AIR);
                         }
                     } else {
                         slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, item);
@@ -431,7 +447,7 @@ public class CargoUtil {
                     if (ItemStackUtil.isItemNull(item)) {
                         slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
                         if (slots.length == 0) {
-                            slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.WITHDRAW, NULL_ITEM);
+                            slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.WITHDRAW, ItemStackUtil.AIR);
                         }
                     } else {
                         slots = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.WITHDRAW, item);
@@ -441,11 +457,11 @@ public class CargoUtil {
                     if (ItemStackUtil.isItemNull(item)) {
                         insert = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.INSERT);
                         if (insert.length == 0) {
-                            insert = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, NULL_ITEM);
+                            insert = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, ItemStackUtil.AIR);
                         }
                         withdraw = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
                         if (withdraw.length == 0) {
-                            withdraw = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.WITHDRAW, NULL_ITEM);
+                            withdraw = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.WITHDRAW, ItemStackUtil.AIR);
                         }
                     } else {
                         insert = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, item);
@@ -462,11 +478,11 @@ public class CargoUtil {
                     if (ItemStackUtil.isItemNull(item)) {
                         insert = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.INSERT);
                         if (insert.length == 0) {
-                            insert = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, NULL_ITEM);
+                            insert = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, ItemStackUtil.AIR);
                         }
                         withdraw = blockMenu.getPreset().getSlotsAccessedByItemTransport(ItemTransportFlow.WITHDRAW);
                         if (withdraw.length == 0) {
-                            withdraw = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.WITHDRAW, NULL_ITEM);
+                            withdraw = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.WITHDRAW, ItemStackUtil.AIR);
                         }
                     } else {
                         insert = blockMenu.getPreset().getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, item);
@@ -507,6 +523,12 @@ public class CargoUtil {
                 case SlotSearchOrder.VALUE_LAST_ONLY:
                     if (slots.length > 0) {
                         slots = new int[] {slots[slots.length - 1]};
+                    }
+                case SlotSearchOrder.VALUE_RANDOM:
+                    List<Integer> collect = Arrays.stream(slots).boxed().collect(Collectors.toList());
+                    Collections.shuffle(collect);
+                    for(int i = 0; i < collect.size(); i++) {
+                        slots[i] = collect.get(i);
                     }
                 default:
                     break;

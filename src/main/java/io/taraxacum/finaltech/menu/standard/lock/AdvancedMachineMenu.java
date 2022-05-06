@@ -1,9 +1,7 @@
 package io.taraxacum.finaltech.menu.standard.lock;
 
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.taraxacum.finaltech.machine.AbstractMachine;
-import io.taraxacum.finaltech.menu.standard.AbstractStandardMachineMenu;
+import io.taraxacum.finaltech.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.menu.Icon;
 
 import javax.annotation.Nonnull;

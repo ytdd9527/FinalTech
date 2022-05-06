@@ -4,10 +4,10 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.dto.AdvancedCraftV2;
+import io.taraxacum.finaltech.dto.AdvancedCraft;
 import io.taraxacum.finaltech.factory.MachineRecipeFactory;
-import io.taraxacum.finaltech.machine.AbstractMachine;
-import io.taraxacum.finaltech.machine.manual.craft.AbstractManualCraftMachine;
+import io.taraxacum.finaltech.items.machine.AbstractMachine;
+import io.taraxacum.finaltech.items.machine.manual.craft.AbstractManualCraftMachine;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -133,11 +133,11 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
                 }
             }
 
-            AdvancedCraftV2 craft;
+            AdvancedCraft craft;
             if(ORDER_VALUE_DESC.equals(order)) {
-                craft = AdvancedCraftV2.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
+                craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
             } else {
-                craft = AdvancedCraftV2.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
+                craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
             }
 
             if(craft == null) {
@@ -165,9 +165,9 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             while (quantity > 0) {
                 offset = craft.getOffset();
                 if(ORDER_VALUE_DESC.equals(order)) {
-                    craft = AdvancedCraftV2.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
+                    craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
                 } else {
-                    craft = AdvancedCraftV2.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
+                    craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
                 }
 
                 if(craft == null) {
@@ -233,13 +233,13 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             Bukkit.getLogger().warning("请确定这是否是由玩家网络卡顿造成，如果不是，可能是其正尝试恶意卡服");
         }
 
-        AdvancedCraftV2 craft = null;
+        AdvancedCraft craft = null;
         String order = config.getString(KEY_ORDER);
         int offset = config.contains(KEY) ? Integer.parseInt(config.getValue(KEY).toString()) : 0;
         if(order == null || ORDER_VALUE_ASC.equals(order)) {
-            craft = AdvancedCraftV2.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), 1, offset);
+            craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), 1, offset);
         } else if (ORDER_VALUE_DESC.equals(order)) {
-            craft = AdvancedCraftV2.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), 1, offset);
+            craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), 1, offset);
         }
 
         if(craft != null) {

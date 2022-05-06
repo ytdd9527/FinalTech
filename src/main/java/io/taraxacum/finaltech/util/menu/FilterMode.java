@@ -1,16 +1,8 @@
 package io.taraxacum.finaltech.util.menu;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.dto.ItemStackWithWrapper;
-import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Final_ROOT
@@ -44,52 +36,5 @@ public class FilterMode {
             case VALUE_BLACK -> FILTER_MODE_BLACK_ICON;
             default -> Icon.ERROR_ICON;
         };
-    }
-
-    public static List<ItemStackWithWrapper> getMatchList(@Nonnull Inventory inventory, int[] filterSlots) {
-        List<ItemStackWithWrapper> filterList = new ArrayList<>();
-        for (int i = 0; i < filterSlots.length; i++) {
-            if (!ItemStackUtil.isItemNull(inventory.getItem(filterSlots[i]))) {
-                filterList.add(new ItemStackWithWrapper(inventory.getItem(filterSlots[i])));
-            }
-        }
-        return filterList;
-    }
-
-    public static boolean ifMatch(@Nonnull ItemStack item, @Nonnull List<ItemStackWithWrapper> list, @Nonnull String filterMode) {
-        if (ItemStackUtil.isItemNull(item)) {
-            return VALUE_BLACK.equals(filterMode);
-        }
-        ItemStackWithWrapper itemStackWithWrapper = new ItemStackWithWrapper(item);
-        for (ItemStackWithWrapper filterItem : list) {
-            if (ItemStackUtil.isItemSimilar(itemStackWithWrapper, filterItem)) {
-                return VALUE_WHITE.equals(filterMode);
-            }
-        }
-        return VALUE_BLACK.equals(filterMode);
-    }
-
-    public static boolean ifMatch(@Nonnull ItemStackWithWrapper itemStackWithWrapper, @Nonnull List<ItemStackWithWrapper> list, @Nonnull String filterMode) {
-        for (ItemStackWithWrapper filterItem : list) {
-            if (ItemStackUtil.isItemSimilar(itemStackWithWrapper, filterItem)) {
-                return VALUE_WHITE.equals(filterMode);
-            }
-        }
-        return VALUE_BLACK.equals(filterMode);
-    }
-
-    public static boolean ifMatch(@Nonnull ItemStack itemStack, @Nonnull BlockMenu blockMenu, @Nonnull String filterMode, int[] filterSlots) {
-        return ifMatch(itemStack, blockMenu.toInventory(), filterMode, filterSlots);
-    }
-
-    // todo
-    public static boolean ifMatch(@Nonnull ItemStack itemStack, @Nonnull Inventory inv, @Nonnull String filterMode, int[] filterSlots) {
-        for (int slot : filterSlots) {
-            boolean itemSimilar = !ItemStackUtil.isItemNull(inv.getItem(slot)) && ItemStackUtil.isItemSimilar(itemStack, inv.getItem(slot));
-            if (itemSimilar) {
-                return VALUE_WHITE.equals(filterMode);
-            }
-        }
-        return VALUE_BLACK.equals(filterMode);
     }
 }

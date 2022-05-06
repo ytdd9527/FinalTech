@@ -9,7 +9,6 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,11 +27,34 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
     }
 
     @Nonnull
-    public static BlockStorageHelper newInstanceOrGet(@Nonnull String id, @Nonnull String key, @Nonnull Map<String, ItemStack> valueIconMap) {
+    public ItemStack getIcon(@Nullable String value) {
+        return valueIconMap.getOrDefault(value, ERROR_ICON);
+    }
+
+    @Nonnull
+    public ItemStack getDefaultIcon() {
+        return valueIconMap.get(this.defaultValue());
+    }
+
+    @Nonnull
+    public static BlockStorageIconHelper newInstanceOrGet(@Nonnull String id, @Nonnull String key, @Nonnull Map<String, ItemStack> valueIconMap) {
         if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
             Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(id);
             if(stringBlockStorageHelperMap.containsKey(key)) {
-                return stringBlockStorageHelperMap.get(key);
+                BlockStorageHelper blockStorageHelper = stringBlockStorageHelperMap.get(key);
+                if(blockStorageHelper instanceof BlockStorageIconHelper) {
+                    return (BlockStorageIconHelper) blockStorageHelper;
+                } else {
+                    blockStorageHelper = new BlockStorageIconHelper(id, valueIconMap) {
+                        @Nonnull
+                        @Override
+                        public String getKey() {
+                            return key;
+                        }
+                    };
+                    stringBlockStorageHelperMap.put(key, blockStorageHelper);
+                    return (BlockStorageIconHelper) blockStorageHelper;
+                }
             }
         }
         return new BlockStorageIconHelper(id, valueIconMap) {
@@ -59,11 +81,6 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
                 return key;
             }
         };
-    }
-
-    @Nonnull
-    public ItemStack getIcon(@Nullable String value) {
-        return valueIconMap.getOrDefault(value, ERROR_ICON);
     }
 
     public static ItemStack getIcon(@Nonnull String id, @Nonnull String key, @Nullable String value) {

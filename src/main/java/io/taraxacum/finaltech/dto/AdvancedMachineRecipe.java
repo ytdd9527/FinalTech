@@ -1,7 +1,5 @@
 package io.taraxacum.finaltech.dto;
 
-import org.bukkit.inventory.ItemStack;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +8,11 @@ import java.util.List;
  * @author Final_ROOT
  */
 public class AdvancedMachineRecipe {
-    private List<ItemStackWithWrapper> inputList;
+    private List<ItemStackWithWrapperAmount> inputList;
     private List<AdvancedRandomOutput> outputList;
     private int weightSum = 0;
 
-    public AdvancedMachineRecipe(List<ItemStackWithWrapper> inputList, List<AdvancedRandomOutput> outputList) {
+    public AdvancedMachineRecipe(List<ItemStackWithWrapperAmount> inputList, List<AdvancedRandomOutput> outputList) {
         this.inputList = inputList;
         this.outputList = outputList;
         for (AdvancedRandomOutput advancedRandomOutput : this.outputList) {
@@ -22,11 +20,11 @@ public class AdvancedMachineRecipe {
         }
     }
 
-    public List<ItemStackWithWrapper> getInput() {
+    public List<ItemStackWithWrapperAmount> getInput() {
         return inputList;
     }
 
-    public List<ItemStackWithWrapper> getOutput() {
+    public List<ItemStackWithWrapperAmount> getOutput() {
         int r = (int)(Math.random() * this.weightSum);
         for (AdvancedRandomOutput advancedRandomOutput : this.outputList) {
             if (r > advancedRandomOutput.getWeight()) {
@@ -47,19 +45,19 @@ public class AdvancedMachineRecipe {
     }
 
     public static class AdvancedRandomOutput {
-        private List<ItemStackWithWrapper> outputItem;
+        private List<ItemStackWithWrapperAmount> outputItem;
         private int weight;
 
-        public AdvancedRandomOutput(List<ItemStackWithWrapper> outputItem, int weight) {
+        public AdvancedRandomOutput(List<ItemStackWithWrapperAmount> outputItem, int weight) {
             this.outputItem = outputItem;
             this.weight = weight;
         }
 
-        public List<ItemStackWithWrapper> getOutputItem() {
+        public List<ItemStackWithWrapperAmount> getOutputItem() {
             return outputItem;
         }
 
-        public void setOutputItem(List<ItemStackWithWrapper> outputItem) {
+        public void setOutputItem(List<ItemStackWithWrapperAmount> outputItem) {
             this.outputItem = outputItem;
         }
 

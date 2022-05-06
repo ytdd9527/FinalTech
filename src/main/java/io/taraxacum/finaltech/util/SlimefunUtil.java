@@ -4,10 +4,8 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.interfaces.RecipeItem;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.common.util.StringNumberUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
@@ -15,17 +13,16 @@ import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -82,17 +79,17 @@ public class SlimefunUtil {
     }
 
     public static String getCharge(@Nonnull Location location) {
-        return BlockStorage.hasBlockInfo(location) ? getCharge(BlockStorage.getLocationInfo(location)) : "0";
+        return BlockStorage.hasBlockInfo(location) ? SlimefunUtil.getCharge(BlockStorage.getLocationInfo(location)) : "0";
     }
 
     public static String getCharge(@Nonnull Config config) {
         return config.contains("energy-charge") ? config.getString("energy-charge") : StringNumberUtil.ZERO;
     }
 
-    public static void setCharge(@Nonnull Location location, String energy) {
+    public static void setCharge(@Nonnull Location location, @Nonnull String energy) {
         BlockStorage.addBlockInfo(location, "energy-charge", energy);
     }
-    public static void setCharge(@Nonnull Config config, String energy) {
+    public static void setCharge(@Nonnull Config config, @Nonnull String energy) {
         config.setValue("energy-charge", energy);
     }
     public static void setCharge(@Nonnull Config config, int energy) {
@@ -107,17 +104,28 @@ public class SlimefunUtil {
         }
     }
 
-    public static final boolean hasPermission(@Nonnull Block block, @Nonnull String uuid) {
-        OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
-        return player.isOnline() && Slimefun.getProtectionManager().hasPermission(player, block, Interaction.INTERACT_BLOCK);
+    public static boolean hasPermission(@Nonnull String uuid, @Nonnull Block block, Interaction interaction) {
+        Player player = Bukkit.getPlayer(UUID.fromString(uuid));
+        if(player == null) {
+            return false;
+        }
+        return Slimefun.getProtectionManager().hasPermission(player, block, interaction);
     }
 
-    public static boolean hasPermission(@Nonnull Entity entity, @Nonnull String uuid) {
-        OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
-        return hasPermission(entity, player);
+    public static boolean hasPermission(@Nonnull String uuid, @Nonnull Entity entity, @Nonnull Interaction interaction) {
+        Player player = Bukkit.getPlayer(UUID.fromString(uuid));
+        if(player == null) {
+            return false;
+        }
+        return Slimefun.getProtectionManager().hasPermission(player, entity.getLocation(), interaction);
     }
 
-    public static boolean hasPermission(@Nonnull Entity entity, @Nullable OfflinePlayer player) {
-        return player.isOnline() && Slimefun.getProtectionManager().hasPermission(player, entity.getLocation(), Interaction.ATTACK_ENTITY);
+    public static boolean hasPermission(@Nonnull Player player, @Nonnull Location location, @Nonnull Interaction... interactions) {
+        for(Interaction interaction : interactions) {
+            if(!Slimefun.getProtectionManager().hasPermission(player, location, interaction)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

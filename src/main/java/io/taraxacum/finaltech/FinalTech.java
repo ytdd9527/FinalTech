@@ -4,6 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.taraxacum.finaltech.command.GetItemFake;
+import io.taraxacum.finaltech.factory.ItemValueMap;
 import io.taraxacum.finaltech.setup.SetupUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,6 +35,8 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         SetupUtil.setupItems(this);
 
         this.init();
+
+        ItemValueMap.init();
 
         this.getCommand("test").setExecutor(new GetItemFake());
     }

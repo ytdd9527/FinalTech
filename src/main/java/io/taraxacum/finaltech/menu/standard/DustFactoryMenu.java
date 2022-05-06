@@ -1,6 +1,6 @@
 package io.taraxacum.finaltech.menu.standard;
 
-import io.taraxacum.finaltech.machine.AbstractMachine;
+import io.taraxacum.finaltech.items.machine.AbstractMachine;
 
 import javax.annotation.Nonnull;
 

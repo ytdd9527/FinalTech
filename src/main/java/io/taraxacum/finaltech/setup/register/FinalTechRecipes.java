@@ -2,6 +2,7 @@ package io.taraxacum.finaltech.setup.register;
 
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -13,6 +14,7 @@ public final class FinalTechRecipes {
     // RecipesType
     public static final RecipeType RECIPE_TYPE_ORDERED_DUST_FACTORY = new RecipeType(FinalTechItems.ORDERED_DUST_FACTORY_DIRT, "FINALTECH_DUST_FACTORY");
     public static final RecipeType RECIPE_TYPE_ALL_COMPRESSION = new RecipeType(FinalTechItems.ALL_COMPRESSION, "FINALTECH_ALL_COMPRESSION");
+    public static final RecipeType RECIPE_TYPE_MATRIX_CRAFTING_TABLE = new RecipeType(FinalTechItems.MATRIX_CRAFTING_TABLE, "FINALTECH_MATRIX_CRAFTING_TABLE");
 
     // items
     public static final ItemStack[] WATER_CARD = new ItemStack[] {
@@ -82,6 +84,12 @@ public final class FinalTechRecipes {
     };
     public static final ItemStack[] FAKE = new ItemStack[] {
             FinalTechItems.SINGULARITY, FinalTechItems.SPIROCHETE, null,
+            null, null, null,
+            null, null, null
+    };
+
+    public static final ItemStack[] BUG = new ItemStack[] {
+            null, null, null,
             null, null, null,
             null, null, null
     };
@@ -231,6 +239,18 @@ public final class FinalTechRecipes {
             null, null, null
     };
 
+    public static final ItemStack[] MATRIX_CRAFTING_TABLE = new ItemStack[] {
+            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, new ItemStack(Material.HEART_OF_THE_SEA), FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST
+    };
+
+    public static final ItemStack[] EQUIVALENT_EXCHANGE_TABLE = new ItemStack[] {
+            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, new ItemStack(Material.NETHER_STAR), FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST
+    };
+
     // advanced machines
     public static final ItemStack[] ADVANCED_COMPOSTER = new ItemStack[] {
             null, null, null,
@@ -348,7 +368,7 @@ public final class FinalTechRecipes {
 
     public static final ItemStack[] ADVANCED_AUTO_CRAFT = new ItemStack[] {
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
-            FinalTechItems.GEARWHEEL, FinalTechItems.FAKE, FinalTechItems.GEARWHEEL,
+            FinalTechItems.GEARWHEEL, FinalTechItems.PHONY, FinalTechItems.GEARWHEEL,
             FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST
     };
 
@@ -366,15 +386,15 @@ public final class FinalTechRecipes {
     };
 
     public static final ItemStack[] MATRIX_REACTOR = new ItemStack[] {
-            FinalTechItems.FAKE, FinalTechItems.FAKE, FinalTechItems.FAKE,
-            FinalTechItems.FAKE, FinalTechItems.FAKE, FinalTechItems.FAKE,
-            FinalTechItems.FAKE, FinalTechItems.FAKE, FinalTechItems.FAKE
+            FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY,
+            FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY,
+            FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY
     };
 
     public static final ItemStack[] OVERLOAD_CORE_MACHINE = new ItemStack[] {
-            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE,
-            FinalTechItems.GEARWHEEL, FinalTechItems.FAKE, FinalTechItems.GEARWHEEL,
-            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE
+            FinalTechItems.PHONY, FinalTechItems.GEARWHEEL, FinalTechItems.PHONY,
+            FinalTechItems.GEARWHEEL, FinalTechItems.PHONY, FinalTechItems.GEARWHEEL,
+            FinalTechItems.PHONY, FinalTechItems.GEARWHEEL, FinalTechItems.PHONY
     };
 
     // cargos
@@ -630,7 +650,7 @@ public final class FinalTechRecipes {
 
     public static final ItemStack[] MATRIX_EXPANDED_CAPACITOR = new ItemStack[] {
             FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, FinalTechItems.QUANTITY_MODULE, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR,
-            FinalTechItems.FAKE, FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, FinalTechItems.FAKE,
+            FinalTechItems.PHONY, FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, FinalTechItems.PHONY,
             null, FinalTechItems.QUANTITY_MODULE, null
     };
 
@@ -683,27 +703,39 @@ public final class FinalTechRecipes {
     };
 
     public static final ItemStack[] MATRIX_GENERATOR = new ItemStack[] {
-            FinalTechItems.FAKE, FinalTechItems.FAKE, FinalTechItems.FAKE,
+            FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY,
             FinalTechItems.ENERGIZED_GENERATOR, FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, FinalTechItems.ENERGIZED_GENERATOR,
             null, FinalTechItems.ENERGIZED_GENERATOR, null
     };
 
     public static final ItemStack[] ENERGIZED_ACCELERATOR = new ItemStack[] {
-            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE,
-            FinalTechItems.GEARWHEEL, FinalTechItems.FAKE, FinalTechItems.GEARWHEEL,
-            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
+            new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L1, 64),
+            new CustomItemStack(FinalTechItems.ANNULAR, 64),
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64)
     };
 
     public static final ItemStack[] OVERLOADED_ACCELERATOR = new ItemStack[] {
-            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE,
-            FinalTechItems.GEARWHEEL, FinalTechItems.FAKE, FinalTechItems.GEARWHEEL,
-            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
+            new CustomItemStack(FinalTechItems.MACHINE_ACTIVATE_CARD_L1, 64),
+            new CustomItemStack(FinalTechItems.ANNULAR, 64),
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64)
     };
 
     public static final ItemStack[] MATRIX_ACCELERATOR = new ItemStack[] {
-            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE,
-            FinalTechItems.GEARWHEEL, FinalTechItems.FAKE, FinalTechItems.GEARWHEEL,
-            FinalTechItems.FAKE, FinalTechItems.GEARWHEEL, FinalTechItems.FAKE
+            FinalTechItems.PHONY, FinalTechItems.GEARWHEEL, FinalTechItems.PHONY,
+            FinalTechItems.GEARWHEEL, FinalTechItems.PHONY, FinalTechItems.GEARWHEEL,
+            FinalTechItems.PHONY, FinalTechItems.GEARWHEEL, FinalTechItems.PHONY
     };
 
     // tool

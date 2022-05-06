@@ -1,7 +1,6 @@
 package io.taraxacum.finaltech.menu.standard.lock;
 
-import io.taraxacum.finaltech.machine.AbstractMachine;
-import io.taraxacum.finaltech.menu.standard.AbstractStandardMachineMenu;
+import io.taraxacum.finaltech.items.machine.AbstractMachine;
 
 import javax.annotation.Nonnull;
 

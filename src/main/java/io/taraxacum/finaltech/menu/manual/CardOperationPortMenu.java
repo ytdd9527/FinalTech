@@ -2,10 +2,10 @@ package io.taraxacum.finaltech.menu.manual;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.taraxacum.finaltech.item.unusable.CopyCardItem;
-import io.taraxacum.finaltech.item.unusable.ItemFake;
-import io.taraxacum.finaltech.item.unusable.StorageCardItem;
-import io.taraxacum.finaltech.machine.AbstractMachine;
+import io.taraxacum.finaltech.items.unusable.CopyCardItem;
+import io.taraxacum.finaltech.items.unusable.ItemPhony;
+import io.taraxacum.finaltech.items.unusable.StorageCardItem;
+import io.taraxacum.finaltech.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.StringItemUtil;
@@ -69,8 +69,8 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                             String amount2 = StringItemUtil.parseAmountInCard(itemMeta2);
                             ItemStack outputItem = new ItemStack(StorageCardItem.RANDOM_STORAGE_CARD_ITEM[(int)(Math.random() * StorageCardItem.RANDOM_STORAGE_CARD_ITEM.length)]);
                             StringItemUtil.setItemInCard(outputItem, stringItem1, StringNumberUtil.add(amount1, amount2));
-                            StringItemUtil.updateStorageCardLore(outputItem);
-                            StringItemUtil.updateStorageCardType(outputItem);
+                            StorageCardItem.updateStorageCardLore(outputItem);
+                            StorageCardItem.updateStorageCardType(outputItem);
                             item1.setAmount(item1.getAmount() - 1);
                             item2.setAmount(item2.getAmount() - 1);
                             blockMenu.replaceExistingItem(outputSlot, outputItem);
@@ -119,11 +119,11 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                     }
                     if(storageCardItem != null && storageCardItemMeta != null) {
                         ItemStack stringItem = StringItemUtil.parseItemInCard(storageCardItemMeta);
-                        ItemStack outputItem = CopyCardItem.newCopyCardItem(stringItem, "1");
+                        ItemStack outputItem = CopyCardItem.newItem(stringItem, "1");
                         outputItem.setAmount(storageCardItem.getAmount());
                         StringItemUtil.setAmountInCard(storageCardItem, StringNumberUtil.sub(StringItemUtil.parseAmountInCard(storageCardItemMeta), String.valueOf(CopyCardItem.COPY_CARD_DIFFICULTY)));
-                        StringItemUtil.updateStorageCardLore(storageCardItem);
-                        StringItemUtil.updateStorageCardType(storageCardItem);
+                        StorageCardItem.updateStorageCardLore(storageCardItem);
+                        StorageCardItem.updateStorageCardType(storageCardItem);
                         blockMenu.replaceExistingItem(outputSlot, outputItem);
                         return true;
                     }
@@ -134,9 +134,9 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         CRAFT_LIST.add(new Craft() {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if(ItemFake.isSingularity(item1) && ItemFake.isSpirochete(item2)) {
+                if(ItemPhony.isSingularity(item1) && ItemPhony.isSpirochete(item2)) {
                     return true;
-                } else if(ItemFake.isSpirochete(item1) && ItemFake.isSingularity(item2)) {
+                } else if(ItemPhony.isSpirochete(item1) && ItemPhony.isSingularity(item2)) {
                     return true;
                 }
                 return false;
@@ -161,7 +161,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                             break;
                         }
                     }
-                    blockMenu.replaceExistingItem(outputSlot, ItemFake.newItemFake(item1, item2, player));
+                    blockMenu.replaceExistingItem(outputSlot, ItemPhony.newItem(item1, item2, player));
                 }
                 return false;
             }
@@ -169,9 +169,9 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         CRAFT_LIST.add(new Craft() {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if(!ItemStackUtil.isItemNull(item1) && CopyCardItem.isCopyCardItem(item1) && ItemStackUtil.isItemSimilar(item2, FinalTechItems.SHELL)) {
+                if(!ItemStackUtil.isItemNull(item1) && CopyCardItem.isValid(item1) && ItemStackUtil.isItemSimilar(item2, FinalTechItems.SHELL)) {
                     return true;
-                } else if(!ItemStackUtil.isItemNull(item2) && CopyCardItem.isCopyCardItem(item2) && ItemStackUtil.isItemSimilar(item1, FinalTechItems.SHELL)) {
+                } else if(!ItemStackUtil.isItemNull(item2) && CopyCardItem.isValid(item2) && ItemStackUtil.isItemSimilar(item1, FinalTechItems.SHELL)) {
                     return true;
                 }
                 return false;
@@ -186,12 +186,12 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
-                if(!ItemStackUtil.isItemNull(item1) && CopyCardItem.isCopyCardItem(item1) && ItemStackUtil.isItemSimilar(item2, FinalTechItems.SHELL)) {
+                if(!ItemStackUtil.isItemNull(item1) && CopyCardItem.isValid(item1) && ItemStackUtil.isItemSimilar(item2, FinalTechItems.SHELL)) {
                     item2.setAmount(item2.getAmount() - 1);
                     ItemStack outputItem = ItemStackUtil.cloneItem(item1);
                     outputItem.setAmount(1);
                     blockMenu.replaceExistingItem(outputSlot, outputItem);
-                } else if(!ItemStackUtil.isItemNull(item2) && CopyCardItem.isCopyCardItem(item2) && ItemStackUtil.isItemSimilar(item1, FinalTechItems.SHELL)) {
+                } else if(!ItemStackUtil.isItemNull(item2) && CopyCardItem.isValid(item2) && ItemStackUtil.isItemSimilar(item1, FinalTechItems.SHELL)) {
                     item1.setAmount(item1.getAmount() - 1);
                     ItemStack outputItem = ItemStackUtil.cloneItem(item2);
                     outputItem.setAmount(1);
@@ -204,7 +204,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         CRAFT_LIST.add(new Craft() {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if(ItemFake.isSingularity(item1) || ItemFake.isSingularity(item2) || ItemFake.isSpirochete(item1) || ItemFake.isSpirochete(item2)) {
+                if(ItemPhony.isSingularity(item1) || ItemPhony.isSingularity(item2) || ItemPhony.isSpirochete(item1) || ItemPhony.isSpirochete(item2)) {
                     return true;
                 }
                 return false;
@@ -219,7 +219,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
-                if(ItemFake.isSingularity(item1) || ItemFake.isSpirochete(item1)) {
+                if(ItemPhony.isSingularity(item1) || ItemPhony.isSpirochete(item1)) {
                     item1.setAmount(item1.getAmount() - 1);
                     Player player = null;
                     for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
@@ -228,9 +228,9 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                             break;
                         }
                     }
-                    ItemStack outputItem = ItemFake.newShell(item1, player);
+                    ItemStack outputItem = ItemPhony.newShell(item1, player);
                     blockMenu.replaceExistingItem(outputSlot, outputItem);
-                } else if(ItemFake.isSingularity(item2) || ItemFake.isSpirochete(item2)) {
+                } else if(ItemPhony.isSingularity(item2) || ItemPhony.isSpirochete(item2)) {
                     item2.setAmount(item2.getAmount() - 1);
                     Player player = null;
                     for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
@@ -239,7 +239,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                             break;
                         }
                     }
-                    ItemStack outputItem = ItemFake.newShell(item2, player);
+                    ItemStack outputItem = ItemPhony.newShell(item2, player);
                     blockMenu.replaceExistingItem(outputSlot, outputItem);
                 }
                 return false;
@@ -248,7 +248,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         CRAFT_LIST.add(new Craft() {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                return CopyCardItem.isCopyCardItem(item1) || CopyCardItem.isCopyCardItem(item2);
+                return CopyCardItem.isValid(item1) || CopyCardItem.isValid(item2);
             }
 
             @Override
@@ -260,7 +260,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
-                if(CopyCardItem.isCopyCardItem(item1)) {
+                if(CopyCardItem.isValid(item1)) {
                     item1.setAmount(item1.getAmount() - 1);
                     Player player = null;
                     for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
@@ -269,8 +269,8 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                             break;
                         }
                     }
-                    blockMenu.replaceExistingItem(outputSlot, ItemFake.newAnnular(item1, player));
-                } else if(CopyCardItem.isCopyCardItem(item2)) {
+                    blockMenu.replaceExistingItem(outputSlot, ItemPhony.newAnnular(item1, player));
+                } else if(CopyCardItem.isValid(item2)) {
                     item2.setAmount(item2.getAmount() - 1);
                     Player player = null;
                     for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
@@ -279,7 +279,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                             break;
                         }
                     }
-                    blockMenu.replaceExistingItem(outputSlot, ItemFake.newAnnular(item2, player));
+                    blockMenu.replaceExistingItem(outputSlot, ItemPhony.newAnnular(item2, player));
                 }
                 return false;
             }

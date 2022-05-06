@@ -2,7 +2,7 @@ package io.taraxacum.finaltech.util;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.nms.ItemNameAdapter;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.dto.ItemStackWithWrapperAmount;
 import io.taraxacum.finaltech.dto.ItemStackWithWrapper;
 import io.taraxacum.finaltech.setup.register.FinalTechItems;
 import org.bukkit.Material;
@@ -26,18 +26,31 @@ public final class ItemStackUtil {
     public static final ItemStack AIR = new ItemStack(Material.AIR);
     public static final ItemNameAdapter itemNameAdapter = ItemNameAdapter.get();
 
+    /**
+     * Just get a new item.
+     * @param item
+     * @return
+     */
     public static ItemStack cloneItem(@Nonnull ItemStack item) {
         return item instanceof ItemStackWrapper ? new ItemStack(item) : item.clone();
     }
 
+    /**
+     * Judge if an item is:
+     * null || type = air || amount = 0
+     * @param item
+     * @return
+     */
     public static boolean isItemNull(@Nullable ItemStack item) {
         return item == null || item.getType().equals(Material.AIR) || item.getAmount() == 0;
     }
 
     public static boolean isItemSame(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-        if (ItemStackUtil.isItemNull(item1) && ItemStackUtil.isItemNull(item2)) {
+        boolean itemNull1 = ItemStackUtil.isItemNull(item1);
+        boolean itemNull2 = ItemStackUtil.isItemNull(item2);
+        if (itemNull1 && itemNull2) {
             return true;
-        } else if (ItemStackUtil.isItemNull(item1) || ItemStackUtil.isItemNull(item2)) {
+        } else if (itemNull1 || itemNull2) {
             return false;
         }
         if (item1.getAmount() != item2.getAmount()) {
@@ -47,11 +60,18 @@ public final class ItemStackUtil {
             return false;
         }
         if (item1.hasItemMeta() && item2.hasItemMeta()) {
-            return isItemMetaSame(item1.getItemMeta(), item2.getItemMeta());
+            return ItemStackUtil.isItemMetaSame(item1.getItemMeta(), item2.getItemMeta());
         }
         return !item1.hasItemMeta() && !item2.hasItemMeta();
     }
 
+    /**
+     * Judge if an item is same to another item
+     * despite their amount.
+     * @param item1
+     * @param item2
+     * @return
+     */
     public static boolean isItemSimilar(@Nullable ItemStack item1, @Nullable ItemStack item2) {
         boolean itemNull1 = ItemStackUtil.isItemNull(item1);
         boolean itemNull2 = ItemStackUtil.isItemNull(item2);
@@ -64,12 +84,11 @@ public final class ItemStackUtil {
             return false;
         }
         if (item1.hasItemMeta() && item2.hasItemMeta()) {
-            return isItemMetaSame(item1.getItemMeta(), item2.getItemMeta());
+            return ItemStackUtil.isItemMetaSame(item1.getItemMeta(), item2.getItemMeta());
         }
         return !item1.hasItemMeta() && !item2.hasItemMeta();
     }
     public static boolean isItemSimilar(@Nonnull ItemStackWithWrapper itemWithWrapper, @Nullable ItemStack item) {
-        boolean itemNull1 = false;
         boolean itemNull2 = ItemStackUtil.isItemNull(item);
         if (itemNull2) {
             return false;
@@ -78,13 +97,12 @@ public final class ItemStackUtil {
             return false;
         }
         if (itemWithWrapper.getItemStackWrapper().hasItemMeta() && item.hasItemMeta()) {
-            return isItemMetaSame(itemWithWrapper.getItemStackWrapper().getItemMeta(), item.getItemMeta());
+            return ItemStackUtil.isItemMetaSame(itemWithWrapper.getItemStackWrapper().getItemMeta(), item.getItemMeta());
         }
         return !itemWithWrapper.getItemStackWrapper().hasItemMeta() && !item.hasItemMeta();
     }
     public static boolean isItemSimilar(@Nullable ItemStack item, @Nonnull ItemStackWithWrapper itemWithWrapper) {
         boolean itemNull1 = ItemStackUtil.isItemNull(item);
-        boolean itemNull2 = false;
         if (itemNull1) {
             return false;
         }
@@ -92,7 +110,7 @@ public final class ItemStackUtil {
             return false;
         }
         if (itemWithWrapper.getItemStackWrapper().hasItemMeta() && item.hasItemMeta()) {
-            return isItemMetaSame(itemWithWrapper.getItemStackWrapper().getItemMeta(), item.getItemMeta());
+            return ItemStackUtil.isItemMetaSame(itemWithWrapper.getItemStackWrapper().getItemMeta(), item.getItemMeta());
         }
         return !itemWithWrapper.getItemStackWrapper().hasItemMeta() && !item.hasItemMeta();
     }
@@ -101,17 +119,12 @@ public final class ItemStackUtil {
             return false;
         }
         if (itemStackWithWrapper1.getItemStackWrapper().hasItemMeta() && itemStackWithWrapper2.getItemStackWrapper().hasItemMeta()) {
-            return isItemMetaSame(itemStackWithWrapper1.getItemStackWrapper().getItemMeta(), itemStackWithWrapper2.getItemStackWrapper().getItemMeta());
+            return ItemStackUtil.isItemMetaSame(itemStackWithWrapper1.getItemStackWrapper().getItemMeta(), itemStackWithWrapper2.getItemStackWrapper().getItemMeta());
         }
         return !itemStackWithWrapper1.getItemStackWrapper().hasItemMeta() && !itemStackWithWrapper2.getItemStackWrapper().hasItemMeta();
     }
 
-    public static boolean isItemMetaSame(@Nullable ItemMeta itemMeta1, @Nullable ItemMeta itemMeta2) {
-        if (itemMeta1 == null && itemMeta2 == null) {
-            return true;
-        } else if (itemMeta1 == null || itemMeta2 == null) {
-            return false;
-        }
+    public static boolean isItemMetaSame(@Nonnull ItemMeta itemMeta1, @Nonnull ItemMeta itemMeta2) {
         if (itemMeta1.hasDisplayName() && itemMeta2.hasDisplayName()) {
             if (!itemMeta1.getDisplayName().equals(itemMeta2.getDisplayName())) {
                 return false;
@@ -119,7 +132,7 @@ public final class ItemStackUtil {
         } else if (itemMeta1.hasDisplayName() || itemMeta2.hasDisplayName()) {
             return false;
         }
-        return isLoreSame(itemMeta1, itemMeta2) && checkContainer(itemMeta1, itemMeta2);
+        return ItemStackUtil.isLoreSame(itemMeta1, itemMeta2) && ItemStackUtil.isContainerSame(itemMeta1, itemMeta2);
     }
 
     public static boolean isLoreSame(@Nonnull ItemMeta itemMeta1, @Nonnull ItemMeta itemMeta2) {
@@ -138,7 +151,7 @@ public final class ItemStackUtil {
         } return !itemMeta1.hasLore() && !itemMeta2.hasLore();
     }
 
-    public static boolean checkContainer(@Nonnull ItemMeta itemMeta1, @Nonnull ItemMeta itemMeta2) {
+    public static boolean isContainerSame(@Nonnull ItemMeta itemMeta1, @Nonnull ItemMeta itemMeta2) {
         PersistentDataContainer persistentDataContainer1 = itemMeta1.getPersistentDataContainer();
         PersistentDataContainer persistentDataContainer2 = itemMeta2.getPersistentDataContainer();
         Set<NamespacedKey> keys1 = persistentDataContainer1.getKeys();
@@ -157,18 +170,24 @@ public final class ItemStackUtil {
         return true;
     }
 
+    /**
+     * Transfer List to stack.
+     * Input item and output item are same item
+     * @param itemList
+     * @return
+     */
     @Nonnull
-    public static ItemStack[] calNoNullItemArray(@Nonnull List<ItemStack> itemList) {
+    public static ItemStack[] getNoNullItemArray(@Nonnull List<ItemStack> itemList) {
         List<ItemStack> noNullItemList = new ArrayList<>(itemList.size());
         for (ItemStack item : itemList) {
             if (!ItemStackUtil.isItemNull(item)) {
                 noNullItemList.add(item);
             }
         }
-        return calItemArray(noNullItemList);
+        return ItemStackUtil.getItemArray(noNullItemList);
     }
     @Nonnull
-    public static ItemStack[] calItemArray(@Nonnull List<ItemStack> itemList) {
+    public static ItemStack[] getItemArray(@Nonnull List<ItemStack> itemList) {
         ItemStack[] items = new ItemStack[itemList.size()];
         for(int i = 0; i < items.length; i++) {
             items[i] = itemList.get(i);
@@ -177,9 +196,10 @@ public final class ItemStackUtil {
     }
 
     /**
-     * 把输入的列表中，相同的物品进行合并
-     * @param itemList 输入的列表
-     * @return 合并后的列表
+     * Merge item to a new List.
+     * Not include null(amount = 0 || type = air || null) item.
+     * @param itemList
+     * @return
      */
     @Nonnull
     public static List<ItemStack> calMergeItemList(@Nonnull List<ItemStack> itemList) {
@@ -195,7 +215,7 @@ public final class ItemStackUtil {
                 if (itemStack.getAmount() >= itemStack.getMaxStackSize()) {
                     continue;
                 }
-                if (isItemSimilar(itemStackWrapper, resultItem.getItemStackWrapper())) {
+                if (ItemStackUtil.isItemSimilar(itemStackWrapper, resultItem.getItemStackWrapper())) {
                     int count = Math.min(amount, itemStack.getMaxStackSize() - itemStack.getAmount());
                     itemStack.setAmount(itemStack.getAmount() + count);
                     amount -= count;
@@ -222,6 +242,11 @@ public final class ItemStackUtil {
         return result;
     }
 
+    /**
+     * @param items
+     * @param amount
+     * @return a new stack that multiply the amount to the items
+     */
     @Nonnull
     public static ItemStack[] calEnlargeItemArray(@Nonnull ItemStack[] items, int amount) {
         int slot = 0;
@@ -248,9 +273,9 @@ public final class ItemStackUtil {
         return result;
     }
     @Nonnull
-    public static ItemStack[] calEnlargeItemArray(@Nonnull List<ItemStackWithWrapper> itemWithWrapperList, int amount) {
+    public static ItemStack[] calEnlargeItemArray(@Nonnull List<ItemStackWithWrapperAmount> itemWithWrapperList, int amount) {
         int slot = 0;
-        for (ItemStackWithWrapper itemWithWrapper : itemWithWrapperList) {
+        for (ItemStackWithWrapperAmount itemWithWrapper : itemWithWrapperList) {
             slot = slot + 1 + itemWithWrapper.getAmount() * amount / itemWithWrapper.getItemStack().getMaxStackSize();
             if (itemWithWrapper.getAmount() * amount % itemWithWrapper.getItemStack().getMaxStackSize() == 0) {
                 slot--;
@@ -258,7 +283,7 @@ public final class ItemStackUtil {
         }
         ItemStack[] result = new ItemStack[slot];
         int pointer = 0;
-        for (ItemStackWithWrapper itemWithWrapper : itemWithWrapperList) {
+        for (ItemStackWithWrapperAmount itemWithWrapper : itemWithWrapperList) {
             int resultAmount = itemWithWrapper.getAmount() * amount;
             while(resultAmount > itemWithWrapper.getItemStack().getMaxStackSize()) {
                 result[pointer] = ItemStackUtil.cloneItem(itemWithWrapper.getItemStack());
@@ -280,42 +305,48 @@ public final class ItemStackUtil {
      * @return
      */
     @Nonnull
-    public static List<ItemStackWithWrapper> calItemListWithAmount(@Nonnull ItemStack[] items) {
-        List<ItemStackWithWrapper> itemWithWrapperList = new ArrayList<>(items.length);
+    public static List<ItemStackWithWrapperAmount> calItemListWithAmount(@Nonnull ItemStack[] items) {
+        List<ItemStackWithWrapperAmount> itemWithWrapperList = new ArrayList<>(items.length);
         for (ItemStack item : items) {
+            if(ItemStackUtil.isItemNull(item)) {
+                continue;
+            }
             ItemStackWrapper itemStackWrapper = ItemStackWrapper.wrap(item);
             boolean find = false;
-            for (ItemStackWithWrapper resultItem : itemWithWrapperList) {
-                if (isItemSimilar(itemStackWrapper, resultItem.getItemStackWrapper())) {
+            for (ItemStackWithWrapperAmount resultItem : itemWithWrapperList) {
+                if (ItemStackUtil.isItemSimilar(itemStackWrapper, resultItem.getItemStackWrapper())) {
                     resultItem.addAmount(item.getAmount());
                     find = true;
                     break;
                 }
             }
             if (!find) {
-                itemWithWrapperList.add(new ItemStackWithWrapper(item, itemStackWrapper));
+                itemWithWrapperList.add(new ItemStackWithWrapperAmount(item, itemStackWrapper));
             }
         }
         return itemWithWrapperList;
     }
     @Nonnull
-    public static List<ItemStackWithWrapper> calItemListWithAmount(@Nonnull List<ItemStack> itemList) {
-        List<ItemStackWithWrapper> itemWithWrapperlist = new ArrayList<>(itemList.size());
+    public static List<ItemStackWithWrapperAmount> calItemListWithAmount(@Nonnull List<ItemStack> itemList) {
+        List<ItemStackWithWrapperAmount> itemWithWrapperList = new ArrayList<>(itemList.size());
         for (ItemStack item : itemList) {
+            if(ItemStackUtil.isItemNull(item)) {
+                continue;
+            }
             ItemStackWrapper itemWithWrapper = ItemStackWrapper.wrap(item);
             boolean find = false;
-            for (ItemStackWithWrapper resultItem : itemWithWrapperlist) {
-                if (isItemSimilar(itemWithWrapper, resultItem.getItemStackWrapper())) {
+            for (ItemStackWithWrapperAmount resultItem : itemWithWrapperList) {
+                if (ItemStackUtil.isItemSimilar(itemWithWrapper, resultItem.getItemStackWrapper())) {
                     resultItem.addAmount(item.getAmount());
                     find = true;
                     break;
                 }
             }
             if (!find) {
-                itemWithWrapperlist.add(new ItemStackWithWrapper(item, itemWithWrapper));
+                itemWithWrapperList.add(new ItemStackWithWrapperAmount(item, itemWithWrapper));
             }
         }
-        return itemWithWrapperlist;
+        return itemWithWrapperList;
     }
 
     /**
@@ -426,7 +457,7 @@ public final class ItemStackUtil {
         return "unknown";
     }
 
-    public static void addLoreToLast(@Nonnull ItemStack item, @Nonnull String s) {
+    public static void addLoreToLast(@Nullable ItemStack item, @Nonnull String s) {
         if (ItemStackUtil.isItemNull(item)) {
             return;
         }
@@ -439,7 +470,6 @@ public final class ItemStackUtil {
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
     }
-
     public static void addLoreToLast(@Nonnull ItemMeta itemMeta, @Nonnull String s) {
         List<String> lore = itemMeta.getLore();
         if (lore == null) {
@@ -449,8 +479,8 @@ public final class ItemStackUtil {
         itemMeta.setLore(lore);
     }
 
-    public static void removeLastLore(@Nonnull ItemStack item) {
-        if (!item.hasItemMeta()) {
+    public static void removeLastLore(@Nullable ItemStack item) {
+        if (ItemStackUtil.isItemNull(item)) {
             return;
         }
         ItemMeta itemMeta = item.getItemMeta();
@@ -462,7 +492,6 @@ public final class ItemStackUtil {
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
     }
-
     public static void removeLastLore(@Nonnull ItemMeta itemMeta) {
         List<String> lore = itemMeta.getLore();
         if (lore == null || lore.size() == 0) {
@@ -570,13 +599,15 @@ public final class ItemStackUtil {
         };
     }
 
-    public static String itemStackToString(ItemStack itemStack) {
+    @Nonnull
+    public static String itemStackToString(@Nonnull ItemStack itemStack) {
         YamlConfiguration yamlConfiguration = new YamlConfiguration();
         yamlConfiguration.set("item", itemStack);
         return yamlConfiguration.saveToString();
     }
 
-    public static ItemStack stringToItemStack(String local) {
+    @Nullable
+    public static ItemStack stringToItemStack(@Nonnull String local) {
         YamlConfiguration yamlConfiguration = new YamlConfiguration();
         try {
             yamlConfiguration.loadFromString(local);

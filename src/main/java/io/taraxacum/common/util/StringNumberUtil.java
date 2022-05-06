@@ -13,6 +13,7 @@ public final class StringNumberUtil {
     public static final String VALUE_MAX = "MAX";
     public static final String VALUE_MIN = "MIN";
     public static final String ZERO = "0";
+    public static final String ONE = "1";
     public static final String INTEGER_MAX_VALUE = String.valueOf(Integer.MAX_VALUE);
 
     /**
@@ -26,7 +27,7 @@ public final class StringNumberUtil {
      * @return 比较结果
      */
     @Deprecated
-    public static int easilyCompare(String stringNumber1, String stringNumber2) {
+    public static int easilyCompare(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
         if (VALUE_MAX.equals(stringNumber1) && VALUE_MAX.equals(stringNumber2)) {
             return 0;
         } else if (VALUE_MAX.equals(stringNumber1)) {
@@ -64,7 +65,8 @@ public final class StringNumberUtil {
      * @param stringNumber2 非负整数
      * @return 相加和
      */
-    private static String easilyAdd(String stringNumber1, String stringNumber2) {
+    @Nonnull
+    private static String easilyAdd(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
         char[] s1 = stringNumber1.toCharArray();
         char[] s2 = stringNumber2.toCharArray();
         int minLength = Math.min(s1.length, s2.length);
@@ -98,7 +100,8 @@ public final class StringNumberUtil {
      * @param stringNumber 非负整数
      * @return 加一后的值
      */
-    private static String easilyAdd(String stringNumber) {
+    @Nonnull
+    private static String easilyAdd(@Nonnull String stringNumber) {
         char[] s = stringNumber.toCharArray();
         StringBuilder stringBuilder = new StringBuilder(s.length + 1);
         int r;
@@ -130,7 +133,8 @@ public final class StringNumberUtil {
      * @param stringNumber2
      * @return
      */
-    private static String easilySub(String stringNumber1, String stringNumber2) {
+    @Nonnull
+    private static String easilySub(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
         char[] s1 = stringNumber1.toCharArray();
         char[] s2 = stringNumber2.toCharArray();
         int minLength = Math.min(s1.length, s2.length);
@@ -165,7 +169,8 @@ public final class StringNumberUtil {
         return stringBuilder.reverse().toString();
     }
 
-    private static String easilySub(String stringNumber) {
+    @Nonnull
+    private static String easilySub(@Nonnull String stringNumber) {
         char[] s = stringNumber.toCharArray();
         StringBuilder stringBuilder = new StringBuilder(stringNumber.length());
         int i;
@@ -193,6 +198,58 @@ public final class StringNumberUtil {
             }
         }
         return stringBuilder.reverse().toString();
+    }
+
+    @Nonnull
+    public static String easilyMul(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
+        char[] s1 = stringNumber1.toCharArray();
+        char[] s2 = stringNumber2.toCharArray();
+        int[] result = new int[s1.length + s2.length];
+        StringBuilder stringBuilder = new StringBuilder();
+        int r;
+        int point;
+        int c1;
+        for(int i = 0; i < s1.length; i++) {
+            c1 = s1[s1.length - i - 1] - ZERO_CHAR_VALUE;
+            point = s1.length + s2.length - i - 1;
+            for(int j = 0; j < s2.length; j++) {
+                r = c1 * (s2[s2.length - j - 1] - ZERO_CHAR_VALUE);
+                result[point] += r % 10;
+                result[point-- - 1] += r / 10;
+            }
+        }
+        for(int l = s1.length + s2.length  - 1; l > 0; l--) {
+            result[l - 1] += result[l] / 10;
+            result[l] %= 10;
+        }
+        int i ;
+        for(i = 0; i < result.length; i++) {
+            if(result[i] != 0) {
+                break;
+            }
+        }
+        for(; i < result.length; i++) {
+            stringBuilder.append((char)(result[i] + ZERO_CHAR_VALUE));
+        }
+        if(stringBuilder.length() == 0) {
+            stringBuilder.append(ZERO);
+        }
+        return stringBuilder.toString();
+    }
+
+    public static int compare(String stringNumber1, String stringNumber2) {
+        boolean r1 = stringNumber1.startsWith(RELATIVE);
+        boolean r2 = stringNumber2.startsWith(RELATIVE);
+        if(!r1 && !r2) {
+            return StringNumberUtil.easilyCompare(stringNumber1, stringNumber2);
+        } else if(r1) {
+            return -1;
+        } else if(r2) {
+            return 1;
+        }
+        String s1 = r1 ? stringNumber1.substring(1) : stringNumber1;
+        String s2 = r2 ? stringNumber2.substring(1) : stringNumber2;
+        return easilyCompare(s1, s2);
     }
 
     public static String min(String stringNumber1, String stringNumber2) {
@@ -293,5 +350,16 @@ public final class StringNumberUtil {
         } else {
             return easilySub(stringNumber);
         }
+    }
+
+    public static String mul(String stringNumber1, String stringNumber2) {
+        boolean r1 = stringNumber1.startsWith(RELATIVE);
+        boolean r2 = stringNumber2.startsWith(RELATIVE);
+        String s1 = r1 ? stringNumber1.substring(1) : stringNumber1;
+        String s2 = r2 ? stringNumber2.substring(1) : stringNumber2;
+        if(ZERO.equals(s1) || ZERO.equals(s2)) {
+            return ZERO;
+        }
+        return (r1 == r2 ? "" : RELATIVE) + easilyMul(s1, s2);
     }
 }

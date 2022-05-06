@@ -1,6 +1,9 @@
 package io.taraxacum.finaltech.util.menu;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import org.bukkit.Location;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -10,11 +13,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Just for easily change value of the given key in specific condition
+ * see {@link BlockStorage}
+ *
  * @author Final_ROOT
  */
 public abstract class BlockStorageHelper {
     private final List<String> valueList;
+    /**
+     * The id of a {@link SlimefunItem},
+     * Or a public id
+     */
     private final String id;
+
+    public static final String ID_CARGO = "cargo";
+    public static final String ID_STANDARD = "standard";
+
+    private static final String ERROR = "0";
 
     protected static final Map<String, Map<String, BlockStorageHelper>> BLOCK_STORAGE_HELPER_FACTORY = new HashMap<>();
 
@@ -36,19 +51,50 @@ public abstract class BlockStorageHelper {
         BLOCK_STORAGE_HELPER_FACTORY.get(this.id).put(this.getKey(), this);
     }
 
-    @Nullable
-    public String defaultValue() {
-        return this.valueList.isEmpty() ? null : this.valueList.get(0);
+    @Nonnull
+    public String getValue(@Nonnull Location location) {
+        String value = BlockStorage.getLocationInfo(location, this.getKey());
+        return value == null ? this.defaultValue() : value;
     }
 
-    @Nullable
+    @Nonnull
+    public String getValue(@Nonnull Config config) {
+        return config.contains(this.getKey()) ? config.getString(this.getKey()) : this.defaultValue();
+    }
+
+    public void setValue(@Nonnull Location location, @Nullable String value) {
+        BlockStorage.addBlockInfo(location, this.getKey(), value);
+    }
+
+    public void setValue(@Nonnull Config config, @Nullable String value) {
+        config.setValue(this.getKey(), value);
+    }
+
+    @Nonnull
+    public String defaultValue() {
+        return this.valueList.isEmpty() ? ERROR : this.valueList.get(0);
+    }
+
+    @Nonnull
     public String nextValue(@Nullable String value) {
         return !this.valueList.contains(value) ? this.valueList.get((this.valueList.indexOf(value) + 1) % this.valueList.size()) : this.defaultValue();
     }
 
-    @Nullable
+    @Nonnull
     public String previousValue(@Nullable String value) {
         return !this.valueList.contains(value) ? this.valueList.get((this.valueList.indexOf(value) - 1 + this.valueList.size()) % this.valueList.size()) : this.defaultValue();
+    }
+
+    public boolean validValue(@Nullable String value) {
+        return valueList.contains(value);
+    }
+
+    public boolean checkOrSetBlockStorage(@Nonnull Location location) {
+        if(BlockStorage.getLocationInfo(location, this.getKey()) != null) {
+            BlockStorage.addBlockInfo(location, this.getKey(), this.defaultValue());
+            return false;
+        }
+        return true;
     }
 
     @Nonnull
