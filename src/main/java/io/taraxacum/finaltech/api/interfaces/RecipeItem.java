@@ -2,10 +2,13 @@ package io.taraxacum.finaltech.api.interfaces;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
+import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.api.RandomMachineRecipe;
-import io.taraxacum.finaltech.factory.MachineRecipeFactory;
+import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
+import io.taraxacum.finaltech.core.factory.MachineRecipeFactory;
+import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
+import io.taraxacum.finaltech.core.items.unusable.laquid.LiquidCard;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.Material;
@@ -16,14 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A {@link SlimefunItem} that will show its working-recipe in {@link SlimefunGuide}.
  * @author Final_ROOT
+ * @since 1.0
  */
 public interface RecipeItem extends RecipeDisplayItem {
 
-    /**
-     * 获取物品展示出的工作配方图标
-     * @return
-     */
     @Nonnull
     @Override
     default List<ItemStack> getDisplayRecipes() {
@@ -47,18 +48,13 @@ public interface RecipeItem extends RecipeDisplayItem {
         return displayRecipes;
     }
 
-    /**
-     * Get the machineRecipes for it
-     * @return
-     */
     @Nonnull
     default List<MachineRecipe> getMachineRecipes() {
         return MachineRecipeFactory.getRecipe(this.getClass());
     };
 
     /**
-     * register a machineRecipes for itself
-     * @param recipe
+     * register a {@link MachineRecipe}
      */
     default void registerRecipe(MachineRecipe recipe) {
         this.getMachineRecipes().add(recipe);
@@ -76,6 +72,11 @@ public interface RecipeItem extends RecipeDisplayItem {
         this.registerRecipe(new MachineRecipe(seconds, new ItemStack[] {input}, new ItemStack[] {output}));
     }
 
+    /**
+     * register a {@link SlimefunItem} whit it's recipe as a {@link MachineRecipe}.
+     * if the slimefun-item's recipe contains liquid-bucket(water bucket, lava bucket e.g.),
+     * this method will also register another similar machine-recipe that replace liquid-bucket with {@link LiquidCard}
+     */
     default void registerRecipeInCard(int seconds, SlimefunItem slimefunItem) {
         this.registerRecipeInCard(seconds, slimefunItem.getRecipe(), new ItemStack[] {slimefunItem.getRecipeOutput()});
     }
@@ -115,18 +116,20 @@ public interface RecipeItem extends RecipeDisplayItem {
         }
     }
 
+    /**
+     * Register a {@link MachineRecipe} that will only be used to show info to player.
+     * @param item
+     */
     default void registerDescriptiveRecipe(ItemStack item) {
         this.registerRecipe(new MachineRecipe(0, new ItemStack[] {item}, new ItemStack[] {ItemStackUtil.AIR}));
     }
-
     default void registerDescriptiveRecipe(String name, String... lore) {
         this.registerDescriptiveRecipe(new CustomItemStack(Material.BOOK, name, lore));
     }
 
     /**
-     * 默认的配方注册方法
-     * 继承了该接口的实现类应该重写该方法
-     * 并在该方法内实现注册机器的工作配方
+     * Implements this method to register {@link MachineRecipe}
+     * An {@link AbstractMachine} will do this method when be constructed.
      */
     void registerDefaultRecipes();
 }

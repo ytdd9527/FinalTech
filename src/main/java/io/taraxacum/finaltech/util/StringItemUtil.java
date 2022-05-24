@@ -1,8 +1,8 @@
 package io.taraxacum.finaltech.util;
 
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.dto.ItemStackWithWrapperAmount;
-import io.taraxacum.finaltech.dto.ItemStackWithWrapper;
+import io.taraxacum.finaltech.api.dto.ItemStackWithWrapperAmount;
+import io.taraxacum.finaltech.api.dto.ItemStackWithWrapper;
 import io.taraxacum.common.util.StringNumberUtil;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Inventory;
@@ -20,6 +20,8 @@ import java.util.List;
  * We should make suer that
  * one item will have "item" key and "amount" key in the same time
  * or one item will not have only on of them.
+ * @author Final_ROOT
+ * @since 1.0
  */
 public class StringItemUtil {
     public static final NamespacedKey ITEM_KEY = new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "item");

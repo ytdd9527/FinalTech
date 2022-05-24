@@ -5,12 +5,15 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
+ * {@linkplain AbstractBasicMachine }
  * @author Final_ROOT
  */
 public class NullEnchantment extends Enchantment {
-    public static final Enchantment ENCHANTMENT = new NullEnchantment(new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "FINALTECH_NULL_ENCHANTMENT"));
+    public static final Enchantment ENCHANTMENT = new NullEnchantment(new NamespacedKey(JavaPlugin.getPlugin(FinalTech.class), "FINALTECH_NULL_ENCHANTMENT"));
+
     private NullEnchantment(NamespacedKey key) {
         super(key);
     }

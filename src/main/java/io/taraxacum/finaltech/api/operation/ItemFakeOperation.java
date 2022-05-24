@@ -2,8 +2,10 @@ package io.taraxacum.finaltech.api.operation;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.items.unusable.CopyCardItem;
-import io.taraxacum.finaltech.setup.register.FinalTechItems;
+import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
+import io.taraxacum.finaltech.core.items.unusable.Singularity;
+import io.taraxacum.finaltech.core.items.unusable.Spirochete;
+import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import org.bukkit.inventory.ItemStack;
 
@@ -23,15 +25,15 @@ public class ItemFakeOperation implements ItemSerializationConstructorOperation 
 
     private final ItemStack showItem;
 
-    private List<ItemStackWrapper> itemTypeList = new ArrayList<>(CopyCardItem.SPIROCHETE_DIFFICULTY);
+    private List<ItemStackWrapper> itemTypeList = new ArrayList<>(Spirochete.SPIROCHETE_DIFFICULTY);
 
     protected ItemFakeOperation(@Nonnull ItemStack item) {
         this.itemTypeCount = 1;
         this.itemTypeList.add(ItemStackWrapper.wrap(item));
         this.itemAmountCount = item.getAmount();
 
-        this.itemTypeDifficulty = CopyCardItem.SPIROCHETE_DIFFICULTY;
-        this.itemAmountDifficulty = CopyCardItem.SINGULARITY_DIFFICULTY;
+        this.itemTypeDifficulty = Spirochete.SPIROCHETE_DIFFICULTY;
+        this.itemAmountDifficulty = Singularity.SINGULARITY_DIFFICULTY;
 
         this.showItem = new CustomItemStack(FinalTechItems.PHONY.getType(), "§f完成进度", "§f物品个数= " + this.itemAmountCount + "/" + this.itemAmountDifficulty, "§f物品种数= " + this.itemTypeCount + "/" + this.itemTypeDifficulty);
     }

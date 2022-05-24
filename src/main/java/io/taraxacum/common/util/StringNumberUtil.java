@@ -10,7 +10,7 @@ public final class StringNumberUtil {
     private static final int ZERO_CHAR_VALUE = '0';
     private static final int DOUBLE_OF_ZERO_CHAR_VALUE = '0' + '0';
 
-    public static final String VALUE_MAX = "MAX";
+    public static final String VALUE_INFINITY = "INFINITY";
     public static final String VALUE_MIN = "MIN";
     public static final String ZERO = "0";
     public static final String ONE = "1";
@@ -28,11 +28,11 @@ public final class StringNumberUtil {
      */
     @Deprecated
     public static int easilyCompare(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
-        if (VALUE_MAX.equals(stringNumber1) && VALUE_MAX.equals(stringNumber2)) {
+        if (VALUE_INFINITY.equals(stringNumber1) && VALUE_INFINITY.equals(stringNumber2)) {
             return 0;
-        } else if (VALUE_MAX.equals(stringNumber1)) {
+        } else if (VALUE_INFINITY.equals(stringNumber1)) {
             return 1;
-        } else if (VALUE_MAX.equals(stringNumber2)) {
+        } else if (VALUE_INFINITY.equals(stringNumber2)) {
             return -1;
         }
         if (VALUE_MIN.equals(stringNumber1) && VALUE_MIN.equals(stringNumber2)) {
@@ -238,6 +238,15 @@ public final class StringNumberUtil {
     }
 
     public static int compare(String stringNumber1, String stringNumber2) {
+        if(stringNumber1.equals(stringNumber2)) {
+            return 0;
+        }
+        if(stringNumber1.contains(VALUE_INFINITY)) {
+            return stringNumber1.startsWith(RELATIVE) ? -1 : 1;
+        }
+        if(stringNumber2.contains(VALUE_INFINITY)) {
+            return stringNumber2.startsWith(RELATIVE) ? 1 : -1;
+        }
         boolean r1 = stringNumber1.startsWith(RELATIVE);
         boolean r2 = stringNumber2.startsWith(RELATIVE);
         if(!r1 && !r2) {
@@ -253,6 +262,15 @@ public final class StringNumberUtil {
     }
 
     public static String min(String stringNumber1, String stringNumber2) {
+        if(stringNumber1.equals(stringNumber2)) {
+            return stringNumber1;
+        }
+        if(stringNumber1.contains(VALUE_INFINITY)) {
+            return stringNumber1.startsWith(RELATIVE) ? stringNumber1 : stringNumber2;
+        }
+        if(stringNumber2.contains(VALUE_INFINITY)) {
+            return stringNumber2.startsWith(RELATIVE) ? stringNumber2 : stringNumber1;
+        }
         boolean r1 = stringNumber1.startsWith(RELATIVE);
         boolean r2 = stringNumber2.startsWith(RELATIVE);
         if(r1 && !r2) {
@@ -268,6 +286,15 @@ public final class StringNumberUtil {
     }
 
     public static String max(String stringNumber1, String stringNumber2) {
+        if(stringNumber1.equals(stringNumber2)) {
+            return stringNumber1;
+        }
+        if(stringNumber1.contains(VALUE_INFINITY)) {
+            return stringNumber1.startsWith(RELATIVE) ? stringNumber2 : stringNumber1;
+        }
+        if(stringNumber2.contains(VALUE_INFINITY)) {
+            return stringNumber2.startsWith(RELATIVE) ? stringNumber1 : stringNumber2;
+        }
         boolean r1 = stringNumber1.startsWith(RELATIVE);
         boolean r2 = stringNumber2.startsWith(RELATIVE);
         if(r1 && !r2) {
@@ -283,6 +310,9 @@ public final class StringNumberUtil {
     }
 
     public static String add(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
+        if(stringNumber1.contains(VALUE_INFINITY) || stringNumber2.contains(VALUE_INFINITY)) {
+            return VALUE_INFINITY;
+        }
         boolean r1 = stringNumber1.startsWith(RELATIVE);
         boolean r2 = stringNumber2.startsWith(RELATIVE);
         if (r1 && r2) {
@@ -310,6 +340,9 @@ public final class StringNumberUtil {
     }
 
     public static String add(String stringNumber) {
+        if(stringNumber.contains(VALUE_INFINITY)) {
+            return VALUE_INFINITY;
+        }
         if (stringNumber.indexOf(RELATIVE) == 0) {
             return RELATIVE + easilySub(stringNumber.substring(1));
         } else {
@@ -318,6 +351,12 @@ public final class StringNumberUtil {
     }
 
     public static String sub(String stringNumber1, String stringNumber2) {
+        if(stringNumber1.contains(VALUE_INFINITY)) {
+            return stringNumber1;
+        }
+        if(stringNumber2.contains(VALUE_INFINITY)) {
+            return stringNumber2.startsWith(RELATIVE) ? VALUE_INFINITY : RELATIVE + VALUE_INFINITY;
+        }
         boolean r1 = stringNumber1.startsWith(RELATIVE);
         boolean r2 = stringNumber2.startsWith(RELATIVE);
         if (!r1 && r2) {
@@ -345,6 +384,9 @@ public final class StringNumberUtil {
     }
 
     public static String sub(String stringNumber) {
+        if(stringNumber.contains(VALUE_INFINITY)) {
+            return stringNumber;
+        }
         if (stringNumber.startsWith(RELATIVE)) {
             return RELATIVE + easilyAdd(stringNumber.substring(1));
         } else {
@@ -357,6 +399,9 @@ public final class StringNumberUtil {
         boolean r2 = stringNumber2.startsWith(RELATIVE);
         String s1 = r1 ? stringNumber1.substring(1) : stringNumber1;
         String s2 = r2 ? stringNumber2.substring(1) : stringNumber2;
+        if(VALUE_INFINITY.equals(s1) || VALUE_INFINITY.equals(s2)) {
+            return r1 == r2 ? VALUE_INFINITY : RELATIVE + VALUE_INFINITY;
+        }
         if(ZERO.equals(s1) || ZERO.equals(s2)) {
             return ZERO;
         }

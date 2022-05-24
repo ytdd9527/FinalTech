@@ -1,23 +1,20 @@
 package io.taraxacum.finaltech.api.interfaces;
 
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 
 /**
+ * {@link AbstractMachine} implements this interface will work fewer times if the server is in low performance
  * @author Final_ROOT
+ * @since 2.0
  */
-@Deprecated
 public interface PerformanceLimitMachine {
     String KEY = "mspt-charge";
 
-    /**
-     * If a machine can work
-     * @param config
-     * @return
-     */
-    default boolean canWork(Config config) {
+    default boolean charge(Config config) {
         long charge = config.contains(KEY) ? Long.parseLong(config.getString(KEY)) : 0;
-        charge += FinalTech.getMspt();
+        charge += FinalTech.getMSPS();
         if(charge >= 1000) {
             if(charge >= 2000) {
                 charge -= 1000;

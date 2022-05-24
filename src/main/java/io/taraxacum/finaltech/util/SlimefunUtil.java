@@ -13,14 +13,12 @@ import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -28,17 +26,11 @@ import java.util.UUID;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class SlimefunUtil {
     public static final String KEY_ID = "id";
 
-    /**
-     * 从粘液科技本体注册的物品中搜索指定ID的机器
-     * 读取其工作配方
-     * 并注册到指定的机器中
-     * @param recipeItem 被注册工作配方的机器
-     * @param slimefunId 粘液科技机器ID
-     */
     public static void registerRecipeBySlimefunId(@Nonnull RecipeItem recipeItem, @Nonnull String slimefunId) {
         final SlimefunItem slimefunItem = SlimefunItem.getById(slimefunId);
         try {

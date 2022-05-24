@@ -3,10 +3,10 @@ package io.taraxacum.finaltech.util;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.dto.ItemStackWithWrapperAmount;
-import io.taraxacum.finaltech.dto.ItemStackWithWrapper;
-import io.taraxacum.finaltech.items.machine.AbstractMachine;
-import io.taraxacum.finaltech.setup.register.FinalTechItems;
+import io.taraxacum.finaltech.api.dto.ItemStackWithWrapperAmount;
+import io.taraxacum.finaltech.api.dto.ItemStackWithWrapper;
+import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
+import io.taraxacum.finaltech.setup.FinalTechItems;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
@@ -21,6 +21,7 @@ import java.util.*;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public final class MachineUtil {
     public static final BlockPlaceHandler BLOCK_PLACE_HANDLER_PLACER_ALLOW = new BlockPlaceHandler(true) {
@@ -386,7 +387,7 @@ public final class MachineUtil {
         return min;
     }
 
-    public static int updateQuantityModule(@Nonnull BlockMenu blockMenu, int quantityModuleSlot, int infoSlot) {
+    public static int updateQuantityModule(@Nonnull BlockMenu blockMenu, int quantityModuleSlot, int statusSlot) {
         ItemStack item = blockMenu.getItemInSlot(quantityModuleSlot);
         int amount;
         String lore;
@@ -400,7 +401,7 @@ public final class MachineUtil {
             amount = 1;
             lore = "§7当前效率=" + amount;
         }
-        ItemStack infoItem = blockMenu.getItemInSlot(infoSlot);
+        ItemStack infoItem = blockMenu.getItemInSlot(statusSlot);
         if (!infoItem.hasItemMeta()) {
             return amount;
         }

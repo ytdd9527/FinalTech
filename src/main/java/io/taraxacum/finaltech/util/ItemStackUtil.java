@@ -2,9 +2,9 @@ package io.taraxacum.finaltech.util;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.nms.ItemNameAdapter;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.dto.ItemStackWithWrapperAmount;
-import io.taraxacum.finaltech.dto.ItemStackWithWrapper;
-import io.taraxacum.finaltech.setup.register.FinalTechItems;
+import io.taraxacum.finaltech.api.dto.ItemStackWithWrapperAmount;
+import io.taraxacum.finaltech.api.dto.ItemStackWithWrapper;
+import io.taraxacum.finaltech.setup.FinalTechItems;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -527,9 +527,10 @@ public final class ItemStackUtil {
         itemMeta.setLore(lore);
     }
 
+    @Nullable
     public static String getLastLore(@Nonnull ItemStack item) {
         if (ItemStackUtil.isItemNull(item)) {
-            return "null";
+            return null;
         }
         ItemMeta itemMeta = item.getItemMeta();
         List<String> lore = itemMeta.getLore();
@@ -538,7 +539,7 @@ public final class ItemStackUtil {
         }
         return lore.get(lore.size() - 1);
     }
-
+    @Nullable
     public static String getLastLore(@Nonnull ItemMeta itemMeta) {
         List<String> lore = itemMeta.getLore();
         if (lore == null || lore.size() == 0) {
@@ -547,7 +548,7 @@ public final class ItemStackUtil {
         return lore.get(lore.size() - 1);
     }
 
-    public static void setLore(@Nonnull ItemStack item, String... lore) {
+    public static void setLore(@Nonnull ItemStack item, @Nonnull String... lore) {
         if (ItemStackUtil.isItemNull(item)) {
             return;
         }
@@ -555,13 +556,49 @@ public final class ItemStackUtil {
         itemMeta.setLore(Arrays.stream(lore).toList());
         item.setItemMeta(itemMeta);
     }
-
-    public static void setLore(@Nonnull ItemStack item, List<String> lore) {
+    public static void setLore(@Nonnull ItemStack item, @Nonnull List<String> lore) {
         if (ItemStackUtil.isItemNull(item)) {
             return;
         }
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.setLore(lore);
+        item.setItemMeta(itemMeta);
+    }
+
+    public static void replaceLore(@Nonnull ItemStack item, int loreOffset, @Nonnull String... lore) {
+        if(loreOffset < 0) {
+            ItemStackUtil.setLore(item, lore);
+            return;
+        }
+        if (ItemStackUtil.isItemNull(item)) {
+            return;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        List<String> oldLore = itemMeta.getLore();
+        while (oldLore.size() < loreOffset) {
+            oldLore.add("");
+        }
+        for(int i = 0; i < lore.length; i++) {
+            oldLore.set(loreOffset + i, lore[i]);
+        }
+        itemMeta.setLore(oldLore);
+        item.setItemMeta(itemMeta);
+    }
+    public static void replaceLore(@Nonnull ItemStack item, int loreOffset, @Nonnull List<String> lore) {
+        if(loreOffset < 0) {
+            ItemStackUtil.setLore(item, lore);
+            return;
+        }
+        if (ItemStackUtil.isItemNull(item)) {
+            return;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        List<String> oldLore = itemMeta.getLore();
+        while (oldLore.size() < loreOffset) {
+            oldLore.add("");
+        }
+        oldLore.addAll(lore);
+        itemMeta.setLore(oldLore);
         item.setItemMeta(itemMeta);
     }
 
