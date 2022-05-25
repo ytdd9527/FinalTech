@@ -103,7 +103,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
         String blockSearchSelf = BlockSearchSelf.HELPER.getOrDefaultValue(config);
         if (BlockSearchSelf.VALUE_BEGIN.equals(blockSearchSelf)) {
             blockList.add(0, block);
-        } else if(BlockSearchSelf.VALUE_LAST.equals(blockSearchSelf)) {
+        } else if (BlockSearchSelf.VALUE_LAST.equals(blockSearchSelf)) {
             blockList.add(block);
         }
 
@@ -115,7 +115,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
             blockList.add(blockList.get(0));
         }
 
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             final List<Block> finalBlockList = blockList;
             this.getAddon().getJavaPlugin().getServer().getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawCubeByBlock(Particle.REDSTONE, PARTICLE_INTERVAL, finalBlockList));
         }

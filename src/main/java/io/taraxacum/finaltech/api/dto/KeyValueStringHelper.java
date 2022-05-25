@@ -38,10 +38,10 @@ public class KeyValueStringHelper {
     }
 
     public void putEntry(@Nonnull String key, @Nullable String value) {
-        if(this.validKey(key)) {
-            if(value == null && this.map.containsKey(key)) {
+        if (this.validKey(key)) {
+            if (value == null && this.map.containsKey(key)) {
                 this.map.remove(key);
-            } else if(this.validValue(value)) {
+            } else if (this.validValue(value)) {
                 this.map.put(key, value);
             }
         }
@@ -53,8 +53,8 @@ public class KeyValueStringHelper {
     @Nonnull
     public List<String> getAllMatchKey(@Nonnull String value) {
         List<String> list = new ArrayList<>();
-        for(Map.Entry<String, String> entry : this.map.entrySet()) {
-            if(entry.getValue() != null && entry.getValue().equals(value)) {
+        for (Map.Entry<String, String> entry : this.map.entrySet()) {
+            if (entry.getValue() != null && entry.getValue().equals(value)) {
                 list.add(entry.getKey());
             }
         }
@@ -69,7 +69,7 @@ public class KeyValueStringHelper {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for(Map.Entry<String, String> entry : this.map.entrySet()) {
+        for (Map.Entry<String, String> entry : this.map.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
             stringBuilder.append(key).append(":").append(value);
@@ -81,10 +81,10 @@ public class KeyValueStringHelper {
     @Nonnull
     public KeyValueStringHelper parseString(@Nullable String string) {
         KeyValueStringHelper keyValueStringHelper = new KeyValueStringHelper(this.keySet, this.valueSet);
-        if(string != null) {
-            for(String entry : string.split("-")) {
+        if (string != null) {
+            for (String entry : string.split("-")) {
                 String[] split = entry.split(":");
-                if(split.length == 2 && this.keySet.contains(split[0]) && this.valueSet.contains(split[1])) {
+                if (split.length == 2 && this.keySet.contains(split[0]) && this.valueSet.contains(split[1])) {
                     keyValueStringHelper.putEntry(split[0], split[1]);
                 }
             }

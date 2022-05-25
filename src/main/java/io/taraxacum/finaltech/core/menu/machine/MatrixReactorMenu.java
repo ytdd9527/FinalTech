@@ -83,9 +83,9 @@ public class MatrixReactorMenu extends AbstractMachineMenu {
 
     @Override
     public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
-        if(ItemTransportFlow.INSERT.equals(itemTransportFlow)) {
+        if (ItemTransportFlow.INSERT.equals(itemTransportFlow)) {
             return INPUT_SLOT;
-        } else if(ItemTransportFlow.WITHDRAW.equals(itemTransportFlow)) {
+        } else if (ItemTransportFlow.WITHDRAW.equals(itemTransportFlow)) {
             return OUTPUT_SLOT;
         } else {
             return new int[0];
@@ -94,16 +94,16 @@ public class MatrixReactorMenu extends AbstractMachineMenu {
 
     @Override
     public int[] getSlotsAccessedByItemTransport(DirtyChestMenu menu, ItemTransportFlow flow, ItemStack item) {
-        if(ItemTransportFlow.WITHDRAW.equals(flow)) {
+        if (ItemTransportFlow.WITHDRAW.equals(flow)) {
             return OUTPUT_SLOT;
-        } else if(flow == null) {
+        } else if (flow == null) {
             return new int[0];
         }
-        if(ItemStackUtil.isItemSimilar(item, FinalTechItems.ORDERED_DUST)) {
+        if (ItemStackUtil.isItemSimilar(item, FinalTechItems.ORDERED_DUST)) {
             return ORDERED_DUST_INPUT_SLOT;
-        } else if(ItemStackUtil.isItemSimilar(item, FinalTechItems.UNORDERED_DUST)) {
+        } else if (ItemStackUtil.isItemSimilar(item, FinalTechItems.UNORDERED_DUST)) {
             return UNORDERED_DUST_INPUT_SLOT;
-        } else if(ItemPhony.isValid(item)) {
+        } else if (ItemPhony.isValid(item)) {
             return ITEM_PHONY_INPUT_SLOT;
         } else {
             return OTHER_ITEM_INPUT_SLOT;

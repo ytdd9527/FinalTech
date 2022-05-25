@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.storage.AllOutputStorageUnitMenu;
+import io.taraxacum.finaltech.core.menu.unit.AllOutputStorageUnitMenu;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;

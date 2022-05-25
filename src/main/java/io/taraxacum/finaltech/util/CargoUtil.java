@@ -84,7 +84,7 @@ public class CargoUtil {
             }
             cargoNumber -= count;
             number += count;
-            if(cargoNumber == 0) {
+            if (cargoNumber == 0) {
                 break;
             }
             if (CargoLimit.VALUE_STACK.equals(itemMode)) {
@@ -139,7 +139,7 @@ public class CargoUtil {
             }
             cargoNumber -= count;
             number += count;
-            if(cargoNumber == 0) {
+            if (cargoNumber == 0) {
                 break;
             }
             if (CargoLimit.VALUE_STACK.equals(itemMode)) {
@@ -160,7 +160,7 @@ public class CargoUtil {
         }
         InvWithSlots outputMap = null;
         boolean vanillaOutputBlock;
-        if(Bukkit.isPrimaryThread()) {
+        if (Bukkit.isPrimaryThread()) {
             vanillaOutputBlock = !BlockStorage.hasInventory(outputBlock) && PaperLib.getBlockState(outputBlock, false).getState() instanceof InventoryHolder;
         } else {
             try {
@@ -199,8 +199,8 @@ public class CargoUtil {
             }
             if (!vanillaOutputBlock) {
                 outputMap = null;
-                for(int i = 0; i < searchItemList.size(); i++) {
-                    if(ItemStackUtil.isItemSimilar(inputItemWithWrapper, searchItemList.get(i))) {
+                for (int i = 0; i < searchItemList.size(); i++) {
+                    if (ItemStackUtil.isItemSimilar(inputItemWithWrapper, searchItemList.get(i))) {
                         outputMap = searchInvList.get(i);
                         break;
                     }
@@ -282,7 +282,7 @@ public class CargoUtil {
         }
         InvWithSlots inputMap = null;
         boolean vanillaOutputBlock;
-        if(Bukkit.isPrimaryThread()) {
+        if (Bukkit.isPrimaryThread()) {
             vanillaOutputBlock = !BlockStorage.hasInventory(inputBlock) && PaperLib.getBlockState(inputBlock, false).getState() instanceof InventoryHolder;
         } else {
             try {
@@ -325,7 +325,7 @@ public class CargoUtil {
             if (!vanillaOutputBlock) {
                 inputMap = null;
                 for (int i = 0; i < searchItemList.size(); i++) {
-                    if(ItemStackUtil.isItemSimilar(outputItemWithWrapper, searchItemList.get(i))) {
+                    if (ItemStackUtil.isItemSimilar(outputItemWithWrapper, searchItemList.get(i))) {
                         inputMap = searchInvList.get(i);
                         break;
                     }
@@ -369,7 +369,7 @@ public class CargoUtil {
                     if (CargoLimit.VALUE_STACK.equals(itemMode)) {
                         cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
                     }
-                    if(outputItem.getAmount() >= outputItem.getMaxStackSize()) {
+                    if (outputItem.getAmount() >= outputItem.getMaxStackSize()) {
                         break;
                     }
                     if (cargoNumber == 0) {
@@ -386,7 +386,7 @@ public class CargoUtil {
                     if (CargoLimit.VALUE_STACK.equals(itemMode)) {
                         cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
                     }
-                    if(outputItem.getAmount() >= outputItem.getMaxStackSize()) {
+                    if (outputItem.getAmount() >= outputItem.getMaxStackSize()) {
                         break;
                     }
                     if (cargoNumber == 0) {
@@ -394,7 +394,7 @@ public class CargoUtil {
                     }
                 }
             }
-            if(cargoNumber == 0) {
+            if (cargoNumber == 0) {
                 break;
             }
             if (work) {
@@ -498,7 +498,7 @@ public class CargoUtil {
                     slots = new int[0];
             }
         } else {
-            if(Bukkit.isPrimaryThread()) {
+            if (Bukkit.isPrimaryThread()) {
                 BlockState blockState = PaperLib.getBlockState(block, false).getState();
                 if (blockState instanceof InventoryHolder) {
                     inventory = ((InventoryHolder) blockState).getInventory();
@@ -522,7 +522,7 @@ public class CargoUtil {
                 });
                 try {
                     InvWithSlots invWithSlots = future.get();
-                    if(invWithSlots == null) {
+                    if (invWithSlots == null) {
                         return null;
                     }
                     inventory = invWithSlots.inventory();

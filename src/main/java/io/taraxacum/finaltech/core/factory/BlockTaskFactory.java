@@ -72,17 +72,17 @@ public class BlockTaskFactory<T> {
                 while (iterator.hasNext()) {
                     BlockTask<T> blockTask = iterator.next();
                     boolean lock = false;
-                    for(T object : blockTask.objects()) {
-                        if(lockMap.get(object)) {
+                    for (T object : blockTask.objects()) {
+                        if (lockMap.get(object)) {
                             lock = true;
                             break;
                         }
                     }
-                    if(!lock) {
-                        for(T object : blockTask.objects()) {
+                    if (!lock) {
+                        for (T object : blockTask.objects()) {
                             lockMap.put(object, true);
                         }
-                        if(blockTask.sync()) {
+                        if (blockTask.sync()) {
                             BukkitTask bukkitTask = Bukkit.getScheduler().runTask(JavaPlugin.getPlugin(FinalTech.class), () -> {
                                 blockTask.runnable().run();
                                 for (T object : blockTask.objects()) {
@@ -95,7 +95,7 @@ public class BlockTaskFactory<T> {
                         } else {
                             BukkitTask bukkitTask = Bukkit.getScheduler().runTaskAsynchronously(JavaPlugin.getPlugin(FinalTech.class), () -> {
                                 blockTask.runnable().run();
-                                for(T object : blockTask.objects()) {
+                                for (T object : blockTask.objects()) {
                                     lockMap.put(object, false);
                                 }
                                 synchronized (BlockTaskFactory.this.lock) {

@@ -35,7 +35,7 @@ public class InfinityMachineAccelerateCard extends AbstractMachineActivateCard {
 
     @Override
     protected boolean conditionMatch(@Nonnull Player player) {
-        if(player.getHealth() > 1) {
+        if (player.getHealth() > 1) {
             player.setHealth(player.getHealth() - 1);
             return true;
         }

@@ -71,14 +71,14 @@ public final class SetupUtil {
         Spirochete.SPIROCHETE_DIFFICULTY = spirocheteDifficulty;
 
         int copyCardDifficulty = CopyCardItem.DIFFICULTY;
-        if(valueConfig.contains("constructor.copy-card")) {
+        if (valueConfig.contains("constructor.copy-card")) {
             copyCardDifficulty = valueConfig.getInt("constructor.copy-card");
         } else {
             valueConfig.setValue("constructor.copy-card", CopyCardItem.DIFFICULTY);
         }
         CopyCardItem.DIFFICULTY = copyCardDifficulty;
 
-        if(valueConfig.contains("cargo.link-search-distance")) {
+        if (valueConfig.contains("cargo.link-search-distance")) {
             LinkTransfer.BLOCK_SEARCH_LIMIT = valueConfig.getInt("cargo.link-search-distance");
         } else {
             valueConfig.setValue("cargo.link-search-distance", LinkTransfer.BLOCK_SEARCH_LIMIT);

@@ -35,7 +35,7 @@ public class AbstractMySlimefunItem extends SlimefunItem {
     @Override
     public void register(@Nonnull SlimefunAddon addon) {
         super.register(addon);
-        if(this instanceof RecipeItem) {
+        if (this instanceof RecipeItem) {
             Bukkit.getServer().getScheduler().runTask((Plugin)addon, () -> {
                 ((RecipeItem) AbstractMySlimefunItem.this).registerDefaultRecipes();
                 MachineRecipeFactory.initAdvancedRecipeMap(AbstractMySlimefunItem.this.getClass());

@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.menu.storage;
+package io.taraxacum.finaltech.core.menu.unit;
 
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;

@@ -61,12 +61,12 @@ public class MatrixReactor extends AbstractMachine{
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         Location location = block.getLocation();
         ItemStack item = blockMenu.getItemInSlot(MatrixReactorMenu.OTHER_ITEM_INPUT_SLOT[0]);
-        if(ItemStackUtil.isItemNull(item)) {
+        if (ItemStackUtil.isItemNull(item)) {
             BlockStorage.addBlockInfo(location, KEY_ITEM, null);
             BlockStorage.addBlockInfo(location, KEY_COUNT, "0");
             this.updateMenu(blockMenu, config);
             return;
-        } else if(!MatrixReactor.allowedItem(item)) {
+        } else if (!MatrixReactor.allowedItem(item)) {
             BlockStorage.addBlockInfo(location, KEY_ITEM, null);
             BlockStorage.addBlockInfo(location, KEY_COUNT, "0");
             this.updateMenu(blockMenu, config);
@@ -74,26 +74,26 @@ public class MatrixReactor extends AbstractMachine{
             return;
         }
         ItemStack stringItem = null;
-        if(config.contains(KEY_ITEM)) {
+        if (config.contains(KEY_ITEM)) {
             String itemString = config.getString(KEY_ITEM);
             stringItem = ItemStackUtil.stringToItemStack(itemString);
         }
-        if(ItemStackUtil.isItemNull(stringItem) || !ItemStackUtil.isItemSimilar(item, stringItem)) {
+        if (ItemStackUtil.isItemNull(stringItem) || !ItemStackUtil.isItemSimilar(item, stringItem)) {
             ItemStack orderedDustItem = null;
             ItemStack unorderedDustItem = null;
-            for(int slot : MatrixReactorMenu.ORDERED_DUST_INPUT_SLOT) {
-                if(ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.ORDERED_DUST)) {
+            for (int slot : MatrixReactorMenu.ORDERED_DUST_INPUT_SLOT) {
+                if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.ORDERED_DUST)) {
                     orderedDustItem = blockMenu.getItemInSlot(slot);
                     break;
                 }
             }
-            for(int slot : MatrixReactorMenu.UNORDERED_DUST_INPUT_SLOT) {
-                if(ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.UNORDERED_DUST)) {
+            for (int slot : MatrixReactorMenu.UNORDERED_DUST_INPUT_SLOT) {
+                if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.UNORDERED_DUST)) {
                     unorderedDustItem = blockMenu.getItemInSlot(slot);
                     break;
                 }
             }
-            if(ItemStackUtil.isItemNull(orderedDustItem) || ItemStackUtil.isItemNull(unorderedDustItem)) {
+            if (ItemStackUtil.isItemNull(orderedDustItem) || ItemStackUtil.isItemNull(unorderedDustItem)) {
                 BlockStorage.addBlockInfo(location, KEY_ITEM, null);
                 BlockStorage.addBlockInfo(location, KEY_COUNT, "0");
             } else {
@@ -102,7 +102,7 @@ public class MatrixReactor extends AbstractMachine{
                 BlockStorage.addBlockInfo(location, KEY_ITEM, ItemStackUtil.itemStackToString(item));
                 int[] result = new int[] {0, 1};
                 int count;
-                if(ItemPhony.isValid(blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0]))) {
+                if (ItemPhony.isValid(blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0]))) {
                     ItemStack itemPhony = blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0]);
                     itemPhony.setAmount(itemPhony.getAmount() - 1);
                     count = 0;
@@ -115,35 +115,35 @@ public class MatrixReactor extends AbstractMachine{
         } else {
             ItemStack orderedDustItem = null;
             ItemStack unorderedDustItem = null;
-            for(int slot : MatrixReactorMenu.ORDERED_DUST_INPUT_SLOT) {
-                if(ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.ORDERED_DUST)) {
+            for (int slot : MatrixReactorMenu.ORDERED_DUST_INPUT_SLOT) {
+                if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.ORDERED_DUST)) {
                     orderedDustItem = blockMenu.getItemInSlot(slot);
                     break;
                 }
             }
-            for(int slot : MatrixReactorMenu.UNORDERED_DUST_INPUT_SLOT) {
-                if(ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.UNORDERED_DUST)) {
+            for (int slot : MatrixReactorMenu.UNORDERED_DUST_INPUT_SLOT) {
+                if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.UNORDERED_DUST)) {
                     unorderedDustItem = blockMenu.getItemInSlot(slot);
                     break;
                 }
             }
             int count = config.contains(KEY_COUNT) ? Integer.parseInt(config.getString(KEY_COUNT)) : 0;
-            if(ItemStackUtil.isItemNull(orderedDustItem) || ItemStackUtil.isItemNull(unorderedDustItem)) {
+            if (ItemStackUtil.isItemNull(orderedDustItem) || ItemStackUtil.isItemNull(unorderedDustItem)) {
                 count = count > 0 ? count - 1 : 0;
                 BlockStorage.addBlockInfo(location, KEY_COUNT, String.valueOf(count));
             } else {
                 orderedDustItem.setAmount(orderedDustItem.getAmount() - 1);
                 unorderedDustItem.setAmount(unorderedDustItem.getAmount() - 1);
-                if(ItemPhony.isValid(blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0]))) {
+                if (ItemPhony.isValid(blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0]))) {
                     ItemStack itemPhony = blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0]);
                     itemPhony.setAmount(itemPhony.getAmount() - 1);
                     count++;
                 } else {
                     count = Math.random() >= 0.5 ? count - 1 : count + 1;
                 }
-                if(count + item.getAmount() >= DIFFICULTY) {
+                if (count + item.getAmount() >= DIFFICULTY) {
                     ItemStack existedItem = blockMenu.getItemInSlot(this.getOutputSlot()[0]);
-                    if(ItemStackUtil.isItemNull(existedItem)) {
+                    if (ItemStackUtil.isItemNull(existedItem)) {
                         ItemStack outputItem = ItemStackUtil.cloneItem(item);
                         outputItem.setAmount(1);
                         blockMenu.replaceExistingItem(this.getOutputSlot()[0], outputItem);
@@ -151,7 +151,7 @@ public class MatrixReactor extends AbstractMachine{
                         BlockStorage.addBlockInfo(location, KEY_COUNT, "0");
                         this.updateMenu(blockMenu, config);
                         return;
-                    } else if(existedItem.getAmount() < existedItem.getMaxStackSize() && ItemStackUtil.isItemSimilar(existedItem, item)) {
+                    } else if (existedItem.getAmount() < existedItem.getMaxStackSize() && ItemStackUtil.isItemSimilar(existedItem, item)) {
                         existedItem.setAmount(existedItem.getAmount() + 1);
                         BlockStorage.addBlockInfo(location, KEY_ITEM, null);
                         BlockStorage.addBlockInfo(location, KEY_COUNT, "0");
@@ -175,7 +175,7 @@ public class MatrixReactor extends AbstractMachine{
     private void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Config config) {
         ItemStack item = blockMenu.getItemInSlot(MatrixReactorMenu.OTHER_ITEM_INPUT_SLOT[0]);
         ItemStack iconItem = blockMenu.getItemInSlot(MatrixReactorMenu.STATUS_SLOT);
-        if(ItemStackUtil.isItemNull(item)) {
+        if (ItemStackUtil.isItemNull(item)) {
             ItemStackUtil.setLore(iconItem, "§7未工作");
         } else {
             String count = config.contains(MatrixReactor.KEY_COUNT) ? config.getString(MatrixReactor.KEY_COUNT) : "0";
@@ -189,10 +189,10 @@ public class MatrixReactor extends AbstractMachine{
                 return false;
             }
         }
-        if(item.hasItemMeta()) {
+        if (item.hasItemMeta()) {
             ItemMeta itemMeta = item.getItemMeta();
             PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-            if(persistentDataContainer.getKeys().size() > 0) {
+            if (persistentDataContainer.getKeys().size() > 0) {
                 for (NamespacedKey namespacedKey : persistentDataContainer.getKeys()) {
                     if (!"slimefun".equals(namespacedKey.getNamespace())) {
                         return false;

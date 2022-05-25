@@ -91,22 +91,22 @@ public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
         int quantityModule = MachineUtil.updateQuantityModule(blockMenu, AdvancedMachineMenu.MODULE_SLOT, AdvancedMachineMenu.STATUS_SLOT);
 
         List<AdvancedMachineRecipe> advancedMachineRecipeList = MachineRecipeFactory.getAdvancedRecipe(this.getClass());
-        if(recipeLock >= 0) {
+        if (recipeLock >= 0) {
             List<AdvancedMachineRecipe> finalAdvancedMachineRecipeList = advancedMachineRecipeList;
             advancedMachineRecipeList = new ArrayList<>(1);
             advancedMachineRecipeList.add(finalAdvancedMachineRecipeList.get(recipeLock));
         }
 
         AdvancedCraft craft = AdvancedCraft.craftAsc(blockMenu, this.getInputSlot(), advancedMachineRecipeList, quantityModule, offset);
-        if(craft != null) {
+        if (craft != null) {
             craft.setMatchCount(Math.min(craft.getMatchCount(), MachineUtil.calMaxMatch(blockMenu, this.getOutputSlot(), craft.getOutputItemList())));
-            if(craft.getMatchCount() > 0) {
+            if (craft.getMatchCount() > 0) {
                 craft.consumeItem(blockMenu);
-                if(recipeLock == Integer.parseInt(MachineRecipeLock.VALUE_UNLOCK)) {
+                if (recipeLock == Integer.parseInt(MachineRecipeLock.VALUE_UNLOCK)) {
                     ItemStack item = blockMenu.getItemInSlot(AbstractLockMachineMenu.RECIPE_LOCK_SLOT);
                     MachineRecipeLock.HELPER.setIcon(item, String.valueOf(craft.getOffset()), this);
                     BlockStorage.addBlockInfo(blockMenu.getLocation(), MachineRecipeLock.KEY, String.valueOf(craft.getOffset()));
-                } else if(recipeLock == Integer.parseInt(MachineRecipeLock.VALUE_LOCK_OFF)) {
+                } else if (recipeLock == Integer.parseInt(MachineRecipeLock.VALUE_LOCK_OFF)) {
                     BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, String.valueOf(craft.getOffset()));
                 }
                 return craft.calMachineRecipe(this.getMachineRecipes().get(offset).getTicks());

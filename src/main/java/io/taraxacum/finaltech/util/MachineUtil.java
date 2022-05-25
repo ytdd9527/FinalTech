@@ -249,9 +249,9 @@ public final class MachineUtil {
 
     public static List<ItemStackWithWrapperAmount> calItemListWithAmount(@Nonnull BlockMenu blockMenu, int[] slots) {
         List<ItemStackWithWrapperAmount> itemWithWrapperList = new ArrayList<>(slots.length);
-        for(int slot : slots) {
+        for (int slot : slots) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(ItemStackUtil.isItemNull(item)) {
+            if (ItemStackUtil.isItemNull(item)) {
                 continue;
             }
             ItemStackWrapper itemStackWrapper = ItemStackWrapper.wrap(item);
@@ -271,9 +271,9 @@ public final class MachineUtil {
     }
     public static List<ItemStackWithWrapperAmount> calItemListWithAmount(@Nonnull Inventory inventory, int[] slots) {
         List<ItemStackWithWrapperAmount> itemWithWrapperList = new ArrayList<>(slots.length);
-        for(int slot : slots) {
+        for (int slot : slots) {
             ItemStack item = inventory.getItem(slot);
-            if(ItemStackUtil.isItemNull(item)) {
+            if (ItemStackUtil.isItemNull(item)) {
                 continue;
             }
             ItemStackWrapper itemStackWrapper = ItemStackWrapper.wrap(item);
@@ -295,23 +295,23 @@ public final class MachineUtil {
     public static int calMaxMatch(@Nonnull BlockMenu blockMenu, int[] slots, @Nonnull List<ItemStackWithWrapperAmount> itemWithWrapperList) {
         List<Integer> countList = new ArrayList<>(itemWithWrapperList.size());
         List<Integer> stackList = new ArrayList<>(itemWithWrapperList.size());
-        for(int i = 0; i < itemWithWrapperList.size(); i++) {
+        for (int i = 0; i < itemWithWrapperList.size(); i++) {
             countList.add(0);
             stackList.add(0);
         }
 
         int emptySlot = 0;
-        for(int slot : slots) {
+        for (int slot : slots) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(ItemStackUtil.isItemNull(item)) {
+            if (ItemStackUtil.isItemNull(item)) {
                 emptySlot++;
                 continue;
-            } else if(item.getAmount() >= item.getMaxStackSize()) {
+            } else if (item.getAmount() >= item.getMaxStackSize()) {
                 continue;
             }
             ItemStackWrapper itemWrapper = ItemStackWrapper.wrap(item);
-            for(int i = 0; i < itemWithWrapperList.size(); i++) {
-                if(ItemStackUtil.isItemSimilar(itemWrapper, itemWithWrapperList.get(i))) {
+            for (int i = 0; i < itemWithWrapperList.size(); i++) {
+                if (ItemStackUtil.isItemSimilar(itemWrapper, itemWithWrapperList.get(i))) {
                     countList.set(i, countList.get(i) + (item.getMaxStackSize() - item.getAmount()));
                     stackList.set(i, countList.get(i) / itemWithWrapperList.get(i).getAmount());
                     break;
@@ -322,8 +322,8 @@ public final class MachineUtil {
         while (emptySlot > 0) {
             int minStackP = 0;
             int minStack = stackList.get(0);
-            for(int i = 1; i < itemWithWrapperList.size(); i++) {
-                if(minStack > stackList.get(i)) {
+            for (int i = 1; i < itemWithWrapperList.size(); i++) {
+                if (minStack > stackList.get(i)) {
                     minStack = stackList.get(i);
                     minStackP = i;
                 }
@@ -334,7 +334,7 @@ public final class MachineUtil {
         }
 
         int min = stackList.get(0);
-        for(int stack : stackList) {
+        for (int stack : stackList) {
             min = Math.min(min, stack);
         }
         return min;
@@ -342,23 +342,23 @@ public final class MachineUtil {
     public static int calMaxMatch(@Nonnull Inventory inventory, int[] slots, @Nonnull List<ItemStackWithWrapperAmount> itemWithWrapperList) {
         List<Integer> countList = new ArrayList<>(itemWithWrapperList.size());
         List<Integer> stackList = new ArrayList<>(itemWithWrapperList.size());
-        for(int i = 0; i < itemWithWrapperList.size(); i++) {
+        for (int i = 0; i < itemWithWrapperList.size(); i++) {
             countList.add(0);
             stackList.add(0);
         }
 
         int emptySlot = 0;
-        for(int slot : slots) {
+        for (int slot : slots) {
             ItemStack item = inventory.getItem(slot);
-            if(ItemStackUtil.isItemNull(item)) {
+            if (ItemStackUtil.isItemNull(item)) {
                 emptySlot++;
                 continue;
-            } else if(item.getAmount() >= item.getMaxStackSize()) {
+            } else if (item.getAmount() >= item.getMaxStackSize()) {
                 continue;
             }
             ItemStackWrapper itemWrapper = ItemStackWrapper.wrap(item);
-            for(int i = 0; i < itemWithWrapperList.size(); i++) {
-                if(ItemStackUtil.isItemSimilar(itemWrapper, itemWithWrapperList.get(i))) {
+            for (int i = 0; i < itemWithWrapperList.size(); i++) {
+                if (ItemStackUtil.isItemSimilar(itemWrapper, itemWithWrapperList.get(i))) {
                     countList.set(i, countList.get(i) + (item.getMaxStackSize() - item.getAmount()));
                     stackList.set(i, countList.get(i) / itemWithWrapperList.get(i).getAmount());
                     break;
@@ -369,8 +369,8 @@ public final class MachineUtil {
         while (emptySlot > 0) {
             int minStackP = 0;
             int minStack = stackList.get(0);
-            for(int i = 1; i < itemWithWrapperList.size(); i++) {
-                if(minStack > stackList.get(i)) {
+            for (int i = 1; i < itemWithWrapperList.size(); i++) {
+                if (minStack > stackList.get(i)) {
                     minStack = stackList.get(i);
                     minStackP = i;
                 }
@@ -381,7 +381,7 @@ public final class MachineUtil {
         }
 
         int min = stackList.get(0);
-        for(int stack : stackList) {
+        for (int stack : stackList) {
             min = Math.min(min, stack);
         }
         return min;
@@ -394,7 +394,7 @@ public final class MachineUtil {
         if (ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE)) {
             amount = item.getAmount();
             lore = "§7当前效率=" + amount;
-        } else if(ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE_INFINITY)) {
+        } else if (ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE_INFINITY)) {
             amount = Integer.MAX_VALUE / 64 - 1;
             lore = "§7当前效率=" + "INFINITY";
         } else {

@@ -111,7 +111,7 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
             int result = CargoUtil.doCargoInputMain(block, outputBlock, SlotSearchSize.VALUE_OUTPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, outputSlotSearchSize, outputSlotSearchOrder, outputCargoNumber, outputCargoLimit, cargoFilter, blockInv, StationTransferMenu.ITEM_MATCH);
             if (CargoNumberMode.VALUE_UNIVERSAL.equals(outputCargoNumberMode)) {
                 outputCargoNumber -= result;
-                if(outputCargoNumber == 0) {
+                if (outputCargoNumber == 0) {
                     break;
                 }
             }
@@ -146,7 +146,7 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
             int result = CargoUtil.doCargoOutputMain(inputBlock, block, inputSlotSearchSize, inputSlotSearchOrder, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, inputCargoNumber, inputCargoLimit, cargoFilter, blockInv, StationTransferMenu.ITEM_MATCH);
             if (CargoNumberMode.VALUE_UNIVERSAL.equals(inputCargoNumberMode)) {
                 inputCargoNumber -= result;
-                if(inputCargoNumber == 0) {
+                if (inputCargoNumber == 0) {
                     break;
                 }
             }
@@ -160,7 +160,7 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
         Block result = begin.getRelative(blockFace);
         if (BlockSearchMode.VALUE_ZERO.equals(searchMode)) {
             particleLocationList.add(LocationUtil.getCenterLocation(result));
-            if(drawParticle) {
+            if (drawParticle) {
                 Bukkit.getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawLineByDistance(Particle.REDSTONE, PARTICLE_INTERVAL, PARTICLE_DISTANCE, particleLocationList));
             }
             return result;
@@ -177,7 +177,7 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
             }
             break;
         }
-        if(drawParticle) {
+        if (drawParticle) {
             this.getAddon().getJavaPlugin().getServer().getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawLineByDistance(Particle.REDSTONE, PARTICLE_INTERVAL, PARTICLE_DISTANCE, particleLocationList));
         }
         return result;

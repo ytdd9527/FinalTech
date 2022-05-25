@@ -35,7 +35,7 @@ public class InfinityMachineChargeCard extends AbstractMachineActivateCard {
 
     @Override
     protected boolean conditionMatch(@Nonnull Player player) {
-        if(player.getExp() > 1) {
+        if (player.getExp() > 1) {
             player.setExp(player.getExp() - 1);
             return true;
         }

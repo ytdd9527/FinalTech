@@ -66,19 +66,19 @@ public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(MachineUtil.isEmpty(blockMenu, this.getOutputSlot())) {
+        if (MachineUtil.isEmpty(blockMenu, this.getOutputSlot())) {
             ItemStack item = blockMenu.getItemInSlot(this.getInputSlot()[0]);
             SlimefunItem sfItem = SlimefunItem.getByItem(item);
-            if(sfItem != null && item.getAmount() >= sfItem.getRecipeOutput().getAmount() && sfItem.getRecipe().length <= this.getOutputSlot().length && RECIPE_TYPE_LIST.contains(sfItem.getRecipeType()) && ItemStackUtil.isItemSimilar(item, sfItem.getRecipeOutput())) {
+            if (sfItem != null && item.getAmount() >= sfItem.getRecipeOutput().getAmount() && sfItem.getRecipe().length <= this.getOutputSlot().length && RECIPE_TYPE_LIST.contains(sfItem.getRecipeType()) && ItemStackUtil.isItemSimilar(item, sfItem.getRecipeOutput())) {
                 int amount = item.getAmount() / sfItem.getRecipeOutput().getAmount();
-                for(ItemStack outputItem : sfItem.getRecipe()) {
-                    if(!ItemStackUtil.isItemNull(outputItem)) {
+                for (ItemStack outputItem : sfItem.getRecipe()) {
+                    if (!ItemStackUtil.isItemNull(outputItem)) {
                         amount = Math.min(amount, outputItem.getMaxStackSize() / outputItem.getAmount());
                     }
                 }
                 item.setAmount(item.getAmount() - sfItem.getRecipeOutput().getAmount() * amount);
-                for(int i = 0; i < this.getOutputSlot().length && i < sfItem.getRecipe().length; i++) {
-                    if(!ItemStackUtil.isItemNull(sfItem.getRecipe()[i])) {
+                for (int i = 0; i < this.getOutputSlot().length && i < sfItem.getRecipe().length; i++) {
+                    if (!ItemStackUtil.isItemNull(sfItem.getRecipe()[i])) {
                         ItemStack outputItem = ItemStackUtil.cloneItem(sfItem.getRecipe()[i]);
                         outputItem.setAmount(outputItem.getAmount() * amount);
                         blockMenu.replaceExistingItem(this.getOutputSlot()[i], outputItem);
@@ -95,7 +95,7 @@ public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        for(RecipeType recipeType : RECIPE_TYPE_LIST) {
+        for (RecipeType recipeType : RECIPE_TYPE_LIST) {
             this.registerDescriptiveRecipe(recipeType.toItem());
         }
     }

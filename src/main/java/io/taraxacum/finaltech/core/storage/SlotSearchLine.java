@@ -102,7 +102,7 @@ public class SlotSearchLine {
             String valueMap = BlockStorage.getLocationInfo(location, KEY);
             KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
             String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getKey());
-            if(!BlockStorageLoreMaterialHelper.this.validValue(value)) {
+            if (!BlockStorageLoreMaterialHelper.this.validValue(value)) {
                 value = BlockStorageLoreMaterialHelper.this.defaultValue();
             }
             return value;
@@ -113,7 +113,7 @@ public class SlotSearchLine {
             String valueMap = config.getString(KEY);
             KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
             String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getKey());
-            if(!BlockStorageLoreMaterialHelper.this.validValue(value)) {
+            if (!BlockStorageLoreMaterialHelper.this.validValue(value)) {
                 value = BlockStorageLoreMaterialHelper.this.defaultValue();
             }
             return value;
@@ -121,14 +121,14 @@ public class SlotSearchLine {
 
         @Override
         public boolean setIcon(@Nonnull ItemStack iconItem, @Nullable String value) {
-            if(BlockStorageLoreMaterialHelper.this.validValue(value) && valueMaterialMap.containsKey(value)) {
+            if (BlockStorageLoreMaterialHelper.this.validValue(value) && valueMaterialMap.containsKey(value)) {
                 iconItem.setType(valueMaterialMap.get(value));
             }
             return BlockStorageLoreMaterialHelper.super.setIcon(iconItem, value);
         }
         @Override
         public boolean setIcon(@Nonnull ItemStack iconItem, @Nullable String value, @Nonnull AbstractMachine abstractMachine) {
-            if(BlockStorageLoreMaterialHelper.this.validValue(value) && valueMaterialMap.containsKey(value)) {
+            if (BlockStorageLoreMaterialHelper.this.validValue(value) && valueMaterialMap.containsKey(value)) {
                 iconItem.setType(valueMaterialMap.get(value));
             }
             return BlockStorageLoreMaterialHelper.super.setIcon(iconItem, value, abstractMachine);
@@ -139,7 +139,7 @@ public class SlotSearchLine {
             String valueMap = BlockStorage.getLocationInfo(blockMenu.getLocation(), this.getKey());
             KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
             String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getKey());
-            if(!BlockStorageLoreMaterialHelper.this.validValue(value)) {
+            if (!BlockStorageLoreMaterialHelper.this.validValue(value)) {
                 value = BlockStorageLoreMaterialHelper.this.defaultValue();
                 keyValueStringHelper.putEntry(BlockStorageLoreMaterialHelper.this.getKey(), value);
                 BlockStorage.addBlockInfo(blockMenu.getLocation(), KEY, keyValueStringHelper.toString());
@@ -156,7 +156,7 @@ public class SlotSearchLine {
                 String valueMap = BlockStorageLoreMaterialHelper.this.getOrDefaultValue(block.getLocation());
                 KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
                 String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getKey());
-                if(!action.isRightClicked()) {
+                if (!action.isRightClicked()) {
                     value = BlockStorageLoreMaterialHelper.this.clickNextValue(value, action);
                 } else {
                     value = BlockStorageLoreMaterialHelper.this.clickPreviousValue(value, action);
@@ -175,7 +175,7 @@ public class SlotSearchLine {
                 String valueMap = BlockStorageLoreMaterialHelper.this.getOrDefaultValue(block.getLocation());
                 KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
                 String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getKey());
-                if(!BlockStorageLoreMaterialHelper.this.validValue(value)) {
+                if (!BlockStorageLoreMaterialHelper.this.validValue(value)) {
                     value = BlockStorageLoreMaterialHelper.this.defaultValue();
                 }
                 keyValueStringHelper.putEntry(BlockStorageLoreMaterialHelper.this.getKey(), value);

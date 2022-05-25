@@ -35,7 +35,7 @@ public class JavaUtil<T> {
         List<T> collect = Arrays.stream(stack).collect(Collectors.toList());
         Collections.shuffle(collect);
         T[] result = (T[]) new Object[stack.length];
-        for(int i = 0; i < collect.size(); i++) {
+        for (int i = 0; i < collect.size(); i++) {
             result[i] = collect.get(i);
         }
         return result;
@@ -45,20 +45,20 @@ public class JavaUtil<T> {
         List<Integer> collect = Arrays.stream(ints).boxed().collect(Collectors.toList());
         Collections.shuffle(collect);
         int[] result = new int[ints.length];
-        for(int i = 0; i < collect.size(); i++) {
+        for (int i = 0; i < collect.size(); i++) {
             result[i] = collect.get(i);
         }
         return result;
     }
 
     public static double[] disperse(int size, Number... value) {
-        if(size == 1 && value.length > 0) {
+        if (size == 1 && value.length > 0) {
             return new double[] {value[0].doubleValue()};
-        } else if(size == 0 || value.length == 0) {
+        } else if (size == 0 || value.length == 0) {
             return new double[0];
         }
         double[] result = new double[size--];
-        for(int i = 0; i <= size; i++) {
+        for (int i = 0; i <= size; i++) {
             double p = ((double) i) / size * (value.length - 1);
             double value1 = value[(int) Math.floor(p)].doubleValue() * (1 - p + Math.floor(p));
             double value2 = value[(int) Math.ceil(p)].doubleValue() * (p - Math.floor(p));

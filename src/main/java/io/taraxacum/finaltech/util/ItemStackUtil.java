@@ -189,7 +189,7 @@ public final class ItemStackUtil {
     @Nonnull
     public static ItemStack[] getItemArray(@Nonnull List<ItemStack> itemList) {
         ItemStack[] items = new ItemStack[itemList.size()];
-        for(int i = 0; i < items.length; i++) {
+        for (int i = 0; i < items.length; i++) {
             items[i] = itemList.get(i);
         }
         return items;
@@ -308,7 +308,7 @@ public final class ItemStackUtil {
     public static List<ItemStackWithWrapperAmount> calItemListWithAmount(@Nonnull ItemStack[] items) {
         List<ItemStackWithWrapperAmount> itemWithWrapperList = new ArrayList<>(items.length);
         for (ItemStack item : items) {
-            if(ItemStackUtil.isItemNull(item)) {
+            if (ItemStackUtil.isItemNull(item)) {
                 continue;
             }
             ItemStackWrapper itemStackWrapper = ItemStackWrapper.wrap(item);
@@ -330,7 +330,7 @@ public final class ItemStackUtil {
     public static List<ItemStackWithWrapperAmount> calItemListWithAmount(@Nonnull List<ItemStack> itemList) {
         List<ItemStackWithWrapperAmount> itemWithWrapperList = new ArrayList<>(itemList.size());
         for (ItemStack item : itemList) {
-            if(ItemStackUtil.isItemNull(item)) {
+            if (ItemStackUtil.isItemNull(item)) {
                 continue;
             }
             ItemStackWrapper itemWithWrapper = ItemStackWrapper.wrap(item);
@@ -566,7 +566,7 @@ public final class ItemStackUtil {
     }
 
     public static void replaceLore(@Nonnull ItemStack item, int loreOffset, @Nonnull String... lore) {
-        if(loreOffset < 0) {
+        if (loreOffset < 0) {
             ItemStackUtil.setLore(item, lore);
             return;
         }
@@ -578,14 +578,14 @@ public final class ItemStackUtil {
         while (oldLore.size() < loreOffset) {
             oldLore.add("");
         }
-        for(int i = 0; i < lore.length; i++) {
+        for (int i = 0; i < lore.length; i++) {
             oldLore.set(loreOffset + i, lore[i]);
         }
         itemMeta.setLore(oldLore);
         item.setItemMeta(itemMeta);
     }
     public static void replaceLore(@Nonnull ItemStack item, int loreOffset, @Nonnull List<String> lore) {
-        if(loreOffset < 0) {
+        if (loreOffset < 0) {
             ItemStackUtil.setLore(item, lore);
             return;
         }
@@ -625,7 +625,7 @@ public final class ItemStackUtil {
         if (ItemStackUtil.isItemNull(item)) {
             return null;
         }
-        if(item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
+        if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
             return null;
         }
         return switch (item.getType()) {

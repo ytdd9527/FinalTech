@@ -87,18 +87,18 @@ public interface RecipeItem extends RecipeDisplayItem {
         List<ItemStack> inputList2 = new ArrayList<>(input.length);
         List<ItemStack> outputList1 = new ArrayList<>(output.length);
         List<ItemStack> outputList2 = new ArrayList<>(output.length);
-        for(ItemStack item : output) {
-            if(!ItemStackUtil.isItemNull(item) && !ItemStackUtil.isItemSimilar(item, new CustomItemStack(Material.BUCKET))) {
+        for (ItemStack item : output) {
+            if (!ItemStackUtil.isItemNull(item) && !ItemStackUtil.isItemSimilar(item, new CustomItemStack(Material.BUCKET))) {
                 outputList1.add(item);
             }
         }
         outputList2.addAll(outputList1);
-        for(ItemStack item : input) {
-            if(ItemStackUtil.isItemNull(item)) {
+        for (ItemStack item : input) {
+            if (ItemStackUtil.isItemNull(item)) {
                 continue;
             }
             ItemStack liquidCardItem = ItemStackUtil.getLiquidCard(item);
-            if(liquidCardItem == null) {
+            if (liquidCardItem == null) {
                 inputList1.add(item);
                 inputList2.add(item);
             } else {
@@ -108,7 +108,7 @@ public interface RecipeItem extends RecipeDisplayItem {
                 outputList1.add(new CustomItemStack(Material.BUCKET));
             }
         }
-        if(extraRecipe) {
+        if (extraRecipe) {
             this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItemList(inputList1))), ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItemList(outputList1)));
             this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItemList(inputList2))), ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItemList(outputList2)));
         } else {

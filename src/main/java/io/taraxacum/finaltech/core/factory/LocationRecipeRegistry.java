@@ -17,7 +17,7 @@ public class LocationRecipeRegistry {
 
     @Nullable
     public static AdvancedMachineRecipe getRecipe(@Nonnull Location location) {
-        if(LOCATION_RECIPE_MAP.containsKey(location)) {
+        if (LOCATION_RECIPE_MAP.containsKey(location)) {
             return LOCATION_RECIPE_MAP.get(location);
         }
         return null;

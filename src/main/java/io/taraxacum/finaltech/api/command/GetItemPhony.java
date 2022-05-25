@@ -27,16 +27,16 @@ public class GetItemPhony implements CommandExecutor {
         Bukkit.getLogger().info(s);
         Bukkit.getLogger().info(Arrays.toString(strings));
         Bukkit.getLogger().info(strings.length + "");
-        if(commandSender instanceof Player) {
+        if (commandSender instanceof Player) {
             Player player = (Player) commandSender;
             ItemStack item = player.getItemInHand();
             ItemStack copyCardItem = CopyCardItem.newItem(item, "1");
             player.setItemInHand(copyCardItem);
             Bukkit.getLogger().info("ok");
         }
-        for(Map.Entry<String, List<String>> entry : ItemValueMap.valueItemListOutputMap.entrySet()) {
+        for (Map.Entry<String, List<String>> entry : ItemValueMap.valueItemListOutputMap.entrySet()) {
             Bukkit.getLogger().info("&7value= " + entry.getKey());
-            for(String value : entry.getValue()) {
+            for (String value : entry.getValue()) {
                 Bukkit.getLogger().info("    " + SlimefunItem.getById(value).getItemName());
             }
         }

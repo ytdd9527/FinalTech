@@ -104,11 +104,11 @@ public class SlimefunUtil {
 
     public static boolean hasPermission(@Nonnull String uuid, @Nonnull Block block, @Nonnull Interaction... interactions) {
         Player player = Bukkit.getPlayer(UUID.fromString(uuid));
-        if(player == null) {
+        if (player == null) {
             return false;
         }
-        for(Interaction interaction : interactions) {
-            if(!Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), interaction)) {
+        for (Interaction interaction : interactions) {
+            if (!Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), interaction)) {
                 return false;
             }
         }
@@ -116,11 +116,11 @@ public class SlimefunUtil {
     }
     public static boolean hasPermission(@Nonnull String uuid, @Nonnull Entity entity, @Nonnull Interaction... interactions) {
         Player player = Bukkit.getPlayer(UUID.fromString(uuid));
-        if(player == null) {
+        if (player == null) {
             return false;
         }
-        for(Interaction interaction : interactions) {
-            if(!Slimefun.getProtectionManager().hasPermission(player, entity.getLocation(), interaction)) {
+        for (Interaction interaction : interactions) {
+            if (!Slimefun.getProtectionManager().hasPermission(player, entity.getLocation(), interaction)) {
                 return false;
             }
         }
@@ -128,19 +128,19 @@ public class SlimefunUtil {
     }
     public static boolean hasPermission(@Nonnull String uuid, @Nonnull Location location, @Nonnull Interaction... interactions) {
         Player player = Bukkit.getPlayer(UUID.fromString(uuid));
-        if(player == null) {
+        if (player == null) {
             return false;
         }
-        for(Interaction interaction : interactions) {
-            if(!Slimefun.getProtectionManager().hasPermission(player, location, interaction)) {
+        for (Interaction interaction : interactions) {
+            if (!Slimefun.getProtectionManager().hasPermission(player, location, interaction)) {
                 return false;
             }
         }
         return true;
     }
     public static boolean hasPermission(@Nonnull Player player, @Nonnull Location location, @Nonnull Interaction... interactions) {
-        for(Interaction interaction : interactions) {
-            if(!Slimefun.getProtectionManager().hasPermission(player, location, interaction)) {
+        for (Interaction interaction : interactions) {
+            if (!Slimefun.getProtectionManager().hasPermission(player, location, interaction)) {
                 return false;
             }
         }

@@ -39,7 +39,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onDisable() {
-        if(this.bukkitTask != null) {
+        if (this.bukkitTask != null) {
             this.bukkitTask.cancel();
         }
     }
@@ -77,10 +77,10 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         }, 0, tickRate);
 
         try {
-            if(!this.configFile.getFile().exists()) {
+            if (!this.configFile.getFile().exists()) {
                 Files.copy(Objects.requireNonNull(this.getClass().getResourceAsStream("/config.yml")), this.configFile.getFile().toPath());
             }
-            if(!this.valueFile.getFile().exists()) {
+            if (!this.valueFile.getFile().exists()) {
                 Files.copy(Objects.requireNonNull(this.getClass().getResourceAsStream("/value.yml")), this.valueFile.getFile().toPath());
             }
         } catch (Exception e) {

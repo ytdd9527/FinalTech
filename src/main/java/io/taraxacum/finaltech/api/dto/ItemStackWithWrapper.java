@@ -52,7 +52,7 @@ public class ItemStackWithWrapper {
 
     public static ItemStack[] toItemArray(List<? extends ItemStackWithWrapper> list) {
         ItemStack[] result = new ItemStack[list.size()];
-        for(int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++) {
             result[i] = list.get(i).getItemStack();
         }
         return result;

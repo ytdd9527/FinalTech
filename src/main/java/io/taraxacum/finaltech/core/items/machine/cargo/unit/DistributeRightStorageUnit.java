@@ -7,7 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.api.dto.ItemStackWithWrapperAmount;
 import io.taraxacum.finaltech.core.items.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.storage.OneLineStorageUnitMenu;
+import io.taraxacum.finaltech.core.menu.unit.OneLineStorageUnitMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -35,24 +35,24 @@ public class DistributeRightStorageUnit extends AbstractCargo {
         int endSlot = 0;
         int i;
         ItemStackWithWrapperAmount itemWithWrapperAmount = null;
-        for(i = 0; i < this.getInputSlot().length; i++) {
-            if(!ItemStackUtil.isItemNull(blockMenu.getItemInSlot(i))) {
+        for (i = 0; i < this.getInputSlot().length; i++) {
+            if (!ItemStackUtil.isItemNull(blockMenu.getItemInSlot(i))) {
                 itemWithWrapperAmount = new ItemStackWithWrapperAmount(blockMenu.getItemInSlot(i));
                 beginSlot = i;
                 endSlot = i++;
                 break;
             }
         }
-        for(; i < this.getInputSlot().length; i++) {
-            if(ItemStackUtil.isItemNull(blockMenu.getItemInSlot(i))) {
+        for (; i < this.getInputSlot().length; i++) {
+            if (ItemStackUtil.isItemNull(blockMenu.getItemInSlot(i))) {
                 endSlot = i;
-            } else if(ItemStackUtil.isItemSimilar(itemWithWrapperAmount, blockMenu.getItemInSlot(i))) {
+            } else if (ItemStackUtil.isItemSimilar(itemWithWrapperAmount, blockMenu.getItemInSlot(i))) {
                 itemWithWrapperAmount.addAmount(blockMenu.getItemInSlot(i).getAmount());
                 endSlot = i;
             } else {
                 int amount = itemWithWrapperAmount.getAmount() / (endSlot + 1 - beginSlot);
-                if(amount > 0) {
-                    for(int j = beginSlot; j <= endSlot; j++) {
+                if (amount > 0) {
+                    for (int j = beginSlot; j <= endSlot; j++) {
                         ItemStack item = ItemStackUtil.cloneItem(itemWithWrapperAmount.getItemStack());
                         item.setAmount(amount);
                         blockMenu.replaceExistingItem(j, item);
@@ -66,10 +66,10 @@ public class DistributeRightStorageUnit extends AbstractCargo {
                 endSlot = i;
             }
         }
-        if(beginSlot != endSlot) {
+        if (beginSlot != endSlot) {
             int amount = itemWithWrapperAmount.getAmount() / (endSlot + 1 - beginSlot);
-            if(amount > 0) {
-                for(int j = beginSlot; j <= endSlot; j++) {
+            if (amount > 0) {
+                for (int j = beginSlot; j <= endSlot; j++) {
                     ItemStack item = ItemStackUtil.cloneItem(itemWithWrapperAmount.getItemStack());
                     item.setAmount(amount);
                     blockMenu.replaceExistingItem(j, item);

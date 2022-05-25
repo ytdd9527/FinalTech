@@ -63,13 +63,13 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
                 amountList.add(item.getAmount());
             }
             boolean contain = false;
-            for(ItemStackWithWrapper itemWithWrapper : itemList) {
-                if(ItemStackUtil.isItemSimilar(itemWithWrapper, itemWithWrapper)) {
+            for (ItemStackWithWrapper itemWithWrapper : itemList) {
+                if (ItemStackUtil.isItemSimilar(itemWithWrapper, itemWithWrapper)) {
                     contain = true;
                     break;
                 }
             }
-            if(!contain && itemList.size() <= 1) {
+            if (!contain && itemList.size() <= 1) {
                 itemList.add(new ItemStackWithWrapper(item));
             }
         }
@@ -78,7 +78,7 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
         }
         if (amountList.size() == this.getInputSlot().length && itemList.size() == 1) {
             blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), this.getOutputSlot());
-        } else if(Math.random() < (double)(amountList.size()) / this.getInputSlot().length) {
+        } else if (Math.random() < (double)(amountList.size()) / this.getInputSlot().length) {
             blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), this.getOutputSlot());
         }
     }

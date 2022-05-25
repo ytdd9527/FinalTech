@@ -16,19 +16,19 @@ public class ParticleUtil {
 
 
     public static void drawLineByTotalAmount(@Nonnull Particle particle, int totalAmount, @Nonnull Location... locations) {
-        for(int i = 0; i < locations.length; i++) {
-            if((i + 1) < locations.length) {
+        for (int i = 0; i < locations.length; i++) {
+            if ((i + 1) < locations.length) {
                 Location location1 = locations[i];
                 Location location2 = locations[i + 1];
 
-                if(totalAmount < 1 || location1.getWorld() == null || location1.getWorld() != location2.getWorld()) {
+                if (totalAmount < 1 || location1.getWorld() == null || location1.getWorld() != location2.getWorld()) {
                     return;
                 }
                 World world = location1.getWorld();
                 double[] x = JavaUtil.disperse(totalAmount, location1.getX(), location2.getX());
                 double[] y = JavaUtil.disperse(totalAmount, location1.getY(), location2.getY());
                 double[] z = JavaUtil.disperse(totalAmount, location1.getZ(), location2.getZ());
-                for(int j = 0; j < totalAmount; j++) {
+                for (int j = 0; j < totalAmount; j++) {
                     world.spawnParticle(particle, x[j], y[j], z[j], 1);
                 }
             }
@@ -36,19 +36,19 @@ public class ParticleUtil {
     }
     public static void drawLineByTotalAmount(@Nonnull Particle particle, int totalAmount, @Nonnull List<Location> locationList) {
         Location[] locations = new Location[locationList.size()];
-        for(int i = 0; i < locations.length; i++) {
+        for (int i = 0; i < locations.length; i++) {
             locations[i] = locationList.get(i);
         }
         ParticleUtil.drawLineByTotalAmount(particle, totalAmount, locations);
     }
 
     public static void drawLineByDistance(@Nonnull Particle particle, long interval, double distance, @Nonnull Location... locations) {
-        for(int i = 0; i < locations.length; i++) {
-            if((i + 1) < locations.length) {
+        for (int i = 0; i < locations.length; i++) {
+            if ((i + 1) < locations.length) {
                 Location location1 = locations[i];
                 Location location2 = locations[i + 1];
 
-                if(distance == 0 || location1.getWorld() == null || location1.getWorld() != location2.getWorld()) {
+                if (distance == 0 || location1.getWorld() == null || location1.getWorld() != location2.getWorld()) {
                     return;
                 }
                 World world = location1.getWorld();
@@ -61,13 +61,13 @@ public class ParticleUtil {
                 double py = (location2.getY() - location1.getY()) * (d / distance);
                 double pz = (location2.getZ() - location1.getZ()) * (d / distance);
 
-                for(int j = 0; j < d / distance; j++) {
+                for (int j = 0; j < d / distance; j++) {
                     world.spawnParticle(particle, x, y, z, 1);
                     x += px;
                     y += py;
                     z += pz;
                 }
-                if(interval > 0) {
+                if (interval > 0) {
                     try {
                         Thread.sleep(interval);
                     } catch (InterruptedException e) {
@@ -79,26 +79,26 @@ public class ParticleUtil {
     }
     public static void drawLineByDistance(@Nonnull Particle particle, long interval, double distance, @Nonnull List<Location> locationList) {
         Location[] locations = new Location[locationList.size()];
-        for(int i = 0; i < locations.length; i++) {
+        for (int i = 0; i < locations.length; i++) {
                 locations[i] = locationList.get(i);
         }
         ParticleUtil.drawLineByDistance(particle, interval, distance, locations);
     }
 
     public static void drawCubeByBlock(@Nonnull Particle particle, long interval, Block... blocks) {
-        for(Block block : blocks) {
+        for (Block block : blocks) {
             Location location = block.getLocation();
             World world = location.getWorld();
-            if(world == null) {
+            if (world == null) {
                 continue;
             }
             int x = location.getBlockX();
             int y = location.getBlockY();
             int z = location.getBlockZ();
-            for(int i = 0; i < BLOCK_CUBE_OFFSET_X.length; i++) {
+            for (int i = 0; i < BLOCK_CUBE_OFFSET_X.length; i++) {
                 world.spawnParticle(particle, x + BLOCK_CUBE_OFFSET_X[i], y + BLOCK_CUBE_OFFSET_Y[i], z + BLOCK_CUBE_OFFSET_Z[i], 1);
             }
-            if(interval > 0) {
+            if (interval > 0) {
                 try {
                     Thread.sleep(interval);
                 } catch (InterruptedException e) {
@@ -109,7 +109,7 @@ public class ParticleUtil {
     }
     public static void drawCubeByBlock(@Nonnull Particle particle, long interval, List<Block> blockList) {
         Block[] blocks = new Block[blockList.size()];
-        for(int i = 0; i < blockList.size(); i++) {
+        for (int i = 0; i < blockList.size(); i++) {
             blocks[i] = blockList.get(i);
         }
         ParticleUtil.drawCubeByBlock(particle, interval, blocks);

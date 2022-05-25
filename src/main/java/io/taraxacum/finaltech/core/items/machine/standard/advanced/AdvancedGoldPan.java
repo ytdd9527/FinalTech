@@ -32,7 +32,7 @@ public class AdvancedGoldPan extends AbstractAdvanceMachine {
             method.setAccessible(true);
             Set<GoldPanDrop> invoke = (Set<GoldPanDrop>)method.invoke(goldPan);
             List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>(invoke.size());
-            for(GoldPanDrop goldPanDrop : invoke) {
+            for (GoldPanDrop goldPanDrop : invoke) {
                 randomOutputList.add(new RandomMachineRecipe.RandomOutput(goldPanDrop.getOutput(), goldPanDrop.getValue()));
             }
             this.registerRecipe(new RandomMachineRecipe(0, new ItemStack[] {new ItemStack(goldPan.getInputMaterial())}, randomOutputList));
@@ -51,7 +51,7 @@ public class AdvancedGoldPan extends AbstractAdvanceMachine {
             method.setAccessible(true);
             Set<GoldPanDrop> invoke = (Set<GoldPanDrop>)method.invoke(netherGoldPan);
             List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>(invoke.size());
-            for(GoldPanDrop goldPanDrop : invoke) {
+            for (GoldPanDrop goldPanDrop : invoke) {
                 randomOutputList.add(new RandomMachineRecipe.RandomOutput(goldPanDrop.getOutput(), goldPanDrop.getValue()));
             }
             this.registerRecipe(new RandomMachineRecipe(0, new ItemStack[] {new ItemStack(netherGoldPan.getInputMaterial())}, randomOutputList));

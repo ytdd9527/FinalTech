@@ -70,45 +70,45 @@ public final class MachineRecipeLock {
 
         @Override
         public boolean setIcon(@Nonnull ItemStack item, @Nullable String value, @Nonnull AbstractMachine abstractMachine) {
-            if(this.validValue(value)) {
+            if (this.validValue(value)) {
                 super.setIcon(item, value);
                 return true;
             } else {
                 int recipeLock = value == null ? Integer.parseInt(this.defaultValue()) :  Integer.parseInt(value);
                 List<AdvancedMachineRecipe> advancedMachineRecipeList = MachineRecipeFactory.getAdvancedRecipe(abstractMachine.getClass());
-                if(recipeLock < advancedMachineRecipeList.size() && recipeLock >= 0) {
+                if (recipeLock < advancedMachineRecipeList.size() && recipeLock >= 0) {
                     AdvancedMachineRecipe advancedMachineRecipe = advancedMachineRecipeList.get(recipeLock);
                     List<String> loreList;
-                    if(advancedMachineRecipe.getOutputList().size() == 1) {
+                    if (advancedMachineRecipe.getOutputList().size() == 1) {
                         loreList = new ArrayList<>(advancedMachineRecipe.getInput().size() + advancedMachineRecipe.getOutputList().get(0).getOutputItem().size() + 3);
                         loreList.add("§9输入:");
-                        for(ItemStackWithWrapperAmount inputItem : advancedMachineRecipe.getInput()) {
+                        for (ItemStackWithWrapperAmount inputItem : advancedMachineRecipe.getInput()) {
                             loreList.add("    §7" + ItemStackUtil.getItemName(inputItem.getItemStack()) + " x" + inputItem.getAmount());
                         }
                         loreList.add("");
                         loreList.add("§6输出:");
-                        for(ItemStackWithWrapperAmount outputItem : advancedMachineRecipe.getOutputList().get(0).getOutputItem()) {
+                        for (ItemStackWithWrapperAmount outputItem : advancedMachineRecipe.getOutputList().get(0).getOutputItem()) {
                             loreList.add("    §7" + ItemStackUtil.getItemName(outputItem.getItemStack()) + " x" + outputItem.getAmount());
                         }
                     } else {
                         int outputLength = 0;
-                        for(AdvancedMachineRecipe.AdvancedRandomOutput advancedRandomOutput : advancedMachineRecipe.getOutputList()) {
+                        for (AdvancedMachineRecipe.AdvancedRandomOutput advancedRandomOutput : advancedMachineRecipe.getOutputList()) {
                             outputLength += advancedRandomOutput.getOutputItem().size() + 1;
                         }
                         loreList = new ArrayList<>(advancedMachineRecipe.getInput().size() + outputLength + 3);
                         loreList.add("§9输入:");
-                        for(ItemStackWithWrapperAmount inputItem : advancedMachineRecipe.getInput()) {
+                        for (ItemStackWithWrapperAmount inputItem : advancedMachineRecipe.getInput()) {
                             loreList.add("    §7" + ItemStackUtil.getItemName(inputItem.getItemStack()) + " x" + inputItem.getAmount());
                         }
                         loreList.add("");
                         loreList.add("§6输出:");
-                        for(AdvancedMachineRecipe.AdvancedRandomOutput advancedRandomOutput : advancedMachineRecipe.getOutputList()) {
+                        for (AdvancedMachineRecipe.AdvancedRandomOutput advancedRandomOutput : advancedMachineRecipe.getOutputList()) {
                             String random = String.valueOf(((double) advancedRandomOutput.getWeight()) / advancedMachineRecipe.getWeightSum() * 100.0);
-                            if(random.contains(".")) {
+                            if (random.contains(".")) {
                                 random = random.substring(0, Math.min(random.indexOf(".") + 3, random.length()));
                             }
                             loreList.add("  §a" + random + "%");
-                            for(ItemStackWithWrapperAmount outputItem : advancedRandomOutput.getOutputItem()) {
+                            for (ItemStackWithWrapperAmount outputItem : advancedRandomOutput.getOutputItem()) {
                                 loreList.add("    §7" + ItemStackUtil.getItemName(outputItem.getItemStack()) + " x" + outputItem.getAmount());
                             }
                         }

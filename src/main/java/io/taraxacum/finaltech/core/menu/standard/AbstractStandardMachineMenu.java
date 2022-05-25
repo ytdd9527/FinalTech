@@ -66,7 +66,7 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
                 } else {
                     full++;
                 }
-                if(itemList.size() + full >= inputLimit) {
+                if (itemList.size() + full >= inputLimit) {
                     break;
                 }
             }

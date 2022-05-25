@@ -11,7 +11,7 @@ import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponen
 import io.taraxacum.finaltech.api.dto.LocationWithConfig;
 import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.storage.StatusL2Menu;
+import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.*;
 import io.taraxacum.common.util.StringNumberUtil;

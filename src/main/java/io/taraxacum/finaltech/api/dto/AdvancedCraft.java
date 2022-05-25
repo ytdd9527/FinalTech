@@ -76,14 +76,14 @@ public class AdvancedCraft {
      * @param blockMenu
      */
     public void consumeItem(@Nonnull BlockMenu blockMenu) {
-        for(int i = 0; i < this.inputItemList.size(); i++) {
+        for (int i = 0; i < this.inputItemList.size(); i++) {
             int consumeItemAmount = this.inputItemList.get(i).getAmount() * this.matchCount;
-            for(int slot : this.consumeSlotList.get(i)) {
+            for (int slot : this.consumeSlotList.get(i)) {
                 ItemStack item = blockMenu.getItemInSlot(slot);
                 int itemConsumeAmount = Math.min(consumeItemAmount, item.getAmount());
                 item.setAmount(item.getAmount() - itemConsumeAmount);
                 consumeItemAmount -= itemConsumeAmount;
-                if(consumeItemAmount == 0) {
+                if (consumeItemAmount == 0) {
                     break;
                 }
             }
@@ -92,9 +92,9 @@ public class AdvancedCraft {
 
     @Nonnull
     public MachineRecipe calMachineRecipe(int ticks) {
-        if(this.matchCount > 1) {
+        if (this.matchCount > 1) {
             return new MachineRecipe(ticks, ItemStackUtil.calEnlargeItemArray(this.inputItemList, this.matchCount), ItemStackUtil.calEnlargeItemArray(this.outputItemList, this.matchCount));
-        } else if(this.matchCount == 1) {
+        } else if (this.matchCount == 1) {
             return new MachineRecipe(ticks, ItemStackWithWrapperAmount.toItemArray(this.inputItemList), ItemStackWithWrapperAmount.toItemArray(this.outputItemList));
         } else {
             return new MachineRecipe(ticks, new ItemStack[0], new ItemStack[0]);
@@ -118,7 +118,7 @@ public class AdvancedCraft {
         int matchCount;
         int matchAmount;
         List<Integer> slotList;
-        for(int i = 0, length = advancedMachineRecipeList.size(); i < length; i++) {
+        for (int i = 0, length = advancedMachineRecipeList.size(); i < length; i++) {
             AdvancedMachineRecipe advancedMachineRecipe = advancedMachineRecipeList.get((i + offset) % length);
             List<ItemStackWithWrapperAmount> recipeInputItemList = advancedMachineRecipe.getInput();
             matchCount = quantityModule;
@@ -145,7 +145,7 @@ public class AdvancedCraft {
                 consumeSlotList.add(slotList);
             }
 
-            if(matchCount > 0) {
+            if (matchCount > 0) {
                 List<ItemStackWithWrapperAmount> recipeOutputItemList = advancedMachineRecipe.getOutput();
                 return new AdvancedCraft(advancedMachineRecipe.getInput(), recipeOutputItemList, consumeSlotList, matchCount, (i + offset) % length);
             }
@@ -162,7 +162,7 @@ public class AdvancedCraft {
         int matchCount;
         int matchAmount;
         List<Integer> slotList;
-        for(int i = 0, length = advancedMachineRecipeList.size(); i < length; i++) {
+        for (int i = 0, length = advancedMachineRecipeList.size(); i < length; i++) {
             AdvancedMachineRecipe advancedMachineRecipe = advancedMachineRecipeList.get((offset + length - i) % length);
             List<ItemStackWithWrapperAmount> recipeInputItemList = advancedMachineRecipe.getInput();
             matchCount = quantityModule;
@@ -189,7 +189,7 @@ public class AdvancedCraft {
                 consumeSlotList.add(slotList);
             }
 
-            if(matchCount > 0) {
+            if (matchCount > 0) {
                 List<ItemStackWithWrapperAmount> recipeOutputItemList = advancedMachineRecipe.getOutput();
                 return new AdvancedCraft(advancedMachineRecipe.getInput(), recipeOutputItemList, consumeSlotList, matchCount, (offset + length - i) % length);
             }

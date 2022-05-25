@@ -21,12 +21,12 @@ public class LocationUtil {
     private static final NamespacedKey KEY = new NamespacedKey(FinalTech.getInstance(), "location");
 
     public static Location parseLocationInItem(@Nullable ItemStack item) {
-        if(ItemStackUtil.isItemNull(item)) {
+        if (ItemStackUtil.isItemNull(item)) {
             return null;
         }
         ItemMeta itemMeta = item.getItemMeta();
         PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-        if(persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
+        if (persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
             String locationString = persistentDataContainer.get(KEY, PersistentDataType.STRING);
             return LocationUtil.stringToLocation(locationString);
         }
@@ -34,7 +34,7 @@ public class LocationUtil {
     }
 
     public static boolean saveLocationToItem(@Nullable ItemStack item, @Nonnull Location location) {
-        if(ItemStackUtil.isItemNull(item)) {
+        if (ItemStackUtil.isItemNull(item)) {
             return false;
         }
         ItemMeta itemMeta = item.getItemMeta();
@@ -50,7 +50,7 @@ public class LocationUtil {
         }
         ItemMeta itemMeta = item.getItemMeta();
         PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-        if(persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
+        if (persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
             String locationString = persistentDataContainer.get(KEY, PersistentDataType.STRING);
             Location location = LocationUtil.stringToLocation(locationString);
             List<String> loreList = new ArrayList<>();
@@ -84,33 +84,33 @@ public class LocationUtil {
         Double z = null;
         Float pitch = null;
         Float yaw = null;
-        for(String value : locationString.split(";")) {
-            if(value.startsWith("world")) {
+        for (String value : locationString.split(";")) {
+            if (value.startsWith("world")) {
                 world = Bukkit.getWorld(value.substring("world".length() + 1));
             }
-            if(value.startsWith("pitch")) {
+            if (value.startsWith("pitch")) {
                 pitch = Float.parseFloat(value.substring("pitch".length() + 1));
                 continue;
             }
-            if(value.startsWith("yaw")) {
+            if (value.startsWith("yaw")) {
                 yaw = Float.parseFloat(value.substring("yaw".length() + 1));
                 continue;
             }
-            if(value.startsWith("x")) {
+            if (value.startsWith("x")) {
                 x = Double.parseDouble(value.substring("x".length() + 1));
                 continue;
             }
-            if(value.startsWith("y")) {
+            if (value.startsWith("y")) {
                 y = Double.parseDouble(value.substring("y".length() + 1));
                 continue;
             }
-            if(value.startsWith("z")) {
+            if (value.startsWith("z")) {
                 z = Double.parseDouble(value.substring("z".length() + 1));
                 continue;
             }
         }
-        if(world != null && x != null && y != null && z != null) {
-            if(yaw != null && pitch != null) {
+        if (world != null && x != null && y != null && z != null) {
+            if (yaw != null && pitch != null) {
                 return new Location(world, x, y, z, yaw, pitch);
             }
             return new Location(world, x, y, z);

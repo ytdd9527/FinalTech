@@ -35,7 +35,7 @@ public class MachineChargeCardL3 extends AbstractMachineActivateCard {
 
     @Override
     protected boolean conditionMatch(@Nonnull Player player) {
-        if(player.getLevel() > 1) {
+        if (player.getLevel() > 1) {
             player.setLevel(player.getLevel() - 1);
             return true;
         }

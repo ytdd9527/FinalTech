@@ -43,27 +43,27 @@ public class MenuViewer extends UsableSlimefunItem implements RecipeItem {
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
         Player player = playerRightClickEvent.getPlayer();
         playerRightClickEvent.cancel();
-        if(!playerRightClickEvent.getClickedBlock().isEmpty()) {
+        if (!playerRightClickEvent.getClickedBlock().isEmpty()) {
             Location location = playerRightClickEvent.getClickedBlock().get().getLocation();
             BlockMenu blockMenu = BlockStorage.getInventory(location);
-            if(blockMenu != null) {
+            if (blockMenu != null) {
                 BlockMenuPreset preset = blockMenu.getPreset();
                 ItemStack itemInOffHand = player.getInventory().getItemInOffHand();
                 int[] slotsAccessedByItemTransportInsert = preset.getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.INSERT, itemInOffHand);
                 int[] slotsAccessedByItemTransportWithdraw = preset.getSlotsAccessedByItemTransport(blockMenu, ItemTransportFlow.WITHDRAW, itemInOffHand);
                 int[] viewSlot = new int[blockMenu.getContents().length];
-                for(int slot : slotsAccessedByItemTransportInsert) {
-                    if(slot >= 0 && slot < viewSlot.length) {
+                for (int slot : slotsAccessedByItemTransportInsert) {
+                    if (slot >= 0 && slot < viewSlot.length) {
                         viewSlot[slot] += INSERT_SLOT_VALUE;
                     }
                 }
-                for(int slot : slotsAccessedByItemTransportWithdraw) {
-                    if(slot >= 0 && slot < viewSlot.length) {
+                for (int slot : slotsAccessedByItemTransportWithdraw) {
+                    if (slot >= 0 && slot < viewSlot.length) {
                         viewSlot[slot] += WITHDRAW_SLOT_VALUE;
                     }
                 }
                 ChestMenu chestMenu = new ChestMenu(preset.getTitle());
-                for(int slot = 0; slot < viewSlot.length; slot++) {
+                for (int slot = 0; slot < viewSlot.length; slot++) {
                     if (viewSlot[slot] == INSERT_SLOT_VALUE) {
                         chestMenu.addItem(slot, INPUT_ICON);
                     } else if (viewSlot[slot] == WITHDRAW_SLOT_VALUE) {

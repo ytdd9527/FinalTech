@@ -53,15 +53,15 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
      * @return
      */
     public boolean setIcon(@Nonnull ItemStack iconItem, @Nullable String value) {
-        if(valueLoreMap.containsKey(value)) {
-            if(this.loreOffset < 0) {
+        if (valueLoreMap.containsKey(value)) {
+            if (this.loreOffset < 0) {
                 ItemStackUtil.setLore(iconItem, valueLoreMap.get(value));
             } else {
                 ItemStackUtil.replaceLore(iconItem, this.loreOffset, valueLoreMap.get(value));
             }
             return true;
         } else {
-            if(this.loreOffset < 0) {
+            if (this.loreOffset < 0) {
                 ItemStackUtil.setLore(iconItem, ERROR_LORE);
             } else {
                 ItemStackUtil.replaceLore(iconItem, this.loreOffset, ERROR_LORE);
@@ -89,7 +89,7 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
      */
     public boolean checkAndUpdateIcon(@Nonnull BlockMenu blockMenu, int slot) {
         String value = BlockStorage.getLocationInfo(blockMenu.getLocation(), this.getKey());
-        if(!this.validValue(value)) {
+        if (!this.validValue(value)) {
             value = this.defaultValue();
         }
         ItemStack item = blockMenu.getItemInSlot(slot);
@@ -101,7 +101,7 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
     public ChestMenu.MenuClickHandler getHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
         return (player, i, itemStack, clickAction) -> {
             String value = BlockStorageLoreHelper.this.getOrDefaultValue(block.getLocation());
-            if(clickAction.isRightClicked()) {
+            if (clickAction.isRightClicked()) {
                 value = BlockStorageLoreHelper.this.previousOrDefaultValue(value);
             } else {
                 value = BlockStorageLoreHelper.this.nextOrDefaultValue(value);
@@ -117,7 +117,7 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
         return (player, i, itemStack, clickAction) -> {
             String value = BlockStorageLoreHelper.this.getOrDefaultValue(block.getLocation());
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(!BlockStorageLoreHelper.this.validValue(value)) {
+            if (!BlockStorageLoreHelper.this.validValue(value)) {
                 value = BlockStorageLoreHelper.this.defaultValue();
             }
             BlockStorageLoreHelper.this.setIcon(item, value);
@@ -156,11 +156,11 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
     }
 
     public static boolean setIcon(@Nonnull String id, @Nonnull String key, @Nonnull ItemStack iconItem, @Nullable String value) {
-        if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
+        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
             Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.get(id);
-            if(stringBlockStorageHelperMap.containsKey(key)) {
+            if (stringBlockStorageHelperMap.containsKey(key)) {
                 BlockStorageHelper blockStorageHelper = stringBlockStorageHelperMap.get(key);
-                if(blockStorageHelper instanceof BlockStorageLoreHelper) {
+                if (blockStorageHelper instanceof BlockStorageLoreHelper) {
                     ((BlockStorageLoreHelper) blockStorageHelper).setIcon(iconItem, value);
                     return true;
                 }
@@ -170,11 +170,11 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
         return false;
     }
     public static boolean setIcon(@Nonnull SlimefunItem slimefunItem, @Nonnull String key, @Nonnull ItemStack iconItem, @Nullable String value) {
-        if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
+        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
             Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.get(slimefunItem.getId());
-            if(stringBlockStorageHelperMap.containsKey(key)) {
+            if (stringBlockStorageHelperMap.containsKey(key)) {
                 BlockStorageHelper blockStorageHelper = stringBlockStorageHelperMap.get(key);
-                if(blockStorageHelper instanceof BlockStorageLoreHelper) {
+                if (blockStorageHelper instanceof BlockStorageLoreHelper) {
                     ((BlockStorageLoreHelper) blockStorageHelper).setIcon(iconItem, value);
                     return true;
                 }
@@ -186,9 +186,9 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
 
     @Nonnull
     public static BlockStorageLoreHelper newInstanceOrGet(@Nonnull String id, @Nonnull String key, @Nonnull Map<String, List<String>> valueLoreMap) {
-        if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
+        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
             Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(id);
-            if(stringBlockStorageHelperMap.containsKey(key)) {
+            if (stringBlockStorageHelperMap.containsKey(key)) {
                 return (BlockStorageLoreHelper) stringBlockStorageHelperMap.get(key);
             }
         }
@@ -202,9 +202,9 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
     }
     @Nonnull
     public static BlockStorageLoreHelper newInstanceOrGet(@Nonnull SlimefunItem slimefunItem, @Nonnull String key, @Nonnull Map<String, List<String>> valueLoreMap) {
-        if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
+        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
             Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(slimefunItem.getId());
-            if(stringBlockStorageHelperMap.containsKey(key)) {
+            if (stringBlockStorageHelperMap.containsKey(key)) {
                 return (BlockStorageLoreHelper) stringBlockStorageHelperMap.get(key);
             }
         }
@@ -218,9 +218,9 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
     }
     @Nonnull
     public static BlockStorageLoreHelper newInstanceOrGet(@Nonnull String id, @Nonnull String key, int loreOffset, @Nonnull Map<String, List<String>> valueLoreMap) {
-        if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
+        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
             Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(id);
-            if(stringBlockStorageHelperMap.containsKey(key)) {
+            if (stringBlockStorageHelperMap.containsKey(key)) {
                 return (BlockStorageLoreHelper) stringBlockStorageHelperMap.get(key);
             }
         }
@@ -234,9 +234,9 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
     }
     @Nonnull
     public static BlockStorageLoreHelper newInstanceOrGet(@Nonnull SlimefunItem slimefunItem, @Nonnull String key, int loreOffset, @Nonnull Map<String, List<String>> valueLoreMap) {
-        if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
+        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
             Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(slimefunItem.getId());
-            if(stringBlockStorageHelperMap.containsKey(key)) {
+            if (stringBlockStorageHelperMap.containsKey(key)) {
                 return (BlockStorageLoreHelper) stringBlockStorageHelperMap.get(key);
             }
         }
@@ -251,7 +251,7 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
 
     private static List<String> init(@Nonnull Map<String, List<String>> valueLoreMap) {
         List<String> valueList = new ArrayList<>(valueLoreMap.size());
-        for(Map.Entry<String, List<String>> entry : valueLoreMap.entrySet()) {
+        for (Map.Entry<String, List<String>> entry : valueLoreMap.entrySet()) {
             valueList.add(entry.getKey());
         }
         return valueList;

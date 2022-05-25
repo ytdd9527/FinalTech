@@ -113,10 +113,10 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
 
             long lastTimeMillis = config.contains(AbstractManualCraftMachine.KEY_CURRENT) ? Long.parseLong(config.getString(AbstractManualCraftMachine.KEY_CURRENT)) : 0;
             long currentTimeMillis = System.currentTimeMillis();
-            if(currentTimeMillis - lastTimeMillis < UPDATE_TIME_LIMIT) {
+            if (currentTimeMillis - lastTimeMillis < UPDATE_TIME_LIMIT) {
                 Location location = blockMenu.getLocation();
                 Bukkit.getLogger().warning("[" + JavaPlugin.getPlugin(FinalTech.class).getName() + "]§c位于" + location.getWorld().getName() + "(" + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ() + ")处的粘液科技机器" + this.getTitle() + "正在被玩家高速点击，相关的玩家包括：");
-                for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
                     Bukkit.getLogger().warning("    " + humanEntity.getName());
                 }
                 Bukkit.getLogger().warning("请确定这是否是由玩家网络卡顿造成，如果不是，可能是其正尝试恶意卡服");
@@ -125,8 +125,8 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             int quantity = clickAction.isShiftClicked() || clickAction.isRightClicked() ? 3456 : 64;
             int offset = config.contains(KEY) ? Integer.parseInt(config.getValue(KEY).toString()) : 0;
             String order = null;
-            if(clickAction.isShiftClicked()) {
-                if(clickAction.isRightClicked()) {
+            if (clickAction.isShiftClicked()) {
+                if (clickAction.isRightClicked()) {
                     order = ORDER_VALUE_DESC;
                 } else {
                     order = ORDER_VALUE_ASC;
@@ -134,28 +134,28 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             }
 
             AdvancedCraft craft;
-            if(ORDER_VALUE_DESC.equals(order)) {
+            if (ORDER_VALUE_DESC.equals(order)) {
                 craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
             } else {
                 craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
             }
 
-            if(craft == null) {
+            if (craft == null) {
                 BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_CURRENT, String.valueOf(System.currentTimeMillis()));
                 return false;
             }
             craft.setMatchCount(Math.min(craft.getMatchCount(), MachineUtil.calMaxMatch(blockMenu, OUTPUT_SLOT, craft.getOutputItemList())));
-            if(craft.getMatchCount() == 0 && order == null) {
+            if (craft.getMatchCount() == 0 && order == null) {
                 BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_CURRENT, String.valueOf(System.currentTimeMillis()));
                 return false;
             }
 
             craft.consumeItem(blockMenu);
-            for(ItemStack item : craft.calMachineRecipe(0).getOutput()) {
+            for (ItemStack item : craft.calMachineRecipe(0).getOutput()) {
                 blockMenu.pushItem(item, OUTPUT_SLOT);
             }
 
-            if(order == null) {
+            if (order == null) {
                 updateMenu(blockMenu, block);
                 BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_CURRENT, String.valueOf(System.currentTimeMillis()));
                 return false;
@@ -164,22 +164,22 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             quantity -= craft.getMatchCount();
             while (quantity > 0) {
                 offset = craft.getOffset();
-                if(ORDER_VALUE_DESC.equals(order)) {
+                if (ORDER_VALUE_DESC.equals(order)) {
                     craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
                 } else {
                     craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
                 }
 
-                if(craft == null) {
+                if (craft == null) {
                     break;
                 }
                 craft.setMatchCount(Math.min(craft.getMatchCount(), MachineUtil.calMaxMatch(blockMenu, OUTPUT_SLOT, craft.getOutputItemList())));
-                if(craft.getMatchCount() == 0) {
+                if (craft.getMatchCount() == 0) {
                     break;
                 }
 
                 craft.consumeItem(blockMenu);
-                for(ItemStack item : craft.calMachineRecipe(0).getOutput()) {
+                for (ItemStack item : craft.calMachineRecipe(0).getOutput()) {
                     blockMenu.pushItem(item, OUTPUT_SLOT);
                 }
 
@@ -224,10 +224,10 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
 
         long lastTimeMillis = config.contains(AbstractManualCraftMachine.KEY_CURRENT) ? Long.parseLong(config.getString(AbstractManualCraftMachine.KEY_CURRENT)) : 0;
         long currentTimeMillis = System.currentTimeMillis();
-        if(currentTimeMillis - lastTimeMillis < UPDATE_TIME_LIMIT) {
+        if (currentTimeMillis - lastTimeMillis < UPDATE_TIME_LIMIT) {
             Location location = blockMenu.getLocation();
             Bukkit.getLogger().warning("[" + JavaPlugin.getPlugin(FinalTech.class).getName() + "]§c位于" + location.getWorld().getName() + "(" + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ() + ")处的粘液科技机器" + this.getTitle() + "正在被玩家高速点击，相关的玩家包括：");
-            for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+            for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
                 Bukkit.getLogger().warning("    " + humanEntity.getName());
             }
             Bukkit.getLogger().warning("请确定这是否是由玩家网络卡顿造成，如果不是，可能是其正尝试恶意卡服");
@@ -236,13 +236,13 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         AdvancedCraft craft = null;
         String order = config.getString(KEY_ORDER);
         int offset = config.contains(KEY) ? Integer.parseInt(config.getValue(KEY).toString()) : 0;
-        if(order == null || ORDER_VALUE_ASC.equals(order)) {
+        if (order == null || ORDER_VALUE_ASC.equals(order)) {
             craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), 1, offset);
         } else if (ORDER_VALUE_DESC.equals(order)) {
             craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), 1, offset);
         }
 
-        if(craft != null) {
+        if (craft != null) {
             config.setValue(KEY, String.valueOf(craft.getOffset()));
             ItemStack item = ItemStackUtil.cloneItem(craft.getOutputItemList().get(0).getItemStack());
             ItemStackUtil.addLoreToLast(item, "§8匹配的产物");

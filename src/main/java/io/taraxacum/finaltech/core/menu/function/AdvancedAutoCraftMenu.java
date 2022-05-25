@@ -146,7 +146,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
         this.addItem(STATUS_SLOT, Icon.QUANTITY_MODULE_ICON);
         this.addMenuClickHandler(STATUS_SLOT, ChestMenuUtils.getEmptyClickHandler());
 
-        for(int slot : ITEM_INPUT_SLOT) {
+        for (int slot : ITEM_INPUT_SLOT) {
             this.addItem(slot, Icon.BORDER_ICON);
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
@@ -195,12 +195,12 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
 
         List<ItemStackWithWrapperAmount> inputList = null;
         for (RecipeType type : RECIPE_TYPE_LIST) {
-            if(type.equals(slimefunItem.getRecipeType())) {
+            if (type.equals(slimefunItem.getRecipeType())) {
                 inputList = ItemStackUtil.calItemListWithAmount(slimefunItem.getRecipe());
                 break;
             }
         }
-        if(inputList == null || inputList.size() == 0) {
+        if (inputList == null || inputList.size() == 0) {
             this.setParseFailedMenu(blockMenu);
             return;
         }
@@ -218,20 +218,20 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
                     break;
                 }
             }
-            if(machineRecipeList == null) {
+            if (machineRecipeList == null) {
                 continue;
             }
 
-            for(int i = 0; i < machineItem.getAmount(); i++) {
+            for (int i = 0; i < machineItem.getAmount(); i++) {
                 boolean work = false;
                 List<ItemStackWithWrapperAmount> inputList2 = new ArrayList<>();
-                for(ItemStackWithWrapperAmount oldInputItem : inputList) {
-                    for(AdvancedMachineRecipe advancedMachineRecipe : machineRecipeList) {
-                        for(AdvancedMachineRecipe.AdvancedRandomOutput advancedRandomOutput : advancedMachineRecipe.getOutputList()) {
+                for (ItemStackWithWrapperAmount oldInputItem : inputList) {
+                    for (AdvancedMachineRecipe advancedMachineRecipe : machineRecipeList) {
+                        for (AdvancedMachineRecipe.AdvancedRandomOutput advancedRandomOutput : advancedMachineRecipe.getOutputList()) {
                             ItemStackWithWrapperAmount outputItem = advancedRandomOutput.getOutputItem().get(0);
-                            if(advancedRandomOutput.getOutputItem().size() == 1 && oldInputItem.getAmount() >= outputItem.getAmount() && ItemStackUtil.isItemSimilar(oldInputItem, outputItem)) {
+                            if (advancedRandomOutput.getOutputItem().size() == 1 && oldInputItem.getAmount() >= outputItem.getAmount() && ItemStackUtil.isItemSimilar(oldInputItem, outputItem)) {
                                 int count = oldInputItem.getAmount() / outputItem.getAmount();
-                                for(ItemStackWithWrapperAmount inputItem : advancedMachineRecipe.getInput()) {
+                                for (ItemStackWithWrapperAmount inputItem : advancedMachineRecipe.getInput()) {
                                     ItemStackWithWrapperAmount.addToList(inputList2, inputItem, count);
                                 }
                                 oldInputItem.setAmount(oldInputItem.getAmount() - count * outputItem.getAmount());
@@ -239,13 +239,13 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
                             }
                         }
                     }
-                    if(oldInputItem.getAmount() > 0) {
+                    if (oldInputItem.getAmount() > 0) {
                         ItemStackWithWrapperAmount.addToList(inputList2, oldInputItem);
                         oldInputItem.setAmount(0);
                     }
                 }
                 inputList = inputList2;
-                if(!work) {
+                if (!work) {
                     break;
                 }
             }
@@ -269,8 +269,8 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     private void setParseSuccessMenu(@Nonnull BlockMenu blockMenu, @Nonnull AdvancedMachineRecipe advancedMachineRecipe) {
         LocationRecipeRegistry.setRecipe(blockMenu.getLocation(), advancedMachineRecipe);
         int i;
-        for(i = 0; i < ITEM_INPUT_SLOT.length - 1; i++) {
-            if(advancedMachineRecipe.getInput().size() > i) {
+        for (i = 0; i < ITEM_INPUT_SLOT.length - 1; i++) {
+            if (advancedMachineRecipe.getInput().size() > i) {
                 int amount = advancedMachineRecipe.getInput().get(i).getAmount();
                 CustomItemStack icon = new CustomItemStack(advancedMachineRecipe.getInput().get(i).getItemStack());
                 icon.setAmount(Math.min(amount, 64));
@@ -281,9 +281,9 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
             }
             blockMenu.addMenuClickHandler(ITEM_INPUT_SLOT[i], ChestMenuUtils.getEmptyClickHandler());
         }
-        if(advancedMachineRecipe.getInput().size() < ITEM_INPUT_SLOT.length) {
+        if (advancedMachineRecipe.getInput().size() < ITEM_INPUT_SLOT.length) {
             blockMenu.replaceExistingItem(ITEM_INPUT_SLOT[i], PARSE_SUCCESS_ICON);
-        } else if(advancedMachineRecipe.getInput().size() == ITEM_INPUT_SLOT.length) {
+        } else if (advancedMachineRecipe.getInput().size() == ITEM_INPUT_SLOT.length) {
             int amount = advancedMachineRecipe.getInput().get(i).getAmount();
             CustomItemStack icon = new CustomItemStack(advancedMachineRecipe.getInput().get(i).getItemStack());
             icon.setAmount(Math.min(amount, 64));
@@ -294,8 +294,8 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
             blockMenu.replaceExistingItem(ITEM_INPUT_SLOT[i], PARSE_EXTEND_ICON);
             blockMenu.addMenuClickHandler(ITEM_INPUT_SLOT[i], (player, i1, itemStack, clickAction) -> {
                 ChestMenu chestMenu = new ChestMenu(ItemStackUtil.getItemName(advancedMachineRecipe.getOutput().get(0).getItemStack()));
-                for(int slot = 0; slot < 54 && slot < advancedMachineRecipe.getInput().size(); slot++) {
-                    if(advancedMachineRecipe.getInput().size() > slot) {
+                for (int slot = 0; slot < 54 && slot < advancedMachineRecipe.getInput().size(); slot++) {
+                    if (advancedMachineRecipe.getInput().size() > slot) {
                         int amount = advancedMachineRecipe.getInput().get(slot).getAmount();
                         CustomItemStack icon = new CustomItemStack(advancedMachineRecipe.getInput().get(slot).getItemStack());
                         icon.setAmount(Math.min(amount, 64));
@@ -317,7 +317,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
 
     private static List<MachineRecipe> getMachineRecipeList(SlimefunItemStack slimefunItemStack) {
         SlimefunItem slimefunItem = SlimefunItem.getByItem(slimefunItemStack);
-        if(slimefunItem != null) {
+        if (slimefunItem != null) {
             return MachineRecipeFactory.getRecipe(slimefunItem.getClass());
         }
         return new ArrayList<>();

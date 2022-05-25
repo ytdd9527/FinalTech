@@ -29,13 +29,13 @@ public class TextUtil {
     @Nonnull
     public static String colorString(@Nonnull String string, @Nonnull List<Color> colorList) {
         StringBuilder stringBuilder = new StringBuilder();
-        if(string.length() == 0) {
+        if (string.length() == 0) {
             string += " ";
         }
-        if(string.length() == 1) {
+        if (string.length() == 1) {
             string += " ";
         }
-        for(int i = 0, length = string.length() - 1; i <= length; i++) {
+        for (int i = 0, length = string.length() - 1; i <= length; i++) {
             double p = ((double) i) / length * (colorList.size() - 1);
             Color color1 = colorList.get((int)Math.floor(p));
             Color color2 = colorList.get((int)Math.ceil(p));
@@ -91,7 +91,7 @@ public class TextUtil {
 
     @Nonnull
     public static String codeColor(int c) {
-        if(c < 10 && c >= 0) {
+        if (c < 10 && c >= 0) {
             return String.valueOf(c);
         }
         return switch (c) {

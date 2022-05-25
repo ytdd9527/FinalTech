@@ -43,7 +43,7 @@ public class ItemValueMap {
     public static final Map<String, List<String>> valueItemListOutputMap = new HashMap<>();
 
     public static void init() {
-        if(INIT) {
+        if (INIT) {
             return;
         }
 
@@ -70,17 +70,17 @@ public class ItemValueMap {
 
 
         Config value = JavaPlugin.getPlugin(FinalTech.class).getValueFile();
-        for(String key : value.getKeys("input")) {
+        for (String key : value.getKeys("input")) {
             itemInputValueMap.put(key, value.getString("input." + key));
         }
-        for(String key : value.getKeys("output")) {
+        for (String key : value.getKeys("output")) {
             itemOutputValueMap.put(key, value.getString("output." + key));
             ItemValueMap.addToOutputMap(key, value.getString("output." + key));
         }
 
         List<SlimefunItem> allSlimefunItems = Slimefun.getRegistry().getAllSlimefunItems();
-        for(SlimefunItem slimefunItem : allSlimefunItems) {
-            if(!slimefunItem.isDisabled()) {
+        for (SlimefunItem slimefunItem : allSlimefunItems) {
+            if (!slimefunItem.isDisabled()) {
                 ItemValueMap.getOrCalItemInputValue(slimefunItem);
                 ItemValueMap.getOrCalItemOutputValue(slimefunItem);
             }
@@ -90,7 +90,7 @@ public class ItemValueMap {
 
     public static String getOrCalItemInputValue(@Nonnull ItemStack item) {
         SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
-        if(slimefunItem == null) {
+        if (slimefunItem == null) {
             return StringNumberUtil.mul(StringNumberUtil.ONE, String.valueOf(item.getAmount()));
         }
         return ItemValueMap.getOrCalItemInputValue(slimefunItem);
@@ -98,18 +98,18 @@ public class ItemValueMap {
 
     public static String getOrCalItemInputValue(@Nonnull SlimefunItem slimefunItem) {
         String id = slimefunItem.getId();
-        if(itemInputValueMap.containsKey(id)) {
+        if (itemInputValueMap.containsKey(id)) {
             return itemInputValueMap.get(id);
-        } else if(slimefunItem.isDisabled()) {
+        } else if (slimefunItem.isDisabled()) {
             return StringNumberUtil.ZERO;
         }
         String value = StringNumberUtil.ZERO;
         List<ItemStackWithWrapperAmount> recipeList = ItemStackUtil.calItemListWithAmount(slimefunItem.getRecipe());
-        for(ItemStackWithWrapperAmount recipeItem : ItemStackUtil.calItemListWithAmount(slimefunItem.getRecipe())) {
+        for (ItemStackWithWrapperAmount recipeItem : ItemStackUtil.calItemListWithAmount(slimefunItem.getRecipe())) {
             int amount = recipeItem.getAmount();
-            if(SlimefunItem.getByItem(recipeItem.getItemStack()) != null) {
+            if (SlimefunItem.getByItem(recipeItem.getItemStack()) != null) {
                 amount /= SlimefunItem.getByItem(recipeItem.getItemStack()).getRecipeOutput().getAmount();
-                if(amount == 0) {
+                if (amount == 0) {
                     amount = 1;
                 }
             }
@@ -117,9 +117,9 @@ public class ItemValueMap {
         }
         value = StringNumberUtil.add(value, String.valueOf(recipeList.size()));
         SlimefunItem machineItem = slimefunItem.getRecipeType().getMachine();
-        if(machineItem == null) {
+        if (machineItem == null) {
             value = StringNumberUtil.add(value);
-        } else if(machineItem.equals(slimefunItem)) {
+        } else if (machineItem.equals(slimefunItem)) {
             itemInputValueMap.put(id, value);
             return value;
         } else {
@@ -131,7 +131,7 @@ public class ItemValueMap {
 
     public static String getOrCalItemOutputValue(@Nonnull ItemStack item) {
         SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
-        if(slimefunItem == null) {
+        if (slimefunItem == null) {
             return StringNumberUtil.mul("16", String.valueOf(item.getAmount()));
         }
         return ItemValueMap.getOrCalItemOutputValue(slimefunItem);
@@ -139,18 +139,18 @@ public class ItemValueMap {
 
     public static String getOrCalItemOutputValue(@Nonnull SlimefunItem slimefunItem) {
         String id = slimefunItem.getId();
-        if(itemOutputValueMap.containsKey(id)) {
+        if (itemOutputValueMap.containsKey(id)) {
             return itemOutputValueMap.get(id);
-        } else if(slimefunItem.isDisabled()) {
+        } else if (slimefunItem.isDisabled()) {
             return StringNumberUtil.VALUE_INFINITY;
         }
         String value = StringNumberUtil.ZERO;
         List<ItemStackWithWrapperAmount> recipeList = ItemStackUtil.calItemListWithAmount(slimefunItem.getRecipe());
-        for(ItemStackWithWrapperAmount recipeItem : recipeList) {
+        for (ItemStackWithWrapperAmount recipeItem : recipeList) {
             int amount = recipeItem.getAmount();
-            if(SlimefunItem.getByItem(recipeItem.getItemStack()) != null) {
+            if (SlimefunItem.getByItem(recipeItem.getItemStack()) != null) {
                 amount /= SlimefunItem.getByItem(recipeItem.getItemStack()).getRecipeOutput().getAmount();
-                if(amount == 0) {
+                if (amount == 0) {
                     amount = 1;
                 }
             }
@@ -158,9 +158,9 @@ public class ItemValueMap {
         }
         value = StringNumberUtil.mul(value, String.valueOf(recipeList.size()));
         SlimefunItem machineItem = slimefunItem.getRecipeType().getMachine();
-        if(machineItem == null || recipeList.isEmpty() || StringNumberUtil.ZERO.equals(value)) {
+        if (machineItem == null || recipeList.isEmpty() || StringNumberUtil.ZERO.equals(value)) {
             value = StringNumberUtil.VALUE_INFINITY;
-        } else if(machineItem.equals(slimefunItem)) {
+        } else if (machineItem.equals(slimefunItem)) {
             itemOutputValueMap.put(id, value);
             ItemValueMap.addToOutputMap(id, value);
             return value;
@@ -189,7 +189,7 @@ public class ItemValueMap {
 
     private static void addToOutputMap(String id, String value) {
         List<String> list = valueItemListOutputMap.get(value);
-        if(list == null) {
+        if (list == null) {
             list = new ArrayList<>();
         }
         list.add(id);

@@ -44,7 +44,7 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
 
     public boolean checkAndUpdateIcon(@Nonnull BlockMenu blockMenu, int slot) {
         String value = BlockStorage.getLocationInfo(blockMenu.getLocation(), this.getKey());
-        if(!this.validValue(value)) {
+        if (!this.validValue(value)) {
             value = this.defaultValue();
         }
         blockMenu.replaceExistingItem(slot, this.getOrErrorIcon(value));
@@ -55,7 +55,7 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
     public ChestMenu.MenuClickHandler getHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
         return (player, i, itemStack, clickAction) -> {
             String value = BlockStorageIconHelper.this.getOrDefaultValue(block.getLocation());
-            if(clickAction.isRightClicked()) {
+            if (clickAction.isRightClicked()) {
                 value = BlockStorageIconHelper.this.previousOrDefaultValue(value);
             } else {
                 value = BlockStorageIconHelper.this.nextOrDefaultValue(value);
@@ -104,11 +104,11 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
 
     @Nonnull
     public static BlockStorageIconHelper newInstanceOrGet(@Nonnull String id, @Nonnull String key, @Nonnull Map<String, ItemStack> valueIconMap) {
-        if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
+        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
             Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(id);
-            if(stringBlockStorageHelperMap.containsKey(key)) {
+            if (stringBlockStorageHelperMap.containsKey(key)) {
                 BlockStorageHelper blockStorageHelper = stringBlockStorageHelperMap.get(key);
-                if(blockStorageHelper instanceof BlockStorageIconHelper) {
+                if (blockStorageHelper instanceof BlockStorageIconHelper) {
                     return (BlockStorageIconHelper) blockStorageHelper;
                 } else {
                     blockStorageHelper = new BlockStorageIconHelper(id, valueIconMap) {
@@ -134,9 +134,9 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
 
     @Nonnull
     public static BlockStorageHelper newInstanceOrGet(@Nonnull SlimefunItem slimefunItem, @Nonnull String key, @Nonnull Map<String, ItemStack> valueIconMap) {
-        if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
+        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
             Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(slimefunItem.getId());
-            if(stringBlockStorageHelperMap.containsKey(key)) {
+            if (stringBlockStorageHelperMap.containsKey(key)) {
                 return stringBlockStorageHelperMap.get(key);
             }
         }
@@ -150,11 +150,11 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
     }
 
     public static ItemStack getOrErrorIcon(@Nonnull String id, @Nonnull String key, @Nullable String value) {
-        if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
+        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
             Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.get(id);
-            if(stringBlockStorageHelperMap.containsKey(key)) {
+            if (stringBlockStorageHelperMap.containsKey(key)) {
                 BlockStorageHelper blockStorageHelper = stringBlockStorageHelperMap.get(key);
-                if(blockStorageHelper instanceof BlockStorageIconHelper) {
+                if (blockStorageHelper instanceof BlockStorageIconHelper) {
                     return ((BlockStorageIconHelper) blockStorageHelper).getOrErrorIcon(value);
                 }
             }
@@ -163,11 +163,11 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
     }
 
     public static ItemStack getOrErrorIcon(@Nonnull SlimefunItem slimefunItem, @Nonnull String key, @Nullable String value) {
-        if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
+        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
             Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.get(slimefunItem.getId());
-            if(stringBlockStorageHelperMap.containsKey(key)) {
+            if (stringBlockStorageHelperMap.containsKey(key)) {
                 BlockStorageHelper blockStorageHelper = stringBlockStorageHelperMap.get(key);
-                if(blockStorageHelper instanceof BlockStorageIconHelper) {
+                if (blockStorageHelper instanceof BlockStorageIconHelper) {
                     return ((BlockStorageIconHelper) blockStorageHelper).getOrErrorIcon(value);
                 }
             }
@@ -178,8 +178,8 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
     @Nonnull
     private static List<String> init(@Nonnull Map<String, ItemStack> valueIconMap) {
         List<String> valueList = new ArrayList<>(valueIconMap.size());
-        for(Map.Entry<String, ItemStack> entry : valueIconMap.entrySet()) {
-            if(!ItemStackUtil.isItemNull(entry.getValue())) {
+        for (Map.Entry<String, ItemStack> entry : valueIconMap.entrySet()) {
+            if (!ItemStackUtil.isItemNull(entry.getValue())) {
                 valueList.add(entry.getKey());
             }
         }

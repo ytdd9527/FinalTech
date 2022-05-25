@@ -1,10 +1,9 @@
-package io.taraxacum.finaltech.core.menu.storage;
+package io.taraxacum.finaltech.core.menu.unit;
 
-import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.storage.Icon;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.block.Block;
 
 import javax.annotation.Nonnull;
@@ -12,16 +11,14 @@ import javax.annotation.Nonnull;
 /**
  * @author Final_ROOT
  */
-public class StatusL2Menu extends AbstractMachineMenu {
-    private static final int[] BORDER = new int[] {0, 1, 2, 3, 5 ,6 ,7, 8, 9, 10, 11, 12, 14, 15, 16, 17};
+public class DividedStorageUnitMenu extends AbstractMachineMenu {
+    private static final int[] BORDER = new int[0];
     private static final int[] INPUT_BORDER = new int[0];
     private static final int[] OUTPUT_BORDER = new int[0];
-    private static final int[] INPUT_SLOT = new int[] {13};
-    private static final int[] OUTPUT_SLOT = new int[] {13};
+    private static final int[] INPUT_SLOT = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
+    private static final int[] OUTPUT_SLOT = new int[] {27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53};
 
-    public static final int STATUS_SLOT = 4;
-
-    public StatusL2Menu(@Nonnull AbstractMachine machine) {
+    public DividedStorageUnitMenu(@Nonnull AbstractMachine machine) {
         super(machine);
     }
 
@@ -53,8 +50,18 @@ public class StatusL2Menu extends AbstractMachineMenu {
     @Override
     public void init() {
         super.init();
-        this.addItem(STATUS_SLOT, Icon.STATUS_ICON);
-        this.addMenuClickHandler(STATUS_SLOT, ChestMenuUtils.getEmptyClickHandler());
+        this.setSize(54);
+    }
+
+    @Override
+    public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
+        if (itemTransportFlow == null) {
+            return new int[0];
+        }
+        return switch (itemTransportFlow) {
+            case INSERT -> INPUT_SLOT;
+            case WITHDRAW -> OUTPUT_SLOT;
+        };
     }
 
     @Override

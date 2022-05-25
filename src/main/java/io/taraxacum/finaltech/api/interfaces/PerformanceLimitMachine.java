@@ -15,8 +15,8 @@ public interface PerformanceLimitMachine {
     default boolean charge(Config config) {
         long charge = config.contains(KEY) ? Long.parseLong(config.getString(KEY)) : 0;
         charge += FinalTech.getMSPS();
-        if(charge >= 1000) {
-            if(charge >= 2000) {
+        if (charge >= 1000) {
+            if (charge >= 2000) {
                 charge -= 1000;
             }
             config.setValue(KEY, String.valueOf(charge - 1000));

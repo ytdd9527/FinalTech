@@ -29,7 +29,7 @@ public final class CargoNumber {
 
     public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, 0, new LinkedHashMap<>() {{
         this.put("0", List.of("number no limit"));
-        for(int i = 1; i < 64 * 9; i++) {
+        for (int i = 1; i < 64 * 9; i++) {
             this.put(String.valueOf(i), List.of("number limit: " + i));
         }
     }}) {
@@ -47,9 +47,9 @@ public final class CargoNumber {
 
         @Override
         public String clickNextValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
-            if(!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
+            if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return HELPER.nextOrDefaultValue(value);
-            } else if(clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
+            } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return HELPER.offsetOrDefaultValue(value, 64);
             } else {
                 return HELPER.offsetOrDefaultValue(value, 8);
@@ -58,9 +58,9 @@ public final class CargoNumber {
 
         @Override
         public String clickPreviousValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
-            if(!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
+            if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return HELPER.previousOrDefaultValue(value);
-            } else if(clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
+            } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return HELPER.offsetOrDefaultValue(value, -64);
             } else {
                 return HELPER.offsetOrDefaultValue(value, -8);
@@ -69,7 +69,7 @@ public final class CargoNumber {
     };
     public static final BlockStorageLoreHelper INPUT_HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, 0, new LinkedHashMap<>() {{
         this.put("0", List.of("number no limit"));
-        for(int i = 1; i < 64 * 9; i++) {
+        for (int i = 1; i < 64 * 9; i++) {
             this.put(String.valueOf(i), List.of("number limit: " + i));
         }
     }}) {
@@ -87,9 +87,9 @@ public final class CargoNumber {
 
         @Override
         public String clickNextValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
-            if(!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
+            if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return INPUT_HELPER.nextOrDefaultValue(value);
-            } else if(clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
+            } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return INPUT_HELPER.offsetOrDefaultValue(value, 64);
             } else {
                 return INPUT_HELPER.offsetOrDefaultValue(value, 8);
@@ -98,9 +98,9 @@ public final class CargoNumber {
 
         @Override
         public String clickPreviousValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
-            if(!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
+            if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return INPUT_HELPER.previousOrDefaultValue(value);
-            } else if(clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
+            } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return INPUT_HELPER.offsetOrDefaultValue(value, -64);
             } else {
                 return INPUT_HELPER.offsetOrDefaultValue(value, -8);
@@ -109,7 +109,7 @@ public final class CargoNumber {
     };
     public static final BlockStorageLoreHelper OUTPUT_HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, 0, new LinkedHashMap<>() {{
         this.put("0", List.of("number no limit"));
-        for(int i = 1; i < 64 * 9; i++) {
+        for (int i = 1; i < 64 * 9; i++) {
             this.put(String.valueOf(i), List.of("number limit: " + i));
         }
     }}) {
@@ -127,9 +127,9 @@ public final class CargoNumber {
 
         @Override
         public String clickNextValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
-            if(!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
+            if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return OUTPUT_HELPER.nextOrDefaultValue(value);
-            } else if(clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
+            } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return OUTPUT_HELPER.offsetOrDefaultValue(value, 64);
             } else {
                 return OUTPUT_HELPER.offsetOrDefaultValue(value, 8);
@@ -138,9 +138,9 @@ public final class CargoNumber {
 
         @Override
         public String clickPreviousValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
-            if(!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
+            if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return OUTPUT_HELPER.previousOrDefaultValue(value);
-            } else if(clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
+            } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return OUTPUT_HELPER.offsetOrDefaultValue(value, -64);
             } else {
                 return OUTPUT_HELPER.offsetOrDefaultValue(value, -8);

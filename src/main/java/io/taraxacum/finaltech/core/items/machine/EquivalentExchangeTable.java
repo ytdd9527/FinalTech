@@ -49,20 +49,20 @@ public class EquivalentExchangeTable extends AbstractManualMachine {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             this.getMachineMenu().updateMenu(blockMenu, block);
         }
         String value = config.contains(KEY) ? config.getString(KEY) : StringNumberUtil.ZERO;
-        for(int slot : this.getInputSlot()) {
+        for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(ItemStackUtil.isItemSimilar(item, FinalTechItems.ORDERED_DUST)) {
+            if (ItemStackUtil.isItemSimilar(item, FinalTechItems.ORDERED_DUST)) {
                 this.doCraft(blockMenu, config);
                 value = config.getString(KEY);
                 item.setAmount(item.getAmount() - 1);
                 continue;
             }
             SlimefunItem sfItem = SlimefunItem.getByItem(item);
-            if(sfItem != null) {
+            if (sfItem != null) {
                 value = StringNumberUtil.add(value, StringNumberUtil.mul(ItemValueMap.getOrCalItemInputValue(sfItem), String.valueOf(item.getAmount())));
                 item.setAmount(0);
             }
@@ -87,15 +87,15 @@ public class EquivalentExchangeTable extends AbstractManualMachine {
         String value = config.contains(KEY) ? config.getString(KEY) : StringNumberUtil.ZERO;
         List<String> valueList = new ArrayList<>(ItemValueMap.valueItemListOutputMap.keySet());
         Collections.shuffle(valueList);
-        for(String targetValue : valueList) {
-            if(MachineUtil.itemCount(blockMenu, this.getOutputSlot()) == this.getOutputSlot().length) {
+        for (String targetValue : valueList) {
+            if (MachineUtil.itemCount(blockMenu, this.getOutputSlot()) == this.getOutputSlot().length) {
                 break;
             }
             if (StringNumberUtil.compare(value, targetValue) >= 0) {
                 List<String> idList = ItemValueMap.valueItemListOutputMap.get(targetValue);
                 String id = idList.get((int) (Math.random() * idList.size()));
                 ItemStack item = new CustomItemStack(SlimefunItem.getById(id).getItem(), 1);
-                if(MachineUtil.calMaxMatch(blockMenu, this.getOutputSlot(), List.of(new ItemStackWithWrapperAmount(item))) >= 1) {
+                if (MachineUtil.calMaxMatch(blockMenu, this.getOutputSlot(), List.of(new ItemStackWithWrapperAmount(item))) >= 1) {
                     blockMenu.pushItem(item, this.getOutputSlot());
                     value = StringNumberUtil.sub(value, targetValue);
                 }

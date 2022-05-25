@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.menu.storage;
+package io.taraxacum.finaltech.core.menu.unit;
 
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;

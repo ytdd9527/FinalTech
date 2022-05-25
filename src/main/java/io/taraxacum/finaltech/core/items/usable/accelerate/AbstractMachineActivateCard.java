@@ -46,13 +46,13 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem imp
         Location location = interactEvent.getClickedBlock().getLocation();
         Config config = BlockStorage.getLocationInfo(location);
         if (config.contains(SlimefunUtil.KEY_ID)) {
-            if(!SlimefunUtil.hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
+            if (!SlimefunUtil.hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
                 //todo
                 // 可配置化
                 player.sendRawMessage("您似乎没有在此处使用该物品的权限");
                 return;
             }
-            if(!this.conditionMatch(player)) {
+            if (!this.conditionMatch(player)) {
                 //todo
                 // 可配置化
                 player.sendRawMessage("您似乎无法使用该物品");

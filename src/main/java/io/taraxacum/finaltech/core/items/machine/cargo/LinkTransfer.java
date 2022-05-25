@@ -134,7 +134,7 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
         int count = 1;
         if (BlockSearchMode.VALUE_ZERO.equals(searchMode)) {
             particleLocationList.add(LocationUtil.getCenterLocation(result));
-            if(drawParticle) {
+            if (drawParticle) {
                 Bukkit.getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawLineByDistance(Particle.REDSTONE, PARTICLE_INTERVAL, PARTICLE_DISTANCE, particleLocationList));
             }
             return result;
@@ -171,7 +171,7 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
                 break;
             }
         }
-        if(drawParticle) {
+        if (drawParticle) {
             this.getAddon().getJavaPlugin().getServer().getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawLineByDistance(Particle.REDSTONE, PARTICLE_INTERVAL, PARTICLE_DISTANCE, particleLocationList));
         }
         return result;

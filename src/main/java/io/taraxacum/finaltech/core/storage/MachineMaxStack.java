@@ -28,7 +28,7 @@ public final class MachineMaxStack {
 
     public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, new LinkedHashMap<>() {{
         this.put("0", List.of("§7未限制"));
-        for(int i = 1; i <= 54; i++) {
+        for (int i = 1; i <= 54; i++) {
             this.put(String.valueOf(i), List.of("§7限制数量= " + i));
         }
     }}) {
@@ -40,10 +40,10 @@ public final class MachineMaxStack {
 
         @Override
         public boolean setIcon(@Nonnull ItemStack iconItem, @Nullable String value) {
-            if(Objects.equals(this.defaultValue(), value)) {
+            if (Objects.equals(this.defaultValue(), value)) {
                 iconItem.setType(Material.CHEST);
                 iconItem.setAmount(1);
-            } else if(value != null) {
+            } else if (value != null) {
                 iconItem.setType(Material.HOPPER);
                 iconItem.setAmount(Integer.parseInt(value));
             } else {
@@ -69,10 +69,10 @@ public final class MachineMaxStack {
         public ChestMenu.MenuClickHandler getHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
             return (player, i, itemStack, clickAction) -> {
                 int quantity = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), MachineMaxStack.KEY));
-                if(clickAction.isShiftClicked()) {
+                if (clickAction.isShiftClicked()) {
                     quantity = 0;
                 } else {
-                    if(clickAction.isRightClicked()) {
+                    if (clickAction.isRightClicked()) {
                         quantity = (quantity - 1) % (abstractMachineMenu.getInputSlot().length + 1);
                     } else {
                         quantity = (quantity + 1) % (abstractMachineMenu.getInputSlot().length + 1);

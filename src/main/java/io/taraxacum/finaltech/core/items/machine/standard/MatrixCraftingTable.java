@@ -40,36 +40,36 @@ public class MatrixCraftingTable extends AbstractStandardMachine {
         List<MachineRecipe> recipe = MachineRecipeFactory.getRecipe(this.getClass());
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         Map<Integer, ItemStackWithWrapper> itemWithWrapperMap = new HashMap<>(this.getInputSlot().length);
-        for(int i = 0; i < this.getInputSlot().length; i++) {
-            if(!ItemStackUtil.isItemNull(blockMenu.getItemInSlot(this.getInputSlot()[i]))) {
+        for (int i = 0; i < this.getInputSlot().length; i++) {
+            if (!ItemStackUtil.isItemNull(blockMenu.getItemInSlot(this.getInputSlot()[i]))) {
                 itemWithWrapperMap.put(i, new ItemStackWithWrapper(blockMenu.getItemInSlot(this.getInputSlot()[i])));
             }
         }
         MachineRecipe matchRecipe = null;
-        for(MachineRecipe machineRecipe : recipe) {
+        for (MachineRecipe machineRecipe : recipe) {
             ItemStack[] input = machineRecipe.getInput();
-            if(input.length > this.getInputSlot().length) {
+            if (input.length > this.getInputSlot().length) {
                 continue;
             }
             boolean work = true;
-            for(int i = 0; i < this.getInputSlot().length; i++) {
-                if(ItemStackUtil.isItemNull(input[i])) {
+            for (int i = 0; i < this.getInputSlot().length; i++) {
+                if (ItemStackUtil.isItemNull(input[i])) {
                     continue;
                 }
-                if(itemWithWrapperMap.get(i).getItemStack().getAmount() < input[i].getAmount() || !ItemStackUtil.isItemSimilar(input[i], itemWithWrapperMap.get(i))) {
+                if (itemWithWrapperMap.get(i).getItemStack().getAmount() < input[i].getAmount() || !ItemStackUtil.isItemSimilar(input[i], itemWithWrapperMap.get(i))) {
                     work = false;
                     break;
                 }
             }
-            if(work && MachineUtil.calMaxMatch(blockMenu, this.getOutputSlot(), MachineRecipeFactory.getAdvancedRecipe(this.getClass()).get(recipe.indexOf(machineRecipe)).getOutput()) >= 1) {
+            if (work && MachineUtil.calMaxMatch(blockMenu, this.getOutputSlot(), MachineRecipeFactory.getAdvancedRecipe(this.getClass()).get(recipe.indexOf(machineRecipe)).getOutput()) >= 1) {
                 matchRecipe = machineRecipe;
                 break;
             }
         }
 
-        if(matchRecipe != null) {
-            for(int i = 0; i < this.getInputSlot().length; i++) {
-                if(ItemStackUtil.isItemNull(matchRecipe.getInput()[i])) {
+        if (matchRecipe != null) {
+            for (int i = 0; i < this.getInputSlot().length; i++) {
+                if (ItemStackUtil.isItemNull(matchRecipe.getInput()[i])) {
                     itemWithWrapperMap.get(i).getItemStack().setAmount(itemWithWrapperMap.get(i).getItemStack().getAmount() - matchRecipe.getInput()[i].getAmount());
                 }
             }

@@ -59,8 +59,8 @@ public class ItemStackWithWrapperAmount extends ItemStackWithWrapper {
     }
 
     public static List<ItemStackWithWrapperAmount> addToList(@Nonnull List<ItemStackWithWrapperAmount> list, @Nonnull ItemStackWithWrapperAmount item) {
-        for(ItemStackWithWrapperAmount existedItem : list) {
-            if(ItemStackUtil.isItemSimilar(existedItem, item)) {
+        for (ItemStackWithWrapperAmount existedItem : list) {
+            if (ItemStackUtil.isItemSimilar(existedItem, item)) {
                 existedItem.addAmount(item.getAmount());
                 return list;
             }
@@ -70,8 +70,8 @@ public class ItemStackWithWrapperAmount extends ItemStackWithWrapper {
     }
 
     public static List<ItemStackWithWrapperAmount> addToList(@Nonnull List<ItemStackWithWrapperAmount> list, @Nonnull ItemStackWithWrapperAmount item, int mul) {
-        for(ItemStackWithWrapperAmount existedItem : list) {
-            if(ItemStackUtil.isItemSimilar(existedItem, item)) {
+        for (ItemStackWithWrapperAmount existedItem : list) {
+            if (ItemStackUtil.isItemSimilar(existedItem, item)) {
                 existedItem.addAmount(item.getAmount() * mul);
                 return list;
             }

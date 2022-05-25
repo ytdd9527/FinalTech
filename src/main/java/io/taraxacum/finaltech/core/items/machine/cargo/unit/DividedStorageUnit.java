@@ -7,7 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.storage.DividedStorageUnitMenu;
+import io.taraxacum.finaltech.core.menu.unit.DividedStorageUnitMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;

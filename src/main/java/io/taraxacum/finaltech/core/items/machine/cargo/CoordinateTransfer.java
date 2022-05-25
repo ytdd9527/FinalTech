@@ -71,7 +71,7 @@ public class CoordinateTransfer extends AbstractCargo {
 
         ItemStack locationRecorder = blockMenu.getItemInSlot(CoordinateTransferMenu.LOCATION_RECORDER_SLOT);
         Location targetLocation = LocationUtil.parseLocationInItem(locationRecorder);
-        if(targetLocation == null) {
+        if (targetLocation == null) {
             return;
         }
         Block targetBlock = targetLocation.getBlock();
@@ -90,7 +90,7 @@ public class CoordinateTransfer extends AbstractCargo {
         String cargoMode = CargoMode.HELPER.getOrDefaultValue(config);
         String cargoOrder = CargoOrder.HELPER.getOrDefaultValue(config);
 
-        if(CargoOrder.VALUE_POSITIVE.equals(cargoOrder)) {
+        if (CargoOrder.VALUE_POSITIVE.equals(cargoOrder)) {
             CargoUtil.doCargo(block, targetBlock, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, slotSearchSize, slotSearchOrder, cargoNumber, cargoLimit, CargoFilter.VALUE_BLACK, blockMenu.toInventory(), new int[0], cargoMode);
         } else {
             CargoUtil.doCargo(targetBlock, block, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, slotSearchSize, slotSearchOrder, cargoNumber, cargoLimit, CargoFilter.VALUE_BLACK, blockMenu.toInventory(), new int[0], cargoMode);

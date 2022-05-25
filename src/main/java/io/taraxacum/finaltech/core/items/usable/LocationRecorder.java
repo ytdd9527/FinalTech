@@ -39,25 +39,25 @@ public class LocationRecorder extends UsableSlimefunItem {
     @Override
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
         PlayerInteractEvent interactEvent = playerRightClickEvent.getInteractEvent();
-        if(playerRightClickEvent.getPlayer().isSneaking()) {
+        if (playerRightClickEvent.getPlayer().isSneaking()) {
             Block block = interactEvent.getClickedBlock();
-            if(block != null && SlimefunUtil.hasPermission(playerRightClickEvent.getPlayer(), block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
+            if (block != null && SlimefunUtil.hasPermission(playerRightClickEvent.getPlayer(), block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
                 LocationUtil.saveLocationToItem(playerRightClickEvent.getItem(), block.getLocation());
                 LocationUtil.updateLocationItem(playerRightClickEvent.getItem());
             }
         } else {
             Location location = LocationUtil.parseLocationInItem(playerRightClickEvent.getItem());
-            if(location == null) {
+            if (location == null) {
                 return;
             }
 
             Player player = playerRightClickEvent.getPlayer();
-            if(!SlimefunUtil.hasPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
+            if (!SlimefunUtil.hasPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
                 player.sendRawMessage(TextUtil.colorRandomString("您似乎没有在此处使用该物品的权限"));
             }
 
             Block block = location.getBlock();
-            if(BlockStorage.hasInventory(block)) {
+            if (BlockStorage.hasInventory(block)) {
                 player.openInventory(BlockStorage.getInventory(block).toInventory());
             }
         }

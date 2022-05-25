@@ -36,7 +36,7 @@ public class MachineActivateCardL2 extends AbstractMachineActivateCard {
 
     @Override
     protected boolean conditionMatch(@Nonnull Player player) {
-        if(player.getHealth() > 1 && player.getExp() > 1) {
+        if (player.getHealth() > 1 && player.getExp() > 1) {
             player.setHealth(player.getHealth() - 1);
             player.setExp(player.getExp() - 1);
             return true;

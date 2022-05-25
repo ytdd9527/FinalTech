@@ -93,7 +93,7 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
                 }
                 work = true;
                 break;
-            } else if(ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY)) {
+            } else if (ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY)) {
                 item.setAmount(item.getAmount() - 1);
                 count = this.getCapacity();
                 max = this.getCapacity();

@@ -79,7 +79,7 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
         Location location = block.getLocation();
 
         AdvancedMachineRecipe machineRecipe = LocationRecipeRegistry.getRecipe(location);
-        if(machineRecipe == null) {
+        if (machineRecipe == null) {
             return;
         }
 
@@ -101,11 +101,11 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
         int quantity = MachineUtil.updateQuantityModule(blockMenu, AdvancedAutoCraftMenu.MODULE_SLOT, AdvancedAutoCraftMenu.STATUS_SLOT);
 
         AdvancedCraft craft = AdvancedCraft.craftAsc(containerMenu, inputSlots, List.of(machineRecipe), quantity, 0);
-        if(craft != null) {
+        if (craft != null) {
             craft.setMatchCount(Math.min(craft.getMatchCount(), MachineUtil.calMaxMatch(containerMenu, outputSlots, craft.getOutputItemList())));
-            if(craft.getMatchCount() > 0) {
+            if (craft.getMatchCount() > 0) {
                 craft.consumeItem(containerMenu);
-                for(ItemStack item : craft.calMachineRecipe(0).getOutput()) {
+                for (ItemStack item : craft.calMachineRecipe(0).getOutput()) {
                     containerMenu.pushItem(ItemStackUtil.cloneItem(item), outputSlots);
                 }
             }

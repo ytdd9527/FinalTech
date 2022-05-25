@@ -39,7 +39,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         CRAFT_LIST.add(new Craft() {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if(!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2) && StorageCardItem.isValid(item1) && StorageCardItem.isValid(item2)) {
+                if (!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2) && StorageCardItem.isValid(item1) && StorageCardItem.isValid(item2)) {
                     ItemStack stringItem1 = StringItemUtil.parseItemInCard(item1);
                     ItemStack stringItem2 = StringItemUtil.parseItemInCard(item2);
                     return ItemStackUtil.isItemSimilar(stringItem1, stringItem2);
@@ -56,13 +56,13 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
-                if(!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2) && item1.hasItemMeta() && item2.hasItemMeta()) {
+                if (!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2) && item1.hasItemMeta() && item2.hasItemMeta()) {
                     ItemMeta itemMeta1 = item1.getItemMeta();
                     ItemMeta itemMeta2 = item2.getItemMeta();
-                    if(StorageCardItem.isValid(itemMeta1) && StorageCardItem.isValid(itemMeta2)) {
+                    if (StorageCardItem.isValid(itemMeta1) && StorageCardItem.isValid(itemMeta2)) {
                         ItemStack stringItem1 = StringItemUtil.parseItemInCard(itemMeta1);
                         ItemStack stringItem2 = StringItemUtil.parseItemInCard(itemMeta2);
-                        if(ItemStackUtil.isItemSimilar(stringItem1, stringItem2)) {
+                        if (ItemStackUtil.isItemSimilar(stringItem1, stringItem2)) {
                             String amount1 = StringItemUtil.parseAmountInCard(itemMeta1);
                             String amount2 = StringItemUtil.parseAmountInCard(itemMeta2);
                             ItemStack outputItem = new ItemStack(StorageCardItem.RANDOM_STORAGE_CARD_ITEM[(int)(Math.random() * StorageCardItem.RANDOM_STORAGE_CARD_ITEM.length)]);
@@ -82,8 +82,8 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         CRAFT_LIST.add(new Craft() {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if(!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2)) {
-                    if(StorageCardItem.isValid(item1) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
+                if (!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2)) {
+                    if (StorageCardItem.isValid(item1) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
                         return ItemStackUtil.isItemSimilar(item2, FinalTechItems.ALL_COMPRESSION);
                     } else if (StorageCardItem.isValid(item2) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item2), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
                         return ItemStackUtil.isItemSimilar(item1, FinalTechItems.ALL_COMPRESSION);
@@ -101,21 +101,21 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
-                if(!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2)) {
+                if (!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2)) {
                     ItemStack storageCardItem = null;
                     ItemMeta storageCardItemMeta = null;
-                    if(StorageCardItem.isValid(item1) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
-                        if(ItemStackUtil.isItemSimilar(item2, FinalTechItems.ALL_COMPRESSION)) {
+                    if (StorageCardItem.isValid(item1) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
+                        if (ItemStackUtil.isItemSimilar(item2, FinalTechItems.ALL_COMPRESSION)) {
                             storageCardItem = item1;
                             storageCardItemMeta = item1.getItemMeta();
                         }
                     } else if (StorageCardItem.isValid(item2) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item2), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
-                        if(ItemStackUtil.isItemSimilar(item1, FinalTechItems.ALL_COMPRESSION)) {
+                        if (ItemStackUtil.isItemSimilar(item1, FinalTechItems.ALL_COMPRESSION)) {
                             storageCardItem = item2;
                             storageCardItemMeta = item2.getItemMeta();
                         }
                     }
-                    if(storageCardItem != null && storageCardItemMeta != null) {
+                    if (storageCardItem != null && storageCardItemMeta != null) {
                         ItemStack stringItem = StringItemUtil.parseItemInCard(storageCardItemMeta);
                         ItemStack outputItem = CopyCardItem.newItem(stringItem, "1");
                         outputItem.setAmount(storageCardItem.getAmount());
@@ -132,9 +132,9 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         CRAFT_LIST.add(new Craft() {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if(Singularity.isValid(item1) && Spirochete.isValid(item2)) {
+                if (Singularity.isValid(item1) && Spirochete.isValid(item2)) {
                     return true;
-                } else if(Spirochete.isValid(item1) && Singularity.isValid(item2)) {
+                } else if (Spirochete.isValid(item1) && Singularity.isValid(item2)) {
                     return true;
                 }
                 return false;
@@ -149,12 +149,12 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
-                if(this.canCraft(item1, item2)) {
+                if (this.canCraft(item1, item2)) {
                     item1.setAmount(item1.getAmount() - 1);
                     item2.setAmount(item2.getAmount() - 1);
                     Player player = null;
-                    for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
-                        if(humanEntity instanceof Player) {
+                    for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                        if (humanEntity instanceof Player) {
                             player = (Player) humanEntity;
                             break;
                         }
@@ -167,9 +167,9 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         CRAFT_LIST.add(new Craft() {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if(!ItemStackUtil.isItemNull(item1) && CopyCardItem.isValid(item1) && ItemStackUtil.isItemSimilar(item2, FinalTechItems.SHELL)) {
+                if (!ItemStackUtil.isItemNull(item1) && CopyCardItem.isValid(item1) && ItemStackUtil.isItemSimilar(item2, FinalTechItems.SHELL)) {
                     return true;
-                } else if(!ItemStackUtil.isItemNull(item2) && CopyCardItem.isValid(item2) && ItemStackUtil.isItemSimilar(item1, FinalTechItems.SHELL)) {
+                } else if (!ItemStackUtil.isItemNull(item2) && CopyCardItem.isValid(item2) && ItemStackUtil.isItemSimilar(item1, FinalTechItems.SHELL)) {
                     return true;
                 }
                 return false;
@@ -184,12 +184,12 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
-                if(!ItemStackUtil.isItemNull(item1) && CopyCardItem.isValid(item1) && ItemStackUtil.isItemSimilar(item2, FinalTechItems.SHELL)) {
+                if (!ItemStackUtil.isItemNull(item1) && CopyCardItem.isValid(item1) && ItemStackUtil.isItemSimilar(item2, FinalTechItems.SHELL)) {
                     item2.setAmount(item2.getAmount() - 1);
                     ItemStack outputItem = ItemStackUtil.cloneItem(item1);
                     outputItem.setAmount(1);
                     blockMenu.replaceExistingItem(outputSlot, outputItem);
-                } else if(!ItemStackUtil.isItemNull(item2) && CopyCardItem.isValid(item2) && ItemStackUtil.isItemSimilar(item1, FinalTechItems.SHELL)) {
+                } else if (!ItemStackUtil.isItemNull(item2) && CopyCardItem.isValid(item2) && ItemStackUtil.isItemSimilar(item1, FinalTechItems.SHELL)) {
                     item1.setAmount(item1.getAmount() - 1);
                     ItemStack outputItem = ItemStackUtil.cloneItem(item2);
                     outputItem.setAmount(1);
@@ -202,7 +202,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         CRAFT_LIST.add(new Craft() {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if(Singularity.isValid(item1) || Singularity.isValid(item2) || Spirochete.isValid(item1) || Spirochete.isValid(item2)) {
+                if (Singularity.isValid(item1) || Singularity.isValid(item2) || Spirochete.isValid(item1) || Spirochete.isValid(item2)) {
                     return true;
                 }
                 return false;
@@ -217,22 +217,22 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
-                if(Singularity.isValid(item1) || Spirochete.isValid(item1)) {
+                if (Singularity.isValid(item1) || Spirochete.isValid(item1)) {
                     item1.setAmount(item1.getAmount() - 1);
                     Player player = null;
-                    for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
-                        if(humanEntity instanceof Player) {
+                    for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                        if (humanEntity instanceof Player) {
                             player = (Player) humanEntity;
                             break;
                         }
                     }
                     ItemStack outputItem = Shell.newItem(item1, player);
                     blockMenu.replaceExistingItem(outputSlot, outputItem);
-                } else if(Singularity.isValid(item2) || Spirochete.isValid(item2)) {
+                } else if (Singularity.isValid(item2) || Spirochete.isValid(item2)) {
                     item2.setAmount(item2.getAmount() - 1);
                     Player player = null;
-                    for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
-                        if(humanEntity instanceof Player) {
+                    for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                        if (humanEntity instanceof Player) {
                             player = (Player) humanEntity;
                             break;
                         }
@@ -258,21 +258,21 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
-                if(CopyCardItem.isValid(item1)) {
+                if (CopyCardItem.isValid(item1)) {
                     item1.setAmount(item1.getAmount() - 1);
                     Player player = null;
-                    for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
-                        if(humanEntity instanceof Player) {
+                    for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                        if (humanEntity instanceof Player) {
                             player = (Player) humanEntity;
                             break;
                         }
                     }
                     blockMenu.replaceExistingItem(outputSlot, Annular.newItem(item1, player));
-                } else if(CopyCardItem.isValid(item2)) {
+                } else if (CopyCardItem.isValid(item2)) {
                     item2.setAmount(item2.getAmount() - 1);
                     Player player = null;
-                    for(HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
-                        if(humanEntity instanceof Player) {
+                    for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                        if (humanEntity instanceof Player) {
                             player = (Player) humanEntity;
                             break;
                         }
@@ -327,11 +327,11 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             //todo 操作频繁验证
             ItemStack inputItem1 = blockMenu.getItemInSlot(INPUT_SLOT[0]);
             ItemStack inputItem2 = blockMenu.getItemInSlot(INPUT_SLOT[1]);
-            if(ItemStackUtil.isItemNull(inputItem1) && ItemStackUtil.isItemNull(inputItem2)) {
+            if (ItemStackUtil.isItemNull(inputItem1) && ItemStackUtil.isItemNull(inputItem2)) {
                 return false;
             }
-            for(Craft craft : CRAFT_LIST) {
-                if(craft.doCraft(inputItem1, inputItem2, blockMenu, OUTPUT_SLOT[0])) {
+            for (Craft craft : CRAFT_LIST) {
+                if (craft.doCraft(inputItem1, inputItem2, blockMenu, OUTPUT_SLOT[0])) {
                     break;
                 }
             }
@@ -345,14 +345,14 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         ItemStack inputItem2 = blockMenu.getItemInSlot(INPUT_SLOT[1]);
         ItemStack iconItem = blockMenu.getItemInSlot(CRAFT_SLOT);
         boolean work = false;
-        for(Craft craft : CRAFT_LIST) {
-            if(craft.canCraft(inputItem1, inputItem2)) {
+        for (Craft craft : CRAFT_LIST) {
+            if (craft.canCraft(inputItem1, inputItem2)) {
                 craft.doUpdateIcon(iconItem);
                 work = true;
                 break;
             }
         }
-        if(!work) {
+        if (!work) {
             blockMenu.replaceExistingItem(CRAFT_SLOT, CRAFT_ICON);
         }
     }

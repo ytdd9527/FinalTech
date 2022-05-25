@@ -65,7 +65,7 @@ public class EquivalentExchangeTableMenu extends AbstractManualMachineMenu {
     @Override
     public void init() {
         super.init();
-        for(int slot : PARSE_BORDER) {
+        for (int slot : PARSE_BORDER) {
             this.addItem(slot, PARSE_BORDER_ICON);
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
@@ -82,7 +82,7 @@ public class EquivalentExchangeTableMenu extends AbstractManualMachineMenu {
         SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
         List<String> lore = new ArrayList<>();
         lore.add(ItemStackUtil.getItemName(item));
-        if(slimefunItem == null) {
+        if (slimefunItem == null) {
             lore.add("§c无法作为材料或目标产物");
         } else {
             lore.add("§9作为材料的价值= " + ItemValueMap.getOrCalItemInputValue(item));

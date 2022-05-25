@@ -126,7 +126,7 @@ public class StringItemUtil {
         if (persistentDataContainer.has(ITEM_KEY, PersistentDataType.STRING)) {
             String itemString = persistentDataContainer.get(ITEM_KEY, PersistentDataType.STRING);
             ItemStack item = ItemStackUtil.stringToItemStack(itemString);
-            if(item != null) {
+            if (item != null) {
                 stringItem = new ItemStackWithWrapper(item);
             }
         }
@@ -161,8 +161,8 @@ public class StringItemUtil {
 
         totalAmount = totalAmount - totalAmount % size;
         int count = totalAmount;
-        for(ItemStack sourceItem : sourceItemList) {
-            if(sourceItem.getAmount() > totalAmount) {
+        for (ItemStack sourceItem : sourceItemList) {
+            if (sourceItem.getAmount() > totalAmount) {
                 sourceItem.setAmount(sourceItem.getAmount() - totalAmount);
                 totalAmount = 0;
                 break;
@@ -172,15 +172,15 @@ public class StringItemUtil {
             }
         }
 
-        if(count > 0) {
-            if(StringNumberUtil.ZERO.equals(amount)) {
+        if (count > 0) {
+            if (StringNumberUtil.ZERO.equals(amount)) {
                 persistentDataContainer.set(AMOUNT_KEY, PersistentDataType.STRING, String.valueOf(totalAmount));
                 persistentDataContainer.set(ITEM_KEY, PersistentDataType.STRING, ItemStackUtil.itemStackToString(stringItem.getItemStack()));
             } else {
                 persistentDataContainer.set(AMOUNT_KEY, PersistentDataType.STRING, StringNumberUtil.add(amount, String.valueOf(totalAmount)));
             }
         } else {
-            if(StringNumberUtil.ZERO.equals(amount)) {
+            if (StringNumberUtil.ZERO.equals(amount)) {
                 persistentDataContainer.remove(ITEM_KEY);
             }
         }
@@ -234,7 +234,7 @@ public class StringItemUtil {
         }
         ItemMeta itemMeta = cardItem.getItemMeta();
         PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-        if(StringNumberUtil.easilyCompare(amount, StringNumberUtil.ZERO) == 1) {
+        if (StringNumberUtil.easilyCompare(amount, StringNumberUtil.ZERO) == 1) {
             persistentDataContainer.set(ITEM_KEY, PersistentDataType.STRING, ItemStackUtil.itemStackToString(item));
             persistentDataContainer.set(AMOUNT_KEY, PersistentDataType.STRING, amount);
         } else {
