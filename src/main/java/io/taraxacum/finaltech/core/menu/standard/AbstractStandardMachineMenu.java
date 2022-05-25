@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.core.storage.MaxStack;
+import io.taraxacum.finaltech.core.storage.MachineMaxStack;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
@@ -29,14 +29,14 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
     @Override
     public void init() {
         super.init();
-        this.addItem(MACHINE_MAX_STACK_SLOT, MaxStack.ICON);
+        this.addItem(MACHINE_MAX_STACK_SLOT, MachineMaxStack.ICON);
         this.addMenuClickHandler(MACHINE_MAX_STACK_SLOT, ChestMenuUtils.getEmptyClickHandler());
     }
 
     @Override
     public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
-        blockMenu.addMenuClickHandler(MACHINE_MAX_STACK_SLOT, MaxStack.getHandler(blockMenu, block, this, MACHINE_MAX_STACK_SLOT));
+        blockMenu.addMenuClickHandler(MACHINE_MAX_STACK_SLOT, MachineMaxStack.getHandler(blockMenu, block, this, MACHINE_MAX_STACK_SLOT));
     }
 
     @Override
@@ -85,9 +85,9 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
 
     @Override
     protected void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-        MaxStack.HELPER.checkOrSetBlockStorage(block.getLocation());
-        String quantity = MaxStack.HELPER.getOrDefaultValue(block.getLocation());
+        MachineMaxStack.HELPER.checkOrSetBlockStorage(block.getLocation());
+        String quantity = MachineMaxStack.HELPER.getOrDefaultValue(block.getLocation());
         ItemStack item = blockMenu.getItemInSlot(MACHINE_MAX_STACK_SLOT);
-        MaxStack.HELPER.setIcon(item, quantity);
+        MachineMaxStack.HELPER.setIcon(item, quantity);
     }
 }

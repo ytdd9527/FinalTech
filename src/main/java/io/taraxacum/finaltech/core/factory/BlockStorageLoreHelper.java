@@ -6,6 +6,7 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -45,6 +46,12 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
         this.loreOffset = loreOffset;
     }
 
+    /**
+     * update the lore of the icon{@link ItemStack} by the given value
+     * @param iconItem
+     * @param value
+     * @return
+     */
     public boolean setIcon(@Nonnull ItemStack iconItem, @Nullable String value) {
         if(valueLoreMap.containsKey(value)) {
             if(this.loreOffset < 0) {
@@ -73,6 +80,23 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
         return this.setIcon(iconItem, value);
     }
 
+    /**
+     * check {@link BlockStorage} data
+     * update the icon{@link ItemStack} in the given slot place
+     * @param blockMenu
+     * @param slot
+     * @return
+     */
+    public boolean checkAndUpdateIcon(@Nonnull BlockMenu blockMenu, int slot) {
+        String value = BlockStorage.getLocationInfo(blockMenu.getLocation(), this.getKey());
+        if(!this.validValue(value)) {
+            value = this.defaultValue();
+        }
+        ItemStack item = blockMenu.getItemInSlot(slot);
+        this.setIcon(item, value);
+        return true;
+    }
+
     @Nonnull
     public ChestMenu.MenuClickHandler getHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
         return (player, i, itemStack, clickAction) -> {
@@ -88,18 +112,19 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
             return false;
         };
     }
-
     @Nonnull
     public ChestMenu.MenuClickHandler getUpdateHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
         return (player, i, itemStack, clickAction) -> {
             String value = BlockStorageLoreHelper.this.getOrDefaultValue(block.getLocation());
             ItemStack item = blockMenu.getItemInSlot(slot);
+            if(!BlockStorageLoreHelper.this.validValue(value)) {
+                value = BlockStorageLoreHelper.this.defaultValue();
+            }
             BlockStorageLoreHelper.this.setIcon(item, value);
             BlockStorageLoreHelper.this.setOrClearValue(block.getLocation(), value);
             return false;
         };
     }
-
     @Nonnull
     public ChestMenu.MenuClickHandler getNextHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
         return (player, i, itemStack, clickAction) -> {
@@ -111,7 +136,6 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
             return false;
         };
     }
-
     @Nonnull
     public ChestMenu.MenuClickHandler getPreviousHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
         return (player, i, itemStack, clickAction) -> {
@@ -124,11 +148,10 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
         };
     }
 
-    public String clickNextValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
+    public String clickNextValue(@Nullable String value, @Nonnull ClickAction clickAction) {
         return this.nextOrDefaultValue(value);
     }
-
-    public String clickPreviousValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
+    public String clickPreviousValue(@Nullable String value, @Nonnull ClickAction clickAction) {
         return this.previousOrDefaultValue(value);
     }
 
@@ -146,7 +169,6 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
         ItemStackUtil.setLore(iconItem, ERROR_LORE);
         return false;
     }
-
     public static boolean setIcon(@Nonnull SlimefunItem slimefunItem, @Nonnull String key, @Nonnull ItemStack iconItem, @Nullable String value) {
         if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
             Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.get(slimefunItem.getId());
@@ -194,7 +216,6 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
             }
         };
     }
-
     @Nonnull
     public static BlockStorageLoreHelper newInstanceOrGet(@Nonnull String id, @Nonnull String key, int loreOffset, @Nonnull Map<String, List<String>> valueLoreMap) {
         if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {

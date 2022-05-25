@@ -21,19 +21,10 @@ import java.util.Objects;
 /**
  * @author Final_ROOT
  */
-public final class MaxStack {
-    public static final String KEY = "ms";
+public final class MachineMaxStack {
+    public static final String KEY = "mms";
 
     public static final ItemStack ICON = new CustomItemStack(Material.CHEST, "&7输入数量限制", "&7未限制");
-
-    private static final Map<String, List<String>> LORE_MAP = new LinkedHashMap<>() {
-        {
-            this.put("0", List.of("§7未限制"));
-            for(int i = 1; i <= 54; i++) {
-                this.put(String.valueOf(i), List.of("§7限制数量= " + i));
-            }
-        }
-    };
 
     public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, new LinkedHashMap<>() {{
         this.put("0", List.of("§7未限制"));
@@ -63,35 +54,34 @@ public final class MaxStack {
 
         @Nonnull
         @Override
-        @Deprecated
         public String nextOrDefaultValue(@Nullable String value) {
             return this.defaultValue();
         }
 
         @Nonnull
         @Override
-        @Deprecated
         public String previousOrDefaultValue(@Nullable String value) {
             return this.defaultValue();
         }
-    };
 
-    @Nonnull
-    public static ChestMenu.MenuClickHandler getHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
-        return (player, i, itemStack, clickAction) -> {
-            int quantity = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), MaxStack.KEY));
-            if(clickAction.isShiftClicked()) {
-                quantity = 0;
-            } else {
-                if(clickAction.isRightClicked()) {
-                    quantity = (quantity - 1) % (abstractMachineMenu.getInputSlot().length + 1);
+        @Nonnull
+        @Override
+        public ChestMenu.MenuClickHandler getHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
+            return (player, i, itemStack, clickAction) -> {
+                int quantity = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), MachineMaxStack.KEY));
+                if(clickAction.isShiftClicked()) {
+                    quantity = 0;
                 } else {
-                    quantity = (quantity + 1) % (abstractMachineMenu.getInputSlot().length + 1);
+                    if(clickAction.isRightClicked()) {
+                        quantity = (quantity - 1) % (abstractMachineMenu.getInputSlot().length + 1);
+                    } else {
+                        quantity = (quantity + 1) % (abstractMachineMenu.getInputSlot().length + 1);
+                    }
                 }
-            }
-            MaxStack.HELPER.setIcon(blockMenu.getItemInSlot(slot), String.valueOf(quantity));
-            BlockStorage.addBlockInfo(block, MaxStack.KEY, String.valueOf(quantity));
-            return false;
-        };
-    }
+                MachineMaxStack.HELPER.setIcon(blockMenu.getItemInSlot(slot), String.valueOf(quantity));
+                BlockStorage.addBlockInfo(block, MachineMaxStack.KEY, String.valueOf(quantity));
+                return false;
+            };
+        }
+    };
 }

@@ -25,33 +25,4 @@ public final class BlockSearchCycle {
         this.put(VALUE_FALSE, FALSE_ICON);
         this.put(VALUE_TRUE, TRUE_ICON);
     }});
-
-    @Deprecated
-    public static String next(String cargoSelf) {
-        if (cargoSelf == null) {
-            return VALUE_FALSE;
-        }
-        switch (cargoSelf) {
-            case VALUE_FALSE:
-                return VALUE_TRUE;
-            case VALUE_TRUE:
-            default:
-                return VALUE_FALSE;
-        }
-    }
-
-    @Deprecated
-    public static ItemStack getIcon(String cargoSelf) {
-        if (cargoSelf == null) {
-            return Icon.ERROR_ICON;
-        }
-        switch (cargoSelf) {
-            case VALUE_FALSE:
-                return FALSE_ICON;
-            case VALUE_TRUE:
-                return TRUE_ICON;
-            default:
-                return Icon.ERROR_ICON;
-        }
-    }
 }

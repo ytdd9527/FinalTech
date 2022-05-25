@@ -13,6 +13,8 @@ import java.util.List;
 /**
  * @author Final_ROOT
  */
+//TODO
+// yeah sometime I should update this class.
 public class PositionInfo {
     public static final String KEY = "pi";
 
@@ -40,7 +42,7 @@ public class PositionInfo {
     public static final String POSITION_TYPE_OUTPUT_LORE = "§6输出";
     public static final String POSITION_TYPE_IN_AND_OUT_LORE = "§d输入且输出";
 
-    public static final void setIcon(ItemStack item, String type, int amount) {
+    public static void setIcon(ItemStack item, String type, int amount) {
         ItemMeta itemMeta = item.getItemMeta();
         List<String> lore = itemMeta.getLore();
         if (lore == null) {
@@ -75,7 +77,7 @@ public class PositionInfo {
         item.setItemMeta(itemMeta);
     }
 
-    public static final BlockFace getBlockFaceByPosition(String position) {
+    public static BlockFace getBlockFaceByPosition(String position) {
         if (position == null) {
             return BlockFace.SELF;
         }

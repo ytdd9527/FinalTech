@@ -11,9 +11,10 @@ import java.util.LinkedHashMap;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
-public final class FilterMode {
-    public static final String KEY = "fm";
+public final class CargoFilter {
+    public static final String KEY = "cf";
 
     public static final String VALUE_BLACK = "b";
     public static final String VALUE_WHITE = "w";
@@ -25,30 +26,4 @@ public final class FilterMode {
         this.put(VALUE_BLACK, FILTER_MODE_BLACK_ICON);
         this.put(VALUE_WHITE, FILTER_MODE_WHITE_ICON);
     }});
-
-    @Deprecated
-    public static String next(String filterMode) {
-        if (filterMode == null) {
-            return VALUE_WHITE;
-        }
-        switch (filterMode) {
-            case VALUE_WHITE:
-                return VALUE_BLACK;
-            case VALUE_BLACK:
-            default:
-                return VALUE_WHITE;
-        }
-    }
-
-    @Deprecated
-    public static ItemStack getIcon(String filterMode) {
-        if (filterMode == null) {
-            return Icon.ERROR_ICON;
-        }
-        return switch (filterMode) {
-            case VALUE_WHITE -> FILTER_MODE_WHITE_ICON;
-            case VALUE_BLACK -> FILTER_MODE_BLACK_ICON;
-            default -> Icon.ERROR_ICON;
-        };
-    }
 }

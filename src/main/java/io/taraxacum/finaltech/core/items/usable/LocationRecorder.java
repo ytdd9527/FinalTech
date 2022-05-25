@@ -32,10 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocationRecorder extends UsableSlimefunItem {
-    private static final String KEY = "location";
-    private static final NamespacedKey NAMESPACED_KEY = new NamespacedKey(JavaPlugin.getPlugin(FinalTech.class), KEY);
-    private static final String DEFAULT_LORE = TextUtil.COLOR_NEGATIVE + "未记录坐标";
-
     public LocationRecorder(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -43,71 +39,27 @@ public class LocationRecorder extends UsableSlimefunItem {
     @Override
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
         PlayerInteractEvent interactEvent = playerRightClickEvent.getInteractEvent();
-        Block block = interactEvent.getClickedBlock();
         if(playerRightClickEvent.getPlayer().isSneaking()) {
+            Block block = interactEvent.getClickedBlock();
             if(block != null && SlimefunUtil.hasPermission(playerRightClickEvent.getPlayer(), block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
-                LocationRecorder.setLocation(playerRightClickEvent.getItem(), block.getLocation());
+                LocationUtil.saveLocationToItem(playerRightClickEvent.getItem(), block.getLocation());
+                LocationUtil.updateLocationItem(playerRightClickEvent.getItem());
             }
         } else {
-            ItemStack item = playerRightClickEvent.getItem();
-            ItemMeta itemMeta = item.getItemMeta();
-            PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-            if(persistentDataContainer.has(NAMESPACED_KEY, PersistentDataType.STRING)) {
-                String locationString = persistentDataContainer.get(NAMESPACED_KEY, PersistentDataType.STRING);
-                Bukkit.getLogger().info(locationString);
-                Location targetLocation = LocationUtil.stringToLocation(locationString);
-                Player player = playerRightClickEvent.getPlayer();
-                if(SlimefunUtil.hasPermission(playerRightClickEvent.getPlayer(), targetLocation, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
-                    Block targetBlock = targetLocation.getBlock();
-                    if(BlockStorage.hasInventory(targetBlock)) {
-                        player.openInventory(BlockStorage.getInventory(targetBlock).toInventory());
-                    } else {
-                        Slimefun.runSync(() -> {
-                            if(PaperLib.getBlockState(targetBlock, false).getState() instanceof InventoryHolder) {
-                                InventoryView inventoryView = player.openInventory(((InventoryHolder) PaperLib.getBlockState(targetBlock, false).getState()).getInventory());
-                            }
-                        });
-                    }
-                } else {
-                    player.sendRawMessage("您似乎没有在此处使用该物品的权限");
-                }
+            Location location = LocationUtil.parseLocationInItem(playerRightClickEvent.getItem());
+            if(location == null) {
+                return;
             }
-        }
-    }
 
-    public static void setLocation(@Nonnull ItemStack item, @Nullable Location location) {
-        ItemMeta itemMeta = item.getItemMeta();
-        if(location != null) {
-            PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-            persistentDataContainer.set(NAMESPACED_KEY, PersistentDataType.STRING, LocationUtil.locationToString(location));
-            List<String> loreList = new ArrayList<>();
-            loreList.add(TextUtil.colorPseudorandomString("记录的坐标"));
-            loreList.add(TextUtil.colorPseudorandomString("world= " + location.getWorld().getName()));
-            loreList.add(TextUtil.colorPseudorandomString("x= " + String.format("%.2f", location.getX())));
-            loreList.add(TextUtil.colorPseudorandomString("y= " + String.format("%.2f", location.getY())));
-            loreList.add(TextUtil.colorPseudorandomString("z= " + String.format("%.2f", location.getZ())));
-            itemMeta.setLore(loreList);
+            Player player = playerRightClickEvent.getPlayer();
+            if(!SlimefunUtil.hasPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
+                player.sendRawMessage(TextUtil.colorRandomString("您似乎没有在此处使用该物品的权限"));
+            }
 
-        }
-        if(location == null) {
-            PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-            persistentDataContainer.remove(NAMESPACED_KEY);
-            List<String> loreList = new ArrayList<>();
-            loreList.add(DEFAULT_LORE);
-            itemMeta.setLore(loreList);
-        }
-        item.setItemMeta(itemMeta);
-    }
-
-    @Nullable
-    public static Location getLocation(@Nonnull ItemStack item) {
-        ItemMeta itemMeta = item.getItemMeta();
-        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-        if(persistentDataContainer.has(NAMESPACED_KEY, PersistentDataType.STRING)) {
-            String locationString = persistentDataContainer.get(NAMESPACED_KEY, PersistentDataType.STRING);
-            return LocationUtil.stringToLocation(locationString);
-        } else {
-            return null;
+            Block block = location.getBlock();
+            if(BlockStorage.hasInventory(block)) {
+                player.openInventory(BlockStorage.getInventory(block).toInventory());
+            }
         }
     }
 }

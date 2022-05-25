@@ -3,7 +3,6 @@ package io.taraxacum.finaltech.setup;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.taraxacum.finaltech.setup.FinalTechItems;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -159,7 +158,7 @@ public final class FinalTechRecipes {
     };
 
     public static final ItemStack[] LINKED_STORAGE_UNIT = new ItemStack[] {
-            null, FinalTechItems.TRANSFER_PIPE, null,
+            null, FinalTechItems.LINK_TRANSFER, null,
             null, FinalTechItems.NORMAL_STORAGE_UNIT, null,
             null, null, null,
     };
@@ -177,13 +176,13 @@ public final class FinalTechRecipes {
     };
 
     public static final ItemStack[] DIVIDED_LIMITED_STORAGE_UNIT = new ItemStack[] {
-            null, FinalTechItems.TRANSFER_PIPE, null,
+            null, FinalTechItems.LINK_TRANSFER, null,
             FinalTechItems.TRANSFER_LINE, FinalTechItems.NORMAL_STORAGE_UNIT, null,
             null, null, null,
     };
 
     public static final ItemStack[] DIVIDED_STACK_STORAGE_UNIT = new ItemStack[] {
-            null, FinalTechItems.TRANSFER_PIPE, null,
+            null, FinalTechItems.LINK_TRANSFER, null,
             null, FinalTechItems.NORMAL_STORAGE_UNIT, null,
             null, FinalTechItems.TRANSFER_STATION, null,
     };
@@ -249,9 +248,9 @@ public final class FinalTechRecipes {
     };
 
     public static final ItemStack[] STACKER = new ItemStack[] {
-            FinalTechItems.TRANSFER_LINE, FinalTechItems.TRANSFER_PIPE, FinalTechItems.TRANSFER_LINE,
-            FinalTechItems.TRANSFER_PIPE, FinalTechItems.TRANSFER_STATION, FinalTechItems.TRANSFER_PIPE,
-            FinalTechItems.TRANSFER_LINE, FinalTechItems.TRANSFER_PIPE, FinalTechItems.TRANSFER_LINE
+            FinalTechItems.TRANSFER_LINE, FinalTechItems.LINK_TRANSFER, FinalTechItems.TRANSFER_LINE,
+            FinalTechItems.LINK_TRANSFER, FinalTechItems.TRANSFER_STATION, FinalTechItems.LINK_TRANSFER,
+            FinalTechItems.TRANSFER_LINE, FinalTechItems.LINK_TRANSFER, FinalTechItems.TRANSFER_LINE
     };
 
     public static final ItemStack[] STORAGE_INTERACT_PORT = new ItemStack[] {

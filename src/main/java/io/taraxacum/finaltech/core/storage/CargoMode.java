@@ -25,9 +25,9 @@ public final class CargoMode {
     private static final ItemStack WEAK_SYMMETRY_ICON = new CustomItemStack(Material.MILK_BUCKET, "&d弱对称传输", "&7以对称的方式进行搜索与传输");
 
     public static final BlockStorageIconHelper HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
-        this.put(VALUE_INPUT_MAIN, INPUT_MAIN_ICON);
-        this.put(VALUE_OUTPUT_MAIN, OUTPUT_MAIN_ICON);
         this.put(VALUE_STRONG_SYMMETRY, STRONG_SYMMETRY_ICON);
         this.put(VALUE_WEAK_SYMMETRY, WEAK_SYMMETRY_ICON);
+        this.put(VALUE_INPUT_MAIN, INPUT_MAIN_ICON);
+        this.put(VALUE_OUTPUT_MAIN, OUTPUT_MAIN_ICON);
     }});
 }

@@ -60,94 +60,29 @@ public final class BlockSearchMode {
         this.put(VALUE_RESPECT, RESPECT_ICON);
         this.put(VALUE_INTERRUPT, INTERRUPT_ICON);
     }});
-
     public static final BlockStorageIconHelper PIPE_INPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY_INPUT + SUB_KEY_PIPE, new LinkedHashMap<>() {{
             this.put(VALUE_ZERO, ZERO_ICON);
             this.put(VALUE_INHERIT, INHERIT_ICON);
             this.put(VALUE_PENETRATE, PENETRATE_ICON);
     }});
-
     public static final BlockStorageIconHelper PIPE_OUTPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY_OUTPUT + SUB_KEY_PIPE, new LinkedHashMap<>() {{
             this.put(VALUE_ZERO, ZERO_ICON);
             this.put(VALUE_INHERIT, INHERIT_ICON);
             this.put(VALUE_PENETRATE, PENETRATE_ICON);
     }});
-
     public static final BlockStorageIconHelper LINE_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY + SUB_KEY_LINE, new LinkedHashMap<>() {{
             this.put(VALUE_ZERO, ZERO_ICON);
             this.put(VALUE_PENETRATE, PENETRATE_ICON);
             this.put(VALUE_RESPECT, RESPECT_ICON);
     }});
-
     public static final BlockStorageIconHelper STATION_INPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY_INPUT + SUB_KEY_STATION, new LinkedHashMap<>() {{
             this.put(VALUE_ZERO, ZERO_ICON);
             this.put(VALUE_PENETRATE, PENETRATE_ICON);
             this.put(VALUE_INTERRUPT, INTERRUPT_ICON);
     }});
-
     public static final BlockStorageIconHelper STATION_OUTPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY_OUTPUT + SUB_KEY_STATION, new LinkedHashMap<>() {{
             this.put(VALUE_ZERO, ZERO_ICON);
             this.put(VALUE_PENETRATE, PENETRATE_ICON);
             this.put(VALUE_INTERRUPT, INTERRUPT_ICON);
     }});
-
-    @Deprecated
-    public static final String next(String blockSearchMode, String id) {
-        if (blockSearchMode == null || id == null) {
-            return VALUE_ZERO;
-        }
-        if (id.equals(FinalTechItems.TRANSFER_PIPE.getItemId())) {
-            switch (blockSearchMode) {
-                case VALUE_ZERO:
-                    return VALUE_INHERIT;
-                case VALUE_INHERIT:
-                    return VALUE_PENETRATE;
-                case VALUE_PENETRATE:
-                default:
-                    return VALUE_ZERO;
-            }
-        } else if (id.equals(FinalTechItems.TRANSFER_STATION.getItemId())) {
-            switch (blockSearchMode) {
-                case VALUE_ZERO:
-                    return VALUE_PENETRATE;
-                case VALUE_PENETRATE:
-                    return VALUE_RESPECT;
-                case VALUE_RESPECT:
-                default:
-                    return VALUE_ZERO;
-            }
-        } else if (id.equals(FinalTechItems.TRANSFER_LINE.getItemId())) {
-            switch (blockSearchMode) {
-                case VALUE_ZERO:
-                    return VALUE_PENETRATE;
-                case VALUE_PENETRATE:
-                    return VALUE_INTERRUPT;
-                case VALUE_INHERIT:
-                default:
-                    return VALUE_ZERO;
-            }
-        }
-        return VALUE_ZERO;
-    }
-
-    @Deprecated
-    public static final ItemStack getIcon(String blockSearchMode) {
-        if (blockSearchMode == null) {
-            return Icon.ERROR_ICON;
-        }
-        switch (blockSearchMode) {
-            case VALUE_ZERO:
-                return ZERO_ICON;
-            case VALUE_INHERIT:
-                return INHERIT_ICON;
-            case VALUE_PENETRATE:
-                return PENETRATE_ICON;
-            case VALUE_RESPECT:
-                return RESPECT_ICON;
-            case VALUE_INTERRUPT:
-                return INTERRUPT_ICON;
-            default:
-                return Icon.ERROR_ICON;
-        }
-    }
 }

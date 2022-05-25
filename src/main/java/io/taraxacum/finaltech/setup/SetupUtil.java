@@ -78,6 +78,12 @@ public final class SetupUtil {
         }
         CopyCardItem.DIFFICULTY = copyCardDifficulty;
 
+        if(valueConfig.contains("cargo.link-search-distance")) {
+            LinkTransfer.BLOCK_SEARCH_LIMIT = valueConfig.getInt("cargo.link-search-distance");
+        } else {
+            valueConfig.setValue("cargo.link-search-distance", LinkTransfer.BLOCK_SEARCH_LIMIT);
+        }
+
         FinalTechMenus.MAIN_MENU.setTier(0);
         FinalTechMenus.MAIN_MENU.register(finalTech);
 
@@ -139,7 +145,7 @@ public final class SetupUtil {
         new RandomStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.RANDOM_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.RANDOM_STORAGE_UNIT).register();
         new DistributeLeftStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.DISTRIBUTE_LEFT_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DISTRIBUTE_LEFT_STORAGE_UNIT).register();
         new DistributeRightStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.DISTRIBUTE_RIGHT_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DISTRIBUTE_RIGHT_STORAGE_UNIT).register();
-        new LinkTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.TRANSFER_PIPE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.TRANSFER_PIPE).register();
+        new LinkTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.LINK_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.TRANSFER_PIPE).register();
         new LineTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.TRANSFER_LINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.TRANSFER_LINE).register();
         new MeshTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.TRANSFER_STATION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.TRANSFER_STATION).register();
         new StorageInteractPort(FinalTechMenus.MENU_CARGO, FinalTechItems.STORAGE_INTERACT_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_INTERACT_PORT).register();

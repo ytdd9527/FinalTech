@@ -79,7 +79,7 @@ public class CargoUtil {
                     continue;
                 }
             }
-            if (typeItem == null && !CargoItemMode.VALUE_ALL.equals(itemMode)) {
+            if (typeItem == null && !CargoLimit.VALUE_ALL.equals(itemMode)) {
                 typeItem = ItemStackWrapper.wrap(inputItem);
             }
             cargoNumber -= count;
@@ -87,7 +87,7 @@ public class CargoUtil {
             if(cargoNumber == 0) {
                 break;
             }
-            if (CargoItemMode.VALUE_STACK.equals(itemMode)) {
+            if (CargoLimit.VALUE_STACK.equals(itemMode)) {
                 cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
             }
         }
@@ -134,7 +134,7 @@ public class CargoUtil {
                     continue;
                 }
             }
-            if (typeItem == null && !CargoItemMode.VALUE_ALL.equals(itemMode)) {
+            if (typeItem == null && !CargoLimit.VALUE_ALL.equals(itemMode)) {
                 typeItem = ItemStackWrapper.wrap(inputItem);
             }
             cargoNumber -= count;
@@ -142,7 +142,7 @@ public class CargoUtil {
             if(cargoNumber == 0) {
                 break;
             }
-            if (CargoItemMode.VALUE_STACK.equals(itemMode)) {
+            if (CargoLimit.VALUE_STACK.equals(itemMode)) {
                 cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
             }
         }
@@ -194,7 +194,7 @@ public class CargoUtil {
             if (!CargoUtil.isMatch(inputItemWithWrapper, filterItemList, filterMode)) {
                 continue;
             }
-            if (CargoUtil.isMatch(inputItemWithWrapper, skipItemList, FilterMode.VALUE_WHITE)) {
+            if (CargoUtil.isMatch(inputItemWithWrapper, skipItemList, CargoFilter.VALUE_WHITE)) {
                 continue;
             }
             if (!vanillaOutputBlock) {
@@ -221,7 +221,7 @@ public class CargoUtil {
                 }
                 ItemStack outputItem = outputInv.getItem(outputSlot);
                 if (ItemStackUtil.isItemNull(outputItem)) {
-                    if (typeItem == null && !CargoItemMode.VALUE_ALL.equals(itemMode)) {
+                    if (typeItem == null && !CargoLimit.VALUE_ALL.equals(itemMode)) {
                         typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
                     }
                     int count = Math.min(inputItem.getAmount(), cargoNumber);
@@ -232,7 +232,7 @@ public class CargoUtil {
                     cargoNumber -= count;
                     number += count;
                     work = true;
-                    if (CargoItemMode.VALUE_STACK.equals(itemMode)) {
+                    if (CargoLimit.VALUE_STACK.equals(itemMode)) {
                         cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
                         break;
                     }
@@ -240,14 +240,14 @@ public class CargoUtil {
                         break;
                     }
                 } else if (outputItem.getAmount() < outputItem.getMaxStackSize() && ItemStackUtil.isItemSimilar(inputItemWithWrapper, outputItem)) {
-                    if (typeItem == null && !CargoItemMode.VALUE_ALL.equals(itemMode)) {
+                    if (typeItem == null && !CargoLimit.VALUE_ALL.equals(itemMode)) {
                         typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
                     }
                     int count = ItemStackUtil.stack(inputItemWithWrapper, outputItem, cargoNumber);
                     cargoNumber -= count;
                     number += count;
                     work = true;
-                    if (CargoItemMode.VALUE_STACK.equals(itemMode)) {
+                    if (CargoLimit.VALUE_STACK.equals(itemMode)) {
                         cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
                         break;
                     }
@@ -315,7 +315,7 @@ public class CargoUtil {
                 if (!CargoUtil.isMatch(outputItemWithWrapper, filterList, filterMode)) {
                     continue;
                 }
-                if (CargoUtil.isMatch(outputItemWithWrapper, skipItemList, FilterMode.VALUE_WHITE)) {
+                if (CargoUtil.isMatch(outputItemWithWrapper, skipItemList, CargoFilter.VALUE_WHITE)) {
                     continue;
                 }
             } else {
@@ -353,7 +353,7 @@ public class CargoUtil {
                     continue;
                 }
                 if (ItemStackUtil.isItemNull(outputItem)) {
-                    if (typeItem == null && !CargoItemMode.VALUE_ALL.equals(itemMode)) {
+                    if (typeItem == null && !CargoLimit.VALUE_ALL.equals(itemMode)) {
                         typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
                     }
                     int count = Math.min(inputItem.getAmount(), cargoNumber);
@@ -366,7 +366,7 @@ public class CargoUtil {
                     cargoNumber -= count;
                     number += count;
                     work = true;
-                    if (CargoItemMode.VALUE_STACK.equals(itemMode)) {
+                    if (CargoLimit.VALUE_STACK.equals(itemMode)) {
                         cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
                     }
                     if(outputItem.getAmount() >= outputItem.getMaxStackSize()) {
@@ -376,14 +376,14 @@ public class CargoUtil {
                         break;
                     }
                 } else if (outputItem.getMaxStackSize() > outputItem.getAmount() && ItemStackUtil.isItemSimilar(inputItemWithWrapper.getItemStackWrapper(), outputItemWithWrapper.getItemStackWrapper())) {
-                    if (typeItem == null && !CargoItemMode.VALUE_ALL.equals(itemMode)) {
+                    if (typeItem == null && !CargoLimit.VALUE_ALL.equals(itemMode)) {
                         typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
                     }
                     int count = ItemStackUtil.stack(inputItemWithWrapper, outputItemWithWrapper, cargoNumber);
                     cargoNumber -= count;
                     number += count;
                     work = true;
-                    if (CargoItemMode.VALUE_STACK.equals(itemMode)) {
+                    if (CargoLimit.VALUE_STACK.equals(itemMode)) {
                         cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
                     }
                     if(outputItem.getAmount() >= outputItem.getMaxStackSize()) {
@@ -412,10 +412,10 @@ public class CargoUtil {
     public static boolean isMatch(@Nonnull ItemStackWithWrapper itemStackWithWrapper, @Nonnull List<ItemStackWithWrapper> list, @Nonnull String filterMode) {
         for (ItemStackWithWrapper filterItem : list) {
             if (ItemStackUtil.isItemSimilar(itemStackWithWrapper, filterItem)) {
-                return FilterMode.VALUE_WHITE.equals(filterMode);
+                return CargoFilter.VALUE_WHITE.equals(filterMode);
             }
         }
-        return FilterMode.VALUE_BLACK.equals(filterMode);
+        return CargoFilter.VALUE_BLACK.equals(filterMode);
     }
 
     public static InvWithSlots getInvAsync(@Nonnull Block block, @Nonnull String size, @Nonnull String order) {

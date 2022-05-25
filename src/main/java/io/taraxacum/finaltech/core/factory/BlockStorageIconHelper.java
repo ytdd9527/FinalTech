@@ -6,6 +6,7 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -41,6 +42,15 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
         return valueIconMap.get(this.defaultValue());
     }
 
+    public boolean checkAndUpdateIcon(@Nonnull BlockMenu blockMenu, int slot) {
+        String value = BlockStorage.getLocationInfo(blockMenu.getLocation(), this.getKey());
+        if(!this.validValue(value)) {
+            value = this.defaultValue();
+        }
+        blockMenu.replaceExistingItem(slot, this.getOrErrorIcon(value));
+        return true;
+    }
+
     @Nonnull
     public ChestMenu.MenuClickHandler getHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
         return (player, i, itemStack, clickAction) -> {
@@ -55,7 +65,6 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
             return false;
         };
     }
-
     @Nonnull
     public ChestMenu.MenuClickHandler getUpdateHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
         return (player, i, itemStack, clickAction) -> {
@@ -65,7 +74,6 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
             return false;
         };
     }
-
     @Nonnull
     public ChestMenu.MenuClickHandler getNextHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
         return (player, i, itemStack, clickAction) -> {
@@ -76,7 +84,6 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
             return false;
         };
     }
-
     @Nonnull
     public ChestMenu.MenuClickHandler getPreviousHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
         return (player, i, itemStack, clickAction) -> {
@@ -91,7 +98,6 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
     public String clickNextValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
         return this.nextOrDefaultValue(value);
     }
-
     public String clickPreviousValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
         return this.previousOrDefaultValue(value);
     }

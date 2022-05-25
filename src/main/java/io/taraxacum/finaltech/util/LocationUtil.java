@@ -1,15 +1,83 @@
 package io.taraxacum.finaltech.util;
 
+import io.taraxacum.finaltech.FinalTech;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class LocationUtil {
+    private static final NamespacedKey KEY = new NamespacedKey(FinalTech.getInstance(), "location");
 
+    public static Location parseLocationInItem(@Nullable ItemStack item) {
+        if(ItemStackUtil.isItemNull(item)) {
+            return null;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+        if(persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
+            String locationString = persistentDataContainer.get(KEY, PersistentDataType.STRING);
+            return LocationUtil.stringToLocation(locationString);
+        }
+        return null;
+    }
 
-    public static Location stringToLocation(String locationString) {
+    public static boolean saveLocationToItem(@Nullable ItemStack item, @Nonnull Location location) {
+        if(ItemStackUtil.isItemNull(item)) {
+            return false;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+        persistentDataContainer.set(KEY, PersistentDataType.STRING, LocationUtil.locationToString(location));
+        item.setItemMeta(itemMeta);
+        return true;
+    }
+
+    public static boolean updateLocationItem(@Nullable ItemStack item) {
+        if (ItemStackUtil.isItemNull(item)) {
+            return false;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+        if(persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
+            String locationString = persistentDataContainer.get(KEY, PersistentDataType.STRING);
+            Location location = LocationUtil.stringToLocation(locationString);
+            List<String> loreList = new ArrayList<>();
+            loreList.add(TextUtil.colorRandomString("记录的坐标"));
+            loreList.add(TextUtil.colorRandomString("world= " + location.getWorld().getName()));
+            loreList.add(TextUtil.colorRandomString("x= " + String.format("%.2f", location.getX())));
+            loreList.add(TextUtil.colorRandomString("y= " + String.format("%.2f", location.getY())));
+            loreList.add(TextUtil.colorRandomString("z= " + String.format("%.2f", location.getZ())));
+            itemMeta.setLore(loreList);
+            item.setItemMeta(itemMeta);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Nonnull
+    public static Location getCenterLocation(@Nonnull Block block) {
+        Location location = block.getLocation();
+        location.setX(location.getBlockX() + 0.5);
+        location.setY(location.getBlockY() + 0.5);
+        location.setZ(location.getBlockZ() + 0.5);
+        return location;
+    }
+
+    @Nullable
+    public static Location stringToLocation(@Nonnull String locationString) {
         World world = null;
         Double x = null;
         Double y = null;
@@ -50,7 +118,8 @@ public class LocationUtil {
         return null;
     }
 
-    public static String locationToString(Location location) {
+    @Nonnull
+    public static String locationToString(@Nonnull Location location) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("world:");
         stringBuilder.append(location.getWorld().getName());

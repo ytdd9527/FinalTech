@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.common.util.StringNumberUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -73,11 +74,9 @@ public class SlimefunUtil {
     public static String getCharge(@Nonnull Location location) {
         return BlockStorage.hasBlockInfo(location) ? SlimefunUtil.getCharge(BlockStorage.getLocationInfo(location)) : "0";
     }
-
     public static String getCharge(@Nonnull Config config) {
         return config.contains("energy-charge") ? config.getString("energy-charge") : StringNumberUtil.ZERO;
     }
-
     public static void setCharge(@Nonnull Location location, @Nonnull String energy) {
         BlockStorage.addBlockInfo(location, "energy-charge", energy);
     }
@@ -90,28 +89,55 @@ public class SlimefunUtil {
 
     public static void runBlockTicker(@Nonnull BlockTicker blockTicker, @Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         if (blockTicker.isSynchronized()) {
-            Slimefun.runSync(() -> blockTicker.tick(block, slimefunItem, config));
+            FinalTech.getInstance().getServer().getScheduler().runTask(FinalTech.getInstance(), () -> blockTicker.tick(block, slimefunItem, config));
         } else {
             blockTicker.tick(block, slimefunItem, config);
         }
     }
+    public static void runBlockTickerAsync(@Nonnull BlockTicker blockTicker, @Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+        if (blockTicker.isSynchronized()) {
+            FinalTech.getInstance().getServer().getScheduler().runTask(FinalTech.getInstance(), () -> blockTicker.tick(block, slimefunItem, config));
+        } else {
+            FinalTech.getInstance().getServer().getScheduler().runTaskAsynchronously(FinalTech.getInstance(), () -> blockTicker.tick(block, slimefunItem, config));
+        }
+    }
 
-    public static boolean hasPermission(@Nonnull String uuid, @Nonnull Block block, Interaction interaction) {
+    public static boolean hasPermission(@Nonnull String uuid, @Nonnull Block block, @Nonnull Interaction... interactions) {
         Player player = Bukkit.getPlayer(UUID.fromString(uuid));
         if(player == null) {
             return false;
         }
-        return Slimefun.getProtectionManager().hasPermission(player, block, interaction);
+        for(Interaction interaction : interactions) {
+            if(!Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), interaction)) {
+                return false;
+            }
+        }
+        return true;
     }
-
-    public static boolean hasPermission(@Nonnull String uuid, @Nonnull Entity entity, @Nonnull Interaction interaction) {
+    public static boolean hasPermission(@Nonnull String uuid, @Nonnull Entity entity, @Nonnull Interaction... interactions) {
         Player player = Bukkit.getPlayer(UUID.fromString(uuid));
         if(player == null) {
             return false;
         }
-        return Slimefun.getProtectionManager().hasPermission(player, entity.getLocation(), interaction);
+        for(Interaction interaction : interactions) {
+            if(!Slimefun.getProtectionManager().hasPermission(player, entity.getLocation(), interaction)) {
+                return false;
+            }
+        }
+        return true;
     }
-
+    public static boolean hasPermission(@Nonnull String uuid, @Nonnull Location location, @Nonnull Interaction... interactions) {
+        Player player = Bukkit.getPlayer(UUID.fromString(uuid));
+        if(player == null) {
+            return false;
+        }
+        for(Interaction interaction : interactions) {
+            if(!Slimefun.getProtectionManager().hasPermission(player, location, interaction)) {
+                return false;
+            }
+        }
+        return true;
+    }
     public static boolean hasPermission(@Nonnull Player player, @Nonnull Location location, @Nonnull Interaction... interactions) {
         for(Interaction interaction : interactions) {
             if(!Slimefun.getProtectionManager().hasPermission(player, location, interaction)) {

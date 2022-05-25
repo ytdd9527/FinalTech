@@ -39,85 +39,16 @@ public final class SlotSearchSize {
         this.put(VALUE_INPUTS_AND_OUTPUTS, INPUTS_AND_OUTPUTS_ICON);
         this.put(VALUE_OUTPUTS_AND_INPUTS, OUTPUTS_AND_INPUTS_ICON);
     }});
-
     public static final BlockStorageIconHelper INPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY_INPUT, new LinkedHashMap<>() {{
         this.put(VALUE_INPUTS_ONLY, INPUTS_ONLY_ICON);
         this.put(VALUE_OUTPUTS_ONLY, OUTPUTS_ONLY_ICON);
         this.put(VALUE_INPUTS_AND_OUTPUTS, INPUTS_AND_OUTPUTS_ICON);
         this.put(VALUE_OUTPUTS_AND_INPUTS, OUTPUTS_AND_INPUTS_ICON);
     }});
-
     public static final BlockStorageIconHelper OUTPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY_OUTPUT, new LinkedHashMap<>() {{
         this.put(VALUE_OUTPUTS_ONLY, OUTPUTS_ONLY_ICON);
         this.put(VALUE_INPUTS_AND_OUTPUTS, INPUTS_AND_OUTPUTS_ICON);
         this.put(VALUE_OUTPUTS_AND_INPUTS, OUTPUTS_AND_INPUTS_ICON);
         this.put(VALUE_INPUTS_ONLY, INPUTS_ONLY_ICON);
     }});
-
-    @Deprecated
-    public static ChestMenu.MenuClickHandler getInputHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
-        return (player, i, itemStack, clickAction) -> {
-            String size = INPUT_HELPER.getOrDefaultValue(block.getLocation());
-            if(clickAction.isRightClicked()) {
-                size = INPUT_HELPER.previousOrDefaultValue(size);
-            } else {
-                size = INPUT_HELPER.nextOrDefaultValue(size);
-            }
-            blockMenu.replaceExistingItem(slot, INPUT_HELPER.getOrErrorIcon(size));
-            INPUT_HELPER.setOrClearValue(block.getLocation(), size);
-            return false;
-        };
-    }
-
-    @Deprecated
-    public static ChestMenu.MenuClickHandler getOutputHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
-        return (player, i, itemStack, clickAction) -> {
-            String size = SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(block.getLocation());
-            if(clickAction.isRightClicked()) {
-                size = SlotSearchSize.OUTPUT_HELPER.previousOrDefaultValue(size);
-            } else {
-                size = SlotSearchSize.OUTPUT_HELPER.nextOrDefaultValue(size);
-            }
-            blockMenu.replaceExistingItem(slot, SlotSearchSize.OUTPUT_HELPER.getOrErrorIcon(size));
-            SlotSearchSize.OUTPUT_HELPER.setOrClearValue(block.getLocation(), size);
-            return false;
-        };
-    }
-
-    @Deprecated
-    public static String next(String size) {
-        if (size == null) {
-            return VALUE_INPUTS_ONLY;
-        }
-        switch (size) {
-            case VALUE_INPUTS_ONLY:
-                return VALUE_OUTPUTS_ONLY;
-            case VALUE_OUTPUTS_ONLY:
-                return VALUE_INPUTS_AND_OUTPUTS;
-            case VALUE_INPUTS_AND_OUTPUTS:
-                return VALUE_OUTPUTS_AND_INPUTS;
-            case VALUE_OUTPUTS_AND_INPUTS:
-            default:
-                return VALUE_INPUTS_ONLY;
-        }
-    }
-
-    @Deprecated
-    public static ItemStack getIcon(String size) {
-        if (size == null) {
-            return Icon.ERROR_ICON;
-        }
-        switch (size) {
-            case VALUE_INPUTS_ONLY:
-                return INPUTS_ONLY_ICON;
-            case VALUE_OUTPUTS_ONLY:
-                return OUTPUTS_ONLY_ICON;
-            case VALUE_INPUTS_AND_OUTPUTS:
-                return INPUTS_AND_OUTPUTS_ICON;
-            case VALUE_OUTPUTS_AND_INPUTS:
-                return OUTPUTS_AND_INPUTS_ICON;
-            default:
-                return Icon.ERROR_ICON;
-        }
-    }
 }

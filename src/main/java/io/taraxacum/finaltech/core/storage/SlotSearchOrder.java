@@ -37,7 +37,6 @@ public final class SlotSearchOrder {
         this.put(VALUE_LAST_ONLY, LAST_ONLY_ICON);
         this.put(VALUE_RANDOM, RANDOM_ICON);
     }});
-
     public static final BlockStorageIconHelper INPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY_INPUT, new LinkedHashMap<>() {{
         this.put(VALUE_ASCENT, ASCENT_ICON);
         this.put(VALUE_DESCEND, DESCEND_ICON);
@@ -45,7 +44,6 @@ public final class SlotSearchOrder {
         this.put(VALUE_LAST_ONLY, LAST_ONLY_ICON);
         this.put(VALUE_RANDOM, RANDOM_ICON);
     }});
-
     public static final BlockStorageIconHelper OUTPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY_INPUT, new LinkedHashMap<>() {{
         this.put(VALUE_ASCENT, ASCENT_ICON);
         this.put(VALUE_DESCEND, DESCEND_ICON);
@@ -53,41 +51,4 @@ public final class SlotSearchOrder {
         this.put(VALUE_LAST_ONLY, LAST_ONLY_ICON);
         this.put(VALUE_RANDOM, RANDOM_ICON);
     }});
-
-    @Deprecated
-    public static String next(String order) {
-        if (order == null) {
-            return VALUE_ASCENT;
-        }
-        switch (order) {
-            case VALUE_ASCENT:
-                return VALUE_DESCEND;
-            case VALUE_DESCEND:
-                return VALUE_FIRST_ONLY;
-            case VALUE_FIRST_ONLY:
-                return VALUE_LAST_ONLY;
-            case VALUE_LAST_ONLY:
-            default:
-                return VALUE_ASCENT;
-        }
-    }
-
-    @Deprecated
-    public static ItemStack getIcon(String order) {
-        if (order == null) {
-            return Icon.ERROR_ICON;
-        }
-        switch (order) {
-            case VALUE_ASCENT:
-                return ASCENT_ICON;
-            case VALUE_DESCEND:
-                return DESCEND_ICON;
-            case VALUE_FIRST_ONLY:
-                return FIRST_ONLY_ICON;
-            case VALUE_LAST_ONLY:
-                return LAST_ONLY_ICON;
-            default:
-                return Icon.ERROR_ICON;
-        }
-    }
 }

@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
  * @author Final_ROOT
  * @since 2.0
  */
-public final class BlockCargoOrder {
+public final class CargoOrder {
     public static final String KEY = "bco";
 
     public static final String VALUE_POSITIVE = "p";
@@ -25,33 +25,4 @@ public final class BlockCargoOrder {
         this.put(VALUE_POSITIVE, POSITIVE_ICON);
         this.put(VALUE_REVERSE, REVERSE_ICON);
     }});
-
-    @Deprecated
-    public static String next(String blockSearchOrder) {
-        if (blockSearchOrder == null) {
-            return VALUE_POSITIVE;
-        }
-        switch (blockSearchOrder) {
-            case VALUE_POSITIVE:
-                return VALUE_REVERSE;
-            case VALUE_REVERSE:
-            default:
-                return VALUE_POSITIVE;
-        }
-    }
-
-    @Deprecated
-    public static ItemStack getIcon(String blockSearchOrder) {
-        if (blockSearchOrder == null) {
-            return Icon.ERROR_ICON;
-        }
-        switch (blockSearchOrder) {
-            case VALUE_POSITIVE:
-                return POSITIVE_ICON;
-            case VALUE_REVERSE:
-                return REVERSE_ICON;
-            default:
-                return Icon.ERROR_ICON;
-        }
-    }
 }

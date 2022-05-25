@@ -8,19 +8,19 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
+import io.taraxacum.common.annotation.Translate;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.core.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.function.TransferPipeMenu;
+import io.taraxacum.finaltech.core.menu.function.LinkTransferMenu;
 import io.taraxacum.finaltech.core.storage.*;
 import io.taraxacum.finaltech.setup.FinalTechItems;
-import io.taraxacum.finaltech.util.CargoUtil;
-import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.block.*;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
@@ -33,14 +33,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class LinkTransfer extends AbstractCargo implements RecipeItem {
-    public static final int BLOCK_SEARCH_LIMIT = 8;
+    private static final double PARTICLE_DISTANCE = 0.22;
+    private static final long PARTICLE_INTERVAL = 100L;
+    public static int BLOCK_SEARCH_LIMIT = 8;
+
     public LinkTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -53,18 +55,21 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
             public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {
                 Block block = blockPlaceEvent.getBlock();
                 Location location = block.getLocation();
+
                 BlockStorage.addBlockInfo(location, "UUID", blockPlaceEvent.getPlayer().getUniqueId().toString());
 
-                BlockStorage.addBlockInfo(location, CargoNumber.KEY, "64");
+                CargoNumber.HELPER.checkOrSetBlockStorage(location);
+                CargoFilter.HELPER.checkOrSetBlockStorage(location);
+                CargoMode.HELPER.checkOrSetBlockStorage(location);
+                CargoLimit.HELPER.checkOrSetBlockStorage(location);
+
                 SlotSearchSize.INPUT_HELPER.checkOrSetBlockStorage(location);
                 SlotSearchOrder.INPUT_HELPER.checkOrSetBlockStorage(location);
-                SlotSearchSize.OUTPUT_HELPER.checkOrSetBlockStorage(location);
-                SlotSearchOrder.OUTPUT_HELPER.checkOrSetBlockStorage(location);
-                FilterMode.HELPER.checkOrSetBlockStorage(location);
-                CargoMode.HELPER.checkOrSetBlockStorage(location);
                 BlockSearchMode.PIPE_INPUT_HELPER.checkOrSetBlockStorage(location);
+                SlotSearchSize.OUTPUT_HELPER.checkOrSetBlockStorage(location);
+
+                SlotSearchOrder.OUTPUT_HELPER.checkOrSetBlockStorage(location);
                 BlockSearchMode.PIPE_OUTPUT_HELPER.checkOrSetBlockStorage(location);
-                CargoItemMode.HELPER.checkOrSetBlockStorage(location);
             }
         };
     }
@@ -72,111 +77,85 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.simpleBlockBreakerHandler(this, TransferPipeMenu.ITEM_MATCH);
+        return MachineUtil.simpleBlockBreakerHandler(this, LinkTransferMenu.ITEM_MATCH);
     }
 
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new TransferPipeMenu(this.getId(), this.getItemName(), this);
+        return new LinkTransferMenu(this);
     }
 
     @Override
     public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config)  {
-        Future<Block[]> future = null;
-        if(!Bukkit.isPrimaryThread()) {
-            future = Bukkit.getScheduler().callSyncMethod(LinkTransfer.this.getAddon().getJavaPlugin(), () -> {
-                Block input = null;
-                Block output = null;
-                BlockData blockData = block.getState().getBlockData();
-                if (blockData instanceof Directional) {
-                    BlockFace blockFace = ((Directional) blockData).getFacing();
-                    input = LinkTransfer.searchBlockPiPe(block, BlockSearchMode.PIPE_INPUT_HELPER.getOrDefaultValue(config), blockFace.getOppositeFace(), true);
-                    output = LinkTransfer.searchBlockPiPe(block, BlockSearchMode.PIPE_OUTPUT_HELPER.getOrDefaultValue(config), blockFace, false);
-                }
-                return new Block[]{input, output};
-            });
-        }
+        String inputSlotSearchSize = SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config);
+        String inputSlotSearchOrder = SlotSearchOrder.INPUT_HELPER.getOrDefaultValue(config);
 
-        String inputSize = SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config);
-        String outputSize = SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config);
-        String inputOrder = SlotSearchOrder.INPUT_HELPER.getOrDefaultValue(config);
-        String outputOrder = SlotSearchOrder.OUTPUT_HELPER.getOrDefaultValue(config);
+        String outputSlotSearchSize = SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config);
+        String outputSlotSearchOrder = SlotSearchOrder.OUTPUT_HELPER.getOrDefaultValue(config);
 
-        int cargoNumber = Integer.parseInt(config.getString(CargoNumber.KEY));
-        String filterMode = FilterMode.HELPER.getOrDefaultValue(config);
+        int cargoNumber = Integer.parseInt(CargoNumber.HELPER.getOrDefaultValue(config));
+        String cargoFilter = CargoFilter.HELPER.getOrDefaultValue(config);
         String cargoMode = CargoMode.HELPER.getOrDefaultValue(config);
-        String cargoItemMode = CargoItemMode.HELPER.getOrDefaultValue(config);
+        String cargoLimit = CargoLimit.HELPER.getOrDefaultValue(config);
 
-        Inventory blockInv = BlockStorage.getInventory(block).toInventory();
+        BlockMenu blockMenu = BlockStorage.getInventory(block);
+        Inventory blockInv = blockMenu.toInventory();
 
-        Optional<Block> inputBlock = Optional.empty();
-        Optional<Block> outputBlock = Optional.empty();
-        if(Bukkit.isPrimaryThread()) {
-            BlockData blockData = block.getState().getBlockData();
-            if (blockData instanceof Directional) {
-                BlockFace blockFace = ((Directional) blockData).getFacing();
-                inputBlock = Optional.ofNullable(LinkTransfer.searchBlockPiPe(block, BlockSearchMode.PIPE_INPUT_HELPER.getOrDefaultValue(config), blockFace.getOppositeFace(), true));
-                outputBlock = Optional.ofNullable(LinkTransfer.searchBlockPiPe(block, BlockSearchMode.PIPE_OUTPUT_HELPER.getOrDefaultValue(config), blockFace, false));
-            }
-        } else {
-            try {
-                Block[] blocks = future.get();
-                inputBlock = Optional.of(blocks[0]);
-                outputBlock = Optional.of(blocks[1]);
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
+        boolean drawParticle = blockMenu.hasViewer();
+
+        Block inputBlock = null;
+        Block outputBlock = null;
+        BlockData blockData = block.getState().getBlockData();
+        if (blockData instanceof Directional) {
+            BlockFace blockFace = ((Directional) blockData).getFacing();
+            inputBlock = this.searchBlockPiPe(block, BlockSearchMode.PIPE_INPUT_HELPER.getOrDefaultValue(config), blockFace.getOppositeFace(), true, drawParticle);
+            outputBlock = this.searchBlockPiPe(block, BlockSearchMode.PIPE_OUTPUT_HELPER.getOrDefaultValue(config), blockFace, false, drawParticle);
         }
-
-        if (inputBlock.isEmpty() || outputBlock.isEmpty()) {
+        if (inputBlock == null || outputBlock == null) {
             return;
         }
 
-        Optional<Block> finalInputBlock = inputBlock;
-        Optional<Block> finalOutputBlock = outputBlock;
-
-        BlockTaskFactory.getInstance().registerRunnable(slimefunItem, true, (() -> {
-            String uuid = config.getString("UUID");
-            if (uuid != null) {
-                if (!SlimefunUtil.hasPermission(uuid, finalInputBlock.get(), Interaction.INTERACT_BLOCK) || !SlimefunUtil.hasPermission(uuid, finalOutputBlock.get(), Interaction.INTERACT_BLOCK)) {
-                    return;
-                }
+        String uuid = config.getString("UUID");
+        if (uuid != null) {
+            if (!SlimefunUtil.hasPermission(uuid, inputBlock, Interaction.INTERACT_BLOCK) || !SlimefunUtil.hasPermission(uuid, outputBlock, Interaction.INTERACT_BLOCK)) {
+                return;
             }
+        }
 
-            CargoUtil.doCargo(finalInputBlock.get(), finalOutputBlock.get(), inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoItemMode, filterMode, blockInv, TransferPipeMenu.ITEM_MATCH, cargoMode);
-        }), block.getLocation(), inputBlock.get().getLocation(), outputBlock.get().getLocation());
-    }
-
-    @Override
-    protected boolean isSynchronized() {
-        return true;
+        CargoUtil.doCargo(inputBlock, outputBlock, inputSlotSearchSize, inputSlotSearchOrder, outputSlotSearchSize, outputSlotSearchOrder, cargoNumber, cargoLimit, cargoFilter, blockInv, LinkTransferMenu.ITEM_MATCH, cargoMode);
     }
 
     @Nullable
-    private static Block searchBlockPiPe(@Nonnull Block begin, @Nonnull String searchMode, @Nonnull BlockFace blockFace, boolean input) {
+    private Block searchBlockPiPe(@Nonnull Block begin, @Nonnull String searchMode, @Nonnull BlockFace blockFace, boolean input, boolean drawParticle) {
+        List<Location> particleLocationList = new ArrayList<>();
+        particleLocationList.add(LocationUtil.getCenterLocation(begin));
         Block result = begin.getRelative(blockFace);
         int count = 1;
         if (BlockSearchMode.VALUE_ZERO.equals(searchMode)) {
+            particleLocationList.add(LocationUtil.getCenterLocation(result));
+            if(drawParticle) {
+                Bukkit.getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawLineByDistance(Particle.REDSTONE, PARTICLE_INTERVAL, PARTICLE_DISTANCE, particleLocationList));
+            }
             return result;
         }
-        List<Location> locationList = new ArrayList<>();
-        locationList.add(begin.getLocation());
+        Set<Location> locationSet = new HashSet<>();
+        locationSet.add(begin.getLocation());
         while(true) {
-            if (BlockStorage.hasInventory(result) && !result.getType().equals(FinalTechItems.TRANSFER_PIPE.getType())) {
+            particleLocationList.add(LocationUtil.getCenterLocation(result));
+            if (BlockStorage.hasInventory(result) && !result.getType().equals(FinalTechItems.LINK_TRANSFER.getType())) {
                 break;
             }
             if (PaperLib.getBlockState(result, false).getState() instanceof InventoryHolder) {
                 break;
             }
-            if (result.getType() == FinalTechItems.TRANSFER_PIPE.getType()) {
+            if (result.getType() == FinalTechItems.LINK_TRANSFER.getType()) {
                 count = 0;
-                for (Location location : locationList) {
-                    if (location.equals(result.getLocation())) {
-                        return result;
-                    }
+                if (locationSet.contains(result.getLocation())) {
+                    particleLocationList.add(LocationUtil.getCenterLocation(result));
+                    break;
                 }
-                locationList.add(result.getLocation());
+                locationSet.add(result.getLocation());
                 if (BlockSearchMode.VALUE_INHERIT.equals(searchMode)) {
                     BlockData blockData = result.getState().getBlockData();
                     if (blockData instanceof Directional) {
@@ -189,12 +168,16 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
             }
             result = result.getRelative(blockFace);
             if (count++ > BLOCK_SEARCH_LIMIT) {
-                return null;
+                break;
             }
+        }
+        if(drawParticle) {
+            this.getAddon().getJavaPlugin().getServer().getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawLineByDistance(Particle.REDSTONE, PARTICLE_INTERVAL, PARTICLE_DISTANCE, particleLocationList));
         }
         return result;
     }
 
+    @Translate
     @Override
     public void registerDefaultRecipes() {
         this.registerDescriptiveRecipe("&f基础功能",

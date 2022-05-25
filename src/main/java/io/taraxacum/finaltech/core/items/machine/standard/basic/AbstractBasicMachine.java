@@ -13,7 +13,7 @@ import io.taraxacum.finaltech.core.menu.standard.lock.AbstractLockMachineMenu;
 import io.taraxacum.finaltech.core.menu.standard.lock.BasicMachineMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.core.storage.RecipeLock;
+import io.taraxacum.finaltech.core.storage.MachineRecipeLock;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -47,7 +47,7 @@ public abstract class AbstractBasicMachine extends AbstractStandardMachine {
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         int offset = config.contains(OFFSET_KEY) ? Integer.parseInt(config.getString(OFFSET_KEY)) : 0;
-        int recipeLock = config.contains(RecipeLock.KEY) ? Integer.parseInt(config.getString(RecipeLock.KEY)) : -2;
+        int recipeLock = config.contains(MachineRecipeLock.KEY) ? Integer.parseInt(config.getString(MachineRecipeLock.KEY)) : -2;
 
         CraftingOperation currentOperation = (CraftingOperation) this.getMachineProcessor().getOperation(block);
         if (currentOperation == null) {
@@ -94,11 +94,11 @@ public abstract class AbstractBasicMachine extends AbstractStandardMachine {
             craft.setMatchCount(Math.min(craft.getMatchCount(), MachineUtil.calMaxMatch(blockMenu, this.getOutputSlot(), craft.getOutputItemList())));
             if(craft.getMatchCount() > 0) {
                 craft.consumeItem(blockMenu);
-                if(recipeLock == Integer.parseInt(RecipeLock.VALUE_UNLOCK)) {
+                if(recipeLock == Integer.parseInt(MachineRecipeLock.VALUE_UNLOCK)) {
                     ItemStack item = blockMenu.getItemInSlot(AbstractLockMachineMenu.RECIPE_LOCK_SLOT);
-                    RecipeLock.HELPER.setIcon(item, String.valueOf(craft.getOffset()), this);
-                    BlockStorage.addBlockInfo(blockMenu.getLocation(), RecipeLock.KEY, String.valueOf(craft.getOffset()));
-                } else if(recipeLock == Integer.parseInt(RecipeLock.VALUE_LOCK_OFF)) {
+                    MachineRecipeLock.HELPER.setIcon(item, String.valueOf(craft.getOffset()), this);
+                    BlockStorage.addBlockInfo(blockMenu.getLocation(), MachineRecipeLock.KEY, String.valueOf(craft.getOffset()));
+                } else if(recipeLock == Integer.parseInt(MachineRecipeLock.VALUE_LOCK_OFF)) {
                     BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, String.valueOf(craft.getOffset()));
                 }
                 return craft.calMachineRecipe(this.getMachineRecipes().get(offset).getTicks());

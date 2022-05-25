@@ -6,21 +6,22 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.taraxacum.common.annotation.Translate;
 import io.taraxacum.finaltech.api.interfaces.PerformanceLimitMachine;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.function.TransferStationMenu;
+import io.taraxacum.finaltech.core.menu.function.StationTransferMenu;
 import io.taraxacum.finaltech.core.storage.*;
 import io.taraxacum.finaltech.setup.FinalTechItems;
-import io.taraxacum.finaltech.util.CargoUtil;
-import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.*;
 import io.taraxacum.finaltech.api.dto.PositionHelper;
-import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -28,11 +29,17 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class MeshTransfer extends AbstractCargo implements RecipeItem, PerformanceLimitMachine {
+    private static final double PARTICLE_DISTANCE = 0.22;
+    private static final long PARTICLE_INTERVAL = 100L;
+
     public MeshTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -46,20 +53,23 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
                 Block block = blockPlaceEvent.getBlock();
                 Location location = block.getLocation();
 
-                BlockStorage.addBlockInfo(block, CargoNumber.KEY_INPUT, "64");
-                BlockStorage.addBlockInfo(block, CargoCountMode.KEY_INPUT, CargoCountMode.VALUE_UNIVERSAL);
-                SlotSearchSize.INPUT_HELPER.checkOrSetBlockStorage(location);
-                SlotSearchOrder.INPUT_HELPER.checkOrSetBlockStorage(location);
-                CargoItemMode.INPUT_HELPER.checkOrSetBlockStorage(location);
-                BlockStorage.addBlockInfo(block, CargoNumber.KEY_OUTPUT, "64");
-                BlockStorage.addBlockInfo(block, CargoCountMode.KEY_OUTPUT, CargoCountMode.VALUE_UNIVERSAL);
-                SlotSearchSize.OUTPUT_HELPER.checkOrSetBlockStorage(location);
-                SlotSearchOrder.OUTPUT_HELPER.checkOrSetBlockStorage(location);
-                CargoItemMode.OUTPUT_HELPER.checkOrSetBlockStorage(location);
-                FilterMode.HELPER.checkOrSetBlockStorage(location);
-                BlockStorage.addBlockInfo(block, PositionInfo.KEY, "");
+                CargoFilter.HELPER.checkOrSetBlockStorage(location);
                 BlockSearchMode.STATION_INPUT_HELPER.checkOrSetBlockStorage(location);
                 BlockSearchMode.STATION_OUTPUT_HELPER.checkOrSetBlockStorage(location);
+
+                CargoNumber.INPUT_HELPER.checkOrSetBlockStorage(location);
+                CargoNumberMode.INPUT_HELPER.getOrDefaultValue(location);
+                SlotSearchSize.INPUT_HELPER.checkOrSetBlockStorage(location);
+                SlotSearchOrder.INPUT_HELPER.checkOrSetBlockStorage(location);
+                CargoLimit.INPUT_HELPER.checkOrSetBlockStorage(location);
+
+                CargoNumber.OUTPUT_HELPER.checkOrSetBlockStorage(location);
+                CargoNumberMode.OUTPUT_HELPER.getOrDefaultValue(location);
+                SlotSearchSize.OUTPUT_HELPER.checkOrSetBlockStorage(location);
+                SlotSearchOrder.OUTPUT_HELPER.checkOrSetBlockStorage(location);
+                CargoLimit.OUTPUT_HELPER.checkOrSetBlockStorage(location);
+
+                BlockStorage.addBlockInfo(block, PositionInfo.KEY, "");
             }
         };
     }
@@ -67,13 +77,13 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.simpleBlockBreakerHandler(this, TransferStationMenu.ITEM_MATCH);
+        return MachineUtil.simpleBlockBreakerHandler(this, StationTransferMenu.ITEM_MATCH);
     }
 
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new TransferStationMenu(this.getId(), this.getItemName(), this);
+        return new StationTransferMenu(this.getId(), this.getItemName(), this);
     }
 
     @Override
@@ -82,27 +92,24 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
         Location location = block.getLocation();
         BlockMenu blockMenu = BlockStorage.getInventory(location);
         Inventory blockInv = blockMenu.toInventory();
-        String filterMode = FilterMode.HELPER.getOrDefaultValue(config);
+        String cargoFilter = CargoFilter.HELPER.getOrDefaultValue(config);
         String locationInfo = config.getString(PositionInfo.KEY);
         PositionHelper positionHelper = new PositionHelper(locationInfo);
+        boolean drawParticle = blockMenu.hasViewer();
 
         // do output
-        String outputSize = SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config);
-        String outputOrder = SlotSearchOrder.OUTPUT_HELPER.getOrDefaultValue(config);
-        int outputCargoNumber = Integer.parseInt(config.getString(CargoNumber.KEY_OUTPUT));
-        String outputCountMode = config.getString(CargoCountMode.KEY_OUTPUT);
-        String outputItemMode = CargoItemMode.OUTPUT_HELPER.getOrDefaultValue(config);
+        String outputSlotSearchSize = SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config);
+        String outputSlotSearchOrder = SlotSearchOrder.OUTPUT_HELPER.getOrDefaultValue(config);
+        int outputCargoNumber = Integer.parseInt(CargoNumber.OUTPUT_HELPER.getOrDefaultValue(config));
+        String outputCargoNumberMode = CargoNumberMode.OUTPUT_HELPER.getOrDefaultValue(config);
+        String outputCargoLimit = CargoLimit.OUTPUT_HELPER.getOrDefaultValue(config);
         String[] outputs = positionHelper.getOutputs();
 
         for (String outputPosition : outputs) {
             BlockFace blockFace = PositionInfo.getBlockFaceByPosition(outputPosition);
-            Block outputBlock = MeshTransfer.searchBlock(block, blockFace, BlockSearchMode.STATION_OUTPUT_HELPER.getOrDefaultValue(config));
-            if (outputBlock == null) {
-                continue;
-            }
-            int cargoNumber = outputCargoNumber;
-            int result = CargoUtil.doCargoInputMain(block, outputBlock, SlotSearchSize.VALUE_OUTPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, outputSize, outputOrder, cargoNumber, outputItemMode, filterMode, blockInv, TransferStationMenu.ITEM_MATCH);
-            if (CargoCountMode.VALUE_UNIVERSAL.equals(outputCountMode)) {
+            Block outputBlock = this.searchBlock(block, blockFace, BlockSearchMode.STATION_OUTPUT_HELPER.getOrDefaultValue(config), drawParticle);
+            int result = CargoUtil.doCargoInputMain(block, outputBlock, SlotSearchSize.VALUE_OUTPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, outputSlotSearchSize, outputSlotSearchOrder, outputCargoNumber, outputCargoLimit, cargoFilter, blockInv, StationTransferMenu.ITEM_MATCH);
+            if (CargoNumberMode.VALUE_UNIVERSAL.equals(outputCargoNumberMode)) {
                 outputCargoNumber -= result;
                 if(outputCargoNumber == 0) {
                     break;
@@ -111,14 +118,14 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
         }
 
         // do move
-        for (int i = 0; i < TransferStationMenu.INPUT_SLOT.length; i++) {
-            ItemStack inputItem = blockMenu.getItemInSlot(TransferStationMenu.INPUT_SLOT[i]);
+        for (int i = 0; i < this.getInputSlot().length; i++) {
+            ItemStack inputItem = blockMenu.getItemInSlot(this.getInputSlot()[i]);
             if (ItemStackUtil.isItemNull(inputItem)) {
                 continue;
             }
-            ItemStack outputItem = blockMenu.getItemInSlot(TransferStationMenu.OUTPUT_SLOT[i]);
+            ItemStack outputItem = blockMenu.getItemInSlot(this.getOutputSlot()[i]);
             if (ItemStackUtil.isItemNull(outputItem)) {
-                blockMenu.toInventory().setItem(TransferStationMenu.OUTPUT_SLOT[i], new ItemStack(inputItem));
+                blockMenu.toInventory().setItem(this.getOutputSlot()[i], new ItemStack(inputItem));
                 inputItem.setAmount(0);
             } else if (ItemStackUtil.isItemSimilar(inputItem, outputItem)) {
                 ItemStackUtil.stack(inputItem, outputItem);
@@ -126,22 +133,18 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
         }
 
         // do input
-        String inputSize = SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config);
-        String inputOrder = SlotSearchOrder.INPUT_HELPER.getOrDefaultValue(config);
-        int inputCargoNumber = Integer.parseInt(config.getString(CargoNumber.KEY_INPUT));
-        String inputItemCountMode = config.getString(CargoCountMode.KEY_INPUT);
-        String inputItemMode = CargoItemMode.INPUT_HELPER.getOrDefaultValue(config);
+        String inputSlotSearchSize = SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config);
+        String inputSlotSearchOrder = SlotSearchOrder.INPUT_HELPER.getOrDefaultValue(config);
+        int inputCargoNumber = Integer.parseInt(CargoNumber.INPUT_HELPER.getOrDefaultValue(config));
+        String inputCargoNumberMode = CargoNumberMode.INPUT_HELPER.getOrDefaultValue(config);
+        String inputCargoLimit = CargoLimit.INPUT_HELPER.getOrDefaultValue(config);
         String[] inputs = positionHelper.getInputs();
 
         for (String inputPosition : inputs) {
             BlockFace blockFace = PositionInfo.getBlockFaceByPosition(inputPosition);
-            Block inputBlock = MeshTransfer.searchBlock(block, blockFace, BlockSearchMode.STATION_INPUT_HELPER.getOrDefaultValue(config));
-            if (inputBlock == null) {
-                continue;
-            }
-            int cargoNumber = inputCargoNumber;
-            int result = CargoUtil.doCargoOutputMain(inputBlock, block, inputSize, inputOrder, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, cargoNumber, inputItemMode, filterMode, blockInv, TransferStationMenu.ITEM_MATCH);
-            if (CargoCountMode.VALUE_UNIVERSAL.equals(inputItemCountMode)) {
+            Block inputBlock = this.searchBlock(block, blockFace, BlockSearchMode.STATION_INPUT_HELPER.getOrDefaultValue(config), drawParticle);
+            int result = CargoUtil.doCargoOutputMain(inputBlock, block, inputSlotSearchSize, inputSlotSearchOrder, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, inputCargoNumber, inputCargoLimit, cargoFilter, blockInv, StationTransferMenu.ITEM_MATCH);
+            if (CargoNumberMode.VALUE_UNIVERSAL.equals(inputCargoNumberMode)) {
                 inputCargoNumber -= result;
                 if(inputCargoNumber == 0) {
                     break;
@@ -150,12 +153,20 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
         }
     }
 
-    public static Block searchBlock(@Nonnull Block begin, @Nonnull BlockFace blockFace, @Nonnull String searchMode) {
+    @Nonnull
+    public Block searchBlock(@Nonnull Block begin, @Nonnull BlockFace blockFace, @Nonnull String searchMode, boolean drawParticle) {
+        List<Location> particleLocationList = new ArrayList<>();
+        particleLocationList.add(LocationUtil.getCenterLocation(begin));
         Block result = begin.getRelative(blockFace);
         if (BlockSearchMode.VALUE_ZERO.equals(searchMode)) {
+            particleLocationList.add(LocationUtil.getCenterLocation(result));
+            if(drawParticle) {
+                Bukkit.getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawLineByDistance(Particle.REDSTONE, PARTICLE_INTERVAL, PARTICLE_DISTANCE, particleLocationList));
+            }
             return result;
         }
         while(true) {
+            particleLocationList.add(LocationUtil.getCenterLocation(result));
             if (result.getType() == Material.CHAIN) {
                 result = result.getRelative(blockFace);
                 continue;
@@ -166,9 +177,13 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
             }
             break;
         }
+        if(drawParticle) {
+            this.getAddon().getJavaPlugin().getServer().getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawLineByDistance(Particle.REDSTONE, PARTICLE_INTERVAL, PARTICLE_DISTANCE, particleLocationList));
+        }
         return result;
     }
 
+    @Translate
     @Override
     public void registerDefaultRecipes() {
         this.registerDescriptiveRecipe("&f基础功能",

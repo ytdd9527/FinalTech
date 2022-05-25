@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * @author Final_ROOT
  */
-public final class RecipeLock {
+public final class MachineRecipeLock {
     public static final String KEY = "rl";
 
     public static final String VALUE_UNLOCK = "-1";
@@ -34,14 +34,10 @@ public final class RecipeLock {
 
     public static final ItemStack ICON = new CustomItemStack(Material.TRIPWIRE_HOOK, "&7配方锁", "&8禁用锁定");
 
-    private static final Map<String, List<String>> LORE_MAP = new LinkedHashMap<>(2) {
-        {
-            this.put("-2", List.of("§8禁用锁定"));
-            this.put("-1", List.of("§8未锁定"));
-        }
-    };
-
-    public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, LORE_MAP) {
+    public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, new LinkedHashMap<>(2) {{
+        this.put("-2", List.of("§8禁用锁定"));
+        this.put("-1", List.of("§8未锁定"));
+    }}) {
         @Nonnull
         @Override
         public String getKey() {
@@ -58,6 +54,18 @@ public final class RecipeLock {
         @Override
         public String previousOrDefaultValue(@Nullable String value) {
             return this.defaultValue();
+        }
+
+        @Nonnull
+        @Override
+        public ChestMenu.MenuClickHandler getHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
+            return (player, i, itemStack, clickAction) -> {
+                HELPER.checkOrSetBlockStorage(block.getLocation());
+                String value = clickAction.isRightClicked() ? VALUE_LOCK_OFF : VALUE_UNLOCK;
+                HELPER.setIcon(blockMenu.getItemInSlot(slot), value);
+                BlockStorage.addBlockInfo(block.getLocation(), KEY, value);
+                return false;
+            };
         }
 
         @Override
@@ -111,14 +119,4 @@ public final class RecipeLock {
             }
         }
     };
-
-    public static ChestMenu.MenuClickHandler getHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
-        return (player, i, itemStack, clickAction) -> {
-            HELPER.checkOrSetBlockStorage(block.getLocation());
-            String value = clickAction.isRightClicked() ? VALUE_LOCK_OFF : VALUE_UNLOCK;
-            HELPER.setIcon(blockMenu.getItemInSlot(slot), value);
-            BlockStorage.addBlockInfo(block.getLocation(), KEY, value);
-            return false;
-        };
-    }
 }
