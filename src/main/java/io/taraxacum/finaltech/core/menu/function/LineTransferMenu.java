@@ -115,7 +115,7 @@ public class LineTransferMenu extends AbstractMachineMenu {
         blockMenu.addMenuClickHandler(BLOCK_SEARCH_SELF_SLOT, BlockSearchSelf.HELPER.getHandler(blockMenu, block, this, BLOCK_SEARCH_SELF_SLOT));
 
         blockMenu.addMenuClickHandler(CARGO_NUMBER_SUB_SLOT, CargoNumber.HELPER.getPreviousHandler(blockMenu, block, this, CARGO_NUMBER_SLOT));
-        blockMenu.addMenuClickHandler(CARGO_NUMBER_ADD_SLOT, CargoNumber.HELPER.getNextHandler(blockMenu, block, this, CARGO_NUMBER_ADD_SLOT));
+        blockMenu.addMenuClickHandler(CARGO_NUMBER_ADD_SLOT, CargoNumber.HELPER.getNextHandler(blockMenu, block, this, CARGO_NUMBER_SLOT));
         blockMenu.addMenuClickHandler(CARGO_MODE_SLOT, CargoMode.HELPER.getHandler(blockMenu, block, this, CARGO_MODE_SLOT));
         blockMenu.addMenuClickHandler(CARGO_FILTER_SLOT, CargoFilter.HELPER.getHandler(blockMenu, block, this, CARGO_FILTER_SLOT));
 

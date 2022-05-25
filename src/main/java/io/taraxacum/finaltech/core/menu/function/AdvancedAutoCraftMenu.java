@@ -161,22 +161,16 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
             updateMenu(blockMenu, block);
             return false;
         }));
-        blockMenu.addMenuClickHandler(INPUT_SEARCH_SLOT, SlotSearchSize.getInputHandler(blockMenu, block, this, INPUT_SEARCH_SLOT));
-        blockMenu.addMenuClickHandler(OUTPUT_SEARCH_SLOT, SlotSearchSize.getOutputHandler(blockMenu, block, this, OUTPUT_SEARCH_SLOT));
+        blockMenu.addMenuClickHandler(INPUT_SEARCH_SLOT, SlotSearchSize.INPUT_HELPER.getHandler(blockMenu, block, this, INPUT_SEARCH_SLOT));
+        blockMenu.addMenuClickHandler(OUTPUT_SEARCH_SLOT, SlotSearchSize.OUTPUT_HELPER.getHandler(blockMenu, block, this, OUTPUT_SEARCH_SLOT));
         blockMenu.addMenuCloseHandler(player -> updateMenu(blockMenu, block));
         blockMenu.addMenuOpeningHandler(player -> updateMenu(blockMenu, block));
     }
 
     @Override
     public void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-        Location location = block.getLocation();
-
-        SlotSearchSize.INPUT_HELPER.checkOrSetBlockStorage(location);
-        String slotSearchSizeInputValue = SlotSearchSize.INPUT_HELPER.getOrDefaultValue(location);
-        blockMenu.replaceExistingItem(INPUT_SEARCH_SLOT, SlotSearchSize.INPUT_HELPER.getOrErrorIcon(slotSearchSizeInputValue));
-        SlotSearchSize.OUTPUT_HELPER.checkOrSetBlockStorage(location);
-        String slotSearchSizeOutputValue = SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(location);
-        blockMenu.replaceExistingItem(OUTPUT_SEARCH_SLOT, SlotSearchSize.OUTPUT_HELPER.getOrErrorIcon(slotSearchSizeOutputValue));
+        SlotSearchSize.INPUT_HELPER.checkAndUpdateIcon(blockMenu, INPUT_SEARCH_SLOT);
+        SlotSearchSize.OUTPUT_HELPER.checkAndUpdateIcon(blockMenu, OUTPUT_SEARCH_SLOT);
 
         ItemStack parseItem = blockMenu.getItemInSlot(PARSE_ITEM_SLOT);
         if (ItemStackUtil.isItemNull(parseItem)) {

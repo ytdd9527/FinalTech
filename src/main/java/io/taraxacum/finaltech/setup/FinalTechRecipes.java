@@ -165,32 +165,32 @@ public final class FinalTechRecipes {
 
     public static final ItemStack[] LIMITED_STORAGE_UNIT = new ItemStack[] {
             null, null, null,
-            FinalTechItems.TRANSFER_LINE, FinalTechItems.NORMAL_STORAGE_UNIT, null,
+            FinalTechItems.LINE_TRANSFER, FinalTechItems.NORMAL_STORAGE_UNIT, null,
             null, null, null,
     };
 
     public static final ItemStack[] STACK_STORAGE_UNIT = new ItemStack[] {
             null, null, null,
             null, FinalTechItems.NORMAL_STORAGE_UNIT, null,
-            null, FinalTechItems.TRANSFER_STATION, null,
+            null, FinalTechItems.STATION_TRANSFER, null,
     };
 
     public static final ItemStack[] DIVIDED_LIMITED_STORAGE_UNIT = new ItemStack[] {
             null, FinalTechItems.LINK_TRANSFER, null,
-            FinalTechItems.TRANSFER_LINE, FinalTechItems.NORMAL_STORAGE_UNIT, null,
+            FinalTechItems.LINE_TRANSFER, FinalTechItems.NORMAL_STORAGE_UNIT, null,
             null, null, null,
     };
 
     public static final ItemStack[] DIVIDED_STACK_STORAGE_UNIT = new ItemStack[] {
             null, FinalTechItems.LINK_TRANSFER, null,
             null, FinalTechItems.NORMAL_STORAGE_UNIT, null,
-            null, FinalTechItems.TRANSFER_STATION, null,
+            null, FinalTechItems.STATION_TRANSFER, null,
     };
 
     public static final ItemStack[] LIMITED_STACK_STORAGE_UNIT = new ItemStack[] {
             null, null, null,
-            FinalTechItems.TRANSFER_LINE, FinalTechItems.NORMAL_STORAGE_UNIT, null,
-            null, FinalTechItems.TRANSFER_STATION, null,
+            FinalTechItems.LINE_TRANSFER, FinalTechItems.NORMAL_STORAGE_UNIT, null,
+            null, FinalTechItems.STATION_TRANSFER, null,
     };
 
     public static final ItemStack[] BASIC_CHARGEABLE_STORAGE_UNIT = new ItemStack[] {
@@ -229,28 +229,34 @@ public final class FinalTechRecipes {
             null, null, null,
     };
 
-    public static final ItemStack[] TRANSFER_PIPE = new ItemStack[] {
+    public static final ItemStack[] LINK_TRANSFER = new ItemStack[] {
             new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN), new ItemStack(Material.TRIPWIRE_HOOK),
             new ItemStack(Material.ENDER_PEARL), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.ENDER_PEARL),
             new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN), new ItemStack(Material.TRIPWIRE_HOOK)
     };
 
-    public static final ItemStack[] TRANSFER_STATION = new ItemStack[] {
-            new ItemStack(Material.HOPPER), new ItemStack(Material.HOPPER), new ItemStack(Material.CHAIN),
-            new ItemStack(Material.HOPPER), new ItemStack(Material.HOPPER), FinalTechItems.BASIC_FRAME_MACHINE,
-            new ItemStack(Material.HOPPER), new ItemStack(Material.HOPPER), new ItemStack(Material.CHAIN)
-    };
-
-    public static final ItemStack[] TRANSFER_LINE = new ItemStack[] {
+    public static final ItemStack[] LINE_TRANSFER = new ItemStack[] {
             new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.SLIME_BALL),
             new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.TRIPWIRE_HOOK), FinalTechItems.BASIC_FRAME_MACHINE,
             new ItemStack(Material.CHEST), new ItemStack(Material.CHEST), new ItemStack(Material.CHEST)
     };
 
+    public static final ItemStack[] STATION_TRANSFER = new ItemStack[] {
+            new ItemStack(Material.HOPPER), new ItemStack(Material.HOPPER), new ItemStack(Material.CHAIN),
+            new ItemStack(Material.HOPPER), new ItemStack(Material.HOPPER), FinalTechItems.BASIC_FRAME_MACHINE,
+            new ItemStack(Material.HOPPER), new ItemStack(Material.HOPPER), new ItemStack(Material.CHAIN)
+    };
+
+    public static final ItemStack[] LOCATION_TRANSFER = new ItemStack[] {
+            new ItemStack(Material.HOPPER), new ItemStack(Material.HOPPER), new ItemStack(Material.CHAIN),
+            new ItemStack(Material.HOPPER), new ItemStack(Material.HOPPER), FinalTechItems.BASIC_FRAME_MACHINE,
+            new ItemStack(Material.HOPPER), new ItemStack(Material.HOPPER), new ItemStack(Material.CHAIN)
+    };
+
     public static final ItemStack[] STACKER = new ItemStack[] {
-            FinalTechItems.TRANSFER_LINE, FinalTechItems.LINK_TRANSFER, FinalTechItems.TRANSFER_LINE,
-            FinalTechItems.LINK_TRANSFER, FinalTechItems.TRANSFER_STATION, FinalTechItems.LINK_TRANSFER,
-            FinalTechItems.TRANSFER_LINE, FinalTechItems.LINK_TRANSFER, FinalTechItems.TRANSFER_LINE
+            FinalTechItems.LINE_TRANSFER, FinalTechItems.LINK_TRANSFER, FinalTechItems.LINE_TRANSFER,
+            FinalTechItems.LINK_TRANSFER, FinalTechItems.STATION_TRANSFER, FinalTechItems.LINK_TRANSFER,
+            FinalTechItems.LINE_TRANSFER, FinalTechItems.LINK_TRANSFER, FinalTechItems.LINE_TRANSFER
     };
 
     public static final ItemStack[] STORAGE_INTERACT_PORT = new ItemStack[] {

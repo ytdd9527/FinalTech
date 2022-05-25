@@ -31,7 +31,7 @@ public abstract class AbstractLockMachineMenu extends AbstractStandardMachineMen
     @Override
     public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
-        blockMenu.addMenuClickHandler(RECIPE_LOCK_SLOT, MachineRecipeLock.getHandler(blockMenu, block, this, RECIPE_LOCK_SLOT));
+        blockMenu.addMenuClickHandler(RECIPE_LOCK_SLOT, MachineRecipeLock.HELPER.getHandler(blockMenu, block, this, RECIPE_LOCK_SLOT));
     }
 
     @Override

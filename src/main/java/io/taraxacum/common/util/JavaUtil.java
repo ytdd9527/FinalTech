@@ -9,46 +9,45 @@ import java.util.stream.Collectors;
 /**
  * @author Final_ROOT
  */
-public class JavaUtil<T> {
-
-    /**
-     * 反转数组
-     * @param ints 输入的数组
-     */
-    public static int[] reserve(int[] ints) {
-        int[] result = new int[ints.length];
-        for (int i = 0; i < ints.length; i++) {
-            result[i] = ints[ints.length - i - 1];
+public class JavaUtil {
+    public static int[] reserve(int[] objects) {
+        int[] result = objects.clone();
+        for (int i = 0; i < objects.length; i++) {
+            result[i] = objects[objects.length - 1 - i];
+        }
+        return result;
+    }
+    public static <T> List<T> reserve(List<T> objectList) {
+        List<T> result = new ArrayList<>(objectList);
+        for (int i = 0; i < objectList.size(); i++) {
+            result.set(i, objectList.get(objectList.size() - 1 - i));
         }
         return result;
     }
 
-    public List<T> reserve(List<T> list) {
-        List<T> result = new ArrayList<>();
-        for (int i = list.size() - 1; i >= 0; i--) {
-            result.add(list.get(i));
-        }
-        return result;
-    }
-
-    public T[] reserve(T[] stack) {
-        List<T> collect = Arrays.stream(stack).collect(Collectors.toList());
+    public static int[] shuffle(int[] objects) {
+        List<Integer> collect = Arrays.stream(objects).boxed().collect(Collectors.toList());
         Collections.shuffle(collect);
-        T[] result = (T[]) new Object[stack.length];
+        int[] result = objects.clone();
+        for (int i = 0; i < collect.size(); i++) {
+            result[i] = collect.get(i);
+        }
+        return result;
+    }
+    public static <T> T[] shuffle(T[] objects) {
+        List<T> collect = Arrays.stream(objects).collect(Collectors.toList());
+        Collections.shuffle(collect);
+        T[] result = objects.clone();
         for (int i = 0; i < collect.size(); i++) {
             result[i] = collect.get(i);
         }
         return result;
     }
 
-    public static int[] shuffle(int[] ints) {
-        List<Integer> collect = Arrays.stream(ints).boxed().collect(Collectors.toList());
-        Collections.shuffle(collect);
-        int[] result = new int[ints.length];
-        for (int i = 0; i < collect.size(); i++) {
-            result[i] = collect.get(i);
-        }
-        return result;
+    public static <T> List<T> shuffle(List<T> objectList) {
+        List<T> list = new ArrayList<>(objectList);
+        Collections.shuffle(list);
+        return list;
     }
 
     public static double[] disperse(int size, Number... value) {

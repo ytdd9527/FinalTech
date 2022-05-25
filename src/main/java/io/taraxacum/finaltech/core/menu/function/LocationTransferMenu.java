@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class CoordinateTransferMenu extends AbstractMachineMenu {
+public class LocationTransferMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[] {27, 28, 29, 30, 31, 32, 33, 34, 35, 39, 41, 48, 49, 50};
     private static final int[] INPUT_BORDER = new int[0];
     private static final int[] OUTPUT_BORDER = new int[0];
@@ -36,7 +36,7 @@ public class CoordinateTransferMenu extends AbstractMachineMenu {
 
     public static final int LOCATION_RECORDER_SLOT = 40;
 
-    public CoordinateTransferMenu(@Nonnull AbstractMachine machine) {
+    public LocationTransferMenu(@Nonnull AbstractMachine machine) {
         super(machine);
     }
 

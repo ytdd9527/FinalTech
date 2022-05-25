@@ -8,7 +8,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.function.CoordinateTransferMenu;
+import io.taraxacum.finaltech.core.menu.function.LocationTransferMenu;
 import io.taraxacum.finaltech.core.storage.*;
 import io.taraxacum.finaltech.util.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -18,6 +18,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 
@@ -25,8 +26,8 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class CoordinateTransfer extends AbstractCargo {
-    public CoordinateTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class LocationTransfer extends AbstractCargo {
+    public LocationTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -38,8 +39,6 @@ public class CoordinateTransfer extends AbstractCargo {
             public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {
                 Block block = blockPlaceEvent.getBlock();
                 Location location = block.getLocation();
-
-                BlockStorage.addBlockInfo(location, "UUID", blockPlaceEvent.getPlayer().getUniqueId().toString());
 
                 CargoNumber.HELPER.checkOrSetBlockStorage(location);
                 SlotSearchSize.HELPER.checkOrSetBlockStorage(location);
@@ -55,13 +54,13 @@ public class CoordinateTransfer extends AbstractCargo {
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.simpleBlockBreakerHandler(this, CoordinateTransferMenu.LOCATION_RECORDER_SLOT);
+        return MachineUtil.simpleBlockBreakerHandler(this, LocationTransferMenu.LOCATION_RECORDER_SLOT);
     }
 
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new CoordinateTransferMenu(this);
+        return new LocationTransferMenu(this);
     }
 
     @Override
@@ -69,14 +68,18 @@ public class CoordinateTransfer extends AbstractCargo {
         Location location = block.getLocation();
         BlockMenu blockMenu = BlockStorage.getInventory(location);
 
-        ItemStack locationRecorder = blockMenu.getItemInSlot(CoordinateTransferMenu.LOCATION_RECORDER_SLOT);
-        Location targetLocation = LocationUtil.parseLocationInItem(locationRecorder);
+        ItemStack locationRecorder = blockMenu.getItemInSlot(LocationTransferMenu.LOCATION_RECORDER_SLOT);
+        if(ItemStackUtil.isItemNull(locationRecorder)) {
+            return;
+        }
+        ItemMeta itemMeta = locationRecorder.getItemMeta();
+        Location targetLocation = LocationUtil.parseLocationInItem(itemMeta);
         if (targetLocation == null) {
             return;
         }
         Block targetBlock = targetLocation.getBlock();
 
-        String uuid = config.getString("UUID");
+        String uuid = PlayerUtil.parseIdInItem(itemMeta);
         if (uuid != null) {
             if (!SlimefunUtil.hasPermission(uuid, targetLocation, Interaction.INTERACT_BLOCK, Interaction.INTERACT_BLOCK)) {
                 return;

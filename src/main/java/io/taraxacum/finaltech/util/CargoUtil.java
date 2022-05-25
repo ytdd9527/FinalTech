@@ -21,26 +21,49 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class CargoUtil {
     public static final int SEARCH_MAP_LIMIT = 3;
 
-    public static int doCargo(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String itemMode, @Nonnull String filterMode, @Nonnull Inventory filterInv, int[] filterSlots, @Nonnull String cargoMode) {
+    public static int doCargo(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots, @Nonnull String cargoMode) {
+        if(inputBlock.getLocation().equals(outputBlock.getLocation())) {
+            return 0;
+        }
         return switch (cargoMode) {
-            case CargoMode.VALUE_INPUT_MAIN -> CargoUtil.doCargoInputMain(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
-            case CargoMode.VALUE_OUTPUT_MAIN -> CargoUtil.doCargoOutputMain(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
-            case CargoMode.VALUE_STRONG_SYMMETRY -> CargoUtil.doCargoStrongSymmetry(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
-            case CargoMode.VALUE_WEAK_SYMMETRY -> CargoUtil.doCargoWeakSymmetry(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, itemMode, filterMode, filterInv, filterSlots);
+            case CargoMode.VALUE_INPUT_MAIN -> CargoUtil.doCargoInputMain(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
+            case CargoMode.VALUE_OUTPUT_MAIN -> CargoUtil.doCargoOutputMain(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
+            case CargoMode.VALUE_STRONG_SYMMETRY -> CargoUtil.doCargoStrongSymmetry(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
+            case CargoMode.VALUE_WEAK_SYMMETRY -> CargoUtil.doCargoWeakSymmetry(inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
             default -> 0;
         };
     }
-    public static int doCargoStrongSymmetry(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String itemMode, @Nonnull String filterMode, @Nonnull Inventory filterInv, int[] filterSlots) {
-        InvWithSlots inputMap = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
-        InvWithSlots outputMap = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
+    public static int doCargoStrongSymmetry(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots) {
+        InvWithSlots inputMap = null;
+        InvWithSlots outputMap = null;
+        if((BlockStorage.hasInventory(inputBlock) && BlockStorage.hasInventory(outputBlock)) || Bukkit.isPrimaryThread()) {
+            inputMap = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
+            outputMap = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
+        } else {
+            try {
+                InvWithSlots[] invWithSlots = Bukkit.getScheduler().callSyncMethod(FinalTech.getInstance(), () -> {
+                    InvWithSlots[] invWithSlots1 = new InvWithSlots[2];
+                    invWithSlots1[0] = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
+                    invWithSlots1[1] = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
+                    return invWithSlots1;
+                }).get();
+                inputMap = invWithSlots[0];
+                outputMap = invWithSlots[1];
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+
         if (inputMap == null || outputMap == null) {
             return 0;
         }
@@ -49,7 +72,7 @@ public class CargoUtil {
         Inventory outputInv = outputMap.getInventory();
         int[] outputSlots = outputMap.getSlots();
 
-        ItemStackWrapper typeItem = null;
+        ItemStackWithWrapper typeItem = null;
         int number = 0;
         List<ItemStackWithWrapper> filterItemList = MachineUtil.getItemList(filterInv, filterSlots);
         for (int i = 0, length = Math.min(inputSlots.length, outputSlots.length); i < length; i++) {
@@ -58,44 +81,69 @@ public class CargoUtil {
                 continue;
             }
             ItemStackWithWrapper inputItemWithWrapper = new ItemStackWithWrapper(inputItem);
-            if (!CargoUtil.isMatch(inputItemWithWrapper, filterItemList, filterMode)) {
+            if (!CargoUtil.isMatch(inputItemWithWrapper, filterItemList, cargoFilter)) {
                 continue;
             }
-            if (typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
+            if (typeItem != null && CargoLimit.typeLimit(cargoLimit) && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
                 continue;
             }
             ItemStack outputItem = outputInv.getItem(outputSlots[i]);
             int count;
             if (ItemStackUtil.isItemNull(outputItem)) {
-                count = Math.min(inputItem.getAmount(), cargoNumber);
-                outputItem = inputItem.clone();
-                outputItem.setAmount(count);
-                outputInv.setItem(outputSlots[i], outputItem);
-                outputItem = outputInv.getItem(outputSlots[i]);
-                inputItem.setAmount(inputItem.getAmount() - count);
+                if(!CargoLimit.VALUE_NONNULL.equals(cargoLimit)) {
+                    count = Math.min(inputItem.getAmount(), cargoNumber);
+                    outputItem = inputItem.clone();
+                    outputItem.setAmount(count);
+                    outputInv.setItem(outputSlots[i], outputItem);
+                    outputItem = outputInv.getItem(outputSlots[i]);
+                    inputItem.setAmount(inputItem.getAmount() - count);
+                    if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
+                        typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
+                    }
+                } else {
+                    continue;
+                }
             } else {
                 count = ItemStackUtil.stack(inputItemWithWrapper, outputItem, cargoNumber);
+                if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
+                    typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
+                }
                 if (count == 0) {
                     continue;
                 }
-            }
-            if (typeItem == null && !CargoLimit.VALUE_ALL.equals(itemMode)) {
-                typeItem = ItemStackWrapper.wrap(inputItem);
             }
             cargoNumber -= count;
             number += count;
             if (cargoNumber == 0) {
                 break;
             }
-            if (CargoLimit.VALUE_STACK.equals(itemMode)) {
+            if (CargoLimit.VALUE_STACK.equals(cargoLimit)) {
                 cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
             }
         }
         return number;
     }
-    public static int doCargoWeakSymmetry(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String itemMode, @Nonnull String filterMode, @Nonnull Inventory filterInv, int[] filterSlots) {
-        InvWithSlots inputMap = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
-        InvWithSlots outputMap = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
+    public static int doCargoWeakSymmetry(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots) {
+        InvWithSlots inputMap = null;
+        InvWithSlots outputMap = null;
+        if((BlockStorage.hasInventory(inputBlock) && BlockStorage.hasInventory(outputBlock)) || Bukkit.isPrimaryThread()) {
+            inputMap = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
+            outputMap = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
+        } else {
+            try {
+                InvWithSlots[] invWithSlots = Bukkit.getScheduler().callSyncMethod(FinalTech.getInstance(), () -> {
+                    InvWithSlots[] invWithSlots1 = new InvWithSlots[2];
+                    invWithSlots1[0] = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
+                    invWithSlots1[1] = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
+                    return invWithSlots1;
+                }).get();
+                inputMap = invWithSlots[0];
+                outputMap = invWithSlots[1];
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+
         if (inputMap == null || outputMap == null) {
             return 0;
         }
@@ -104,7 +152,7 @@ public class CargoUtil {
         Inventory outputInv = outputMap.getInventory();
         int[] outputSlots = outputMap.getSlots();
 
-        ItemStackWrapper typeItem = null;
+        ItemStackWithWrapper typeItem = null;
         int number = 0;
         List<ItemStackWithWrapper> filterItemList = MachineUtil.getItemList(filterInv, filterSlots);
         for (int i = 0, length = Math.max(inputSlots.length, outputSlots.length); i < length; i++) {
@@ -113,85 +161,110 @@ public class CargoUtil {
                 continue;
             }
             ItemStackWithWrapper inputItemWithWrapper = new ItemStackWithWrapper(inputItem);
-            if (!CargoUtil.isMatch(inputItemWithWrapper, filterItemList, filterMode)) {
+            if (!CargoUtil.isMatch(inputItemWithWrapper, filterItemList, cargoFilter)) {
                 continue;
             }
-            if (typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
+            if (typeItem != null && CargoLimit.typeLimit(cargoLimit) && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
                 continue;
             }
             ItemStack outputItem = outputInv.getItem(outputSlots[i % outputSlots.length]);
             int count;
             if (ItemStackUtil.isItemNull(outputItem)) {
-                count = Math.min(inputItem.getAmount(), cargoNumber);
-                outputItem = inputItem.clone();
-                outputItem.setAmount(count);
-                outputInv.setItem(outputSlots[i], outputItem);
-                outputItem = outputInv.getItem(outputSlots[i]);
-                inputItem.setAmount(inputItem.getAmount() - count);
+                if(!CargoLimit.VALUE_NONNULL.equals(cargoLimit)) {
+                    count = Math.min(inputItem.getAmount(), cargoNumber);
+                    outputItem = inputItem.clone();
+                    outputItem.setAmount(count);
+                    outputInv.setItem(outputSlots[i % outputSlots.length], outputItem);
+                    outputItem = outputInv.getItem(outputSlots[i % outputSlots.length]);
+                    inputItem.setAmount(inputItem.getAmount() - count);
+                    if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
+                        typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
+                    }
+                } else {
+                    continue;
+                }
             } else {
                 count = ItemStackUtil.stack(inputItemWithWrapper, outputItem, cargoNumber);
+                if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
+                    typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
+                }
                 if (count == 0) {
                     continue;
                 }
-            }
-            if (typeItem == null && !CargoLimit.VALUE_ALL.equals(itemMode)) {
-                typeItem = ItemStackWrapper.wrap(inputItem);
             }
             cargoNumber -= count;
             number += count;
             if (cargoNumber == 0) {
                 break;
             }
-            if (CargoLimit.VALUE_STACK.equals(itemMode)) {
+            if (CargoLimit.VALUE_STACK.equals(cargoLimit)) {
                 cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
             }
         }
         return number;
     }
-    public static int doCargoInputMain(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String itemMode, @Nonnull String filterMode, @Nonnull Inventory filterInv, int[] filterSlots) {
-        InvWithSlots inputMap = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
-        if (inputMap == null) {
-            return 0;
-        }
-        Inventory inputInv = inputMap.getInventory();
-        int[] inputSlots = inputMap.getSlots();
-        if (inputSlots.length == 0) {
-            return 0;
-        }
+    public static int doCargoInputMain(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots) {
+        InvWithSlots inputMap;
         InvWithSlots outputMap = null;
         boolean vanillaOutputBlock;
-        if (Bukkit.isPrimaryThread()) {
+
+        if((BlockStorage.hasInventory(inputBlock) && BlockStorage.hasInventory(outputBlock))) {
+            inputMap = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
+            vanillaOutputBlock = false;
+        } else if(Bukkit.isPrimaryThread()) {
+            inputMap = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
             vanillaOutputBlock = !BlockStorage.hasInventory(outputBlock) && PaperLib.getBlockState(outputBlock, false).getState() instanceof InventoryHolder;
+            if(vanillaOutputBlock) {
+                outputMap = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
+            }
         } else {
             try {
-                vanillaOutputBlock = Bukkit.getScheduler().callSyncMethod(JavaPlugin.getPlugin(FinalTech.class), () -> !BlockStorage.hasInventory(outputBlock) && PaperLib.getBlockState(outputBlock, false).getState() instanceof InventoryHolder).get();
-            } catch (Exception e) {
+                InvWithSlots[] invWithSlots = Bukkit.getScheduler().callSyncMethod(FinalTech.getInstance(), () -> {
+                    InvWithSlots[] result = new InvWithSlots[2];
+                    result[0] = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
+                    if(BlockStorage.hasInventory(outputBlock)) {
+                        result[1] = null;
+                    } else {
+                        result[1] = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
+                    }
+                    return result;
+                }).get();
+                inputMap = invWithSlots[0];
+                outputMap = invWithSlots[1];
+                vanillaOutputBlock = outputMap != null;
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
                 return 0;
             }
         }
-        if (vanillaOutputBlock) {
-            outputMap = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
-            if (outputMap == null || outputMap.getSlots().length == 0) {
-                return 0;
-            }
+
+        if (inputMap == null) {
+            return 0;
         }
+        if(vanillaOutputBlock && outputMap == null) {
+            return 0;
+        }
+
+        Inventory inputInv = inputMap.getInventory();
+        int[] inputSlots = inputMap.getSlots();
+
         List<ItemStackWithWrapper> skipItemList = new ArrayList<>(inputSlots.length);
         List<ItemStackWithWrapper> filterItemList = MachineUtil.getItemList(filterInv, filterSlots);
         List<ItemStackWithWrapper> searchItemList = new ArrayList<>(SEARCH_MAP_LIMIT);
         List<InvWithSlots> searchInvList = new ArrayList<>(SEARCH_MAP_LIMIT);
         ItemStackWithWrapper typeItem = null;
         int number = 0;
+        boolean newOutputMap = false;
         for (int inputSlot : inputSlots) {
             ItemStack inputItem = inputInv.getItem(inputSlot);
             if (ItemStackUtil.isItemNull(inputItem)) {
                 continue;
             }
             ItemStackWithWrapper inputItemWithWrapper = new ItemStackWithWrapper(inputItem);
-            if (typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
+            if (typeItem != null && CargoLimit.typeLimit(cargoLimit) && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
                 continue;
             }
-            if (!CargoUtil.isMatch(inputItemWithWrapper, filterItemList, filterMode)) {
+            if (!CargoUtil.isMatch(inputItemWithWrapper, filterItemList, cargoFilter)) {
                 continue;
             }
             if (CargoUtil.isMatch(inputItemWithWrapper, skipItemList, CargoFilter.VALUE_WHITE)) {
@@ -199,6 +272,7 @@ public class CargoUtil {
             }
             if (!vanillaOutputBlock) {
                 outputMap = null;
+                newOutputMap = false;
                 for (int i = 0; i < searchItemList.size(); i++) {
                     if (ItemStackUtil.isItemSimilar(inputItemWithWrapper, searchItemList.get(i))) {
                         outputMap = searchInvList.get(i);
@@ -206,7 +280,8 @@ public class CargoUtil {
                     }
                 }
                 if (outputMap == null) {
-                    outputMap = CargoUtil.getInvSync(outputBlock, outputSize, outputOrder, inputItem);
+                    newOutputMap = true;
+                    outputMap = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder, inputItem);
                     if (outputMap == null) {
                         continue;
                     }
@@ -216,38 +291,37 @@ public class CargoUtil {
             int[] outputSlots = outputMap.getSlots();
             boolean work = false;
             for (int outputSlot : outputSlots) {
-                if (inputItem.getAmount() == 0 || cargoNumber == 0) {
-                    break;
-                }
                 ItemStack outputItem = outputInv.getItem(outputSlot);
                 if (ItemStackUtil.isItemNull(outputItem)) {
-                    if (typeItem == null && !CargoLimit.VALUE_ALL.equals(itemMode)) {
-                        typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
-                    }
-                    int count = Math.min(inputItem.getAmount(), cargoNumber);
-                    outputItem = ItemStackUtil.cloneItem(inputItem);
-                    outputItem.setAmount(count);
-                    outputInv.setItem(outputSlot, outputItem);
-                    inputItem.setAmount(inputItem.getAmount() - count);
-                    cargoNumber -= count;
-                    number += count;
-                    work = true;
-                    if (CargoLimit.VALUE_STACK.equals(itemMode)) {
-                        cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
-                        break;
-                    }
-                    if (inputItem.getAmount() == 0 || cargoNumber == 0) {
-                        break;
+                    if(!CargoLimit.VALUE_NONNULL.equals(cargoLimit)) {
+                        if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
+                            typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
+                        }
+                        int count = Math.min(inputItem.getAmount(), cargoNumber);
+                        outputItem = ItemStackUtil.cloneItem(inputItem);
+                        outputItem.setAmount(count);
+                        outputInv.setItem(outputSlot, outputItem);
+                        inputItem.setAmount(inputItem.getAmount() - count);
+                        cargoNumber -= count;
+                        number += count;
+                        work = true;
+                        if (CargoLimit.VALUE_STACK.equals(cargoLimit)) {
+                            cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
+                            break;
+                        }
+                        if (inputItem.getAmount() == 0 || cargoNumber == 0) {
+                            break;
+                        }
                     }
                 } else if (outputItem.getAmount() < outputItem.getMaxStackSize() && ItemStackUtil.isItemSimilar(inputItemWithWrapper, outputItem)) {
-                    if (typeItem == null && !CargoLimit.VALUE_ALL.equals(itemMode)) {
+                    if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
                         typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
                     }
                     int count = ItemStackUtil.stack(inputItemWithWrapper, outputItem, cargoNumber);
                     cargoNumber -= count;
                     number += count;
                     work = true;
-                    if (CargoLimit.VALUE_STACK.equals(itemMode)) {
+                    if (CargoLimit.VALUE_STACK.equals(cargoLimit)) {
                         cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
                         break;
                     }
@@ -260,7 +334,7 @@ public class CargoUtil {
                 break;
             }
             if (work) {
-                if (searchItemList.size() < SEARCH_MAP_LIMIT) {
+                if (newOutputMap && searchItemList.size() < SEARCH_MAP_LIMIT) {
                     searchItemList.add(inputItemWithWrapper);
                     searchInvList.add(inputMap);
                 }
@@ -270,60 +344,82 @@ public class CargoUtil {
         }
         return number;
     }
-    public static int doCargoOutputMain(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, @Nonnull int cargoNumber, @Nonnull String itemMode, @Nonnull String filterMode, @Nonnull Inventory filterInv, int[] filterSlots) {
-        InvWithSlots outputMap = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
-        if (outputMap == null) {
-            return 0;
-        }
-        Inventory outputInv = outputMap.getInventory();
-        int[] outputSlots = outputMap.getSlots();
-        if (outputSlots.length == 0) {
-            return 0;
-        }
+    public static int doCargoOutputMain(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, @Nonnull int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots) {
         InvWithSlots inputMap = null;
-        boolean vanillaOutputBlock;
-        if (Bukkit.isPrimaryThread()) {
-            vanillaOutputBlock = !BlockStorage.hasInventory(inputBlock) && PaperLib.getBlockState(inputBlock, false).getState() instanceof InventoryHolder;
+        InvWithSlots outputMap;
+        boolean vanillaInputBlock;
+
+        if((BlockStorage.hasInventory(inputBlock) && BlockStorage.hasInventory(outputBlock))) {
+            outputMap = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
+            vanillaInputBlock = false;
+        } else if(Bukkit.isPrimaryThread()) {
+            outputMap = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
+            vanillaInputBlock = !BlockStorage.hasInventory(inputBlock) && PaperLib.getBlockState(inputBlock, false).getState() instanceof InventoryHolder;
+            if(vanillaInputBlock) {
+                inputMap = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
+            }
         } else {
             try {
-                vanillaOutputBlock = Bukkit.getScheduler().callSyncMethod(JavaPlugin.getPlugin(FinalTech.class), () -> !BlockStorage.hasInventory(inputBlock) && PaperLib.getBlockState(inputBlock, false).getState() instanceof InventoryHolder).get();
-            } catch (Exception e) {
+                InvWithSlots[] invWithSlots = Bukkit.getScheduler().callSyncMethod(FinalTech.getInstance(), () -> {
+                    InvWithSlots[] result = new InvWithSlots[2];
+                    if(BlockStorage.hasInventory(inputBlock)) {
+                        result[0] = null;
+                    } else {
+                        result[0] = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
+                    }
+                    result[1] = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
+                    return result;
+                }).get();
+                inputMap = invWithSlots[0];
+                outputMap = invWithSlots[1];
+                vanillaInputBlock = inputMap != null;
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
                 return 0;
             }
         }
-        if (vanillaOutputBlock) {
-            inputMap = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
-            if (inputMap == null || inputMap.getSlots().length == 0) {
-                return 0;
-            }
+
+        if (outputMap == null) {
+            return 0;
         }
+        if (vanillaInputBlock && inputMap == null) {
+            return 0;
+        }
+
+        Inventory outputInv = outputMap.getInventory();
+        int[] outputSlots = outputMap.getSlots();
+
         List<ItemStackWithWrapper> skipItemList = new ArrayList<>(outputMap.getSlots().length);
         List<ItemStackWithWrapper> filterList = MachineUtil.getItemList(filterInv, filterSlots);
         List<ItemStackWithWrapper> searchItemList = new ArrayList<>(SEARCH_MAP_LIMIT);
         List<InvWithSlots> searchInvList = new ArrayList<>(SEARCH_MAP_LIMIT);
         ItemStackWithWrapper typeItem = null;
         int number = 0;
+        boolean newInputMap = false;
         for (int outputSlot : outputSlots) {
             ItemStack outputItem = outputInv.getItem(outputSlot);
             ItemStackWithWrapper outputItemWithWrapper;
-            if (!ItemStackUtil.isItemNull(outputItem)) {
+            if (ItemStackUtil.isItemNull(outputItem)) {
+                if(CargoLimit.VALUE_NONNULL.equals(cargoLimit)) {
+                    continue;
+                }
+                outputItem = ItemStackUtil.AIR;
+                outputItemWithWrapper = new ItemStackWithWrapper(outputItem);
+            } else {
                 if (outputItem.getAmount() >= outputItem.getMaxStackSize()) {
                     continue;
                 }
                 outputItemWithWrapper = new ItemStackWithWrapper(outputItem);
-                if (!CargoUtil.isMatch(outputItemWithWrapper, filterList, filterMode)) {
+                if (!CargoUtil.isMatch(outputItemWithWrapper, filterList, cargoFilter)) {
                     continue;
                 }
                 if (CargoUtil.isMatch(outputItemWithWrapper, skipItemList, CargoFilter.VALUE_WHITE)) {
                     continue;
                 }
-            } else {
-                outputItem = ItemStackUtil.AIR;
-                outputItemWithWrapper = new ItemStackWithWrapper(outputItem);
             }
-            if (!vanillaOutputBlock) {
+            if (!vanillaInputBlock) {
                 inputMap = null;
+                newInputMap = false;
                 for (int i = 0; i < searchItemList.size(); i++) {
                     if (ItemStackUtil.isItemSimilar(outputItemWithWrapper, searchItemList.get(i))) {
                         inputMap = searchInvList.get(i);
@@ -335,6 +431,7 @@ public class CargoUtil {
                     if (inputMap == null) {
                         continue;
                     }
+                    newInputMap = true;
                 }
             }
             Inventory inputInv = inputMap.getInventory();
@@ -346,14 +443,14 @@ public class CargoUtil {
                     continue;
                 }
                 ItemStackWithWrapper inputItemWithWrapper = new ItemStackWithWrapper(inputItem);
-                if (ItemStackUtil.isItemNull(outputItem) && !CargoUtil.isMatch(inputItemWithWrapper, filterList, filterMode)) {
+                if (ItemStackUtil.isItemNull(outputItem) && !CargoUtil.isMatch(inputItemWithWrapper, filterList, cargoFilter)) {
                     continue;
                 }
-                if (typeItem != null && !work && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
+                if (typeItem != null && !work && ItemStackUtil.isItemNull(outputItem) && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
                     continue;
                 }
                 if (ItemStackUtil.isItemNull(outputItem)) {
-                    if (typeItem == null && !CargoLimit.VALUE_ALL.equals(itemMode)) {
+                    if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
                         typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
                     }
                     int count = Math.min(inputItem.getAmount(), cargoNumber);
@@ -366,30 +463,24 @@ public class CargoUtil {
                     cargoNumber -= count;
                     number += count;
                     work = true;
-                    if (CargoLimit.VALUE_STACK.equals(itemMode)) {
+                    if (CargoLimit.VALUE_STACK.equals(cargoLimit)) {
                         cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
                     }
-                    if (outputItem.getAmount() >= outputItem.getMaxStackSize()) {
+                    if (outputItem.getAmount() >= outputItem.getMaxStackSize() || cargoNumber == 0) {
                         break;
                     }
-                    if (cargoNumber == 0) {
-                        break;
-                    }
-                } else if (outputItem.getMaxStackSize() > outputItem.getAmount() && ItemStackUtil.isItemSimilar(inputItemWithWrapper.getItemStackWrapper(), outputItemWithWrapper.getItemStackWrapper())) {
-                    if (typeItem == null && !CargoLimit.VALUE_ALL.equals(itemMode)) {
+                } else if (outputItem.getAmount() < outputItem.getMaxStackSize() && ItemStackUtil.isItemSimilar(inputItemWithWrapper, outputItemWithWrapper)) {
+                    if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
                         typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
                     }
                     int count = ItemStackUtil.stack(inputItemWithWrapper, outputItemWithWrapper, cargoNumber);
                     cargoNumber -= count;
                     number += count;
                     work = true;
-                    if (CargoLimit.VALUE_STACK.equals(itemMode)) {
+                    if (CargoLimit.VALUE_STACK.equals(cargoLimit)) {
                         cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
                     }
-                    if (outputItem.getAmount() >= outputItem.getMaxStackSize()) {
-                        break;
-                    }
-                    if (cargoNumber == 0) {
+                    if (outputItem.getAmount() >= outputItem.getMaxStackSize() || cargoNumber == 0) {
                         break;
                     }
                 }
@@ -398,7 +489,7 @@ public class CargoUtil {
                 break;
             }
             if (work) {
-                if (searchItemList.size() <= SEARCH_MAP_LIMIT) {
+                if (newInputMap && searchItemList.size() <= SEARCH_MAP_LIMIT) {
                     searchItemList.add(outputItemWithWrapper);
                     searchInvList.add(inputMap);
                 }
@@ -409,13 +500,13 @@ public class CargoUtil {
         return number;
     }
 
-    public static boolean isMatch(@Nonnull ItemStackWithWrapper itemStackWithWrapper, @Nonnull List<ItemStackWithWrapper> list, @Nonnull String filterMode) {
+    public static boolean isMatch(@Nonnull ItemStackWithWrapper itemStackWithWrapper, @Nonnull List<ItemStackWithWrapper> list, @Nonnull String cargoFilter) {
         for (ItemStackWithWrapper filterItem : list) {
             if (ItemStackUtil.isItemSimilar(itemStackWithWrapper, filterItem)) {
-                return CargoFilter.VALUE_WHITE.equals(filterMode);
+                return CargoFilter.VALUE_WHITE.equals(cargoFilter);
             }
         }
-        return CargoFilter.VALUE_BLACK.equals(filterMode);
+        return CargoFilter.VALUE_BLACK.equals(cargoFilter);
     }
 
     public static InvWithSlots getInvAsync(@Nonnull Block block, @Nonnull String size, @Nonnull String order) {

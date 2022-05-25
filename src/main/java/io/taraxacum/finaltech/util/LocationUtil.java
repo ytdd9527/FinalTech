@@ -15,8 +15,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class LocationUtil {
     private static final NamespacedKey KEY = new NamespacedKey(FinalTech.getInstance(), "location");
 
@@ -25,6 +28,9 @@ public class LocationUtil {
             return null;
         }
         ItemMeta itemMeta = item.getItemMeta();
+        return LocationUtil.parseLocationInItem(itemMeta);
+    }
+    public static Location parseLocationInItem(@Nonnull ItemMeta itemMeta) {
         PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
         if (persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
             String locationString = persistentDataContainer.get(KEY, PersistentDataType.STRING);

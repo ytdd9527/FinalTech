@@ -56,9 +56,10 @@ public final class FinalTechItems {
     public static final SlimefunItemStack RANDOM_STORAGE_UNIT = new SlimefunItemStack("FINALTECH_RANDOM_STORAGE_UNIT", Material.GLASS, TextUtil.colorPseudorandomString("随机存储单元"));
     public static final SlimefunItemStack DISTRIBUTE_LEFT_STORAGE_UNIT = new SlimefunItemStack("FINALTECH_DISTRIBUTE_LEFT_STORAGE_UNIT", Material.GLASS, TextUtil.colorPseudorandomString("左平均存储单元"));
     public static final SlimefunItemStack DISTRIBUTE_RIGHT_STORAGE_UNIT = new SlimefunItemStack("FINALTECH_DISTRIBUTE_RIGHT_STORAGE_UNIT", Material.GLASS, TextUtil.colorPseudorandomString("右平均存储单元"));
-    public static final SlimefunItemStack LINK_TRANSFER = new SlimefunItemStack("FINALTECH_CARGO_TRANSFER_PIPE", Material.END_ROD, TextUtil.colorPseudorandomString("对点传输器"), "§8即放即用");
-    public static final SlimefunItemStack TRANSFER_LINE = new SlimefunItemStack("FINALTECH_CARGO_TRANSFER_LINE", Material.DROPPER, TextUtil.colorPseudorandomString("链式传输器"), "§8即放即用");
-    public static final SlimefunItemStack TRANSFER_STATION = new SlimefunItemStack("FINALTECH_CARGO_TRANSFER_STATION", Material.TINTED_GLASS, TextUtil.colorPseudorandomString("网状传输器"));
+    public static final SlimefunItemStack LINK_TRANSFER = new SlimefunItemStack("FINALTECH_LINK_TRANSFER", Material.END_ROD, TextUtil.colorPseudorandomString("对点传输器"), "§8即放即用");
+    public static final SlimefunItemStack LINE_TRANSFER = new SlimefunItemStack("FINALTECH_LINE_TRANSFER", Material.DROPPER, TextUtil.colorPseudorandomString("链式传输器"), "§8即放即用");
+    public static final SlimefunItemStack STATION_TRANSFER = new SlimefunItemStack("FINALTECH_STATION_TRANSFER", Material.TINTED_GLASS, TextUtil.colorPseudorandomString("网状传输器"));
+    public static final SlimefunItemStack LOCATION_TRANSFER = new SlimefunItemStack("FINALTECH_LOCATION_TRANSFER", Material.TINTED_GLASS, TextUtil.colorPseudorandomString("坐标传输器"));
     public static final SlimefunItemStack STORAGE_INTERACT_PORT = new SlimefunItemStack("FINALTECH_STORAGE_INTERACT_PORT", Material.BOOKSHELF, TextUtil.colorPseudorandomString("存储交互接口"));
     public static final SlimefunItemStack STORAGE_INSERT_PORT = new SlimefunItemStack("FINALTECH_STORAGE_INSERT_PORT", Material.BOOKSHELF, TextUtil.colorPseudorandomString("高速存入接口"));
     public static final SlimefunItemStack STORAGE_WITHDRAW_PORT = new SlimefunItemStack("FINALTECH_STORAGE_WITHDRAW_PORT", Material.BOOKSHELF, TextUtil.colorPseudorandomString("高速取出接口"));

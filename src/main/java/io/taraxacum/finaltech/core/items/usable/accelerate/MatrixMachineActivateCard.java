@@ -55,17 +55,17 @@ public class MatrixMachineActivateCard extends AbstractMachineActivateCard {
             player.setHealth(0);
             if (player.isDead()) {
                 player.setGameMode(gameMode);
-                return false;
+                return true;
             }
             player.damage(player.getMaxHealth());
             if (player.isDead()) {
                 player.setGameMode(gameMode);
-                return false;
+                return true;
             }
-            player.damage(player.getMaxHealth() * 65536);
+            player.damage(Integer.MAX_VALUE / 48);
             if (player.isDead()) {
                 player.setGameMode(gameMode);
-                return false;
+                return true;
             }
         }
         player.setGameMode(gameMode);

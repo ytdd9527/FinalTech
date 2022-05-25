@@ -10,12 +10,15 @@ import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.items.machine.manual.craft.AbstractManualCraftMachine;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.ParticleUtil;
+import io.taraxacum.finaltech.util.PlayerUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.ItemStack;
@@ -85,6 +88,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             ManualCraftMachineMenu.this.updateMenu(blockMenu, block);
         }));
         blockMenu.addMenuClickHandler(PREVIOUS_SLOT, ((player, i, itemStack, clickAction) -> {
+            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             BlockStorage.addBlockInfo(block.getLocation(), KEY_ORDER, ORDER_VALUE_DESC);
             int offset = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY));
             int length = MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()).size();
@@ -95,6 +99,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             return false;
         }));
         blockMenu.addMenuClickHandler(NEXT_SLOT, ((player, i, itemStack, clickAction) -> {
+            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             BlockStorage.addBlockInfo(block.getLocation(), KEY_ORDER, ORDER_VALUE_ASC);
             int offset = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY));
             int length = MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()).size();
@@ -105,10 +110,12 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             return false;
         }));
         blockMenu.addMenuClickHandler(STOCK_SLOT, ((player, i, itemStack, clickAction) -> {
+            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             MachineUtil.stockSlots(blockMenu, INPUT_SLOT);
             return false;
         }));
         blockMenu.addMenuClickHandler(CRAFT_SLOT, ((player, i, itemStack, clickAction) -> {
+            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             Config config = BlockStorage.getLocationInfo(block.getLocation());
 
             long lastTimeMillis = config.contains(AbstractManualCraftMachine.KEY_CURRENT) ? Long.parseLong(config.getString(AbstractManualCraftMachine.KEY_CURRENT)) : 0;

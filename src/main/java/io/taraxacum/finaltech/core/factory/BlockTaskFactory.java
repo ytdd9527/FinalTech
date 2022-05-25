@@ -120,12 +120,6 @@ public class BlockTaskFactory<T> {
 
             long endTime = System.nanoTime();
 
-            {
-                Bukkit.getLogger().info(TextUtil.colorRandomString("----------------"));
-                Bukkit.getLogger().info(TextUtil.colorRandomString("FINALTECH_ALL") + " §f:§9 " + (endTime - beginTime));
-                Bukkit.getLogger().info(TextUtil.colorRandomString("----------------"));
-            }
-
             this.work = false;
             this.lock.notifyAll();
         }

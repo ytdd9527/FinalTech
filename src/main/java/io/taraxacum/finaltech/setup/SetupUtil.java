@@ -7,17 +7,14 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.command.GetItemPhony;
+import io.taraxacum.finaltech.core.items.machine.*;
 import io.taraxacum.finaltech.core.items.machine.cargo.unit.*;
-import io.taraxacum.finaltech.core.items.machine.EquivalentExchangeTable;
 import io.taraxacum.finaltech.core.items.machine.standard.*;
 import io.taraxacum.finaltech.core.items.machine.standard.basic.*;
 import io.taraxacum.finaltech.core.items.unusable.*;
 import io.taraxacum.finaltech.core.items.usable.LocationRecorder;
 import io.taraxacum.finaltech.core.items.usable.MenuViewer;
 import io.taraxacum.finaltech.core.items.usable.accelerate.*;
-import io.taraxacum.finaltech.core.items.machine.DustFactoryStone;
-import io.taraxacum.finaltech.core.items.machine.ItemDismantleTable;
-import io.taraxacum.finaltech.core.items.machine.MatrixReactor;
 import io.taraxacum.finaltech.core.items.machine.capacitor.AdvancedChargeIncreaseCapacitor;
 import io.taraxacum.finaltech.core.items.machine.capacitor.AdvancedConsumeReduceCapacitor;
 import io.taraxacum.finaltech.core.items.machine.range.area.EnergizedAccelerator;
@@ -32,7 +29,6 @@ import io.taraxacum.finaltech.core.items.machine.cargo.*;
 import io.taraxacum.finaltech.core.items.machine.cargo.storage.StorageInsertPort;
 import io.taraxacum.finaltech.core.items.machine.cargo.storage.StorageInteractPort;
 import io.taraxacum.finaltech.core.items.machine.cargo.storage.StorageWithdrawPort;
-import io.taraxacum.finaltech.core.items.machine.DustGenerator;
 import io.taraxacum.finaltech.core.items.machine.manual.CardOperationTable;
 import io.taraxacum.finaltech.core.items.machine.manual.craft.*;
 import io.taraxacum.finaltech.core.items.machine.range.ray.shooter.EnergizedElectricityShootPile;
@@ -45,12 +41,20 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public final class SetupUtil {
 
     public static void init() {
         FinalTech finalTech = FinalTech.getInstance();
         Config valueConfig = finalTech.getConfigFile();
+
+        Config configFile = FinalTech.getInstance().getConfigFile();
+        if(configFile.contains("option.multi-thread-level")) {
+            AbstractMachine.MULTI_THREAD_LEVEL = configFile.getInt("option.multi-thread");
+        } else {
+            configFile.setValue("option.multi-thread", AbstractMachine.MULTI_THREAD_LEVEL);
+        }
 
         int singularityDifficulty = Singularity.DEFAULT_SINGULARITY_DIFFICULTY;
         if (valueConfig.contains("constructor.singularity")) {
@@ -145,9 +149,10 @@ public final class SetupUtil {
         new RandomStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.RANDOM_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.RANDOM_STORAGE_UNIT).register();
         new DistributeLeftStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.DISTRIBUTE_LEFT_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DISTRIBUTE_LEFT_STORAGE_UNIT).register();
         new DistributeRightStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.DISTRIBUTE_RIGHT_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DISTRIBUTE_RIGHT_STORAGE_UNIT).register();
-        new LinkTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.LINK_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.TRANSFER_PIPE).register();
-        new LineTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.TRANSFER_LINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.TRANSFER_LINE).register();
-        new MeshTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.TRANSFER_STATION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.TRANSFER_STATION).register();
+        new LinkTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.LINK_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LINK_TRANSFER).register();
+        new LineTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.LINE_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LINE_TRANSFER).register();
+        new MeshTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.STATION_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STATION_TRANSFER).register();
+        new LocationTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.LOCATION_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LOCATION_TRANSFER).register();
         new StorageInteractPort(FinalTechMenus.MENU_CARGO, FinalTechItems.STORAGE_INTERACT_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_INTERACT_PORT).register();
         new StorageInsertPort(FinalTechMenus.MENU_CARGO, FinalTechItems.STORAGE_INSERT_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_INSERT_PORT).register();
         new StorageWithdrawPort(FinalTechMenus.MENU_CARGO, FinalTechItems.STORAGE_WITHDRAW_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_WITHDRAW_PORT).register();

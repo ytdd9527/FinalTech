@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.common.annotation.Translate;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.PerformanceLimitMachine;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
@@ -38,7 +39,6 @@ import java.util.List;
  */
 public class MeshTransfer extends AbstractCargo implements RecipeItem, PerformanceLimitMachine {
     private static final double PARTICLE_DISTANCE = 0.22;
-    private static final long PARTICLE_INTERVAL = 100L;
 
     public MeshTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -161,7 +161,7 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
         if (BlockSearchMode.VALUE_ZERO.equals(searchMode)) {
             particleLocationList.add(LocationUtil.getCenterLocation(result));
             if (drawParticle) {
-                Bukkit.getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawLineByDistance(Particle.REDSTONE, PARTICLE_INTERVAL, PARTICLE_DISTANCE, particleLocationList));
+                Bukkit.getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawLineByDistance(Particle.COMPOSTER, FinalTech.SLIMEFUN_TICK_TIME_MILLIS / particleLocationList.size() / 1000, PARTICLE_DISTANCE, particleLocationList));
             }
             return result;
         }
@@ -171,14 +171,14 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
                 result = result.getRelative(blockFace);
                 continue;
             }
-            if (BlockSearchMode.VALUE_PENETRATE.equals(searchMode) && BlockStorage.hasInventory(result) && BlockStorage.getInventory(result).getPreset().getID().equals(FinalTechItems.TRANSFER_STATION.getItemId())) {
+            if (BlockSearchMode.VALUE_PENETRATE.equals(searchMode) && BlockStorage.hasInventory(result) && BlockStorage.getInventory(result).getPreset().getID().equals(FinalTechItems.STATION_TRANSFER.getItemId())) {
                 result = result.getRelative(blockFace);
                 continue;
             }
             break;
         }
         if (drawParticle) {
-            this.getAddon().getJavaPlugin().getServer().getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawLineByDistance(Particle.REDSTONE, PARTICLE_INTERVAL, PARTICLE_DISTANCE, particleLocationList));
+            this.getAddon().getJavaPlugin().getServer().getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawLineByDistance(Particle.COMPOSTER, FinalTech.SLIMEFUN_TICK_TIME_MILLIS / particleLocationList.size() / 1000, PARTICLE_DISTANCE, particleLocationList));
         }
         return result;
     }

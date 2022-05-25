@@ -46,7 +46,7 @@ public class SlotSearchLine {
     @Translate
     public static final String RESERVE_LORE = "逆向";
     @Translate
-    public static final String RANDOM_LORE = "正向";
+    public static final String RANDOM_LORE = "随机";
 
     public static final Material NULL_MATERIAL = Material.GRAY_STAINED_GLASS_PANE;
     public static final Material POSITIVE_MATERIAL = Material.BLUE_STAINED_GLASS_PANE;
@@ -135,6 +135,16 @@ public class SlotSearchLine {
         }
 
         @Override
+        public void setOrClearValue(@Nonnull Location location, @Nullable String value) {
+            BlockStorage.addBlockInfo(location, KEY, value);
+        }
+
+        @Override
+        public void setOrClearValue(@Nonnull Config config, @Nullable String value) {
+            config.setValue(KEY, value);
+        }
+
+        @Override
         public boolean checkAndUpdateIcon(@Nonnull BlockMenu blockMenu, int slot) {
             String valueMap = BlockStorage.getLocationInfo(blockMenu.getLocation(), this.getKey());
             KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
@@ -153,7 +163,7 @@ public class SlotSearchLine {
         @Override
         public ChestMenu.MenuClickHandler getHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
             return (p, slot1, item, action) -> {
-                String valueMap = BlockStorageLoreMaterialHelper.this.getOrDefaultValue(block.getLocation());
+                String valueMap = BlockStorage.getLocationInfo(block.getLocation(), KEY);
                 KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
                 String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getKey());
                 if (!action.isRightClicked()) {
@@ -172,7 +182,7 @@ public class SlotSearchLine {
         @Override
         public ChestMenu.MenuClickHandler getUpdateHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
             return (p, slot1, item, action) -> {
-                String valueMap = BlockStorageLoreMaterialHelper.this.getOrDefaultValue(block.getLocation());
+                String valueMap = BlockStorage.getLocationInfo(block.getLocation(), KEY);
                 KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
                 String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getKey());
                 if (!BlockStorageLoreMaterialHelper.this.validValue(value)) {
@@ -189,7 +199,7 @@ public class SlotSearchLine {
         @Override
         public ChestMenu.MenuClickHandler getNextHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
             return (p, slot1, item, action) -> {
-                String valueMap = BlockStorageLoreMaterialHelper.this.getOrDefaultValue(block.getLocation());
+                String valueMap = BlockStorage.getLocationInfo(block.getLocation(), KEY);
                 KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
                 String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getKey());
                 value = BlockStorageLoreMaterialHelper.this.clickNextValue(value, action);
@@ -204,7 +214,7 @@ public class SlotSearchLine {
         @Override
         public ChestMenu.MenuClickHandler getPreviousHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
             return (p, slot1, item, action) -> {
-                String valueMap = BlockStorageLoreMaterialHelper.this.getOrDefaultValue(block.getLocation());
+                String valueMap = BlockStorage.getLocationInfo(block.getLocation(), KEY);
                 KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
                 String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getKey());
                 value = BlockStorageLoreMaterialHelper.this.clickPreviousValue(value, action);

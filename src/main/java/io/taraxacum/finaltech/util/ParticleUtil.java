@@ -57,9 +57,9 @@ public class ParticleUtil {
                 double z = location1.getZ();
 
                 double d = location1.distance(location2);
-                double px = (location2.getX() - location1.getX()) * (d / distance);
-                double py = (location2.getY() - location1.getY()) * (d / distance);
-                double pz = (location2.getZ() - location1.getZ()) * (d / distance);
+                double px = (location2.getX() - location1.getX()) / (d / distance);
+                double py = (location2.getY() - location1.getY()) / (d / distance);
+                double pz = (location2.getZ() - location1.getZ()) / (d / distance);
 
                 for (int j = 0; j < d / distance; j++) {
                     world.spawnParticle(particle, x, y, z, 1);

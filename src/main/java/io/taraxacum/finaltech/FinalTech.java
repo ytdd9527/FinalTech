@@ -3,11 +3,11 @@ package io.taraxacum.finaltech;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
-import io.taraxacum.finaltech.api.command.GetItemPhony;
 import io.taraxacum.finaltech.core.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.core.factory.ItemValueMap;
 import io.taraxacum.finaltech.setup.SetupUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
@@ -25,16 +25,17 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
     public final Config configFile = new Config(this);
     public final Config valueFile = new Config(this, "value.yml");
     public static FinalTech instance;
+    public static int SLIMEFUN_TICK_TIME_MILLIS = 50 * 1000 * 10;
     private static int TIME_COUNT = 0;
     private static long MILLISECONDS_PER_20_TICK = 1000;
 
     @Override
     public void onEnable() {
         super.onEnable();
+
         instance = this;
 
         this.init();
-
     }
 
     @Override
@@ -67,11 +68,11 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         BukkitScheduler scheduler = Bukkit.getScheduler();
         AtomicLong lastTimeMillis = new AtomicLong(System.currentTimeMillis());
         int tickRate = Slimefun.getTickerTask().getTickRate();
-        long t = 50L * 1000L * tickRate;
+        SLIMEFUN_TICK_TIME_MILLIS = 50 * 1000 * tickRate;
         AtomicLong currentTimeMillis = new AtomicLong();
         scheduler.runTaskTimerAsynchronously(this, () -> {
             currentTimeMillis.set(System.currentTimeMillis());
-            FinalTech.MILLISECONDS_PER_20_TICK = t / (currentTimeMillis.get() - lastTimeMillis.get());
+            FinalTech.MILLISECONDS_PER_20_TICK = SLIMEFUN_TICK_TIME_MILLIS / (currentTimeMillis.get() - lastTimeMillis.get());
             lastTimeMillis.set(currentTimeMillis.get());
             FinalTech.TIME_COUNT++;
         }, 0, tickRate);

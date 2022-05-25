@@ -6,6 +6,7 @@ import io.taraxacum.finaltech.core.factory.BlockStorageIconHelper;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.LinkedHashMap;
 
 /**
@@ -45,4 +46,8 @@ public final class CargoLimit {
         this.put(VALUE_STACK, STACK_ICON);
         this.put(VALUE_NONNULL, NONNULL_ICON);
     }});
+
+    public static boolean typeLimit(@Nonnull String value) {
+        return VALUE_TYPE.equals(value) || VALUE_STACK.equals(value);
+    }
 }

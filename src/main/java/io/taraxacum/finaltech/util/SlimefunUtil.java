@@ -14,6 +14,7 @@ import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -103,36 +104,27 @@ public class SlimefunUtil {
     }
 
     public static boolean hasPermission(@Nonnull String uuid, @Nonnull Block block, @Nonnull Interaction... interactions) {
-        Player player = Bukkit.getPlayer(UUID.fromString(uuid));
-        if (player == null) {
-            return false;
-        }
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
         for (Interaction interaction : interactions) {
-            if (!Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), interaction)) {
+            if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, block.getLocation(), interaction)) {
                 return false;
             }
         }
         return true;
     }
     public static boolean hasPermission(@Nonnull String uuid, @Nonnull Entity entity, @Nonnull Interaction... interactions) {
-        Player player = Bukkit.getPlayer(UUID.fromString(uuid));
-        if (player == null) {
-            return false;
-        }
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
         for (Interaction interaction : interactions) {
-            if (!Slimefun.getProtectionManager().hasPermission(player, entity.getLocation(), interaction)) {
+            if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, entity.getLocation(), interaction)) {
                 return false;
             }
         }
         return true;
     }
     public static boolean hasPermission(@Nonnull String uuid, @Nonnull Location location, @Nonnull Interaction... interactions) {
-        Player player = Bukkit.getPlayer(UUID.fromString(uuid));
-        if (player == null) {
-            return false;
-        }
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
         for (Interaction interaction : interactions) {
-            if (!Slimefun.getProtectionManager().hasPermission(player, location, interaction)) {
+            if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, location, interaction)) {
                 return false;
             }
         }

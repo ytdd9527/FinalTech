@@ -365,7 +365,7 @@ public final class ItemStackUtil {
         return 0;
     }
     public static int stack(@Nullable ItemStackWithWrapper inputItem, @Nullable ItemStack output) {
-        if (inputItem != null && !ItemStackUtil.isItemNull(output) && output.getAmount() < output.getMaxStackSize() && ItemStackUtil.isItemSimilar(inputItem.getItemStackWrapper(), output)) {
+        if (inputItem != null && !ItemStackUtil.isItemNull(output) && output.getAmount() < output.getMaxStackSize() && ItemStackUtil.isItemSimilar(inputItem, output)) {
             int amount = Math.min(inputItem.getItemStack().getAmount(), output.getMaxStackSize() - output.getAmount());
             inputItem.getItemStack().setAmount(inputItem.getItemStack().getAmount() - amount);
             output.setAmount(output.getAmount() + amount);
@@ -374,7 +374,7 @@ public final class ItemStackUtil {
         return 0;
     }
     public static int stack(@Nullable ItemStack input, @Nullable ItemStackWithWrapper output) {
-        if (output != null && !ItemStackUtil.isItemNull(output.getItemStack()) && output.getItemStack().getAmount() < output.getItemStack().getMaxStackSize() && ItemStackUtil.isItemSimilar(input, output.getItemStackWrapper())) {
+        if (output != null && !ItemStackUtil.isItemNull(output.getItemStack()) && output.getItemStack().getAmount() < output.getItemStack().getMaxStackSize() && ItemStackUtil.isItemSimilar(input, output)) {
             int amount = Math.min(input.getAmount(), output.getItemStack().getMaxStackSize() - output.getItemStack().getAmount());
             input.setAmount(input.getAmount() - amount);
             output.getItemStack().setAmount(output.getItemStack().getAmount() + amount);
@@ -383,7 +383,7 @@ public final class ItemStackUtil {
         return 0;
     }
     public static int stack(@Nullable ItemStackWithWrapper input, @Nullable ItemStackWithWrapper output) {
-        if (input != null && output != null && output.getItemStack().getAmount() < output.getItemStack().getMaxStackSize() && ItemStackUtil.isItemSimilar(input.getItemStackWrapper(), output.getItemStackWrapper())) {
+        if (input != null && output != null && output.getItemStack().getAmount() < output.getItemStack().getMaxStackSize() && ItemStackUtil.isItemSimilar(input, output)) {
             int amount = Math.min(input.getItemStack().getAmount(), output.getItemStack().getMaxStackSize() - output.getItemStack().getAmount());
             input.getItemStack().setAmount(input.getItemStack().getAmount() - amount);
             output.getItemStack().setAmount(output.getItemStack().getAmount() + amount);
@@ -409,7 +409,7 @@ public final class ItemStackUtil {
         return 0;
     }
     public static int stack(@Nonnull ItemStackWithWrapper input, @Nullable ItemStack output, int maxAmount) {
-        if (!ItemStackUtil.isItemNull(output) && output.getMaxStackSize() > output.getAmount() && ItemStackUtil.isItemSimilar(input.getItemStackWrapper(), output)) {
+        if (!ItemStackUtil.isItemNull(output) && output.getMaxStackSize() > output.getAmount() && ItemStackUtil.isItemSimilar(input, output)) {
             int amount = Math.min(maxAmount, Math.min(input.getItemStack().getAmount(), output.getMaxStackSize() - output.getAmount()));
             input.getItemStack().setAmount(input.getItemStack().getAmount() - amount);
             output.setAmount(output.getAmount() + amount);
@@ -418,7 +418,7 @@ public final class ItemStackUtil {
         return 0;
     }
     public static int stack(@Nullable ItemStack input, @Nonnull ItemStackWithWrapper output, int maxAmount) {
-        if (!ItemStackUtil.isItemNull(output.getItemStack()) && output.getItemStack().getMaxStackSize() > output.getItemStack().getAmount() && ItemStackUtil.isItemSimilar(input, output.getItemStackWrapper())) {
+        if (!ItemStackUtil.isItemNull(output.getItemStack()) && output.getItemStack().getMaxStackSize() > output.getItemStack().getAmount() && ItemStackUtil.isItemSimilar(input, output)) {
             int amount = Math.min(maxAmount, Math.min(input.getAmount(), output.getItemStack().getMaxStackSize() - output.getItemStack().getAmount()));
             input.setAmount(input.getAmount() - amount);
             output.getItemStack().setAmount(output.getItemStack().getAmount() + amount);
@@ -427,7 +427,7 @@ public final class ItemStackUtil {
         return 0;
     }
     public static int stack(@Nonnull ItemStackWithWrapper input, @Nonnull ItemStackWithWrapper output, int maxAmount) {
-        if (output.getItemStack().getMaxStackSize() > output.getItemStack().getAmount() && ItemStackUtil.isItemSimilar(input.getItemStackWrapper(), output.getItemStackWrapper())) {
+        if (output.getItemStack().getMaxStackSize() > output.getItemStack().getAmount() && ItemStackUtil.isItemSimilar(input, output)) {
             int amount = Math.min(maxAmount, Math.min(input.getItemStack().getAmount(), output.getItemStack().getMaxStackSize() - output.getItemStack().getAmount()));
             input.getItemStack().setAmount(input.getItemStack().getAmount() - amount);
             output.getItemStack().setAmount(output.getItemStack().getAmount() + amount);
@@ -575,11 +575,18 @@ public final class ItemStackUtil {
         }
         ItemMeta itemMeta = item.getItemMeta();
         List<String> oldLore = itemMeta.getLore();
+        if(oldLore == null) {
+            oldLore = new ArrayList<>();
+        }
         while (oldLore.size() < loreOffset) {
             oldLore.add("");
         }
         for (int i = 0; i < lore.length; i++) {
-            oldLore.set(loreOffset + i, lore[i]);
+            if(oldLore.size() <= loreOffset + i) {
+                oldLore.add(loreOffset + i, lore[i]);
+            } else {
+                oldLore.set(loreOffset + i, lore[i]);
+            }
         }
         itemMeta.setLore(oldLore);
         item.setItemMeta(itemMeta);
@@ -594,10 +601,19 @@ public final class ItemStackUtil {
         }
         ItemMeta itemMeta = item.getItemMeta();
         List<String> oldLore = itemMeta.getLore();
+        if(oldLore == null) {
+            oldLore = new ArrayList<>();
+        }
         while (oldLore.size() < loreOffset) {
             oldLore.add("");
         }
-        oldLore.addAll(lore);
+        for (int i = 0; i < lore.size(); i++) {
+            if(oldLore.size() <= loreOffset + i) {
+                oldLore.add(loreOffset + i, lore.get(i));
+            } else {
+                oldLore.set(loreOffset + i, lore.get(i));
+            }
+        }
         itemMeta.setLore(oldLore);
         item.setItemMeta(itemMeta);
     }

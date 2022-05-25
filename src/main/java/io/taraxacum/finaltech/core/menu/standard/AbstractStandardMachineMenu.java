@@ -36,7 +36,7 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
     @Override
     public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
-        blockMenu.addMenuClickHandler(MACHINE_MAX_STACK_SLOT, MachineMaxStack.getHandler(blockMenu, block, this, MACHINE_MAX_STACK_SLOT));
+        blockMenu.addMenuClickHandler(MACHINE_MAX_STACK_SLOT, MachineMaxStack.HELPER.getHandler(blockMenu, block, this, MACHINE_MAX_STACK_SLOT));
     }
 
     @Override
