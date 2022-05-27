@@ -1,7 +1,6 @@
 package io.taraxacum.finaltech.util;
 
 import io.taraxacum.finaltech.FinalTech;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
@@ -14,7 +13,9 @@ import org.bukkit.persistence.PersistentDataType;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Final_ROOT
@@ -82,6 +83,24 @@ public class LocationUtil {
         return location;
     }
 
+    @Nonnull
+    public static Set<Location> parseLocation(@Nonnull Block... blocks) {
+        Set<Location> locationSet = new HashSet<>(blocks.length);
+        for(Block block : blocks) {
+            locationSet.add(block.getLocation());
+        }
+        return locationSet;
+    }
+
+    @Nonnull
+    public static Set<Location> parseLocation(@Nonnull List<Block> blocks) {
+        Set<Location> locationSet = new HashSet<>(blocks.size());
+        for(Block block : blocks) {
+            locationSet.add(block.getLocation());
+        }
+        return locationSet;
+    }
+
     @Nullable
     public static Location stringToLocation(@Nonnull String locationString) {
         World world = null;
@@ -92,7 +111,7 @@ public class LocationUtil {
         Float yaw = null;
         for (String value : locationString.split(";")) {
             if (value.startsWith("world")) {
-                world = Bukkit.getWorld(value.substring("world".length() + 1));
+                world = FinalTech.getInstance().getServer().getWorld(value.substring("world".length() + 1));
             }
             if (value.startsWith("pitch")) {
                 pitch = Float.parseFloat(value.substring("pitch".length() + 1));

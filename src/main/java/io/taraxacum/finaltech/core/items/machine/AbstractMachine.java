@@ -14,7 +14,6 @@ import io.taraxacum.finaltech.core.items.AbstractMySlimefunItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
-import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
@@ -26,6 +25,12 @@ import javax.annotation.Nonnull;
  */
 public abstract class AbstractMachine extends AbstractMySlimefunItem {
     private final AbstractMachineMenu menu;
+
+    /**
+     * 0: nothing change, all task will run at slimefun #{@link io.github.thebusybiscuit.slimefun4.implementation.tasks.TickerTask}
+     * 1: async task will be put in #{@link BlockTaskFactory}, so they will be really async
+     * 2: sync task will be run as async, so all task will be put in #{@link BlockTaskFactory}
+     */
     public static int MULTI_THREAD_LEVEL = 0;
 
     public AbstractMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

@@ -10,6 +10,10 @@ import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class PlayerUtil {
     public static final NamespacedKey KEY_UUID = new NamespacedKey(FinalTech.getInstance(), "UUID");
 

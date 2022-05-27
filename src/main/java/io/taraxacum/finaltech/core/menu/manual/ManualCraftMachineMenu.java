@@ -11,11 +11,9 @@ import io.taraxacum.finaltech.core.items.machine.manual.craft.AbstractManualCraf
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.ParticleUtil;
-import io.taraxacum.finaltech.util.PlayerUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -122,11 +120,11 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             long currentTimeMillis = System.currentTimeMillis();
             if (currentTimeMillis - lastTimeMillis < UPDATE_TIME_LIMIT) {
                 Location location = blockMenu.getLocation();
-                Bukkit.getLogger().warning("[" + JavaPlugin.getPlugin(FinalTech.class).getName() + "]§c位于" + location.getWorld().getName() + "(" + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ() + ")处的粘液科技机器" + this.getTitle() + "正在被玩家高速点击，相关的玩家包括：");
+                FinalTech.getInstance().getServer().getLogger().warning("[" + JavaPlugin.getPlugin(FinalTech.class).getName() + "]§c位于" + location.getWorld().getName() + "(" + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ() + ")处的粘液科技机器" + this.getTitle() + "正在被玩家高速点击，相关的玩家包括：");
                 for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
-                    Bukkit.getLogger().warning("    " + humanEntity.getName());
+                    FinalTech.getInstance().getServer().getLogger().warning("    " + humanEntity.getName());
                 }
-                Bukkit.getLogger().warning("请确定这是否是由玩家网络卡顿造成，如果不是，可能是其正尝试恶意卡服");
+                FinalTech.getInstance().getServer().getLogger().warning("请确定这是否是由玩家网络卡顿造成，如果不是，可能是其正尝试恶意卡服");
             }
 
             int quantity = clickAction.isShiftClicked() || clickAction.isRightClicked() ? 3456 : 64;
@@ -233,11 +231,11 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         long currentTimeMillis = System.currentTimeMillis();
         if (currentTimeMillis - lastTimeMillis < UPDATE_TIME_LIMIT) {
             Location location = blockMenu.getLocation();
-            Bukkit.getLogger().warning("[" + JavaPlugin.getPlugin(FinalTech.class).getName() + "]§c位于" + location.getWorld().getName() + "(" + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ() + ")处的粘液科技机器" + this.getTitle() + "正在被玩家高速点击，相关的玩家包括：");
+            FinalTech.getInstance().getServer().getLogger().warning("[" + JavaPlugin.getPlugin(FinalTech.class).getName() + "]§c位于" + location.getWorld().getName() + "(" + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ() + ")处的粘液科技机器" + this.getTitle() + "正在被玩家高速点击，相关的玩家包括：");
             for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
-                Bukkit.getLogger().warning("    " + humanEntity.getName());
+                FinalTech.getInstance().getServer().getLogger().warning("    " + humanEntity.getName());
             }
-            Bukkit.getLogger().warning("请确定这是否是由玩家网络卡顿造成，如果不是，可能是其正尝试恶意卡服");
+            FinalTech.getInstance().getServer().getLogger().warning("请确定这是否是由玩家网络卡顿造成，如果不是，可能是其正尝试恶意卡服");
         }
 
         AdvancedCraft craft = null;

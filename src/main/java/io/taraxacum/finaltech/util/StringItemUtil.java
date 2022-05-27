@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * We should make suer that
  * one item will have "item" key and "amount" key in the same time
- * or one item will not have only on of them.
+ * or one item will not have only one of them.
  * @author Final_ROOT
  * @since 1.0
  */

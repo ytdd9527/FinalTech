@@ -12,6 +12,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
 import io.taraxacum.common.annotation.Translate;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.core.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.LinkTransferMenu;
 import io.taraxacum.finaltech.core.storage.*;
@@ -20,7 +21,6 @@ import io.taraxacum.finaltech.util.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.block.*;
@@ -30,11 +30,14 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Final_ROOT
@@ -42,7 +45,6 @@ import java.util.*;
  */
 public class LinkTransfer extends AbstractCargo implements RecipeItem {
     private static final double PARTICLE_DISTANCE = 0.22;
-    private static final long PARTICLE_INTERVAL = 100L;
     public static int BLOCK_SEARCH_LIMIT = 8;
 
     public LinkTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -90,6 +92,11 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
 
     @Override
     public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config)  {
+        BlockMenu blockMenu = BlockStorage.getInventory(block);
+        JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
+        boolean primaryThread = javaPlugin.getServer().isPrimaryThread();
+        boolean drawParticle = blockMenu.hasViewer();
+
         String inputSlotSearchSize = SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config);
         String inputSlotSearchOrder = SlotSearchOrder.INPUT_HELPER.getOrDefaultValue(config);
 
@@ -101,21 +108,40 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
         String cargoMode = CargoMode.HELPER.getOrDefaultValue(config);
         String cargoLimit = CargoLimit.HELPER.getOrDefaultValue(config);
 
-        BlockMenu blockMenu = BlockStorage.getInventory(block);
-        Inventory blockInv = blockMenu.toInventory();
-
-        boolean drawParticle = blockMenu.hasViewer();
-
         Block inputBlock = null;
         Block outputBlock = null;
-        BlockData blockData = block.getState().getBlockData();
-        if (blockData instanceof Directional) {
-            BlockFace blockFace = ((Directional) blockData).getFacing();
-            inputBlock = this.searchBlockPiPe(block, BlockSearchMode.PIPE_INPUT_HELPER.getOrDefaultValue(config), blockFace.getOppositeFace(), true, drawParticle);
-            outputBlock = this.searchBlockPiPe(block, BlockSearchMode.PIPE_OUTPUT_HELPER.getOrDefaultValue(config), blockFace, false, drawParticle);
+        if(primaryThread) {
+            BlockData blockData = block.getState().getBlockData();
+            if (blockData instanceof Directional) {
+                BlockFace blockFace = ((Directional) blockData).getFacing();
+                inputBlock = this.searchBlockPiPe(block, BlockSearchMode.PIPE_INPUT_HELPER.getOrDefaultValue(config), blockFace.getOppositeFace(), true, drawParticle);
+                outputBlock = this.searchBlockPiPe(block, BlockSearchMode.PIPE_OUTPUT_HELPER.getOrDefaultValue(config), blockFace, false, drawParticle);
+            }
+        } else {
+            try {
+                Block[] blocks = javaPlugin.getServer().getScheduler().callSyncMethod(javaPlugin, () -> {
+                    BlockData blockData = block.getState().getBlockData();
+                    Block[] result = new Block[2];
+                    if (blockData instanceof Directional) {
+                        BlockFace blockFace = ((Directional) blockData).getFacing();
+                        result[0] = LinkTransfer.this.searchBlockPiPe(block, BlockSearchMode.PIPE_INPUT_HELPER.getOrDefaultValue(config), blockFace.getOppositeFace(), true, drawParticle);
+                        result[1] = LinkTransfer.this.searchBlockPiPe(block, BlockSearchMode.PIPE_OUTPUT_HELPER.getOrDefaultValue(config), blockFace, false, drawParticle);
+                    }
+                    return result;
+                }).get();
+                inputBlock = blocks[0];
+                outputBlock = blocks[1];
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
         }
+
         if (inputBlock == null || outputBlock == null) {
             return;
+        } else if(drawParticle) {
+            final Block finalInputBlock = inputBlock;
+            final Block finalOutputBlock = outputBlock;
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, finalInputBlock, finalOutputBlock));
         }
 
         String uuid = config.getString("UUID");
@@ -125,10 +151,21 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
             }
         }
 
-        CargoUtil.doCargo(inputBlock, outputBlock, inputSlotSearchSize, inputSlotSearchOrder, outputSlotSearchSize, outputSlotSearchOrder, cargoNumber, cargoLimit, cargoFilter, blockInv, LinkTransferMenu.ITEM_MATCH, cargoMode);
+        if(primaryThread) {
+            CargoUtil.doCargo(inputBlock, outputBlock, inputSlotSearchSize, inputSlotSearchOrder, outputSlotSearchSize, outputSlotSearchOrder, cargoNumber, cargoLimit, cargoFilter, blockMenu.toInventory(), LinkTransferMenu.ITEM_MATCH, cargoMode);
+        } else {
+            final Block finalInputBlock = inputBlock;
+            final Block finalOutputBlock = outputBlock;
+            BlockTaskFactory.getInstance().registerRunnable(slimefunItem, false, () -> CargoUtil.doCargo(finalInputBlock, finalOutputBlock, inputSlotSearchSize, inputSlotSearchOrder, outputSlotSearchSize, outputSlotSearchOrder, cargoNumber, cargoLimit, cargoFilter, blockMenu.toInventory(), LinkTransferMenu.ITEM_MATCH, cargoMode), block.getLocation(), inputBlock.getLocation(), outputBlock.getLocation());
+        }
     }
 
-    @Nullable
+    @Override
+    protected boolean isSynchronized() {
+        return true;
+    }
+
+    @Nonnull
     private Block searchBlockPiPe(@Nonnull Block begin, @Nonnull String searchMode, @Nonnull BlockFace blockFace, boolean input, boolean drawParticle) {
         List<Location> particleLocationList = new ArrayList<>();
         particleLocationList.add(LocationUtil.getCenterLocation(begin));
@@ -137,7 +174,8 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
         if (BlockSearchMode.VALUE_ZERO.equals(searchMode)) {
             particleLocationList.add(LocationUtil.getCenterLocation(result));
             if (drawParticle) {
-                Bukkit.getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawLineByDistance(Particle.COMPOSTER, FinalTech.SLIMEFUN_TICK_TIME_MILLIS / particleLocationList.size() / 1000, PARTICLE_DISTANCE, particleLocationList));
+                JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawLineByDistance(Particle.COMPOSTER, FinalTech.SLIMEFUN_TICK_TIME_MILLIS / particleLocationList.size() / 1000, PARTICLE_DISTANCE, particleLocationList));
             }
             return result;
         }
@@ -174,7 +212,8 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
             }
         }
         if (drawParticle) {
-            this.getAddon().getJavaPlugin().getServer().getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> ParticleUtil.drawLineByDistance(Particle.COMPOSTER, FinalTech.SLIMEFUN_TICK_TIME_MILLIS / particleLocationList.size() / 1000, PARTICLE_DISTANCE, particleLocationList));
+            JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawLineByDistance(Particle.COMPOSTER, FinalTech.SLIMEFUN_TICK_TIME_MILLIS / particleLocationList.size() / 1000, PARTICLE_DISTANCE, particleLocationList));
         }
         return result;
     }

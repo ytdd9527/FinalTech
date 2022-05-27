@@ -3,8 +3,6 @@ package io.taraxacum.finaltech.core.factory;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.BlockTask;
-import io.taraxacum.finaltech.util.TextUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -83,7 +81,7 @@ public class BlockTaskFactory<T> {
                             lockMap.put(object, true);
                         }
                         if (blockTask.sync()) {
-                            BukkitTask bukkitTask = Bukkit.getScheduler().runTask(JavaPlugin.getPlugin(FinalTech.class), () -> {
+                            BukkitTask bukkitTask = FinalTech.getInstance().getServer().getScheduler().runTask(JavaPlugin.getPlugin(FinalTech.class), () -> {
                                 blockTask.runnable().run();
                                 for (T object : blockTask.objects()) {
                                     lockMap.put(object, false);
@@ -93,7 +91,7 @@ public class BlockTaskFactory<T> {
                                 }
                             });
                         } else {
-                            BukkitTask bukkitTask = Bukkit.getScheduler().runTaskAsynchronously(JavaPlugin.getPlugin(FinalTech.class), () -> {
+                            BukkitTask bukkitTask = FinalTech.getInstance().getServer().getScheduler().runTaskAsynchronously(JavaPlugin.getPlugin(FinalTech.class), () -> {
                                 blockTask.runnable().run();
                                 for (T object : blockTask.objects()) {
                                     lockMap.put(object, false);

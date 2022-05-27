@@ -8,7 +8,6 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.factory.MachineRecipeFactory;
-import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -36,7 +35,7 @@ public class AbstractMySlimefunItem extends SlimefunItem {
     public void register(@Nonnull SlimefunAddon addon) {
         super.register(addon);
         if (this instanceof RecipeItem) {
-            Bukkit.getServer().getScheduler().runTask((Plugin)addon, () -> {
+            this.getAddon().getServer().getScheduler().runTask((Plugin)addon, () -> {
                 ((RecipeItem) AbstractMySlimefunItem.this).registerDefaultRecipes();
                 MachineRecipeFactory.initAdvancedRecipeMap(AbstractMySlimefunItem.this.getClass());
             });

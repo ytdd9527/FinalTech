@@ -1,7 +1,6 @@
 package io.taraxacum.finaltech.util;
 
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
-import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.InvWithSlots;
 import io.taraxacum.common.util.JavaUtil;
@@ -10,7 +9,6 @@ import io.taraxacum.finaltech.core.storage.*;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.inventory.Inventory;
@@ -46,12 +44,12 @@ public class CargoUtil {
     public static int doCargoStrongSymmetry(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots) {
         InvWithSlots inputMap = null;
         InvWithSlots outputMap = null;
-        if((BlockStorage.hasInventory(inputBlock) && BlockStorage.hasInventory(outputBlock)) || Bukkit.isPrimaryThread()) {
+        if((BlockStorage.hasInventory(inputBlock) && BlockStorage.hasInventory(outputBlock)) || FinalTech.getInstance().getServer().isPrimaryThread()) {
             inputMap = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
             outputMap = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
         } else {
             try {
-                InvWithSlots[] invWithSlots = Bukkit.getScheduler().callSyncMethod(FinalTech.getInstance(), () -> {
+                InvWithSlots[] invWithSlots = FinalTech.getInstance().getServer().getScheduler().callSyncMethod(FinalTech.getInstance(), () -> {
                     InvWithSlots[] invWithSlots1 = new InvWithSlots[2];
                     invWithSlots1[0] = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
                     invWithSlots1[1] = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
@@ -126,12 +124,12 @@ public class CargoUtil {
     public static int doCargoWeakSymmetry(@Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots) {
         InvWithSlots inputMap = null;
         InvWithSlots outputMap = null;
-        if((BlockStorage.hasInventory(inputBlock) && BlockStorage.hasInventory(outputBlock)) || Bukkit.isPrimaryThread()) {
+        if((BlockStorage.hasInventory(inputBlock) && BlockStorage.hasInventory(outputBlock)) || FinalTech.getInstance().getServer().isPrimaryThread()) {
             inputMap = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
             outputMap = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
         } else {
             try {
-                InvWithSlots[] invWithSlots = Bukkit.getScheduler().callSyncMethod(FinalTech.getInstance(), () -> {
+                InvWithSlots[] invWithSlots = FinalTech.getInstance().getServer().getScheduler().callSyncMethod(FinalTech.getInstance(), () -> {
                     InvWithSlots[] invWithSlots1 = new InvWithSlots[2];
                     invWithSlots1[0] = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
                     invWithSlots1[1] = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
@@ -211,7 +209,7 @@ public class CargoUtil {
         if((BlockStorage.hasInventory(inputBlock) && BlockStorage.hasInventory(outputBlock))) {
             inputMap = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
             vanillaOutputBlock = false;
-        } else if(Bukkit.isPrimaryThread()) {
+        } else if(FinalTech.getInstance().getServer().isPrimaryThread()) {
             inputMap = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
             vanillaOutputBlock = !BlockStorage.hasInventory(outputBlock) && PaperLib.getBlockState(outputBlock, false).getState() instanceof InventoryHolder;
             if(vanillaOutputBlock) {
@@ -219,7 +217,7 @@ public class CargoUtil {
             }
         } else {
             try {
-                InvWithSlots[] invWithSlots = Bukkit.getScheduler().callSyncMethod(FinalTech.getInstance(), () -> {
+                InvWithSlots[] invWithSlots = FinalTech.getInstance().getServer().getScheduler().callSyncMethod(FinalTech.getInstance(), () -> {
                     InvWithSlots[] result = new InvWithSlots[2];
                     result[0] = CargoUtil.getInvAsync(inputBlock, inputSize, inputOrder);
                     if(BlockStorage.hasInventory(outputBlock)) {
@@ -352,7 +350,7 @@ public class CargoUtil {
         if((BlockStorage.hasInventory(inputBlock) && BlockStorage.hasInventory(outputBlock))) {
             outputMap = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
             vanillaInputBlock = false;
-        } else if(Bukkit.isPrimaryThread()) {
+        } else if(FinalTech.getInstance().getServer().isPrimaryThread()) {
             outputMap = CargoUtil.getInvAsync(outputBlock, outputSize, outputOrder);
             vanillaInputBlock = !BlockStorage.hasInventory(inputBlock) && PaperLib.getBlockState(inputBlock, false).getState() instanceof InventoryHolder;
             if(vanillaInputBlock) {
@@ -360,7 +358,7 @@ public class CargoUtil {
             }
         } else {
             try {
-                InvWithSlots[] invWithSlots = Bukkit.getScheduler().callSyncMethod(FinalTech.getInstance(), () -> {
+                InvWithSlots[] invWithSlots = FinalTech.getInstance().getServer().getScheduler().callSyncMethod(FinalTech.getInstance(), () -> {
                     InvWithSlots[] result = new InvWithSlots[2];
                     if(BlockStorage.hasInventory(inputBlock)) {
                         result[0] = null;
@@ -589,7 +587,7 @@ public class CargoUtil {
                     slots = new int[0];
             }
         } else {
-            if (Bukkit.isPrimaryThread()) {
+            if (FinalTech.getInstance().getServer().isPrimaryThread()) {
                 BlockState blockState = PaperLib.getBlockState(block, false).getState();
                 if (blockState instanceof InventoryHolder) {
                     inventory = ((InventoryHolder) blockState).getInventory();
@@ -599,7 +597,7 @@ public class CargoUtil {
                     }
                 }
             } else {
-                Future<InvWithSlots> future = Bukkit.getScheduler().callSyncMethod(JavaPlugin.getPlugin(FinalTech.class), () -> {
+                Future<InvWithSlots> future = FinalTech.getInstance().getServer().getScheduler().callSyncMethod(JavaPlugin.getPlugin(FinalTech.class), () -> {
                     BlockState blockState = PaperLib.getBlockState(block, false).getState();
                     if (blockState instanceof InventoryHolder) {
                         Inventory inv = ((InventoryHolder) blockState).getInventory();
@@ -728,6 +726,7 @@ public class CargoUtil {
                     slots = new int[0];
             }
         } else {
+            BlockState state = block.getState();
             BlockState blockState = PaperLib.getBlockState(block, false).getState();
             if (blockState instanceof InventoryHolder) {
                 inventory = ((InventoryHolder) blockState).getInventory();

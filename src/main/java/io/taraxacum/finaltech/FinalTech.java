@@ -6,8 +6,6 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.taraxacum.finaltech.core.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.core.factory.ItemValueMap;
 import io.taraxacum.finaltech.setup.SetupUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
@@ -65,7 +63,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
     }
 
     private void init() {
-        BukkitScheduler scheduler = Bukkit.getScheduler();
+        BukkitScheduler scheduler = FinalTech.getInstance().getServer().getScheduler();
         AtomicLong lastTimeMillis = new AtomicLong(System.currentTimeMillis());
         int tickRate = Slimefun.getTickerTask().getTickRate();
         SLIMEFUN_TICK_TIME_MILLIS = 50 * 1000 * tickRate;

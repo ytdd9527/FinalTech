@@ -9,11 +9,14 @@ import org.bukkit.block.Block;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class ParticleUtil {
     private static final double[] BLOCK_CUBE_OFFSET_X = new double[] {0, 1, 0, 0, 1, 1, 0, 1};
     private static final double[] BLOCK_CUBE_OFFSET_Y = new double[] {0, 0, 1, 0, 1, 0, 1, 1};
     private static final double[] BLOCK_CUBE_OFFSET_Z = new double[] {0, 0, 0, 1, 0, 1, 1, 1};
-
 
     public static void drawLineByTotalAmount(@Nonnull Particle particle, int totalAmount, @Nonnull Location... locations) {
         for (int i = 0; i < locations.length; i++) {

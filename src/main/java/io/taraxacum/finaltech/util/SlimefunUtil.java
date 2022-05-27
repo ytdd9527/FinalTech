@@ -12,7 +12,6 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
@@ -44,14 +43,14 @@ public class SlimefunUtil {
                 }
             }
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            Bukkit.getLogger().info("[FinalTECH]§e无法为本附属中ID为" + recipeItem.getId() + "的机器从ID为" + slimefunId + "的物品读取对应的方法以注册机器的工作配方");
-            Bukkit.getLogger().info("[FinalTECH]§b但是我们有备用方案!");
+            FinalTech.getInstance().getServer().getLogger().info("[FinalTECH]§e无法为本附属中ID为" + recipeItem.getId() + "的机器从ID为" + slimefunId + "的物品读取对应的方法以注册机器的工作配方");
+            FinalTech.getInstance().getServer().getLogger().info("[FinalTECH]§b但是我们有备用方案!");
             if (slimefunItem instanceof RecipeDisplayItem) {
                 List<ItemStack> displayRecipes = ((RecipeDisplayItem) slimefunItem).getDisplayRecipes();
                 registerRecipeBySimpleDisplayRecipe(recipeItem, displayRecipes);
-                Bukkit.getLogger().info("[FinalTECH]§a备用方案成功了!");
+                FinalTech.getInstance().getServer().getLogger().info("[FinalTECH]§a备用方案成功了!");
             } else {
-                Bukkit.getLogger().info("[FinalTECH]§c备用方案失败了!");
+                FinalTech.getInstance().getServer().getLogger().info("[FinalTECH]§c备用方案失败了!");
                 e.printStackTrace();
             }
         }
@@ -104,7 +103,7 @@ public class SlimefunUtil {
     }
 
     public static boolean hasPermission(@Nonnull String uuid, @Nonnull Block block, @Nonnull Interaction... interactions) {
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+        OfflinePlayer offlinePlayer = FinalTech.getInstance().getServer().getOfflinePlayer(UUID.fromString(uuid));
         for (Interaction interaction : interactions) {
             if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, block.getLocation(), interaction)) {
                 return false;
@@ -113,7 +112,7 @@ public class SlimefunUtil {
         return true;
     }
     public static boolean hasPermission(@Nonnull String uuid, @Nonnull Entity entity, @Nonnull Interaction... interactions) {
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+        OfflinePlayer offlinePlayer = FinalTech.getInstance().getServer().getOfflinePlayer(UUID.fromString(uuid));
         for (Interaction interaction : interactions) {
             if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, entity.getLocation(), interaction)) {
                 return false;
@@ -122,7 +121,7 @@ public class SlimefunUtil {
         return true;
     }
     public static boolean hasPermission(@Nonnull String uuid, @Nonnull Location location, @Nonnull Interaction... interactions) {
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+        OfflinePlayer offlinePlayer = FinalTech.getInstance().getServer().getOfflinePlayer(UUID.fromString(uuid));
         for (Interaction interaction : interactions) {
             if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, location, interaction)) {
                 return false;

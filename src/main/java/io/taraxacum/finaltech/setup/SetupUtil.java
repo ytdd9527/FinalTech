@@ -44,10 +44,10 @@ import javax.annotation.Nonnull;
  * @since 1.0
  */
 public final class SetupUtil {
-
     public static void init() {
         FinalTech finalTech = FinalTech.getInstance();
-        Config valueConfig = finalTech.getConfigFile();
+
+        // setup config
 
         Config configFile = FinalTech.getInstance().getConfigFile();
         if(configFile.contains("option.multi-thread-level")) {
@@ -56,6 +56,9 @@ public final class SetupUtil {
             configFile.setValue("option.multi-thread", AbstractMachine.MULTI_THREAD_LEVEL);
         }
 
+        // setup values
+
+        Config valueConfig = finalTech.getValueFile();
         int singularityDifficulty = Singularity.DEFAULT_SINGULARITY_DIFFICULTY;
         if (valueConfig.contains("constructor.singularity")) {
             singularityDifficulty = valueConfig.getInt("constructor.singularity");
@@ -88,17 +91,21 @@ public final class SetupUtil {
             valueConfig.setValue("cargo.link-search-distance", LinkTransfer.BLOCK_SEARCH_LIMIT);
         }
 
+        // setup menu
+
         FinalTechMenus.MAIN_MENU.setTier(0);
         FinalTechMenus.MAIN_MENU.register(finalTech);
 
         FinalTechMenus.MENU_MATERIAL.setTier(0);
         FinalTechMenus.MENU_TOOL.setTier(0);
-        FinalTechMenus.MENU_ELECTRIC.setTier(0);
         FinalTechMenus.MENU_CARGO.setTier(0);
+        FinalTechMenus.MENU_ELECTRIC.setTier(0);
         FinalTechMenus.MENU_FUNCTION_MACHINE.setTier(0);
         FinalTechMenus.MENU_BASIC_MACHINE.setTier(0);
         FinalTechMenus.MENU_ADVANCED_MACHINE.setTier(0);
         FinalTechMenus.MENU_FINAL_ITEM.setTier(0);
+
+        // setup command
 
         finalTech.getCommand("test").setExecutor(new GetItemPhony());
     }
@@ -254,14 +261,14 @@ public final class SetupUtil {
         new AdvancedDustFactory(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_DUST_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_DUST_FACTORY).register();
         new AdvancedFarmFactory(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_FARM_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_FARM_FACTORY).register();
 
-        // demo machine
+        // most powerful item
         new InfinityMachineChargeCard(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MACHINE_CHARGE_CARD_INFINITY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_CHARGE_CARD_INFINITY).register();
         new InfinityMachineAccelerateCard(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MACHINE_ACCELERATE_CARD_INFINITY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACCELERATE_CARD_INFINITY).register();
         new MatrixMachineActivateCard(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MACHINE_ACTIVATE_CARD_L4, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACTIVATE_CARD_L4).register();
         new MatrixExpandedCapacitor(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_EXPANDED_CAPACITOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MATRIX_EXPANDED_CAPACITOR).register();
         new AdvancedAutoCraft(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.ADVANCED_AUTO_CRAFT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_AUTO_CRAFT).register();
-        new MatrixReactor(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_REACTOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MATRIX_REACTOR).register();
-        new MatrixAccelerator(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_ACCELERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ACCELERATOR).register();
         new MatrixGenerator(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_GENERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MATRIX_GENERATOR).register();
+        new MatrixAccelerator(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_ACCELERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ACCELERATOR).register();
+        new MatrixReactor(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_REACTOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MATRIX_REACTOR).register();
     }
 }

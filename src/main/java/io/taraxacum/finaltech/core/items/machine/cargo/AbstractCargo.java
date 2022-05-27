@@ -13,6 +13,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public abstract class AbstractCargo extends AbstractMachine {
     public AbstractCargo(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -33,6 +34,6 @@ public abstract class AbstractCargo extends AbstractMachine {
 
     @Override
     protected boolean isSynchronized() {
-        return true;
+        return false;
     }
 }

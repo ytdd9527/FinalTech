@@ -3,8 +3,8 @@ package io.taraxacum.finaltech.core.items.machine.manual.craft;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.inventory.*;
 
 import java.util.*;
@@ -19,7 +19,7 @@ public class ManualCraftingTable extends AbstractManualCraftMachine{
 
     @Override
     public void registerDefaultRecipes() {
-        Iterator<Recipe> recipeIterator = Bukkit.getServer().recipeIterator();
+        Iterator<Recipe> recipeIterator = this.getAddon().getJavaPlugin().getServer().recipeIterator();
         while (recipeIterator.hasNext()) {
             Recipe next = recipeIterator.next();
             if (next instanceof ShapedRecipe) {

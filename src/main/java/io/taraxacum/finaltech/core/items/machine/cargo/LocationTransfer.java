@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import io.taraxacum.finaltech.core.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.LocationTransferMenu;
 import io.taraxacum.finaltech.core.storage.*;
@@ -15,10 +16,12 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 
@@ -65,8 +68,10 @@ public class LocationTransfer extends AbstractCargo {
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        Location location = block.getLocation();
-        BlockMenu blockMenu = BlockStorage.getInventory(location);
+        BlockMenu blockMenu = BlockStorage.getInventory(block);
+        JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
+        boolean primaryThread = javaPlugin.getServer().isPrimaryThread();
+        boolean drawParticle = blockMenu.hasViewer();
 
         ItemStack locationRecorder = blockMenu.getItemInSlot(LocationTransferMenu.LOCATION_RECORDER_SLOT);
         if(ItemStackUtil.isItemNull(locationRecorder)) {
@@ -86,6 +91,10 @@ public class LocationTransfer extends AbstractCargo {
             }
         }
 
+        if(drawParticle) {
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, targetBlock));
+        }
+
         int cargoNumber = Integer.parseInt(CargoNumber.HELPER.getOrDefaultValue(config));
         String slotSearchSize = SlotSearchSize.HELPER.getOrDefaultValue(config);
         String slotSearchOrder = SlotSearchOrder.HELPER.getOrDefaultValue(config);
@@ -93,10 +102,23 @@ public class LocationTransfer extends AbstractCargo {
         String cargoMode = CargoMode.HELPER.getOrDefaultValue(config);
         String cargoOrder = CargoOrder.HELPER.getOrDefaultValue(config);
 
-        if (CargoOrder.VALUE_POSITIVE.equals(cargoOrder)) {
-            CargoUtil.doCargo(block, targetBlock, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, slotSearchSize, slotSearchOrder, cargoNumber, cargoLimit, CargoFilter.VALUE_BLACK, blockMenu.toInventory(), new int[0], cargoMode);
+        Runnable runnable = () -> {
+            if (CargoOrder.VALUE_POSITIVE.equals(cargoOrder)) {
+                CargoUtil.doCargo(block, targetBlock, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, slotSearchSize, slotSearchOrder, cargoNumber, cargoLimit, CargoFilter.VALUE_BLACK, blockMenu.toInventory(), new int[0], cargoMode);
+            } else {
+                CargoUtil.doCargo(targetBlock, block, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, slotSearchSize, slotSearchOrder, cargoNumber, cargoLimit, CargoFilter.VALUE_BLACK, blockMenu.toInventory(), new int[0], cargoMode);
+            }
+        };
+
+        if(primaryThread) {
+            runnable.run();
         } else {
-            CargoUtil.doCargo(targetBlock, block, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, slotSearchSize, slotSearchOrder, cargoNumber, cargoLimit, CargoFilter.VALUE_BLACK, blockMenu.toInventory(), new int[0], cargoMode);
+            BlockTaskFactory.getInstance().registerRunnable(slimefunItem, false, runnable, block.getLocation(), targetLocation);
         }
+    }
+
+    @Override
+    protected boolean isSynchronized() {
+        return true;
     }
 }
