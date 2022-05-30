@@ -85,14 +85,14 @@ public class EquivalentExchangeTable extends AbstractManualMachine {
     // support plugin reload
     private void doCraft(@Nonnull BlockMenu blockMenu, @Nonnull Config config) {
         String value = config.contains(KEY) ? config.getString(KEY) : StringNumberUtil.ZERO;
-        List<String> valueList = new ArrayList<>(ItemValueMap.valueItemListOutputMap.keySet());
+        List<String> valueList = new ArrayList<>(ItemValueMap.VALUE_ITEM_LIST_OUTPUT_MAP.keySet());
         Collections.shuffle(valueList);
         for (String targetValue : valueList) {
             if (MachineUtil.itemCount(blockMenu, this.getOutputSlot()) == this.getOutputSlot().length) {
                 break;
             }
             if (StringNumberUtil.compare(value, targetValue) >= 0) {
-                List<String> idList = ItemValueMap.valueItemListOutputMap.get(targetValue);
+                List<String> idList = ItemValueMap.VALUE_ITEM_LIST_OUTPUT_MAP.get(targetValue);
                 String id = idList.get((int) (Math.random() * idList.size()));
                 ItemStack item = new CustomItemStack(SlimefunItem.getById(id).getItem(), 1);
                 if (MachineUtil.calMaxMatch(blockMenu, this.getOutputSlot(), List.of(new ItemStackWithWrapperAmount(item))) >= 1) {

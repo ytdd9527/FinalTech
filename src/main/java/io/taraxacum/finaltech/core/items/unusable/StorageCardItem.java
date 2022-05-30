@@ -24,7 +24,7 @@ import java.util.List;
  * @since 2.0
  */
 public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem {
-    public static final String ITEM_LORE_WITHOUT_COLOR = "⌫⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌦";
+    public static final String ITEM_LORE_WITHOUT_COLOR = "⌫⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌦";
     public static final String ITEM_LORE = TextUtil.colorRandomString(ITEM_LORE_WITHOUT_COLOR);
 
     public static final ItemStack[] RANDOM_STORAGE_CARD_ITEM = new ItemStack[] {
