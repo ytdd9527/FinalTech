@@ -14,12 +14,12 @@ import javax.annotation.Nullable;
  */
 public interface ItemSerializationConstructorOperation extends MachineOperation {
     int COPY_CARD = 1;
-    int ITEM_FAKE = 2;
+    int ITEM_PHONY = 2;
     int ERROR_ITEM = -1;
 
     static int getType(@Nonnull ItemStack item) {
         if (CopyCardItem.isValid(item)) {
-            return ITEM_FAKE;
+            return ITEM_PHONY;
         }
         if (ItemStackUtil.isItemSimilar(item, FinalTechItems.SINGULARITY) || ItemStackUtil.isItemSimilar(item, FinalTechItems.SPIROCHETE) || ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY)) {
             return ERROR_ITEM;
@@ -34,10 +34,10 @@ public interface ItemSerializationConstructorOperation extends MachineOperation 
             ItemStack itemStack = item.clone();
             item.setAmount(0);
             return new ItemCopyCardOperation(itemStack);
-        } else if (type == ITEM_FAKE) {
+        } else if (type == ITEM_PHONY) {
             ItemStack itemStack = item.clone();
             item.setAmount(0);
-            return new ItemFakeOperation(itemStack);
+            return new ItemPhonyOperation(itemStack);
         }
         return null;
     }

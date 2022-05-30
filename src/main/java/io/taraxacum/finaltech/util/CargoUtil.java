@@ -118,6 +118,9 @@ public class CargoUtil {
             if (CargoLimit.VALUE_STACK.equals(cargoLimit)) {
                 cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
             }
+            if (CargoLimit.VALUE_FIRST.equals(cargoLimit)) {
+                break;
+            }
         }
         return number;
     }
@@ -197,6 +200,9 @@ public class CargoUtil {
             }
             if (CargoLimit.VALUE_STACK.equals(cargoLimit)) {
                 cargoNumber = Math.min(cargoNumber, outputItem.getMaxStackSize() - outputItem.getAmount());
+            }
+            if (CargoLimit.VALUE_FIRST.equals(cargoLimit)) {
+                break;
             }
         }
         return number;

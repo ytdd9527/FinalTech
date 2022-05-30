@@ -5,16 +5,19 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
+import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.api.dto.AdvancedMachineRecipe;
 import io.taraxacum.finaltech.api.dto.ItemStackWithWrapperAmount;
 import io.taraxacum.finaltech.core.factory.LocationRecipeRegistry;
 import io.taraxacum.finaltech.core.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
+import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.core.storage.Icon;
 import io.taraxacum.finaltech.core.storage.SlotSearchSize;
+import io.taraxacum.finaltech.util.StringItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -212,35 +215,50 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
                     break;
                 }
             }
-            if (machineRecipeList == null) {
-                continue;
-            }
-
-            for (int i = 0; i < machineItem.getAmount(); i++) {
-                boolean work = false;
-                List<ItemStackWithWrapperAmount> inputList2 = new ArrayList<>();
-                for (ItemStackWithWrapperAmount oldInputItem : inputList) {
-                    for (AdvancedMachineRecipe advancedMachineRecipe : machineRecipeList) {
-                        for (AdvancedMachineRecipe.AdvancedRandomOutput advancedRandomOutput : advancedMachineRecipe.getOutputList()) {
-                            ItemStackWithWrapperAmount outputItem = advancedRandomOutput.getOutputItem().get(0);
-                            if (advancedRandomOutput.getOutputItem().size() == 1 && oldInputItem.getAmount() >= outputItem.getAmount() && ItemStackUtil.isItemSimilar(oldInputItem, outputItem)) {
-                                int count = oldInputItem.getAmount() / outputItem.getAmount();
-                                for (ItemStackWithWrapperAmount inputItem : advancedMachineRecipe.getInput()) {
-                                    ItemStackWithWrapperAmount.addToList(inputList2, inputItem, count);
+            if (machineRecipeList != null) {
+                for (int i = 0; i < machineItem.getAmount(); i++) {
+                    boolean work = false;
+                    List<ItemStackWithWrapperAmount> inputListTemp = new ArrayList<>();
+                    for (ItemStackWithWrapperAmount oldInputItem : inputList) {
+                        for (AdvancedMachineRecipe advancedMachineRecipe : machineRecipeList) {
+                            for (AdvancedMachineRecipe.AdvancedRandomOutput advancedRandomOutput : advancedMachineRecipe.getOutputList()) {
+                                ItemStackWithWrapperAmount outputItem = advancedRandomOutput.getOutputItem().get(0);
+                                if (advancedRandomOutput.getOutputItem().size() == 1 && oldInputItem.getAmount() >= outputItem.getAmount() && ItemStackUtil.isItemSimilar(oldInputItem, outputItem)) {
+                                    int count = oldInputItem.getAmount() / outputItem.getAmount();
+                                    for (ItemStackWithWrapperAmount inputItem : advancedMachineRecipe.getInput()) {
+                                        ItemStackWithWrapperAmount.addToList(inputListTemp, inputItem, count);
+                                    }
+                                    oldInputItem.setAmount(oldInputItem.getAmount() - count * outputItem.getAmount());
+                                    work = true;
                                 }
-                                oldInputItem.setAmount(oldInputItem.getAmount() - count * outputItem.getAmount());
-                                work = true;
                             }
                         }
+                        if (oldInputItem.getAmount() > 0) {
+                            ItemStackWithWrapperAmount.addToList(inputListTemp, oldInputItem);
+                            oldInputItem.setAmount(0);
+                        }
                     }
-                    if (oldInputItem.getAmount() > 0) {
-                        ItemStackWithWrapperAmount.addToList(inputList2, oldInputItem);
-                        oldInputItem.setAmount(0);
+                    inputList = inputListTemp;
+                    if (!work) {
+                        break;
                     }
                 }
-                inputList = inputList2;
-                if (!work) {
-                    break;
+            } else {
+                if(CopyCardItem.isValid(machineItem)) {
+                    ItemStack stringItem = StringItemUtil.parseItemInCard(machineItem);
+                    String amount = StringItemUtil.parseAmountInCard(machineItem);
+                    Iterator<ItemStackWithWrapperAmount> iterator = inputList.iterator();
+                    while (iterator.hasNext()) {
+                        ItemStackWithWrapperAmount inputItem = iterator.next();
+                        if(ItemStackUtil.isItemSimilar(inputItem, stringItem)) {
+                            if(StringNumberUtil.compare(amount, String.valueOf(inputItem.getAmount())) >= 0) {
+                                iterator.remove();
+                            } else {
+                                inputItem.setAmount(inputItem.getAmount() - Integer.parseInt(amount));
+                            }
+                            break;
+                        }
+                    }
                 }
             }
         }

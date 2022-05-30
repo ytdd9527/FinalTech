@@ -7,8 +7,10 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.machine.range.area.AbstractCubeMachine;
+import io.taraxacum.finaltech.core.items.unusable.StorageCardItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
@@ -16,6 +18,7 @@ import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.common.util.StringNumberUtil;
+import io.taraxacum.finaltech.util.StringItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -59,10 +62,15 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
         String extraEnergy = this.getElectricity();
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if (!ItemStackUtil.isItemNull(item) && ItemStackUtil.isItemSimilar(item, this.getItem())) {
-                //todo
-                for (int i = 0; i < item.getAmount(); i++) {
-                    extraEnergy = StringNumberUtil.add(extraEnergy, this.getElectricity());
+            if (!ItemStackUtil.isItemNull(item)) {
+                String amount = String.valueOf(item.getAmount());
+                if(StorageCardItem.isValid(item)) {
+                    amount = StringItemUtil.parseAmountInCard(item);
+                    item = StringItemUtil.parseItemInCard(item);
+                }
+                if(ItemStackUtil.isItemSimilar(item, this.getItem())) {
+                    //todo
+                    extraEnergy = StringNumberUtil.add(extraEnergy, StringNumberUtil.mul(this.getElectricity(), amount));
                 }
             }
         }
@@ -73,7 +81,7 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
                 Config energyComponentConfig = BlockStorage.getLocationInfo(location);
                 if (energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
                     SlimefunItem item = SlimefunItem.getById(energyComponentConfig.getString(SlimefunUtil.KEY_ID));
-                    if (item instanceof EnergyNetComponent) {
+                    if (item instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) item).getEnergyComponentType())) {
                         int componentCapacity = ((EnergyNetComponent) item).getCapacity();
                         if (componentCapacity == 0) {
                             return 0;

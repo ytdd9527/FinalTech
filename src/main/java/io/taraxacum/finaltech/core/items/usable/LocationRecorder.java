@@ -5,13 +5,11 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import io.taraxacum.finaltech.util.LocationUtil;
-import io.taraxacum.finaltech.util.PlayerUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.*;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -40,6 +38,7 @@ public class LocationRecorder extends UsableSlimefunItem {
                 LocationUtil.saveLocationToItem(item, block.getLocation());
                 LocationUtil.updateLocationItem(item);
                 PlayerUtil.updateIdInItem(item, playerRightClickEvent.getPlayer(), true);
+                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             }
         } else {
             Location location = LocationUtil.parseLocationInItem(playerRightClickEvent.getItem());
@@ -56,6 +55,7 @@ public class LocationRecorder extends UsableSlimefunItem {
             if (BlockStorage.hasInventory(block)) {
                 BlockMenu blockMenu = BlockStorage.getInventory(block);
                 blockMenu.open(player);
+                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             }
         }
     }

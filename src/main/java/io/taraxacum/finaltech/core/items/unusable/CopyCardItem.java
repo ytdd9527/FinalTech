@@ -30,6 +30,14 @@ public class CopyCardItem extends UnusableSlimefunItem {
         super(itemGroup, item, recipeType, recipe);
     }
 
+    public static ItemStack newItem(@Nonnull ItemStack stringItem, @Nonnull String amount) {
+        ItemStack result = new ItemStack(FinalTechItems.COPY_CARD);
+        result.setAmount(1);
+        StringItemUtil.setItemInCard(result, stringItem, amount);
+        ItemStackUtil.setLore(result, CopyCardItem.ITEM_LORE, "§7物品= " + ItemStackUtil.getItemName(stringItem), "§7数量= " + amount);
+        return result;
+    }
+
     public static boolean isValid(@Nullable ItemStack itemStack) {
         if (ItemStackUtil.isItemNull(itemStack) || !itemStack.hasItemMeta()) {
             return false;
@@ -45,13 +53,5 @@ public class CopyCardItem extends UnusableSlimefunItem {
             }
         }
         return false;
-    }
-
-    public static ItemStack newItem(@Nonnull ItemStack stringItem, @Nonnull String amount) {
-        ItemStack result = new ItemStack(FinalTechItems.COPY_CARD);
-        result.setAmount(1);
-        StringItemUtil.setItemInCard(result, stringItem, amount);
-        ItemStackUtil.setLore(result, CopyCardItem.ITEM_LORE, "§7物品= " + ItemStackUtil.getItemName(stringItem), "§7数量= " + amount);
-        return result;
     }
 }

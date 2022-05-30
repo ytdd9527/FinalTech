@@ -35,7 +35,7 @@ public class AbstractMySlimefunItem extends SlimefunItem {
     public void register(@Nonnull SlimefunAddon addon) {
         super.register(addon);
         if (this instanceof RecipeItem) {
-            this.getAddon().getServer().getScheduler().runTask((Plugin)addon, () -> {
+            this.getAddon().getJavaPlugin().getServer().getScheduler().runTask((Plugin)addon, () -> {
                 ((RecipeItem) AbstractMySlimefunItem.this).registerDefaultRecipes();
                 MachineRecipeFactory.initAdvancedRecipeMap(AbstractMySlimefunItem.this.getClass());
             });

@@ -3,9 +3,12 @@ package io.taraxacum.finaltech.core.factory;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.BlockTask;
+import io.taraxacum.finaltech.util.TextUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scoreboard.Team;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -80,26 +83,24 @@ public class BlockTaskFactory<T> {
                         for (T object : blockTask.objects()) {
                             lockMap.put(object, true);
                         }
+                        Runnable runnable = () -> {
+                            try {
+                                blockTask.runnable().run();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            } finally {
+                                for (T object : blockTask.objects()) {
+                                    lockMap.put(object, false);
+                                }
+                                synchronized (BlockTaskFactory.this.lock) {
+                                    BlockTaskFactory.this.lock.notifyAll();
+                                }
+                            }
+                        };
                         if (blockTask.sync()) {
-                            BukkitTask bukkitTask = FinalTech.getInstance().getServer().getScheduler().runTask(JavaPlugin.getPlugin(FinalTech.class), () -> {
-                                blockTask.runnable().run();
-                                for (T object : blockTask.objects()) {
-                                    lockMap.put(object, false);
-                                }
-                                synchronized (BlockTaskFactory.this.lock) {
-                                    BlockTaskFactory.this.lock.notifyAll();
-                                }
-                            });
+                            BukkitTask bukkitTask = FinalTech.getInstance().getServer().getScheduler().runTask(JavaPlugin.getPlugin(FinalTech.class), runnable);
                         } else {
-                            BukkitTask bukkitTask = FinalTech.getInstance().getServer().getScheduler().runTaskAsynchronously(JavaPlugin.getPlugin(FinalTech.class), () -> {
-                                blockTask.runnable().run();
-                                for (T object : blockTask.objects()) {
-                                    lockMap.put(object, false);
-                                }
-                                synchronized (BlockTaskFactory.this.lock) {
-                                    BlockTaskFactory.this.lock.notifyAll();
-                                }
-                            });
+                            BukkitTask bukkitTask = FinalTech.getInstance().getServer().getScheduler().runTaskAsynchronously(JavaPlugin.getPlugin(FinalTech.class), runnable);
                         }
                         iterator.remove();
                         wait.set(false);
@@ -117,6 +118,10 @@ public class BlockTaskFactory<T> {
             }
 
             long endTime = System.nanoTime();
+
+            if(!lockMap.isEmpty()) {
+                Bukkit.getLogger().info(TextUtil.colorRandomString("[FINAL TECH] All Task is run in " + (endTime - beginTime) / 1000000 + "ms"));
+            }
 
             this.work = false;
             this.lock.notifyAll();

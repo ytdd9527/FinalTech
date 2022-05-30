@@ -1,6 +1,9 @@
 package io.taraxacum.finaltech.util;
 
+import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
+import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
@@ -23,6 +26,21 @@ import java.util.Set;
  */
 public class LocationUtil {
     private static final NamespacedKey KEY = new NamespacedKey(FinalTech.getInstance(), "location");
+
+    public static String getNonNullStringNumber(@Nonnull Location location, @Nonnull String key) {
+        String value = BlockStorage.getLocationInfo(location, key);
+        if(value == null) {
+            value = StringNumberUtil.ZERO;
+        }
+        return value;
+    }
+    public static String getNonNullStringNumber(@Nonnull Config config, @Nonnull String key) {
+        String value = config.getString(key);
+        if(value == null) {
+            value = StringNumberUtil.ZERO;
+        }
+        return value;
+    }
 
     public static Location parseLocationInItem(@Nullable ItemStack item) {
         if (ItemStackUtil.isItemNull(item)) {

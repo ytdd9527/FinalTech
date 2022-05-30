@@ -59,8 +59,8 @@ public class MachineRecipeFactory {
     }
 
     public static void initAdvancedRecipeMap() {
-        for (Class clazz : RECIPE_MAP.keySet()) {
-            initAdvancedRecipeMap(clazz);
+        for (Class<?> clazz : RECIPE_MAP.keySet()) {
+            MachineRecipeFactory.initAdvancedRecipeMap(clazz);
         }
     }
 }

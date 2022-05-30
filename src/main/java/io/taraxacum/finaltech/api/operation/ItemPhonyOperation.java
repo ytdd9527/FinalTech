@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * @author Final_ROOT
  */
-public class ItemFakeOperation implements ItemSerializationConstructorOperation {
+public class ItemPhonyOperation implements ItemSerializationConstructorOperation {
     private int itemTypeCount;
     private int itemAmountCount;
     private final int itemTypeDifficulty;
@@ -27,7 +27,7 @@ public class ItemFakeOperation implements ItemSerializationConstructorOperation 
 
     private List<ItemStackWrapper> itemTypeList = new ArrayList<>(Spirochete.SPIROCHETE_DIFFICULTY);
 
-    protected ItemFakeOperation(@Nonnull ItemStack item) {
+    protected ItemPhonyOperation(@Nonnull ItemStack item) {
         this.itemTypeCount = 1;
         this.itemTypeList.add(ItemStackWrapper.wrap(item));
         this.itemAmountCount = item.getAmount();
@@ -40,7 +40,7 @@ public class ItemFakeOperation implements ItemSerializationConstructorOperation 
 
     @Override
     public int getType() {
-        return ItemSerializationConstructorOperation.ITEM_FAKE;
+        return ItemSerializationConstructorOperation.ITEM_PHONY;
     }
 
     @Override

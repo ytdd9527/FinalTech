@@ -40,15 +40,15 @@ public final class SlotSearchSize {
         this.put(VALUE_OUTPUTS_AND_INPUTS, OUTPUTS_AND_INPUTS_ICON);
     }});
     public static final BlockStorageIconHelper INPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY_INPUT, new LinkedHashMap<>() {{
-        this.put(VALUE_INPUTS_ONLY, INPUTS_ONLY_ICON);
         this.put(VALUE_OUTPUTS_ONLY, OUTPUTS_ONLY_ICON);
         this.put(VALUE_INPUTS_AND_OUTPUTS, INPUTS_AND_OUTPUTS_ICON);
         this.put(VALUE_OUTPUTS_AND_INPUTS, OUTPUTS_AND_INPUTS_ICON);
+        this.put(VALUE_INPUTS_ONLY, INPUTS_ONLY_ICON);
     }});
     public static final BlockStorageIconHelper OUTPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY_OUTPUT, new LinkedHashMap<>() {{
+        this.put(VALUE_INPUTS_ONLY, INPUTS_ONLY_ICON);
         this.put(VALUE_OUTPUTS_ONLY, OUTPUTS_ONLY_ICON);
         this.put(VALUE_INPUTS_AND_OUTPUTS, INPUTS_AND_OUTPUTS_ICON);
         this.put(VALUE_OUTPUTS_AND_INPUTS, OUTPUTS_AND_INPUTS_ICON);
-        this.put(VALUE_INPUTS_ONLY, INPUTS_ONLY_ICON);
     }});
 }

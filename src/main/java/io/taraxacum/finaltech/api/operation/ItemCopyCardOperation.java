@@ -1,6 +1,7 @@
 package io.taraxacum.finaltech.api.operation;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
@@ -13,7 +14,7 @@ import javax.annotation.Nullable;
  * @author Final_ROOT
  */
 public class ItemCopyCardOperation implements ItemSerializationConstructorOperation {
-    private int count = 0;
+    private double count;
     private final int difficulty;
 
     private final ItemStack matchItem;
@@ -30,11 +31,11 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
         this.showItem = new CustomItemStack(item.getType(), "§f完成进度", "§f物品名称= " + ItemStackUtil.getItemName(item), "§f压缩数量= " + this.count + "/" + this.difficulty);
     }
 
-    public int getCount() {
+    public double getCount() {
         return this.count;
     }
 
-    public void setCount(int count) {
+    public void setCount(double count) {
         this.count = count;
     }
 
@@ -60,11 +61,24 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
     @Override
     public int addItem(@Nullable ItemStack item) {
         if (!this.isFinished()) {
-            if (ItemStackUtil.isItemSimilar(item, this.matchItem) || ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY)) {
-                int amount = Math.min(item.getAmount(), this.difficulty - this.count);
-                item.setAmount(item.getAmount() - amount);
+            if (ItemStackUtil.isItemSimilar(item, this.matchItem)) {
+                double efficiency = Math.pow(0.5, 20.0 - 20.0 * 1000 / FinalTech.getMSPS());
+                if(item.getAmount() * efficiency + this.count < this.difficulty) {
+                    int amount = item.getAmount();
+                    item.setAmount(item.getAmount() - amount);
+                    this.count += amount * efficiency;
+                    return amount;
+                } else {
+                    double amount = (this.difficulty - this.count) / efficiency;
+                    item.setAmount(item.getAmount() - (int) Math.ceil(amount));
+                    this.count = this.difficulty;
+                    return (int) Math.ceil(amount);
+                }
+            } else if(ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY)) {
+                double amount = Math.min(item.getAmount(), this.difficulty - this.count);
+                item.setAmount(item.getAmount() - (int) Math.ceil(amount));
                 this.count += amount;
-                return amount;
+                return (int) Math.ceil(amount);
             }
         }
         return 0;

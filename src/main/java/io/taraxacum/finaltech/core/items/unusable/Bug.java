@@ -9,11 +9,8 @@ import org.bukkit.inventory.ItemStack;
  * @author Final_ROOT
  * @since 2.0
  */
-public class Gearwheel extends UnusableSlimefunItem {
-    public Gearwheel(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, ItemStack output) {
-        super(itemGroup, item, recipeType, recipe, output);
+public class Bug extends UnusableSlimefunItem{
+    public Bug(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+        super(itemGroup, item, recipeType, recipe);
     }
-
-    //TODO
-    // it may do some function in future?
 }

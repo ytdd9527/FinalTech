@@ -181,9 +181,6 @@ public final class MachineUtil {
                 continue;
             }
             for (ItemStackWithWrapper item2 : items) {
-                if (ItemStackUtil.isItemNull(item2.getItemStack())) {
-                    continue;
-                }
                 ItemStackUtil.stack(item1, item2);
             }
             if (item1.getAmount() > 0 && item1.getAmount() < item1.getMaxStackSize()) {

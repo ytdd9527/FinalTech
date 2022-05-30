@@ -84,9 +84,9 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
                 if (!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2)) {
                     if (StorageCardItem.isValid(item1) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
-                        return ItemStackUtil.isItemSimilar(item2, FinalTechItems.ALL_COMPRESSION);
+                        return ItemStackUtil.isItemSimilar(item2, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR);
                     } else if (StorageCardItem.isValid(item2) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item2), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
-                        return ItemStackUtil.isItemSimilar(item1, FinalTechItems.ALL_COMPRESSION);
+                        return ItemStackUtil.isItemSimilar(item1, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR);
                     }
                 }
                 return false;
@@ -105,12 +105,12 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                     ItemStack storageCardItem = null;
                     ItemMeta storageCardItemMeta = null;
                     if (StorageCardItem.isValid(item1) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
-                        if (ItemStackUtil.isItemSimilar(item2, FinalTechItems.ALL_COMPRESSION)) {
+                        if (ItemStackUtil.isItemSimilar(item2, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR)) {
                             storageCardItem = item1;
                             storageCardItemMeta = item1.getItemMeta();
                         }
                     } else if (StorageCardItem.isValid(item2) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item2), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
-                        if (ItemStackUtil.isItemSimilar(item1, FinalTechItems.ALL_COMPRESSION)) {
+                        if (ItemStackUtil.isItemSimilar(item1, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR)) {
                             storageCardItem = item2;
                             storageCardItemMeta = item2.getItemMeta();
                         }

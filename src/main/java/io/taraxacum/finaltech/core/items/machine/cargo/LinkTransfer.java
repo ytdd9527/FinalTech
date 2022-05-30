@@ -141,7 +141,7 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
         } else if(drawParticle) {
             final Block finalInputBlock = inputBlock;
             final Block finalOutputBlock = outputBlock;
-            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, finalInputBlock, finalOutputBlock));
+            javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, finalInputBlock, finalOutputBlock), FinalTech.SLIMEFUN_TICK_TIME_MILLIS / 1000 / 50);
         }
 
         String uuid = config.getString("UUID");

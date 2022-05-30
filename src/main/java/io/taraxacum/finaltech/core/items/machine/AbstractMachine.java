@@ -14,6 +14,7 @@ import io.taraxacum.finaltech.core.items.AbstractMySlimefunItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
+import org.apache.http.impl.auth.BasicSchemeFactory;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
@@ -44,6 +45,7 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
         this.addItemHandler(this.onBlockBreak());
         this.addItemHandler(this.onBlockPlace());
 
+        System.out.println("AbstractMachine.MULTI_THREAD_LEVEL= " + MULTI_THREAD_LEVEL);
         if(MULTI_THREAD_LEVEL == 2) {
             if (this instanceof AntiAccelerationMachine) {
                 if (this instanceof PerformanceLimitMachine) {
@@ -111,70 +113,126 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
                 }
             }
         } else if(MULTI_THREAD_LEVEL == 1) {
-            if (this instanceof AntiAccelerationMachine) {
-                if (this instanceof PerformanceLimitMachine) {
-                    this.addItemHandler(new BlockTicker() {
-                        @Override
-                        public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-                            if (!((PerformanceLimitMachine)AbstractMachine.this).charge(config)) {
-                                return;
-                            }
-                            if (((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
-                                return;
-                            }
-                            BlockTaskFactory.getInstance().registerRunnable(slimefunItem, AbstractMachine.this.isSynchronized(), () -> AbstractMachine.this.tick(block, slimefunItem, config), block.getLocation());
+            if(this instanceof AntiAccelerationMachine && this instanceof PerformanceLimitMachine && this.isSynchronized()) {
+                this.addItemHandler(new BlockTicker() {
+                    @Override
+                    public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+                        if (!((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
+                            return;
                         }
+                        if (!((PerformanceLimitMachine)AbstractMachine.this).charge(config)) {
+                            return;
+                        }
+                        AbstractMachine.this.tick(block, slimefunItem, config);
+                    }
 
-                        @Override
-                        public boolean isSynchronized() {
-                            return false;
+                    @Override
+                    public boolean isSynchronized() {
+                        return true;
+                    }
+                });
+            } else if(this instanceof AntiAccelerationMachine && this instanceof PerformanceLimitMachine && !this.isSynchronized()) {
+                this.addItemHandler(new BlockTicker() {
+                    @Override
+                    public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+                        if (!((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
+                            return;
                         }
-                    });
-                } else {
-                    this.addItemHandler(new BlockTicker() {
-                        @Override
-                        public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-                            if (((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
-                                return;
-                            }
-                            BlockTaskFactory.getInstance().registerRunnable(slimefunItem, AbstractMachine.this.isSynchronized(), () -> AbstractMachine.this.tick(block, slimefunItem, config), block.getLocation());
+                        if (!((PerformanceLimitMachine)AbstractMachine.this).charge(config)) {
+                            return;
                         }
+                        BlockTaskFactory.getInstance().registerRunnable(slimefunItem, false, () -> AbstractMachine.this.tick(block, slimefunItem, config), block.getLocation());
+                    }
 
-                        @Override
-                        public boolean isSynchronized() {
-                            return false;
+                    @Override
+                    public boolean isSynchronized() {
+                        return true;
+                    }
+                });
+            } else if(this instanceof AntiAccelerationMachine && !(this instanceof PerformanceLimitMachine) && this.isSynchronized()) {
+                this.addItemHandler(new BlockTicker() {
+                    @Override
+                    public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+                        if (!((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
+                            return;
                         }
-                    });
-                }
-            } else {
-                if (this instanceof PerformanceLimitMachine) {
-                    this.addItemHandler(new BlockTicker() {
-                        @Override
-                        public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-                            if (!((PerformanceLimitMachine)AbstractMachine.this).charge(config)) {
-                                return;
-                            }
-                            BlockTaskFactory.getInstance().registerRunnable(slimefunItem, AbstractMachine.this.isSynchronized(), () -> AbstractMachine.this.tick(block, slimefunItem, config), block.getLocation());
-                        }
+                        AbstractMachine.this.tick(block, slimefunItem, config);
+                    }
 
-                        @Override
-                        public boolean isSynchronized() {
-                            return false;
+                    @Override
+                    public boolean isSynchronized() {
+                        return true;
+                    }
+                });
+            } else if(this instanceof AntiAccelerationMachine && !(this instanceof PerformanceLimitMachine) && !this.isSynchronized()) {
+                this.addItemHandler(new BlockTicker() {
+                    @Override
+                    public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+                        if (!((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
+                            return;
                         }
-                    });
-                } else {
-                    this.addItemHandler(new BlockTicker() {
-                        @Override
-                        public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-                            BlockTaskFactory.getInstance().registerRunnable(slimefunItem, AbstractMachine.this.isSynchronized(), () -> AbstractMachine.this.tick(block, slimefunItem, config), block.getLocation());
-                        }
+                        BlockTaskFactory.getInstance().registerRunnable(slimefunItem, false, () -> AbstractMachine.this.tick(block, slimefunItem, config), block.getLocation());
+                    }
 
-                        @Override
-                        public boolean isSynchronized() {
-                            return false;
+                    @Override
+                    public boolean isSynchronized() {
+                        return true;
+                    }
+                });
+            } else if(!(this instanceof AntiAccelerationMachine) && this instanceof PerformanceLimitMachine && this.isSynchronized()) {
+                this.addItemHandler(new BlockTicker() {
+                    @Override
+                    public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+                        if (!((PerformanceLimitMachine)AbstractMachine.this).charge(config)) {
+                            return;
                         }
-                    });
-                }
+                        AbstractMachine.this.tick(block, slimefunItem, config);
+                    }
+
+                    @Override
+                    public boolean isSynchronized() {
+                        return true;
+                    }
+                });
+            } else if(!(this instanceof AntiAccelerationMachine) && this instanceof PerformanceLimitMachine && !this.isSynchronized()) {
+                this.addItemHandler(new BlockTicker() {
+                    @Override
+                    public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+                        if (!((PerformanceLimitMachine)AbstractMachine.this).charge(config)) {
+                            return;
+                        }
+                        BlockTaskFactory.getInstance().registerRunnable(slimefunItem, false, () -> AbstractMachine.this.tick(block, slimefunItem, config), block.getLocation());
+                    }
+
+                    @Override
+                    public boolean isSynchronized() {
+                        return true;
+                    }
+                });
+            } else if(!(this instanceof AntiAccelerationMachine) && !(this instanceof PerformanceLimitMachine) && this.isSynchronized()) {
+                this.addItemHandler(new BlockTicker() {
+                    @Override
+                    public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+                        AbstractMachine.this.tick(block, slimefunItem, config);
+                    }
+
+                    @Override
+                    public boolean isSynchronized() {
+                        return true;
+                    }
+                });
+            } else if(!(this instanceof AntiAccelerationMachine) && !(this instanceof PerformanceLimitMachine) && !this.isSynchronized()) {
+                this.addItemHandler(new BlockTicker() {
+                    @Override
+                    public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+                        BlockTaskFactory.getInstance().registerRunnable(slimefunItem, false, () -> AbstractMachine.this.tick(block, slimefunItem, config), block.getLocation());
+                    }
+
+                    @Override
+                    public boolean isSynchronized() {
+                        return true;
+                    }
+                });
             }
         } else {
             if (this instanceof AntiAccelerationMachine) {
@@ -243,8 +301,6 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
                 }
             }
         }
-
-
     }
 
     @Nonnull

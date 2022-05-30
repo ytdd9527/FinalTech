@@ -3,29 +3,28 @@ package io.taraxacum.finaltech.core.menu.manual;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.api.dto.AdvancedCraft;
 import io.taraxacum.finaltech.core.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.items.machine.manual.craft.AbstractManualCraftMachine;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.LocationUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.ParticleUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
     private static final int[] BORDER = new int[] {39, 41, 48, 50};
@@ -57,11 +56,8 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
 
     private static final long UPDATE_TIME_LIMIT = 50;
 
-    private AbstractMachine abstractMachine;
-
     public ManualCraftMachineMenu(@Nonnull AbstractMachine abstractMachine) {
         super(abstractMachine);
-        this.abstractMachine = abstractMachine;
     }
 
     @Override
@@ -86,46 +82,41 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             ManualCraftMachineMenu.this.updateMenu(blockMenu, block);
         }));
         blockMenu.addMenuClickHandler(PREVIOUS_SLOT, ((player, i, itemStack, clickAction) -> {
+            BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(block.getLocation(), AbstractManualCraftMachine.KEY_COUNT)));
+
             ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             BlockStorage.addBlockInfo(block.getLocation(), KEY_ORDER, ORDER_VALUE_DESC);
             int offset = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY));
-            int length = MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()).size();
+            int length = MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()).size();
             offset = (offset + length - 1) % length;
             BlockStorage.addBlockInfo(block.getLocation(), KEY, String.valueOf(offset));
             ManualCraftMachineMenu.this.updateMenu(blockMenu, block);
-            BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_CURRENT, String.valueOf(System.currentTimeMillis()));
             return false;
         }));
         blockMenu.addMenuClickHandler(NEXT_SLOT, ((player, i, itemStack, clickAction) -> {
+            BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(block.getLocation(), AbstractManualCraftMachine.KEY_COUNT)));
+
             ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             BlockStorage.addBlockInfo(block.getLocation(), KEY_ORDER, ORDER_VALUE_ASC);
             int offset = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY));
-            int length = MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()).size();
+            int length = MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()).size();
             offset = (offset + 1) % length;
             BlockStorage.addBlockInfo(block.getLocation(), KEY, String.valueOf(offset));
             ManualCraftMachineMenu.this.updateMenu(blockMenu, block);
-            BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_CURRENT, String.valueOf(System.currentTimeMillis()));
             return false;
         }));
         blockMenu.addMenuClickHandler(STOCK_SLOT, ((player, i, itemStack, clickAction) -> {
+            BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(block.getLocation(), AbstractManualCraftMachine.KEY_COUNT)));
+
             ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             MachineUtil.stockSlots(blockMenu, INPUT_SLOT);
             return false;
         }));
         blockMenu.addMenuClickHandler(CRAFT_SLOT, ((player, i, itemStack, clickAction) -> {
+            BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(block.getLocation(), AbstractManualCraftMachine.KEY_COUNT)));
+
             ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             Config config = BlockStorage.getLocationInfo(block.getLocation());
-
-            long lastTimeMillis = config.contains(AbstractManualCraftMachine.KEY_CURRENT) ? Long.parseLong(config.getString(AbstractManualCraftMachine.KEY_CURRENT)) : 0;
-            long currentTimeMillis = System.currentTimeMillis();
-            if (currentTimeMillis - lastTimeMillis < UPDATE_TIME_LIMIT) {
-                Location location = blockMenu.getLocation();
-                FinalTech.getInstance().getServer().getLogger().warning("[" + JavaPlugin.getPlugin(FinalTech.class).getName() + "]§c位于" + location.getWorld().getName() + "(" + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ() + ")处的粘液科技机器" + this.getTitle() + "正在被玩家高速点击，相关的玩家包括：");
-                for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
-                    FinalTech.getInstance().getServer().getLogger().warning("    " + humanEntity.getName());
-                }
-                FinalTech.getInstance().getServer().getLogger().warning("请确定这是否是由玩家网络卡顿造成，如果不是，可能是其正尝试恶意卡服");
-            }
 
             int quantity = clickAction.isShiftClicked() || clickAction.isRightClicked() ? 3456 : 64;
             int offset = config.contains(KEY) ? Integer.parseInt(config.getValue(KEY).toString()) : 0;
@@ -140,18 +131,16 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
 
             AdvancedCraft craft;
             if (ORDER_VALUE_DESC.equals(order)) {
-                craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
+                craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()), quantity, offset);
             } else {
-                craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
+                craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()), quantity, offset);
             }
 
             if (craft == null) {
-                BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_CURRENT, String.valueOf(System.currentTimeMillis()));
                 return false;
             }
             craft.setMatchCount(Math.min(craft.getMatchCount(), MachineUtil.calMaxMatch(blockMenu, OUTPUT_SLOT, craft.getOutputItemList())));
             if (craft.getMatchCount() == 0 && order == null) {
-                BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_CURRENT, String.valueOf(System.currentTimeMillis()));
                 return false;
             }
 
@@ -162,7 +151,6 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
 
             if (order == null) {
                 updateMenu(blockMenu, block);
-                BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_CURRENT, String.valueOf(System.currentTimeMillis()));
                 return false;
             }
 
@@ -170,9 +158,9 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             while (quantity > 0) {
                 offset = craft.getOffset();
                 if (ORDER_VALUE_DESC.equals(order)) {
-                    craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
+                    craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()), quantity, offset);
                 } else {
-                    craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), quantity, offset);
+                    craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()), quantity, offset);
                 }
 
                 if (craft == null) {
@@ -192,7 +180,6 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             }
 
             updateMenu(blockMenu, block);
-            BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_CURRENT, String.valueOf(System.currentTimeMillis()));
             return false;
 
         }));
@@ -227,24 +214,13 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
     public void updateMenu(@Nonnull BlockMenu blockMenu, Block block) {
         Config config = BlockStorage.getLocationInfo(block.getLocation());
 
-        long lastTimeMillis = config.contains(AbstractManualCraftMachine.KEY_CURRENT) ? Long.parseLong(config.getString(AbstractManualCraftMachine.KEY_CURRENT)) : 0;
-        long currentTimeMillis = System.currentTimeMillis();
-        if (currentTimeMillis - lastTimeMillis < UPDATE_TIME_LIMIT) {
-            Location location = blockMenu.getLocation();
-            FinalTech.getInstance().getServer().getLogger().warning("[" + JavaPlugin.getPlugin(FinalTech.class).getName() + "]§c位于" + location.getWorld().getName() + "(" + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ() + ")处的粘液科技机器" + this.getTitle() + "正在被玩家高速点击，相关的玩家包括：");
-            for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
-                FinalTech.getInstance().getServer().getLogger().warning("    " + humanEntity.getName());
-            }
-            FinalTech.getInstance().getServer().getLogger().warning("请确定这是否是由玩家网络卡顿造成，如果不是，可能是其正尝试恶意卡服");
-        }
-
         AdvancedCraft craft = null;
         String order = config.getString(KEY_ORDER);
         int offset = config.contains(KEY) ? Integer.parseInt(config.getValue(KEY).toString()) : 0;
         if (order == null || ORDER_VALUE_ASC.equals(order)) {
-            craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), 1, offset);
+            craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()), 1, offset);
         } else if (ORDER_VALUE_DESC.equals(order)) {
-            craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.abstractMachine.getClass()), 1, offset);
+            craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()), 1, offset);
         }
 
         if (craft != null) {

@@ -80,6 +80,10 @@ public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
                 for (int i = 0; i < this.getOutputSlot().length && i < sfItem.getRecipe().length; i++) {
                     if (!ItemStackUtil.isItemNull(sfItem.getRecipe()[i])) {
                         ItemStack outputItem = ItemStackUtil.cloneItem(sfItem.getRecipe()[i]);
+                        ItemStack liquidCard = ItemStackUtil.getLiquidCard(outputItem);
+                        if(liquidCard != null) {
+                            outputItem = liquidCard;
+                        }
                         outputItem.setAmount(outputItem.getAmount() * amount);
                         blockMenu.replaceExistingItem(this.getOutputSlot()[i], outputItem);
                     }

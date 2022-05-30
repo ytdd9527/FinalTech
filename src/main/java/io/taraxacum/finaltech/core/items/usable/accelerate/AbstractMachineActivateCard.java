@@ -10,12 +10,14 @@ import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponen
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.usable.UsableSlimefunItem;
+import io.taraxacum.finaltech.util.ParticleUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.common.util.StringNumberUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -62,6 +64,7 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem imp
                 ItemStack item = playerRightClickEvent.getItem();
                 item.setAmount(item.getAmount() - 1);
             }
+            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             SlimefunItem slimefunItem = SlimefunItem.getById(config.getString(SlimefunUtil.KEY_ID));
             if (slimefunItem != null) {
                 boolean chargeable = slimefunItem instanceof EnergyNetComponent && this.energy() > 0;

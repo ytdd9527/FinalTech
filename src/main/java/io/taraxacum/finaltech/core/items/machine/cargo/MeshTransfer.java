@@ -132,10 +132,10 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
         if(inputBlocks.length == 0 && outputBlocks.length == 0) {
             return;
         } else if(drawParticle) {
-            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> {
+            javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> {
                 ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, inputBlocks);
                 ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, outputBlocks);
-            });
+            }, FinalTech.SLIMEFUN_TICK_TIME_MILLIS / 1000 / 50);
         }
 
         // parse output

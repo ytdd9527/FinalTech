@@ -38,6 +38,9 @@ public interface RecipeItem extends RecipeDisplayItem {
                     displayRecipes.add(new ItemStack(Material.AIR));
                 }
             }
+            if(inputLength == 0) {
+                displayRecipes.add(new ItemStack(Material.AIR));
+            }
             for (int i = 0; i < outputLength; i++) {
                 if (i != 0) {
                     displayRecipes.add(new ItemStack(Material.AIR));

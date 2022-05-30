@@ -27,7 +27,7 @@ public class AdvancedMachineRecipe {
     public List<ItemStackWithWrapperAmount> getOutput() {
         int r = (int)(Math.random() * this.weightSum);
         for (AdvancedRandomOutput advancedRandomOutput : this.outputList) {
-            if (r > advancedRandomOutput.getWeight()) {
+            if (r >= advancedRandomOutput.getWeight()) {
                 r -= advancedRandomOutput.getWeight();
                 continue;
             }
