@@ -1,17 +1,13 @@
-package io.taraxacum.finaltech.core.storage;
+package io.taraxacum.finaltech.core.helper;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.core.factory.BlockStorageHelper;
-import io.taraxacum.finaltech.core.factory.BlockStorageIconHelper;
 import io.taraxacum.finaltech.core.factory.BlockStorageLoreHelper;
-import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 

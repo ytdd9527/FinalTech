@@ -2,7 +2,7 @@ package io.taraxacum.finaltech.core.menu.standard.lock;
 
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
-import io.taraxacum.finaltech.core.storage.Icon;
+import io.taraxacum.finaltech.core.helper.Icon;
 
 import javax.annotation.Nonnull;
 

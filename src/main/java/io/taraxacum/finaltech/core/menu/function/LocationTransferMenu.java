@@ -2,7 +2,7 @@ package io.taraxacum.finaltech.core.menu.function;
 
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.storage.*;
+import io.taraxacum.finaltech.core.helper.*;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.block.Block;
 

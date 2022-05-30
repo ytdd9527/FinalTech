@@ -5,7 +5,7 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.InvWithSlots;
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.api.dto.ItemStackWithWrapper;
-import io.taraxacum.finaltech.core.storage.*;
+import io.taraxacum.finaltech.core.helper.*;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
@@ -82,30 +82,30 @@ public class CargoUtil {
             if (!CargoUtil.isMatch(inputItemWithWrapper, filterItemList, cargoFilter)) {
                 continue;
             }
-            if (typeItem != null && CargoLimit.typeLimit(cargoLimit) && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
+            if (typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
                 continue;
             }
             ItemStack outputItem = outputInv.getItem(outputSlots[i]);
             int count;
             if (ItemStackUtil.isItemNull(outputItem)) {
                 if(!CargoLimit.VALUE_NONNULL.equals(cargoLimit)) {
+                    if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
+                        typeItem = new ItemStackWithWrapper(ItemStackUtil.cloneItem(inputItem), inputItemWithWrapper.getItemStackWrapper());
+                    }
                     count = Math.min(inputItem.getAmount(), cargoNumber);
                     outputItem = inputItem.clone();
                     outputItem.setAmount(count);
                     outputInv.setItem(outputSlots[i], outputItem);
                     outputItem = outputInv.getItem(outputSlots[i]);
                     inputItem.setAmount(inputItem.getAmount() - count);
-                    if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
-                        typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
-                    }
                 } else {
                     continue;
                 }
             } else {
-                count = ItemStackUtil.stack(inputItemWithWrapper, outputItem, cargoNumber);
                 if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
-                    typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
+                    typeItem = new ItemStackWithWrapper(ItemStackUtil.cloneItem(inputItem), inputItemWithWrapper.getItemStackWrapper());
                 }
+                count = ItemStackUtil.stack(inputItemWithWrapper, outputItem, cargoNumber);
                 if (count == 0) {
                     continue;
                 }
@@ -165,30 +165,30 @@ public class CargoUtil {
             if (!CargoUtil.isMatch(inputItemWithWrapper, filterItemList, cargoFilter)) {
                 continue;
             }
-            if (typeItem != null && CargoLimit.typeLimit(cargoLimit) && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
+            if (typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
                 continue;
             }
             ItemStack outputItem = outputInv.getItem(outputSlots[i % outputSlots.length]);
             int count;
             if (ItemStackUtil.isItemNull(outputItem)) {
                 if(!CargoLimit.VALUE_NONNULL.equals(cargoLimit)) {
+                    if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
+                        typeItem = new ItemStackWithWrapper(ItemStackUtil.cloneItem(inputItem), inputItemWithWrapper.getItemStackWrapper());
+                    }
                     count = Math.min(inputItem.getAmount(), cargoNumber);
                     outputItem = inputItem.clone();
                     outputItem.setAmount(count);
                     outputInv.setItem(outputSlots[i % outputSlots.length], outputItem);
                     outputItem = outputInv.getItem(outputSlots[i % outputSlots.length]);
                     inputItem.setAmount(inputItem.getAmount() - count);
-                    if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
-                        typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
-                    }
                 } else {
                     continue;
                 }
             } else {
-                count = ItemStackUtil.stack(inputItemWithWrapper, outputItem, cargoNumber);
                 if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
-                    typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
+                    typeItem = new ItemStackWithWrapper(ItemStackUtil.cloneItem(inputItem), inputItemWithWrapper.getItemStackWrapper());
                 }
+                count = ItemStackUtil.stack(inputItemWithWrapper, outputItem, cargoNumber);
                 if (count == 0) {
                     continue;
                 }
@@ -265,7 +265,7 @@ public class CargoUtil {
                 continue;
             }
             ItemStackWithWrapper inputItemWithWrapper = new ItemStackWithWrapper(inputItem);
-            if (typeItem != null && CargoLimit.typeLimit(cargoLimit) && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
+            if (typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWithWrapper, typeItem)) {
                 continue;
             }
             if (!CargoUtil.isMatch(inputItemWithWrapper, filterItemList, cargoFilter)) {
@@ -299,7 +299,7 @@ public class CargoUtil {
                 if (ItemStackUtil.isItemNull(outputItem)) {
                     if(!CargoLimit.VALUE_NONNULL.equals(cargoLimit)) {
                         if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
-                            typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
+                            typeItem = new ItemStackWithWrapper(ItemStackUtil.cloneItem(inputItem), inputItemWithWrapper.getItemStackWrapper());
                         }
                         int count = Math.min(inputItem.getAmount(), cargoNumber);
                         outputItem = ItemStackUtil.cloneItem(inputItem);
@@ -319,7 +319,7 @@ public class CargoUtil {
                     }
                 } else if (outputItem.getAmount() < outputItem.getMaxStackSize() && ItemStackUtil.isItemSimilar(inputItemWithWrapper, outputItem)) {
                     if (typeItem == null && CargoLimit.typeLimit(cargoLimit)) {
-                        typeItem = new ItemStackWithWrapper(inputItem, inputItemWithWrapper.getItemStackWrapper());
+                        typeItem = new ItemStackWithWrapper(ItemStackUtil.cloneItem(inputItem), inputItemWithWrapper.getItemStackWrapper());
                     }
                     int count = ItemStackUtil.stack(inputItemWithWrapper, outputItem, cargoNumber);
                     cargoNumber -= count;
@@ -338,7 +338,9 @@ public class CargoUtil {
                 break;
             }
             if (work) {
-                if (newOutputMap && searchItemList.size() < SEARCH_MAP_LIMIT) {
+                if (CargoLimit.VALUE_FIRST.equals(cargoLimit)) {
+                    break;
+                } else if (newOutputMap && searchItemList.size() < SEARCH_MAP_LIMIT) {
                     searchItemList.add(inputItemWithWrapper);
                     searchInvList.add(inputMap);
                 }
@@ -493,7 +495,9 @@ public class CargoUtil {
                 break;
             }
             if (work) {
-                if (newInputMap && searchItemList.size() <= SEARCH_MAP_LIMIT) {
+                if (CargoLimit.VALUE_FIRST.equals(cargoLimit)) {
+                    break;
+                } else if (newInputMap && searchItemList.size() <= SEARCH_MAP_LIMIT) {
                     searchItemList.add(outputItemWithWrapper);
                     searchInvList.add(inputMap);
                 }

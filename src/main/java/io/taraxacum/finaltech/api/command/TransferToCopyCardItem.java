@@ -14,8 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.List;
-import java.util.Map;
 
 /**
  * A {@link Command} that will transfer item in player's hand to a {@link CopyCardItem}.
@@ -32,16 +30,11 @@ public class TransferToCopyCardItem implements CommandExecutor {
             }
             ItemStack copyCardItem = CopyCardItem.newItem(item, "1");
             player.setItemInHand(copyCardItem);
+            return true;
         } else {
             Bukkit.getLogger().info("Not support for console");
-//            for (Map.Entry<String, List<String>> entry : ItemValueMap.VALUE_ITEM_LIST_OUTPUT_MAP.entrySet()) {
-//                Bukkit.getLogger().info("&7value= " + entry.getKey());
-//                for (String value : entry.getValue()) {
-//                    Bukkit.getLogger().info("    " + SlimefunItem.getById(value).getItemName());
-//                }
-//            }
         }
-        return true;
+        return false;
     }
 
     private static boolean validItem(@Nonnull ItemStack item) {

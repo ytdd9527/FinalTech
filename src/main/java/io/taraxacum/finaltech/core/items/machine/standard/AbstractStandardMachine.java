@@ -11,7 +11,7 @@ import io.github.thebusybiscuit.slimefun4.core.machines.MachineProcessor;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.core.storage.MachineMaxStack;
+import io.taraxacum.finaltech.core.helper.MachineMaxStack;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;

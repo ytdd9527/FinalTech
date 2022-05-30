@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.storage;
+package io.taraxacum.finaltech.core.helper;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.core.factory.BlockStorageHelper;
@@ -15,7 +15,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**

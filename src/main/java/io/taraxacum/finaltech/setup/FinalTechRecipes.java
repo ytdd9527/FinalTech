@@ -460,9 +460,9 @@ public final class FinalTechRecipes {
     };
 
     public static final ItemStack[] NORMAL_ELECTRICITY_SHOOT_PILE = new ItemStack[] {
-            null, FinalTechItems.BUG, null,
+            FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.BUG,
             FinalTechItems.BUG, SlimefunItems.ENERGY_CONNECTOR, FinalTechItems.BUG,
-            null, FinalTechItems.BUG, null
+            FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.BUG
     };
 
     public static final ItemStack[] ENERGIZED_ELECTRICITY_SHOOT_PILE = new ItemStack[] {

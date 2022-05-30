@@ -13,7 +13,7 @@ import io.taraxacum.finaltech.core.menu.standard.lock.AbstractLockMachineMenu;
 import io.taraxacum.finaltech.core.menu.standard.lock.BasicMachineMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.core.storage.MachineRecipeLock;
+import io.taraxacum.finaltech.core.helper.MachineRecipeLock;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;

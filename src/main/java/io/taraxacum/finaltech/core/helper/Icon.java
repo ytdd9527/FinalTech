@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.storage;
+package io.taraxacum.finaltech.core.helper;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import org.bukkit.Material;

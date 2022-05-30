@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.api.dto.ItemStackWithWrapperAmount;
@@ -94,7 +95,11 @@ public class EquivalentExchangeTable extends AbstractManualMachine {
             if (StringNumberUtil.compare(value, targetValue) >= 0) {
                 List<String> idList = ItemValueMap.VALUE_ITEM_LIST_OUTPUT_MAP.get(targetValue);
                 String id = idList.get((int) (Math.random() * idList.size()));
-                ItemStack item = new CustomItemStack(SlimefunItem.getById(id).getItem(), 1);
+                SlimefunItem slimefunItem = SlimefunItem.getById(id);
+                if(slimefunItem == null || slimefunItem instanceof MultiBlockMachine) {
+                    continue;
+                }
+                ItemStack item = new CustomItemStack(slimefunItem.getItem(), 1);
                 if (MachineUtil.calMaxMatch(blockMenu, this.getOutputSlot(), List.of(new ItemStackWithWrapperAmount(item))) >= 1) {
                     blockMenu.pushItem(item, this.getOutputSlot());
                     value = StringNumberUtil.sub(value, targetValue);

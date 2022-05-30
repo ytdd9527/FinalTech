@@ -1,6 +1,6 @@
 package io.taraxacum.finaltech.api.dto;
 
-import io.taraxacum.finaltech.core.storage.PositionInfo;
+import io.taraxacum.finaltech.core.helper.PositionInfo;
 
 import java.util.ArrayList;
 import java.util.List;

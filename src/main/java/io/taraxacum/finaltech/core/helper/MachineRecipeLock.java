@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.storage;
+package io.taraxacum.finaltech.core.helper;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.api.dto.AdvancedMachineRecipe;
@@ -21,7 +21,6 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Final_ROOT

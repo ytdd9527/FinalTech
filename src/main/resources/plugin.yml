@@ -16,7 +16,19 @@ depend:
 - Slimefun
 
 commands:
-  test:
-    description: test command
+  finaltech copy-card:
+    description: Transfer a valid item to a copy card
     usage: /<command>
-    permission: finaltech.test
+    permission: finaltech.item.copy-card
+  finaltech item-value:
+    description: Show the value of the item
+    usage: /<command> <id>
+    permission: finaltech.item.value
+
+permissions:
+  finaltech.item.value:
+    description: Show the value of the item
+    default: op
+  finaltech.item.copy-card:
+    description: Transfer a valid item to a copy card
+    default: op

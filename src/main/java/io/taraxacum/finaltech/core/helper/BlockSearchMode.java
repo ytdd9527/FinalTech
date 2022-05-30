@@ -1,9 +1,8 @@
-package io.taraxacum.finaltech.core.storage;
+package io.taraxacum.finaltech.core.helper;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.core.factory.BlockStorageHelper;
 import io.taraxacum.finaltech.core.factory.BlockStorageIconHelper;
-import io.taraxacum.finaltech.setup.FinalTechItems;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
