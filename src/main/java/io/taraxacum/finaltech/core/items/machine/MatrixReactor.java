@@ -7,12 +7,14 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.MatrixReactorMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -27,12 +29,12 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
-public class MatrixReactor extends AbstractMachine{
+public class MatrixReactor extends AbstractMachine implements RecipeItem {
     private static final String KEY_ITEM = "item";
     private static final String KEY_COUNT = "count";
-    private static final int DIFFICULTY = 72;
-    //TODO configurable
+    public static int DIFFICULTY = 72;
 
     public MatrixReactor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -176,10 +178,10 @@ public class MatrixReactor extends AbstractMachine{
         ItemStack item = blockMenu.getItemInSlot(MatrixReactorMenu.OTHER_ITEM_INPUT_SLOT[0]);
         ItemStack iconItem = blockMenu.getItemInSlot(MatrixReactorMenu.STATUS_SLOT);
         if (ItemStackUtil.isItemNull(item)) {
-            ItemStackUtil.setLore(iconItem, "§7未工作");
+            ItemStackUtil.setLore(iconItem, TextUtil.COLOR_NORMAL + "未工作");
         } else {
             String count = config.contains(MatrixReactor.KEY_COUNT) ? config.getString(MatrixReactor.KEY_COUNT) : "0";
-            ItemStackUtil.setLore(iconItem, "§7当前进度" + count + " / " + (DIFFICULTY - item.getAmount()) );
+            ItemStackUtil.setLore(iconItem, TextUtil.COLOR_NORMAL + "当前进度 " + TextUtil.COLOR_NUMBER + count + " / " + (DIFFICULTY - item.getAmount()) );
         }
     }
 
@@ -201,5 +203,23 @@ public class MatrixReactor extends AbstractMachine{
             }
         }
         return true;
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
+                "",
+                TextUtil.COLOR_NORMAL + "中间放入物品",
+                TextUtil.COLOR_NORMAL + "左右两侧分别输入 " + FinalTechItems.ORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 与 " + FinalTechItems.UNORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL,
+                TextUtil.COLOR_NORMAL + "每 " + TextUtil.COLOR_NUMBER + String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0) + "秒" + TextUtil.COLOR_NORMAL + " 各消耗一个 " + FinalTechItems.ORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 与 " + FinalTechItems.UNORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 使进度随机 " + TextUtil.COLOR_STRESS + "+1" + TextUtil.COLOR_NORMAL + " 或 " + TextUtil.COLOR_STRESS + "-1" + TextUtil.COLOR_NORMAL,
+                TextUtil.COLOR_NORMAL + "当进度与物品堆叠数之和达到 " + TextUtil.COLOR_NUMBER + DIFFICULTY + TextUtil.COLOR_NORMAL + " 时 复制一个输入的物品");
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "限制",
+                "",
+                TextUtil.COLOR_NORMAL + "若未输入并消耗 " + FinalTechItems.ORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 与 " + FinalTechItems.UNORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL,
+                TextUtil.COLOR_NORMAL + "或中途切换物品",
+                TextUtil.COLOR_NORMAL + "则进度清零");
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "矩阵加速",
+                "",
+                TextUtil.COLOR_NORMAL + "在最上方放入并消耗 " + FinalTechItems.PHONY.getDisplayName() + TextUtil.COLOR_NORMAL + " 使进度强制 " + TextUtil.COLOR_STRESS + "+1");
     }
 }

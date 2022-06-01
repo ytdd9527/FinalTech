@@ -21,15 +21,15 @@ public interface ItemSerializationConstructorOperation extends MachineOperation 
         if (CopyCardItem.isValid(item)) {
             return ITEM_PHONY;
         }
-        if (ItemStackUtil.isItemSimilar(item, FinalTechItems.SINGULARITY) || ItemStackUtil.isItemSimilar(item, FinalTechItems.SPIROCHETE) || ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY)) {
-            return ERROR_ITEM;
+        if (CopyCardItem.copiableItem(item)) {
+            return COPY_CARD;
         }
-        return COPY_CARD;
+        return ERROR_ITEM;
     }
 
     @Nullable
     static ItemSerializationConstructorOperation newInstance(@Nonnull ItemStack item) {
-        int type = getType(item);
+        int type = ItemSerializationConstructorOperation.getType(item);
         if (type == COPY_CARD) {
             ItemStack itemStack = item.clone();
             item.setAmount(0);

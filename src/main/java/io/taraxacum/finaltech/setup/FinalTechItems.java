@@ -12,9 +12,9 @@ import org.bukkit.inventory.ItemStack;
  */
 public final class FinalTechItems {
     // items
-    public static final SlimefunItemStack WATER_CARD = new SlimefunItemStack("FINALTECH_WATER_CARD", Material.PAPER, TextUtil.colorPseudorandomString("水卡"));
-    public static final SlimefunItemStack LAVA_CARD = new SlimefunItemStack("FINALTECH_LAVAL_CARD", Material.PAPER, TextUtil.colorPseudorandomString("岩浆卡"));
-    public static final SlimefunItemStack MILK_CARD = new SlimefunItemStack("FINALTECH_MILK_CARD", Material.PAPER, TextUtil.colorPseudorandomString("牛奶卡"));
+    public static final SlimefunItemStack WATER_CARD = new SlimefunItemStack("FINALTECH_WATER_CARD", Material.PAPER, "§9水卡");
+    public static final SlimefunItemStack LAVA_CARD = new SlimefunItemStack("FINALTECH_LAVAL_CARD", Material.PAPER, "§6岩浆卡");
+    public static final SlimefunItemStack MILK_CARD = new SlimefunItemStack("FINALTECH_MILK_CARD", Material.PAPER, "§f牛奶卡");
     public static final SlimefunItemStack GEARWHEEL = new SlimefunItemStack("FINALTECH_GEARWHEEL", Material.REDSTONE, TextUtil.colorPseudorandomString("齿轮"));
     public static final SlimefunItemStack UNORDERED_DUST = new SlimefunItemStack("FINALTECH_UNORDERED_DUST", Material.WHEAT_SEEDS, TextUtil.colorPseudorandomString("无序尘埃"));
     public static final SlimefunItemStack ORDERED_DUST = new SlimefunItemStack("FINALTECH_ORDERED_DUST", Material.SLIME_BALL, TextUtil.colorPseudorandomString("有序尘埃"));
@@ -63,23 +63,23 @@ public final class FinalTechItems {
     public static final SlimefunItemStack STORAGE_INTERACT_PORT = new SlimefunItemStack("FINALTECH_STORAGE_INTERACT_PORT", Material.BOOKSHELF, TextUtil.colorPseudorandomString("存储交互接口"));
     public static final SlimefunItemStack STORAGE_INSERT_PORT = new SlimefunItemStack("FINALTECH_STORAGE_INSERT_PORT", Material.BOOKSHELF, TextUtil.colorPseudorandomString("高速存入接口"));
     public static final SlimefunItemStack STORAGE_WITHDRAW_PORT = new SlimefunItemStack("FINALTECH_STORAGE_WITHDRAW_PORT", Material.BOOKSHELF, TextUtil.colorPseudorandomString("高速取出接口"));
-    public static final SlimefunItemStack STORAGE_ITEM_UNCOLORED = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_UNCOLORED", Material.FLOWER_BANNER_PATTERN, TextUtil.colorPseudorandomString("存储卡-无色"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_WHITE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_WHITE", Material.WHITE_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-白"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_ORANGE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_ORANGE", Material.ORANGE_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-橙"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_MAGENTA = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_MAGENTA", Material.MAGENTA_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-品红"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_LIGHT_BLUE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_LIGHT_BLUE", Material.LIGHT_BLUE_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-淡蓝"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_YELLOW = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_YELLOW", Material.YELLOW_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-黄"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_LIME = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_LIME", Material.LIME_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-黄绿"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_PINK = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_PINK", Material.PINK_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-粉红"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_GRAY = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_GRAY", Material.GRAY_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-灰"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_LIGHT_GRAY = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_LIGHT_GRAY", Material.LIGHT_GRAY_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-淡灰"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_CYAN = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_CYAN", Material.CYAN_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-青"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_PURPLE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_PURPLE", Material.PURPLE_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-紫"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_BLUE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_BLUE", Material.BLUE_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-蓝"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_BROWN = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_BROWN", Material.BROWN_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-棕"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_GREEN = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_GREEN", Material.GREEN_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-绿"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_RED = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_RED", Material.RED_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-红"), StorageCardItem.ITEM_LORE);
-    public static final SlimefunItemStack STORAGE_ITEM_BLACK = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_BLACK", Material.BLACK_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-黑"), StorageCardItem.ITEM_LORE);
+    public static final SlimefunItemStack STORAGE_CARD = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_UNCOLORED", Material.WATER_BUCKET, TextUtil.colorPseudorandomString("存储卡"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_WHITE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_WHITE", Material.WHITE_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-白"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_ORANGE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_ORANGE", Material.ORANGE_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-橙"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_MAGENTA = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_MAGENTA", Material.MAGENTA_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-品红"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_LIGHT_BLUE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_LIGHT_BLUE", Material.LIGHT_BLUE_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-淡蓝"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_YELLOW = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_YELLOW", Material.YELLOW_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-黄"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_LIME = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_LIME", Material.LIME_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-黄绿"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_PINK = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_PINK", Material.PINK_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-粉红"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_GRAY = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_GRAY", Material.GRAY_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-灰"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_LIGHT_GRAY = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_LIGHT_GRAY", Material.LIGHT_GRAY_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-淡灰"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_CYAN = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_CYAN", Material.CYAN_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-青"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_PURPLE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_PURPLE", Material.PURPLE_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-紫"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_BLUE = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_BLUE", Material.BLUE_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-蓝"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_BROWN = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_BROWN", Material.BROWN_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-棕"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_GREEN = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_GREEN", Material.GREEN_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-绿"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_RED = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_RED", Material.RED_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-红"), StorageCardItem.ITEM_LORE);
+//    public static final SlimefunItemStack STORAGE_ITEM_BLACK = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_BLACK", Material.BLACK_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-黑"), StorageCardItem.ITEM_LORE);
 
     // electric
     public static final SlimefunItemStack BASIC_CHARGE_INCREASE_CAPACITOR = new SlimefunItemStack("FINALTECH_BASIC_CHARGE_INCREASE_CAPACITOR", Material.RED_STAINED_GLASS, TextUtil.colorPseudorandomString("基础充电增益电容"));

@@ -3,6 +3,7 @@ package io.taraxacum.finaltech.core.helper;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.core.factory.BlockStorageHelper;
 import io.taraxacum.finaltech.core.factory.BlockStorageLoreHelper;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -19,14 +20,14 @@ public final class CargoNumber {
     public static final String KEY_INPUT = "cbi";
     public static final String KEY_OUTPUT = "cbo";
 
-    public static final ItemStack CARGO_NUMBER_ICON = new CustomItemStack(Material.TARGET, "&d数量限制");
-    public static final ItemStack CARGO_NUMBER_ADD_ICON = new CustomItemStack(Material.GREEN_CONCRETE, "&6增加数量限制");
-    public static final ItemStack CARGO_NUMBER_SUB_ICON = new CustomItemStack(Material.RED_CONCRETE, "&9减少数量限制");
+    public static final ItemStack CARGO_NUMBER_ICON = new CustomItemStack(Material.TARGET, TextUtil.colorPseudorandomString("传输数量限制"));
+    public static final ItemStack CARGO_NUMBER_ADD_ICON = new CustomItemStack(Material.GREEN_CONCRETE, TextUtil.colorPseudorandomString("增加数量限制"));
+    public static final ItemStack CARGO_NUMBER_SUB_ICON = new CustomItemStack(Material.RED_CONCRETE, TextUtil.colorPseudorandomString("减少数量限制"));
 
     public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, 0, new LinkedHashMap<>() {{
-        this.put("0", List.of("number no limit"));
+//        this.put("0", List.of("number no limit"));
         for (int i = 1; i < 64 * 9; i++) {
-            this.put(String.valueOf(i), List.of("number limit: " + i));
+            this.put(String.valueOf(i), List.of(TextUtil.colorRandomString("数量限制 " + i)));
         }
     }}) {
         @Nonnull

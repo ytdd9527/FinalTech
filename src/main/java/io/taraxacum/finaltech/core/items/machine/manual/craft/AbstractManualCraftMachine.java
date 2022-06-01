@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.core.items.machine.manual.AbstractManualMachine;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
@@ -28,7 +29,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 1.0
  */
-public abstract class AbstractManualCraftMachine extends AbstractManualMachine implements RecipeItem {
+public abstract class AbstractManualCraftMachine extends AbstractManualMachine implements AntiAccelerationMachine, RecipeItem {
     public static final String KEY_COUNT = "count";
     public static int COUNT_THRESHOLD = 40;
 

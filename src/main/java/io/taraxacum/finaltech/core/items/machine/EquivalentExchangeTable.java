@@ -10,13 +10,15 @@ import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.api.dto.ItemStackWithWrapperAmount;
-import io.taraxacum.finaltech.core.factory.ItemValueMap;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.core.factory.ItemValueTable;
 import io.taraxacum.finaltech.core.items.machine.manual.AbstractManualMachine;
 import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
 import io.taraxacum.finaltech.core.menu.manual.EquivalentExchangeTableMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class EquivalentExchangeTable extends AbstractManualMachine {
+public class EquivalentExchangeTable extends AbstractManualMachine implements RecipeItem {
     private static final String KEY = "value";
 
     public EquivalentExchangeTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -64,7 +66,7 @@ public class EquivalentExchangeTable extends AbstractManualMachine {
             }
             SlimefunItem sfItem = SlimefunItem.getByItem(item);
             if (sfItem != null) {
-                value = StringNumberUtil.add(value, StringNumberUtil.mul(ItemValueMap.getOrCalItemInputValue(sfItem), String.valueOf(item.getAmount())));
+                value = StringNumberUtil.add(value, StringNumberUtil.mul(ItemValueTable.getInstance().getOrCalItemInputValue(sfItem), String.valueOf(item.getAmount())));
                 item.setAmount(0);
             }
         }
@@ -86,14 +88,14 @@ public class EquivalentExchangeTable extends AbstractManualMachine {
     // support plugin reload
     private void doCraft(@Nonnull BlockMenu blockMenu, @Nonnull Config config) {
         String value = config.contains(KEY) ? config.getString(KEY) : StringNumberUtil.ZERO;
-        List<String> valueList = new ArrayList<>(ItemValueMap.VALUE_ITEM_LIST_OUTPUT_MAP.keySet());
+        List<String> valueList = new ArrayList<>(ItemValueTable.getInstance().VALUE_ITEM_LIST_OUTPUT_MAP.keySet());
         Collections.shuffle(valueList);
         for (String targetValue : valueList) {
             if (MachineUtil.itemCount(blockMenu, this.getOutputSlot()) == this.getOutputSlot().length) {
                 break;
             }
             if (StringNumberUtil.compare(value, targetValue) >= 0) {
-                List<String> idList = ItemValueMap.VALUE_ITEM_LIST_OUTPUT_MAP.get(targetValue);
+                List<String> idList = ItemValueTable.getInstance().VALUE_ITEM_LIST_OUTPUT_MAP.get(targetValue);
                 String id = idList.get((int) (Math.random() * idList.size()));
                 SlimefunItem slimefunItem = SlimefunItem.getById(id);
                 if(slimefunItem == null || slimefunItem instanceof MultiBlockMachine) {
@@ -107,5 +109,19 @@ public class EquivalentExchangeTable extends AbstractManualMachine {
             }
         }
         BlockStorage.addBlockInfo(blockMenu.getLocation(), KEY, value);
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
+                "",
+                TextUtil.COLOR_NORMAL + "输入物品后 该物品会被转化为价值并被该机器记录",
+                TextUtil.COLOR_NORMAL + "输入 " + FinalTechItems.ORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 时 消耗随机价值并随机输出与消耗价值等价的物品");
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "价值计算",
+                "",
+                TextUtil.COLOR_NORMAL + "将物品放于上方槽中 会显示该物品的价值",
+                TextUtil.COLOR_NORMAL + "物品的输入价值和输出价值计算方式不同",
+                TextUtil.COLOR_NORMAL + "输入价值= 物品可以被转换为多少价值",
+                TextUtil.COLOR_NORMAL + "输出价值= 多少价值可以转换为该物品");
     }
 }

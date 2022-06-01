@@ -1,7 +1,5 @@
 package io.taraxacum.finaltech.api.command;
 
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.taraxacum.finaltech.core.factory.ItemValueMap;
 import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
 import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.items.unusable.Singularity;

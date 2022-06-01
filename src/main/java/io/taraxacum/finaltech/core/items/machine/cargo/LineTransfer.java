@@ -17,6 +17,7 @@ import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.util.CargoUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.ParticleUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -29,6 +30,7 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.w3c.dom.Text;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -219,53 +221,10 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe("&f基础功能",
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "功能",
                 "",
-                "&f该机器会不断把物品",
-                "&f从输入侧方块的容器",
-                "&f传输到输出侧方块的容器");
-        this.registerDescriptiveRecipe("&f相关概念",
-                "",
-                "&f输入侧",
-                "&f该机器搜索方向上的某一方块",
-                "&f该方块的物品将被取出",
-                "",
-                "&f输出侧",
-                "&f该机器搜索方向上的下一方块",
-                "&f该方块将被传入物品");
-        this.registerDescriptiveRecipe("&f传输模式",
-                "",
-                "&f对称传输",
-                "&f会把物品按照在输入侧容器的格子顺序",
-                "&f传输到输出侧容器对应的格子位置上",
-                "",
-                "&f主输入侧",
-                "&f尝试把输入侧的物品一个一个地",
-                "&f传输到输出侧容器的各个格子上",
-                "",
-                "&f主输出侧",
-                "&f尝试按照输出侧容器的格子顺序",
-                "&f一个一个地从输入侧容器取出物品");
-        this.registerDescriptiveRecipe("&f搜索模式",
-                "",
-                "&f零模式",
-                "&f搜索范围锁定为自身前方两格的方块",
-                "",
-                "&f中断模式",
-                "&f当该机器指向了相同机器方块",
-                "&f在其所在位置处停止搜索",
-                "",
-                "&f穿透模式",
-                "&f当该机器指向了相同机器方块",
-                "&f跨过其所在位置",
-                "&f并继续搜索");
-        this.registerDescriptiveRecipe("&f运输模式",
-                "",
-                "&f首尾循环运输",
-                "&f让搜索方向上的最后一个方块",
-                "&f与第一个方块进行运输",
-                "",
-                "&f自运输",
-                "&f是否将自身加入到搜索范围中");
+                TextUtil.COLOR_NORMAL + "该机器会不断把物品",
+                TextUtil.COLOR_NORMAL + "从输入侧方块的容器",
+                TextUtil.COLOR_NORMAL + "传输到输出侧方块的容器");
     }
 }

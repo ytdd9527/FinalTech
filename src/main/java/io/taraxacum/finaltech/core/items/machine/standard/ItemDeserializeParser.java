@@ -4,12 +4,15 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
 import io.taraxacum.finaltech.core.menu.standard.AbstractStandardMachineMenu;
 import io.taraxacum.finaltech.core.menu.standard.ItemDeserializeParserMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.StringItemUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -26,10 +29,9 @@ import javax.annotation.Nonnull;
  * It's not a function class!
  * @author Final_ROOT
  */
-public class ItemDeserializeParser extends AbstractStandardMachine {
+public class ItemDeserializeParser extends AbstractStandardMachine implements AntiAccelerationMachine {
     public ItemDeserializeParser(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.registerDefaultRecipes();
     }
 
     @Nonnull
@@ -55,10 +57,10 @@ public class ItemDeserializeParser extends AbstractStandardMachine {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(new CustomItemStack(Material.BOOK, "&f复制物品",
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
                 "",
-                "&f中间放入复制卡",
-                "&f输出该复制卡记录的物品",
-                "&f可以放入堆叠的复制卡从而提升输出数量"));
+                TextUtil.COLOR_NORMAL + "放入复制卡",
+                TextUtil.COLOR_NORMAL + "每 " + TextUtil.COLOR_NUMBER + String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0) + "秒" + TextUtil.COLOR_NORMAL + " 输出一次该复制卡记录的物品",
+                TextUtil.COLOR_NORMAL + "可以放入堆叠的复制卡从而提升单次输出数量");
     }
 }

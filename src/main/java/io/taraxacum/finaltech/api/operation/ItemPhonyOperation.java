@@ -43,6 +43,7 @@ public class ItemPhonyOperation implements ItemSerializationConstructorOperation
         return ItemSerializationConstructorOperation.ITEM_PHONY;
     }
 
+    @Nonnull
     @Override
     public ItemStack getShowItem() {
         return this.showItem;

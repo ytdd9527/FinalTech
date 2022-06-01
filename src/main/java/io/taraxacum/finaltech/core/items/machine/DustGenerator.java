@@ -8,12 +8,14 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetProvider;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.OrderDustGeneratorMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -142,27 +144,26 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
         return LIMIT;
     }
 
-    @Override
-    public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe("&f发电",
-                "",
-                "&f输入无序尘埃",
-                "&f使其发电量+1J/t",
-                "",
-                "&f输入有序尘埃",
-                "&f使其发电量+1J/t",
-                "&f或者使其发电量增加与最大发电量差值的一半",
-                "&f然后重置最大发电量");
-        this.registerDescriptiveRecipe("&f供电规则",
-                "",
-                "&f如果某次未输入任何有效物品",
-                "&f重置其发电量为 0");
-    }
-
     private void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         ItemStack item = blockMenu.getItemInSlot(OrderDustGeneratorMenu.STATUS_SLOT);
         ItemStackUtil.setLore(item,
-                "§7当前发电量= §e" + BlockStorage.getLocationInfo(block.getLocation(), DustGenerator.KEY_COUNT) + "J/t",
-                "§7最大发电量= §e" + BlockStorage.getLocationInfo(block.getLocation(), DustGenerator.KEY_MAX) + "J/t");
+                TextUtil.COLOR_NORMAL + "当前发电量= " + TextUtil.COLOR_NUMBER + BlockStorage.getLocationInfo(block.getLocation(), DustGenerator.KEY_COUNT) + "J/t",
+                TextUtil.COLOR_NORMAL + "已达到的最大发电量= " + TextUtil.COLOR_NUMBER + BlockStorage.getLocationInfo(block.getLocation(), DustGenerator.KEY_MAX) + "J/t");
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
+                "",
+                TextUtil.COLOR_NORMAL + "每 " + TextUtil.COLOR_NUMBER + String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0) + "秒" + TextUtil.COLOR_NORMAL + " 消耗一个 " + FinalTechItems.ORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 或 " + FinalTechItems.UNORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 并使发电量加 " + TextUtil.COLOR_NUMBER + "1J/t",
+                TextUtil.COLOR_NORMAL + "未消耗成功时 发电量置零",
+                "",
+                TextUtil.COLOR_NORMAL + "最大发电量 " + TextUtil.COLOR_NUMBER + this.getCapacity() + "J/t");
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "电力回溯",
+                "",
+                TextUtil.COLOR_NORMAL + "消耗 " + FinalTechItems.ORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 时",
+                TextUtil.COLOR_NORMAL + "若当前发电量小于已达到的最大发电量",
+                TextUtil.COLOR_NORMAL + "则将当前发电量提升至当前发电量与已达到的最大发电量的平均值",
+                TextUtil.COLOR_NORMAL + "然后重置已达到的最大发电量");
     }
 }

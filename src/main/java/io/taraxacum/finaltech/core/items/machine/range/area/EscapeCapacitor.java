@@ -14,6 +14,7 @@ import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -28,9 +29,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Final_ROOT
  */
 public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetComponent, RecipeItem {
-    public final static int RANGE = 6;
+    public final static int RANGE = 4;
     public static final int CAPACITOR = Integer.MAX_VALUE / 2;
     public final static double LOSS = 16;
+
     public EscapeCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -89,10 +91,10 @@ public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetCom
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
         ItemStackUtil.setLore(item,
-                "§7当前存储电量= " + charge,
-                "§7当前生效的机器= " + count,
-                "§7实际发电量= " + totalEnergy,
-                "§7最大单机器发电量= " + maxEnergy);
+                TextUtil.COLOR_NORMAL + "当前存储电量= " + TextUtil.COLOR_NUMBER + charge + "J",
+                TextUtil.COLOR_NORMAL + "当前生效的机器= " + TextUtil.COLOR_NUMBER + count + "J",
+                TextUtil.COLOR_NORMAL + "实际传输量= " + TextUtil.COLOR_NUMBER + totalEnergy + "J",
+                TextUtil.COLOR_NORMAL + "单机器最大传输量= " + TextUtil.COLOR_NUMBER + maxEnergy + "J");
         charge = charge - (int) (maxEnergy.get() * LOSS);
         charge = Math.max(charge, 0);
         SlimefunUtil.setCharge(blockLocation, String.valueOf(charge));
@@ -116,19 +118,14 @@ public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetCom
 
     @Override
     public void registerDefaultRecipes() {
-        //todo 说明优化
-        this.registerDescriptiveRecipe("&f工作原理",
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
                 "",
-                "&f搜索范围内的所有机器",
-                "&f根据自身已存储的电量",
-                "&f对其进行输电",
-                "&f",
-                "&f无法用于电容类机器");
-        this.registerDescriptiveRecipe("&f电损耗率",
+                TextUtil.COLOR_NORMAL + "搜索范围内的机器",
+                TextUtil.COLOR_NORMAL + "根据自身的存电量 使这些机器充电",
                 "",
-                "&f电力损耗率 " + LOSS * 100 + "%",
-                "&f即传输时 电力额外消耗" + (LOSS * 100 - 100) + "%",
+                TextUtil.COLOR_NORMAL + "每次为周围机器充电 自身存电量只会降低一次",
+                TextUtil.COLOR_NORMAL + "降低数值为单个机器最大充电量的 " + TextUtil.COLOR_NUMBER + "16倍",
                 "",
-                "&f电力损耗只会计算输电量为最大的一次");
+                TextUtil.COLOR_NORMAL + "可存储电量= " + TextUtil.COLOR_NUMBER + this.getCapacity() + "J");
     }
 }

@@ -9,6 +9,7 @@ import io.taraxacum.finaltech.core.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -31,11 +32,11 @@ public final class MachineRecipeLock {
     public static final String VALUE_UNLOCK = "-1";
     public static final String VALUE_LOCK_OFF = "-2";
 
-    public static final ItemStack ICON = new CustomItemStack(Material.TRIPWIRE_HOOK, "&7配方锁", "&8禁用锁定");
+    public static final ItemStack ICON = new CustomItemStack(Material.TRIPWIRE_HOOK, TextUtil.colorPseudorandomString("配方锁"), TextUtil.COLOR_PASSIVE + "禁用锁定");
 
     public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, new LinkedHashMap<>(2) {{
-        this.put("-2", List.of("§8禁用锁定"));
-        this.put("-1", List.of("§8未锁定"));
+        this.put("-2", List.of(TextUtil.COLOR_PASSIVE + "禁用锁定"));
+        this.put("-1", List.of(TextUtil.COLOR_INITIATIVE + "未锁定"));
     }}) {
         @Nonnull
         @Override
@@ -74,7 +75,7 @@ public final class MachineRecipeLock {
                 return true;
             } else {
                 int recipeLock = value == null ? Integer.parseInt(this.defaultValue()) :  Integer.parseInt(value);
-                List<AdvancedMachineRecipe> advancedMachineRecipeList = MachineRecipeFactory.getAdvancedRecipe(abstractMachine.getClass());
+                List<AdvancedMachineRecipe> advancedMachineRecipeList = MachineRecipeFactory.getInstance().getAdvancedRecipe(abstractMachine.getClass());
                 if (recipeLock < advancedMachineRecipeList.size() && recipeLock >= 0) {
                     AdvancedMachineRecipe advancedMachineRecipe = advancedMachineRecipeList.get(recipeLock);
                     List<String> loreList;
@@ -82,12 +83,12 @@ public final class MachineRecipeLock {
                         loreList = new ArrayList<>(advancedMachineRecipe.getInput().size() + advancedMachineRecipe.getOutputList().get(0).getOutputItem().size() + 3);
                         loreList.add("§9输入:");
                         for (ItemStackWithWrapperAmount inputItem : advancedMachineRecipe.getInput()) {
-                            loreList.add("    §7" + ItemStackUtil.getItemName(inputItem.getItemStack()) + " x" + inputItem.getAmount());
+                            loreList.add("    §f" + ItemStackUtil.getItemName(inputItem.getItemStack()) + TextUtil.COLOR_NUMBER + " x" + inputItem.getAmount());
                         }
                         loreList.add("");
                         loreList.add("§6输出:");
                         for (ItemStackWithWrapperAmount outputItem : advancedMachineRecipe.getOutputList().get(0).getOutputItem()) {
-                            loreList.add("    §7" + ItemStackUtil.getItemName(outputItem.getItemStack()) + " x" + outputItem.getAmount());
+                            loreList.add("    §f" + ItemStackUtil.getItemName(outputItem.getItemStack()) + TextUtil.COLOR_NUMBER + " x" + outputItem.getAmount());
                         }
                     } else {
                         int outputLength = 0;
@@ -97,7 +98,7 @@ public final class MachineRecipeLock {
                         loreList = new ArrayList<>(advancedMachineRecipe.getInput().size() + outputLength + 3);
                         loreList.add("§9输入:");
                         for (ItemStackWithWrapperAmount inputItem : advancedMachineRecipe.getInput()) {
-                            loreList.add("    §7" + ItemStackUtil.getItemName(inputItem.getItemStack()) + " x" + inputItem.getAmount());
+                            loreList.add("    §f" + ItemStackUtil.getItemName(inputItem.getItemStack()) + TextUtil.COLOR_NUMBER + " x" + inputItem.getAmount());
                         }
                         loreList.add("");
                         loreList.add("§6输出:");
@@ -108,7 +109,7 @@ public final class MachineRecipeLock {
                             }
                             loreList.add("  §a" + random + "%");
                             for (ItemStackWithWrapperAmount outputItem : advancedRandomOutput.getOutputItem()) {
-                                loreList.add("    §7" + ItemStackUtil.getItemName(outputItem.getItemStack()) + " x" + outputItem.getAmount());
+                                loreList.add("    §f" + ItemStackUtil.getItemName(outputItem.getItemStack()) + TextUtil.COLOR_NUMBER + " x" + outputItem.getAmount());
                             }
                         }
                     }

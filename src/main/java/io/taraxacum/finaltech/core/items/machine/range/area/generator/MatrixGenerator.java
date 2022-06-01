@@ -14,6 +14,7 @@ import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.common.util.StringNumberUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -21,6 +22,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -35,7 +37,7 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator implements An
     protected static final String KEY = "energy-charge";
 
     public final static String ELECTRICITY = StringNumberUtil.VALUE_INFINITY;
-    public final static int RANGE = 16;
+    public final static int RANGE = 10;
 
     @Nonnull
     @Override
@@ -110,16 +112,26 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator implements An
             }
             return 0;
         });
-        //todo 说明优化
         ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
         ItemStackUtil.setLore(item,
-                "§7当前生效的机器= " + count,
-                "§7实际发电量= " + energyCharge + "J");
+                TextUtil.COLOR_NORMAL + "当前生效的机器= " + TextUtil.COLOR_NUMBER + count + "个",
+                TextUtil.COLOR_NORMAL + "实际发电量= " + TextUtil.COLOR_NUMBER + energyCharge + "J");
         if (count == 0) {
             item.setType(Material.RED_STAINED_GLASS_PANE);
         } else {
             item.setType(Material.GREEN_STAINED_GLASS_PANE);
         }
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
+                "",
+                TextUtil.COLOR_NORMAL + "每 " + TextUtil.COLOR_NUMBER + String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0) + "秒" + TextUtil.COLOR_NORMAL + " 对周围 " + TextUtil.COLOR_NUMBER + this.getRange() + "格" + TextUtil.COLOR_NORMAL + " 的机器进行充电",
+                TextUtil.COLOR_NORMAL + "每次充电使其电量充满至最大电容量");
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "极化扩展",
+                "",
+                TextUtil.COLOR_NORMAL + "放入 " + FinalTechItems.PHONY + TextUtil.COLOR_NORMAL + " 后 其工作范围会扩大");
     }
 
     @Override
@@ -130,19 +142,5 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator implements An
     @Override
     protected int getRange() {
         return RANGE;
-    }
-
-    @Override
-    public void registerDefaultRecipes() {
-        //todo 说明优化
-        registerDescriptiveRecipe("&f供电量",
-                "",
-                "&f对范围内的每个机器",
-                "&f使其存电量达到最大储电量");
-        registerDescriptiveRecipe("&f供电范围",
-                "",
-                "&f传输半径=" + this.getRange() + "格",
-                "&f即以自身为中心",
-                "&f边长" + (this.getRange() * 2 + 1) + "格（含）的正方体区域");
     }
 }

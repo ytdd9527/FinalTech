@@ -9,12 +9,14 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.api.dto.LocationWithConfig;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -29,8 +31,9 @@ import java.util.*;
 /**
  * @author Final_ROOT
  */
-public class OverloadedAccelerator extends AbstractCubeMachine implements AntiAccelerationMachine {
+public class OverloadedAccelerator extends AbstractCubeMachine implements AntiAccelerationMachine, RecipeItem {
     public static final int RANGE = 2;
+
     public OverloadedAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -113,12 +116,20 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements AntiAc
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
         ItemStackUtil.setLore(item,
-                "§7检测到的机器个数= " + accelerateMachineCount,
-                "§7加速次数= " + accelerateTimeCount);
+                TextUtil.COLOR_NORMAL + "检测到的机器个数= " + TextUtil.COLOR_NUMBER + accelerateMachineCount + "个",
+                TextUtil.COLOR_NORMAL + "加速次数= " + TextUtil.COLOR_NUMBER + accelerateTimeCount + "次");
     }
 
     @Override
     protected boolean isSynchronized() {
         return false;
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
+                TextUtil.COLOR_NORMAL + "对于周围 " + TextUtil.COLOR_NUMBER + RANGE + "格" + TextUtil.COLOR_NORMAL + " 的耗电机器",
+                TextUtil.COLOR_NORMAL + "对其进行加速",
+                TextUtil.COLOR_NORMAL + "每次加速时 使其存电量减半 直至其存电量小于最大电容量");
     }
 }

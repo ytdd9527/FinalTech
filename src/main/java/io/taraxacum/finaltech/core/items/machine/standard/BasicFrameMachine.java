@@ -9,6 +9,7 @@ import io.taraxacum.finaltech.core.menu.standard.AbstractStandardMachineMenu;
 import io.taraxacum.finaltech.core.menu.standard.BasicFrameMachineMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -54,6 +55,10 @@ public class BasicFrameMachine extends AbstractStandardMachine {
 
     @Override
     public void registerDefaultRecipes() {
-
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
+                "",
+                TextUtil.COLOR_NORMAL + "将自身左侧的物品",
+                TextUtil.COLOR_NORMAL + "对称地",
+                TextUtil.COLOR_NORMAL + "移动到自身右侧");
     }
 }

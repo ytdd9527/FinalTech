@@ -5,6 +5,7 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -28,7 +29,7 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
         this.copyCardItem = CopyCardItem.newItem(this.matchItem, "1");
         this.count = item.getAmount();
         this.difficulty = CopyCardItem.DIFFICULTY;
-        this.showItem = new CustomItemStack(item.getType(), "§f完成进度", "§f物品名称= " + ItemStackUtil.getItemName(item), "§f压缩数量= " + this.count + "/" + this.difficulty);
+        this.showItem = new CustomItemStack(item.getType(), TextUtil.COLOR_NORMAL + "完成进度", TextUtil.COLOR_NORMAL + "物品名称= &f" + ItemStackUtil.getItemName(item), TextUtil.COLOR_NORMAL + "压缩数量= " + TextUtil.COLOR_NUMBER + this.count + "/" + this.difficulty);
     }
 
     public double getCount() {
@@ -48,6 +49,7 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
         return ItemSerializationConstructorOperation.COPY_CARD;
     }
 
+    @Nonnull
     @Override
     public ItemStack getShowItem() {
         return this.showItem;
@@ -55,7 +57,7 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
 
     @Override
     public void updateShowItem() {
-        ItemStackUtil.setLastLore(this.showItem, "§f压缩数量= " + this.count + "/" + this.difficulty);
+        ItemStackUtil.setLastLore(this.showItem, TextUtil.COLOR_NORMAL + "压缩数量= " + TextUtil.COLOR_NUMBER + this.count + "/" + this.difficulty);
     }
 
     @Override

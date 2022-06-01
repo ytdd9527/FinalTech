@@ -9,8 +9,8 @@ import org.bukkit.inventory.ItemStack;
  * @author Final_ROOT
  */
 public class EnergizedStackGenerator extends AbstractCubeElectricGenerator {
-    public final static String ELECTRICITY = "2048";
-    public final static int RANGE = 8;
+    public final static String ELECTRICITY = "512";
+    public final static int RANGE = 6;
     public EnergizedStackGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }

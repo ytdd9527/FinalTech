@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
+import io.taraxacum.finaltech.api.interfaces.PerformanceLimitMachine;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.api.dto.ItemStackWithWrapper;
 import io.taraxacum.finaltech.core.items.unusable.StorageCardItem;
@@ -30,7 +31,7 @@ import java.util.*;
 /**
  * @author Final_ROOT
  */
-public class StorageInteractPort extends AbstractCargo implements RecipeItem {
+public class StorageInteractPort extends AbstractCargo implements PerformanceLimitMachine, RecipeItem {
     private static final int SEARCH_LIMIT = 3;
 
     public StorageInteractPort(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -51,21 +52,27 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
             BlockState blockState = PaperLib.getBlockState(targetBlock, false).getState();
             if (blockState instanceof InventoryHolder) {
                 Inventory inventory = ((InventoryHolder) blockState).getInventory();
-                LinkedList<ItemStackWrapper> unPushItem = new LinkedList<>();
-                LinkedList<ItemStackWrapper> unStackItem = new LinkedList<>();
-                boolean isFull = MachineUtil.isFull(blockMenu.toInventory(), getOutputSlot()) || MachineUtil.itemCount(blockMenu.toInventory(), getOutputSlot()) >= getOutputSlot().length / 2;
-                boolean isEmpty = MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlot()) || MachineUtil.itemCount(blockMenu.toInventory(), getInputSlot()) < getInputSlot().length / 2;
-                if (isFull && isEmpty) {
+                List<ItemStackWrapper> unOutputItem = new LinkedList<>();
+                List<ItemStackWrapper> unInputItem = new LinkedList<>();
+                for(int slot : this.getInputSlot()) {
+                    ItemStack item = blockMenu.getItemInSlot(slot);
+                    if(!ItemStackUtil.isItemNull(item) && !StorageCardItem.storableItem(item)) {
+                        blockMenu.dropItems(block.getLocation(), slot);
+                    }
+                }
+                boolean outputFull = MachineUtil.isFull(blockMenu.toInventory(), this.getOutputSlot()) || MachineUtil.itemCount(blockMenu.toInventory(), this.getOutputSlot()) >= this.getOutputSlot().length / 2;
+                boolean inputEmpty = MachineUtil.isEmpty(blockMenu.toInventory(), this.getInputSlot()) || MachineUtil.itemCount(blockMenu.toInventory(), this.getInputSlot()) < this.getInputSlot().length / 2;
+                if (outputFull && inputEmpty) {
                     return;
                 }
-                if (!isFull) {
-                    MachineUtil.stockSlots(blockMenu, getOutputSlot());
+                if (!outputFull) {
+                    MachineUtil.stockSlots(blockMenu, this.getOutputSlot());
                 }
-                if (!isEmpty) {
-                    MachineUtil.stockSlots(blockMenu, getInputSlot());
+                if (!inputEmpty) {
+                    MachineUtil.stockSlots(blockMenu, this.getInputSlot());
                 }
                 int pushItemAmount = 0;
-                Map<ItemStack, ItemMeta> map = new HashMap<>(inventory.getSize());
+                List<ItemStackWithWrapper> storageCardItemList = new ArrayList<>(Math.min(inventory.getSize(), SEARCH_LIMIT));
                 for (int i = 0, size = Math.min(inventory.getSize(), SEARCH_LIMIT); i < size; i++) {
                     ItemStack item = inventory.getItem(i);
                     if (ItemStackUtil.isItemNull(item) || !item.hasItemMeta()) {
@@ -73,66 +80,61 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
                     }
                     ItemMeta itemMeta = item.getItemMeta();
                     if (StorageCardItem.isValid(itemMeta)) {
-                        map.put(item, itemMeta);
+                        storageCardItemList.add(new ItemStackWithWrapper(item));
                         if (item.getAmount() == 1) {
                             pushItemAmount++;
                         }
                     }
                 }
-                for (Map.Entry<ItemStack, ItemMeta> entry : map.entrySet()) {
-                    if (isEmpty && isFull) {
+                for (ItemStackWithWrapper storageCardItem : storageCardItemList) {
+                    if (inputEmpty && outputFull) {
                         continue;
                     }
-                    ItemMeta itemMeta = entry.getValue();
+                    ItemMeta itemMeta = storageCardItem.getItemStackWrapper().getItemMeta();
                     ItemStack stringItemStack = StringItemUtil.parseItemInCard(itemMeta);
                     ItemStackWithWrapper stringItem = stringItemStack == null ? null : new ItemStackWithWrapper(stringItemStack);
                     boolean work = true;
                     int pushCount = 0;
                     int stackCount = 0;
-                    if (!isFull && entry.getKey().getAmount() == 1 && stringItem != null) {
-                        for (ItemStackWrapper unWorkItem : unPushItem) {
-                            if (ItemStackUtil.isItemSimilar(stringItem.getItemStackWrapper(), unWorkItem)) {
+                    if (!outputFull && storageCardItem.getItemStack().getAmount() == 1 && stringItem != null) {
+                        for (ItemStackWrapper unWorkItem : unOutputItem) {
+                            if (ItemStackUtil.isItemSimilar(stringItem, unWorkItem)) {
                                 work = false;
                                 break;
                             }
                         }
                         if (work) {
                             pushItemAmount--;
-                            pushCount = StringItemUtil.pushItemFromCard(itemMeta, stringItem, blockMenu.toInventory(), getOutputSlot());
+                            pushCount = StringItemUtil.pushItemFromCard(itemMeta, stringItem, blockMenu.toInventory(), this.getOutputSlot());
                             if (pushCount == 0) {
-                                unPushItem.add(stringItem.getItemStackWrapper());
+                                unOutputItem.add(stringItem.getItemStackWrapper());
                             } else {
-                                isFull = MachineUtil.isFull(blockMenu.toInventory(), getOutputSlot());
-                                if (!isFull) {
-                                    MachineUtil.stockSlots(blockMenu, getOutputSlot());
-                                }
+                                MachineUtil.stockSlots(blockMenu, this.getOutputSlot());
+                                outputFull = MachineUtil.isFull(blockMenu.toInventory(), this.getOutputSlot());
                             }
                             if (pushItemAmount == 0) {
-                                isFull = true;
+                                outputFull = true;
                             }
                         }
                     }
-                    if (!isEmpty) {
+                    if (!inputEmpty) {
                         work = true;
                         if (stringItem != null) {
-                            for (ItemStackWrapper unWorkItem : unStackItem) {
-                                if (ItemStackUtil.isItemSimilar(stringItem.getItemStackWrapper(), unWorkItem)) {
+                            for (ItemStackWrapper unWorkItem : unInputItem) {
+                                if (ItemStackUtil.isItemSimilar(stringItem, unWorkItem)) {
                                     work = false;
                                     break;
                                 }
                             }
                         }
                         if (work) {
-                            stackCount = StringItemUtil.storageItemToCard(itemMeta, stringItem, entry.getKey().getAmount(), blockMenu.toInventory(), getInputSlot());
+                            stackCount = StringItemUtil.storageItemToCard(itemMeta, stringItem, storageCardItem.getItemStack().getAmount(), blockMenu.toInventory(), this.getInputSlot());
                             if (stackCount == 0) {
                                 if (stringItem != null) {
-                                    unStackItem.add(stringItem.getItemStackWrapper());
+                                    unInputItem.add(stringItem.getItemStackWrapper());
                                 }
                             } else {
-                                isEmpty = MachineUtil.isEmpty(blockMenu.toInventory(), getInputSlot());
-                                if (!isEmpty) {
-                                    MachineUtil.stockSlots(blockMenu, getInputSlot());
-                                }
+                                inputEmpty = MachineUtil.isEmpty(blockMenu.toInventory(), this.getInputSlot());
                                 if (stringItem == null) {
                                     stringItem = new ItemStackWithWrapper(StringItemUtil.parseItemInCard(itemMeta));
                                 }
@@ -141,8 +143,7 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
                     }
                     if (pushCount != 0 || stackCount != 0) {
                         StorageCardItem.updateLore(itemMeta, stringItem.getItemStack());
-                        entry.getKey().setItemMeta(itemMeta);
-                        StorageCardItem.updateType(entry.getKey(), itemMeta);
+                        storageCardItem.getItemStack().setItemMeta(itemMeta);
                     }
                 }
             }
@@ -150,21 +151,25 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
     }
 
     @Override
+    protected boolean isSynchronized() {
+        return true;
+    }
+
+    @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe("&f存取物品",
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "存入物品",
                 "",
-                "&f需在该机器上方放置原版容器",
-                "&f并将存储卡放于前" + SEARCH_LIMIT + "个格子");
-        this.registerDescriptiveRecipe("&f存入物品",
+                TextUtil.COLOR_NORMAL + "需在该机器上方放置原版容器",
+                TextUtil.COLOR_NORMAL + "并将存储卡放于前 " + TextUtil.COLOR_NUMBER + SEARCH_LIMIT + "个" + TextUtil.COLOR_NORMAL  + " 格子",
                 "",
-                "&f将物品输入到该机器的输入槽",
-                "&f然后该机器会把物品存入到对应的存储器中");
-        this.registerDescriptiveRecipe("&f取出物品",
+                TextUtil.COLOR_NORMAL + "当该机器的输入槽有一半以上格子非空时",
+                TextUtil.COLOR_NORMAL + "该机器会尝试将物品存入识别到的所有存储卡");
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "取出物品",
                 "",
-                "&f在交互位置放置堆叠数为1的存储卡",
-                "&f然后该机器会不断取出物品至自身输出槽");
-        this.registerDescriptiveRecipe("&f混合存入",
+                TextUtil.COLOR_NORMAL + "需在该机器上方放置原版容器",
+                TextUtil.COLOR_NORMAL + "并将存储卡放于前 " + TextUtil.COLOR_NUMBER + SEARCH_LIMIT + "个" + TextUtil.COLOR_NORMAL  + " 格子",
                 "",
-                "&f该机器可以把物品存入到堆叠的存储卡中");
+                TextUtil.COLOR_NORMAL + "当该机器的输出槽有一半以上格子为空时",
+                TextUtil.COLOR_NORMAL + "该机器会尝试将存储卡中的物品取出至输出槽");
     }
 }

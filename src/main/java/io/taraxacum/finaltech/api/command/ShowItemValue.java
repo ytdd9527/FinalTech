@@ -1,7 +1,7 @@
 package io.taraxacum.finaltech.api.command;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.taraxacum.finaltech.core.factory.ItemValueMap;
+import io.taraxacum.finaltech.core.factory.ItemValueTable;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,8 +25,8 @@ public class ShowItemValue implements CommandExecutor {
                 id = strings[0];
             }
             if(id != null) {
-                String inputValue = ItemValueMap.getOrCalItemInputValue(id);
-                String outputValue = ItemValueMap.getOrCalItemOutputValue(id);
+                String inputValue = ItemValueTable.getInstance().getOrCalItemInputValue(id);
+                String outputValue = ItemValueTable.getInstance().getOrCalItemOutputValue(id);
                 player.sendRawMessage("Item id: " + id);
                 player.sendRawMessage("Input value: " + inputValue);
                 player.sendRawMessage("Output value: " + outputValue);
@@ -37,8 +37,8 @@ public class ShowItemValue implements CommandExecutor {
                 id = strings[0];
             }
             if(id != null) {
-                String inputValue = ItemValueMap.getOrCalItemInputValue(id);
-                String outputValue = ItemValueMap.getOrCalItemOutputValue(id);
+                String inputValue = ItemValueTable.getInstance().getOrCalItemInputValue(id);
+                String outputValue = ItemValueTable.getInstance().getOrCalItemOutputValue(id);
                 Bukkit.getLogger().info("Item id: " + id);
                 Bukkit.getLogger().info("Input value: " + inputValue);
                 Bukkit.getLogger().info("Output value: " + outputValue);

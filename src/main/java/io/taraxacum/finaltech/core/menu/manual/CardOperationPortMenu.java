@@ -8,6 +8,7 @@ import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.StringItemUtil;
 import io.taraxacum.common.util.StringNumberUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -32,7 +33,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
     private static final int[] OUTPUT_SLOT = new int[] {40};
 
     private static final int CRAFT_SLOT = 13;
-    private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, "&c无法操作");
+    private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, TextUtil.COLOR_NEGATIVE + "无法操作");
 
     private static final List<Craft> CRAFT_LIST = new ArrayList<>();
     static {
@@ -50,8 +51,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem,
-                        "§7合并存储卡");
+                ItemStackUtil.setLore(iconItem, TextUtil.COLOR_NORMAL + "合并存储卡");
             }
 
             @Override
@@ -65,10 +65,9 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                         if (ItemStackUtil.isItemSimilar(stringItem1, stringItem2)) {
                             String amount1 = StringItemUtil.parseAmountInCard(itemMeta1);
                             String amount2 = StringItemUtil.parseAmountInCard(itemMeta2);
-                            ItemStack outputItem = new ItemStack(StorageCardItem.RANDOM_STORAGE_CARD_ITEM[(int)(Math.random() * StorageCardItem.RANDOM_STORAGE_CARD_ITEM.length)]);
+                            ItemStack outputItem = StorageCardItem.newItem();
                             StringItemUtil.setItemInCard(outputItem, stringItem1, StringNumberUtil.add(amount1, amount2));
                             StorageCardItem.updateLore(outputItem);
-                            StorageCardItem.updateType(outputItem);
                             item1.setAmount(item1.getAmount() - 1);
                             item2.setAmount(item2.getAmount() - 1);
                             blockMenu.replaceExistingItem(outputSlot, outputItem);
@@ -83,10 +82,10 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
                 if (!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2)) {
-                    if (StorageCardItem.isValid(item1) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
-                        return ItemStackUtil.isItemSimilar(item2, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR);
-                    } else if (StorageCardItem.isValid(item2) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item2), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
-                        return ItemStackUtil.isItemSimilar(item1, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR);
+                    if (StorageCardItem.isValid(item1) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
+                        return true;
+                    } else if (StorageCardItem.isValid(item2) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item2), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
+                        return true;
                     }
                 }
                 return false;
@@ -95,8 +94,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem,
-                        "§7制造复制卡");
+                ItemStackUtil.setLore(iconItem, TextUtil.COLOR_NORMAL + "制造 " + FinalTechItems.ANNULAR.getDisplayName());
             }
 
             @Override
@@ -104,24 +102,25 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                 if (!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2)) {
                     ItemStack storageCardItem = null;
                     ItemMeta storageCardItemMeta = null;
-                    if (StorageCardItem.isValid(item1) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
-                        if (ItemStackUtil.isItemSimilar(item2, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR)) {
-                            storageCardItem = item1;
-                            storageCardItemMeta = item1.getItemMeta();
-                        }
-                    } else if (StorageCardItem.isValid(item2) && StringNumberUtil.easilyCompare(StringItemUtil.parseAmountInCard(item2), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
-                        if (ItemStackUtil.isItemSimilar(item1, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR)) {
-                            storageCardItem = item2;
-                            storageCardItemMeta = item2.getItemMeta();
-                        }
+                    if (StorageCardItem.isValid(item1) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
+                        storageCardItem = item1;
+                        storageCardItemMeta = item1.getItemMeta();
+                    } else if (StorageCardItem.isValid(item2) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item2), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
+                        storageCardItem = item2;
+                        storageCardItemMeta = item2.getItemMeta();
                     }
                     if (storageCardItem != null && storageCardItemMeta != null) {
-                        ItemStack stringItem = StringItemUtil.parseItemInCard(storageCardItemMeta);
-                        ItemStack outputItem = CopyCardItem.newItem(stringItem, "1");
-                        outputItem.setAmount(storageCardItem.getAmount());
+                        Player player = null;
+                        for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                            if (humanEntity instanceof Player) {
+                                player = (Player) humanEntity;
+                                break;
+                            }
+                        }
+                        ItemStack outputItem = Annular.newItem(storageCardItem, player);
+                        outputItem.setAmount(1);
                         StringItemUtil.setAmountInCard(storageCardItem, StringNumberUtil.sub(StringItemUtil.parseAmountInCard(storageCardItemMeta), String.valueOf(CopyCardItem.DIFFICULTY)));
                         StorageCardItem.updateLore(storageCardItem);
-                        StorageCardItem.updateType(storageCardItem);
                         blockMenu.replaceExistingItem(outputSlot, outputItem);
                         return true;
                     }
@@ -134,17 +133,14 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
                 if (Singularity.isValid(item1) && Spirochete.isValid(item2)) {
                     return true;
-                } else if (Spirochete.isValid(item1) && Singularity.isValid(item2)) {
-                    return true;
-                }
-                return false;
+                } else return Spirochete.isValid(item1) && Singularity.isValid(item2);
             }
 
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
                 ItemStackUtil.setLore(iconItem,
-                        "§7制作伪物");
+                        TextUtil.COLOR_NORMAL + "制作 " + FinalTechItems.PHONY.getDisplayName());
             }
 
             @Override
@@ -167,29 +163,26 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         CRAFT_LIST.add(new Craft() {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if (!ItemStackUtil.isItemNull(item1) && CopyCardItem.isValid(item1) && ItemStackUtil.isItemSimilar(item2, FinalTechItems.SHELL)) {
+                if (!ItemStackUtil.isItemNull(item1) && CopyCardItem.isValid(item1) && Shell.isValid(item2)) {
                     return true;
-                } else if (!ItemStackUtil.isItemNull(item2) && CopyCardItem.isValid(item2) && ItemStackUtil.isItemSimilar(item1, FinalTechItems.SHELL)) {
-                    return true;
-                }
-                return false;
+                } else return !ItemStackUtil.isItemNull(item2) && CopyCardItem.isValid(item2) && Shell.isValid(item1);
             }
 
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
                 ItemStackUtil.setLore(iconItem,
-                        "§7复制复制卡");
+                        TextUtil.COLOR_NORMAL + "复制复制卡");
             }
 
             @Override
             public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
-                if (!ItemStackUtil.isItemNull(item1) && CopyCardItem.isValid(item1) && ItemStackUtil.isItemSimilar(item2, FinalTechItems.SHELL)) {
+                if (!ItemStackUtil.isItemNull(item1) && CopyCardItem.isValid(item1) && Shell.isValid(item2)) {
                     item2.setAmount(item2.getAmount() - 1);
                     ItemStack outputItem = ItemStackUtil.cloneItem(item1);
                     outputItem.setAmount(1);
                     blockMenu.replaceExistingItem(outputSlot, outputItem);
-                } else if (!ItemStackUtil.isItemNull(item2) && CopyCardItem.isValid(item2) && ItemStackUtil.isItemSimilar(item1, FinalTechItems.SHELL)) {
+                } else if (!ItemStackUtil.isItemNull(item2) && CopyCardItem.isValid(item2) && Shell.isValid(item1)) {
                     item1.setAmount(item1.getAmount() - 1);
                     ItemStack outputItem = ItemStackUtil.cloneItem(item2);
                     outputItem.setAmount(1);
@@ -212,7 +205,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
                 ItemStackUtil.setLore(iconItem,
-                        "§7制造壳");
+                        TextUtil.COLOR_NORMAL + "制造 " + FinalTechItems.SHELL.getDisplayName());
             }
 
             @Override
@@ -253,7 +246,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
                 ItemStackUtil.setLore(iconItem,
-                        "§7制造环");
+                        TextUtil.COLOR_NORMAL + "制造 " + FinalTechItems.ANNULAR.getDisplayName());
             }
 
             @Override
@@ -324,7 +317,6 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
     public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
         blockMenu.addMenuClickHandler(CRAFT_SLOT, ((player, i, itemStack, clickAction) -> {
-            //todo 操作频繁验证
             ItemStack inputItem1 = blockMenu.getItemInSlot(INPUT_SLOT[0]);
             ItemStack inputItem2 = blockMenu.getItemInSlot(INPUT_SLOT[1]);
             if (ItemStackUtil.isItemNull(inputItem1) && ItemStackUtil.isItemNull(inputItem2)) {

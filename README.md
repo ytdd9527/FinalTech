@@ -1,20 +1,25 @@
-# FinalTECH 无限加速
-An addon about making the world faster
+# FinalTECH 乱序技艺
+A Slimefun addon about making the world so damn better
 
-这个版本将以多样化提高玩家的机器效率为主要更新
+It includes many machines with unique function, which will make a hole change to Slimefun gameplay.
 
----------------------------------
-This is a test version.
+It's not completed now, and more object will be added.
 
-这是一个测试版本
+一个粘液科技插件，致力于让世界更加美好
 
-Do not use this version in your server!
-Do not use this version in your server!
-Do not use this version in your server!
+它包含一系列功能诡异的机器
 
-不要用这个版本！！！！！！！！！！！！！！！！！！！！！！！！！！！
-还在开发中！！！！！！！！！！！！！！！！！！！！！！
-不要用这个版本！！！！！！！！！！！！！！！！！！！！！！！！！！！
-还在开发中！！！！！！！！！！！！！！！！！！！！！！
-不要用这个版本！！！！！！！！！！！！！！！！！！！！！！！！！！！
-还在开发中！！！！！！！！！！！！！！！！！！！！！！
+它目前仍处于开发中
+
+---
+
+###注意
+    跨大版本升级可能会有物品无法兼容或损坏的问题
+
+2.0-preview
+> 更新了诸多内容\
+> 未完全测试
+
+1.6.12
+> 稳定版\
+> 但是仍有许多bug未修复

@@ -17,6 +17,7 @@ import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.common.util.StringNumberUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
@@ -82,10 +83,9 @@ public abstract class AbstractElectricityShootPile extends AbstractRayMachine im
     }
 
     protected void updateMenu(ItemStack item, int count, Summary summary) {
-        //todo 优化说明
         ItemStackUtil.setLore(item,
-                "§7当前生效机器= " + count,
-                "§7实际传输电量= " + summary.getEnergyCharge());
+                TextUtil.COLOR_NORMAL + "当前生效机器= " + TextUtil.COLOR_NUMBER + count + "个",
+                TextUtil.COLOR_NORMAL + "实际传输电量= " + TextUtil.COLOR_NUMBER + summary.getEnergyCharge() + "J");
     }
 
     public abstract int getRange();

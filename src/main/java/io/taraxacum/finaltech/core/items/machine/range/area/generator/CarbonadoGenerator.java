@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
  * @author Final_ROOT
  */
 public class CarbonadoGenerator extends AbstractCubeElectricGenerator {
-    public final static String ELECTRICITY = "64";
+    public final static String ELECTRICITY = "16";
     public final static int RANGE = 3;
     public CarbonadoGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

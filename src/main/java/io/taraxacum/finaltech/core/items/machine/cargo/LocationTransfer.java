@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.LocationTransferMenu;
@@ -29,7 +30,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class LocationTransfer extends AbstractCargo {
+public class LocationTransfer extends AbstractCargo implements RecipeItem {
     public LocationTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -120,5 +121,14 @@ public class LocationTransfer extends AbstractCargo {
     @Override
     protected boolean isSynchronized() {
         return true;
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "功能",
+                "",
+                TextUtil.COLOR_NORMAL + "该机器会不断把物品",
+                TextUtil.COLOR_NORMAL + "从输入侧方块的容器",
+                TextUtil.COLOR_NORMAL + "传输到输出侧方块的容器");
     }
 }

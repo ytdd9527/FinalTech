@@ -84,10 +84,10 @@ public class MenuViewer extends UsableSlimefunItem implements RecipeItem {
     public void registerDefaultRecipes() {
         this.registerDescriptiveRecipe(TextUtil.COLOR_INITIATIVE + "使用方式",
                 "",
-                TextUtil.COLOR_ACTION + "[右键]" + TextUtil.COLOR_STRESS + "粘液科技方块",
+                TextUtil.COLOR_ACTION + "[右键]" + TextUtil.COLOR_NORMAL + "粘液科技方块",
                 TextUtil.COLOR_NORMAL + "显示其输入槽和输出槽位置",
                 "",
-                TextUtil.COLOR_NORMAL + "根据" + TextUtil.COLOR_STRESS + "副手持有物品不同",
+                TextUtil.COLOR_NORMAL + "根据副手持有物品不同",
                 TextUtil.COLOR_NORMAL + "显示的效果可能不同");
     }
 }

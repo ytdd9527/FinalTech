@@ -10,6 +10,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.taraxacum.finaltech.api.dto.LocationWithConfig;
 import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
@@ -29,8 +30,9 @@ import java.util.*;
 /**
  * @author Final_ROOT
  */
-public class MatrixAccelerator extends AbstractCubeMachine implements AntiAccelerationMachine {
+public class MatrixAccelerator extends AbstractCubeMachine implements AntiAccelerationMachine, RecipeItem {
     public static final int RANGE = 2;
+
     public MatrixAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -213,8 +215,27 @@ public class MatrixAccelerator extends AbstractCubeMachine implements AntiAccele
     private void updateMenu(@Nonnull BlockMenu blockMenu, int accelerateTimeCount, int accelerateMachineCount, String accelerateEnergy) {
         ItemStack item = blockMenu.getItemInSlot(StatusL2Menu.STATUS_SLOT);
         ItemStackUtil.setLore(item,
-                "§7生效的机器= " + accelerateMachineCount,
-                "§7生效的总次数= " + accelerateTimeCount,
-                "§7产生的电量= " + accelerateEnergy + "J");
+                TextUtil.COLOR_NORMAL + "生效的机器= " + TextUtil.COLOR_NUMBER + accelerateMachineCount + "个",
+                TextUtil.COLOR_NORMAL + "生效的总次数= " + TextUtil.COLOR_NUMBER + accelerateTimeCount + "次",
+                TextUtil.COLOR_NORMAL + "产生的电量= " + TextUtil.COLOR_NUMBER + accelerateEnergy + "J");
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
+                "",
+                TextUtil.COLOR_NORMAL + "使周围的机器工作效率提升",
+                TextUtil.COLOR_NORMAL + "并使其每次加速前补充 " + TextUtil.COLOR_NUMBER + "50%J" + TextUtil.COLOR_NORMAL + " 的电量");
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "定向加速",
+                "",
+                TextUtil.COLOR_NORMAL + "放入粘液科技机器对应的物品",
+                TextUtil.COLOR_NORMAL + "使周围 " + TextUtil.COLOR_NUMBER + RANGE + "格" + TextUtil.COLOR_NORMAL + " 范围内的对应机器工作效率提升",
+                TextUtil.COLOR_NORMAL + "单个机器的工作效率提升量 取决于",
+                TextUtil.COLOR_NORMAL + "放入的物品数量 和 总共加速的机器数量");
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "全量加速",
+                "",
+                TextUtil.COLOR_NORMAL + "放入 " + FinalTechItems.PHONY.getDisplayName(),
+                TextUtil.COLOR_NORMAL + "使周围 " + TextUtil.COLOR_NUMBER + (RANGE + 1) + " + log2(物品数量)格" + TextUtil.COLOR_NORMAL + " 范围内的机器效率提升",
+                TextUtil.COLOR_NORMAL + "效率提升量为 " + TextUtil.COLOR_NUMBER + "1 + log2(物品数量)次");
     }
 }

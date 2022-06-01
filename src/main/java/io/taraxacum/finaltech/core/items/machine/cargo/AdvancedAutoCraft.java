@@ -72,7 +72,7 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
         boolean primaryThread = javaPlugin.getServer().isPrimaryThread();
 
-        AdvancedMachineRecipe machineRecipe = LocationRecipeRegistry.getRecipe(location);
+        AdvancedMachineRecipe machineRecipe = LocationRecipeRegistry.getInstance().getRecipe(location);
         if (machineRecipe == null) {
             return;
         }

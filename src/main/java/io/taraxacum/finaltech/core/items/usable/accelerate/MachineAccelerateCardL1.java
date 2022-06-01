@@ -40,9 +40,9 @@ public class MachineAccelerateCardL1 extends AbstractMachineActivateCard {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_INITIATIVE + "介绍",
+        this.registerDescriptiveRecipe(TextUtil.COLOR_INITIATIVE + "使用方式",
                 "",
-                TextUtil.COLOR_ACTION + "[右键]" + TextUtil.COLOR_NORMAL + "机器使其立即工作 " + TIMES + " 次",
+                TextUtil.COLOR_ACTION + "[右键] " + TextUtil.COLOR_NORMAL + "机器使其立即工作 " + TextUtil.COLOR_NUMBER + TIMES + " 次",
                 TextUtil.COLOR_NEGATIVE + "消耗品");
     }
 }

@@ -63,7 +63,7 @@ public class StringItemUtil {
         PersistentDataContainer persistentDataContainer = cardItemMeta.getPersistentDataContainer();
         String amount = persistentDataContainer.get(AMOUNT_KEY, PersistentDataType.STRING);
         int maxStackSize = stringItem.getItemStack().getMaxStackSize();
-        int validAmount = StringNumberUtil.easilyCompare(amount, String.valueOf(maxStackSize * slots.length)) >= 1 ? maxStackSize * slots.length : Integer.parseInt(amount);
+        int validAmount = StringNumberUtil.compare(amount, String.valueOf(maxStackSize * slots.length)) >= 1 ? maxStackSize * slots.length : Integer.parseInt(amount);
         amount = StringNumberUtil.sub(amount, String.valueOf(validAmount));
         ItemStack targetItem;
         int count = 0;
@@ -96,9 +96,6 @@ public class StringItemUtil {
                     validAmount -= stackableAmount;
                     break;
                 }
-            }
-            if (validAmount == 0) {
-                break;
             }
         }
         amount = StringNumberUtil.add(amount, String.valueOf(validAmount));
@@ -164,7 +161,6 @@ public class StringItemUtil {
         for (ItemStack sourceItem : sourceItemList) {
             if (sourceItem.getAmount() > totalAmount) {
                 sourceItem.setAmount(sourceItem.getAmount() - totalAmount);
-                totalAmount = 0;
                 break;
             } else {
                 totalAmount -= sourceItem.getAmount();
@@ -174,10 +170,10 @@ public class StringItemUtil {
 
         if (count > 0) {
             if (StringNumberUtil.ZERO.equals(amount)) {
-                persistentDataContainer.set(AMOUNT_KEY, PersistentDataType.STRING, String.valueOf(totalAmount));
+                persistentDataContainer.set(AMOUNT_KEY, PersistentDataType.STRING, String.valueOf(count));
                 persistentDataContainer.set(ITEM_KEY, PersistentDataType.STRING, ItemStackUtil.itemStackToString(stringItem.getItemStack()));
             } else {
-                persistentDataContainer.set(AMOUNT_KEY, PersistentDataType.STRING, StringNumberUtil.add(amount, String.valueOf(totalAmount)));
+                persistentDataContainer.set(AMOUNT_KEY, PersistentDataType.STRING, StringNumberUtil.add(amount, String.valueOf(count)));
             }
         } else {
             if (StringNumberUtil.ZERO.equals(amount)) {

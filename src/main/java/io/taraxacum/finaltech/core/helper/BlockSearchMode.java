@@ -3,8 +3,10 @@ package io.taraxacum.finaltech.core.helper;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.core.factory.BlockStorageHelper;
 import io.taraxacum.finaltech.core.factory.BlockStorageIconHelper;
+import io.taraxacum.finaltech.util.TextUtil;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.w3c.dom.Text;
 
 import java.util.LinkedHashMap;
 
@@ -27,30 +29,20 @@ public final class BlockSearchMode {
     public static final String VALUE_RESPECT = "r";
     public static final String VALUE_INTERRUPT = "it";
 
-    public static final ItemStack ZERO_ICON = new CustomItemStack((Material.PURPLE_STAINED_GLASS), "&7搜索模式",
-            "&f零模式",
-            "",
-            "&7不进行远距离搜索");
-    public static final ItemStack INHERIT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, "&7搜索模式",
-            "&f继承模式",
-            "",
-            "&7继承相同类型方块的方向",
-            "&7同时会延长最大搜索范围");
-    public static final ItemStack PENETRATE_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, "&7搜索模式",
-            "&f穿透模式",
-            "",
-            "&7尝试穿透相同类型的方块",
-            "&7同时会延长最大搜索范围");
-    public static final ItemStack RESPECT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, "&7搜索模式",
-            "&f链接模式",
-            "",
-            "&7允许用锁链延长搜索范围",
-            "&7搜索到相同类型的方块时停止搜索");
-    public static final ItemStack INTERRUPT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, "&7搜索模式",
-            "&f中断模式",
-            "",
-            "&7搜索到相同类型方块时",
-            "&7中断远程搜索");
+    public static final ItemStack ZERO_ICON = new CustomItemStack((Material.PURPLE_STAINED_GLASS), TextUtil.colorPseudorandomString("搜索模式") + " " + TextUtil.colorRandomString("零模式"),
+            TextUtil.colorRandomString("不进行远距离搜索"));
+    public static final ItemStack INHERIT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, TextUtil.colorPseudorandomString("搜索模式") + " " + TextUtil.colorRandomString("继承模式"),
+            TextUtil.colorRandomString("继承相同类型方块的方向"),
+            TextUtil.colorRandomString("同时会延长最大搜索范围"));
+    public static final ItemStack PENETRATE_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, TextUtil.colorPseudorandomString("搜索模式") + " " + TextUtil.colorRandomString("穿透模式"),
+            TextUtil.colorRandomString("尝试穿透相同类型的方块"),
+            TextUtil.colorRandomString("同时会延长最大搜索范围"));
+    public static final ItemStack RESPECT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, TextUtil.colorPseudorandomString("搜索模式") + " " + TextUtil.colorRandomString("链接模式"),
+            TextUtil.colorRandomString("允许用锁链延长搜索范围"),
+            TextUtil.colorRandomString("搜索到相同类型的方块时停止搜索"));
+    public static final ItemStack INTERRUPT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, TextUtil.colorPseudorandomString("搜索模式") + " " + TextUtil.colorRandomString("中断模式"),
+            TextUtil.colorRandomString("搜索到相同类型方块时"),
+            TextUtil.colorRandomString("中断远程搜索"));
 
     public static final BlockStorageIconHelper HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
         this.put(VALUE_ZERO, ZERO_ICON);

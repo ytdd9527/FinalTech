@@ -29,3 +29,5 @@ exchange:
     - ORE_WASHER
 cargo:
   link-search-distance: 8
+matrix-reactor:
+  difficulty: 72

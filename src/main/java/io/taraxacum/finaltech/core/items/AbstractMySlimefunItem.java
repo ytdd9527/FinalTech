@@ -17,8 +17,10 @@ import javax.annotation.Nullable;
 
 /**
  * We may add something soon
+ * @author Final_ROOT
+ * @since 2.0
  */
-public class AbstractMySlimefunItem extends SlimefunItem {
+public abstract class AbstractMySlimefunItem extends SlimefunItem {
     public AbstractMySlimefunItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -37,7 +39,7 @@ public class AbstractMySlimefunItem extends SlimefunItem {
         if (this instanceof RecipeItem) {
             this.getAddon().getJavaPlugin().getServer().getScheduler().runTask((Plugin)addon, () -> {
                 ((RecipeItem) AbstractMySlimefunItem.this).registerDefaultRecipes();
-                MachineRecipeFactory.initAdvancedRecipeMap(AbstractMySlimefunItem.this.getClass());
+                MachineRecipeFactory.getInstance().initAdvancedRecipeMap(AbstractMySlimefunItem.this.getClass());
             });
         }
     }

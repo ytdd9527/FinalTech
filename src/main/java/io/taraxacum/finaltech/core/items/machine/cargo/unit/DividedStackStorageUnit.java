@@ -4,10 +4,13 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.DividedStorageUnitMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -19,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * @author Final_ROOT
  */
-public class DividedStackStorageUnit extends AbstractCargo {
+public class DividedStackStorageUnit extends AbstractCargo implements RecipeItem {
     public DividedStackStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -35,5 +38,19 @@ public class DividedStackStorageUnit extends AbstractCargo {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         MachineUtil.stockSlots(blockMenu, this.getInputSlot());
         MachineUtil.stockSlots(blockMenu, this.getOutputSlot());
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
+                "",
+                TextUtil.COLOR_NORMAL + "可存储 " + TextUtil.COLOR_NUMBER + MachineUtil.calMachineSlotSize(this) + "格" + TextUtil.COLOR_NORMAL + " 物品");
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "分层",
+                "",
+                TextUtil.COLOR_NORMAL + "输入槽被限制为上面的 " + TextUtil.COLOR_NUMBER + this.getInputSlot().length + "格",
+                TextUtil.COLOR_NORMAL + "输出槽被限制为下面的 " + TextUtil.COLOR_NUMBER + this.getOutputSlot().length + "格");
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "堆叠",
+                "",
+                TextUtil.COLOR_NORMAL + "该机器每 " + TextUtil.COLOR_NUMBER + String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0) + "秒" + TextUtil.COLOR_NORMAL + " 会尝试将自身输入槽或输出槽中的物品进行合并");
     }
 }

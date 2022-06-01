@@ -19,7 +19,7 @@ public class EnergizedStackExpandedCapacitor extends AbstractExpandedElectricCap
 
     @Override
     public int getCapacity() {
-        return CAPACITY;
+        return CAPACITY * 2;
     }
 
     @Override

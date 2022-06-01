@@ -23,10 +23,10 @@ public final class SlotSearchSize {
     public static final String VALUE_INPUTS_AND_OUTPUTS = "iao";
     public static final String VALUE_OUTPUTS_AND_INPUTS = "oai";
 
-    public static final ItemStack INPUTS_ONLY_ICON = new CustomItemStack(Material.SOUL_TORCH, "&9仅搜索输入槽", TextUtil.colorRandomString("对箱子、桶、漏斗等原版容器，该设置无效"));
-    public static final ItemStack OUTPUTS_ONLY_ICON = new CustomItemStack(Material.TORCH, "&6仅搜索输出槽", TextUtil.colorRandomString("&7对箱子、桶、漏斗等原版容器，该设置无效"));
-    public static final ItemStack INPUTS_AND_OUTPUTS_ICON = new CustomItemStack(Material.REDSTONE_TORCH, "&d搜索输入槽输出槽", TextUtil.colorRandomString("对箱子、桶、漏斗等原版容器，该设置无效"));
-    public static final ItemStack OUTPUTS_AND_INPUTS_ICON = new CustomItemStack(Material.REDSTONE_TORCH, "&d搜索输出槽输入槽", TextUtil.colorRandomString("对箱子、桶、漏斗等原版容器，该设置无效"));
+    public static final ItemStack INPUTS_ONLY_ICON = new CustomItemStack(Material.SOUL_TORCH, TextUtil.colorPseudorandomString("容器搜索范围") + " " + TextUtil.colorRandomString("输入槽"));
+    public static final ItemStack OUTPUTS_ONLY_ICON = new CustomItemStack(Material.TORCH, TextUtil.colorPseudorandomString("容器搜索范围") + " " + TextUtil.colorRandomString("输出槽"));
+    public static final ItemStack INPUTS_AND_OUTPUTS_ICON = new CustomItemStack(Material.REDSTONE_TORCH, TextUtil.colorPseudorandomString("容器搜索范围") + " " + TextUtil.colorRandomString("输入槽+输出槽"));
+    public static final ItemStack OUTPUTS_AND_INPUTS_ICON = new CustomItemStack(Material.REDSTONE_TORCH, TextUtil.colorPseudorandomString("容器搜索范围") + " " + TextUtil.colorRandomString("输出槽+输入槽"));
 
     public static final BlockStorageIconHelper HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
         this.put(VALUE_INPUTS_ONLY, INPUTS_ONLY_ICON);

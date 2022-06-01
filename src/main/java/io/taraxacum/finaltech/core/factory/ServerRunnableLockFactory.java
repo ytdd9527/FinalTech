@@ -13,17 +13,17 @@ import java.util.concurrent.FutureTask;
 public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
     private final Map<T, FutureTask<Object>> MAP = new HashMap<>();
     private final Object lock = new Object();
+    private final JavaPlugin javaPlugin;
 
-    private ServerRunnableLockFactory() {
-
+    private ServerRunnableLockFactory(@Nonnull JavaPlugin javaPlugin) {
+        this.javaPlugin = javaPlugin;
     }
 
     @Override
     @SafeVarargs
     public final FutureTask<Object> waitThenRun(@Nonnull Runnable runnable, @Nonnull T... objects) {
-        final JavaPlugin javaPlugin = FinalTech.getInstance().getJavaPlugin();
         FutureTask<Object> futureTask = new FutureTask<>(runnable, new Object());
-        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> {
+        this.javaPlugin.getServer().getScheduler().runTaskAsynchronously(this.javaPlugin, () -> {
             boolean work = false;
             while (!work) {
                 for(T object : objects) {
@@ -48,7 +48,7 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
                     if(work) {
                         for(T object : objects) {
                             ServerRunnableLockFactory.this.MAP.put(object, futureTask);
-                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, futureTask);
+                            this.javaPlugin.getServer().getScheduler().runTaskAsynchronously(this.javaPlugin, futureTask);
                         }
                     }
                 }
@@ -57,7 +57,7 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
         return futureTask;
     }
 
-    public static <T> ServerRunnableLockFactory<T> getInstance() {
-        return new ServerRunnableLockFactory<>();
+    public static <T> ServerRunnableLockFactory<T> getInstance(@Nonnull JavaPlugin javaPlugin) {
+        return new ServerRunnableLockFactory<>(javaPlugin);
     }
 }

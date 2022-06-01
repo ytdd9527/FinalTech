@@ -23,8 +23,6 @@ public class TextUtil {
     public static final String COLOR_NEGATIVE = "§x§f§f§8§8§8§8"; // 负面
     public static final String COLOR_INPUT = "§9";
     public static final String COLOR_OUTPUT = "§6";
-    public static final String TEXT_INPUT_SLOT = "§9输入槽";
-    public static final String TEXT_OUTPUT_SLOT = "§6输出槽";
 
     @Nonnull
     public static String colorString(@Nonnull String string, @Nonnull List<Color> colorList) {

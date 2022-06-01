@@ -3,6 +3,7 @@ package io.taraxacum.finaltech.core.helper;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.core.factory.BlockStorageHelper;
 import io.taraxacum.finaltech.core.factory.BlockStorageIconHelper;
+import io.taraxacum.finaltech.util.TextUtil;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,10 +20,10 @@ public final class CargoMode {
     public static final String VALUE_STRONG_SYMMETRY = "ss";
     public static final String VALUE_WEAK_SYMMETRY = "ws";
 
-    private static final ItemStack INPUT_MAIN_ICON = new CustomItemStack(Material.WATER_BUCKET, "&9输入侧优先", "&7以输入侧物品为主要搜索顺序");
-    private static final ItemStack OUTPUT_MAIN_ICON = new CustomItemStack(Material.LAVA_BUCKET, "&6输出侧优先", "&7以输出侧物品为主要搜索顺序");
-    private static final ItemStack STRONG_SYMMETRY_ICON = new CustomItemStack(Material.MILK_BUCKET, "&d强对称传输", "&7以对称的方式进行搜索与传输");
-    private static final ItemStack WEAK_SYMMETRY_ICON = new CustomItemStack(Material.MILK_BUCKET, "&d弱对称传输", "&7以对称的方式进行搜索与传输");
+    private static final ItemStack INPUT_MAIN_ICON = new CustomItemStack(Material.WATER_BUCKET, TextUtil.colorPseudorandomString("传输模式") + " " + TextUtil.colorRandomString("输入侧优先"), TextUtil.colorRandomString("以输入侧为主要搜索顺序"));
+    private static final ItemStack OUTPUT_MAIN_ICON = new CustomItemStack(Material.LAVA_BUCKET, TextUtil.colorPseudorandomString("传输模式") + " " + TextUtil.colorRandomString("输出侧优先"), TextUtil.colorRandomString("以输出侧为主要搜索顺序"));
+    private static final ItemStack STRONG_SYMMETRY_ICON = new CustomItemStack(Material.MILK_BUCKET, TextUtil.colorPseudorandomString("传输模式") + " " + TextUtil.colorRandomString("强对称模式"), TextUtil.colorRandomString("以强制完全对称的方式进行搜索与传输"));
+    private static final ItemStack WEAK_SYMMETRY_ICON = new CustomItemStack(Material.MILK_BUCKET, TextUtil.colorPseudorandomString("传输模式") + " " + TextUtil.colorRandomString("弱对称模式"), TextUtil.colorRandomString("以非完全对称的方式进行搜索与传输"));
 
     public static final BlockStorageIconHelper HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
         this.put(VALUE_STRONG_SYMMETRY, STRONG_SYMMETRY_ICON);

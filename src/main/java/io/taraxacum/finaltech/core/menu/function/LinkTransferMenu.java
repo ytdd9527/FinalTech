@@ -17,9 +17,9 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class LinkTransferMenu extends AbstractMachineMenu {
-    private static final int[] BORDER = new int[] {21, 22, 23};
-    private static final int[] INPUT_BORDER = new int[] {0, 2, 9, 11, 18, 20, 27, 29, 36, 38, 45, 47};
-    private static final int[] OUTPUT_BORDER = new int[] {6, 8, 15, 17, 24, 26, 33, 35, 42, 44, 51, 53};
+    private static final int[] BORDER = new int[] {21, 22, 23, 27, 28, 29, 33, 34, 35, 36, 37, 38, 42, 43, 44, 45, 46, 47, 51, 52, 53};
+    private static final int[] INPUT_BORDER = new int[] {0, 2, 9, 11, 18, 20};
+    private static final int[] OUTPUT_BORDER = new int[] {6, 8, 15, 17, 24, 26};
     private static final int[] INPUT_SLOT = new int[] {30, 31, 32, 39, 40, 41, 48, 49, 50};
     private static final int[] OUTPUT_SLOT = new int[] {30, 31, 32, 39, 40, 41, 48, 49, 50};
 

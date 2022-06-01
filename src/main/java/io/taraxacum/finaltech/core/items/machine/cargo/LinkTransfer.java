@@ -214,51 +214,12 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
         return result;
     }
 
-    @Translate
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe("&f基础功能",
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "功能",
                 "",
-                "&f该机器会不断把物品",
-                "&f从输入侧方块的容器",
-                "&f传输到输出侧方块的容器");
-        this.registerDescriptiveRecipe("&f相关概念",
-                "",
-                "&f输入侧",
-                "&f该机器尾部所指向的方块",
-                "&f该方块的物品将被取出",
-                "",
-                "&f输出侧",
-                "&f该机器头部所指向的方块",
-                "&f该方块将被传入物品");
-        this.registerDescriptiveRecipe("&f传输模式",
-                "",
-                "&f对称传输",
-                "&f会把物品按照在输入侧容器的格子顺序",
-                "&f传输到输出侧容器对应的格子位置上",
-                "",
-                "&f主输入侧",
-                "&f尝试把输入侧的物品一个一个地",
-                "&f传输到输出侧容器的各个格子上",
-                "",
-                "&f主输出侧",
-                "&f尝试按照输出侧容器的格子顺序",
-                "&f一个一个地从输入侧容器取出物品");
-        this.registerDescriptiveRecipe("&f搜索模式",
-                "",
-                "&f零模式",
-                "&f输入侧/输出侧锁定为该机器头部/尾部指向的相邻一格的方块",
-                "",
-                "&f继承模式",
-                "&f当该机器头部/尾部指向了同材质（末地烛）方块",
-                "&f继承其头部/尾部的方向",
-                "&f重置最大搜索距离并继续搜索",
-                "",
-                "&f穿透模式",
-                "&f当该机器头部/尾部指向了同材质（末地烛）方块",
-                "&f无视其头部/尾部的方向",
-                "&f重置最大搜索距离并继续搜索",
-                "",
-                "&f最大搜索距离为" + BLOCK_SEARCH_LIMIT + "格");
+                TextUtil.COLOR_NORMAL + "该机器会不断把物品",
+                TextUtil.COLOR_NORMAL + "从输入侧方块的容器",
+                TextUtil.COLOR_NORMAL + "传输到输出侧方块的容器");
     }
 }

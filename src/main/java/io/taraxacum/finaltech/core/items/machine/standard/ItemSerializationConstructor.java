@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.operation.ItemSerializationConstructorOperation;
 import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
 import io.taraxacum.finaltech.core.items.unusable.Singularity;
@@ -13,7 +14,9 @@ import io.taraxacum.finaltech.core.items.unusable.Spirochete;
 import io.taraxacum.finaltech.core.menu.standard.AbstractStandardMachineMenu;
 import io.taraxacum.finaltech.api.operation.ItemCopyCardOperation;
 import io.taraxacum.finaltech.core.menu.standard.ItemSerializationConstructorMenu;
+import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -30,7 +33,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  */
 public class ItemSerializationConstructor extends AbstractStandardMachine {
-    public static final CustomItemStack NULL_INFO_ICON = new CustomItemStack(Material.REDSTONE, "&f完成进度", "&7暂未输入物品");
+    public static final CustomItemStack NULL_INFO_ICON = new CustomItemStack(Material.REDSTONE, TextUtil.COLOR_NORMAL + "完成进度", TextUtil.COLOR_NORMAL + "暂未输入物品");
     private static final String BLOCK_STORAGE_ITEM_KEY = "item";
     private static final String BLOCK_STORAGE_AMOUNT_KEY = "amount";
 
@@ -102,37 +105,31 @@ public class ItemSerializationConstructor extends AbstractStandardMachine {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe("&f制造[复制卡]",
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "制造 " + FinalTechItems.COPY_CARD.getDisplayName(),
                 "",
-                "&f输入" + CopyCardItem.DIFFICULTY + "个相同物品",
-                "&f输出一个该物品的[复制卡]",
-                "&f无法制造 奇点、螺旋体、伪物 的复制卡");
-        this.registerDescriptiveRecipe("&f制造[奇点]",
+                TextUtil.COLOR_NORMAL + "输入 " + TextUtil.COLOR_NUMBER + CopyCardItem.DIFFICULTY + "个" + TextUtil.COLOR_NORMAL + " 相同物品",
+                TextUtil.COLOR_NORMAL + "输出一个该物品的复制卡",
+                TextUtil.COLOR_NEGATIVE + "无法制造 " + FinalTechItems.SINGULARITY.getDisplayName() + " " + FinalTechItems.SPIROCHETE.getDisplayName() + " " + FinalTechItems.PHONY.getDisplayName() + TextUtil.COLOR_NEGATIVE + " 的复制卡");
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "制造 " + FinalTechItems.SINGULARITY.getDisplayName(),
                 "",
-                "&f输入任意" + Singularity.SINGULARITY_DIFFICULTY + "个[复制卡]",
-                "&f输出一个[奇点]",
+                TextUtil.COLOR_NORMAL + "输入任意 " + TextUtil.COLOR_NUMBER + Singularity.SINGULARITY_DIFFICULTY + "个" + TextUtil.COLOR_NORMAL + " 任意物品的复制卡",
+                TextUtil.COLOR_NORMAL + "输出一个 " + FinalTechItems.SINGULARITY.getDisplayName());
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "制造 " + FinalTechItems.SPIROCHETE.getDisplayName(),
                 "",
-                "&f制造[奇点]所需[复制卡]的基础数量为128",
-                "&f然后再加上总共的粘液科技物品个数取根号后的数字",
-                "&f即为最终所需要的[复制卡]的个数");
-        this.registerDescriptiveRecipe("&f制造[螺旋体]",
+                TextUtil.COLOR_NORMAL + "输入任意 " + TextUtil.COLOR_NUMBER + Spirochete.SPIROCHETE_DIFFICULTY + "种" + TextUtil.COLOR_NORMAL + " 不同物品的复制卡",
+                TextUtil.COLOR_NORMAL + "输出一个 " + FinalTechItems.SPIROCHETE.getDisplayName());
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "制造 " + FinalTechItems.PHONY.getDisplayName(),
                 "",
-                "&f输入任意" + Spirochete.SPIROCHETE_DIFFICULTY + "种不同的[复制卡]",
-                "&f输出一个[螺旋体]",
+                TextUtil.COLOR_NORMAL + "输入的复制卡同时满足",
+                TextUtil.COLOR_NORMAL + "制造 " + FinalTechItems.SINGULARITY.getDisplayName() + TextUtil.COLOR_NORMAL + " 和制造 " + FinalTechItems.SPIROCHETE.getDisplayName() + TextUtil.COLOR_NORMAL + " 的条件",
+                TextUtil.COLOR_NORMAL + "输出一个 " + FinalTechItems.PHONY.getDisplayName());
+        this.registerDescriptiveRecipe(TextUtil.COLOR_NEGATIVE + "反制",
                 "",
-                "&f制造[螺旋体]所需[复制卡]的基础种数为32",
-                "&f每个已有的粘液科技附属使其+1");
-        this.registerDescriptiveRecipe("&f制造[伪物]",
+                TextUtil.COLOR_NORMAL + "服务器性能会极大地影响制造复制卡效率",
+                TextUtil.COLOR_NORMAL + "具体体现为 压缩进度变化值可能会远小于输入物品的数量");
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "仿造物",
                 "",
-                "&f输入的复制卡同时满足",
-                "&f制造[奇点]和制造[螺旋体]的条件",
-                "&f输出一个[伪物]");
-        this.registerDescriptiveRecipe("&f提示",
-                "",
-                "&f[伪物]可以在压缩过程中代替任何物品制造[复制卡]");
-        this.registerDescriptiveRecipe("&f提示",
-                "",
-                "&f也可以在增强型工作台",
-                "&f使用一个[奇点]和一个[螺旋体]合成[伪物]");
+                TextUtil.COLOR_NORMAL + "可以使用 " + FinalTechItems.PHONY.getDisplayName() + TextUtil.COLOR_NORMAL + " 在压缩过程中代替任何物品制造复制卡",
+                TextUtil.COLOR_NORMAL + "且此时不会受到 " + TextUtil.COLOR_NEGATIVE + "反制" + TextUtil.COLOR_NORMAL + " 效果影响");
     }
 }

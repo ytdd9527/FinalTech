@@ -14,27 +14,33 @@ import java.util.*;
  * @since 2.0
  */
 public class MachineRecipeFactory {
-    private static final Map<Class<?>, List<MachineRecipe>> RECIPE_MAP = new HashMap<>();
-    private static final Map<Class<?>, List<AdvancedMachineRecipe>> ADVANCED_RECIPE_MAP = new HashMap<>();
+    private final Map<Class<?>, List<MachineRecipe>> recipeMap = new HashMap<>();
+    private final Map<Class<?>, List<AdvancedMachineRecipe>> advancedRecipeMap = new HashMap<>();
 
-    public static List<MachineRecipe> getRecipe(Class<?> clazz) {
-        if (RECIPE_MAP.containsKey(clazz)) {
-            return RECIPE_MAP.get(clazz);
+    private static volatile MachineRecipeFactory instance;
+
+    private MachineRecipeFactory() {
+
+    }
+
+    public List<MachineRecipe> getRecipe(Class<?> clazz) {
+        if (this.recipeMap.containsKey(clazz)) {
+            return this.recipeMap.get(clazz);
         }
         List<MachineRecipe> machineRecipeList = new ArrayList<>();
-        RECIPE_MAP.put(clazz, machineRecipeList);
+        this.recipeMap.put(clazz, machineRecipeList);
         return machineRecipeList;
     }
 
-    public static List<AdvancedMachineRecipe> getAdvancedRecipe(Class<?> clazz) {
-        if (ADVANCED_RECIPE_MAP.containsKey(clazz)) {
-            return ADVANCED_RECIPE_MAP.get(clazz);
+    public List<AdvancedMachineRecipe> getAdvancedRecipe(Class<?> clazz) {
+        if (this.advancedRecipeMap.containsKey(clazz)) {
+            return this.advancedRecipeMap.get(clazz);
         }
         return new ArrayList<>();
     }
 
-    public static void initAdvancedRecipeMap(Class<?> clazz) {
-        List<MachineRecipe> machineRecipeList = RECIPE_MAP.get(clazz);
+    public void initAdvancedRecipeMap(Class<?> clazz) {
+        List<MachineRecipe> machineRecipeList = this.recipeMap.get(clazz);
         if (machineRecipeList == null) {
             return;
         }
@@ -55,12 +61,23 @@ public class MachineRecipeFactory {
             }
             advancedMachineRecipeList.add(new AdvancedMachineRecipe(inputItemList, outputItemList));
         }
-        ADVANCED_RECIPE_MAP.put(clazz, advancedMachineRecipeList);
+        this.advancedRecipeMap.put(clazz, advancedMachineRecipeList);
     }
 
-    public static void initAdvancedRecipeMap() {
-        for (Class<?> clazz : RECIPE_MAP.keySet()) {
-            MachineRecipeFactory.initAdvancedRecipeMap(clazz);
+    public void initAdvancedRecipeMap() {
+        for (Class<?> clazz : this.recipeMap.keySet()) {
+            this.initAdvancedRecipeMap(clazz);
         }
+    }
+
+    public static MachineRecipeFactory getInstance() {
+        if(instance == null) {
+            synchronized (MachineRecipeFactory.class) {
+                if(instance == null) {
+                    instance = new MachineRecipeFactory();
+                }
+            }
+        }
+        return instance;
     }
 }

@@ -3,9 +3,10 @@ package io.taraxacum.finaltech.core.menu.manual;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.taraxacum.finaltech.core.factory.ItemValueMap;
+import io.taraxacum.finaltech.core.factory.ItemValueTable;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
@@ -29,9 +30,9 @@ public class EquivalentExchangeTableMenu extends AbstractManualMachineMenu {
 
     private static final int CRAFT_SLOT = 40;
 
-    private static final ItemStack PARSE_BORDER_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, "&7解析槽");
-    private static final ItemStack PARSE_STATUS_ICON = new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, "&7解析结果");
-    private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, "&7制造");
+    private static final ItemStack PARSE_BORDER_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, TextUtil.COLOR_NORMAL + "解析槽");
+    private static final ItemStack PARSE_STATUS_ICON = new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, TextUtil.COLOR_STRESS + "解析结果");
+    private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, TextUtil.colorRandomString("价值"));
 
     public EquivalentExchangeTableMenu(@Nonnull AbstractMachine machine) {
         super(machine);
@@ -81,17 +82,17 @@ public class EquivalentExchangeTableMenu extends AbstractManualMachineMenu {
         ItemStack item = blockMenu.getItemInSlot(PARSE_ITEM_SLOT);
         SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
         List<String> lore = new ArrayList<>();
-        lore.add(ItemStackUtil.getItemName(item));
+        lore.add("§f" + ItemStackUtil.getItemName(item));
         if (slimefunItem == null) {
-            lore.add("§c无法作为材料或目标产物");
+            lore.add(TextUtil.COLOR_NEGATIVE + "无法作为材料或目标产物");
         } else {
-            lore.add("§9作为材料的价值= " + ItemValueMap.getOrCalItemInputValue(item));
-            lore.add("§6作为产物所需要的价值= " + ItemValueMap.getOrCalItemOutputValue(item));
+            lore.add(TextUtil.COLOR_NORMAL + "作为材料的价值= " + TextUtil.COLOR_NUMBER + ItemValueTable.getInstance().getOrCalItemInputValue(item));
+            lore.add(TextUtil.COLOR_NORMAL + "作为产物所需要的价值= " + TextUtil.COLOR_NUMBER + ItemValueTable.getInstance().getOrCalItemOutputValue(item));
         }
         ItemStack iconItem = blockMenu.getItemInSlot(PARSE_STATUS_SLOT);
         ItemStackUtil.setLore(iconItem, lore);
 
         iconItem = blockMenu.getItemInSlot(CRAFT_SLOT);
-        ItemStackUtil.setLore(iconItem, "§7当前存储价值= " + BlockStorage.getLocationInfo(block.getLocation(), "value"));
+        ItemStackUtil.setLore(iconItem, TextUtil.COLOR_NORMAL + "当前存储价值= " + TextUtil.COLOR_NUMBER + BlockStorage.getLocationInfo(block.getLocation(), "value"));
     }
 }

@@ -7,6 +7,7 @@ import io.taraxacum.finaltech.core.factory.BlockStorageHelper;
 import io.taraxacum.finaltech.core.factory.BlockStorageLoreHelper;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -15,6 +16,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scoreboard.Team;
+import org.w3c.dom.Text;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,11 +31,11 @@ public class SlotSearchLine {
     public static final String VALUE_KEY_L3 = "l3";
 
     @Translate
-    public static final ItemStack L1_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, "第一行");
+    public static final ItemStack L1_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, TextUtil.colorPseudorandomString("第一行"));
     @Translate
-    public static final ItemStack L2_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, "第二行");
+    public static final ItemStack L2_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, TextUtil.colorPseudorandomString("第二行"));
     @Translate
-    public static final ItemStack L3_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, "第三行");
+    public static final ItemStack L3_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, TextUtil.colorPseudorandomString("第三行"));
 
     public static final String VALUE_NULL = null;
     public static final String VALUE_POSITIVE = "p";
@@ -40,13 +43,13 @@ public class SlotSearchLine {
     public static final String VALUE_RANDOM = "ra";
 
     @Translate
-    public static final String NULL_LORE = "无效";
+    public static final String NULL_LORE = TextUtil.colorRandomString("无效");
     @Translate
-    public static final String POSITIVE_LORE = "正向";
+    public static final String POSITIVE_LORE = TextUtil.colorRandomString("正向");
     @Translate
-    public static final String RESERVE_LORE = "逆向";
+    public static final String RESERVE_LORE = TextUtil.colorRandomString("逆向");
     @Translate
-    public static final String RANDOM_LORE = "随机";
+    public static final String RANDOM_LORE = TextUtil.colorRandomString("随机");
 
     public static final Material NULL_MATERIAL = Material.GRAY_STAINED_GLASS_PANE;
     public static final Material POSITIVE_MATERIAL = Material.BLUE_STAINED_GLASS_PANE;

@@ -8,17 +8,15 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.machine.range.area.AbstractCubeMachine;
 import io.taraxacum.finaltech.core.items.unusable.StorageCardItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
-import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.*;
 import io.taraxacum.common.util.StringNumberUtil;
-import io.taraxacum.finaltech.util.StringItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -34,6 +32,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine implements RecipeItem {
     protected static final String KEY = "energy-charge";
+
     public AbstractCubeElectricGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -69,7 +68,6 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
                     item = StringItemUtil.parseItemInCard(item);
                 }
                 if(ItemStackUtil.isItemSimilar(item, this.getItem())) {
-                    //todo
                     extraEnergy = StringNumberUtil.add(extraEnergy, StringNumberUtil.mul(this.getElectricity(), amount));
                 }
             }
@@ -105,8 +103,8 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
         blockMenu = BlockStorage.getInventory(block);
         ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
         ItemStackUtil.setLore(item,
-                "§7当前生效的机器= " + count,
-                "§7实际发电量= " + energyCharge + "J");
+                TextUtil.COLOR_NORMAL + "当前生效的机器= " + TextUtil.COLOR_NUMBER + count + "个",
+                TextUtil.COLOR_NORMAL + "实际发电量= " + TextUtil.COLOR_NUMBER + energyCharge + "J");
         if (count == 0) {
             item.setType(Material.RED_STAINED_GLASS_PANE);
         } else {
@@ -121,17 +119,16 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
 
     @Override
     public void registerDefaultRecipes() {
-        //todo 优化说明
-        registerDescriptiveRecipe("&f供电量",
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
                 "",
-                "&f供电量=" + this.getElectricity() + "J/t",
-                "&f即对范围内的每个机器",
-                "&f每粘液刻都会提供" + this.getElectricity() + "J 的电量");
-        registerDescriptiveRecipe("&f供电范围",
+                TextUtil.COLOR_NORMAL + "每 " + TextUtil.COLOR_NUMBER + String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0) + "秒" + TextUtil.COLOR_NORMAL + " 对周围 " + TextUtil.COLOR_NUMBER + this.getRange() + "格" + TextUtil.COLOR_NORMAL + " 的机器进行充电",
+                TextUtil.COLOR_NORMAL + "充电量为 " + TextUtil.COLOR_NUMBER + this.getElectricity() + "J",
+                TextUtil.COLOR_NEGATIVE + "无法作用于电容");
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "可扩展",
                 "",
-                "&f传输半径=" + this.getRange() + "格",
-                "&f即以自身为中心",
-                "&f边长" + (this.getRange() * 2 + 1) + "格（含）的正方体区域");
+                TextUtil.COLOR_NORMAL + "放入相同的机器物品",
+                TextUtil.COLOR_NORMAL + "或放入存有相同机器物品的存储卡",
+                TextUtil.COLOR_NORMAL + "根据物品数量 提升该机器的供电量");
     }
 
     protected abstract String getElectricity();

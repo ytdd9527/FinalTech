@@ -6,13 +6,11 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
-import io.taraxacum.common.annotation.Translate;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.interfaces.PerformanceLimitMachine;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.function.StationTransferMenu;
+import io.taraxacum.finaltech.core.menu.function.MeshTransferMenu;
 import io.taraxacum.finaltech.core.helper.*;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.*;
@@ -39,7 +37,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Final_ROOT
  * @since 1.0
  */
-public class MeshTransfer extends AbstractCargo implements RecipeItem, PerformanceLimitMachine {
+public class MeshTransfer extends AbstractCargo implements RecipeItem {
     private static final double PARTICLE_DISTANCE = 0.22;
 
     public MeshTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -79,13 +77,13 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.simpleBlockBreakerHandler(this, StationTransferMenu.ITEM_MATCH);
+        return MachineUtil.simpleBlockBreakerHandler(this, MeshTransferMenu.ITEM_MATCH);
     }
 
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new StationTransferMenu(this.getId(), this.getItemName(), this);
+        return new MeshTransferMenu(this.getId(), this.getItemName(), this);
     }
 
     @Override
@@ -153,7 +151,7 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
 
         Runnable runnable = () -> {
             for (Block outputBlock : outputBlocks) {
-                int result = CargoUtil.doCargoInputMain(block, outputBlock, SlotSearchSize.VALUE_OUTPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, outputSlotSearchSize, outputSlotSearchOrder, outputCargoNumber.get(), outputCargoLimit, cargoFilter, blockMenu.toInventory(), StationTransferMenu.ITEM_MATCH);
+                int result = CargoUtil.doCargoInputMain(block, outputBlock, SlotSearchSize.VALUE_OUTPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, outputSlotSearchSize, outputSlotSearchOrder, outputCargoNumber.get(), outputCargoLimit, cargoFilter, blockMenu.toInventory(), MeshTransferMenu.ITEM_MATCH);
                 if (CargoNumberMode.VALUE_UNIVERSAL.equals(outputCargoNumberMode)) {
                     outputCargoNumber.addAndGet(-result);
                     if (outputCargoNumber.get() == 0) {
@@ -179,7 +177,7 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
             for (String inputPosition : inputs) {
                 BlockFace blockFace = PositionInfo.getBlockFaceByPosition(inputPosition);
                 Block inputBlock = MeshTransfer.this.searchBlock(block, blockFace, BlockSearchMode.STATION_INPUT_HELPER.getOrDefaultValue(config), drawParticle);
-                int result = CargoUtil.doCargoOutputMain(inputBlock, block, inputSlotSearchSize, inputSlotSearchOrder, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, inputCargoNumber.get(), inputCargoLimit, cargoFilter, blockMenu.toInventory(), StationTransferMenu.ITEM_MATCH);
+                int result = CargoUtil.doCargoOutputMain(inputBlock, block, inputSlotSearchSize, inputSlotSearchOrder, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, inputCargoNumber.get(), inputCargoLimit, cargoFilter, blockMenu.toInventory(), MeshTransferMenu.ITEM_MATCH);
                 if (CargoNumberMode.VALUE_UNIVERSAL.equals(inputCargoNumberMode)) {
                     inputCargoNumber.addAndGet(-result);
                     if (inputCargoNumber.get() == 0) {
@@ -244,68 +242,12 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem, Performan
         return result;
     }
 
-    @Translate
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe("&f基础功能",
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "功能",
                 "",
-                "&f该机器会不断把物品",
-                "&f1.从自身的输出槽物品传出到输出侧容器",
-                "&f2.把自身的输入槽物品移到输出槽",
-                "&f3.从输入侧容器取出物品到自身输入槽");
-        this.registerDescriptiveRecipe("&f相关概念",
-                "",
-                "&f输入侧",
-                "&f该机器搜索方向上的某一方块",
-                "&f该方块的物品将被取出",
-                "&f需通过设置方向以指定输入侧容器位置",
-                "",
-                "&f输出侧",
-                "&f该机器搜索方向上的某一方块",
-                "&f该方块将被传入物品",
-                "&f需通过设置方向以指定输出侧容器位置");
-        this.registerDescriptiveRecipe("&f传输模式",
-                "",
-                "&f对称传输",
-                "&f会把物品按照在输入侧容器的格子顺序",
-                "&f传输到输出侧容器对应的格子位置上",
-                "&f该机器转移自身输入槽和输出槽物品时所用的模式",
-                "",
-                "&f主输入侧",
-                "&f尝试把输入侧的物品一个一个地",
-                "&f传输到输出侧容器的各个格子上",
-                "&f该机器把物品传出到输出侧容器时所用的模式",
-                "",
-                "&f主输出侧",
-                "&f尝试按照输出侧容器的格子顺序",
-                "&f一个一个地从输入侧容器取出物品",
-                "&f该机器把物品从输入侧容器取出时所用的模式");
-        this.registerDescriptiveRecipe("&f搜索模式",
-                "",
-                "&f零模式",
-                "&f搜索范围锁定为自身指定方向上相邻一格的方块",
-                "",
-                "&f穿透模式",
-                "&f当该机器指向了相同机器方块",
-                "&f跨过其所在位置",
-                "&f并继续搜索",
-                "",
-                "&f链接模式",
-                "&f当该机器指向了相同机器方块",
-                "&f在其所在位置处停止搜索");
-        this.registerDescriptiveRecipe("&f数量限制模式",
-                "",
-                "&f通用模式",
-                "&f输入侧/输出侧传输物品时",
-                "&f每个容器使用共通的总计数量限制",
-                "",
-                "&f独立模式",
-                "&f输入侧/输出侧传输物品时",
-                "&f每个容器的数量限制独立计算互不影响");
-        this.registerDescriptiveRecipe("&f搜索顺序",
-                "",
-                "&f该机器会按照输入侧/输出侧的设定顺序",
-                "&f搜索其对应方向的方块容器",
-                "&f设定顺序会以物品数量的形式显示");
+                TextUtil.COLOR_NORMAL + "该机器会不断把物品",
+                TextUtil.COLOR_NORMAL + "从输入侧方块的容器",
+                TextUtil.COLOR_NORMAL + "传输到输出侧方块的容器");
     }
 }

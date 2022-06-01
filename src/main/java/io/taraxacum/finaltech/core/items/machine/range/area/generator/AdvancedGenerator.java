@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
  * @author Final_ROOT
  */
 public class AdvancedGenerator extends AbstractCubeElectricGenerator {
-    public final static String  ELECTRICITY = "16";
+    public final static String  ELECTRICITY = "4";
     public final static int RANGE = 2;
     public AdvancedGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

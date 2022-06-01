@@ -210,7 +210,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
             List<AdvancedMachineRecipe> machineRecipeList = null;
             for (ItemStack machine : RECIPE_MAP.keySet()) {
                 if (ItemStackUtil.isItemSimilar(machineItem, machine)) {
-                    machineRecipeList = MachineRecipeFactory.getAdvancedRecipe(SlimefunItem.getByItem(machine).getClass());
+                    machineRecipeList = MachineRecipeFactory.getInstance().getAdvancedRecipe(SlimefunItem.getByItem(machine).getClass());
                     break;
                 }
             }
@@ -268,7 +268,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     }
 
     private void setParseFailedMenu(@Nonnull BlockMenu blockMenu) {
-        LocationRecipeRegistry.setRecipe(blockMenu.getLocation(), null);
+        LocationRecipeRegistry.getInstance().setRecipe(blockMenu.getLocation(), null);
         for (int slot : ITEM_INPUT_SLOT) {
             blockMenu.replaceExistingItem(slot, PARSE_FAILED_ICON);
             blockMenu.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
@@ -278,7 +278,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     }
 
     private void setParseSuccessMenu(@Nonnull BlockMenu blockMenu, @Nonnull AdvancedMachineRecipe advancedMachineRecipe) {
-        LocationRecipeRegistry.setRecipe(blockMenu.getLocation(), advancedMachineRecipe);
+        LocationRecipeRegistry.getInstance().setRecipe(blockMenu.getLocation(), advancedMachineRecipe);
         int i;
         for (i = 0; i < ITEM_INPUT_SLOT.length - 1; i++) {
             if (advancedMachineRecipe.getInput().size() > i) {
@@ -329,7 +329,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     private static List<MachineRecipe> getMachineRecipeList(SlimefunItemStack slimefunItemStack) {
         SlimefunItem slimefunItem = SlimefunItem.getByItem(slimefunItemStack);
         if (slimefunItem != null) {
-            return MachineRecipeFactory.getRecipe(slimefunItem.getClass());
+            return MachineRecipeFactory.getInstance().getRecipe(slimefunItem.getClass());
         }
         return new ArrayList<>();
     }

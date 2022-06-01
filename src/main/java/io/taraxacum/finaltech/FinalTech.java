@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.taraxacum.finaltech.core.factory.BlockTaskFactory;
-import io.taraxacum.finaltech.core.factory.ItemValueMap;
+import io.taraxacum.finaltech.core.factory.ItemValueTable;
 import io.taraxacum.finaltech.setup.SetupUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -89,7 +89,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         SetupUtil.init();
         SetupUtil.setupItems(this);
 
-        ItemValueMap.init();
+        ItemValueTable.getInstance().init();
 
         this.bukkitTask = scheduler.runTaskTimerAsynchronously(this, () -> BlockTaskFactory.getInstance().tick(), 0, tickRate);
     }

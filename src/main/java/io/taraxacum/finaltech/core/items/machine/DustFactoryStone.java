@@ -13,6 +13,7 @@ import io.taraxacum.finaltech.core.menu.machine.OrderedDustFactoryV2Menu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -90,16 +91,16 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe("&f制造无序尘埃",
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "制造 " + FinalTechItems.UNORDERED_DUST.getDisplayName(),
                 "",
-                "&f在机器界面左侧所有的" + this.getInputSlot().length + "格上都放有物品",
-                "&f然后会消耗其上的所有物品",
-                "&f并生产一个无序尘埃");
-        this.registerDescriptiveRecipe("&f制造有序尘埃",
+                TextUtil.COLOR_NORMAL + "在机器界面左侧所有的 " + TextUtil.COLOR_NUMBER + this.getInputSlot().length + "格"  + TextUtil.COLOR_NORMAL + " 上都放有物品后",
+                TextUtil.COLOR_NORMAL + "消耗所有物品",
+                TextUtil.COLOR_NORMAL + "每个个数不同的物品 使该次有 " + TextUtil.COLOR_NUMBER + String.format("%.2f", 100.0 / this.getInputSlot().length) + "%" + TextUtil.COLOR_NORMAL + " 的概率生成 " + FinalTechItems.UNORDERED_DUST.getDisplayName());
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "&f制造 " + FinalTechItems.ORDERED_DUST.getDisplayName(),
                 "",
-                "&f在机器界面左侧所有的" + this.getInputSlot().length + "格上都放有物品",
-                "&f并且各个格子上的物品数量各不相同",
-                "&f然后会消耗其上的所有物品",
-                "&f并生产一个有序尘埃");
+                TextUtil.COLOR_NORMAL + "在机器界面左侧所有的 " + TextUtil.COLOR_NUMBER + this.getInputSlot().length + "格"  + TextUtil.COLOR_NORMAL + " 上都放有物品后",
+                TextUtil.COLOR_NORMAL + "消耗所有物品",
+                TextUtil.COLOR_NORMAL + "当每个格子上的物品个数均不相同 且只使用到了一种物品时",
+                TextUtil.COLOR_NORMAL + "生成 " + FinalTechItems.ORDERED_DUST.getDisplayName());
     }
 }

@@ -12,6 +12,8 @@ import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.api.interfaces.PerformanceLimitMachine;
 import io.taraxacum.finaltech.core.items.AbstractMySlimefunItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import org.apache.http.impl.auth.BasicSchemeFactory;
@@ -45,7 +47,21 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
         this.addItemHandler(this.onBlockBreak());
         this.addItemHandler(this.onBlockPlace());
 
-        System.out.println("AbstractMachine.MULTI_THREAD_LEVEL= " + MULTI_THREAD_LEVEL);
+        if(this.isDisabled()) {
+            return;
+        }
+
+        if(AbstractMachine.MULTI_THREAD_LEVEL == 0) {
+            this.getAddon().getJavaPlugin().getServer().getLogger().info(TextUtil.COLOR_STRESS + "[FINALTECH]" + ItemStackUtil.getItemName(this.getItem()) + TextUtil.COLOR_NEGATIVE + "已禁用多线程优化");
+        } else if(AbstractMachine.MULTI_THREAD_LEVEL == 1) {
+            this.getAddon().getJavaPlugin().getServer().getLogger().info(TextUtil.COLOR_STRESS + "[FINALTECH]" + ItemStackUtil.getItemName(this.getItem()) + TextUtil.COLOR_NEGATIVE + "已启用一级多线程优化");
+        } else if(AbstractMachine.MULTI_THREAD_LEVEL == 2) {
+            this.getAddon().getJavaPlugin().getServer().getLogger().info(TextUtil.COLOR_STRESS + "[FINALTECH]" + ItemStackUtil.getItemName(this.getItem()) + TextUtil.COLOR_NEGATIVE + "二级多线程优化暂不支持");
+        } else {
+            AbstractMachine.MULTI_THREAD_LEVEL = 0;
+            this.getAddon().getJavaPlugin().getServer().getLogger().info(TextUtil.COLOR_STRESS + "[FINALTECH]" + ItemStackUtil.getItemName(this.getItem()) + TextUtil.COLOR_NEGATIVE + "已禁用多线程优化");
+        }
+
         if(MULTI_THREAD_LEVEL == 2) {
             if (this instanceof AntiAccelerationMachine) {
                 if (this instanceof PerformanceLimitMachine) {

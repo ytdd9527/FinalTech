@@ -18,7 +18,7 @@ import java.util.*;
  * @author Final_ROOT
  * @since 2.0
  */
-public class StationTransferMenu extends AbstractMachineMenu {
+public class MeshTransferMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[0];
     private static final int[] INPUT_BORDER = new int[] {5, 14, 23};
     private static final int[] OUTPUT_BORDER = new int[] {32, 41, 50};
@@ -63,7 +63,7 @@ public class StationTransferMenu extends AbstractMachineMenu {
         POSITION.put(19, PositionInfo.POSITION_SOUTH);
     }
 
-    public StationTransferMenu(@Nonnull String id, @Nonnull String title, AbstractMachine machine) {
+    public MeshTransferMenu(@Nonnull String id, @Nonnull String title, AbstractMachine machine) {
         super(id, title, machine);
     }
 

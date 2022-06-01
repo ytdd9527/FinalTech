@@ -18,9 +18,9 @@ public class BasicLiquidFactory extends AbstractBasicMachine{
     @Override
     public void registerDefaultRecipes() {
         List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>(3);
-        randomOutputList.add(new RandomMachineRecipe.RandomOutput(FinalTechItems.WATER_CARD, 1));
-        randomOutputList.add(new RandomMachineRecipe.RandomOutput(FinalTechItems.LAVA_CARD, 1));
-        randomOutputList.add(new RandomMachineRecipe.RandomOutput(FinalTechItems.MILK_CARD, 1));
+        randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack(FinalTechItems.WATER_CARD), 1));
+        randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack(FinalTechItems.LAVA_CARD), 1));
+        randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack(FinalTechItems.MILK_CARD), 1));
         RandomMachineRecipe randomMachineRecipe = new RandomMachineRecipe(0, new ItemStack[0], randomOutputList);
         this.registerRecipe(randomMachineRecipe);
     }

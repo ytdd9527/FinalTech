@@ -39,7 +39,17 @@ public class SlimefunUtil {
             List<MachineRecipe> recipes = (List<MachineRecipe>)method.invoke(slimefunItem);
             if (recipes != null) {
                 for (MachineRecipe recipe : recipes) {
-                    recipeItem.registerRecipeInCard(0, recipe.getInput(), recipe.getOutput());
+                    boolean disabled = false;
+                    if(recipe.getOutput().length > 0) {
+                        ItemStack itemStack = recipe.getOutput()[0];
+                        SlimefunItem sfItem = SlimefunItem.getByItem(itemStack);
+                        if(sfItem != null) {
+                            disabled = sfItem.isDisabled();
+                        }
+                    }
+                    if(!disabled) {
+                        recipeItem.registerRecipeInCard(0, recipe.getInput(), recipe.getOutput());
+                    }
                 }
             }
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
@@ -47,7 +57,7 @@ public class SlimefunUtil {
             FinalTech.getInstance().getServer().getLogger().info("[FinalTECH]§b但是我们有备用方案!");
             if (slimefunItem instanceof RecipeDisplayItem) {
                 List<ItemStack> displayRecipes = ((RecipeDisplayItem) slimefunItem).getDisplayRecipes();
-                registerRecipeBySimpleDisplayRecipe(recipeItem, displayRecipes);
+                SlimefunUtil.registerRecipeBySimpleDisplayRecipe(recipeItem, displayRecipes);
                 FinalTech.getInstance().getServer().getLogger().info("[FinalTECH]§a备用方案成功了!");
             } else {
                 FinalTech.getInstance().getServer().getLogger().info("[FinalTECH]§c备用方案失败了!");
@@ -59,7 +69,7 @@ public class SlimefunUtil {
     public static void registerRecipeByRecipeType(@Nonnull RecipeItem recipeItem, @Nonnull RecipeType recipeType) {
         List<SlimefunItem> list = Slimefun.getRegistry().getEnabledSlimefunItems();
         for (SlimefunItem slimefunItem : list) {
-            if (recipeType.equals(slimefunItem.getRecipeType())) {
+            if (!slimefunItem.isDisabled() && recipeType.equals(slimefunItem.getRecipeType())) {
                 recipeItem.registerRecipeInCard(0, slimefunItem);
             }
         }
@@ -67,7 +77,15 @@ public class SlimefunUtil {
 
     public static void registerRecipeBySimpleDisplayRecipe(@Nonnull RecipeItem recipeItem, List<ItemStack> displayRecipes) {
         for (int i = 0; i < displayRecipes.size(); i+= 2) {
-            recipeItem.registerRecipeInCard(0, new ItemStack[] {displayRecipes.get(i)}, new ItemStack[] {displayRecipes.get(i+1)});
+            boolean disabled = false;
+            ItemStack itemStack = displayRecipes.get(i + 1);
+            SlimefunItem sfItem = SlimefunItem.getByItem(itemStack);
+            if(sfItem != null) {
+                disabled = sfItem.isDisabled();
+            }
+            if(!disabled) {
+                recipeItem.registerRecipeInCard(0, new ItemStack[] {displayRecipes.get(i)}, new ItemStack[] {displayRecipes.get(i+1)});
+            }
         }
     }
 

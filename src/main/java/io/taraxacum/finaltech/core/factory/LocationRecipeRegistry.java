@@ -13,17 +13,34 @@ import java.util.Map;
  * @since 2.0
  */
 public class LocationRecipeRegistry {
-    private static final Map<Location, AdvancedMachineRecipe> LOCATION_RECIPE_MAP = new HashMap<>();
+    private final Map<Location, AdvancedMachineRecipe> LOCATION_RECIPE_MAP = new HashMap<>();
+
+    private static volatile LocationRecipeRegistry instance;
+
+    private LocationRecipeRegistry() {
+
+    }
 
     @Nullable
-    public static AdvancedMachineRecipe getRecipe(@Nonnull Location location) {
+    public AdvancedMachineRecipe getRecipe(@Nonnull Location location) {
         if (LOCATION_RECIPE_MAP.containsKey(location)) {
             return LOCATION_RECIPE_MAP.get(location);
         }
         return null;
     }
 
-    public static void setRecipe(@Nonnull Location location, @Nullable AdvancedMachineRecipe advancedMachineRecipe) {
+    public void setRecipe(@Nonnull Location location, @Nullable AdvancedMachineRecipe advancedMachineRecipe) {
         LOCATION_RECIPE_MAP.put(location, advancedMachineRecipe);
+    }
+
+    public static LocationRecipeRegistry getInstance() {
+        if(instance == null) {
+            synchronized (LocationRecipeRegistry.class) {
+                if(instance == null) {
+                    instance = new LocationRecipeRegistry();
+                }
+            }
+        }
+        return instance;
     }
 }

@@ -10,11 +10,11 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
  * @since 2.0
  */
 public interface PerformanceLimitMachine {
-    String KEY = "mspt-charge";
+    String KEY = "msps-charge";
 
     default boolean charge(Config config) {
-        long charge = config.contains(KEY) ? Long.parseLong(config.getString(KEY)) : 0;
-        charge += FinalTech.getMSPS();
+        int charge = config.contains(KEY) ? Integer.parseInt(config.getString(KEY)) : 0;
+        charge += 1000000.0 / FinalTech.getMSPS();
         if (charge >= 1000) {
             if (charge >= 2000) {
                 charge -= 1000;

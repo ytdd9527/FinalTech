@@ -6,10 +6,12 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.menu.standard.AbstractStandardMachineMenu;
 import io.taraxacum.finaltech.api.operation.OrderedDustOperation;
 import io.taraxacum.finaltech.core.menu.standard.DustFactoryMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -82,15 +84,15 @@ public class DustFactoryDirt extends AbstractStandardMachine {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe("&f制造无序尘埃",
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "制造 " + FinalTechItems.UNORDERED_DUST.getDisplayName(),
                 "",
-                "&f输入至少" + TYPE_DIFFICULTY + "种物品",
-                "&f输入至少" + AMOUNT_DIFFICULTY + "个物品",
-                "&f满足以上两个条件时生成一个无序尘埃");
-        this.registerDescriptiveRecipe("&f制造有序尘埃",
+                TextUtil.COLOR_NORMAL + "输入至少 " + TextUtil.COLOR_NUMBER + AMOUNT_DIFFICULTY + "个" + TextUtil.COLOR_NORMAL + " 任意物品",
+                TextUtil.COLOR_NORMAL + "输入至少 " + TextUtil.COLOR_NUMBER + TYPE_DIFFICULTY + "种" + TextUtil.COLOR_NORMAL + " 不同物品",
+                TextUtil.COLOR_NORMAL + "同时满足以上两个条件时生成一个 " + FinalTechItems.UNORDERED_DUST.getDisplayName());
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "制造 " + FinalTechItems.ORDERED_DUST.getDisplayName(),
                 "",
-                "&f输入恰好" + TYPE_DIFFICULTY + "种物品",
-                "&f输入恰好" + AMOUNT_DIFFICULTY + "个物品",
-                "&f满足以上两个条件时生成一个有序尘埃");
+                TextUtil.COLOR_NORMAL + "输入恰好 " + TextUtil.COLOR_NUMBER + AMOUNT_DIFFICULTY + "个" + TextUtil.COLOR_NORMAL + " 任意物品",
+                TextUtil.COLOR_NORMAL + "输入恰好 " + TextUtil.COLOR_NUMBER + TYPE_DIFFICULTY + "种" + TextUtil.COLOR_NORMAL + " 不同物品",
+                TextUtil.COLOR_NORMAL + "同时满足以上两个条件时生成一个 " + FinalTechItems.ORDERED_DUST.getDisplayName());
     }
 }

@@ -8,10 +8,7 @@ import io.taraxacum.finaltech.api.dto.AdvancedCraft;
 import io.taraxacum.finaltech.core.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.items.machine.manual.craft.AbstractManualCraftMachine;
-import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.LocationUtil;
-import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.ParticleUtil;
+import io.taraxacum.finaltech.util.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -39,15 +36,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
     private static final int STOCK_SLOT = 40;
     private static final int CRAFT_SLOT = 49;
 
-    //todo 说明优化
-    private static final ItemStack INFO_ICON = new CustomItemStack(Material.TARGET, "§f介绍",
-            "",
-            "§f点击合成即可进行合成",
-            "",
-            "§f目标合成产物的显示可能略有延迟",
-            "§f这不会影响实际合成效果",
-            "",
-            "§f每隔约" + Slimefun.getTickerTask().getTickRate() / 20.0 + "秒会刷新一次目标合成产物");
+    private static final ItemStack INFO_ICON = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, TextUtil.COLOR_NEGATIVE + "无匹配的目标物品");
 
     public static final String KEY = "offset";
     private static final String KEY_ORDER = "order";
@@ -64,15 +53,14 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
     public void init() {
         super.init();
         this.addMenuClickHandler(STATUS_SLOT, ChestMenuUtils.getEmptyClickHandler());
-        this.addItem(PREVIOUS_SLOT, new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, "§7上一个物品"));
-        this.addItem(NEXT_SLOT, new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, "§7下一个物品"));
-        this.addItem(STOCK_SLOT, new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, "§7点击堆叠",
-                "§e点击 尝试堆叠物品"));
-        this.addItem(CRAFT_SLOT, new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, "§7点击合成",
-                "§e左键 §b合成64次，但只会合成一种物品",
-                "§e右键 §b合成3456次，但只会合成一种物品",
-                "§eshift+左键 §b合成3456次，可能合成多种物品（配方顺序搜索）",
-                "§eshift+右键 §b合成3456次，可能合成多种物品（配方逆序搜索）"));
+        this.addItem(PREVIOUS_SLOT, new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, TextUtil.colorRandomString("上一个物品")));
+        this.addItem(NEXT_SLOT, new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, TextUtil.colorRandomString("下一个物品")));
+        this.addItem(STOCK_SLOT, new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, TextUtil.colorRandomString("点击堆叠")));
+        this.addItem(CRAFT_SLOT, new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, TextUtil.colorRandomString("点击合成"),
+                TextUtil.COLOR_ACTION + "左键" + TextUtil.COLOR_NORMAL + "合成 " + TextUtil.COLOR_NUMBER + "64次" + TextUtil.COLOR_NORMAL + "  只会合成一种物品",
+                TextUtil.COLOR_ACTION + "右键" + TextUtil.COLOR_NORMAL + "合成 " + TextUtil.COLOR_NUMBER + "3456次" + TextUtil.COLOR_NORMAL + "  只会合成一种物品",
+                TextUtil.COLOR_ACTION + "shift+左键" + TextUtil.COLOR_NORMAL + "合成 " + TextUtil.COLOR_NUMBER + "3456次" + TextUtil.COLOR_NORMAL + "  可能合成多种物品（顺序配方搜索）",
+                TextUtil.COLOR_ACTION + "shift+右键" + TextUtil.COLOR_NORMAL + "合成 " + TextUtil.COLOR_NUMBER + "3456次" + TextUtil.COLOR_NORMAL + "  可能合成多种物品（逆序配方搜索）"));
     }
 
     @Override
@@ -81,13 +69,17 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         blockMenu.addMenuOpeningHandler((player -> {
             ManualCraftMachineMenu.this.updateMenu(blockMenu, block);
         }));
+        blockMenu.addMenuClickHandler(STATUS_SLOT, (((player, i, itemStack, clickAction) -> {
+
+            return false;
+        })));
         blockMenu.addMenuClickHandler(PREVIOUS_SLOT, ((player, i, itemStack, clickAction) -> {
             BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(block.getLocation(), AbstractManualCraftMachine.KEY_COUNT)));
 
             ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             BlockStorage.addBlockInfo(block.getLocation(), KEY_ORDER, ORDER_VALUE_DESC);
             int offset = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY));
-            int length = MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()).size();
+            int length = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getMachine().getClass()).size();
             offset = (offset + length - 1) % length;
             BlockStorage.addBlockInfo(block.getLocation(), KEY, String.valueOf(offset));
             ManualCraftMachineMenu.this.updateMenu(blockMenu, block);
@@ -99,7 +91,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             BlockStorage.addBlockInfo(block.getLocation(), KEY_ORDER, ORDER_VALUE_ASC);
             int offset = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY));
-            int length = MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()).size();
+            int length = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getMachine().getClass()).size();
             offset = (offset + 1) % length;
             BlockStorage.addBlockInfo(block.getLocation(), KEY, String.valueOf(offset));
             ManualCraftMachineMenu.this.updateMenu(blockMenu, block);
@@ -131,9 +123,9 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
 
             AdvancedCraft craft;
             if (ORDER_VALUE_DESC.equals(order)) {
-                craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()), quantity, offset);
+                craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getMachine().getClass()), quantity, offset);
             } else {
-                craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()), quantity, offset);
+                craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getMachine().getClass()), quantity, offset);
             }
 
             if (craft == null) {
@@ -158,9 +150,9 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             while (quantity > 0) {
                 offset = craft.getOffset();
                 if (ORDER_VALUE_DESC.equals(order)) {
-                    craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()), quantity, offset);
+                    craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getMachine().getClass()), quantity, offset);
                 } else {
-                    craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()), quantity, offset);
+                    craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getMachine().getClass()), quantity, offset);
                 }
 
                 if (craft == null) {
@@ -218,9 +210,9 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         String order = config.getString(KEY_ORDER);
         int offset = config.contains(KEY) ? Integer.parseInt(config.getValue(KEY).toString()) : 0;
         if (order == null || ORDER_VALUE_ASC.equals(order)) {
-            craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()), 1, offset);
+            craft = AdvancedCraft.craftAsc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getMachine().getClass()), 1, offset);
         } else if (ORDER_VALUE_DESC.equals(order)) {
-            craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getAdvancedRecipe(this.getMachine().getClass()), 1, offset);
+            craft = AdvancedCraft.craftDesc(blockMenu, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getMachine().getClass()), 1, offset);
         }
 
         if (craft != null) {

@@ -14,6 +14,7 @@ import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -24,6 +25,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public abstract class AbstractElectricCapacitor extends AbstractMachine implements EnergyNetComponent {
     public AbstractElectricCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -68,7 +70,6 @@ public abstract class AbstractElectricCapacitor extends AbstractMachine implemen
 
     protected void updateMenu(@Nonnull ItemStack item, @Nonnull Config config) {
         String charge = SlimefunUtil.getCharge(config);
-        //todo 说明优化
-        ItemStackUtil.setLore(item, "§7当前流转电量= §6" + charge + "J");
+        ItemStackUtil.setLore(item, TextUtil.COLOR_NORMAL + "当前流转电量= " + TextUtil.COLOR_NUMBER + charge + "J");
     }
 }

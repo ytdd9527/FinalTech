@@ -85,6 +85,17 @@ public final class MachineUtil {
         };
     }
 
+    public static Integer calMachineSlotSize(@Nonnull AbstractMachine abstractMachine) {
+        Set<Integer> slots = new HashSet<>();
+        for(int slot : abstractMachine.getInputSlot()) {
+            slots.add(slot);
+        }
+        for(int slot : abstractMachine.getOutputSlot()) {
+            slots.add(slot);
+        }
+        return slots.size();
+    }
+
     /**
      * How many slot has item on it.
      * @param inventory

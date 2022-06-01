@@ -4,6 +4,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.core.factory.BlockStorageHelper;
 import io.taraxacum.finaltech.core.factory.BlockStorageLoreHelper;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -23,12 +24,12 @@ import java.util.Objects;
 public final class MachineMaxStack {
     public static final String KEY = "mms";
 
-    public static final ItemStack ICON = new CustomItemStack(Material.CHEST, "&7输入数量限制", "&7未限制");
+    public static final ItemStack ICON = new CustomItemStack(Material.CHEST, TextUtil.colorPseudorandomString("输入数量限制"), TextUtil.colorPseudorandomString("未限制"));
 
     public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, new LinkedHashMap<>() {{
-        this.put("0", List.of("§7未限制"));
-        for (int i = 1; i <= 54; i++) {
-            this.put(String.valueOf(i), List.of("§7限制数量= " + i));
+        this.put("0", List.of(TextUtil.colorPseudorandomString("未限制")));
+        for (int i = 1; i <= 24; i++) {
+            this.put(String.valueOf(i), List.of(TextUtil.colorRandomString("限制数量= " + i)));
         }
     }}) {
         @Nonnull

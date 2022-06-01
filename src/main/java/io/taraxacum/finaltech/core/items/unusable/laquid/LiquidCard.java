@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
  * @author Final_ROOT
  * @since 2.0
  */
-public class LiquidCard extends UnusableSlimefunItem {
+public abstract class LiquidCard extends UnusableSlimefunItem {
     public LiquidCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }

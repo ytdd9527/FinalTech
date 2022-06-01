@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 /**
- * An {@link SlimefunItem} that can be used by player to do some function.
+ * An {@link SlimefunItem} that can be used by player to do some #function.
  * @author Final_ROOT
  * @since 2.0
  */
@@ -21,7 +21,9 @@ public abstract class UsableSlimefunItem extends AbstractMySlimefunItem {
     public UsableSlimefunItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.addItemHandler(MachineUtil.BLOCK_PLACE_HANDLER_DENY);
-        this.addItemHandler((ItemUseHandler) UsableSlimefunItem.this::function);
+        if(!this.isDisabled()) {
+            this.addItemHandler((ItemUseHandler) UsableSlimefunItem.this::function);
+        }
     }
 
     /**
