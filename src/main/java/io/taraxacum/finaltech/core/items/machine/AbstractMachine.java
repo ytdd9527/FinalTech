@@ -47,10 +47,6 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
         this.addItemHandler(this.onBlockBreak());
         this.addItemHandler(this.onBlockPlace());
 
-        if(this.isDisabled()) {
-            return;
-        }
-
         if(AbstractMachine.MULTI_THREAD_LEVEL == 0) {
             this.getAddon().getJavaPlugin().getServer().getLogger().info(TextUtil.COLOR_STRESS + "[FINALTECH]" + ItemStackUtil.getItemName(this.getItem()) + TextUtil.COLOR_NEGATIVE + "已禁用多线程优化");
         } else if(AbstractMachine.MULTI_THREAD_LEVEL == 1) {

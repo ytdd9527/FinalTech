@@ -1,5 +1,6 @@
 package io.taraxacum.finaltech.core.items.usable;
 
+import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -21,9 +22,6 @@ public abstract class UsableSlimefunItem extends AbstractMySlimefunItem {
     public UsableSlimefunItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.addItemHandler(MachineUtil.BLOCK_PLACE_HANDLER_DENY);
-        if(!this.isDisabled()) {
-            this.addItemHandler((ItemUseHandler) UsableSlimefunItem.this::function);
-        }
     }
 
     /**

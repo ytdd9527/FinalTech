@@ -87,7 +87,7 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
     }
 
     @Override
-    public void tick(Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+    public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         // do something now?
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();

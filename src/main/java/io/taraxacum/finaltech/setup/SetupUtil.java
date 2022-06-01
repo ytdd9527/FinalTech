@@ -136,8 +136,8 @@ public final class SetupUtil {
 
         // setup command
 
-        finalTech.getCommand("finaltech copy-card").setExecutor(new TransferToCopyCardItem());
-        finalTech.getCommand("finaltech item-value").setExecutor(new ShowItemValue());
+        finalTech.getCommand("finaltech-copy-card").setExecutor(new TransferToCopyCardItem());
+        finalTech.getCommand("finaltech-item-value").setExecutor(new ShowItemValue());
     }
 
     public static void setupItems(@Nonnull SlimefunAddon slimefunAddon) {
