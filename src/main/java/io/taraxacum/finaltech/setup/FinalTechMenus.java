@@ -12,7 +12,7 @@ import org.bukkit.NamespacedKey;
  * @author Final_ROOT
  */
 public final class FinalTechMenus {
-    public static final NestedItemGroup MAIN_MENU = new NestedItemGroup(new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "FINALTECH_CATEGORY_MAIN"), new CustomItemStack(Material.OBSERVER, TextUtil.colorRandomString("乱序技艺-2.0")));
+    public static final NestedItemGroup MAIN_MENU = new NestedItemGroup(new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "FINALTECH_CATEGORY_MAIN"), new CustomItemStack(Material.OBSERVER, TextUtil.colorRandomString("乱序技艺 2.0-preview")));
     public static final SubItemGroup MENU_MATERIAL = new SubItemGroup(new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "FINALTECH_CATEGORY_MATERIAL"), MAIN_MENU , new CustomItemStack(Material.AMETHYST_SHARD, TextUtil.colorRandomString("合成材料")));
     public static final SubItemGroup MENU_TOOL = new SubItemGroup(new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "FINALTECH_TOOL"), MAIN_MENU, new CustomItemStack(Material.KNOWLEDGE_BOOK, TextUtil.colorRandomString("工具")));
     public static final SubItemGroup MENU_ELECTRIC = new SubItemGroup(new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "FINALTECH_ELECTRIC"), MAIN_MENU, new CustomItemStack(Material.MAGMA_BLOCK, TextUtil.colorRandomString("电力系统")));
