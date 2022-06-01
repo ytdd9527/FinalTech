@@ -26,7 +26,7 @@ public final class CargoNumber {
 
     public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, 0, new LinkedHashMap<>() {{
 //        this.put("0", List.of("number no limit"));
-        for (int i = 1; i < 64 * 9; i++) {
+        for (int i = 1; i <= 64 * 9; i++) {
             this.put(String.valueOf(i), List.of(TextUtil.colorRandomString("数量限制 " + i)));
         }
     }}) {
