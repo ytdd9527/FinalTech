@@ -39,10 +39,9 @@ import java.util.concurrent.Callable;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class LineTransfer extends AbstractCargo implements RecipeItem {
-    private static final long PARTICLE_INTERVAL = 100L;
-
     public LineTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }

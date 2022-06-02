@@ -5,10 +5,7 @@ import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.helper.*;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
-import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.block.Block;
-import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
@@ -107,16 +104,6 @@ public class LinkTransferMenu extends AbstractMachineMenu {
         blockMenu.addMenuClickHandler(OUTPUT_SLOT_SEARCH_SIZE_SLOT, SlotSearchSize.OUTPUT_HELPER.getHandler(blockMenu, block, this, OUTPUT_SLOT_SEARCH_SIZE_SLOT));
         blockMenu.addMenuClickHandler(OUTPUT_SLOT_SEARCH_ORDER_SLOT, SlotSearchOrder.OUTPUT_HELPER.getHandler(blockMenu, block, this, OUTPUT_SLOT_SEARCH_ORDER_SLOT));
         blockMenu.addMenuClickHandler(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.PIPE_OUTPUT_HELPER.getHandler(blockMenu, block, this, OUTPUT_BLOCK_SEARCH_MODE_SLOT));
-    }
-
-    @Override
-    public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
-        return ITEM_MATCH;
-    }
-
-    @Override
-    public int[] getSlotsAccessedByItemTransport(DirtyChestMenu menu, ItemTransportFlow flow, ItemStack item) {
-        return this.getSlotsAccessedByItemTransport(flow);
     }
 
     @Override

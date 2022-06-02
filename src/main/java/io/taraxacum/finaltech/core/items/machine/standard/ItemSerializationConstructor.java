@@ -31,6 +31,7 @@ import javax.annotation.Nonnull;
  * it will be used in gameplay
  * It's not a function class!
  * @author Final_ROOT
+ * @since 1.0
  */
 public class ItemSerializationConstructor extends AbstractStandardMachine {
     public static final CustomItemStack NULL_INFO_ICON = new CustomItemStack(Material.REDSTONE, TextUtil.COLOR_NORMAL + "完成进度", TextUtil.COLOR_NORMAL + "暂未输入物品");

@@ -2,6 +2,7 @@ package io.taraxacum.finaltech.core.factory;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.taraxacum.common.util.StringNumberUtil;
@@ -24,27 +25,11 @@ import java.util.*;
  * @since 2.0
  */
 public class ItemValueTable {
-    private boolean INIT = false;
-    /**
-     * Uesd to cal an item's value for exchange other item
-     * @param key the id of a slimefun item
-     * @param value the value of this slimefun item
-     */
-    private final Map<String, String> ITEM_INPUT_VALUE_MAP = new HashMap<>();
-    /**
-     * Used to get an item's value which will be given to player
-     * @param key the id of a slimefun item
-     * @param value the value of this slimefun item
-     */
-    private final Map<String, String> ITEM_OUTPUT_VALUE_MAP = new HashMap<>();
-    /**
-     * @param key value of one of the items
-     * @param value the slimefun items that have the same value in output.
-     */
-    public final Map<String, List<String>> VALUE_ITEM_LIST_OUTPUT_MAP = new HashMap<>();
-
-    public final String BASE_OUTPUT_VALUE = "16";
-
+    private boolean init = false;
+    private final Map<String, String> itemInputValueMap = new HashMap<>();
+    private final Map<String, String> itemOutputValueMap = new HashMap<>();
+    private final Map<String, List<String>> valueItemListOutputMap = new HashMap<>();
+    public static final String BASE_OUTPUT_VALUE = "16";
     private static volatile ItemValueTable instance;
 
     private ItemValueTable() {
@@ -52,7 +37,7 @@ public class ItemValueTable {
     }
 
     public void init() {
-        if (INIT) {
+        if (init) {
             return;
         }
 
@@ -75,10 +60,10 @@ public class ItemValueTable {
 
         Config valueFile = JavaPlugin.getPlugin(FinalTech.class).getValueFile();
         for (String key : valueFile.getKeys("input")) {
-            ITEM_INPUT_VALUE_MAP.put(key, valueFile.getString("input." + key));
+            this.itemInputValueMap.put(key, valueFile.getString("input." + key));
         }
         for (String key : valueFile.getKeys("output")) {
-            ITEM_OUTPUT_VALUE_MAP.put(key, valueFile.getString("output." + key));
+            this.itemOutputValueMap.put(key, valueFile.getString("output." + key));
             this.addToOutputMap(key, valueFile.getString("output." + key));
         }
 
@@ -95,10 +80,10 @@ public class ItemValueTable {
             this.removeFromOutputMap(id);
         }
 
-        INIT = true;
+        init = true;
     }
 
-    public String getOrCalItemInputValue(@Nonnull ItemStack item) {
+    public String getOrCalItemInputValue(@Nullable ItemStack item) {
         SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
         if (slimefunItem == null) {
             return StringNumberUtil.mul(StringNumberUtil.ONE, String.valueOf(item.getAmount()));
@@ -106,6 +91,9 @@ public class ItemValueTable {
         return this.getOrCalItemInputValue(slimefunItem);
     }
     public String getOrCalItemInputValue(@Nonnull String id) {
+        if(this.itemInputValueMap.containsKey(id)) {
+            return this.itemInputValueMap.get(id);
+        }
         SlimefunItem slimefunItem = SlimefunItem.getById(id);
         if(slimefunItem == null) {
             return StringNumberUtil.ZERO;
@@ -114,9 +102,10 @@ public class ItemValueTable {
     }
     public String getOrCalItemInputValue(@Nonnull SlimefunItem slimefunItem) {
         String id = slimefunItem.getId();
-        if (ITEM_INPUT_VALUE_MAP.containsKey(id)) {
-            return ITEM_INPUT_VALUE_MAP.get(id);
+        if (this.itemInputValueMap.containsKey(id)) {
+            return this.itemInputValueMap.get(id);
         } else if (slimefunItem.isDisabled()) {
+            this.itemInputValueMap.put(id, StringNumberUtil.ZERO);
             return StringNumberUtil.ZERO;
         }
         String value = StringNumberUtil.ZERO;
@@ -137,16 +126,16 @@ public class ItemValueTable {
         if (machineItem == null) {
             value = StringNumberUtil.add(value);
         } else if (machineItem.equals(slimefunItem)) {
-            ITEM_INPUT_VALUE_MAP.put(id, value);
+            itemInputValueMap.put(id, value);
             return value;
         } else {
             value = StringNumberUtil.add(value, this.getOrCalItemInputValue(slimefunItem.getRecipeType().getMachine()));
         }
-        ITEM_INPUT_VALUE_MAP.put(id, value);
+        this.itemInputValueMap.put(id, value);
         return value;
     }
 
-    public String getOrCalItemOutputValue(@Nonnull ItemStack item) {
+    public String getOrCalItemOutputValue(@Nullable ItemStack item) {
         SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
         if (slimefunItem == null) {
             return StringNumberUtil.mul(BASE_OUTPUT_VALUE, String.valueOf(item.getAmount()));
@@ -154,6 +143,9 @@ public class ItemValueTable {
         return this.getOrCalItemOutputValue(slimefunItem);
     }
     public String getOrCalItemOutputValue(@Nonnull String id) {
+        if(this.itemOutputValueMap.containsKey(id)) {
+            return this.itemOutputValueMap.get(id);
+        }
         SlimefunItem slimefunItem = SlimefunItem.getById(id);
         if(slimefunItem == null) {
             return StringNumberUtil.VALUE_INFINITY;
@@ -162,9 +154,10 @@ public class ItemValueTable {
     }
     public String getOrCalItemOutputValue(@Nonnull SlimefunItem slimefunItem) {
         String id = slimefunItem.getId();
-        if (ITEM_OUTPUT_VALUE_MAP.containsKey(id)) {
-            return ITEM_OUTPUT_VALUE_MAP.get(id);
+        if (this.itemOutputValueMap.containsKey(id)) {
+            return this.itemOutputValueMap.get(id);
         } else if (slimefunItem.isDisabled()) {
+            this.itemOutputValueMap.put(id, StringNumberUtil.VALUE_INFINITY);
             return StringNumberUtil.VALUE_INFINITY;
         }
         String value = StringNumberUtil.ZERO;
@@ -185,20 +178,22 @@ public class ItemValueTable {
         if (machineItem == null || recipeList.isEmpty() || StringNumberUtil.ZERO.equals(value)) {
             value = StringNumberUtil.VALUE_INFINITY;
         } else if (machineItem.equals(slimefunItem)) {
-            ITEM_OUTPUT_VALUE_MAP.put(id, value);
+            this.itemOutputValueMap.put(id, value);
             this.addToOutputMap(id, value);
             return value;
         } else {
             value = StringNumberUtil.add(value, this.getOrCalItemOutputValue(machineItem));
         }
-        ITEM_OUTPUT_VALUE_MAP.put(id, value);
-        this.addToOutputMap(id, value);
+        this.itemOutputValueMap.put(id, value);
+        if(!(slimefunItem instanceof MultiBlockMachine)) {
+            this.addToOutputMap(id, value);
+        }
         return value;
     }
 
     private void manualInitId(@Nonnull String id, @Nonnull String inputValue, @Nonnull String outputValue, boolean canOutput) {
-        ITEM_INPUT_VALUE_MAP.put(id, inputValue);
-        ITEM_OUTPUT_VALUE_MAP.put(id, outputValue);
+        this.itemInputValueMap.put(id, inputValue);
+        this.itemOutputValueMap.put(id, outputValue);
         if(canOutput) {
             this.addToOutputMap(id, outputValue);
         }
@@ -208,22 +203,27 @@ public class ItemValueTable {
     }
 
     private void addToOutputMap(@Nonnull String id, @Nonnull String value) {
-        List<String> list = VALUE_ITEM_LIST_OUTPUT_MAP.get(value);
+        List<String> list = this.valueItemListOutputMap.get(value);
         if (list == null) {
             list = new ArrayList<>();
         }
         list.add(id);
-        VALUE_ITEM_LIST_OUTPUT_MAP.put(value, list);
+        this.valueItemListOutputMap.put(value, list);
     }
 
     private void removeFromOutputMap(@Nullable String id) {
-        if(ITEM_OUTPUT_VALUE_MAP.containsKey(id)) {
-            String value = ITEM_OUTPUT_VALUE_MAP.get(id);
-            if(VALUE_ITEM_LIST_OUTPUT_MAP.containsKey(value)) {
-                List<String> idList = VALUE_ITEM_LIST_OUTPUT_MAP.get(value);
+        if(this.itemOutputValueMap.containsKey(id)) {
+            String value = this.itemOutputValueMap.get(id);
+            if(this.valueItemListOutputMap.containsKey(value)) {
+                List<String> idList = this.valueItemListOutputMap.get(value);
                 idList.remove(id);
             }
         }
+    }
+
+    @Nonnull
+    public Map<String, List<String>> getValueItemListOutputMap() {
+        return valueItemListOutputMap;
     }
 
     public static ItemValueTable getInstance() {

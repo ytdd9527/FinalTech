@@ -7,6 +7,8 @@ import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 
 /**
@@ -16,14 +18,14 @@ import java.util.*;
 public class MachineRecipeFactory {
     private final Map<Class<?>, List<MachineRecipe>> recipeMap = new HashMap<>();
     private final Map<Class<?>, List<AdvancedMachineRecipe>> advancedRecipeMap = new HashMap<>();
-
     private static volatile MachineRecipeFactory instance;
 
     private MachineRecipeFactory() {
 
     }
 
-    public List<MachineRecipe> getRecipe(Class<?> clazz) {
+    @Nonnull
+    public List<MachineRecipe> getRecipe(@Nonnull Class<?> clazz) {
         if (this.recipeMap.containsKey(clazz)) {
             return this.recipeMap.get(clazz);
         }
@@ -32,14 +34,18 @@ public class MachineRecipeFactory {
         return machineRecipeList;
     }
 
-    public List<AdvancedMachineRecipe> getAdvancedRecipe(Class<?> clazz) {
+    @Nonnull
+    public List<AdvancedMachineRecipe> getAdvancedRecipe(@Nonnull Class<?> clazz) {
         if (this.advancedRecipeMap.containsKey(clazz)) {
+            return this.advancedRecipeMap.get(clazz);
+        } else if(this.recipeMap.containsKey(clazz)) {
+            this.initAdvancedRecipeMap(clazz);
             return this.advancedRecipeMap.get(clazz);
         }
         return new ArrayList<>();
     }
 
-    public void initAdvancedRecipeMap(Class<?> clazz) {
+    public void initAdvancedRecipeMap(@Nonnull Class<?> clazz) {
         List<MachineRecipe> machineRecipeList = this.recipeMap.get(clazz);
         if (machineRecipeList == null) {
             return;
@@ -62,12 +68,6 @@ public class MachineRecipeFactory {
             advancedMachineRecipeList.add(new AdvancedMachineRecipe(inputItemList, outputItemList));
         }
         this.advancedRecipeMap.put(clazz, advancedMachineRecipeList);
-    }
-
-    public void initAdvancedRecipeMap() {
-        for (Class<?> clazz : this.recipeMap.keySet()) {
-            this.initAdvancedRecipeMap(clazz);
-        }
     }
 
     public static MachineRecipeFactory getInstance() {

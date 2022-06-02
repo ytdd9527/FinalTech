@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class AdvancedGenerator extends AbstractCubeElectricGenerator {
     public final static String  ELECTRICITY = "4";

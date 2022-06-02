@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class AdvancedElectricSmeltery extends AbstractAdvanceMachine {
     public AdvancedElectricSmeltery(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

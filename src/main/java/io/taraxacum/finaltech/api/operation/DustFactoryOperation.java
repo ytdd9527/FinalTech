@@ -6,33 +6,36 @@ import io.taraxacum.finaltech.core.items.machine.standard.DustFactoryDirt;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nullable;
+
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
-public class OrderedDustOperation implements MachineOperation {
+public class DustFactoryOperation implements MachineOperation {
     private int typeCount = 0;
     private int amountCount = 0;
+    private final ItemStackWrapper[] matchItemList = new ItemStackWrapper[DustFactoryDirt.TYPE_DIFFICULTY + 1];
 
-    private ItemStackWrapper[] matchItemList = new ItemStackWrapper[DustFactoryDirt.TYPE_DIFFICULTY + 1];
+    public DustFactoryOperation() {
 
-    public OrderedDustOperation() {
     }
 
-    public void addItem(ItemStack item) {
+    public void addItem(@Nullable ItemStack item) {
         if (ItemStackUtil.isItemNull(item)) {
             return;
         }
         if (this.typeCount <= DustFactoryDirt.TYPE_DIFFICULTY) {
             boolean newItem = true;
             for (int i = 0; i < this.typeCount; i++) {
-                ItemStack input = this.matchItemList[i];
-                if (ItemStackUtil.isItemSimilar(item, input)) {
+                ItemStack existedItem = this.matchItemList[i];
+                if (ItemStackUtil.isItemSimilar(item, existedItem)) {
                     newItem = false;
                     break;
                 }
             }
             if (newItem == true) {
-                matchItemList[typeCount++] = ItemStackWrapper.wrap(item);
+                this.matchItemList[this.typeCount++] = ItemStackWrapper.wrap(item);
             }
         }
         this.amountCount += item.getAmount();

@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class DividedStackStorageUnit extends AbstractCargo implements RecipeItem {
     public DividedStackStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

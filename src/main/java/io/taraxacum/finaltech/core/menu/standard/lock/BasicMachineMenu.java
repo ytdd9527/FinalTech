@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class BasicMachineMenu extends AbstractLockMachineMenu {
     private static final int[] BORDER = new int[] {3, 4, 5, 12, 14, 21, 22, 23, 30, 31, 32, 39, 40, 41, 48, 49, 50};

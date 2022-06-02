@@ -7,9 +7,11 @@ import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.annotation.Nonnull;
+
 /**
- * {@linkplain AbstractBasicMachine }
  * @author Final_ROOT
+ * @since 1.0
  */
 public class NullEnchantment extends Enchantment {
     public static final Enchantment ENCHANTMENT = new NullEnchantment(new NamespacedKey(JavaPlugin.getPlugin(FinalTech.class), "FINALTECH_NULL_ENCHANTMENT"));
@@ -18,24 +20,26 @@ public class NullEnchantment extends Enchantment {
         super(key);
     }
 
+    @Nonnull
     @Override
     public String getName() {
-        return "";
+        return " ";
     }
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 1;
     }
 
     @Override
     public int getStartLevel() {
-        return 0;
+        return 1;
     }
 
+    @Nonnull
     @Override
     public EnchantmentTarget getItemTarget() {
-        return EnchantmentTarget.ALL;
+        return EnchantmentTarget.BREAKABLE;
     }
 
     @Override
@@ -49,12 +53,12 @@ public class NullEnchantment extends Enchantment {
     }
 
     @Override
-    public boolean conflictsWith(Enchantment enchantment) {
+    public boolean conflictsWith(@Nonnull Enchantment enchantment) {
         return false;
     }
 
     @Override
-    public boolean canEnchantItem(ItemStack itemStack) {
+    public boolean canEnchantItem(@Nonnull ItemStack itemStack) {
         return true;
     }
 }

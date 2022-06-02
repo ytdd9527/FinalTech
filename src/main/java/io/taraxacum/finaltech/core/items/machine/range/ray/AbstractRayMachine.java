@@ -14,6 +14,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public abstract class AbstractRayMachine extends AbstractRangeMachine {
     public AbstractRayMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

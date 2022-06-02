@@ -30,6 +30,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public abstract class AbstractElectricityShootPile extends AbstractRayMachine implements RecipeItem {
     public AbstractElectricityShootPile(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

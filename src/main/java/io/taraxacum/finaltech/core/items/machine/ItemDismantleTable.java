@@ -20,6 +20,10 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.*;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
     private static final List<RecipeType> RECIPE_TYPE_LIST = new ArrayList<>();
     static {

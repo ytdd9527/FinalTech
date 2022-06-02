@@ -18,13 +18,16 @@ import java.util.Map;
  * @since 2.0
  */
 public class AdvancedCraft {
+    @Nonnull
     private List<ItemStackWithWrapperAmount> inputItemList;
+    @Nonnull
     private List<ItemStackWithWrapperAmount> outputItemList;
+    @Nonnull
     private List<List<Integer>> consumeSlotList;
     private int matchCount;
     private int offset;
 
-    private AdvancedCraft(List<ItemStackWithWrapperAmount> inputItemList, List<ItemStackWithWrapperAmount> outputItemList, List<List<Integer>> consumeSlotList, int matchCount, int offset) {
+    private AdvancedCraft(@Nonnull List<ItemStackWithWrapperAmount> inputItemList, @Nonnull List<ItemStackWithWrapperAmount> outputItemList, @Nonnull List<List<Integer>> consumeSlotList, int matchCount, int offset) {
         this.inputItemList = inputItemList;
         this.outputItemList = outputItemList;
         this.consumeSlotList = consumeSlotList;
@@ -32,27 +35,30 @@ public class AdvancedCraft {
         this.offset = offset;
     }
 
+    @Nonnull
     public List<ItemStackWithWrapperAmount> getInputItemList() {
         return inputItemList;
     }
 
-    public void setInputItemList(List<ItemStackWithWrapperAmount> inputItemList) {
+    public void setInputItemList(@Nonnull List<ItemStackWithWrapperAmount> inputItemList) {
         this.inputItemList = inputItemList;
     }
 
+    @Nonnull
     public List<ItemStackWithWrapperAmount> getOutputItemList() {
         return outputItemList;
     }
 
-    public void setOutputItemList(List<ItemStackWithWrapperAmount> outputItemList) {
+    public void setOutputItemList(@Nonnull List<ItemStackWithWrapperAmount> outputItemList) {
         this.outputItemList = outputItemList;
     }
 
+    @Nonnull
     public List<List<Integer>> getConsumeSlotList() {
         return consumeSlotList;
     }
 
-    public void setConsumeSlotList(List<List<Integer>> consumeSlotList) {
+    public void setConsumeSlotList(@Nonnull List<List<Integer>> consumeSlotList) {
         this.consumeSlotList = consumeSlotList;
     }
 

@@ -11,6 +11,7 @@ import java.util.*;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class ManualCraftingTable extends AbstractManualCraftMachine{
     public ManualCraftingTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

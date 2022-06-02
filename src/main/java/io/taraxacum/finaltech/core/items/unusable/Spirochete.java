@@ -28,7 +28,7 @@ public class Spirochete extends UnusableSlimefunItem implements RecipeItem {
         return ItemStackUtil.isItemSimilar(item, FinalTechItems.SPIROCHETE);
     }
 
-    public static ItemStack newItem(@Nonnull ItemStack item, @Nullable Player player) {
+    public static ItemStack newItem(@Nullable ItemStack item, @Nullable Player player) {
         return new ItemStack(FinalTechItems.SPIROCHETE);
     }
 

@@ -18,6 +18,7 @@ import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.helper.SlotSearchSize;
 import io.taraxacum.finaltech.util.StringItemUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -30,6 +31,7 @@ import java.util.*;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[] {36, 37};
@@ -40,7 +42,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
 
     private static final int PARSE_SLOT = 46;
     public static final int PARSE_ITEM_SLOT = 45;
-    public static final ItemStack PARSE_ICON = new CustomItemStack(Material.CRAFTING_TABLE, "&a点击尝试解析");
+    public static final ItemStack PARSE_ICON = new CustomItemStack(Material.CRAFTING_TABLE, TextUtil.COLOR_STRESS + "点击尝试解析");
 
     private static final int[] ITEM_INPUT_SLOT = new int[] {30, 31, 32, 39, 40, 41, 48, 49, 50};
     private static final int ITEM_OUTPUT_SLOT = 43;
@@ -52,22 +54,18 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     private static final int OUTPUT_SEARCH_SLOT = 47;
     private static final int SEARCH_INFO_SLOT = 38;
 
-    private static final ItemStack SEARCH_INFO_ICON = new CustomItemStack(Material.TARGET, "&7介绍",
+    private static final ItemStack SEARCH_INFO_ICON = new CustomItemStack(Material.TARGET, TextUtil.COLOR_PASSIVE + "机制",
             "",
-            "&7仅支持自动合成部分粘液科技物品",
-            "&7会读取该方块下方一格的容器的物品并尝试合成",
-            "&7仅支持非原版容器",
+            TextUtil.COLOR_NORMAL + "多级解析粘液科技物品的合成配方",
+            TextUtil.COLOR_NORMAL + "读取该方块下方一格的容器的物品并尝试合成" + TextUtil.COLOR_NEGATIVE + " 仅支持非原版容器",
             "",
-            "&7在最上面一行放入机器",
-            "&7可以实现多级合成",
-            "",
-            "&7左边=合成原料搜索范围",
-            "&7右边=输出产物搜索范围");
+            TextUtil.COLOR_NORMAL + "在上面两行放入机器",
+            TextUtil.COLOR_NORMAL + "即按照顺序进行解析");
 
 
-    private static final ItemStack PARSE_FAILED_ICON = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, "&4解析失败", "&kYou_find_me!");
-    private static final ItemStack PARSE_SUCCESS_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, "&a解析成功");
-    private static final ItemStack PARSE_EXTEND_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, "&a点击查看详情");
+    private static final ItemStack PARSE_FAILED_ICON = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, TextUtil.COLOR_NEGATIVE + "解析失败", "&kYou_find_me!");
+    private static final ItemStack PARSE_SUCCESS_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, TextUtil.COLOR_POSITIVE + "解析成功");
+    private static final ItemStack PARSE_EXTEND_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, TextUtil.COLOR_ACTION + "点击查看详情");
 
     public static final Map<ItemStack, List<MachineRecipe>> RECIPE_MAP = new HashMap<>(10);
     private static final List<RecipeType> RECIPE_TYPE_LIST = new ArrayList<>(10);

@@ -30,6 +30,7 @@ import java.util.List;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public abstract class AbstractAdvanceMachine extends AbstractStandardMachine {
     private static final String OFFSET_KEY = "offset";

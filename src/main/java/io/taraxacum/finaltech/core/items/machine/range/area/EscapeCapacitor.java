@@ -27,6 +27,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetComponent, RecipeItem {
     public final static int RANGE = 4;

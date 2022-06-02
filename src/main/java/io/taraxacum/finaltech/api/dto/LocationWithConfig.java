@@ -10,10 +10,11 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public record LocationWithConfig(@Nonnull Location location, @Nonnull Config config) {
+    @Nonnull
     public Location getLocation() {
         return this.location;
     }
-
+    @Nonnull
     public Config getConfig() {
         return this.config;
     }

@@ -10,6 +10,7 @@ import io.taraxacum.finaltech.api.command.ShowItemValue;
 import io.taraxacum.finaltech.api.command.TransferToCopyCardItem;
 import io.taraxacum.finaltech.core.items.machine.*;
 import io.taraxacum.finaltech.core.items.machine.cargo.unit.*;
+import io.taraxacum.finaltech.core.items.machine.manual.EquivalentExchangeTable;
 import io.taraxacum.finaltech.core.items.machine.manual.craft.MatrixCraftingTable;
 import io.taraxacum.finaltech.core.items.machine.standard.*;
 import io.taraxacum.finaltech.core.items.machine.standard.basic.*;

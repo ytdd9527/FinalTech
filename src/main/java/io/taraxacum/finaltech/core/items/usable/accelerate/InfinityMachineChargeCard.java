@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class InfinityMachineChargeCard extends AbstractMachineActivateCard {
     private static final double ENERGY = 16.05;

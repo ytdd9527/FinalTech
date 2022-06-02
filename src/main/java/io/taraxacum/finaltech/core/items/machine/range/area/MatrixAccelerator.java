@@ -29,6 +29,7 @@ import java.util.*;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class MatrixAccelerator extends AbstractCubeMachine implements AntiAccelerationMachine, RecipeItem {
     public static final int RANGE = 2;

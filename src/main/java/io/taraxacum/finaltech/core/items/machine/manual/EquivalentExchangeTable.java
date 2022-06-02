@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.items.machine;
+package io.taraxacum.finaltech.core.items.machine.manual;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -30,6 +30,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class EquivalentExchangeTable extends AbstractManualMachine implements RecipeItem {
     private static final String KEY = "value";
 
@@ -68,6 +72,7 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
             if (sfItem != null) {
                 value = StringNumberUtil.add(value, StringNumberUtil.mul(ItemValueTable.getInstance().getOrCalItemInputValue(sfItem), String.valueOf(item.getAmount())));
                 item.setAmount(0);
+                config.setValue(KEY, value);
             }
         }
         BlockStorage.addBlockInfo(block.getLocation(), KEY, value);
@@ -88,14 +93,14 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
     // support plugin reload
     private void doCraft(@Nonnull BlockMenu blockMenu, @Nonnull Config config) {
         String value = config.contains(KEY) ? config.getString(KEY) : StringNumberUtil.ZERO;
-        List<String> valueList = new ArrayList<>(ItemValueTable.getInstance().VALUE_ITEM_LIST_OUTPUT_MAP.keySet());
+        List<String> valueList = new ArrayList<>(ItemValueTable.getInstance().getValueItemListOutputMap().keySet());
         Collections.shuffle(valueList);
         for (String targetValue : valueList) {
             if (MachineUtil.itemCount(blockMenu, this.getOutputSlot()) == this.getOutputSlot().length) {
                 break;
             }
             if (StringNumberUtil.compare(value, targetValue) >= 0) {
-                List<String> idList = ItemValueTable.getInstance().VALUE_ITEM_LIST_OUTPUT_MAP.get(targetValue);
+                List<String> idList = ItemValueTable.getInstance().getValueItemListOutputMap().get(targetValue);
                 String id = idList.get((int) (Math.random() * idList.size()));
                 SlimefunItem slimefunItem = SlimefunItem.getById(id);
                 if(slimefunItem == null || slimefunItem instanceof MultiBlockMachine) {
@@ -108,7 +113,7 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
                 }
             }
         }
-        BlockStorage.addBlockInfo(blockMenu.getLocation(), KEY, value);
+        config.setValue(KEY, value);
     }
 
     @Override

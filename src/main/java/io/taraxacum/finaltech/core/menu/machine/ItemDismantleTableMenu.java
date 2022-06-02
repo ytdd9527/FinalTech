@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class ItemDismantleTableMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[] {3, 4, 12, 13, 21, 22};

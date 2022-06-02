@@ -11,6 +11,12 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
+/**
+ * A #{@link Command} that will show the value of an item.
+ * #{@link ItemValueTable}
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class ShowItemValue implements CommandExecutor {
     @Override
     public boolean onCommand(@Nonnull CommandSender commandSender, @Nonnull Command command, @Nonnull String s, @Nonnull String[] strings) {

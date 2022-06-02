@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public abstract class AbstractManualMachine extends AbstractMachine {
     private AbstractManualMachineMenu menu;

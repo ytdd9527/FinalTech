@@ -18,6 +18,7 @@ import java.util.Set;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class AdvancedGoldPan extends AbstractAdvanceMachine {
     public AdvancedGoldPan(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class OrderDustGeneratorMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[] {0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 16, 17, 18, 19, 25, 26, 27, 28, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44};
@@ -18,7 +19,6 @@ public class OrderDustGeneratorMenu extends AbstractMachineMenu {
     private static final int[] OUTPUT_BORDER = new int[0];
     private static final int[] INPUT_SLOT = new int[] {21, 22, 23};
     private static final int[] OUTPUT_SLOT = new int[0];
-
     public static final int STATUS_SLOT = 4;
 
     public OrderDustGeneratorMenu(@Nonnull AbstractMachine machine) {

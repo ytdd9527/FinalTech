@@ -28,6 +28,7 @@ import java.util.*;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public abstract class AbstractBasicMachine extends AbstractStandardMachine {
     private static final String OFFSET_KEY = "offset";

@@ -5,7 +5,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
 import io.taraxacum.finaltech.core.menu.standard.AbstractStandardMachineMenu;
@@ -16,18 +15,17 @@ import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-// todo
 /**
  * This is a slimefun machine
  * it will be used in gameplay
  * It's not a function class!
  * @author Final_ROOT
+ * @since 1.0
  */
 public class ItemDeserializeParser extends AbstractStandardMachine implements AntiAccelerationMachine {
     public ItemDeserializeParser(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

@@ -15,6 +15,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class MatrixMachineActivateCard extends AbstractMachineActivateCard {
     private static final int TIMES = 21600;

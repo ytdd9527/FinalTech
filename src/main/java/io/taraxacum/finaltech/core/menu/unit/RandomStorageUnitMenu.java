@@ -11,6 +11,10 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class RandomStorageUnitMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[0];
     private static final int[] INPUT_BORDER = new int[0];

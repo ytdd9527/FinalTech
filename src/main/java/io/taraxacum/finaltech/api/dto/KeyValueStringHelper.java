@@ -4,24 +4,31 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class KeyValueStringHelper {
+    @Nonnull
     private final Set<String> keySet;
+    @Nonnull
     private final Set<String> valueSet;
+    @Nonnull
     private final Map<String, String> map;
 
-    public KeyValueStringHelper(Set<String> keySet, Set<String> valueSet) {
+    public KeyValueStringHelper(@Nonnull Set<String> keySet, @Nonnull Set<String> valueSet) {
         this.keySet = keySet;
         this.valueSet = valueSet;
         this.map = new LinkedHashMap<>();
     }
-    public KeyValueStringHelper(List<String> keySet, List<String> valueSet) {
+    public KeyValueStringHelper(@Nonnull List<String> keySet, @Nonnull List<String> valueSet) {
         this.keySet = new HashSet<>(keySet.size());
         this.keySet.addAll(keySet);
         this.valueSet = new HashSet<>(valueSet.size());
         this.valueSet.addAll(valueSet);
         this.map = new LinkedHashMap<>();
     }
-    public KeyValueStringHelper(String[] keys, String[] values) {
+    public KeyValueStringHelper(@Nonnull String[] keys, @Nonnull String[] values) {
         this.keySet = new HashSet<>(keys.length);
         this.keySet.addAll(Arrays.asList(keys));
         this.valueSet = new HashSet<>(values.length);
@@ -29,15 +36,15 @@ public class KeyValueStringHelper {
         this.map = new LinkedHashMap<>();
     }
 
-    public boolean validKey(@Nonnull String key) {
+    public boolean validKey(@Nullable String key) {
         return this.keySet.contains(key);
     }
 
-    public boolean validValue(@Nonnull String value) {
+    public boolean validValue(@Nullable String value) {
         return this.valueSet.contains(value);
     }
 
-    public void putEntry(@Nonnull String key, @Nullable String value) {
+    public void putEntry(@Nullable String key, @Nullable String value) {
         if (this.validKey(key)) {
             if (value == null && this.map.containsKey(key)) {
                 this.map.remove(key);
@@ -46,12 +53,12 @@ public class KeyValueStringHelper {
             }
         }
     }
-    public void deleteEntry(@Nonnull String key) {
+    public void deleteEntry(@Nullable String key) {
         this.putEntry(key, null);
     }
 
     @Nonnull
-    public List<String> getAllMatchKey(@Nonnull String value) {
+    public List<String> getAllMatchKey(@Nullable String value) {
         List<String> list = new ArrayList<>();
         for (Map.Entry<String, String> entry : this.map.entrySet()) {
             if (entry.getValue() != null && entry.getValue().equals(value)) {
@@ -66,6 +73,7 @@ public class KeyValueStringHelper {
         return this.map.get(key);
     }
 
+    @Nonnull
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -79,14 +87,12 @@ public class KeyValueStringHelper {
     }
 
     @Nonnull
-    public KeyValueStringHelper parseString(@Nullable String string) {
+    public KeyValueStringHelper parseString(@Nonnull String string) {
         KeyValueStringHelper keyValueStringHelper = new KeyValueStringHelper(this.keySet, this.valueSet);
-        if (string != null) {
-            for (String entry : string.split("-")) {
-                String[] split = entry.split(":");
-                if (split.length == 2 && this.keySet.contains(split[0]) && this.valueSet.contains(split[1])) {
-                    keyValueStringHelper.putEntry(split[0], split[1]);
-                }
+        for (String entry : string.split("-")) {
+            String[] split = entry.split(":");
+            if (split.length == 2 && this.keySet.contains(split[0]) && this.valueSet.contains(split[1])) {
+                keyValueStringHelper.putEntry(split[0], split[1]);
             }
         }
         return keyValueStringHelper;

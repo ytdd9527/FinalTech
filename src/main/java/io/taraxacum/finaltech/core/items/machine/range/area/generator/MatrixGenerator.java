@@ -32,6 +32,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class MatrixGenerator extends AbstractCubeElectricGenerator implements AntiAccelerationMachine {
     protected static final String KEY = "energy-charge";

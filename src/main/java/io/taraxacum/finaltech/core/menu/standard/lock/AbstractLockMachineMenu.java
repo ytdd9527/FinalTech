@@ -13,6 +13,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public abstract class AbstractLockMachineMenu extends AbstractStandardMachineMenu {
     public static final int RECIPE_LOCK_SLOT = 4;
@@ -39,7 +40,7 @@ public abstract class AbstractLockMachineMenu extends AbstractStandardMachineMen
         super.updateMenu(blockMenu, block);
         MachineRecipeLock.HELPER.checkOrSetBlockStorage(block.getLocation());
         ItemStack item = blockMenu.getItemInSlot(RECIPE_LOCK_SLOT);
-        String  recipeLock = BlockStorage.getLocationInfo(block.getLocation(), MachineRecipeLock.KEY);
+        String recipeLock = BlockStorage.getLocationInfo(block.getLocation(), MachineRecipeLock.KEY);
         MachineRecipeLock.HELPER.setIcon(item, recipeLock, this.getMachine());
     }
 }

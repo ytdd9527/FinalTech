@@ -16,6 +16,10 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class RandomOutputStorageUnit extends AbstractCargo implements RecipeItem {
     public RandomOutputStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

@@ -24,6 +24,7 @@ import java.util.Set;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class ChargeableStorageUnit extends AbstractCargo implements EnergyNetComponent, RecipeItem {
     public ChargeableStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

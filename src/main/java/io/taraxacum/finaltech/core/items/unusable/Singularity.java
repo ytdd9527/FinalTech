@@ -29,7 +29,7 @@ public class Singularity extends UnusableSlimefunItem implements RecipeItem {
         return ItemStackUtil.isItemSimilar(item, FinalTechItems.SINGULARITY);
     }
 
-    public static ItemStack newItem(@Nonnull ItemStack item, @Nonnull Player player) {
+    public static ItemStack newItem(@Nullable ItemStack item, @Nullable Player player) {
         return new ItemStack(FinalTechItems.SINGULARITY);
     }
 

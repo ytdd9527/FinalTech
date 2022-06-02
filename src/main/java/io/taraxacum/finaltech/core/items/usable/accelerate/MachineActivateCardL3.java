@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class MachineActivateCardL3 extends AbstractMachineActivateCard {
     private static final int TIMES = 1800;

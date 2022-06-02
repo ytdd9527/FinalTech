@@ -14,10 +14,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Should use with {@link AbstractMachine}
  * @author Final_ROOT
+ * @since 1.0
  */
 public abstract class AbstractMachineMenu extends BlockMenuPreset {
     private final AbstractMachine machine;
@@ -56,72 +58,38 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
 
     @Override
     public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
-        return player.hasPermission("slimefun.inventory.bypass") || machine.canUse(player, false) && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
+        return player.hasPermission("slimefun.inventory.bypass") || this.machine.canUse(player, false) && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
     }
 
     @Override
-    public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
-        if (itemTransportFlow.equals(ItemTransportFlow.WITHDRAW)) {
-            return this.getOutputSlot();
-        } else if (itemTransportFlow.equals(ItemTransportFlow.INSERT)) {
-            return this.getInputSlot();
+    public int[] getSlotsAccessedByItemTransport(@Nullable ItemTransportFlow itemTransportFlow) {
+        if(itemTransportFlow == null) {
+            return new int[0];
         }
-        return new int[0];
+        return switch (itemTransportFlow) {
+            case WITHDRAW -> this.getOutputSlot();
+            case INSERT -> this.getInputSlot();
+        };
     }
 
     @Override
-    public int[] getSlotsAccessedByItemTransport(DirtyChestMenu menu, ItemTransportFlow flow, ItemStack item) {
+    public int[] getSlotsAccessedByItemTransport(DirtyChestMenu menu, @Nullable ItemTransportFlow flow, ItemStack item) {
         return this.getSlotsAccessedByItemTransport(flow);
     }
 
-    /**
-     * The border of the menu
-     * These are slots that may have no function.
-     * @return
-     */
     protected abstract int[] getBorder();
 
-    /**
-     * The input border of the menu
-     * These are slots that surround the input slots
-     * so that player will know where is input slots
-     * @return
-     */
     protected abstract int[] getInputBorder();
 
-    /**
-     * The output border of the menu
-     * These are slots that surround the output slots
-     * so that player will know where is output slots
-     * @return
-     */
     protected abstract int[] getOutputBorder();
 
-    /**
-     * The input slot of the menu
-     * These are slots that player may insert item
-     * so that the machine of the menu can work
-     * @return
-     */
     public abstract int[] getInputSlot();
 
-    /**
-     * The output slot of the menu
-     * These are slots that player may withdraw item
-     * to get the output result of the machine
-     * @return
-     */
     public abstract int[] getOutputSlot();
 
     protected AbstractMachine getMachine() {
         return this.machine;
     }
 
-    /**
-     * Update the menu
-     * May be used in some specific machine
-     * @param blockMenu
-     * @param block
-     */
     protected abstract void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block);
 }

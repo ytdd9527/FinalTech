@@ -7,7 +7,6 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
 import io.taraxacum.finaltech.core.factory.MachineRecipeFactory;
-import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.items.unusable.laquid.LiquidCard;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
@@ -24,7 +23,6 @@ import java.util.List;
  * @since 1.0
  */
 public interface RecipeItem extends RecipeDisplayItem {
-
     @Nonnull
     @Override
     default List<ItemStack> getDisplayRecipes() {
@@ -54,24 +52,21 @@ public interface RecipeItem extends RecipeDisplayItem {
     @Nonnull
     default List<MachineRecipe> getMachineRecipes() {
         return MachineRecipeFactory.getInstance().getRecipe(this.getClass());
-    };
+    }
 
-    /**
-     * register a {@link MachineRecipe}
-     */
-    default void registerRecipe(MachineRecipe recipe) {
+    default void registerRecipe(@Nonnull MachineRecipe recipe) {
         this.getMachineRecipes().add(recipe);
     }
 
-    default void registerRecipe(int seconds, ItemStack[] input, ItemStack[] output) {
+    default void registerRecipe(int seconds, @Nonnull ItemStack[] input, @Nonnull ItemStack[] output) {
         this.registerRecipe(new MachineRecipe(seconds, input, output));
     }
 
-    default void registerRecipe(ItemStack[] input, ItemStack[] output) {
+    default void registerRecipe(@Nonnull ItemStack[] input, @Nonnull ItemStack[] output) {
         this.registerRecipe(new MachineRecipe(0, input, output));
     }
 
-    default void registerRecipe(int seconds, ItemStack input, ItemStack output) {
+    default void registerRecipe(int seconds, @Nonnull ItemStack input, @Nonnull ItemStack output) {
         this.registerRecipe(new MachineRecipe(seconds, new ItemStack[] {input}, new ItemStack[] {output}));
     }
 
@@ -80,11 +75,11 @@ public interface RecipeItem extends RecipeDisplayItem {
      * if the slimefun-item's recipe contains liquid-bucket(water bucket, lava bucket e.g.),
      * this method will also register another similar machine-recipe that replace liquid-bucket with {@link LiquidCard}
      */
-    default void registerRecipeInCard(int seconds, SlimefunItem slimefunItem) {
+    default void registerRecipeInCard(int seconds, @Nonnull SlimefunItem slimefunItem) {
         this.registerRecipeInCard(seconds, slimefunItem.getRecipe(), new ItemStack[] {slimefunItem.getRecipeOutput()});
     }
 
-    default void registerRecipeInCard(int seconds, ItemStack[] input, ItemStack[] output) {
+    default void registerRecipeInCard(int seconds, @Nonnull ItemStack[] input, @Nonnull ItemStack[] output) {
         boolean extraRecipe = false;
         List<ItemStack> inputList1 = new ArrayList<>(input.length);
         List<ItemStack> inputList2 = new ArrayList<>(input.length);
@@ -123,16 +118,15 @@ public interface RecipeItem extends RecipeDisplayItem {
      * Register a {@link MachineRecipe} that will only be used to show info to player.
      * @param item
      */
-    default void registerDescriptiveRecipe(ItemStack item) {
+    default void registerDescriptiveRecipe(@Nonnull ItemStack item) {
         this.registerRecipe(new MachineRecipe(0, new ItemStack[] {item}, new ItemStack[] {ItemStackUtil.AIR}));
     }
-    default void registerDescriptiveRecipe(String name, String... lore) {
+    default void registerDescriptiveRecipe(@Nonnull String name, @Nonnull String... lore) {
         this.registerDescriptiveRecipe(new CustomItemStack(Material.BOOK, name, lore));
     }
+    default void registerDescriptiveRecipe(@Nonnull ItemStack item, @Nonnull String name, @Nonnull String... lore) {
+        this.registerRecipe(0, new CustomItemStack(Material.BOOK, name, lore), item);
+    }
 
-    /**
-     * Implements this method to register {@link MachineRecipe}
-     * An {@link AbstractMachine} will do this method when be constructed.
-     */
     void registerDefaultRecipes();
 }

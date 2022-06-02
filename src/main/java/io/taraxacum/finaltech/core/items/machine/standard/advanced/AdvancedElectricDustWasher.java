@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class AdvancedElectricDustWasher extends AbstractAdvanceMachine {
     public AdvancedElectricDustWasher(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

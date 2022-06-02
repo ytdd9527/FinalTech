@@ -216,7 +216,9 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem {
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "限制",
                 "",
                 TextUtil.COLOR_NORMAL + "若未输入并消耗 " + FinalTechItems.ORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 与 " + FinalTechItems.UNORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL,
-                TextUtil.COLOR_NORMAL + "或中途切换物品",
+                TextUtil.COLOR_NORMAL + "则进度强制 " + TextUtil.COLOR_STRESS + "-1",
+                "",
+                TextUtil.COLOR_NORMAL + "若中途切换物品",
                 TextUtil.COLOR_NORMAL + "则进度清零");
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "矩阵加速",
                 "",

@@ -3,39 +3,39 @@ package io.taraxacum.finaltech.api.operation;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
+import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.items.unusable.Singularity;
 import io.taraxacum.finaltech.core.items.unusable.Spirochete;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.TextUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class ItemPhonyOperation implements ItemSerializationConstructorOperation {
     private int itemTypeCount;
     private int itemAmountCount;
     private final int itemTypeDifficulty;
     private final int itemAmountDifficulty;
-
     private final ItemStack showItem;
-
-    private List<ItemStackWrapper> itemTypeList = new ArrayList<>(Spirochete.SPIROCHETE_DIFFICULTY);
+    private final List<ItemStackWrapper> itemTypeList = new ArrayList<>(Spirochete.SPIROCHETE_DIFFICULTY);
 
     protected ItemPhonyOperation(@Nonnull ItemStack item) {
         this.itemTypeCount = 1;
-        this.itemTypeList.add(ItemStackWrapper.wrap(item));
         this.itemAmountCount = item.getAmount();
-
         this.itemTypeDifficulty = Spirochete.SPIROCHETE_DIFFICULTY;
         this.itemAmountDifficulty = Singularity.SINGULARITY_DIFFICULTY;
-
-        this.showItem = new CustomItemStack(FinalTechItems.PHONY.getType(), "§f完成进度", "§f物品个数= " + this.itemAmountCount + "/" + this.itemAmountDifficulty, "§f物品种数= " + this.itemTypeCount + "/" + this.itemTypeDifficulty);
+        this.showItem = new CustomItemStack(FinalTechItems.PHONY.getType(), TextUtil.COLOR_NORMAL + "完成进度", TextUtil.COLOR_NORMAL + "物品个数= " + TextUtil.COLOR_NUMBER + this.itemAmountCount + "/" + this.itemAmountDifficulty, TextUtil.COLOR_NORMAL + "物品种数= " + TextUtil.COLOR_NUMBER + this.itemTypeCount + "/" + this.itemTypeDifficulty);
+        this.itemTypeList.add(ItemStackWrapper.wrap(item));
     }
 
     @Override
@@ -51,32 +51,33 @@ public class ItemPhonyOperation implements ItemSerializationConstructorOperation
 
     @Override
     public void updateShowItem() {
-        ItemStackUtil.setLore(this.showItem, "§f物品个数= " + this.itemAmountCount + "/" + this.itemAmountDifficulty, "§f物品种数= " + this.itemTypeCount + "/" + this.itemTypeDifficulty);
+        ItemStackUtil.setLore(this.showItem, TextUtil.COLOR_NORMAL + "物品个数= " + TextUtil.COLOR_NUMBER + this.itemAmountCount + "/" + this.itemAmountDifficulty, TextUtil.COLOR_NORMAL + "物品种数= " + TextUtil.COLOR_NUMBER + this.itemTypeCount + "/" + this.itemTypeDifficulty);
     }
 
     @Override
     public int addItem(@Nullable ItemStack item) {
-        if (ItemStackUtil.isItemNull(item) || !CopyCardItem.isValid(item)) {
+        if (!CopyCardItem.isValid(item)) {
             return 0;
         }
 
-        this.itemTypeCount++;
         if (this.itemTypeCount <= this.itemTypeDifficulty) {
+            boolean newType = true;
             ItemStackWrapper itemWrapper = ItemStackWrapper.wrap(item);
-            for (ItemStackWrapper itemTypeWrapper : itemTypeList) {
+            for (ItemStackWrapper itemTypeWrapper : this.itemTypeList) {
                 if (ItemStackUtil.isItemSimilar(itemWrapper, itemTypeWrapper)) {
-                    this.itemTypeCount--;
+                    newType = false;
                     break;
                 }
             }
+            if(newType) {
+                this.itemTypeCount++;
+                this.itemTypeList.add(itemWrapper);
+            }
         }
-        int amount = item.getAmount();
+        int amount = Math.min(item.getAmount(), this.itemAmountDifficulty - this.itemAmountCount);
         this.itemAmountCount += amount;
 
         item.setAmount(item.getAmount() - amount);
-
-        this.itemAmountCount = Math.min(this.itemAmountCount, this.itemAmountDifficulty);
-        this.itemTypeCount = Math.min(this.itemTypeCount, this.itemTypeDifficulty);
 
         return amount;
     }
@@ -90,28 +91,15 @@ public class ItemPhonyOperation implements ItemSerializationConstructorOperation
     @Override
     public ItemStack getResult() {
         if (this.itemAmountCount >= this.itemAmountDifficulty && this.itemTypeCount >= this.itemTypeDifficulty) {
-            return new ItemStack(FinalTechItems.PHONY);
+            return ItemPhony.newItem(null, null, null);
         }
         if (this.itemAmountCount >= this.itemAmountDifficulty) {
-            return new ItemStack(FinalTechItems.SINGULARITY);
+            return Singularity.newItem(null, null);
         }
         if (this.itemTypeCount >= this.itemTypeDifficulty) {
-            return new ItemStack(FinalTechItems.SPIROCHETE);
+            return Spirochete.newItem(null, null);
         }
         return ItemStackUtil.AIR;
-    }
-
-    public int getItemTypeCount() {
-        return this.itemTypeCount;
-    }
-    public int getItemAmountCount() {
-        return this.itemAmountCount;
-    }
-    public int getItemTypeDifficulty() {
-        return this.itemTypeDifficulty;
-    }
-    public int getItemAmountDifficulty() {
-        return this.itemAmountDifficulty;
     }
 
     @Deprecated

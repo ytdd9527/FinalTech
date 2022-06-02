@@ -17,6 +17,10 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class EquivalentExchangeTableMenu extends AbstractManualMachineMenu {
     private static final int[] BORDER = new int[] {30, 31, 32, 39, 41, 48, 49, 50};
     private static final int[] INPUT_BORDER = new int[] {2, 11, 20, 29, 38, 47};

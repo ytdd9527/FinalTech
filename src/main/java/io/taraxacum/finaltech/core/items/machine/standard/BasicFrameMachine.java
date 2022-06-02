@@ -19,8 +19,8 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 /**
- * Transfer item in it's input slots to it's output slots
  * @author Final_ROOT
+ * @since 1.0
  */
 public class BasicFrameMachine extends AbstractStandardMachine {
     public BasicFrameMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

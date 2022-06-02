@@ -26,7 +26,7 @@ public class ItemPhony extends UnusableSlimefunItem implements RecipeItem {
         return ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY);
     }
 
-    public static ItemStack newItem(@Nonnull ItemStack item1, @Nonnull ItemStack item2, @Nullable Player player) {
+    public static ItemStack newItem(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nullable Player player) {
         return new ItemStack(FinalTechItems.PHONY);
     }
 

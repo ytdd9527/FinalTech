@@ -14,7 +14,6 @@ import java.util.Map;
  */
 public class LocationRecipeRegistry {
     private final Map<Location, AdvancedMachineRecipe> LOCATION_RECIPE_MAP = new HashMap<>();
-
     private static volatile LocationRecipeRegistry instance;
 
     private LocationRecipeRegistry() {

@@ -16,6 +16,10 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class MatrixReactorMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[] {0, 2, 3, 5, 6, 8, 12, 13, 14, 21, 23};
     private static final int[] INPUT_BORDER = new int[] {9, 10, 11, 18, 20, 27, 29, 36, 38, 45, 46, 47, 15, 16, 17, 24, 26, 33, 35, 42, 44, 51, 52, 53};
@@ -83,13 +87,7 @@ public class MatrixReactorMenu extends AbstractMachineMenu {
 
     @Override
     public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
-        if (ItemTransportFlow.INSERT.equals(itemTransportFlow)) {
-            return INPUT_SLOT;
-        } else if (ItemTransportFlow.WITHDRAW.equals(itemTransportFlow)) {
-            return OUTPUT_SLOT;
-        } else {
-            return new int[0];
-        }
+        return super.getSlotsAccessedByItemTransport(itemTransportFlow);
     }
 
     @Override

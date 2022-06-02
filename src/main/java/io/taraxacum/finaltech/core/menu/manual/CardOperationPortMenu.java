@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class CardOperationPortMenu extends AbstractManualMachineMenu {
     private static final int[] BORDER = new int[] {3, 4, 5, 12, 14, 21, 22, 23, 27, 28, 29, 33, 34, 35, 36, 37, 38, 42, 43, 44, 45, 46, 47, 51, 52, 53};
@@ -31,7 +32,6 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
     private static final int[] OUTPUT_BORDER = new int[] {30, 31, 32, 39, 41, 48, 49, 50};
     private static final int[] INPUT_SLOT = new int[] {10, 16};
     private static final int[] OUTPUT_SLOT = new int[] {40};
-
     private static final int CRAFT_SLOT = 13;
     private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, TextUtil.COLOR_NEGATIVE + "无法操作");
 
@@ -55,7 +55,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             }
 
             @Override
-            public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
                 if (!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2) && item1.hasItemMeta() && item2.hasItemMeta()) {
                     ItemMeta itemMeta1 = item1.getItemMeta();
                     ItemMeta itemMeta2 = item2.getItemMeta();
@@ -98,7 +98,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             }
 
             @Override
-            public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
                 if (!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2)) {
                     ItemStack storageCardItem = null;
                     ItemMeta storageCardItemMeta = null;
@@ -144,7 +144,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             }
 
             @Override
-            public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
                 if (this.canCraft(item1, item2)) {
                     item1.setAmount(item1.getAmount() - 1);
                     item2.setAmount(item2.getAmount() - 1);
@@ -176,7 +176,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             }
 
             @Override
-            public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
                 if (!ItemStackUtil.isItemNull(item1) && CopyCardItem.isValid(item1) && Shell.isValid(item2)) {
                     item2.setAmount(item2.getAmount() - 1);
                     ItemStack outputItem = ItemStackUtil.cloneItem(item1);
@@ -209,7 +209,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             }
 
             @Override
-            public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
                 if (Singularity.isValid(item1) || Spirochete.isValid(item1)) {
                     item1.setAmount(item1.getAmount() - 1);
                     Player player = null;
@@ -250,7 +250,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             }
 
             @Override
-            public boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
                 if (CopyCardItem.isValid(item1)) {
                     item1.setAmount(item1.getAmount() - 1);
                     Player player = null;
@@ -323,7 +323,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                 return false;
             }
             for (Craft craft : CRAFT_LIST) {
-                if (craft.doCraft(inputItem1, inputItem2, blockMenu, OUTPUT_SLOT[0])) {
+                if (craft.craft(inputItem1, inputItem2, blockMenu, OUTPUT_SLOT[0])) {
                     break;
                 }
             }
@@ -354,6 +354,6 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
         void doUpdateIcon(@Nonnull ItemStack iconItem);
 
-        boolean doCraft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot);
+        boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot);
     }
 }

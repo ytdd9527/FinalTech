@@ -76,7 +76,7 @@ public class ItemWrapper {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(@Nonnull Object obj) {
         if (this.itemStack instanceof ItemStackWrapper) {
             return new ItemStack(this.itemStack).equals(obj);
         } else {

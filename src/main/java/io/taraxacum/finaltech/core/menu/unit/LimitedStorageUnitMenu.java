@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class LimitedStorageUnitMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[0];

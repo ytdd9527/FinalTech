@@ -18,6 +18,7 @@ import java.util.Set;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class ManualGoldPan extends AbstractManualCraftMachine{
     public ManualGoldPan(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

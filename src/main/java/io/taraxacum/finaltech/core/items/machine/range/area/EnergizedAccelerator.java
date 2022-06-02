@@ -31,6 +31,7 @@ import java.util.*;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class EnergizedAccelerator extends AbstractCubeMachine implements AntiAccelerationMachine, EnergyNetComponent, RecipeItem {
     private static final int RANGE = 2;

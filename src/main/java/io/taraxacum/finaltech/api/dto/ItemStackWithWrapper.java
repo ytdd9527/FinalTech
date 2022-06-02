@@ -12,7 +12,9 @@ import java.util.List;
  * @since 2.0
  */
 public class ItemStackWithWrapper {
+    @Nonnull
     private ItemStack itemStack;
+    @Nonnull
     private ItemStackWrapper itemStackWrapper;
 
     public ItemStackWithWrapper(@Nonnull ItemStack itemStack) {
@@ -25,15 +27,17 @@ public class ItemStackWithWrapper {
         this.itemStackWrapper = itemStackWrapper;
     }
 
+    @Nonnull
     public ItemStack getItemStack() {
         return itemStack;
     }
 
+    @Nonnull
     public ItemStackWrapper getItemStackWrapper() {
         return itemStackWrapper;
     }
 
-    public void warpItem(ItemStack itemStack) {
+    public void warpItem(@Nonnull ItemStack itemStack) {
         this.itemStack = itemStack;
         this.itemStackWrapper = ItemStackWrapper.wrap(itemStack);
     }
@@ -42,7 +46,8 @@ public class ItemStackWithWrapper {
         this.itemStackWrapper = ItemStackWrapper.wrap(this.itemStack);
     }
 
-    public static List<ItemStack> toItemList(List<ItemStackWithWrapper> list) {
+    @Nonnull
+    public static List<ItemStack> toItemList(@Nonnull List<? extends ItemStackWithWrapper> list) {
         ArrayList<ItemStack> result = new ArrayList<>(list.size());
         for (ItemStackWithWrapper itemStackWithWrapper : list) {
             result.add(itemStackWithWrapper.getItemStack());
@@ -50,7 +55,8 @@ public class ItemStackWithWrapper {
         return result;
     }
 
-    public static ItemStack[] toItemArray(List<? extends ItemStackWithWrapper> list) {
+    @Nonnull
+    public static ItemStack[] toItemArray(@Nonnull List<? extends ItemStackWithWrapper> list) {
         ItemStack[] result = new ItemStack[list.size()];
         for (int i = 0; i < result.length; i++) {
             result[i] = list.get(i).getItemStack();
@@ -58,7 +64,8 @@ public class ItemStackWithWrapper {
         return result;
     }
 
-    public static List<ItemStackWrapper> toItemWrapperList(List<ItemStackWithWrapper> list) {
+    @Nonnull
+    public static List<ItemStackWrapper> toItemWrapperList(@Nonnull List<? extends ItemStackWithWrapper> list) {
         ArrayList<ItemStackWrapper> result = new ArrayList<>(list.size());
         for (ItemStackWithWrapper itemStackWithWrapper : list) {
             result.add(itemStackWithWrapper.getItemStackWrapper());
@@ -66,10 +73,6 @@ public class ItemStackWithWrapper {
         return result;
     }
 
-    /**
-     * Try not use this in code
-     * @return
-     */
     @Override
     public int hashCode() {
         if (this.itemStack instanceof ItemStackWrapper) {
@@ -79,11 +82,6 @@ public class ItemStackWithWrapper {
         }
     }
 
-
-    /**
-     * Try not use this in code
-     * @return
-     */
     @Override
     public boolean equals(Object obj) {
         if (this.itemStack instanceof ItemStackWrapper) {

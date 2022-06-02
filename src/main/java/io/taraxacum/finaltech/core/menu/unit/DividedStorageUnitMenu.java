@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class DividedStorageUnitMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[0];
@@ -59,8 +60,8 @@ public class DividedStorageUnitMenu extends AbstractMachineMenu {
             return new int[0];
         }
         return switch (itemTransportFlow) {
-            case INSERT -> INPUT_SLOT;
             case WITHDRAW -> OUTPUT_SLOT;
+            case INSERT -> INPUT_SLOT;
         };
     }
 

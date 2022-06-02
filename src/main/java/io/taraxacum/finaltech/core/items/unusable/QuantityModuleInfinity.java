@@ -13,6 +13,10 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class QuantityModuleInfinity extends UnusableSlimefunItem implements RecipeItem {
     public static final int VALUE = Integer.MAX_VALUE / 128;
     public QuantityModuleInfinity(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

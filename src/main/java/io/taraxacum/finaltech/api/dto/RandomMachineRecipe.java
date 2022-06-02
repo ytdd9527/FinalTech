@@ -10,12 +10,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * A {@link MachineRecipe} that will its output item is random.
- *
+ * A {@link MachineRecipe} that its output item is random.
  * @author Final_ROOT
  * @since 2.0
  */
 public class RandomMachineRecipe extends MachineRecipe {
+    @Nonnull
     private final List<RandomOutput> randomOutputList;
     private int weightSum = 0;
 
@@ -68,6 +68,7 @@ public class RandomMachineRecipe extends MachineRecipe {
      * @since 2.0
      */
     public static class RandomOutput {
+        @Nonnull
         private List<ItemStack> outputItem;
         private int weight;
 
@@ -91,16 +92,8 @@ public class RandomMachineRecipe extends MachineRecipe {
             return outputItem;
         }
 
-        public void setOutputItem(@Nonnull List<ItemStack> outputItem) {
-            this.outputItem = outputItem;
-        }
-
         public int getWeight() {
             return weight;
-        }
-
-        public void setWeight(int weight) {
-            this.weight = weight;
         }
     }
 }

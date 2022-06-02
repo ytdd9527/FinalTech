@@ -9,7 +9,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.api.dto.ItemStackWithWrapper;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.machine.OrderedDustFactoryV2Menu;
+import io.taraxacum.finaltech.core.menu.machine.OrderedDustFactoryStoneMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
@@ -47,7 +47,7 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new OrderedDustFactoryV2Menu(this);
+        return new OrderedDustFactoryStoneMenu(this);
     }
 
     @Override

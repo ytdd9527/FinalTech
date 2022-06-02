@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class StorageInteractPortMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[0];

@@ -160,20 +160,6 @@ public class MeshTransferMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
-        return switch (itemTransportFlow) {
-            case WITHDRAW -> OUTPUT_SLOT;
-            case INSERT -> INPUT_SLOT;
-            default -> ITEM_MATCH;
-        };
-    }
-
-    @Override
-    public int[] getSlotsAccessedByItemTransport(DirtyChestMenu menu, ItemTransportFlow flow, ItemStack item) {
-        return this.getSlotsAccessedByItemTransport(flow);
-    }
-
-    @Override
     public void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         CargoFilter.HELPER.checkAndUpdateIcon(blockMenu, CARGO_FILTER_SLOT);
         BlockSearchMode.STATION_INPUT_HELPER.checkAndUpdateIcon(blockMenu, INPUT_BLOCK_SEARCH_MODE_SLOT);

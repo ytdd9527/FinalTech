@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 1.0
  */
 public class DustGenerator extends AbstractMachine implements RecipeItem, EnergyNetProvider {
     public static final String KEY_COUNT = "count";

@@ -5,10 +5,7 @@ import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.helper.*;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
-import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.block.Block;
-import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
@@ -143,19 +140,5 @@ public class LineTransferMenu extends AbstractMachineMenu {
         CargoLimit.HELPER.checkAndUpdateIcon(blockMenu, CARGO_LIMIT_SLOT);
         SlotSearchSize.OUTPUT_HELPER.checkAndUpdateIcon(blockMenu, OUTPUT_SLOT_SEARCH_SIZE_SLOT);
         SlotSearchOrder.OUTPUT_HELPER.checkAndUpdateIcon(blockMenu, OUTPUT_SLOT_SEARCH_ORDER_SLOT);
-    }
-
-    @Override
-    public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
-        return switch (itemTransportFlow) {
-            case WITHDRAW -> OUTPUT_SLOT;
-            case INSERT -> INPUT_SLOT;
-            default -> ITEM_MATCH;
-        };
-    }
-
-    @Override
-    public int[] getSlotsAccessedByItemTransport(DirtyChestMenu menu, ItemTransportFlow flow, ItemStack item) {
-        return this.getSlotsAccessedByItemTransport(flow);
     }
 }

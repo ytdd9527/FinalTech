@@ -19,10 +19,10 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.time.temporal.Temporal;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class CardOperationTable extends AbstractManualMachine implements RecipeItem {
     public CardOperationTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

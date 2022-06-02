@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class StatusMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[] {0, 1, 2, 3, 5 ,6 ,7, 8};
@@ -18,7 +19,6 @@ public class StatusMenu extends AbstractMachineMenu {
     private static final int[] OUTPUT_BORDER = new int[0];
     private static final int[] INPUT_SLOT = new int[0];
     private static final int[] OUTPUT_SLOT = new int[0];
-
     public static final int STATUS_SLOT = 4;
 
     public StatusMenu(@Nonnull AbstractMachine machine) {

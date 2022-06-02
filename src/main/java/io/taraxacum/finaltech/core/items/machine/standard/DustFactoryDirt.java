@@ -6,11 +6,11 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.menu.standard.AbstractStandardMachineMenu;
-import io.taraxacum.finaltech.api.operation.OrderedDustOperation;
+import io.taraxacum.finaltech.api.operation.DustFactoryOperation;
 import io.taraxacum.finaltech.core.menu.standard.DustFactoryMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -22,11 +22,8 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 /**
- * Be used to make dust
- * input 16 kinds of item and 1024 items in total to make a dust
- * if you input more than 16 kinds of item or more than 1024 item in total
- * it will output unordered dust
  * @author Final_ROOT
+ * @since 1.0
  */
 public class DustFactoryDirt extends AbstractStandardMachine {
     public static final int TYPE_DIFFICULTY = 16;
@@ -44,42 +41,42 @@ public class DustFactoryDirt extends AbstractStandardMachine {
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        BlockMenu inv = BlockStorage.getInventory(block);
-        OrderedDustOperation operation = (OrderedDustOperation)this.getMachineProcessor().getOperation(block);
+        BlockMenu blockMenu = BlockStorage.getInventory(block);
+        DustFactoryOperation operation = (DustFactoryOperation)this.getMachineProcessor().getOperation(block);
 
         for (int slot : this.getInputSlot()) {
-            ItemStack inputItem = inv.getItemInSlot(slot);
-            if (inputItem == null) {
+            ItemStack inputItem = blockMenu.getItemInSlot(slot);
+            if (ItemStackUtil.isItemNull(inputItem)) {
                 continue;
             }
             if (operation == null) {
-                operation = new OrderedDustOperation();
+                operation = new DustFactoryOperation();
                 this.getMachineProcessor().startOperation(block, operation);
             }
             operation.addItem(inputItem);
 
             if (operation.isFinished()) {
-                if (operation.isOrderedDust() && InvUtils.fitAll(inv.toInventory(), new ItemStack[] {FinalTechItems.ORDERED_DUST}, this.getOutputSlot())) {
-                    inv.pushItem(new ItemStack(FinalTechItems.ORDERED_DUST), this.getOutputSlot());
+                if (operation.isOrderedDust() && InvUtils.fitAll(blockMenu.toInventory(), new ItemStack[] {FinalTechItems.ORDERED_DUST}, this.getOutputSlot())) {
+                    blockMenu.pushItem(new ItemStack(FinalTechItems.ORDERED_DUST), this.getOutputSlot());
                     this.getMachineProcessor().endOperation(block);
                     operation = null;
-                } else if (InvUtils.fitAll(inv.toInventory(), new ItemStack[] {FinalTechItems.UNORDERED_DUST}, this.getOutputSlot())) {
-                    inv.pushItem(new ItemStack(FinalTechItems.UNORDERED_DUST), this.getOutputSlot());
+                } else if (InvUtils.fitAll(blockMenu.toInventory(), new ItemStack[] {FinalTechItems.UNORDERED_DUST}, this.getOutputSlot())) {
+                    blockMenu.pushItem(new ItemStack(FinalTechItems.UNORDERED_DUST), this.getOutputSlot());
                     this.getMachineProcessor().endOperation(block);
                     operation = null;
                 }
             }
-            inv.consumeItem(slot, inputItem.getAmount());
+            blockMenu.consumeItem(slot, inputItem.getAmount());
         }
 
         if (operation == null) {
-            operation = new OrderedDustOperation();
+            operation = new DustFactoryOperation();
             this.getMachineProcessor().startOperation(block, operation);
         }
-        CustomItemStack progress = new CustomItemStack(Material.REDSTONE, "&f完成进度",
-                "&7匹配的物品种类" + operation.getTypeCount() + "/" + TYPE_DIFFICULTY,
-                "&7输入的物品总数" + operation.getAmountCount() + "/" + AMOUNT_DIFFICULTY);
-        inv.replaceExistingItem(22, progress);
+        CustomItemStack progress = new CustomItemStack(Material.REDSTONE, TextUtil.COLOR_NORMAL + "完成进度",
+                TextUtil.COLOR_NORMAL + "匹配的物品种类= " + TextUtil.COLOR_NUMBER + operation.getTypeCount() + "/" + TYPE_DIFFICULTY,
+                TextUtil.COLOR_NORMAL + "输入的物品总数= " + TextUtil.COLOR_NUMBER + operation.getAmountCount() + "/" + AMOUNT_DIFFICULTY);
+        blockMenu.replaceExistingItem(DustFactoryMenu.STATUS_SLOT, progress);
     }
 
     @Override

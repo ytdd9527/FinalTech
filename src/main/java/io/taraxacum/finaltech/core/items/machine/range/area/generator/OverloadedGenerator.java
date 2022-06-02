@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class OverloadedGenerator extends AbstractCubeElectricGenerator{
     public final static String ELECTRICITY = "2048";
