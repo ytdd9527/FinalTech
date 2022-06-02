@@ -6,6 +6,8 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.taraxacum.finaltech.core.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.core.factory.ItemValueTable;
 import io.taraxacum.finaltech.setup.SetupUtil;
+import io.taraxacum.finaltech.util.TextUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
@@ -92,6 +94,10 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         ItemValueTable.getInstance().init();
 
         this.bukkitTask = scheduler.runTaskTimerAsynchronously(this, () -> BlockTaskFactory.getInstance().tick(), 0, tickRate);
+
+        for(int i = 0; i < 32; i++) {
+            Bukkit.getLogger().info("[FinalTECH]" + TextUtil.COLOR_NEGATIVE + "测试版本 谨慎使用");
+        }
     }
 
     public static FinalTech getInstance() {
