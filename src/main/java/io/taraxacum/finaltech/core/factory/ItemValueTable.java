@@ -120,6 +120,7 @@ public class ItemValueTable {
             this.itemInputValueMap.put(id, StringNumberUtil.ZERO);
             return StringNumberUtil.ZERO;
         }
+        this.itemInputValueMap.put(id, StringNumberUtil.ZERO);
         String value = StringNumberUtil.ZERO;
         List<ItemStackWithWrapperAmount> recipeList = ItemStackUtil.calItemListWithAmount(slimefunItem.getRecipe());
         for (ItemStackWithWrapperAmount recipeItem : ItemStackUtil.calItemListWithAmount(slimefunItem.getRecipe())) {
@@ -138,7 +139,7 @@ public class ItemValueTable {
         if (machineItem == null) {
             value = StringNumberUtil.add(value);
         } else if (machineItem.equals(slimefunItem)) {
-            itemInputValueMap.put(id, value);
+            this.itemInputValueMap.put(id, value);
             return value;
         } else {
             value = StringNumberUtil.add(value, this.getOrCalItemInputValue(slimefunItem.getRecipeType().getMachine()));
@@ -172,6 +173,7 @@ public class ItemValueTable {
             this.itemOutputValueMap.put(id, StringNumberUtil.VALUE_INFINITY);
             return StringNumberUtil.VALUE_INFINITY;
         }
+        this.itemOutputValueMap.put(id, StringNumberUtil.VALUE_INFINITY);
         String value = StringNumberUtil.ZERO;
         List<ItemStackWithWrapperAmount> recipeList = ItemStackUtil.calItemListWithAmount(slimefunItem.getRecipe());
         for (ItemStackWithWrapperAmount recipeItem : recipeList) {
