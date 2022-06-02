@@ -13,6 +13,8 @@ import io.taraxacum.finaltech.core.items.unusable.Singularity;
 import io.taraxacum.finaltech.core.items.unusable.Spirochete;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.TextUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -70,8 +72,18 @@ public class ItemValueTable {
         List<SlimefunItem> allSlimefunItems = Slimefun.getRegistry().getAllSlimefunItems();
         for (SlimefunItem slimefunItem : allSlimefunItems) {
             if (!slimefunItem.isDisabled()) {
-                this.getOrCalItemInputValue(slimefunItem);
-                this.getOrCalItemOutputValue(slimefunItem);
+                try {
+                    this.getOrCalItemInputValue(slimefunItem);
+                } catch (Exception e) {
+                    this.itemInputValueMap.put(slimefunItem.getId(), StringNumberUtil.ZERO);
+                    FinalTech.getInstance().getServer().getLogger().info(TextUtil.COLOR_NEGATIVE + "Id为 " + slimefunItem.getId() + " 的物品无法计算输入价值");
+                }
+                try {
+                    this.getOrCalItemOutputValue(slimefunItem);
+                } catch (Exception e) {
+                    this.itemOutputValueMap.put(slimefunItem.getId(), StringNumberUtil.VALUE_INFINITY);
+                    FinalTech.getInstance().getServer().getLogger().info(TextUtil.COLOR_NEGATIVE + "Id为 " + slimefunItem.getId() + " 的物品无法计算输出价值");
+                }
             }
         }
 
