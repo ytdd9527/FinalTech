@@ -90,12 +90,14 @@ public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetCom
             });
         }
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
-        ItemStackUtil.setLore(item,
-                TextUtil.COLOR_NORMAL + "当前存储电量= " + TextUtil.COLOR_NUMBER + charge + "J",
-                TextUtil.COLOR_NORMAL + "当前生效的机器= " + TextUtil.COLOR_NUMBER + count + "J",
-                TextUtil.COLOR_NORMAL + "实际传输量= " + TextUtil.COLOR_NUMBER + totalEnergy + "J",
-                TextUtil.COLOR_NORMAL + "单机器最大传输量= " + TextUtil.COLOR_NUMBER + maxEnergy + "J");
+        if(blockMenu.hasViewer()) {
+            ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
+            ItemStackUtil.setLore(item,
+                    TextUtil.COLOR_NORMAL + "当前存储电量= " + TextUtil.COLOR_NUMBER + charge + "J",
+                    TextUtil.COLOR_NORMAL + "当前生效的机器= " + TextUtil.COLOR_NUMBER + count + "J",
+                    TextUtil.COLOR_NORMAL + "实际传输量= " + TextUtil.COLOR_NUMBER + totalEnergy + "J",
+                    TextUtil.COLOR_NORMAL + "单机器最大传输量= " + TextUtil.COLOR_NUMBER + maxEnergy + "J");
+        }
         charge = charge - (int) (maxEnergy.get() * LOSS);
         charge = Math.max(charge, 0);
         SlimefunUtil.setCharge(blockLocation, String.valueOf(charge));

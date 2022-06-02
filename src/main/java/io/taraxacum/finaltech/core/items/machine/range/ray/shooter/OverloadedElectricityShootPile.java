@@ -66,7 +66,8 @@ public class OverloadedElectricityShootPile extends AbstractElectricityShootPile
                 "",
                 TextUtil.COLOR_NORMAL + "将自身背向的电容的电量",
                 TextUtil.COLOR_NORMAL + "按照 从近至远 的顺序",
-                TextUtil.COLOR_NORMAL + "依次传输并充满至自身面向的 " + TextUtil.COLOR_NUMBER + this.getRange() +"格" + TextUtil.COLOR_NORMAL + " 机器");
+                TextUtil.COLOR_NORMAL + "依次传输并充满至自身面向的 " + TextUtil.COLOR_NUMBER + this.getRange() +"格" + TextUtil.COLOR_NORMAL + " 机器",
+                TextUtil.COLOR_NEGATIVE + "无法传电至电容");
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "过载化充电",
                 "",
                 TextUtil.COLOR_NORMAL + "充电时 无视目标机器的最大电容量",

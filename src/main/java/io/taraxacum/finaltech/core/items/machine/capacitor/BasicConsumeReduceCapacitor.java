@@ -28,16 +28,16 @@ public class BasicConsumeReduceCapacitor extends AbstractElectricCapacitor imple
 
     @Override
     public void removeCharge(@Nonnull Location l, int charge) {
-        charge *= this.getEfficient() / (1 + (this.getEfficient() - 1) * ((getCapacity() - getCharge(l)) / (double) getCapacity()));
+        charge *= 1.0 / this.getEfficient();
         super.removeCharge(l, charge);
     }
 
     @Override
     public void setCharge(@Nonnull Location l, int charge) {
-        int difference = charge - getCharge(l);
+        int difference = charge - this.getCharge(l);
         if (difference < 0) {
             charge -= difference;
-            difference *= 1 / (1 + (this.getEfficient() - 1) * ((getCapacity() - getCharge(l)) / (double) getCapacity()));
+            difference *= 1.0 / this.getEfficient();
             charge += difference;
         }
         super.setCharge(l, charge);

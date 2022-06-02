@@ -22,7 +22,9 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Final_ROOT
@@ -53,31 +55,23 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        List<Integer> amountList = new ArrayList<>(this.getInputSlot().length);
-        List<ItemStackWithWrapper> itemList = new ArrayList<>(this.getInputSlot().length);
+        if(MachineUtil.itemCount(blockMenu, this.getInputSlot()) != this.getInputSlot().length) {
+            return;
+        }
+        Set<Integer> amountList = new HashSet<>(this.getInputSlot().length);
+        ItemStackWithWrapper firstItem = new ItemStackWithWrapper(blockMenu.getItemInSlot(this.getInputSlot()[0]));
+        boolean allSameItem = true;
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if (ItemStackUtil.isItemNull(item)) {
-                return;
-            }
-            if (!amountList.contains(item.getAmount())) {
-                amountList.add(item.getAmount());
-            }
-            boolean contain = false;
-            for (ItemStackWithWrapper itemWithWrapper : itemList) {
-                if (ItemStackUtil.isItemSimilar(itemWithWrapper, itemWithWrapper)) {
-                    contain = true;
-                    break;
-                }
-            }
-            if (!contain && itemList.size() <= 1) {
-                itemList.add(new ItemStackWithWrapper(item));
+            amountList.add(item.getAmount());
+            if(allSameItem && !ItemStackUtil.isItemSimilar(firstItem, item)) {
+                allSameItem = false;
             }
         }
         for (int slot : this.getInputSlot()) {
             blockMenu.replaceExistingItem(slot, ItemStackUtil.AIR);
         }
-        if (amountList.size() == this.getInputSlot().length && itemList.size() == 1) {
+        if (amountList.size() == this.getInputSlot().length && allSameItem) {
             blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), this.getOutputSlot());
         } else if (Math.random() < (double)(amountList.size()) / this.getInputSlot().length) {
             blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), this.getOutputSlot());

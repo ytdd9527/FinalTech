@@ -9,6 +9,7 @@ import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.TextUtil;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.MainHand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -66,7 +67,8 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
     public int addItem(@Nullable ItemStack item) {
         if (!this.isFinished()) {
             if (ItemStackUtil.isItemSimilar(item, this.matchItem)) {
-                double efficiency = Math.pow(0.5, 20.0 - 20.0 * 1000 / FinalTech.getMSPS());
+                double efficiency = Math.pow(0.5, 20.0 - 20.0 * 1000 / (FinalTech.getMSPS() - 50));
+                efficiency = Math.min(efficiency, 1);
                 if(item.getAmount() * efficiency + this.count < this.difficulty) {
                     int amount = item.getAmount();
                     item.setAmount(item.getAmount() - amount);

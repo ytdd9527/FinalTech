@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
+import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.common.util.StringNumberUtil;
@@ -39,7 +40,7 @@ public class EnergizedElectricityShootPile extends AbstractElectricityShootPile 
                 Config energyComponentConfig = BlockStorage.getLocationInfo(location);
                 if (energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
                     SlimefunItem energyComponentItem = SlimefunItem.getById(energyComponentConfig.getString(SlimefunUtil.KEY_ID));
-                    if (energyComponentItem instanceof EnergyNetComponent) {
+                    if (energyComponentItem instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) energyComponentItem).getEnergyComponentType())) {
                         int componentEnergy = Integer.parseInt(SlimefunUtil.getCharge(energyComponentConfig));
                         int componentCapacity = ((EnergyNetComponent) energyComponentItem).getCapacity();
                         if (componentEnergy >= componentCapacity) {
@@ -63,6 +64,7 @@ public class EnergizedElectricityShootPile extends AbstractElectricityShootPile 
                 "",
                 TextUtil.COLOR_NORMAL + "将自身背向的电容的电量",
                 TextUtil.COLOR_NORMAL + "按照 从近至远 的顺序",
-                TextUtil.COLOR_NORMAL + "依次传输并充满至自身面向的 " + TextUtil.COLOR_NUMBER + this.getRange() +"格" + TextUtil.COLOR_NORMAL + " 机器");
+                TextUtil.COLOR_NORMAL + "依次传输并充满至自身面向的 " + TextUtil.COLOR_NUMBER + this.getRange() +"格" + TextUtil.COLOR_NORMAL + " 机器",
+                TextUtil.COLOR_NEGATIVE + "无法传电至电容");
     }
 }

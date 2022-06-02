@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class LocationTransferMenu extends AbstractMachineMenu {
-    private static final int[] BORDER = new int[] {27, 28, 29, 30, 31, 32, 33, 34, 35, 39, 41, 48, 49, 50};
+    private static final int[] BORDER = new int[] {27, 28, 29, 30, 31, 32, 33, 34, 35, 39, 41, 44, 48, 49, 50, 51, 52, 53};
     private static final int[] INPUT_BORDER = new int[0];
     private static final int[] OUTPUT_BORDER = new int[0];
     private static final int[] INPUT_SLOT = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
@@ -80,9 +80,9 @@ public class LocationTransferMenu extends AbstractMachineMenu {
         this.addItem(CARGO_MODE_SLOT, CargoMode.HELPER.defaultIcon());
         this.addItem(CARGO_ORDER_SLOT, CargoOrder.HELPER.defaultIcon());
 
-        this.addItem(LINE1_SLOT, SlotSearchLine.L1_ICON);
-        this.addItem(LINE2_SLOT, SlotSearchLine.L2_ICON);
-        this.addItem(LINE3_SLOT, SlotSearchLine.L3_ICON);
+//        this.addItem(LINE1_SLOT, SlotSearchLine.L1_ICON);
+//        this.addItem(LINE2_SLOT, SlotSearchLine.L2_ICON);
+//        this.addItem(LINE3_SLOT, SlotSearchLine.L3_ICON);
     }
 
     @Override
@@ -99,9 +99,9 @@ public class LocationTransferMenu extends AbstractMachineMenu {
         blockMenu.addMenuClickHandler(CARGO_MODE_SLOT, CargoMode.HELPER.getHandler(blockMenu, block, this, CARGO_MODE_SLOT));
         blockMenu.addMenuClickHandler(CARGO_ORDER_SLOT, CargoOrder.HELPER.getHandler(blockMenu, block, this, CARGO_ORDER_SLOT));
 
-        blockMenu.addMenuClickHandler(LINE1_SLOT, SlotSearchLine.L1_HELPER.getHandler(blockMenu, block, this, LINE1_SLOT));
-        blockMenu.addMenuClickHandler(LINE2_SLOT, SlotSearchLine.L2_HELPER.getHandler(blockMenu, block, this, LINE2_SLOT));
-        blockMenu.addMenuClickHandler(LINE3_SLOT, SlotSearchLine.L3_HELPER.getHandler(blockMenu, block, this, LINE3_SLOT));
+//        blockMenu.addMenuClickHandler(LINE1_SLOT, SlotSearchLine.L1_HELPER.getHandler(blockMenu, block, this, LINE1_SLOT));
+//        blockMenu.addMenuClickHandler(LINE2_SLOT, SlotSearchLine.L2_HELPER.getHandler(blockMenu, block, this, LINE2_SLOT));
+//        blockMenu.addMenuClickHandler(LINE3_SLOT, SlotSearchLine.L3_HELPER.getHandler(blockMenu, block, this, LINE3_SLOT));
     }
 
     @Override
@@ -116,8 +116,8 @@ public class LocationTransferMenu extends AbstractMachineMenu {
         CargoMode.HELPER.checkAndUpdateIcon(blockMenu, CARGO_MODE_SLOT);
         CargoOrder.HELPER.checkAndUpdateIcon(blockMenu, CARGO_ORDER_SLOT);
 
-        SlotSearchLine.L1_HELPER.checkAndUpdateIcon(blockMenu, LINE1_SLOT);
-        SlotSearchLine.L2_HELPER.checkAndUpdateIcon(blockMenu, LINE2_SLOT);
-        SlotSearchLine.L3_HELPER.checkAndUpdateIcon(blockMenu, LINE3_SLOT);
+//        SlotSearchLine.L1_HELPER.checkAndUpdateIcon(blockMenu, LINE1_SLOT);
+//        SlotSearchLine.L2_HELPER.checkAndUpdateIcon(blockMenu, LINE2_SLOT);
+//        SlotSearchLine.L3_HELPER.checkAndUpdateIcon(blockMenu, LINE3_SLOT);
     }
 }

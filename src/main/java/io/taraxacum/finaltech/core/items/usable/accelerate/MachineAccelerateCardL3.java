@@ -15,6 +15,7 @@ import javax.annotation.Nonnull;
  */
 public class MachineAccelerateCardL3 extends AbstractMachineActivateCard {
     public static final int TIMES = 3600;
+
     public MachineAccelerateCardL3(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }

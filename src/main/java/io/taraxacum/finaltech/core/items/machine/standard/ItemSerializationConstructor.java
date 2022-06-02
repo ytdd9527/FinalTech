@@ -61,7 +61,7 @@ public class ItemSerializationConstructor extends AbstractStandardMachine {
                 operation = ItemSerializationConstructorOperation.newInstance(stringItem);
                 if (operation != null) {
                     this.getMachineProcessor().startOperation(block, operation);
-                    int amount = Integer.parseInt(config.getString(BLOCK_STORAGE_AMOUNT_KEY));
+                    int amount = (int) Double.parseDouble(config.getString(BLOCK_STORAGE_AMOUNT_KEY));
                     ((ItemCopyCardOperation)operation).setCount(amount);
                 }
             }
@@ -96,7 +96,7 @@ public class ItemSerializationConstructor extends AbstractStandardMachine {
             showItem = operation.getShowItem();
             if (operation.getType() == ItemSerializationConstructorOperation.COPY_CARD) {
                 BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_ITEM_KEY, ItemStackUtil.itemStackToString(((ItemCopyCardOperation)operation).getMatchItem()));
-                BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_AMOUNT_KEY, String.valueOf(((ItemCopyCardOperation)operation).getCount()));
+                BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_AMOUNT_KEY, String.valueOf((int)((ItemCopyCardOperation)operation).getCount()));
             }
         } else {
             showItem = NULL_INFO_ICON;

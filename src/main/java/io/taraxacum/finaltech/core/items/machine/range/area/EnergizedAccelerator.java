@@ -36,6 +36,7 @@ import java.util.*;
 public class EnergizedAccelerator extends AbstractCubeMachine implements AntiAccelerationMachine, EnergyNetComponent, RecipeItem {
     private static final int RANGE = 2;
     private static final int CAPACITY = Integer.MAX_VALUE / 4;
+
     public EnergizedAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -63,6 +64,7 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements AntiAcc
         Location blockLocation = block.getLocation();
         BlockMenu blockMenu = BlockStorage.getInventory(blockLocation);
         int machineEnergy = Integer.parseInt(SlimefunUtil.getCharge(config));
+        final int finalMachineEnergy = machineEnergy;
         if(machineEnergy == 0) {
             this.updateMenu(blockMenu, 0, 0, 0, 0);
             return;
@@ -88,19 +90,24 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements AntiAcc
         }
 
         int accelerateTime = 0;
-        int energy = machineEnergy / count;
         int accelerateEachTime = 0;
 
         String extraEnergyConsume = StringNumberUtil.ZERO;
         int extraEnergy;
 
         for(Map.Entry<Integer, List<LocationWithConfig>> entry : machineConfigMap.entrySet()) {
-            for(LocationWithConfig locationConfig : entry.getValue()) {
+            Iterator<LocationWithConfig> iterator = entry.getValue().iterator();
+            while (iterator.hasNext()) {
+                LocationWithConfig locationConfig = iterator.next();
+                if(locationConfig.getLocation().equals(blockLocation)) {
+                    iterator.remove();
+                    continue;
+                }
                 SlimefunItem sfItem = SlimefunItem.getById(locationConfig.getConfig().getString(SlimefunUtil.KEY_ID));
-                if(!(sfItem instanceof EnergyNetComponent)) {
-                    entry.getValue().remove(locationConfig);
-                } else {
+                if(sfItem instanceof EnergyNetComponent) {
                     extraEnergyConsume = StringNumberUtil.add(extraEnergyConsume, String.valueOf(((EnergyNetComponent) sfItem).getCapacity()));
+                } else {
+                    iterator.remove();
                 }
             }
         }
@@ -111,9 +118,9 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements AntiAcc
             extraEnergy = Integer.parseInt(extraEnergyConsume);
         }
 
-        energy -= extraEnergy;
+        machineEnergy -= extraEnergy;
 
-        while (energy > 0) {
+        while (machineEnergy > 0) {
             for (int distance = 1; distance <= RANGE * 3; distance++) {
                 List<LocationWithConfig> locationConfigList = machineConfigMap.get(distance);
                 if (locationConfigList != null) {
@@ -129,14 +136,13 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements AntiAcc
                 }
             }
             accelerateEachTime++;
-            energy /= count;
-            energy /= accelerateEachTime;
-            energy -= extraEnergy;
+            machineEnergy /= count - 1;
+            machineEnergy /= accelerateEachTime;
+            machineEnergy -= extraEnergy;
         }
 
         SlimefunUtil.setCharge(config, 0);
-
-        this.updateMenu(blockMenu, machineEnergy, count - 1, accelerateEachTime, accelerateTime);
+        this.updateMenu(blockMenu, finalMachineEnergy, count - 1, accelerateEachTime, accelerateTime);
     }
 
     @Override

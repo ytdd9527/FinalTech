@@ -11,6 +11,7 @@ import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponen
 import io.taraxacum.finaltech.api.dto.LocationWithConfig;
 import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
@@ -71,7 +72,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements AntiAccele
 
         if (ItemStackUtil.isItemNull(matchItem)) {
             accelerate = 1;
-        } else if (ItemStackUtil.isItemSimilar(matchItem, FinalTechItems.PHONY)) {
+        } else if (ItemPhony.isValid(matchItem)) {
             int amount = matchItem.getAmount();
             while (amount > 0) {
                 accelerate++;
@@ -120,7 +121,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements AntiAccele
 
         if (machineId != null) {
             if (count == 0) {
-                updateMenu(blockMenu, 0, 0, StringNumberUtil.ZERO);
+                this.updateMenu(blockMenu, 0, 0, StringNumberUtil.ZERO);
                 return;
             }
             energyNetComponent = machineItem instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) machineItem).getEnergyComponentType());
@@ -167,8 +168,8 @@ public class MatrixAccelerator extends AbstractCubeMachine implements AntiAccele
                         for (int i = 0; i < accelerate; i++) {
                             if (energyNetComponent) {
                                 String machineEnergy = SlimefunUtil.getCharge(machineConfig);
-                                String transferEnergy = StringNumberUtil.min(StringNumberUtil.sub(machineCapacity, machineEnergy), machineEnergy);
-                                SlimefunUtil.setCharge(machineConfig, StringNumberUtil.add(machineEnergy, transferEnergy));
+                                String transferEnergy = StringNumberUtil.sub(machineCapacity, machineEnergy);
+                                SlimefunUtil.setCharge(machineConfig, machineCapacity);
                                 accelerateEnergy = StringNumberUtil.add(accelerateEnergy, transferEnergy);
                             }
                             SlimefunUtil.runBlockTicker(blockTicker, machineLocation.getBlock(), machineItem, machineConfig);
@@ -181,26 +182,26 @@ public class MatrixAccelerator extends AbstractCubeMachine implements AntiAccele
                         Location machineLocation = locationConfig.getLocation();
                         machineId = machineConfig.getString(SlimefunUtil.KEY_ID);
                         machineItem = SlimefunItem.getById(machineId);
-                        machineCapacity = energyComponentCapacityMap.get(machineId);
                         blockTicker = machineItem.getBlockTicker();
-                        if (blockTicker != null || !StringNumberUtil.ZERO.equals(machineCapacity)) {
+                        machineCapacity = energyComponentCapacityMap.get(machineId);
+                        energyNetComponent = !StringNumberUtil.ZERO.equals(machineCapacity);
+                        if (blockTicker != null || energyNetComponent) {
                             accelerateMachineCount++;
                             for (int i = 0; i < accelerate; i++) {
-                                if (blockTicker != null) {
-                                    SlimefunUtil.runBlockTicker(blockTicker, machineLocation.getBlock(), machineItem, machineConfig);
-                                }
-                                if (!StringNumberUtil.ZERO.equals(machineCapacity)) {
+                                if (energyNetComponent) {
                                     String machineEnergy = SlimefunUtil.getCharge(machineConfig);
-                                    String transferEnergy = StringNumberUtil.min(StringNumberUtil.sub(machineCapacity, machineEnergy), machineEnergy);
+                                    String transferEnergy = StringNumberUtil.sub(machineCapacity, machineEnergy);
                                     SlimefunUtil.setCharge(machineConfig, StringNumberUtil.add(machineEnergy, transferEnergy));
                                     accelerateEnergy = StringNumberUtil.add(accelerateEnergy, transferEnergy);
+                                }
+                                if (blockTicker != null) {
+                                    SlimefunUtil.runBlockTicker(blockTicker, machineLocation.getBlock(), machineItem, machineConfig);
                                 }
                                 accelerateTimeCount++;
                             }
                         }
                     }
                     machineId = null;
-                    machineItem = null;
                 }
             }
         }
@@ -226,7 +227,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements AntiAccele
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
                 "",
                 TextUtil.COLOR_NORMAL + "使周围的机器工作效率提升",
-                TextUtil.COLOR_NORMAL + "并使其每次加速前补充 " + TextUtil.COLOR_NUMBER + "50%J" + TextUtil.COLOR_NORMAL + " 的电量");
+                TextUtil.COLOR_NORMAL + "并使其每次加速前补充 " + TextUtil.COLOR_NUMBER + "全部" + TextUtil.COLOR_NORMAL + " 的电量");
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "定向加速",
                 "",
                 TextUtil.COLOR_NORMAL + "放入粘液科技机器对应的物品",

@@ -89,12 +89,31 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem imp
 
                 BlockTicker blockTicker = slimefunItem.getBlockTicker();
                 if (blockTicker != null && chargeable) {
+                    final String finalChargeEnergy = chargeEnergy;
+                    final String finalCapacity = capacity;
+                    BlockTicker bT = new BlockTicker() {
+                        @Override
+                        public boolean isSynchronized() {
+                            return blockTicker.isSynchronized();
+                        }
+
+                        @Override
+                        public void tick(Block b, SlimefunItem item, Config data) {
+                            String energy = SlimefunUtil.getCharge(config);
+                            energy = StringNumberUtil.add(energy, finalChargeEnergy);
+                            energy = StringNumberUtil.min(energy, finalCapacity);
+                            SlimefunUtil.setCharge(data, energy);
+                            blockTicker.tick(b, item, data);
+                        }
+                    };
                     for (int i = 0, limit = this.consume() ? this.times() : this.times() * playerRightClickEvent.getItem().getAmount(); i < limit; i++) {
+                        SlimefunUtil.runBlockTicker(bT, block, slimefunItem, config);
+                    }
+                    if(this.times() == 0) {
                         String energy = SlimefunUtil.getCharge(config);
                         energy = StringNumberUtil.add(energy, chargeEnergy);
                         energy = StringNumberUtil.min(energy, capacity);
                         SlimefunUtil.setCharge(config, energy);
-                        SlimefunUtil.runBlockTicker(blockTicker, block, slimefunItem, config);
                     }
                 } else if (blockTicker != null) {
                     for (int i = 0, limit = this.consume() ? this.times() : this.times() * playerRightClickEvent.getItem().getAmount(); i < limit; i++) {

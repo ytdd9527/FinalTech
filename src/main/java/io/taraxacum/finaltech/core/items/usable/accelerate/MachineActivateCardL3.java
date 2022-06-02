@@ -16,6 +16,7 @@ import javax.annotation.Nonnull;
 public class MachineActivateCardL3 extends AbstractMachineActivateCard {
     private static final int TIMES = 1800;
     private static final double ENERGY = 4096.48;
+
     public MachineActivateCardL3(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }

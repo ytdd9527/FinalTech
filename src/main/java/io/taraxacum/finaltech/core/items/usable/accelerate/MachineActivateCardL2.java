@@ -15,7 +15,8 @@ import javax.annotation.Nonnull;
  */
 public class MachineActivateCardL2 extends AbstractMachineActivateCard {
     private static final int TIMES = 32;
-    private static final double ENERGY = 256.2;
+    private static final double ENERGY = 256.08;
+
     public MachineActivateCardL2(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -37,9 +38,9 @@ public class MachineActivateCardL2 extends AbstractMachineActivateCard {
 
     @Override
     protected boolean conditionMatch(@Nonnull Player player) {
-        if (player.getHealth() > 1 && player.getExp() > 1) {
+        if (player.getHealth() > 1 && player.getTotalExperience() > 1) {
             player.setHealth(player.getHealth() - 1);
-            player.setExp(player.getExp() - 1);
+            player.setTotalExperience(player.getTotalExperience() - 1);
             return true;
         }
         return false;

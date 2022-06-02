@@ -66,7 +66,7 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements AntiAc
                 Config componentConfig = BlockStorage.getLocationInfo(location);
                 if (componentConfig.contains(SlimefunUtil.KEY_ID)) {
                     int distance = Math.abs(location.getBlockX() - blockLocation.getBlockX()) + Math.abs(location.getBlockY() - blockLocation.getBlockY()) + Math.abs(location.getBlockZ() - blockLocation.getBlockZ());
-                    List<LocationWithConfig> componentConfigList = componentConfigMap.computeIfAbsent(distance, d -> new ArrayList(d * d * 4 + 2));
+                    List<LocationWithConfig> componentConfigList = componentConfigMap.computeIfAbsent(distance, d -> new ArrayList<>(d * d * 4 + 2));
                     componentConfigList.add(new LocationWithConfig(location.clone(), componentConfig));
                     return 1;
                 }
@@ -85,33 +85,28 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements AntiAc
                 for (LocationWithConfig locationConfig : locationConfigList) {
                     Config componentConfig = locationConfig.getConfig();
                     SlimefunItem item = SlimefunItem.getById(componentConfig.getString(SlimefunUtil.KEY_ID));
-                    if (item instanceof EnergyNetComponent) {
+                    BlockTicker blockTicker = item.getBlockTicker();
+                    if (item instanceof EnergyNetComponent && blockTicker != null) {
                         int componentCapacity = ((EnergyNetComponent) item).getCapacity();
-                        if (componentCapacity > 0) {
+                        int componentEnergy = Integer.parseInt(SlimefunUtil.getCharge(componentConfig));
+                        if (componentCapacity > 0 && componentEnergy > componentCapacity) {
                             accelerateMachineCount++;
-                            int componentEnergy = Integer.parseInt(SlimefunUtil.getCharge(componentConfig));
-                            if (componentEnergy > componentCapacity) {
-                                BlockTicker blockTicker = item.getBlockTicker();
-                                if (blockTicker != null) {
-                                    Block componentBlock = locationConfig.getLocation().getBlock();
-                                    while (componentEnergy > componentCapacity) {
-                                        accelerateTimeCount++;
-                                        if (blockTicker.isSynchronized()) {
-                                            Slimefun.runSync(() -> blockTicker.tick(componentBlock, item, componentConfig));
-                                        } else if (!blockTicker.isSynchronized()) {
-                                            blockTicker.tick(componentBlock, item, componentConfig);
-                                        }
-                                        componentEnergy = Integer.parseInt(SlimefunUtil.getCharge(componentConfig));
-                                        componentEnergy /= 2;
-                                        SlimefunUtil.setCharge(componentConfig, componentEnergy);
-                                    }
+                            Block componentBlock = locationConfig.getLocation().getBlock();
+                            while (componentEnergy > componentCapacity) {
+                                accelerateTimeCount++;
+                                if (blockTicker.isSynchronized()) {
+                                    Slimefun.runSync(() -> blockTicker.tick(componentBlock, item, componentConfig));
+                                } else if (!blockTicker.isSynchronized()) {
+                                    blockTicker.tick(componentBlock, item, componentConfig);
                                 }
+                                componentEnergy = Integer.parseInt(SlimefunUtil.getCharge(componentConfig));
+                                componentEnergy /= 2;
+                                SlimefunUtil.setCharge(componentConfig, componentEnergy);
                             }
                         }
                     }
                 }
             }
-
         }
 
         BlockMenu blockMenu = BlockStorage.getInventory(block);

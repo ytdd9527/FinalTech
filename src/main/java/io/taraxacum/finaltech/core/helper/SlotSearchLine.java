@@ -150,6 +150,9 @@ public class SlotSearchLine {
         @Override
         public boolean checkAndUpdateIcon(@Nonnull BlockMenu blockMenu, int slot) {
             String valueMap = BlockStorage.getLocationInfo(blockMenu.getLocation(), this.getKey());
+            if(valueMap == null) {
+                valueMap = "";
+            }
             KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
             String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getKey());
             if (!BlockStorageLoreMaterialHelper.this.validValue(value)) {

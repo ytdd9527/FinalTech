@@ -28,7 +28,7 @@ public class BasicChargeIncreaseCapacitor extends AbstractElectricCapacitor impl
 
     @Override
     public void addCharge(@Nonnull Location l, int charge) {
-        charge *= this.getEfficient() * (this.getCapacity() - this.getCharge(l)) / (double) this.getCapacity();
+        charge *= this.getEfficient();
         super.addCharge(l, charge);
     }
 
@@ -37,9 +37,10 @@ public class BasicChargeIncreaseCapacitor extends AbstractElectricCapacitor impl
         int difference = charge - this.getCharge(l);
         if (difference > 0) {
             charge -= difference;
-            difference *= this.getEfficient() * (this.getCapacity() - this.getCharge(l)) / (double) this.getCapacity();
+            difference *= this.getEfficient();
             charge += difference;
         }
+        charge = Math.min(charge, this.getCapacity());
         super.setCharge(l, charge);
     }
 
