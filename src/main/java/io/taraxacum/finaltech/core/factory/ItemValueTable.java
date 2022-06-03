@@ -65,8 +65,11 @@ public class ItemValueTable {
             this.itemInputValueMap.put(key, valueFile.getString("input." + key));
         }
         for (String key : valueFile.getKeys("output")) {
-            this.itemOutputValueMap.put(key, valueFile.getString("output." + key));
-            this.addToOutputMap(key, valueFile.getString("output." + key));
+            String value = valueFile.getString("output." + key);
+            this.itemOutputValueMap.put(key, value);
+            if(!StringNumberUtil.VALUE_INFINITY.equals(value)) {
+                this.addToOutputMap(key, valueFile.getString("output." + key));
+            }
         }
 
         List<SlimefunItem> allSlimefunItems = Slimefun.getRegistry().getAllSlimefunItems();
