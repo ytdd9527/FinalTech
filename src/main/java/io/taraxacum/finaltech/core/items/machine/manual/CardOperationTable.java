@@ -44,7 +44,7 @@ public class CardOperationTable extends AbstractManualMachine implements RecipeI
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if (!blockMenu.toInventory().getViewers().isEmpty()) {
+        if (blockMenu != null && !blockMenu.hasViewer()) {
             this.getMachineMenu().updateMenu(BlockStorage.getInventory(block.getLocation()), block);
         }
     }

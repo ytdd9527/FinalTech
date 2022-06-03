@@ -129,7 +129,7 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
                 this.addItemHandler(new BlockTicker() {
                     @Override
                     public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-                        if (!((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
+                        if (((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
                             return;
                         }
                         if (!((PerformanceLimitMachine)AbstractMachine.this).charge(config)) {
@@ -147,7 +147,7 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
                 this.addItemHandler(new BlockTicker() {
                     @Override
                     public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-                        if (!((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
+                        if (((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
                             return;
                         }
                         if (!((PerformanceLimitMachine)AbstractMachine.this).charge(config)) {
@@ -165,7 +165,7 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
                 this.addItemHandler(new BlockTicker() {
                     @Override
                     public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-                        if (!((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
+                        if (((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
                             return;
                         }
                         AbstractMachine.this.tick(block, slimefunItem, config);
@@ -180,7 +180,7 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
                 this.addItemHandler(new BlockTicker() {
                     @Override
                     public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-                        if (!((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
+                        if (((AntiAccelerationMachine)AbstractMachine.this).isAccelerated(config)) {
                             return;
                         }
                         BlockTaskFactory.getInstance().registerRunnable(slimefunItem, false, () -> AbstractMachine.this.tick(block, slimefunItem, config), block.getLocation());

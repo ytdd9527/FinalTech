@@ -215,11 +215,13 @@ public class MatrixAccelerator extends AbstractCubeMachine implements AntiAccele
     }
 
     private void updateMenu(@Nonnull BlockMenu blockMenu, int accelerateTimeCount, int accelerateMachineCount, String accelerateEnergy) {
-        ItemStack item = blockMenu.getItemInSlot(StatusL2Menu.STATUS_SLOT);
-        ItemStackUtil.setLore(item,
-                TextUtil.COLOR_NORMAL + "生效的机器= " + TextUtil.COLOR_NUMBER + accelerateMachineCount + "个",
-                TextUtil.COLOR_NORMAL + "生效的总次数= " + TextUtil.COLOR_NUMBER + accelerateTimeCount + "次",
-                TextUtil.COLOR_NORMAL + "产生的电量= " + TextUtil.COLOR_NUMBER + accelerateEnergy + "J");
+        if(blockMenu.hasViewer()) {
+            ItemStack item = blockMenu.getItemInSlot(StatusL2Menu.STATUS_SLOT);
+            ItemStackUtil.setLore(item,
+                    TextUtil.COLOR_NORMAL + "生效的机器= " + TextUtil.COLOR_NUMBER + accelerateMachineCount + "个",
+                    TextUtil.COLOR_NORMAL + "生效的总次数= " + TextUtil.COLOR_NUMBER + accelerateTimeCount + "次",
+                    TextUtil.COLOR_NORMAL + "产生的电量= " + TextUtil.COLOR_NUMBER + accelerateEnergy + "J");
+        }
     }
 
     @Override

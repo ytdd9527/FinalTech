@@ -199,7 +199,7 @@ public class ItemValueTable {
             value = StringNumberUtil.add(value, this.getOrCalItemOutputValue(machineItem));
         }
         this.itemOutputValueMap.put(id, value);
-        if(!(slimefunItem instanceof MultiBlockMachine)) {
+        if(!(slimefunItem instanceof MultiBlockMachine) && !StringNumberUtil.VALUE_INFINITY.equals(value)) {
             this.addToOutputMap(id, value);
         }
         return value;

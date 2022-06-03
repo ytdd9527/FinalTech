@@ -105,11 +105,12 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
             BlockStorage.addBlockInfo(block.getLocation(), KEY, energyStack);
         }
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
-
-        ItemStackUtil.setLore(item,
-                TextUtil.COLOR_NORMAL + "当前流转电量= " + TextUtil.COLOR_NUMBER + energy + "J",
-                TextUtil.COLOR_NORMAL + "当前存电组数= " + TextUtil.COLOR_NUMBER + energyStack);
+        if(blockMenu.hasViewer()) {
+            ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
+            ItemStackUtil.setLore(item,
+                    TextUtil.COLOR_NORMAL + "当前流转电量= " + TextUtil.COLOR_NUMBER + energy + "J",
+                    TextUtil.COLOR_NORMAL + "当前存电组数= " + TextUtil.COLOR_NUMBER + energyStack);
+        }
     }
 
     @Override

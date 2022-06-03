@@ -61,8 +61,7 @@ public class NormalElectricityShootPile extends AbstractElectricityShootPile imp
 
     @Override
     protected void updateMenu(ItemStack item, int count, Summary summary) {
-        //todo 优化说明
-        ItemStackUtil.setLore(item, "§7实际传输电量= " + summary.getEnergyCharge());
+        ItemStackUtil.setLore(item, TextUtil.COLOR_NORMAL + "实际传输电量= " + TextUtil.COLOR_NUMBER + summary.getEnergyCharge());
     }
 
     @Override

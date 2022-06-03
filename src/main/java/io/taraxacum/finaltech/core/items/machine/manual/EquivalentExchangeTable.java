@@ -56,9 +56,6 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if (blockMenu.hasViewer()) {
-            this.getMachineMenu().updateMenu(blockMenu, block);
-        }
         String value = config.contains(KEY) ? config.getString(KEY) : StringNumberUtil.ZERO;
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
@@ -76,6 +73,9 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
             }
         }
         BlockStorage.addBlockInfo(block.getLocation(), KEY, value);
+        if (blockMenu.hasViewer()) {
+            this.getMachineMenu().updateMenu(blockMenu, block);
+        }
     }
 
     @Override

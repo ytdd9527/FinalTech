@@ -146,10 +146,12 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
     }
 
     private void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-        ItemStack item = blockMenu.getItemInSlot(OrderDustGeneratorMenu.STATUS_SLOT);
-        ItemStackUtil.setLore(item,
-                TextUtil.COLOR_NORMAL + "当前发电量= " + TextUtil.COLOR_NUMBER + BlockStorage.getLocationInfo(block.getLocation(), DustGenerator.KEY_COUNT) + "J/t",
-                TextUtil.COLOR_NORMAL + "已达到的最大发电量= " + TextUtil.COLOR_NUMBER + BlockStorage.getLocationInfo(block.getLocation(), DustGenerator.KEY_MAX) + "J/t");
+        if(blockMenu.hasViewer()) {
+            ItemStack item = blockMenu.getItemInSlot(OrderDustGeneratorMenu.STATUS_SLOT);
+            ItemStackUtil.setLore(item,
+                    TextUtil.COLOR_NORMAL + "当前发电量= " + TextUtil.COLOR_NUMBER + BlockStorage.getLocationInfo(block.getLocation(), DustGenerator.KEY_COUNT) + "J/t",
+                    TextUtil.COLOR_NORMAL + "已达到的最大发电量= " + TextUtil.COLOR_NUMBER + BlockStorage.getLocationInfo(block.getLocation(), DustGenerator.KEY_MAX) + "J/t");
+        }
     }
 
     @Override

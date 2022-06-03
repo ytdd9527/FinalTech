@@ -50,8 +50,7 @@ public class ItemSerializationConstructor extends AbstractStandardMachine {
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        BlockMenu inv = BlockStorage.getInventory(block);
-
+        BlockMenu blockMenu = BlockStorage.getInventory(block);
         ItemSerializationConstructorOperation operation = (ItemSerializationConstructorOperation) this.getMachineProcessor().getOperation(block);
 
         if (operation == null && config.contains(BLOCK_STORAGE_ITEM_KEY)) {
@@ -68,7 +67,7 @@ public class ItemSerializationConstructor extends AbstractStandardMachine {
         }
 
         for (int slot : this.getInputSlot()) {
-            ItemStack inputItem = inv.getItemInSlot(slot);
+            ItemStack inputItem = blockMenu.getItemInSlot(slot);
             if (ItemStackUtil.isItemNull(inputItem)) {
                 continue;
             }
@@ -82,26 +81,29 @@ public class ItemSerializationConstructor extends AbstractStandardMachine {
             }
         }
 
-        if (operation != null && operation.isFinished() && InvUtils.fits(inv.toInventory(), operation.getResult(), this.getOutputSlot())) {
-            inv.pushItem(operation.getResult(), this.getOutputSlot());
+        if (operation != null && operation.isFinished() && InvUtils.fits(blockMenu.toInventory(), operation.getResult(), this.getOutputSlot())) {
+            blockMenu.pushItem(operation.getResult(), this.getOutputSlot());
             this.getMachineProcessor().endOperation(block);
             operation = null;
             BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_ITEM_KEY, null);
             BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_AMOUNT_KEY, null);
         }
 
-        ItemStack showItem;
-        if (operation != null) {
-            operation.updateShowItem();
-            showItem = operation.getShowItem();
-            if (operation.getType() == ItemSerializationConstructorOperation.COPY_CARD) {
-                BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_ITEM_KEY, ItemStackUtil.itemStackToString(((ItemCopyCardOperation)operation).getMatchItem()));
-                BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_AMOUNT_KEY, String.valueOf((int)((ItemCopyCardOperation)operation).getCount()));
-            }
-        } else {
-            showItem = NULL_INFO_ICON;
+        if(operation != null && operation.getType() == ItemSerializationConstructorOperation.COPY_CARD) {
+            BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_ITEM_KEY, ItemStackUtil.itemStackToString(((ItemCopyCardOperation)operation).getMatchItem()));
+            BlockStorage.addBlockInfo(block.getLocation(), BLOCK_STORAGE_AMOUNT_KEY, String.valueOf((int)((ItemCopyCardOperation)operation).getCount()));
         }
-        inv.replaceExistingItem(ItemSerializationConstructorMenu.STATUS_SLOT, showItem);
+
+        if(blockMenu.hasViewer()) {
+            ItemStack showItem;
+            if (operation != null) {
+                operation.updateShowItem();
+                showItem = operation.getShowItem();
+            } else {
+                showItem = NULL_INFO_ICON;
+            }
+            blockMenu.replaceExistingItem(ItemSerializationConstructorMenu.STATUS_SLOT, showItem);
+        }
     }
 
     @Override

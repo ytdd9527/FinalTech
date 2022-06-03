@@ -119,9 +119,9 @@ public class BlockTaskFactory<T> {
 
             long endTime = System.nanoTime();
 
-            if(!lockMap.isEmpty()) {
-                Bukkit.getLogger().info(TextUtil.colorRandomString("[FINAL TECH] All Task is run in " + (endTime - beginTime) / 1000000 + "ms"));
-            }
+//            if(!lockMap.isEmpty()) {
+//                Bukkit.getLogger().info(TextUtil.colorRandomString("[FINAL TECH] All Task is run in " + (endTime - beginTime) / 1000000 + "ms"));
+//            }
 
             this.work = false;
             this.lock.notifyAll();

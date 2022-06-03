@@ -58,7 +58,6 @@ public class BasicFrameMachine extends AbstractStandardMachine {
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
                 "",
                 TextUtil.COLOR_NORMAL + "将自身左侧的物品",
-                TextUtil.COLOR_NORMAL + "对称地",
                 TextUtil.COLOR_NORMAL + "移动到自身右侧");
     }
 }

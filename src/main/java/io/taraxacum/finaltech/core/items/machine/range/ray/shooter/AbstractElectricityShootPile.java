@@ -20,6 +20,7 @@ import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -75,7 +76,10 @@ public abstract class AbstractElectricityShootPile extends AbstractRayMachine im
             }
         }
 
-        this.updateMenu(BlockStorage.getInventory(block).getItemInSlot(StatusMenu.STATUS_SLOT), count, summary);
+        BlockMenu blockMenu = BlockStorage.getInventory(block);
+        if(blockMenu.hasViewer()) {
+            this.updateMenu(blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT), count, summary);
+        }
     }
 
     @Override

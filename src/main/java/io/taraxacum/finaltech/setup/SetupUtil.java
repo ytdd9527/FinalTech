@@ -60,7 +60,7 @@ public final class SetupUtil {
         if(configFile.contains("machine.multi-thread-level")) {
             AbstractMachine.MULTI_THREAD_LEVEL = configFile.getInt("machine.multi-thread-level");
         } else {
-            configFile.setValue("option.multi-thread-level", AbstractMachine.MULTI_THREAD_LEVEL);
+            configFile.setValue("machine.multi-thread-level", AbstractMachine.MULTI_THREAD_LEVEL);
         }
 
         if(AbstractMachine.MULTI_THREAD_LEVEL == 0) {

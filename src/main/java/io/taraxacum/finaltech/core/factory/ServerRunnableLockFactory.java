@@ -1,8 +1,8 @@
 package io.taraxacum.finaltech.core.factory;
 
 import io.taraxacum.common.api.RunnableLockFactory;
-import io.taraxacum.finaltech.FinalTech;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -10,6 +10,11 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ * @param <T>
+ */
 public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
     private final Map<T, FutureTask<Object>> MAP = new HashMap<>();
     private final Object lock = new Object();
@@ -23,7 +28,8 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
     @SafeVarargs
     public final FutureTask<Object> waitThenRun(@Nonnull Runnable runnable, @Nonnull T... objects) {
         FutureTask<Object> futureTask = new FutureTask<>(runnable, new Object());
-        this.javaPlugin.getServer().getScheduler().runTaskAsynchronously(this.javaPlugin, () -> {
+        final BukkitScheduler scheduler = this.javaPlugin.getServer().getScheduler();
+        scheduler.runTaskAsynchronously(this.javaPlugin, () -> {
             boolean work = false;
             while (!work) {
                 for(T object : objects) {
@@ -46,9 +52,9 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
                         }
                     }
                     if(work) {
+                        scheduler.runTaskAsynchronously(this.javaPlugin, futureTask);
                         for(T object : objects) {
                             ServerRunnableLockFactory.this.MAP.put(object, futureTask);
-                            this.javaPlugin.getServer().getScheduler().runTaskAsynchronously(this.javaPlugin, futureTask);
                         }
                     }
                 }

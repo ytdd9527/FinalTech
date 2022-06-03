@@ -54,7 +54,9 @@ public abstract class AbstractElectricCapacitor extends AbstractMachine implemen
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
-        this.updateMenu(item, config);
+        if(blockMenu.hasViewer()) {
+            this.updateMenu(item, config);
+        }
     }
 
     @Override

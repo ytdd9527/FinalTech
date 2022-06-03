@@ -73,10 +73,12 @@ public class DustFactoryDirt extends AbstractStandardMachine {
             operation = new DustFactoryOperation();
             this.getMachineProcessor().startOperation(block, operation);
         }
-        CustomItemStack progress = new CustomItemStack(Material.REDSTONE, TextUtil.COLOR_NORMAL + "完成进度",
-                TextUtil.COLOR_NORMAL + "匹配的物品种类= " + TextUtil.COLOR_NUMBER + operation.getTypeCount() + "/" + TYPE_DIFFICULTY,
-                TextUtil.COLOR_NORMAL + "输入的物品总数= " + TextUtil.COLOR_NUMBER + operation.getAmountCount() + "/" + AMOUNT_DIFFICULTY);
-        blockMenu.replaceExistingItem(DustFactoryMenu.STATUS_SLOT, progress);
+        if(blockMenu.hasViewer()) {
+            CustomItemStack progress = new CustomItemStack(Material.REDSTONE, TextUtil.COLOR_NORMAL + "完成进度",
+                    TextUtil.COLOR_NORMAL + "匹配的物品种类= " + TextUtil.COLOR_NUMBER + operation.getTypeCount() + "/" + TYPE_DIFFICULTY,
+                    TextUtil.COLOR_NORMAL + "输入的物品总数= " + TextUtil.COLOR_NUMBER + operation.getAmountCount() + "/" + AMOUNT_DIFFICULTY);
+            blockMenu.replaceExistingItem(DustFactoryMenu.STATUS_SLOT, progress);
+        }
     }
 
     @Override

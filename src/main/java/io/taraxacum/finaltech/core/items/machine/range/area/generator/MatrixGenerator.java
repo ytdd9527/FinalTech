@@ -113,14 +113,16 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator implements An
             }
             return 0;
         });
-        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
-        ItemStackUtil.setLore(item,
-                TextUtil.COLOR_NORMAL + "当前生效的机器= " + TextUtil.COLOR_NUMBER + count + "个",
-                TextUtil.COLOR_NORMAL + "实际发电量= " + TextUtil.COLOR_NUMBER + energyCharge + "J");
-        if (count == 0) {
-            item.setType(Material.RED_STAINED_GLASS_PANE);
-        } else {
-            item.setType(Material.GREEN_STAINED_GLASS_PANE);
+        if(blockMenu.hasViewer()) {
+            ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
+            ItemStackUtil.setLore(item,
+                    TextUtil.COLOR_NORMAL + "当前生效的机器= " + TextUtil.COLOR_NUMBER + count + "个",
+                    TextUtil.COLOR_NORMAL + "实际发电量= " + TextUtil.COLOR_NUMBER + energyCharge + "J");
+            if (count == 0) {
+                item.setType(Material.RED_STAINED_GLASS_PANE);
+            } else {
+                item.setType(Material.GREEN_STAINED_GLASS_PANE);
+            }
         }
     }
 

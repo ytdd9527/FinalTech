@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.usable.UsableSlimefunItem;
 import io.taraxacum.finaltech.util.ParticleUtil;
@@ -106,9 +107,11 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem imp
                             blockTicker.tick(b, item, data);
                         }
                     };
-                    for (int i = 0, limit = this.consume() ? this.times() : this.times() * playerRightClickEvent.getItem().getAmount(); i < limit; i++) {
-                        SlimefunUtil.runBlockTicker(bT, block, slimefunItem, config);
-                    }
+                    this.getAddon().getJavaPlugin().getServer().getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> {
+                        for (int i = 0, limit = AbstractMachineActivateCard.this.consume() ? AbstractMachineActivateCard.this.times() : AbstractMachineActivateCard.this.times() * playerRightClickEvent.getItem().getAmount(); i < limit; i++) {
+                            SlimefunUtil.runBlockTicker(bT, block, slimefunItem, config);
+                        }
+                    });
                     if(this.times() == 0) {
                         String energy = SlimefunUtil.getCharge(config);
                         energy = StringNumberUtil.add(energy, chargeEnergy);
@@ -116,9 +119,11 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem imp
                         SlimefunUtil.setCharge(config, energy);
                     }
                 } else if (blockTicker != null) {
-                    for (int i = 0, limit = this.consume() ? this.times() : this.times() * playerRightClickEvent.getItem().getAmount(); i < limit; i++) {
-                        SlimefunUtil.runBlockTicker(blockTicker, block, slimefunItem, config);
-                    }
+                    this.getAddon().getJavaPlugin().getServer().getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> {
+                        for (int i = 0, limit = AbstractMachineActivateCard.this.consume() ? AbstractMachineActivateCard.this.times() : AbstractMachineActivateCard.this.times() * playerRightClickEvent.getItem().getAmount(); i < limit; i++) {
+                            SlimefunUtil.runBlockTicker(blockTicker, block, slimefunItem, config);
+                        }
+                    });
                 } else if (chargeable) {
                     String chargeEnergyResult = StringNumberUtil.add(chargeEnergy, chargeEnergy);
                     for (int i = 1, limit = this.consume() ? this.times() : this.times() * playerRightClickEvent.getItem().getAmount(); i < limit; i++) {

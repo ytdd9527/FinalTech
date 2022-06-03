@@ -110,10 +110,12 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements AntiAc
         }
 
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
-        ItemStackUtil.setLore(item,
-                TextUtil.COLOR_NORMAL + "检测到的机器个数= " + TextUtil.COLOR_NUMBER + accelerateMachineCount + "个",
-                TextUtil.COLOR_NORMAL + "加速次数= " + TextUtil.COLOR_NUMBER + accelerateTimeCount + "次");
+        if(blockMenu.hasViewer()) {
+            ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
+            ItemStackUtil.setLore(item,
+                    TextUtil.COLOR_NORMAL + "检测到的机器个数= " + TextUtil.COLOR_NUMBER + accelerateMachineCount + "个",
+                    TextUtil.COLOR_NORMAL + "加速次数= " + TextUtil.COLOR_NUMBER + accelerateTimeCount + "次");
+        }
     }
 
     @Override
