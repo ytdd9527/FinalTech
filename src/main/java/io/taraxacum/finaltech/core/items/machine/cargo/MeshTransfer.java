@@ -249,5 +249,8 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
                 TextUtil.COLOR_NORMAL + "该机器会不断把物品",
                 TextUtil.COLOR_NORMAL + "从输入侧方块的容器",
                 TextUtil.COLOR_NORMAL + "传输到输出侧方块的容器");
+        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "锁链扩展",
+                "",
+                TextUtil.COLOR_NORMAL + "非零模式下 可使用对应方向放置的锁链延长搜索范围");
     }
 }

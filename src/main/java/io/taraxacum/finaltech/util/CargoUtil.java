@@ -422,6 +422,9 @@ public class CargoUtil {
                 if (CargoUtil.isMatch(outputItemWithWrapper, skipItemList, CargoFilter.VALUE_WHITE)) {
                     continue;
                 }
+                if (typeItem != null && !ItemStackUtil.isItemSimilar(outputItemWithWrapper, typeItem)) {
+
+                }
             }
             if (!vanillaInputBlock) {
                 inputMap = null;
