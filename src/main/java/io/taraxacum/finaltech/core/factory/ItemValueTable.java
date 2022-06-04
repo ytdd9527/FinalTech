@@ -4,6 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
@@ -31,7 +32,7 @@ public class ItemValueTable {
     private final Map<String, String> itemInputValueMap = new HashMap<>();
     private final Map<String, String> itemOutputValueMap = new HashMap<>();
     private final Map<String, List<String>> valueItemListOutputMap = new HashMap<>();
-    public static final String BASE_OUTPUT_VALUE = "16";
+    public static final String BASE_OUTPUT_VALUE = "64";
     private static volatile ItemValueTable instance;
 
     private ItemValueTable() {
@@ -44,21 +45,21 @@ public class ItemValueTable {
         }
 
         this.manualInitId(FinalTechItems.SINGULARITY.getItemId(), StringNumberUtil.mul(String.valueOf(Singularity.SINGULARITY_DIFFICULTY), String.valueOf(CopyCardItem.DIFFICULTY)), true);
-        this.manualInitId(FinalTechItems.SPIROCHETE.getItemId(), StringNumberUtil.mul(String.valueOf(Singularity.SINGULARITY_DIFFICULTY), String.valueOf(CopyCardItem.DIFFICULTY)), true);
+        this.manualInitId(FinalTechItems.SPIROCHETE.getItemId(), StringNumberUtil.mul(String.valueOf(Spirochete.SPIROCHETE_DIFFICULTY), String.valueOf(CopyCardItem.DIFFICULTY)), true);
         this.manualInitId(FinalTechItems.PHONY.getItemId(), StringNumberUtil.mul(StringNumberUtil.mul(String.valueOf(Singularity.SINGULARITY_DIFFICULTY), String.valueOf(Spirochete.SPIROCHETE_DIFFICULTY)), String.valueOf(CopyCardItem.DIFFICULTY)), true);
-        this.manualInitId(FinalTechItems.BUG.getItemId(), StringNumberUtil.ZERO, StringNumberUtil.ZERO, true);
+        this.manualInitId(FinalTechItems.BUG.getItemId(), StringNumberUtil.ZERO, StringNumberUtil.ZERO, false);
         this.manualInitId(RecipeType.ENHANCED_CRAFTING_TABLE.getMachine().getId(), StringNumberUtil.ZERO, false);
-        this.manualInitId(RecipeType.SMELTERY.getMachine().getId(), "1", false);
-        this.manualInitId(RecipeType.PRESSURE_CHAMBER.getMachine().getId(), "1", false);
-        this.manualInitId(RecipeType.ORE_CRUSHER.getMachine().getId(), "1", false);
-        this.manualInitId(RecipeType.MAGIC_WORKBENCH.getMachine().getId(), "2", false);
-        this.manualInitId(RecipeType.JUICER.getMachine().getId(), "1", false);
-        this.manualInitId(RecipeType.GRIND_STONE.getMachine().getId(), "1", false);
-        this.manualInitId(RecipeType.COMPRESSOR.getMachine().getId(), "1", false);
-        this.manualInitId(RecipeType.ARMOR_FORGE.getMachine().getId(), "1", false);
-        this.manualInitId(RecipeType.ANCIENT_ALTAR.getMachine().getId(), "5", false);
-        this.manualInitId(RecipeType.GOLD_PAN.getMachine().getId(), "3", false);
-        this.manualInitId(RecipeType.ORE_WASHER.getMachine().getId(), "2", false);
+        this.manualInitId(SlimefunItems.ENCHANTMENT_RUNE.getItemId(), "1", false);
+        this.manualInitId(SlimefunItems.GRIND_STONE.getItemId(), "1", false);
+        this.manualInitId(SlimefunItems.ARMOR_FORGE.getItemId(), "1", false);
+        this.manualInitId(SlimefunItems.ORE_CRUSHER.getItemId(), "1", false);
+        this.manualInitId(SlimefunItems.COMPRESSOR.getItemId(), "1", false);
+        this.manualInitId(SlimefunItems.SMELTERY.getItemId(), "1", false);
+        this.manualInitId(SlimefunItems.PRESSURE_CHAMBER.getItemId(), "1", false);
+        this.manualInitId(SlimefunItems.MAGIC_WORKBENCH.getItemId(), "1", false);
+        this.manualInitId(SlimefunItems.GOLD_PAN.getItemId(), "1", false);
+        this.manualInitId(SlimefunItems.JUICER.getItemId(), "1", false);
+        this.manualInitId(SlimefunItems.ORE_WASHER.getItemId(), "1", false);
 
         Config valueFile = JavaPlugin.getPlugin(FinalTech.class).getValueFile();
         for (String key : valueFile.getKeys("input")) {
@@ -127,23 +128,16 @@ public class ItemValueTable {
         String value = StringNumberUtil.ZERO;
         List<ItemStackWithWrapperAmount> recipeList = ItemStackUtil.calItemListWithAmount(slimefunItem.getRecipe());
         for (ItemStackWithWrapperAmount recipeItem : ItemStackUtil.calItemListWithAmount(slimefunItem.getRecipe())) {
-            int amount = recipeItem.getAmount();
-            SlimefunItem recipeSlimefunItem = SlimefunItem.getByItem(recipeItem.getItemStack());
-            if (recipeSlimefunItem != null) {
-                amount /= recipeSlimefunItem.getRecipeOutput().getAmount();
-                if (amount == 0) {
-                    amount = 1;
-                }
-            }
-            value = StringNumberUtil.add(value, StringNumberUtil.mul(this.getOrCalItemInputValue(recipeItem.getItemStack()), String.valueOf(amount)));
+            ItemStack item = ItemStackUtil.cloneItem(recipeItem.getItemStack());
+            item.setAmount(1);
+            value = StringNumberUtil.add(value, this.getOrCalItemInputValue(item));
         }
         value = StringNumberUtil.add(value, String.valueOf(recipeList.size()));
         SlimefunItem machineItem = slimefunItem.getRecipeType().getMachine();
-        if (machineItem == null) {
+        if (machineItem == null || slimefunItem instanceof MultiBlockMachine) {
             value = StringNumberUtil.add(value);
         } else if (machineItem.equals(slimefunItem)) {
-            this.itemInputValueMap.put(id, value);
-            return value;
+
         } else {
             value = StringNumberUtil.add(value, this.getOrCalItemInputValue(slimefunItem.getRecipeType().getMachine()));
         }
@@ -188,16 +182,18 @@ public class ItemValueTable {
                     amount = 1;
                 }
             }
-            value = StringNumberUtil.add(value, StringNumberUtil.mul(this.getOrCalItemOutputValue(recipeItem.getItemStack()), String.valueOf(amount)));
+            ItemStack item = ItemStackUtil.cloneItem(recipeItem.getItemStack());
+            item.setAmount(1);
+            value = StringNumberUtil.add(value, StringNumberUtil.mul(this.getOrCalItemOutputValue(item), String.valueOf(amount)));
         }
         value = StringNumberUtil.mul(value, String.valueOf(recipeList.size()));
         SlimefunItem machineItem = slimefunItem.getRecipeType().getMachine();
         if (machineItem == null || recipeList.isEmpty() || StringNumberUtil.ZERO.equals(value)) {
             value = StringNumberUtil.VALUE_INFINITY;
+        } else if(slimefunItem instanceof MultiBlockMachine) {
+            value = StringNumberUtil.add(value);
         } else if (machineItem.equals(slimefunItem)) {
-            this.itemOutputValueMap.put(id, value);
-            this.addToOutputMap(id, value);
-            return value;
+
         } else {
             value = StringNumberUtil.add(value, this.getOrCalItemOutputValue(machineItem));
         }
@@ -211,7 +207,7 @@ public class ItemValueTable {
     private void manualInitId(@Nonnull String id, @Nonnull String inputValue, @Nonnull String outputValue, boolean canOutput) {
         this.itemInputValueMap.put(id, inputValue);
         this.itemOutputValueMap.put(id, outputValue);
-        if(canOutput) {
+        if(canOutput && !outputValue.contains(StringNumberUtil.VALUE_INFINITY)) {
             this.addToOutputMap(id, outputValue);
         }
     }
