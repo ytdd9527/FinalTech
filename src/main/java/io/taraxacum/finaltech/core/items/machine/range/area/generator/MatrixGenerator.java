@@ -134,7 +134,7 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator implements An
                 TextUtil.COLOR_NORMAL + "每次充电使其电量充满至最大电容量");
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "极化扩展",
                 "",
-                TextUtil.COLOR_NORMAL + "放入 " + FinalTechItems.PHONY + TextUtil.COLOR_NORMAL + " 后 其工作范围会扩大");
+                TextUtil.COLOR_NORMAL + "放入 " + FinalTechItems.PHONY.getDisplayName() + TextUtil.COLOR_NORMAL + " 后 其工作范围会扩大");
     }
 
     @Override
