@@ -6,7 +6,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
-import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.api.dto.ItemStackWithWrapper;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
@@ -73,9 +72,9 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
             blockMenu.replaceExistingItem(slot, ItemStackUtil.AIR);
         }
         if (amountList.size() == this.getInputSlot().length && allSameItem) {
-            blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), JavaUtil.shuffle(this.getInputSlot()));
+            blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), this.getOutputSlot());
         } else if (Math.random() < (double)(amountList.size()) / this.getInputSlot().length) {
-            blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), this.getInputSlot());
+            blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), this.getOutputSlot());
         }
     }
 

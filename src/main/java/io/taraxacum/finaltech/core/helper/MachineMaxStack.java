@@ -73,7 +73,7 @@ public final class MachineMaxStack {
                     quantity = 0;
                 } else {
                     if (clickAction.isRightClicked()) {
-                        quantity = (quantity + abstractMachineMenu.getInputSlot().length) % (abstractMachineMenu.getInputSlot().length + 1);
+                        quantity = (quantity - 1) % (abstractMachineMenu.getInputSlot().length + 1);
                     } else {
                         quantity = (quantity + 1) % (abstractMachineMenu.getInputSlot().length + 1);
                     }
