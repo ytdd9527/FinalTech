@@ -1,6 +1,7 @@
 package io.taraxacum.finaltech.core.helper;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.core.factory.BlockStorageHelper;
 import io.taraxacum.finaltech.core.factory.BlockStorageLoreHelper;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
@@ -45,7 +46,9 @@ public final class MachineMaxStack {
                 iconItem.setAmount(1);
             } else if (value != null) {
                 iconItem.setType(Material.HOPPER);
-                iconItem.setAmount(Integer.parseInt(value));
+                if(!StringNumberUtil.ZERO.equals(value)) {
+                    iconItem.setAmount(Integer.parseInt(value));
+                }
             } else {
                 return false;
             }
