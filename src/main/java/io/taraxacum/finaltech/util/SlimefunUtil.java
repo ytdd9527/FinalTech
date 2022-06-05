@@ -20,6 +20,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -121,31 +122,25 @@ public class SlimefunUtil {
     }
 
     public static boolean hasPermission(@Nonnull String uuid, @Nonnull Block block, @Nonnull Interaction... interactions) {
-        OfflinePlayer offlinePlayer = FinalTech.getInstance().getServer().getOfflinePlayer(UUID.fromString(uuid));
-        for (Interaction interaction : interactions) {
-            if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, block.getLocation(), interaction)) {
-                return false;
-            }
+        Player player = FinalTech.getInstance().getServer().getOfflinePlayer(UUID.fromString(uuid)).getPlayer();
+        if(player == null || player.isBanned()) {
+            return false;
         }
-        return true;
+        return SlimefunUtil.hasPermission(player, block.getLocation(), interactions);
     }
     public static boolean hasPermission(@Nonnull String uuid, @Nonnull Entity entity, @Nonnull Interaction... interactions) {
-        OfflinePlayer offlinePlayer = FinalTech.getInstance().getServer().getOfflinePlayer(UUID.fromString(uuid));
-        for (Interaction interaction : interactions) {
-            if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, entity.getLocation(), interaction)) {
-                return false;
-            }
+        Player player = FinalTech.getInstance().getServer().getOfflinePlayer(UUID.fromString(uuid)).getPlayer();
+        if(player == null || player.isBanned()) {
+            return false;
         }
-        return true;
+        return SlimefunUtil.hasPermission(player, entity.getLocation(), interactions);
     }
     public static boolean hasPermission(@Nonnull String uuid, @Nonnull Location location, @Nonnull Interaction... interactions) {
-        OfflinePlayer offlinePlayer = FinalTech.getInstance().getServer().getOfflinePlayer(UUID.fromString(uuid));
-        for (Interaction interaction : interactions) {
-            if (!Slimefun.getProtectionManager().hasPermission(offlinePlayer, location, interaction)) {
-                return false;
-            }
+        Player player = FinalTech.getInstance().getServer().getOfflinePlayer(UUID.fromString(uuid)).getPlayer();
+        if(player == null || player.isBanned()) {
+            return false;
         }
-        return true;
+        return SlimefunUtil.hasPermission(player, location, interactions);
     }
     public static boolean hasPermission(@Nonnull Player player, @Nonnull Location location, @Nonnull Interaction... interactions) {
         for (Interaction interaction : interactions) {

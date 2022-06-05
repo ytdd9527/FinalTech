@@ -401,13 +401,13 @@ public final class MachineUtil {
         String lore;
         if (ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE)) {
             amount = item.getAmount();
-            lore = "§7当前效率=" + amount;
+            lore = "§7当前效率= " + amount;
         } else if (ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE_INFINITY)) {
             amount = Integer.MAX_VALUE / 64 - 1;
-            lore = "§7当前效率=" + "INFINITY";
+            lore = "§7当前效率= " + "INFINITY";
         } else {
             amount = 1;
-            lore = "§7当前效率=" + amount;
+            lore = "§7当前效率= " + amount;
         }
         ItemStack infoItem = blockMenu.getItemInSlot(statusSlot);
         if (!infoItem.hasItemMeta()) {

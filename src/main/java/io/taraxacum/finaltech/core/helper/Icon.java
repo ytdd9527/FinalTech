@@ -11,7 +11,7 @@ import org.w3c.dom.Text;
  * @author Final_ROOT
  */
 public class Icon {
-    public static final ItemStack QUANTITY_MODULE_ICON = new CustomItemStack(Material.REDSTONE, TextUtil.colorRandomString("可升级模块"), TextUtil.COLOR_NORMAL + "该机器可以通过添加 " + FinalTechItems.QUANTITY_MODULE.getDisplayName() + TextUtil.COLOR_NUMBER + "进行升级", TextUtil.colorRandomString("当前效率= 1"));
+    public static final ItemStack QUANTITY_MODULE_ICON = new CustomItemStack(Material.REDSTONE, TextUtil.colorRandomString("可升级模块"), TextUtil.COLOR_NORMAL + "该机器可以通过添加 " + FinalTechItems.QUANTITY_MODULE.getDisplayName() + TextUtil.COLOR_NUMBER + " 进行升级", TextUtil.colorRandomString("当前效率= 1"));
 
     public static final ItemStack BORDER_ICON = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, " ");
     public static final ItemStack INPUT_BORDER_ICON = new CustomItemStack(Material.BLUE_STAINED_GLASS_PANE, TextUtil.COLOR_INPUT + "输入侧");

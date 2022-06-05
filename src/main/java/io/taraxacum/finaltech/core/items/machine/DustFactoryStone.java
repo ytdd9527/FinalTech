@@ -29,6 +29,7 @@ import java.util.Set;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class DustFactoryStone extends AbstractMachine implements RecipeItem {
     public DustFactoryStone(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -73,9 +74,9 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
             blockMenu.replaceExistingItem(slot, ItemStackUtil.AIR);
         }
         if (amountList.size() == this.getInputSlot().length && allSameItem) {
-            blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), JavaUtil.shuffle(this.getInputSlot()));
+            blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
         } else if (Math.random() < (double)(amountList.size()) / this.getInputSlot().length) {
-            blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), this.getOutputSlot());
+            blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
         }
     }
 
