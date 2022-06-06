@@ -59,6 +59,6 @@ public class RemoteAccessor extends AbstractCargo implements RecipeItem {
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
                 "",
                 TextUtil.COLOR_NORMAL + "玩家访问该机器时",
-                TextUtil.COLOR_NORMAL + "变更为访问该机器面向方向 直线" + TextUtil.COLOR_NUMBER + SEARCH_LIMIT + "格" + TextUtil.COLOR_NORMAL + " 距离内最近的粘液科技机器");
+                TextUtil.COLOR_NORMAL + "变更为访问该机器面向方向 " + TextUtil.COLOR_NUMBER + "直线" + SEARCH_LIMIT + "格" + TextUtil.COLOR_NORMAL + " 距离内最近的粘液科技机器");
     }
 }
