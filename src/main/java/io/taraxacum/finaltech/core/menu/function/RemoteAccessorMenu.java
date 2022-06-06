@@ -4,14 +4,18 @@ import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.items.machine.cargo.RemoteAccessor;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.util.ParticleUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Final_ROOT
@@ -67,14 +71,17 @@ public class RemoteAccessorMenu extends AbstractMachineMenu {
             BlockStorage.addBlockInfo(block, RemoteAccessor.KEY, StringNumberUtil.sub(value));
 
             BlockData blockData = block.getState().getBlockData();
+            List<Block> blockList = new ArrayList<>();
             if(blockData instanceof Directional) {
                 BlockFace blockFace = ((Directional) blockData).getFacing();
                 Block targetBlock = block;
                 for(int i = 0; i < RemoteAccessor.SEARCH_LIMIT; i++) {
                     targetBlock = targetBlock.getRelative(blockFace);
+                    blockList.add(targetBlock);
                     if(BlockStorage.hasInventory(targetBlock)) {
                         BlockMenu targetBlockMenu = BlockStorage.getInventory(targetBlock);
                         if(targetBlockMenu.canOpen(targetBlock, p)) {
+                            ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, blockList);
                             blockMenu.close();
                             targetBlockMenu.open(p);
                             return;
