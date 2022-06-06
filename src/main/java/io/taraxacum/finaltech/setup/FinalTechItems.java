@@ -19,6 +19,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack UNORDERED_DUST = new SlimefunItemStack("FINALTECH_UNORDERED_DUST", Material.WHEAT_SEEDS, TextUtil.colorPseudorandomString("无序尘埃"));
     public static final SlimefunItemStack ORDERED_DUST = new SlimefunItemStack("FINALTECH_ORDERED_DUST", Material.SLIME_BALL, TextUtil.colorPseudorandomString("有序尘埃"));
     public static final SlimefunItemStack BUG = new SlimefunItemStack("FINALTECH_BUG", Material.BONE_MEAL, TextUtil.colorPseudorandomString("锟斤拷"));
+    public static final SlimefunItemStack ENTROPY = new SlimefunItemStack("FINALTECH_ENTROPY", Material.WHEAT_SEEDS, "§0熵");
     public static final SlimefunItemStack QUANTITY_MODULE = new SlimefunItemStack("FINALTECH_QUANTITY_MODULE", Material.AMETHYST_SHARD, TextUtil.colorPseudorandomString("数量组件"));
     public static final SlimefunItemStack COPY_CARD = new SlimefunItemStack("FINALTECH_COPY_CARD", Material.FLINT, TextUtil.colorPseudorandomString("复制卡"));
     public static final SlimefunItemStack ANNULAR = new SlimefunItemStack("FINALTECH_ANNULAR", Material.BOWL, TextUtil.colorPseudorandomString("环"));
@@ -56,6 +57,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack RANDOM_STORAGE_UNIT = new SlimefunItemStack("FINALTECH_RANDOM_STORAGE_UNIT", Material.GLASS, TextUtil.colorPseudorandomString("随机存储单元"));
     public static final SlimefunItemStack DISTRIBUTE_LEFT_STORAGE_UNIT = new SlimefunItemStack("FINALTECH_DISTRIBUTE_LEFT_STORAGE_UNIT", Material.GLASS, TextUtil.colorPseudorandomString("左平均存储单元"));
     public static final SlimefunItemStack DISTRIBUTE_RIGHT_STORAGE_UNIT = new SlimefunItemStack("FINALTECH_DISTRIBUTE_RIGHT_STORAGE_UNIT", Material.GLASS, TextUtil.colorPseudorandomString("右平均存储单元"));
+    public static final SlimefunItemStack REMOTE_ACCESSOR = new SlimefunItemStack("FINALTECH_REMOTE_ACCESSOR", Material.OBSERVER, TextUtil.colorPseudorandomString("远程访问器"));
     public static final SlimefunItemStack LINK_TRANSFER = new SlimefunItemStack("FINALTECH_LINK_TRANSFER", Material.END_ROD, TextUtil.colorPseudorandomString("对点传输器"), "§8即放即用");
     public static final SlimefunItemStack LINE_TRANSFER = new SlimefunItemStack("FINALTECH_LINE_TRANSFER", Material.DROPPER, TextUtil.colorPseudorandomString("链式传输器"), "§8即放即用");
     public static final SlimefunItemStack STATION_TRANSFER = new SlimefunItemStack("FINALTECH_STATION_TRANSFER", Material.TINTED_GLASS, TextUtil.colorPseudorandomString("网状传输器"));
@@ -117,6 +119,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack CARD_OPERATION_PORT = new SlimefunItemStack("FINALTECH_CARD_OPERATION_PORT", Material.CARTOGRAPHY_TABLE, TextUtil.colorPseudorandomString("物品卡操作台"));
     public static final SlimefunItemStack ITEM_DISMANTLE_TABLE = new SlimefunItemStack("FINALTECH_ITEM_DISMANTLE_TABLE", Material.CUT_COPPER, TextUtil.colorPseudorandomString("反向合成台"));
     public static final SlimefunItemStack EQUIVALENT_EXCHANGE_TABLE = new SlimefunItemStack("FINALTECH_EQUIVALENT_EXCHANGE_TABLE", Material.REDSTONE_LAMP, TextUtil.colorPseudorandomString("等价交换台"));
+    public static final SlimefunItemStack ENTROPY_CONSTRUCTOR = new SlimefunItemStack("FINALTECH_ENTROPY_CONSTRUCTOR", Material.INFESTED_STONE, "§x§2§2§2§2§2§2熵化构造器");
 
     // basic machines
     public static final SlimefunItemStack BASIC_COBBLE_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_COBBLE_FACTORY", Material.CHISELED_STONE_BRICKS, TextUtil.colorPseudorandomString("基础刷石工厂"));

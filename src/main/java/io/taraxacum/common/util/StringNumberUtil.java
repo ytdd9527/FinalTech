@@ -197,6 +197,9 @@ public final class StringNumberUtil {
                 break;
             }
         }
+        if(stringBuilder.length() == 0) {
+            return StringNumberUtil.ZERO;
+        }
         return stringBuilder.reverse().toString();
     }
 
@@ -386,6 +389,9 @@ public final class StringNumberUtil {
     public static String sub(String stringNumber) {
         if (stringNumber.contains(VALUE_INFINITY)) {
             return stringNumber;
+        }
+        if (stringNumber.equals(StringNumberUtil.ZERO)) {
+            return "-1";
         }
         if (stringNumber.startsWith(RELATIVE)) {
             return RELATIVE + easilyAdd(stringNumber.substring(1));

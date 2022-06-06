@@ -134,10 +134,10 @@ public class ItemValueTable {
         }
         value = StringNumberUtil.add(value, String.valueOf(recipeList.size()));
         SlimefunItem machineItem = slimefunItem.getRecipeType().getMachine();
-        if (machineItem == null || slimefunItem instanceof MultiBlockMachine) {
+        if (machineItem == null || slimefunItem instanceof MultiBlockMachine || ItemStackUtil.isItemSimilar(machineItem.getItem(), RecipeType.MULTIBLOCK.toItem())) {
             value = StringNumberUtil.add(value);
         } else if (machineItem.equals(slimefunItem)) {
-
+            value = StringNumberUtil.add(value, value);
         } else {
             value = StringNumberUtil.add(value, this.getOrCalItemInputValue(slimefunItem.getRecipeType().getMachine()));
         }
@@ -190,10 +190,10 @@ public class ItemValueTable {
         SlimefunItem machineItem = slimefunItem.getRecipeType().getMachine();
         if (machineItem == null || recipeList.isEmpty() || StringNumberUtil.ZERO.equals(value)) {
             value = StringNumberUtil.VALUE_INFINITY;
-        } else if(slimefunItem instanceof MultiBlockMachine) {
+        } else if(slimefunItem instanceof MultiBlockMachine || ItemStackUtil.isItemSimilar(machineItem.getItem(), RecipeType.MULTIBLOCK.toItem())) {
             value = StringNumberUtil.add(value);
         } else if (machineItem.equals(slimefunItem)) {
-
+            value = StringNumberUtil.add(value, value);
         } else {
             value = StringNumberUtil.add(value, this.getOrCalItemOutputValue(machineItem));
         }
