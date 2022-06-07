@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * @since 2.0
  */
 public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
-    public static final int MACHINE_MAX_STACK_SLOT = 13;
+    private static final int MACHINE_MAX_STACK_SLOT = 13;
 
     public AbstractStandardMachineMenu(@Nonnull AbstractMachine abstractMachine) {
         super(abstractMachine);
@@ -30,14 +30,14 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
     @Override
     public void init() {
         super.init();
-        this.addItem(MACHINE_MAX_STACK_SLOT, MachineMaxStack.ICON);
-        this.addMenuClickHandler(MACHINE_MAX_STACK_SLOT, ChestMenuUtils.getEmptyClickHandler());
+        this.addItem(this.getMachineMaxStackSlot(), MachineMaxStack.ICON);
+        this.addMenuClickHandler(this.getMachineMaxStackSlot(), ChestMenuUtils.getEmptyClickHandler());
     }
 
     @Override
     public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
-        blockMenu.addMenuClickHandler(MACHINE_MAX_STACK_SLOT, MachineMaxStack.HELPER.getHandler(blockMenu, block, this, MACHINE_MAX_STACK_SLOT));
+        blockMenu.addMenuClickHandler(this.getMachineMaxStackSlot(), MachineMaxStack.HELPER.getHandler(blockMenu, block, this, this.getMachineMaxStackSlot()));
     }
 
     @Override
@@ -49,14 +49,14 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
         }
 
         int full = 0;
-        if (menu.getItemInSlot(MACHINE_MAX_STACK_SLOT).getType().equals(Material.CHEST)) {
+        if (menu.getItemInSlot(this.getMachineMaxStackSlot()).getType().equals(Material.CHEST)) {
             return this.getInputSlot();
         }
 
         ArrayList<Integer> itemList = new ArrayList<>();
         ArrayList<Integer> nullList = new ArrayList<>();
         ItemStackWrapper itemStackWrapper = ItemStackWrapper.wrap(item);
-        int inputLimit = menu.getItemInSlot(MACHINE_MAX_STACK_SLOT).getAmount();
+        int inputLimit = menu.getItemInSlot(this.getMachineMaxStackSlot()).getAmount();
         for (int slot : this.getInputSlot()) {
             ItemStack existedItem = menu.getItemInSlot(slot);
             if (ItemStackUtil.isItemNull(existedItem)) {
@@ -88,7 +88,11 @@ public abstract class AbstractStandardMachineMenu extends AbstractMachineMenu {
     protected void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         MachineMaxStack.HELPER.checkOrSetBlockStorage(block.getLocation());
         String quantity = MachineMaxStack.HELPER.getOrDefaultValue(block.getLocation());
-        ItemStack item = blockMenu.getItemInSlot(MACHINE_MAX_STACK_SLOT);
+        ItemStack item = blockMenu.getItemInSlot(this.getMachineMaxStackSlot());
         MachineMaxStack.HELPER.setIcon(item, quantity);
+    }
+
+    public int getMachineMaxStackSlot() {
+        return MACHINE_MAX_STACK_SLOT;
     }
 }

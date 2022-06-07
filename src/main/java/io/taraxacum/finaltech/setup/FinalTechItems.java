@@ -143,6 +143,8 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MANUAL_JUICER = new SlimefunItemStack("FINALTECH_MANUAL_JUICER", Material.GLASS, TextUtil.colorPseudorandomString("快捷榨汁机"));
     public static final SlimefunItemStack MANUAL_ANCIENT_ALTAR = new SlimefunItemStack("FINALTECH_MANUAL_ANCIENT_ALTAR", Material.ENCHANTING_TABLE, TextUtil.colorPseudorandomString("快捷古代祭坛"));
     public static final SlimefunItemStack MANUAL_HEATED_PRESSURE_CHAMBER = new SlimefunItemStack("FINALTECH_MANUAL_HEATED_PRESSURE_CHAMBER", Material.LIGHT_GRAY_STAINED_GLASS, TextUtil.colorPseudorandomString("快捷加热压力舱"));
+    public static final SlimefunItemStack STONE_CHUNK_PRODUCTION_STATION = new SlimefunItemStack("FINALTECH_STONE_CHUNK_PRODUCTION_STATION", Material.CHISELED_STONE_BRICKS, TextUtil.colorPseudorandomString("石块生产厂"));
+    public static final SlimefunItemStack DUST_WORKSHOP = new SlimefunItemStack("FINALTECH_DUST_WORKSHOP", Material.POLISHED_DEEPSLATE, TextUtil.colorPseudorandomString("矿粉加工站"));
 
     // advanced machines
     public static final SlimefunItemStack ADVANCED_COMPOSTER = new SlimefunItemStack("FINALTECH_COMPOSTER", Material.CAULDRON, TextUtil.colorPseudorandomString("高级搅拌机"));

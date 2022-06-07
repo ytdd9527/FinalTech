@@ -28,7 +28,7 @@ public final class MachineMaxStack {
 
     public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, new LinkedHashMap<>() {{
         this.put("0", List.of(TextUtil.colorPseudorandomString("未限制")));
-        for (int i = 1; i <= 24; i++) {
+        for (int i = 1; i <= 54; i++) {
             this.put(String.valueOf(i), List.of(TextUtil.colorRandomString("限制数量= " + i)));
         }
     }}) {

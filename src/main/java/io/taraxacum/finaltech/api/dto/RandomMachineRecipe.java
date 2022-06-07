@@ -63,6 +63,21 @@ public class RandomMachineRecipe extends MachineRecipe {
         return randomOutputList;
     }
 
+    @Nonnull
+    public RandomMachineRecipe addRandomOutput(@Nonnull RandomOutput randomOutput) {
+        this.randomOutputList.add(randomOutput);
+        this.weightSum += randomOutput.weight;
+        return this;
+    }
+
+    @Nonnull
+    public RandomMachineRecipe addRandomOutput(@Nonnull List<RandomOutput> randomOutputList) {
+        for(RandomOutput randomOutput : randomOutputList) {
+            this.addRandomOutput(randomOutput);
+        }
+        return this;
+    }
+
     /**
      * @author Final_ROOT
      * @since 2.0

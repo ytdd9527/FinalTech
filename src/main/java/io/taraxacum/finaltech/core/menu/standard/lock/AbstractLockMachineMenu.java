@@ -25,22 +25,26 @@ public abstract class AbstractLockMachineMenu extends AbstractStandardMachineMen
     @Override
     public void init() {
         super.init();
-        this.addItem(RECIPE_LOCK_SLOT, MachineRecipeLock.ICON);
-        this.addMenuClickHandler(RECIPE_LOCK_SLOT, ChestMenuUtils.getEmptyClickHandler());
+        this.addItem(this.getRecipeLockSlot(), MachineRecipeLock.ICON);
+        this.addMenuClickHandler(this.getRecipeLockSlot(), ChestMenuUtils.getEmptyClickHandler());
     }
 
     @Override
     public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
-        blockMenu.addMenuClickHandler(RECIPE_LOCK_SLOT, MachineRecipeLock.HELPER.getHandler(blockMenu, block, this, RECIPE_LOCK_SLOT));
+        blockMenu.addMenuClickHandler(this.getRecipeLockSlot(), MachineRecipeLock.HELPER.getHandler(blockMenu, block, this, this.getRecipeLockSlot()));
     }
 
     @Override
     protected void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.updateMenu(blockMenu, block);
         MachineRecipeLock.HELPER.checkOrSetBlockStorage(block.getLocation());
-        ItemStack item = blockMenu.getItemInSlot(RECIPE_LOCK_SLOT);
+        ItemStack item = blockMenu.getItemInSlot(this.getRecipeLockSlot());
         String recipeLock = BlockStorage.getLocationInfo(block.getLocation(), MachineRecipeLock.KEY);
         MachineRecipeLock.HELPER.setIcon(item, recipeLock, this.getMachine());
+    }
+
+    public int getRecipeLockSlot() {
+        return RECIPE_LOCK_SLOT;
     }
 }

@@ -14,6 +14,8 @@ import io.taraxacum.finaltech.core.items.machine.manual.EquivalentExchangeTable;
 import io.taraxacum.finaltech.core.items.machine.manual.craft.MatrixCraftingTable;
 import io.taraxacum.finaltech.core.items.machine.standard.*;
 import io.taraxacum.finaltech.core.items.machine.standard.basic.*;
+import io.taraxacum.finaltech.core.items.machine.standard.production.StoneChunkProductionStation;
+import io.taraxacum.finaltech.core.items.machine.standard.workshop.DustWorkshop;
 import io.taraxacum.finaltech.core.items.unusable.*;
 import io.taraxacum.finaltech.core.items.unusable.laquid.LavaCard;
 import io.taraxacum.finaltech.core.items.unusable.laquid.MilkCard;
@@ -275,6 +277,7 @@ public final class SetupUtil {
         new ManualJuicer(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.MANUAL_JUICER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MANUAL_JUICER).register();
         new ManualAncientAltar(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.MANUAL_ANCIENT_ALTAR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MANUAL_ANCIENT_ALTAR).register();
         new ManualHeatedPressureChamber(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MANUAL_HEATED_PRESSURE_CHAMBER).register();
+//        new StoneChunkProductionStation(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.STONE_CHUNK_PRODUCTION_STATION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STONE_CHUNK_PRODUCTION_STATION).register();
 
         // advanced machine
         new AdvancedComposter(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_COMPOSTER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_COMPOSTER).register();
@@ -296,6 +299,7 @@ public final class SetupUtil {
         new AdvancedOreFactory(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_ORE_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ORE_FACTORY).register();
         new AdvancedDustFactory(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_DUST_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_DUST_FACTORY).register();
         new AdvancedFarmFactory(FinalTechMenus.MENU_ADVANCED_MACHINE, FinalTechItems.ADVANCED_FARM_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_FARM_FACTORY).register();
+//        new DustWorkshop(FinalTechMenus.MENU_BASIC_MACHINE, FinalTechItems.DUST_WORKSHOP, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DUST_WORKSHOP).register();
 
         // most powerful item
         new InfinityMachineChargeCard(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MACHINE_CHARGE_CARD_INFINITY, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MACHINE_CHARGE_CARD_INFINITY).register();
