@@ -140,7 +140,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
             blockList = JavaUtil.shuffle(blockList);
         }
 
-        if (BlockSearchCycle.VALUE_TRUE.equals(BlockSearchCycle.HELPER.getOrDefaultValue(config))) {
+        if (BlockSearchCycle.VALUE_TRUE.equals(BlockSearchCycle.HELPER.getOrDefaultValue(config)) && blockList.size() > 0) {
             blockList.add(blockList.get(0));
         }
 
