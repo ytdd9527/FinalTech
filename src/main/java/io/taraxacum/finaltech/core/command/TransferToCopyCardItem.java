@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.api.command;
+package io.taraxacum.finaltech.core.command;
 
 import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
 import io.taraxacum.finaltech.util.ItemStackUtil;

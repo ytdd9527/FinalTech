@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.factory;
+package io.taraxacum.finaltech.api.factory;
 
 import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
 import io.taraxacum.finaltech.api.dto.AdvancedMachineRecipe;
@@ -8,7 +8,6 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecip
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.*;
 
 /**

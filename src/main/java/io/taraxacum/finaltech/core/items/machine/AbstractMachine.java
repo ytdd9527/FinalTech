@@ -6,8 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
-import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.core.factory.BlockTaskFactory;
+import io.taraxacum.finaltech.api.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.api.interfaces.PerformanceLimitMachine;
 import io.taraxacum.finaltech.core.items.AbstractMySlimefunItem;
@@ -16,7 +15,6 @@ import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
-import org.apache.http.impl.auth.BasicSchemeFactory;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 

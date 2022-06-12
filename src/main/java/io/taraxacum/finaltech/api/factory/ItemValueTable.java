@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.factory;
+package io.taraxacum.finaltech.api.factory;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -15,7 +15,6 @@ import io.taraxacum.finaltech.core.items.unusable.Spirochete;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.TextUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 

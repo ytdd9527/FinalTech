@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.factory;
+package io.taraxacum.finaltech.api.factory;
 
 import io.taraxacum.finaltech.api.dto.AdvancedMachineRecipe;
 import org.bukkit.Location;

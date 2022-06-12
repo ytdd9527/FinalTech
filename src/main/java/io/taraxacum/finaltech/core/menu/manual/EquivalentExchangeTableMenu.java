@@ -3,7 +3,7 @@ package io.taraxacum.finaltech.core.menu.manual;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.taraxacum.finaltech.core.factory.ItemValueTable;
+import io.taraxacum.finaltech.api.factory.ItemValueTable;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.TextUtil;

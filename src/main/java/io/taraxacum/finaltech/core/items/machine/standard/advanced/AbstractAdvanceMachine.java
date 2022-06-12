@@ -9,7 +9,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.operations.CraftingOper
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.taraxacum.finaltech.api.dto.AdvancedCraft;
 import io.taraxacum.finaltech.api.dto.AdvancedMachineRecipe;
-import io.taraxacum.finaltech.core.factory.MachineRecipeFactory;
+import io.taraxacum.finaltech.api.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.core.items.machine.standard.AbstractStandardMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.standard.lock.AbstractLockMachineMenu;

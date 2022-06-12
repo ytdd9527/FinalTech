@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.api.dto.AdvancedCraft;
-import io.taraxacum.finaltech.core.factory.MachineRecipeFactory;
+import io.taraxacum.finaltech.api.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.items.machine.manual.craft.AbstractManualCraftMachine;
 import io.taraxacum.finaltech.util.*;

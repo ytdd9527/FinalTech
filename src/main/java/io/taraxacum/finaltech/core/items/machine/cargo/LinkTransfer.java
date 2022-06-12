@@ -10,7 +10,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.core.factory.BlockTaskFactory;
+import io.taraxacum.finaltech.api.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.LinkTransferMenu;
 import io.taraxacum.finaltech.core.helper.*;
@@ -19,9 +19,7 @@ import io.taraxacum.finaltech.util.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.Particle;
 import org.bukkit.block.*;
 import org.bukkit.block.data.BlockData;

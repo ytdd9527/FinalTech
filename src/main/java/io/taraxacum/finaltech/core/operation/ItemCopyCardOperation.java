@@ -1,15 +1,12 @@
-package io.taraxacum.finaltech.api.operation;
+package io.taraxacum.finaltech.core.operation;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
 import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
-import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.TextUtil;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.MainHand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

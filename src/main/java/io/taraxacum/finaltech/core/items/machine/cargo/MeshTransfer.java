@@ -8,7 +8,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.core.factory.BlockTaskFactory;
+import io.taraxacum.finaltech.api.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.MeshTransferMenu;
 import io.taraxacum.finaltech.core.helper.*;

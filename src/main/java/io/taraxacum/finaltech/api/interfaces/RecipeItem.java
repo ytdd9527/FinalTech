@@ -6,7 +6,7 @@ import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
-import io.taraxacum.finaltech.core.factory.MachineRecipeFactory;
+import io.taraxacum.finaltech.api.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.core.items.unusable.laquid.LiquidCard;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;

@@ -8,7 +8,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.core.factory.BlockTaskFactory;
+import io.taraxacum.finaltech.api.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.LineTransferMenu;
 import io.taraxacum.finaltech.core.helper.*;
@@ -30,7 +30,6 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.w3c.dom.Text;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

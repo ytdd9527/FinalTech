@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.factory;
+package io.taraxacum.finaltech.api.factory;
 
 import io.taraxacum.common.api.RunnableLockFactory;
 import org.bukkit.plugin.java.JavaPlugin;

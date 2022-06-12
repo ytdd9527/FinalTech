@@ -7,7 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.core.menu.standard.AbstractStandardMachineMenu;
-import io.taraxacum.finaltech.api.operation.DustFactoryOperation;
+import io.taraxacum.finaltech.core.operation.DustFactoryOperation;
 import io.taraxacum.finaltech.core.menu.standard.DustFactoryMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;

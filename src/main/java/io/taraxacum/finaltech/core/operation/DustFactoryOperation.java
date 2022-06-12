@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.api.operation;
+package io.taraxacum.finaltech.core.operation;
 
 import io.github.thebusybiscuit.slimefun4.core.machines.MachineOperation;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;

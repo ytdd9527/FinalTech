@@ -9,7 +9,7 @@ import io.taraxacum.finaltech.api.dto.AdvancedMachineRecipe;
 import io.taraxacum.finaltech.api.dto.ItemStackWithWrapper;
 import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.core.factory.MachineRecipeFactory;
+import io.taraxacum.finaltech.api.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.core.items.machine.standard.AbstractStandardMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.standard.WorkshopMachineMenu;
