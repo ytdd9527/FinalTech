@@ -13,6 +13,6 @@ public class PlantWorkshop extends AbstractWorkshopMachine{
 
     @Override
     public void registerDefaultRecipes() {
-        Material.BLACK_BANNER
+//        Material.BLACK_BANNER
     }
 }

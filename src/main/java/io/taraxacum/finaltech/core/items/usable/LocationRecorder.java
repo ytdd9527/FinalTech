@@ -53,8 +53,12 @@ public class LocationRecorder extends UsableSlimefunItem implements RecipeItem {
             Block block = location.getBlock();
             if (BlockStorage.hasInventory(block)) {
                 BlockMenu blockMenu = BlockStorage.getInventory(block);
-                blockMenu.open(player);
-                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+                if(blockMenu.canOpen(block, player)) {
+                    blockMenu.open(player);
+                    ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+                } else {
+                    player.sendRawMessage(TextUtil.COLOR_NEGATIVE + "您似乎没有在此处使用该物品的权限");
+                }
             }
         }
     }
