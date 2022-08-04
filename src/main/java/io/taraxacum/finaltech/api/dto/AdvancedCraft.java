@@ -99,10 +99,8 @@ public class AdvancedCraft {
 
     @Nonnull
     public MachineRecipe calMachineRecipe(int ticks) {
-        if (this.matchCount > 1) {
+        if (this.matchCount >= 1) {
             return new MachineRecipe(ticks, ItemStackUtil.calEnlargeItemArray(this.inputItemList, this.matchCount), ItemStackUtil.calEnlargeItemArray(this.outputItemList, this.matchCount));
-        } else if (this.matchCount == 1) {
-            return new MachineRecipe(ticks, ItemStackWithWrapperAmount.toItemArray(this.inputItemList), ItemStackWithWrapperAmount.toItemArray(this.outputItemList));
         } else {
             return new MachineRecipe(ticks, new ItemStack[0], new ItemStack[0]);
         }
