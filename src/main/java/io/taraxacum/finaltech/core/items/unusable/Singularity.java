@@ -3,14 +3,15 @@ package io.taraxacum.finaltech.core.items.unusable;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -18,8 +19,7 @@ import javax.annotation.Nullable;
  * @since 2.0
  */
 public class Singularity extends UnusableSlimefunItem implements RecipeItem {
-    public static int DEFAULT_SINGULARITY_DIFFICULTY = 256;
-    public static int SINGULARITY_DIFFICULTY = DEFAULT_SINGULARITY_DIFFICULTY;
+    public static Integer DIFFICULTY = FinalTech.getValueManager().getOrDefault(256, "items", SlimefunUtil.getIdFormatName(Singularity.class), "difficulty") + Slimefun.getInstalledAddons().size() * 16;
 
     public Singularity(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -30,14 +30,12 @@ public class Singularity extends UnusableSlimefunItem implements RecipeItem {
     }
 
     public static ItemStack newItem(@Nullable ItemStack item, @Nullable Player player) {
-        return new ItemStack(FinalTechItems.SINGULARITY);
+        return ItemStackUtil.cloneItem(FinalTechItems.SINGULARITY);
     }
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_POSITIVE + "说明",
-                "",
-                TextUtil.COLOR_NORMAL + "通过在 " + FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getDisplayName() + TextUtil.COLOR_NORMAL + " 中",
-                TextUtil.COLOR_NORMAL + "消耗 " + TextUtil.COLOR_NUMBER + SINGULARITY_DIFFICULTY + "个" + TextUtil.COLOR_NORMAL + " 任意物品的复制卡获取");
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(DIFFICULTY));
     }
 }

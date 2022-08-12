@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
@@ -15,12 +16,14 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
+
 /**
  * @author Final_ROOT
  * @since 2.0
  */
 public class NormalElectricityShootPile extends AbstractElectricityShootPile implements AntiAccelerationMachine {
-    public static final int RANGE = 16;
+    public final Integer range = FinalTech.getValueManager().getOrDefault(16, "items", SlimefunUtil.getIdFormatName(NormalElectricityShootPile.class), "range");
 
     public NormalElectricityShootPile(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -28,11 +31,11 @@ public class NormalElectricityShootPile extends AbstractElectricityShootPile imp
 
     @Override
     public int getRange() {
-        return RANGE;
+        return range;
     }
 
     @Override
-    protected Function doFunction(Summary summary) {
+    protected Function doFunction(@Nonnull Summary summary) {
         return location -> {
             if (summary.getCapacitorEnergy() <= 0) {
                 return -1;
@@ -60,12 +63,9 @@ public class NormalElectricityShootPile extends AbstractElectricityShootPile imp
     }
 
     @Override
-    protected void updateMenu(ItemStack item, int count, Summary summary) {
-        ItemStackUtil.setLore(item, TextUtil.COLOR_NORMAL + "实际传输电量= " + TextUtil.COLOR_NUMBER + summary.getEnergyCharge());
-    }
-
-    @Override
     public void registerDefaultRecipes() {
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.range));
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
                 "",
                 TextUtil.COLOR_NORMAL + "将自身背向的电容的电量",

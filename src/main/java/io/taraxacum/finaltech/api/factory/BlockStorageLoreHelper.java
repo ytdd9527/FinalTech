@@ -8,12 +8,15 @@ import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,8 +25,8 @@ import java.util.Map;
  * @since 2.0
  */
 public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
-    private Map<String, List<String>> valueLoreMap;
     private int loreOffset = -1;
+    private final Map<String, List<String>> valueLoreMap;
     private static final List<String> ERROR_LORE = List.of("§cERROR");
 
     protected BlockStorageLoreHelper(@Nonnull String id, @Nonnull Map<String, List<String>> valueLoreMap) {
@@ -32,8 +35,7 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
     }
 
     protected BlockStorageLoreHelper(@Nonnull SlimefunItem slimefunItem, @Nonnull Map<String, List<String>> valueLoreMap) {
-        super(slimefunItem.getId(), BlockStorageLoreHelper.init(valueLoreMap));
-        this.valueLoreMap = valueLoreMap;
+        this(slimefunItem.getId(), valueLoreMap);
     }
 
     protected BlockStorageLoreHelper(@Nonnull String id, int loreOffset, @Nonnull Map<String, List<String>> valueLoreMap) {
@@ -48,9 +50,6 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
 
     /**
      * update the lore of the icon{@link ItemStack} by the given value
-     * @param iconItem
-     * @param value
-     * @return
      */
     public boolean setIcon(@Nonnull ItemStack iconItem, @Nullable String value) {
         if (valueLoreMap.containsKey(value)) {
@@ -71,182 +70,138 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
     }
     /**
      * Override this method to do some function
-     * @param iconItem
-     * @param value
-     * @param abstractMachine
-     * @return
      */
-    public boolean setIcon(@Nonnull ItemStack iconItem, @Nullable String value, @Nonnull AbstractMachine abstractMachine) {
+    public boolean setIcon(@Nonnull ItemStack iconItem, @Nullable String value, @Nonnull SlimefunItem slimefunItem) {
         return this.setIcon(iconItem, value);
     }
 
     /**
      * check {@link BlockStorage} data
      * update the icon{@link ItemStack} in the given slot place
-     * @param blockMenu
-     * @param slot
-     * @return
      */
-    public boolean checkAndUpdateIcon(@Nonnull BlockMenu blockMenu, int slot) {
-        String value = BlockStorage.getLocationInfo(blockMenu.getLocation(), this.getKey());
+    public boolean checkAndUpdateIcon(@Nonnull Inventory inventory, @Nonnull Location location, int slot) {
+        String value = BlockStorage.getLocationInfo(location, this.getKey());
         if (!this.validValue(value)) {
             value = this.defaultValue();
         }
-        ItemStack item = blockMenu.getItemInSlot(slot);
+        ItemStack item = inventory.getItem(slot);
         this.setIcon(item, value);
         return true;
     }
 
     @Nonnull
-    public ChestMenu.MenuClickHandler getHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
+    public ChestMenu.MenuClickHandler getHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
         return (player, i, itemStack, clickAction) -> {
-            String value = BlockStorageLoreHelper.this.getOrDefaultValue(block.getLocation());
+            String value = BlockStorageLoreHelper.this.getOrDefaultValue(location);
             if (clickAction.isRightClicked()) {
                 value = BlockStorageLoreHelper.this.previousOrDefaultValue(value);
             } else {
                 value = BlockStorageLoreHelper.this.nextOrDefaultValue(value);
             }
-            ItemStack item = blockMenu.getItemInSlot(slot);
+            ItemStack item = inventory.getItem(slot);
             BlockStorageLoreHelper.this.setIcon(item, value);
-            BlockStorageLoreHelper.this.setOrClearValue(block.getLocation(), value);
+            BlockStorageLoreHelper.this.setOrClearValue(location, value);
             return false;
         };
     }
     @Nonnull
-    public ChestMenu.MenuClickHandler getUpdateHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
+    public ChestMenu.MenuClickHandler getUpdateHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
         return (player, i, itemStack, clickAction) -> {
-            String value = BlockStorageLoreHelper.this.getOrDefaultValue(block.getLocation());
-            ItemStack item = blockMenu.getItemInSlot(slot);
+            String value = BlockStorageLoreHelper.this.getOrDefaultValue(location);
+            ItemStack item = inventory.getItem(slot);
             if (!BlockStorageLoreHelper.this.validValue(value)) {
                 value = BlockStorageLoreHelper.this.defaultValue();
             }
             BlockStorageLoreHelper.this.setIcon(item, value);
-            BlockStorageLoreHelper.this.setOrClearValue(block.getLocation(), value);
+            BlockStorageLoreHelper.this.setOrClearValue(location, value);
             return false;
         };
     }
     @Nonnull
-    public ChestMenu.MenuClickHandler getNextHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
+    public ChestMenu.MenuClickHandler getNextHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
         return (player, i, itemStack, clickAction) -> {
-            String value = BlockStorageLoreHelper.this.getOrDefaultValue(block.getLocation());
+            String value = BlockStorageLoreHelper.this.getOrDefaultValue(location);
             value = BlockStorageLoreHelper.this.clickNextValue(value, clickAction);
-            ItemStack item = blockMenu.getItemInSlot(slot);
+            ItemStack item = inventory.getItem(slot);
             BlockStorageLoreHelper.this.setIcon(item, value);
-            BlockStorageLoreHelper.this.setOrClearValue(block.getLocation(), value);
+            BlockStorageLoreHelper.this.setOrClearValue(location, value);
             return false;
         };
     }
     @Nonnull
-    public ChestMenu.MenuClickHandler getPreviousHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
+    public ChestMenu.MenuClickHandler getPreviousHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
         return (player, i, itemStack, clickAction) -> {
-            String value = BlockStorageLoreHelper.this.getOrDefaultValue(block.getLocation());
+            String value = BlockStorageLoreHelper.this.getOrDefaultValue(location);
             value = BlockStorageLoreHelper.this.clickPreviousValue(value, clickAction);
-            ItemStack item = blockMenu.getItemInSlot(slot);
+            ItemStack item = inventory.getItem(slot);
             BlockStorageLoreHelper.this.setIcon(item, value);
-            BlockStorageLoreHelper.this.setOrClearValue(block.getLocation(), value);
+            BlockStorageLoreHelper.this.setOrClearValue(location, value);
             return false;
         };
     }
 
+    @Nonnull
     public String clickNextValue(@Nullable String value, @Nonnull ClickAction clickAction) {
         return this.nextOrDefaultValue(value);
     }
+    @Nonnull
     public String clickPreviousValue(@Nullable String value, @Nonnull ClickAction clickAction) {
         return this.previousOrDefaultValue(value);
     }
 
-    public static boolean setIcon(@Nonnull String id, @Nonnull String key, @Nonnull ItemStack iconItem, @Nullable String value) {
+    @Nonnull
+    public static BlockStorageLoreHelper newInstanceOrGet(@Nonnull String id, @Nonnull String key, int loreOffset, @Nonnull Map<String, List<String>> valueLoreMap) {
         if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
             Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.get(id);
             if (stringBlockStorageHelperMap.containsKey(key)) {
                 BlockStorageHelper blockStorageHelper = stringBlockStorageHelperMap.get(key);
-                if (blockStorageHelper instanceof BlockStorageLoreHelper) {
-                    ((BlockStorageLoreHelper) blockStorageHelper).setIcon(iconItem, value);
-                    return true;
+                return (BlockStorageLoreHelper) blockStorageHelper;
+            } else {
+                synchronized (stringBlockStorageHelperMap) {
+                    if(stringBlockStorageHelperMap.containsKey(key)) {
+                        return (BlockStorageLoreHelper) stringBlockStorageHelperMap.get(key);
+                    }
+                    BlockStorageLoreHelper blockStorageLoreHelper = new BlockStorageLoreHelper(id, loreOffset, valueLoreMap) {
+                        @Nonnull
+                        @Override
+                        public String getKey() {
+                            return key;
+                        }
+                    };
+                    stringBlockStorageHelperMap.put(key, blockStorageLoreHelper);
+                    return blockStorageLoreHelper;
                 }
             }
-        }
-        ItemStackUtil.setLore(iconItem, ERROR_LORE);
-        return false;
-    }
-    public static boolean setIcon(@Nonnull SlimefunItem slimefunItem, @Nonnull String key, @Nonnull ItemStack iconItem, @Nullable String value) {
-        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.get(slimefunItem.getId());
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                BlockStorageHelper blockStorageHelper = stringBlockStorageHelperMap.get(key);
-                if (blockStorageHelper instanceof BlockStorageLoreHelper) {
-                    ((BlockStorageLoreHelper) blockStorageHelper).setIcon(iconItem, value);
-                    return true;
+        } else {
+            synchronized (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY) {
+                if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
+                    return BlockStorageLoreHelper.newInstanceOrGet(id, key, loreOffset, valueLoreMap);
                 }
+                Map<String, BlockStorageHelper> stringBlockStorageHelperMap = new HashMap<>();
+                BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.put(id, stringBlockStorageHelperMap);
+                BlockStorageLoreHelper blockStorageLoreHelper = new BlockStorageLoreHelper(id, loreOffset, valueLoreMap) {
+                    @Nonnull
+                    @Override
+                    public String getKey() {
+                        return key;
+                    }
+                };
+                stringBlockStorageHelperMap.put(key, blockStorageLoreHelper);
+                return blockStorageLoreHelper;
             }
         }
-        ItemStackUtil.setLore(iconItem, ERROR_LORE);
-        return false;
-    }
-
-    @Nonnull
-    public static BlockStorageLoreHelper newInstanceOrGet(@Nonnull String id, @Nonnull String key, @Nonnull Map<String, List<String>> valueLoreMap) {
-        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(id);
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                return (BlockStorageLoreHelper) stringBlockStorageHelperMap.get(key);
-            }
-        }
-        return new BlockStorageLoreHelper(id, valueLoreMap) {
-            @Nonnull
-            @Override
-            public String getKey() {
-                return key;
-            }
-        };
-    }
-    @Nonnull
-    public static BlockStorageLoreHelper newInstanceOrGet(@Nonnull SlimefunItem slimefunItem, @Nonnull String key, @Nonnull Map<String, List<String>> valueLoreMap) {
-        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(slimefunItem.getId());
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                return (BlockStorageLoreHelper) stringBlockStorageHelperMap.get(key);
-            }
-        }
-        return new BlockStorageLoreHelper(slimefunItem.getId(), valueLoreMap) {
-            @Nonnull
-            @Override
-            public String getKey() {
-                return key;
-            }
-        };
-    }
-    @Nonnull
-    public static BlockStorageLoreHelper newInstanceOrGet(@Nonnull String id, @Nonnull String key, int loreOffset, @Nonnull Map<String, List<String>> valueLoreMap) {
-        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(id);
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                return (BlockStorageLoreHelper) stringBlockStorageHelperMap.get(key);
-            }
-        }
-        return new BlockStorageLoreHelper(id, loreOffset, valueLoreMap) {
-            @Nonnull
-            @Override
-            public String getKey() {
-                return key;
-            }
-        };
     }
     @Nonnull
     public static BlockStorageLoreHelper newInstanceOrGet(@Nonnull SlimefunItem slimefunItem, @Nonnull String key, int loreOffset, @Nonnull Map<String, List<String>> valueLoreMap) {
-        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(slimefunItem.getId());
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                return (BlockStorageLoreHelper) stringBlockStorageHelperMap.get(key);
-            }
-        }
-        return new BlockStorageLoreHelper(slimefunItem.getId(), loreOffset, valueLoreMap) {
-            @Nonnull
-            @Override
-            public String getKey() {
-                return key;
-            }
-        };
+        return BlockStorageLoreHelper.newInstanceOrGet(slimefunItem.getId(), key, loreOffset, valueLoreMap);
+    }
+    @Nonnull
+    public static BlockStorageLoreHelper newInstanceOrGet(@Nonnull String id, @Nonnull String key, @Nonnull Map<String, List<String>> valueLoreMap) {
+        return BlockStorageLoreHelper.newInstanceOrGet(id, key, -1, valueLoreMap);
+    }
+    @Nonnull
+    public static BlockStorageLoreHelper newInstanceOrGet(@Nonnull SlimefunItem slimefunItem, @Nonnull String key, @Nonnull Map<String, List<String>> valueLoreMap) {
+        return BlockStorageLoreHelper.newInstanceOrGet(slimefunItem.getId(), key, -1, valueLoreMap);
     }
 
     private static List<String> init(@Nonnull Map<String, List<String>> valueLoreMap) {

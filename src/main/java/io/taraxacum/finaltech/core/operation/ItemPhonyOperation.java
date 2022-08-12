@@ -26,13 +26,13 @@ public class ItemPhonyOperation implements ItemSerializationConstructorOperation
     private final int itemTypeDifficulty;
     private final int itemAmountDifficulty;
     private final ItemStack showItem;
-    private final List<ItemStackWrapper> itemTypeList = new ArrayList<>(Spirochete.SPIROCHETE_DIFFICULTY);
+    private final List<ItemStackWrapper> itemTypeList = new ArrayList<>(Spirochete.DIFFICULTY);
 
     protected ItemPhonyOperation(@Nonnull ItemStack item) {
         this.itemTypeCount = 1;
         this.itemAmountCount = item.getAmount();
-        this.itemTypeDifficulty = Spirochete.SPIROCHETE_DIFFICULTY;
-        this.itemAmountDifficulty = Singularity.SINGULARITY_DIFFICULTY;
+        this.itemTypeDifficulty = Spirochete.DIFFICULTY;
+        this.itemAmountDifficulty = Singularity.DIFFICULTY;
         this.showItem = new CustomItemStack(FinalTechItems.PHONY.getType(), TextUtil.COLOR_NORMAL + "完成进度", TextUtil.COLOR_NORMAL + "物品个数= " + TextUtil.COLOR_NUMBER + this.itemAmountCount + "/" + this.itemAmountDifficulty, TextUtil.COLOR_NORMAL + "物品种数= " + TextUtil.COLOR_NUMBER + this.itemTypeCount + "/" + this.itemTypeDifficulty);
         this.itemTypeList.add(ItemStackWrapper.wrap(item));
     }

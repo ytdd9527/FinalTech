@@ -64,7 +64,7 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
     public int addItem(@Nullable ItemStack item) {
         if (!this.isFinished()) {
             if (ItemStackUtil.isItemSimilar(item, this.matchItem)) {
-                double efficiency = Math.pow(0.5, 20.0 - 20.0 * 1000 / (FinalTech.getMSPS() - 50));
+                double efficiency = Math.pow(0.5, 20.0 - FinalTech.getTps());
                 efficiency = Math.min(efficiency, 1);
                 if(item.getAmount() * efficiency + this.count < this.difficulty) {
                     int amount = item.getAmount();

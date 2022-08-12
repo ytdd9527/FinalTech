@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.machine.capacitor.AbstractElectricCapacitor;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
@@ -13,7 +14,6 @@ import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.common.util.StringNumberUtil;
-import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  */
 public abstract class AbstractExpandedElectricCapacitor extends AbstractElectricCapacitor implements RecipeItem {
-    private static final String KEY = "stack";
+    private static final String KEY = "s";
 
     public AbstractExpandedElectricCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -62,10 +62,10 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
 
         if ("".equals(energyStack)) {
             energyStack = StringNumberUtil.ZERO;
-        } else if (StringNumberUtil.easilyCompare(energyStack, StringNumberUtil.INTEGER_MAX_VALUE) < 0) {
+        } else if (StringNumberUtil.compare(energyStack, StringNumberUtil.INTEGER_MAX_VALUE) < 0) {
             generateEnergy = Integer.parseInt(energyStack);
             if (generateEnergy >= capacity / 2) {
-                if (StringNumberUtil.easilyCompare(energyStack, this.getMaxStack()) < 0) {
+                if (StringNumberUtil.compare(energyStack, this.getMaxStack()) < 0) {
                     generateEnergy -= capacity / 2;
                     energyStack = StringNumberUtil.add(energyStack);
                     updateStack = true;
@@ -75,17 +75,17 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
             energy += transferEnergy;
             generateEnergy -= transferEnergy;
             updateEnergy = true;
-        } else if (StringNumberUtil.easilyCompare(energyStack, StringNumberUtil.INTEGER_MAX_VALUE) >= 0) {
+        } else if (StringNumberUtil.compare(energyStack, StringNumberUtil.INTEGER_MAX_VALUE) >= 0) {
             energyStack = StringNumberUtil.add(energyStack);
             updateStack = true;
         }
 
-        if (energy < capacity / 4 && StringNumberUtil.easilyCompare(energyStack, StringNumberUtil.ZERO) > 0) {
+        if (energy < capacity / 4 && StringNumberUtil.compare(energyStack, StringNumberUtil.ZERO) > 0) {
             energy += capacity / 2;
             updateEnergy = true;
             energyStack = StringNumberUtil.sub(energyStack);
             updateStack = true;
-        } else if (energy > capacity / 4 * 3 && StringNumberUtil.easilyCompare(energyStack, this.getMaxStack()) < 0) {
+        } else if (energy > capacity / 4 * 3 && StringNumberUtil.compare(energyStack, this.getMaxStack()) < 0) {
             energy -= capacity / 2;
             updateEnergy = true;
             energyStack = StringNumberUtil.add(energyStack);
@@ -106,10 +106,7 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
         }
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         if(blockMenu.hasViewer()) {
-            ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
-            ItemStackUtil.setLore(item,
-                    TextUtil.COLOR_NORMAL + "当前流转电量= " + TextUtil.COLOR_NUMBER + energy + "J",
-                    TextUtil.COLOR_NORMAL + "当前存电组数= " + TextUtil.COLOR_NUMBER + energyStack);
+            this.updateMenu(blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT), energy, energyStack);
         }
     }
 
@@ -146,22 +143,25 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
     @Override
     public abstract int getCapacity();
 
+    @Nonnull
     public abstract String getMaxStack();
 
     public abstract double chargeIncrease();
 
     public abstract double consumeReduce();
 
+    protected void updateMenu(@Nonnull ItemStack item, int energy, @Nonnull String energyStack) {
+        ItemStackUtil.setLore(item, SlimefunUtil.updateMenuLore(FinalTech.getLanguageManager(), this,
+                String.valueOf(energy),
+                energyStack));
+    }
+
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
-                "",
-                TextUtil.COLOR_NORMAL + "单组流转电量 " + TextUtil.COLOR_NUMBER + (this.getCapacity() / 2) + "J",
-                TextUtil.COLOR_NORMAL + "可流转电容组数 " + TextUtil.COLOR_NUMBER + StringNumberUtil.add(this.getMaxStack(), "2") + "S",
-                TextUtil.COLOR_NORMAL + "充电效率 " + TextUtil.COLOR_NUMBER + String.format("%.2f", this.chargeIncrease() * 100) + "%",
-                TextUtil.COLOR_NORMAL + "耗电效率 " + TextUtil.COLOR_NUMBER + String.format("%.2f", this.consumeReduce() * 100) + "%");
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "电力回转",
-                "",
-                TextUtil.COLOR_NORMAL + "每 " + TextUtil.COLOR_NUMBER + String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0) + "秒" + TextUtil.COLOR_NORMAL + " 回复等同于已存电组数的电量");
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf((this.getCapacity() / 2)),
+                String.format("%.2f", this.chargeIncrease() * 100),
+                String.format("%.2f", this.consumeReduce() * 100),
+                String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0));
     }
 }

@@ -7,27 +7,28 @@ import org.bukkit.Location;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Just for easily change value of the given key in specific condition
- * see {@link BlockStorage}
- *
+ * @see BlockStorage
  * @author Final_ROOT
+ * @since 2.0
  */
 public abstract class BlockStorageHelper {
-    private final List<String> valueList;
     /**
      * The id of a {@link SlimefunItem},
      * Or a public id
      */
+    @Nonnull
     private final String id;
 
+    @Nonnull
+    private final List<String> valueList;
+
     public static final String ID_CARGO = "cargo";
-    public static final String ID_STANDARD = "standard";
 
     private static final String ERROR = "0";
 
@@ -36,18 +37,9 @@ public abstract class BlockStorageHelper {
     protected BlockStorageHelper(@Nonnull String id, @Nonnull List<String> valueList) {
         this.id = id;
         this.valueList = valueList;
-        if (!BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
-            BLOCK_STORAGE_HELPER_FACTORY.put(id, new HashMap<>());
-        }
-        BLOCK_STORAGE_HELPER_FACTORY.get(id).put(this.getKey(), this);
     }
     protected BlockStorageHelper(@Nonnull SlimefunItem slimefunItem, @Nonnull List<String> valueList) {
-        this.id = slimefunItem.getId();
-        this.valueList = valueList;
-        if (!BLOCK_STORAGE_HELPER_FACTORY.containsKey(this.id)) {
-            BLOCK_STORAGE_HELPER_FACTORY.put(this.id, new HashMap<>());
-        }
-        BLOCK_STORAGE_HELPER_FACTORY.get(this.id).put(this.getKey(), this);
+        this(slimefunItem.getId(), valueList);
     }
 
     @Nonnull
@@ -77,17 +69,16 @@ public abstract class BlockStorageHelper {
     }
 
     @Nonnull
+    public String offsetOrDefaultValue(@Nullable String value, int offset) {
+        return this.valueList.contains(value) ? this.valueList.get(((this.valueList.indexOf(value) + offset) % this.valueList.size() + this.valueList.size()) % this.valueList.size()) : this.defaultValue();
+    }
+    @Nonnull
     public String nextOrDefaultValue(@Nullable String value) {
-        return this.valueList.contains(value) ? this.valueList.get((this.valueList.indexOf(value) + 1) % this.valueList.size()) : this.defaultValue();
+        return this.offsetOrDefaultValue(value, 1);
     }
     @Nonnull
     public String previousOrDefaultValue(@Nullable String value) {
-        return this.valueList.contains(value) ? this.valueList.get((this.valueList.indexOf(value) - 1 + this.valueList.size()) % this.valueList.size()) : this.defaultValue();
-    }
-
-    @Nonnull
-    public String offsetOrDefaultValue(@Nullable String value, int offset) {
-        return this.valueList.contains(value) ? this.valueList.get(((this.valueList.indexOf(value) + offset) % this.valueList.size() + this.valueList.size()) % this.valueList.size()) : this.defaultValue();
+        return this.offsetOrDefaultValue(value, -1);
     }
 
     public boolean validValue(@Nullable String value) {
@@ -95,7 +86,7 @@ public abstract class BlockStorageHelper {
     }
 
     public boolean checkOrSetBlockStorage(@Nonnull Location location) {
-        if (BlockStorage.getLocationInfo(location, this.getKey()) != null) {
+        if (BlockStorage.getLocationInfo(location, this.getKey()) == null) {
             BlockStorage.addBlockInfo(location, this.getKey(), this.defaultValue());
             return false;
         }
@@ -111,136 +102,51 @@ public abstract class BlockStorageHelper {
             Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(id);
             if (stringBlockStorageHelperMap.containsKey(key)) {
                 return stringBlockStorageHelperMap.get(key);
+            } else {
+                synchronized (stringBlockStorageHelperMap) {
+                    if(stringBlockStorageHelperMap.containsKey(key)) {
+                        return stringBlockStorageHelperMap.get(key);
+                    }
+                    BlockStorageHelper blockStorageHelper = new BlockStorageHelper(id, valueList) {
+                        @Nonnull
+                        @Override
+                        public String getKey() {
+                            return key;
+                        }
+                    };
+                    stringBlockStorageHelperMap.put(key, blockStorageHelper);
+                    return blockStorageHelper;
+                }
+            }
+        } else {
+            synchronized (BLOCK_STORAGE_HELPER_FACTORY) {
+                if(BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
+                    return BlockStorageHelper.newInstanceOrGet(id, key, valueList);
+                }
+                Map<String, BlockStorageHelper> stringBlockStorageHelperMap = new HashMap<>();
+                BLOCK_STORAGE_HELPER_FACTORY.put(id, stringBlockStorageHelperMap);
+                BlockStorageHelper blockStorageHelper = new BlockStorageHelper(id, valueList) {
+                    @Nonnull
+                    @Override
+                    public String getKey() {
+                        return key;
+                    }
+                };
+                stringBlockStorageHelperMap.put(key, blockStorageHelper);
+                return blockStorageHelper;
             }
         }
-        return new BlockStorageHelper(id, valueList) {
-            @Nonnull
-            @Override
-            public String getKey() {
-                return key;
-            }
-        };
     }
     @Nonnull
     public static BlockStorageHelper newInstanceOrGet(@Nonnull String id, @Nonnull String key, @Nonnull String... values) {
-        if (BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(id);
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                return stringBlockStorageHelperMap.get(key);
-            }
-        }
-        return new BlockStorageHelper(id, new ArrayList<>(List.of(values))) {
-            @Nonnull
-            @Override
-            public String getKey() {
-                return key;
-            }
-        };
+        return BlockStorageHelper.newInstanceOrGet(id, key, List.of(values));
     }
     @Nonnull
     public static BlockStorageHelper newInstanceOrGet(@Nonnull SlimefunItem slimefunItem, @Nonnull String key, @Nonnull List<String> valueList) {
-        if (BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(slimefunItem.getId());
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                return stringBlockStorageHelperMap.get(key);
-            }
-        }
-        return new BlockStorageHelper(slimefunItem.getId(), valueList) {
-            @Nonnull
-            @Override
-            public String getKey() {
-                return key;
-            }
-        };
+        return BlockStorageHelper.newInstanceOrGet(slimefunItem.getId(), key, valueList);
     }
     @Nonnull
     public static BlockStorageHelper newInstanceOrGet(@Nonnull SlimefunItem slimefunItem, @Nonnull String key, @Nonnull String... values) {
-        if (BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(slimefunItem.getId());
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                return stringBlockStorageHelperMap.get(key);
-            }
-        }
-        return new BlockStorageHelper(slimefunItem.getId(), new ArrayList<>(List.of(values))) {
-            @Nonnull
-            @Override
-            public String getKey() {
-                return key;
-            }
-        };
-    }
-
-    @Nullable
-    public static String defaultValue(@Nonnull String id, @Nullable String key) {
-        if (BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(id);
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                return stringBlockStorageHelperMap.get(key).defaultValue();
-            }
-        }
-        return null;
-    }
-    @Nullable
-    public static String defaultValue(@Nonnull SlimefunItem slimefunItem, @Nullable String key) {
-        return BlockStorageHelper.defaultValue(slimefunItem.getId(), key);
-    }
-
-    @Nullable
-    public static String getOrDefaultValue(@Nonnull Location location, @Nonnull String id, @Nullable String key) {
-        if (BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(id);
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                return stringBlockStorageHelperMap.get(key).getOrDefaultValue(location);
-            }
-        }
-        return null;
-    }
-    @Nullable
-    public static String getOrDefaultValue(@Nonnull Location location, @Nonnull SlimefunItem slimefunItem, @Nonnull String key) {
-        return BlockStorageHelper.getOrDefaultValue(location, slimefunItem.getId(), key);
-    }
-    @Nullable
-    public static String getOrDefaultValue(@Nonnull Config config, @Nonnull String id, @Nullable String key) {
-        if (BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(id);
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                return stringBlockStorageHelperMap.get(key).getOrDefaultValue(config);
-            }
-        }
-        return null;
-    }
-    @Nullable
-    public static String getOrDefaultValue(@Nonnull Config config, @Nonnull SlimefunItem slimefunItem, @Nonnull String key) {
-        return BlockStorageHelper.getOrDefaultValue(config, slimefunItem.getId(), key);
-    }
-
-    @Nullable
-    public static String nextOrDefaultValue(@Nonnull String id, @Nullable String key, @Nullable String value) {
-        if (BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(id);
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                return stringBlockStorageHelperMap.get(key).nextOrDefaultValue(value);
-            }
-        }
-        return null;
-    }
-    @Nullable
-    public static String nextOrDefaultValue(@Nonnull SlimefunItem slimefunItem, @Nullable String key, @Nullable String value) {
-        return BlockStorageHelper.nextOrDefaultValue(slimefunItem.getId(), key, value);
-    }
-
-    @Nullable
-    public static String previousOrDefaultValue(@Nonnull String id, @Nullable String key, @Nullable String value) {
-        if (BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(id);
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                return stringBlockStorageHelperMap.get(key).previousOrDefaultValue(value);
-            }
-        }
-        return null;
-    }
-    @Nullable
-    public static String previousOrDefaultValue(@Nonnull SlimefunItem slimefunItem, @Nullable String key, @Nullable String value) {
-        return BlockStorageHelper.previousOrDefaultValue(slimefunItem.getId(), key, value);
+        return BlockStorageHelper.newInstanceOrGet(slimefunItem.getId(), key, values);
     }
 }

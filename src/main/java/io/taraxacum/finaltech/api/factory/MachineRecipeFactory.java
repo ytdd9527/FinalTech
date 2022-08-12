@@ -1,8 +1,8 @@
 package io.taraxacum.finaltech.api.factory;
 
+import io.taraxacum.finaltech.api.dto.ItemAmountWrapper;
 import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
 import io.taraxacum.finaltech.api.dto.AdvancedMachineRecipe;
-import io.taraxacum.finaltech.api.dto.ItemStackWithWrapperAmount;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.inventory.ItemStack;
@@ -52,7 +52,7 @@ public class MachineRecipeFactory {
         List<AdvancedMachineRecipe> advancedMachineRecipeList = new ArrayList<>(machineRecipeList.size());
         for (MachineRecipe machineRecipe : machineRecipeList) {
             ItemStack[] inputItems = machineRecipe.getInput();
-            List<ItemStackWithWrapperAmount> inputItemList = ItemStackUtil.calItemListWithAmount(inputItems);
+            List<ItemAmountWrapper> inputItemList = ItemStackUtil.calItemListWithAmount(inputItems);
             List<AdvancedMachineRecipe.AdvancedRandomOutput> outputItemList;
             if (machineRecipe instanceof RandomMachineRecipe) {
                 outputItemList = new ArrayList<>(((RandomMachineRecipe) machineRecipe).getRandomOutputList().size());
@@ -69,6 +69,7 @@ public class MachineRecipeFactory {
         this.advancedRecipeMap.put(clazz, advancedMachineRecipeList);
     }
 
+    @Nonnull
     public static MachineRecipeFactory getInstance() {
         if(instance == null) {
             synchronized (MachineRecipeFactory.class) {

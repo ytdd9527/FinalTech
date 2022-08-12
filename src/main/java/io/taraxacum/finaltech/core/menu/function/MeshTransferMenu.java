@@ -3,16 +3,12 @@ package io.taraxacum.finaltech.core.menu.function;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.helper.*;
-import io.taraxacum.finaltech.api.dto.PositionHelper;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
-import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Inventory;
 
 import javax.annotation.Nonnull;
-import java.util.*;
 
 /**
  * @author Final_ROOT
@@ -25,12 +21,12 @@ public class MeshTransferMenu extends AbstractMachineMenu {
     private static final int[] INPUT_SLOT = new int[] {6, 7, 8, 15, 16, 17, 24, 25, 26};
     private static final int[] OUTPUT_SLOT = new int[] {33, 34, 35, 42, 43, 44, 51, 52, 53};
 
-    private static final int POSITION_UP_SLOT = 0;
     private static final int POSITION_NORTH_SLOT = 1;
-    private static final int POSITION_WEST_SLOT = 9;
     private static final int POSITION_EAST_SLOT = 11;
-    private static final int POSITION_DOWN_SLOT = 18;
     private static final int POSITION_SOUTH_SLOT = 19;
+    private static final int POSITION_WEST_SLOT = 9;
+    private static final int POSITION_UP_SLOT = 0;
+    private static final int POSITION_DOWN_SLOT = 18;
 
     private static final int CARGO_FILTER_SLOT = 10;
     private static final int INPUT_BLOCK_SEARCH_MODE_SLOT = 2;
@@ -52,19 +48,8 @@ public class MeshTransferMenu extends AbstractMachineMenu {
 
     public static final int[] ITEM_MATCH = new int[] {27, 28, 29, 36, 37, 38, 45, 46, 47};
 
-    private static final Map<Integer, String> POSITION;
-    static {
-        POSITION = new HashMap<>();
-        POSITION.put(0, PositionInfo.POSITION_UP);
-        POSITION.put(1, PositionInfo.POSITION_NORTH);
-        POSITION.put(9, PositionInfo.POSITION_WEST);
-        POSITION.put(11, PositionInfo.POSITION_EAST);
-        POSITION.put(18, PositionInfo.POSITION_DOWN);
-        POSITION.put(19, PositionInfo.POSITION_SOUTH);
-    }
-
-    public MeshTransferMenu(@Nonnull String id, @Nonnull String title, AbstractMachine machine) {
-        super(id, title, machine);
+    public MeshTransferMenu(@Nonnull AbstractMachine machine) {
+        super(machine);
     }
 
     @Override
@@ -96,16 +81,16 @@ public class MeshTransferMenu extends AbstractMachineMenu {
     public void init() {
         super.init();
 
-        this.addItem(POSITION_UP_SLOT, PositionInfo.POSITION_UP_NULL_ICON);
-        this.addItem(POSITION_NORTH_SLOT, PositionInfo.POSITION_NORTH_NULL_ICON);
-        this.addItem(POSITION_WEST_SLOT, PositionInfo.POSITION_WEST_NULL_ICON);
-        this.addItem(POSITION_EAST_SLOT, PositionInfo.POSITION_EAST_NULL_ICON);
-        this.addItem(POSITION_DOWN_SLOT, PositionInfo.POSITION_DOWN_NULL_ICON);
-        this.addItem(POSITION_SOUTH_SLOT, PositionInfo.POSITION_SOUTH_NULL_ICON);
+        this.addItem(POSITION_NORTH_SLOT, PositionInfo.NORTH_ICON);
+        this.addItem(POSITION_EAST_SLOT, PositionInfo.EAST_ICON);
+        this.addItem(POSITION_SOUTH_SLOT, PositionInfo.SOUTH_ICON);
+        this.addItem(POSITION_WEST_SLOT, PositionInfo.WEST_ICON);
+        this.addItem(POSITION_UP_SLOT, PositionInfo.UP_ICON);
+        this.addItem(POSITION_DOWN_SLOT, PositionInfo.DOWN_ICON);
 
         this.addItem(CARGO_FILTER_SLOT, CargoFilter.HELPER.defaultIcon());
-        this.addItem(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.STATION_INPUT_HELPER.defaultIcon());
-        this.addItem(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.STATION_OUTPUT_HELPER.defaultIcon());
+        this.addItem(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.MESH_INPUT_HELPER.defaultIcon());
+        this.addItem(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.MESH_OUTPUT_HELPER.defaultIcon());
 
         this.addItem(INPUT_CARGO_NUMBER_SUB_SLOT, CargoNumber.CARGO_NUMBER_SUB_ICON);
         this.addItem(INPUT_CARGO_NUMBER_MODE_SLOT, CargoNumber.CARGO_NUMBER_ICON);
@@ -124,67 +109,59 @@ public class MeshTransferMenu extends AbstractMachineMenu {
 
     @Override
     public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-        updateMenu(blockMenu, block);
+        super.newInstance(blockMenu, block);
+        Inventory inventory = blockMenu.toInventory();
+        Location location = block.getLocation();
 
-        blockMenu.addMenuClickHandler(CARGO_FILTER_SLOT, CargoFilter.HELPER.getHandler(blockMenu, block, this, CARGO_FILTER_SLOT));
-        blockMenu.addMenuClickHandler(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.STATION_INPUT_HELPER.getHandler(blockMenu, block, this, INPUT_BLOCK_SEARCH_MODE_SLOT));
-        blockMenu.addMenuClickHandler(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.STATION_OUTPUT_HELPER.getHandler(blockMenu, block, this, OUTPUT_BLOCK_SEARCH_MODE_SLOT));
+        blockMenu.addMenuClickHandler(POSITION_NORTH_SLOT, PositionInfo.NORTH_HELPER.getHandler(inventory, location, this.getSlimefunItem(), POSITION_NORTH_SLOT));
+        blockMenu.addMenuClickHandler(POSITION_EAST_SLOT, PositionInfo.EAST_HELPER.getHandler(inventory, location, this.getSlimefunItem(), POSITION_EAST_SLOT));
+        blockMenu.addMenuClickHandler(POSITION_SOUTH_SLOT, PositionInfo.SOUTH_HELPER.getHandler(inventory, location, this.getSlimefunItem(), POSITION_SOUTH_SLOT));
+        blockMenu.addMenuClickHandler(POSITION_WEST_SLOT, PositionInfo.WEST_HELPER.getHandler(inventory, location, this.getSlimefunItem(), POSITION_WEST_SLOT));
+        blockMenu.addMenuClickHandler(POSITION_UP_SLOT, PositionInfo.UP_HELPER.getHandler(inventory, location, this.getSlimefunItem(), POSITION_UP_SLOT));
+        blockMenu.addMenuClickHandler(POSITION_DOWN_SLOT, PositionInfo.DOWN_HELPER.getHandler(inventory, location, this.getSlimefunItem(), POSITION_DOWN_SLOT));
 
-        blockMenu.addMenuClickHandler(INPUT_CARGO_NUMBER_ADD_SLOT, CargoNumber.INPUT_HELPER.getNextHandler(blockMenu, block, this, INPUT_CARGO_NUMBER_MODE_SLOT));
-        blockMenu.addMenuClickHandler(INPUT_CARGO_NUMBER_SUB_SLOT, CargoNumber.INPUT_HELPER.getPreviousHandler(blockMenu, block, this, INPUT_CARGO_NUMBER_MODE_SLOT));
-        blockMenu.addMenuClickHandler(INPUT_CARGO_NUMBER_MODE_SLOT, CargoNumberMode.INPUT_HELPER.getHandler(blockMenu, block, this, INPUT_CARGO_NUMBER_MODE_SLOT));
-        blockMenu.addMenuClickHandler(INPUT_SLOT_SEARCH_SIZE_SLOT, SlotSearchSize.INPUT_HELPER.getHandler(blockMenu, block, this, INPUT_SLOT_SEARCH_SIZE_SLOT));
-        blockMenu.addMenuClickHandler(INPUT_SLOT_SEARCH_ORDER_SLOT, SlotSearchOrder.INPUT_HELPER.getHandler(blockMenu, block, this, INPUT_SLOT_SEARCH_ORDER_SLOT));
-        blockMenu.addMenuClickHandler(INPUT_CARGO_LIMIT_SLOT, CargoLimit.INPUT_HELPER.getHandler(blockMenu, block, this, INPUT_CARGO_LIMIT_SLOT));
+        blockMenu.addMenuClickHandler(CARGO_FILTER_SLOT, CargoFilter.HELPER.getHandler(inventory, location, this.getSlimefunItem(), CARGO_FILTER_SLOT));
+        blockMenu.addMenuClickHandler(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.MESH_INPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), INPUT_BLOCK_SEARCH_MODE_SLOT));
+        blockMenu.addMenuClickHandler(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.MESH_OUTPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), OUTPUT_BLOCK_SEARCH_MODE_SLOT));
 
-        blockMenu.addMenuClickHandler(OUTPUT_CARGO_NUMBER_ADD_SLOT, CargoNumber.OUTPUT_HELPER.getNextHandler(blockMenu, block, this, OUTPUT_CARGO_NUMBER_MODE_SLOT));
-        blockMenu.addMenuClickHandler(OUTPUT_CARGO_NUMBER_SUB_SLOT, CargoNumber.OUTPUT_HELPER.getPreviousHandler(blockMenu, block, this, OUTPUT_CARGO_NUMBER_MODE_SLOT));
-        blockMenu.addMenuClickHandler(OUTPUT_CARGO_NUMBER_MODE_SLOT, CargoNumberMode.OUTPUT_HELPER.getHandler(blockMenu, block, this, OUTPUT_CARGO_NUMBER_MODE_SLOT));
-        blockMenu.addMenuClickHandler(OUTPUT_SLOT_SEARCH_SIZE_SLOT, SlotSearchSize.OUTPUT_HELPER.getHandler(blockMenu, block, this, OUTPUT_SLOT_SEARCH_SIZE_SLOT));
-        blockMenu.addMenuClickHandler(OUTPUT_SLOT_SEARCH_ORDER_SLOT, SlotSearchOrder.OUTPUT_HELPER.getHandler(blockMenu, block, this, OUTPUT_SLOT_SEARCH_ORDER_SLOT));
-        blockMenu.addMenuClickHandler(OUTPUT_CARGO_LIMIT_SLOT, CargoLimit.OUTPUT_HELPER.getHandler(blockMenu, block, this, OUTPUT_CARGO_LIMIT_SLOT));
+        blockMenu.addMenuClickHandler(INPUT_CARGO_NUMBER_ADD_SLOT, CargoNumber.INPUT_HELPER.getNextHandler(inventory, location, this.getSlimefunItem(), INPUT_CARGO_NUMBER_MODE_SLOT));
+        blockMenu.addMenuClickHandler(INPUT_CARGO_NUMBER_SUB_SLOT, CargoNumber.INPUT_HELPER.getPreviousHandler(inventory, location, this.getSlimefunItem(), INPUT_CARGO_NUMBER_MODE_SLOT));
+        blockMenu.addMenuClickHandler(INPUT_CARGO_NUMBER_MODE_SLOT, CargoNumberMode.INPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), INPUT_CARGO_NUMBER_MODE_SLOT));
+        blockMenu.addMenuClickHandler(INPUT_SLOT_SEARCH_SIZE_SLOT, SlotSearchSize.INPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), INPUT_SLOT_SEARCH_SIZE_SLOT));
+        blockMenu.addMenuClickHandler(INPUT_SLOT_SEARCH_ORDER_SLOT, SlotSearchOrder.INPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), INPUT_SLOT_SEARCH_ORDER_SLOT));
+        blockMenu.addMenuClickHandler(INPUT_CARGO_LIMIT_SLOT, CargoLimit.INPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), INPUT_CARGO_LIMIT_SLOT));
 
-        //TODO
-        for (int slot : POSITION.keySet()) {
-            String position = POSITION.get(slot);
-            blockMenu.addMenuClickHandler(slot, (player, i, itemStack, clickAction) -> {
-                String infos = BlockStorage.getLocationInfo(block.getLocation(), PositionInfo.KEY);
-                PositionHelper p = new PositionHelper(infos);
-                String type = p.nextType(position);
-                int order = p.getOrder(position);
-                PositionInfo.setIcon(blockMenu.getItemInSlot(slot), type, order == -1 ? 1 : order);
-                BlockStorage.addBlockInfo(block.getLocation(), PositionInfo.KEY, p.toString());
-                return false;
-            });
-        }
+        blockMenu.addMenuClickHandler(OUTPUT_CARGO_NUMBER_ADD_SLOT, CargoNumber.OUTPUT_HELPER.getNextHandler(inventory, location, this.getSlimefunItem(), OUTPUT_CARGO_NUMBER_MODE_SLOT));
+        blockMenu.addMenuClickHandler(OUTPUT_CARGO_NUMBER_SUB_SLOT, CargoNumber.OUTPUT_HELPER.getPreviousHandler(inventory, location, this.getSlimefunItem(), OUTPUT_CARGO_NUMBER_MODE_SLOT));
+        blockMenu.addMenuClickHandler(OUTPUT_CARGO_NUMBER_MODE_SLOT, CargoNumberMode.OUTPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), OUTPUT_CARGO_NUMBER_MODE_SLOT));
+        blockMenu.addMenuClickHandler(OUTPUT_SLOT_SEARCH_SIZE_SLOT, SlotSearchSize.OUTPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), OUTPUT_SLOT_SEARCH_SIZE_SLOT));
+        blockMenu.addMenuClickHandler(OUTPUT_SLOT_SEARCH_ORDER_SLOT, SlotSearchOrder.OUTPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), OUTPUT_SLOT_SEARCH_ORDER_SLOT));
+        blockMenu.addMenuClickHandler(OUTPUT_CARGO_LIMIT_SLOT, CargoLimit.OUTPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), OUTPUT_CARGO_LIMIT_SLOT));
     }
 
     @Override
-    public void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-        CargoFilter.HELPER.checkAndUpdateIcon(blockMenu, CARGO_FILTER_SLOT);
-        BlockSearchMode.STATION_INPUT_HELPER.checkAndUpdateIcon(blockMenu, INPUT_BLOCK_SEARCH_MODE_SLOT);
-        BlockSearchMode.STATION_OUTPUT_HELPER.checkAndUpdateIcon(blockMenu, OUTPUT_BLOCK_SEARCH_MODE_SLOT);
+    protected void updateInventory(@Nonnull Inventory inventory, @Nonnull Location location) {
+        PositionInfo.NORTH_HELPER.checkAndUpdateIcon(inventory, location, POSITION_NORTH_SLOT);
+        PositionInfo.EAST_HELPER.checkAndUpdateIcon(inventory, location, POSITION_EAST_SLOT);
+        PositionInfo.SOUTH_HELPER.checkAndUpdateIcon(inventory, location, POSITION_SOUTH_SLOT);
+        PositionInfo.WEST_HELPER.checkAndUpdateIcon(inventory, location, POSITION_WEST_SLOT);
+        PositionInfo.UP_HELPER.checkAndUpdateIcon(inventory, location, POSITION_UP_SLOT);
+        PositionInfo.DOWN_HELPER.checkAndUpdateIcon(inventory, location, POSITION_DOWN_SLOT);
 
-        CargoNumber.INPUT_HELPER.checkAndUpdateIcon(blockMenu, INPUT_CARGO_NUMBER_MODE_SLOT);
-        CargoNumberMode.INPUT_HELPER.checkAndUpdateIcon(blockMenu, INPUT_CARGO_NUMBER_MODE_SLOT);
-        SlotSearchSize.INPUT_HELPER.checkAndUpdateIcon(blockMenu, INPUT_SLOT_SEARCH_SIZE_SLOT);
-        SlotSearchOrder.INPUT_HELPER.checkAndUpdateIcon(blockMenu, INPUT_SLOT_SEARCH_ORDER_SLOT);
-        CargoLimit.INPUT_HELPER.checkAndUpdateIcon(blockMenu, INPUT_CARGO_LIMIT_SLOT);
+        CargoFilter.HELPER.checkAndUpdateIcon(inventory, location, CARGO_FILTER_SLOT);
+        BlockSearchMode.MESH_INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_BLOCK_SEARCH_MODE_SLOT);
+        BlockSearchMode.MESH_OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_BLOCK_SEARCH_MODE_SLOT);
 
-        CargoNumber.OUTPUT_HELPER.checkAndUpdateIcon(blockMenu, OUTPUT_CARGO_NUMBER_MODE_SLOT);
-        CargoNumberMode.OUTPUT_HELPER.checkAndUpdateIcon(blockMenu, OUTPUT_CARGO_NUMBER_MODE_SLOT);
-        SlotSearchSize.OUTPUT_HELPER.checkAndUpdateIcon(blockMenu, OUTPUT_SLOT_SEARCH_SIZE_SLOT);
-        SlotSearchOrder.OUTPUT_HELPER.checkAndUpdateIcon(blockMenu, OUTPUT_SLOT_SEARCH_ORDER_SLOT);
-        CargoLimit.OUTPUT_HELPER.checkAndUpdateIcon(blockMenu, OUTPUT_CARGO_LIMIT_SLOT);
+        CargoNumber.INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_CARGO_NUMBER_MODE_SLOT);
+        CargoNumberMode.INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_CARGO_NUMBER_MODE_SLOT);
+        SlotSearchSize.INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_SLOT_SEARCH_SIZE_SLOT);
+        SlotSearchOrder.INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_SLOT_SEARCH_ORDER_SLOT);
+        CargoLimit.INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_CARGO_LIMIT_SLOT);
 
-        //TODO
-        for (int slot : POSITION.keySet()) {
-            String position = POSITION.get(slot);
-            String infos = BlockStorage.getLocationInfo(block.getLocation(), PositionInfo.KEY);
-            PositionHelper p = new PositionHelper(infos);
-            String type = p.getType(position);
-            int order = p.getOrder(position);
-            PositionInfo.setIcon(blockMenu.getItemInSlot(slot), type, order == -1 ? 1 : order);
-        }
+        CargoNumber.OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_CARGO_NUMBER_MODE_SLOT);
+        CargoNumberMode.OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_CARGO_NUMBER_MODE_SLOT);
+        SlotSearchSize.OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_SLOT_SEARCH_SIZE_SLOT);
+        SlotSearchOrder.OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_SLOT_SEARCH_ORDER_SLOT);
+        CargoLimit.OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_CARGO_LIMIT_SLOT);
     }
 }

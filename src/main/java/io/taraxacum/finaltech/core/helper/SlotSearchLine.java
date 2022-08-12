@@ -1,26 +1,27 @@
 package io.taraxacum.finaltech.core.helper;
 
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.taraxacum.common.annotation.Translate;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.KeyValueStringHelper;
 import io.taraxacum.finaltech.api.factory.BlockStorageHelper;
 import io.taraxacum.finaltech.api.factory.BlockStorageLoreHelper;
-import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
-import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class SlotSearchLine {
     public static final String KEY = "ssl";
 
@@ -28,26 +29,19 @@ public class SlotSearchLine {
     public static final String VALUE_KEY_L2 = "l2";
     public static final String VALUE_KEY_L3 = "l3";
 
-    @Translate
-    public static final ItemStack L1_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, TextUtil.colorPseudorandomString("第一行"));
-    @Translate
-    public static final ItemStack L2_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, TextUtil.colorPseudorandomString("第二行"));
-    @Translate
-    public static final ItemStack L3_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, TextUtil.colorPseudorandomString("第三行"));
+    public static final ItemStack L1_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "slot-search-line", "l1", "name"), FinalTech.getLanguageStringArray("helper", "slot-search-line", "l1", "lore"));
+    public static final ItemStack L2_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "slot-search-line", "l2", "name"), FinalTech.getLanguageStringArray("helper", "slot-search-line", "l2", "lore"));
+    public static final ItemStack L3_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "slot-search-line", "l3", "name"), FinalTech.getLanguageStringArray("helper", "slot-search-line", "l3", "lore"));
 
     public static final String VALUE_NULL = null;
     public static final String VALUE_POSITIVE = "p";
     public static final String VALUE_RESERVE = "re";
     public static final String VALUE_RANDOM = "ra";
 
-    @Translate
-    public static final String NULL_LORE = TextUtil.colorRandomString("无效");
-    @Translate
-    public static final String POSITIVE_LORE = TextUtil.colorRandomString("正向");
-    @Translate
-    public static final String RESERVE_LORE = TextUtil.colorRandomString("逆向");
-    @Translate
-    public static final String RANDOM_LORE = TextUtil.colorRandomString("随机");
+    public static final List<String> NULL_LORE = FinalTech.getLanguageStringList("helper", "slot-search-line", "null", "lore");
+    public static final List<String> POSITIVE_LORE = FinalTech.getLanguageStringList("helper", "slot-search-line", "positive", "lore");
+    public static final List<String> RESERVE_LORE = FinalTech.getLanguageStringList("helper", "slot-search-line", "reserve", "lore");
+    public static final List<String> RANDOM_LORE = FinalTech.getLanguageStringList("helper", "slot-search-line", "random", "lore");
 
     public static final Material NULL_MATERIAL = Material.GRAY_STAINED_GLASS_PANE;
     public static final Material POSITIVE_MATERIAL = Material.BLUE_STAINED_GLASS_PANE;
@@ -90,14 +84,14 @@ public class SlotSearchLine {
     public static abstract class BlockStorageLoreMaterialHelper extends BlockStorageLoreHelper {
         BlockStorageLoreMaterialHelper() {
             super(BlockStorageHelper.ID_CARGO, new LinkedHashMap<>() {{
-                this.put(VALUE_NULL, List.of(NULL_LORE));
-                this.put(VALUE_POSITIVE, List.of(POSITIVE_LORE));
-                this.put(VALUE_RESERVE, List.of(RESERVE_LORE));
-                this.put(VALUE_RANDOM, List.of(RANDOM_LORE));
+                this.put(VALUE_NULL, NULL_LORE);
+                this.put(VALUE_POSITIVE, POSITIVE_LORE);
+                this.put(VALUE_RESERVE, RESERVE_LORE);
+                this.put(VALUE_RANDOM, RANDOM_LORE);
             }});
         }
 
-        @Nullable
+        @Nonnull
         @Override
         public String getOrDefaultValue(@Nonnull Location location) {
             String valueMap = BlockStorage.getLocationInfo(location, KEY);
@@ -108,7 +102,7 @@ public class SlotSearchLine {
             }
             return value;
         }
-        @Nullable
+        @Nonnull
         @Override
         public String getOrDefaultValue(@Nonnull Config config) {
             String valueMap = config.getString(KEY);
@@ -128,26 +122,16 @@ public class SlotSearchLine {
             return BlockStorageLoreMaterialHelper.super.setIcon(iconItem, value);
         }
         @Override
-        public boolean setIcon(@Nonnull ItemStack iconItem, @Nullable String value, @Nonnull AbstractMachine abstractMachine) {
+        public boolean setIcon(@Nonnull ItemStack iconItem, @Nullable String value, @Nonnull SlimefunItem slimefunItem) {
             if (BlockStorageLoreMaterialHelper.this.validValue(value) && valueMaterialMap.containsKey(value)) {
                 iconItem.setType(valueMaterialMap.get(value));
             }
-            return BlockStorageLoreMaterialHelper.super.setIcon(iconItem, value, abstractMachine);
+            return BlockStorageLoreMaterialHelper.super.setIcon(iconItem, value, slimefunItem);
         }
 
         @Override
-        public void setOrClearValue(@Nonnull Location location, @Nullable String value) {
-            BlockStorage.addBlockInfo(location, KEY, value);
-        }
-
-        @Override
-        public void setOrClearValue(@Nonnull Config config, @Nullable String value) {
-            config.setValue(KEY, value);
-        }
-
-        @Override
-        public boolean checkAndUpdateIcon(@Nonnull BlockMenu blockMenu, int slot) {
-            String valueMap = BlockStorage.getLocationInfo(blockMenu.getLocation(), this.getKey());
+        public boolean checkAndUpdateIcon(@Nonnull Inventory inventory, @Nonnull Location location, int slot) {
+            String valueMap = BlockStorage.getLocationInfo(location, this.getKey());
             if(valueMap == null) {
                 valueMap = "";
             }
@@ -156,18 +140,18 @@ public class SlotSearchLine {
             if (!BlockStorageLoreMaterialHelper.this.validValue(value)) {
                 value = BlockStorageLoreMaterialHelper.this.defaultValue();
                 keyValueStringHelper.putEntry(BlockStorageLoreMaterialHelper.this.getKey(), value);
-                BlockStorage.addBlockInfo(blockMenu.getLocation(), KEY, keyValueStringHelper.toString());
+                BlockStorage.addBlockInfo(location, KEY, keyValueStringHelper.toString());
             }
-            ItemStack item = blockMenu.getItemInSlot(slot);
+            ItemStack item = inventory.getItem(slot);
             BlockStorageLoreMaterialHelper.this.setIcon(item, value);
             return true;
         }
 
         @Nonnull
         @Override
-        public ChestMenu.MenuClickHandler getHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
+        public ChestMenu.MenuClickHandler getHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
             return (p, slot1, item, action) -> {
-                String valueMap = BlockStorage.getLocationInfo(block.getLocation(), KEY);
+                String valueMap = BlockStorage.getLocationInfo(location, KEY);
                 KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
                 String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getKey());
                 if (!action.isRightClicked()) {
@@ -177,16 +161,16 @@ public class SlotSearchLine {
                 }
                 keyValueStringHelper.putEntry(BlockStorageLoreMaterialHelper.this.getKey(), value);
                 BlockStorageLoreMaterialHelper.this.setIcon(item, value);
-                BlockStorageLoreMaterialHelper.this.setOrClearValue(block.getLocation(), keyValueStringHelper.toString());
+                BlockStorageLoreMaterialHelper.this.setOrClearValue(location, keyValueStringHelper.toString());
                 return false;
             };
         }
 
         @Nonnull
         @Override
-        public ChestMenu.MenuClickHandler getUpdateHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
+        public ChestMenu.MenuClickHandler getUpdateHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
             return (p, slot1, item, action) -> {
-                String valueMap = BlockStorage.getLocationInfo(block.getLocation(), KEY);
+                String valueMap = BlockStorage.getLocationInfo(location, KEY);
                 KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
                 String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getKey());
                 if (!BlockStorageLoreMaterialHelper.this.validValue(value)) {
@@ -194,39 +178,39 @@ public class SlotSearchLine {
                 }
                 keyValueStringHelper.putEntry(BlockStorageLoreMaterialHelper.this.getKey(), value);
                 BlockStorageLoreMaterialHelper.this.setIcon(item, value);
-                BlockStorageLoreMaterialHelper.this.setOrClearValue(block.getLocation(), keyValueStringHelper.toString());
+                BlockStorageLoreMaterialHelper.this.setOrClearValue(location, keyValueStringHelper.toString());
                 return false;
             };
         }
 
         @Nonnull
         @Override
-        public ChestMenu.MenuClickHandler getNextHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
+        public ChestMenu.MenuClickHandler getNextHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
             return (p, slot1, item, action) -> {
-                String valueMap = BlockStorage.getLocationInfo(block.getLocation(), KEY);
+                String valueMap = BlockStorage.getLocationInfo(location, KEY);
                 KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
                 String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getKey());
                 value = BlockStorageLoreMaterialHelper.this.clickNextValue(value, action);
                 keyValueStringHelper.putEntry(BlockStorageLoreMaterialHelper.this.getKey(), value);
                 BlockStorageLoreMaterialHelper.this.setIcon(item, value);
-                BlockStorageLoreMaterialHelper.this.setOrClearValue(block.getLocation(), keyValueStringHelper.toString());
+                BlockStorageLoreMaterialHelper.this.setOrClearValue(location, keyValueStringHelper.toString());
                 return false;
             };
         }
 
         @Nonnull
         @Override
-        public ChestMenu.MenuClickHandler getPreviousHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
+        public ChestMenu.MenuClickHandler getPreviousHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
             return (p, slot1, item, action) -> {
-                String valueMap = BlockStorage.getLocationInfo(block.getLocation(), KEY);
+                String valueMap = BlockStorage.getLocationInfo(location, KEY);
                 KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
                 String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getKey());
                 value = BlockStorageLoreMaterialHelper.this.clickPreviousValue(value, action);
                 keyValueStringHelper.putEntry(BlockStorageLoreMaterialHelper.this.getKey(), value);
                 BlockStorageLoreMaterialHelper.this.setIcon(item, value);
-                BlockStorageLoreMaterialHelper.this.setOrClearValue(block.getLocation(), keyValueStringHelper.toString());
+                BlockStorageLoreMaterialHelper.this.setOrClearValue(location, keyValueStringHelper.toString());
                 return false;
             };
         }
-    };
+    }
 }

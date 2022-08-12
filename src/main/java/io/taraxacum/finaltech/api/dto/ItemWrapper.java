@@ -1,11 +1,15 @@
 package io.taraxacum.finaltech.api.dto;
 
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
+import io.taraxacum.finaltech.util.ItemStackUtil;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Final_ROOT
@@ -18,52 +22,66 @@ public class ItemWrapper {
     @Nullable
     private ItemMeta itemMeta;
 
-    private boolean hasItemMeta;
+    public static final ItemStack AIR = new ItemStack(Material.AIR);
+
+    public ItemWrapper() {
+        this.itemStack = AIR;
+    }
 
     public ItemWrapper(@Nonnull ItemStack itemStack) {
         this.itemStack = itemStack;
-        this.hasItemMeta = itemStack.hasItemMeta();
-        this.itemMeta = this.hasItemMeta ? this.itemStack.getItemMeta() : null;
+        this.itemMeta = this.itemStack.hasItemMeta() ? this.itemStack.getItemMeta() : null;
     }
 
     public ItemWrapper(@Nonnull ItemStack itemStack, @Nullable ItemMeta itemMeta) {
         this.itemStack = itemStack;
         this.itemMeta = itemMeta;
-        this.hasItemMeta = itemMeta == null;
     }
 
     @Nonnull
     public ItemStack getItemStack() {
-        return itemStack;
+        return this.itemStack;
     }
 
     public void setItemStack(@Nonnull ItemStack itemStack) {
         this.itemStack = itemStack;
     }
 
-    public void replaceItemStack(@Nonnull ItemStack itemStack) {
-        this.itemStack = itemStack;
-        this.hasItemMeta = this.itemStack.hasItemMeta();
-        this.itemMeta = this.hasItemMeta ? this.itemStack.getItemMeta() : null;
-    }
-
     @Nullable
     public ItemMeta getItemMeta() {
-        return itemMeta;
+        return this.itemMeta;
     }
 
     public void setItemMeta(@Nullable ItemMeta itemMeta) {
         this.itemMeta = itemMeta;
-        this.hasItemMeta = this.itemMeta == null;
     }
 
-    public boolean isHasItemMeta() {
-        return hasItemMeta;
+    public boolean hasItemMeta() {
+        return this.itemMeta != null;
     }
 
     public void updateItemMeta() {
-        this.hasItemMeta = this.itemStack.hasItemMeta();
-        this.itemMeta = this.hasItemMeta ? this.itemStack.getItemMeta() : null;
+        this.itemMeta = this.itemStack.hasItemMeta() ? this.itemStack.getItemMeta() : null;
+    }
+
+    public void newWrap(@Nonnull ItemStack itemStack) {
+        this.itemStack = itemStack;
+        this.itemMeta = this.itemStack.hasItemMeta() ? this.itemStack.getItemMeta() : null;
+    }
+
+    public void newWrap(@Nonnull ItemStack itemStack, @Nullable ItemMeta itemMeta) {
+        this.itemStack = itemStack;
+        this.itemMeta = itemMeta;
+    }
+
+    @Nonnull
+    public ItemWrapper shallowClone() {
+        return new ItemWrapper(this.itemStack, this.itemMeta);
+    }
+
+    @Nonnull
+    public ItemWrapper deepClone() {
+        return new ItemWrapper(new ItemStack(this.itemStack));
     }
 
     @Override
@@ -71,7 +89,7 @@ public class ItemWrapper {
         int hash = 31 + this.itemStack.getType().hashCode();
         hash = hash * 31 + this.itemStack.getAmount();
         hash = hash * 31 + (this.itemStack.getDurability() & 0xffff);
-        hash = hash * 31 + (this.hasItemMeta ? (this.itemMeta.hashCode()) : 0);
+        hash = hash * 31 + (this.itemMeta != null ? (this.itemMeta.hashCode()) : 0);
         return hash;
     }
 
@@ -82,5 +100,47 @@ public class ItemWrapper {
         } else {
             return this.itemStack.equals(obj);
         }
+    }
+
+    @Nonnull
+    public static ItemStack[] getItemArray(@Nonnull ItemWrapper[] itemWrappers) {
+        ItemStack[] itemStacks = new ItemStack[itemWrappers.length];
+        for(int i = 0, length = itemStacks.length; i < length; i++) {
+            itemStacks[i] = itemWrappers[i].getItemStack();
+        }
+        return itemStacks;
+    }
+    @Nonnull
+    public static ItemStack[] getItemArray(@Nonnull List<? extends ItemWrapper> itemWrapperList) {
+        ItemStack[] itemStacks = new ItemStack[itemWrapperList.size()];
+        for(int i = 0, length = itemStacks.length; i < length; i++) {
+            itemStacks[i] = itemWrapperList.get(i).getItemStack();
+        }
+        return itemStacks;
+    }
+    @Nonnull
+    public static ItemStack[] getCopiedItemArray(@Nonnull List<? extends ItemWrapper> itemWrapperList) {
+        ItemStack[] itemStacks = new ItemStack[itemWrapperList.size()];
+        for(int i = 0, length = itemStacks.length; i < length; i++) {
+            itemStacks[i] = ItemStackUtil.cloneItem(itemWrapperList.get(i).getItemStack());
+        }
+        return itemStacks;
+    }
+
+    @Nonnull
+    public static List<ItemStack> getItemList(@Nonnull ItemWrapper[] itemWrappers) {
+        List<ItemStack> itemStackList = new ArrayList<>(itemWrappers.length);
+        for (ItemWrapper itemWrapper : itemWrappers) {
+            itemStackList.add(itemWrapper.getItemStack());
+        }
+        return itemStackList;
+    }
+    @Nonnull
+    public static List<ItemStack> getItemList(@Nonnull List<? extends ItemWrapper> itemWrapperList) {
+        List<ItemStack> itemStackList = new ArrayList<>(itemWrapperList.size());
+        for(ItemWrapper itemWrapper : itemWrapperList) {
+            itemStackList.add(itemWrapper.getItemStack());
+        }
+        return itemStackList;
     }
 }

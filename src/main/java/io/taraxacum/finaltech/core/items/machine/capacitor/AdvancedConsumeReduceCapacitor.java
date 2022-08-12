@@ -3,6 +3,8 @@ package io.taraxacum.finaltech.core.items.machine.capacitor;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -10,8 +12,8 @@ import org.bukkit.inventory.ItemStack;
  * @since 2.0
  */
 public class AdvancedConsumeReduceCapacitor extends BasicConsumeReduceCapacitor {
-    public static final int CAPACITOR = Integer.MAX_VALUE / 4;
-    public static final int EFFICIENT = 4;
+    private final int capacity = FinalTech.getValueManager().getOrDefault(Integer.MAX_VALUE / 4, "capacitor", SlimefunUtil.getIdFormatName(AdvancedConsumeReduceCapacitor.class), "capacity");
+    private final int efficient = FinalTech.getValueManager().getOrDefault(4, "capacitor", SlimefunUtil.getIdFormatName(AdvancedConsumeReduceCapacitor.class), "efficient");
 
     public AdvancedConsumeReduceCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -19,11 +21,11 @@ public class AdvancedConsumeReduceCapacitor extends BasicConsumeReduceCapacitor 
 
     @Override
     public int getCapacity() {
-        return CAPACITOR;
+        return this.capacity;
     }
 
     @Override
     protected int getEfficient() {
-        return EFFICIENT;
+        return this.efficient;
     }
 }

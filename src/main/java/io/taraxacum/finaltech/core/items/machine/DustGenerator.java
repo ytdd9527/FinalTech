@@ -9,7 +9,10 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.core.items.unusable.Annular;
+import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.OrderDustGeneratorMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
@@ -30,6 +33,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 1.0
  */
+// TODO use operation
 public class DustGenerator extends AbstractMachine implements RecipeItem, EnergyNetProvider {
     public static final String KEY_COUNT = "count";
     public static final String KEY_MAX = "max";
@@ -45,8 +49,8 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
         return new BlockPlaceHandler(false) {
             @Override
             public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {
-                BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), KEY_COUNT, "0");
-                BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), KEY_MAX, "0");
+                BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), KEY_COUNT, StringNumberUtil.ZERO);
+                BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), KEY_MAX, StringNumberUtil.ZERO);
             }
         };
     }
@@ -83,7 +87,7 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
                 }
                 work = true;
                 break;
-            } else if (ItemStackUtil.isItemSimilar(item, FinalTechItems.ORDERED_DUST)) {
+            } else if (Annular.isValid(item)) {
                 item.setAmount(item.getAmount() - 1);
                 if (count < max) {
                     count = (count + max) / 2;
@@ -96,7 +100,7 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
                 }
                 work = true;
                 break;
-            } else if (ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY)) {
+            } else if (ItemPhony.isValid(item)) {
                 item.setAmount(item.getAmount() - 1);
                 count = this.getCapacity();
                 max = this.getCapacity();
@@ -164,9 +168,10 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
                 TextUtil.COLOR_NORMAL + "最大发电量 " + TextUtil.COLOR_NUMBER + this.getCapacity() + "J/t");
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "电力回溯",
                 "",
-                TextUtil.COLOR_NORMAL + "消耗 " + FinalTechItems.ORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 时",
+                TextUtil.COLOR_NORMAL + "消耗 " + FinalTechItems.ANNULAR.getDisplayName() + TextUtil.COLOR_NORMAL + " 时",
                 TextUtil.COLOR_NORMAL + "若当前发电量小于已达到的最大发电量",
                 TextUtil.COLOR_NORMAL + "则将当前发电量提升至当前发电量与已达到的最大发电量的平均值",
                 TextUtil.COLOR_NORMAL + "然后重置已达到的最大发电量");
+        // 使用伪物可以直接将电量拉满
     }
 }

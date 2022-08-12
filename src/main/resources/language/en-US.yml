@@ -1,0 +1,40 @@
+category:
+  main:
+    name: "{color:random}FinalTECH 2.0-alpha"
+  material:
+    name: "{color:random}Material"
+  tool:
+    name: "{color:random}Tool"
+  weapon:
+    name: "{color:random}Weapon And Equipment"
+  electric:
+    name: "{color:random}Electric System"
+  cargo:
+    name: "{color:random}Cargo System"
+  functional-machine:
+    name: "{color:random}Machine-Functional"
+  manual-machine:
+    name: "{color:random}Machine-Manual"
+  productive-machine-basic:
+    name: "{color:random}Productive Machine-Basic"
+  productive-machine-advanced:
+    name: "{color:random}Productive Machine-Advanced"
+  productive-machine-conversion:
+    name: "{color:random}Productive Machine-Conversion"
+  productive-machine-extraction:
+    name: "{color:random}Productive Machine-Extraction"
+  productive-machine-generator:
+    name: "{color:random}Productive Machine-Generator"
+  final-item:
+    name: "{color:random}Final Items"
+
+helper:
+  filter-mode:
+    black:
+      name: "{color:random:start}黑名单模式{color:random:end}"
+      lore:
+        - "{color:normal} 传输匹配的物品"
+    white:
+      name: "{color:random:start}白名单模式{color:random:end}"
+      lore:
+        - "{color:normal} 传输不匹配的物品"

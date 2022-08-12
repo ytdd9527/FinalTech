@@ -2,7 +2,12 @@ package io.taraxacum.finaltech.setup;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.items.machine.tower.CureTower;
+import io.taraxacum.finaltech.core.items.machine.tower.PurifyLevelTower;
+import io.taraxacum.finaltech.core.items.machine.tower.PurifyTimeTower;
 import io.taraxacum.finaltech.core.items.unusable.StorageCardItem;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.finaltech.util.TextUtil;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -12,22 +17,27 @@ import org.bukkit.inventory.ItemStack;
  */
 public final class FinalTechItems {
     // items
-    public static final SlimefunItemStack WATER_CARD = new SlimefunItemStack("FINALTECH_WATER_CARD", Material.PAPER, "§9水卡");
-    public static final SlimefunItemStack LAVA_CARD = new SlimefunItemStack("FINALTECH_LAVAL_CARD", Material.PAPER, "§6岩浆卡");
-    public static final SlimefunItemStack MILK_CARD = new SlimefunItemStack("FINALTECH_MILK_CARD", Material.PAPER, "§f牛奶卡");
+    public static final SlimefunItemStack WATER_CARD = new SlimefunItemStack("FINALTECH_WATER_CARD", Material.PAPER, FinalTech.getLanguageString("item", "water-card", "name"), FinalTech.getLanguageStringArray("item", "water-card", "lore"));
+    public static final SlimefunItemStack LAVA_CARD = new SlimefunItemStack("FINALTECH_LAVAL_CARD", Material.PAPER, FinalTech.getLanguageString("item", "lava-card", "name"), FinalTech.getLanguageStringArray("item", "lava-card", "lore"));
+    public static final SlimefunItemStack MILK_CARD = new SlimefunItemStack("FINALTECH_MILK_CARD", Material.PAPER, FinalTech.getLanguageString("item", "milk-card", "name"), FinalTech.getLanguageStringArray("item", "milk-card", "lore"));
     public static final SlimefunItemStack GEARWHEEL = new SlimefunItemStack("FINALTECH_GEARWHEEL", Material.REDSTONE, TextUtil.colorPseudorandomString("齿轮"));
     public static final SlimefunItemStack UNORDERED_DUST = new SlimefunItemStack("FINALTECH_UNORDERED_DUST", Material.WHEAT_SEEDS, TextUtil.colorPseudorandomString("无序尘埃"));
     public static final SlimefunItemStack ORDERED_DUST = new SlimefunItemStack("FINALTECH_ORDERED_DUST", Material.SLIME_BALL, TextUtil.colorPseudorandomString("有序尘埃"));
     public static final SlimefunItemStack BUG = new SlimefunItemStack("FINALTECH_BUG", Material.BONE_MEAL, TextUtil.colorPseudorandomString("锟斤拷"));
-    public static final SlimefunItemStack ENTROPY = new SlimefunItemStack("FINALTECH_ENTROPY", Material.WHEAT_SEEDS, "§0熵");
-    public static final SlimefunItemStack QUANTITY_MODULE = new SlimefunItemStack("FINALTECH_QUANTITY_MODULE", Material.AMETHYST_SHARD, TextUtil.colorPseudorandomString("数量组件"));
+    public static final SlimefunItemStack ENTROPY = new SlimefunItemStack("FINALTECH_ENTROPY", Material.WHEAT_SEEDS, "熵");
+    public static final SlimefunItemStack NULL = new SlimefunItemStack("FINALTECH_NULL", Material.WHITE_CONCRETE, TextUtil.colorPseudorandomString("空白"));
+    public static final SlimefunItemStack BOX = new SlimefunItemStack("FINALTECH_BOX", Material.CHEST, TextUtil.colorPseudorandomString("盒"));
+    public static final SlimefunItemStack SHINE = new SlimefunItemStack("FINALTECH_SHINE", Material.BONE_MEAL, TextUtil.colorPseudorandomString("辉"));
     public static final SlimefunItemStack COPY_CARD = new SlimefunItemStack("FINALTECH_COPY_CARD", Material.FLINT, TextUtil.colorPseudorandomString("复制卡"));
     public static final SlimefunItemStack ANNULAR = new SlimefunItemStack("FINALTECH_ANNULAR", Material.BOWL, TextUtil.colorPseudorandomString("环"));
+    public static final SlimefunItemStack QUANTITY_MODULE = new SlimefunItemStack("FINALTECH_QUANTITY_MODULE", Material.AMETHYST_SHARD, TextUtil.colorPseudorandomString("数量组件"));
     public static final SlimefunItemStack QUANTITY_MODULE_INFINITY = new SlimefunItemStack("FINALTECH_QUANTITY_MODULE_INFINITY", Material.AMETHYST_SHARD, TextUtil.colorPseudorandomString("数量组件-无限"));
     public static final SlimefunItemStack SINGULARITY = new SlimefunItemStack("FINALTECH_SINGULARITY", Material.NETHER_STAR, TextUtil.colorPseudorandomString("奇点"));
     public static final SlimefunItemStack SPIROCHETE = new SlimefunItemStack("FINALTECH_SPIROCHETE", Material.STRING, TextUtil.colorPseudorandomString("螺旋体"));
     public static final SlimefunItemStack SHELL = new SlimefunItemStack("FINALTECH_SHELL", Material.PRISMARINE_SHARD, TextUtil.colorPseudorandomString("壳"));
     public static final SlimefunItemStack PHONY = new SlimefunItemStack("FINALTECH_PHONY", Material.END_CRYSTAL, TextUtil.colorPseudorandomString("伪物"));
+    public static final SlimefunItemStack EQUIVALENT_CONCEPT = new SlimefunItemStack("FINALTECH_EQUIVALENT_CONCEPT", Material.BLACK_CONCRETE, TextUtil.colorPseudorandomString("熵块"));
+    public static final SlimefunItemStack JUSTIFIABILITY = new SlimefunItemStack("FINALTECH_JUSTIFIABILITY", Material.BLACK_CONCRETE, TextUtil.colorPseudorandomString("静态熵块"));
 
     // tool
     public static final SlimefunItemStack MACHINE_CHARGE_CARD_L1 = new SlimefunItemStack("FINALTECH_MACHINE_CHARGE_CARD_L1", Material.BRICK, TextUtil.colorPseudorandomString("充能卡L1"));
@@ -41,6 +51,45 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MACHINE_ACTIVATE_CARD_L3 = new SlimefunItemStack("FINALTECH_MACHINE_ACTIVATE_CARD_L3", Material.COPPER_INGOT, TextUtil.colorPseudorandomString("带电超频卡L3"));
     public static final SlimefunItemStack MENU_VIEWER = new SlimefunItemStack("FINALTECH_MENU_VIEWER", Material.SPYGLASS, TextUtil.colorPseudorandomString("容器透镜"));
     public static final SlimefunItemStack LOCATION_RECORDER = new SlimefunItemStack("FINALTECH_LOCATION_RECORDER", Material.COMPASS, TextUtil.colorPseudorandomString("坐标记录器"));
+    public static final SlimefunItemStack MAGIC_HYPNOTIC = new SlimefunItemStack("FINALTECH_MAGIC_HYPNOTIC", Material.DRAGON_BREATH, TextUtil.colorPseudorandomString("魔法催眠药"));
+    public static final SlimefunItemStack POTION_EFFECT_COMPRESSOR = new SlimefunItemStack("FINALTECH_POTION_EFFECT_COMPRESSOR", Material.GOLD_INGOT, TextUtil.colorPseudorandomString("状态压缩器"));
+    public static final SlimefunItemStack POTION_EFFECT_DILATOR = new SlimefunItemStack("FINALTECH_POTION_EFFECT_DILATOR", Material.COPPER_INGOT, TextUtil.colorPseudorandomString("状态扩张器"));
+    public static final SlimefunItemStack POTION_EFFECT_PURIFIER = new SlimefunItemStack("FINALTECH_POTION_EFFECT_PURIFIER", Material.IRON_INGOT, TextUtil.colorPseudorandomString("状态净化器"));
+    public static final SlimefunItemStack STAFF_ELEMENTAL_LINE = new SlimefunItemStack("FINALTECH_STAFF_ELEMENTAL_LINE", Material.STICK, TextUtil.colorPseudorandomString("元素法杖 线"));
+    public static final SlimefunItemStack UNTREATABLE_RUNE = new SlimefunItemStack("FINALTECH_UNTREATABLE_RUNE", Material.FEATHER, TextUtil.colorPseudorandomString("无法治疗符文"));
+    public static final SlimefunItemStack RESEARCH_UNLOCK_TICKET = new SlimefunItemStack("FINALTECH_RESEARCH_UNLOCK_TICKET", Material.PAPER, TextUtil.colorPseudorandomString("研究解锁券"));
+
+    // weapon
+    public static final SlimefunItemStack DUST_WOODEN_SWORD = new SlimefunItemStack("FINALTECH_DUST_WOODEN_SWORD", Material.WOODEN_SWORD, TextUtil.colorPseudorandomString("尘埃化木剑"));
+
+    // electric
+    public static final SlimefunItemStack BASIC_CHARGE_INCREASE_CAPACITOR = new SlimefunItemStack("FINALTECH_BASIC_CHARGE_INCREASE_CAPACITOR", Material.RED_STAINED_GLASS, TextUtil.colorPseudorandomString("基础充电增益电容"));
+    public static final SlimefunItemStack BASIC_CONSUME_REDUCE_CAPACITOR = new SlimefunItemStack("FINALTECH_BASIC_CONSUME_REDUCE_CAPACITOR", Material.RED_STAINED_GLASS, TextUtil.colorPseudorandomString("基础耗电减免电容"));
+    public static final SlimefunItemStack SMALL_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_SMALL_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("小型扩展电容"));
+    public static final SlimefunItemStack MEDIUM_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_MEDIUM_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("中型扩展电容"));
+    public static final SlimefunItemStack BIG_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_BIG_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("大型扩展电容"));
+    public static final SlimefunItemStack LARGE_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_LARGE_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("巨型扩展电容"));
+    public static final SlimefunItemStack CARBONADO_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_CARBONADO_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("黑金刚石扩展电容"));
+    public static final SlimefunItemStack ENERGIZED_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_ENERGIZED_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("终极扩展电容"));
+    public static final SlimefunItemStack ENERGIZED_STACK_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_ENERGIZED_STACK_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("终极扩展电容组"));
+    public static final SlimefunItemStack OVERLOADED_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_OVERLOADED_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("过载扩展电容"));
+    public static final SlimefunItemStack ADVANCED_CHARGE_INCREASE_CAPACITOR = new SlimefunItemStack("FINALTECH_ADVANCED_CHARGE_INCREASE_CAPACITOR", Material.RED_STAINED_GLASS, TextUtil.colorPseudorandomString("高级充电增益电容"));
+    public static final SlimefunItemStack ADVANCED_CONSUME_REDUCE_CAPACITOR = new SlimefunItemStack("FINALTECH_ADVANCED_CONSUME_REDUCE_CAPACITOR", Material.RED_STAINED_GLASS, TextUtil.colorPseudorandomString("高级耗电减免电容"));
+    public static final SlimefunItemStack ESCAPE_CAPACITOR = new SlimefunItemStack("FINALTECH_ESCAPE_CAPACITOR", Material.GREEN_STAINED_GLASS, TextUtil.colorPseudorandomString("逸散电容"));
+    public static final SlimefunItemStack NORMAL_ELECTRICITY_SHOOT_PILE = new SlimefunItemStack("FINALTECH_NORMAL_ELECTRICITY_SHOOT_PILE", Material.DISPENSER, TextUtil.colorPseudorandomString("普通射电桩"));
+    public static final SlimefunItemStack ENERGIZED_ELECTRICITY_SHOOT_PILE = new SlimefunItemStack("FINALTECH_ENERGIZED_ELECTRICITY_SHOOT_PILE", Material.DISPENSER, TextUtil.colorPseudorandomString("充能射电桩"));
+    public static final SlimefunItemStack OVERLOADED_ELECTRICITY_SHOOT_PILE = new SlimefunItemStack("FINALTECH_EXCESS_LOAD_ELECTRICITY_SHOOT_PILE", Material.DISPENSER, TextUtil.colorPseudorandomString("过载射电桩"));
+    public static final SlimefunItemStack ORDERED_DUST_GENERATOR = new SlimefunItemStack("FINALTECH_ORDERED_DUST_GENERATOR", Material.BROWN_MUSHROOM_BLOCK, TextUtil.colorPseudorandomString("尘埃发电机"));
+    public static final SlimefunItemStack BASIC_GENERATOR = new SlimefunItemStack("FINALTECH_BASIC_GENERATOR", Material.GLOWSTONE, TextUtil.colorPseudorandomString("基础供电机"));
+    public static final SlimefunItemStack ADVANCED_GENERATOR = new SlimefunItemStack("FINALTECH_ADVANCED_GENERATOR", Material.GLOWSTONE, TextUtil.colorPseudorandomString("高级供电机"));
+    public static final SlimefunItemStack CARBONADO_GENERATOR = new SlimefunItemStack("FINALTECH_CARBONADO_GENERATOR", Material.GLOWSTONE, TextUtil.colorPseudorandomString("黑金刚石供电机"));
+    public static final SlimefunItemStack ENERGIZED_GENERATOR = new SlimefunItemStack("FINALTECH_ENERGIZED_GENERATOR", Material.GLOWSTONE, TextUtil.colorPseudorandomString("充能供电机"));
+    public static final SlimefunItemStack ENERGIZED_STACK_GENERATOR = new SlimefunItemStack("FINALTECH_ENERGIZED_STACK_GENERATOR", Material.GLOWSTONE, TextUtil.colorPseudorandomString("充能供电机组"));
+    public static final SlimefunItemStack OVERLOADED_GENERATOR = new SlimefunItemStack("FINALTECH_OVERLOADED_GENERATOR", Material.GLOWSTONE, TextUtil.colorPseudorandomString("过载供电机"));
+    public static final SlimefunItemStack ENERGIZED_CHARGE_BASE = new SlimefunItemStack("FINALTECH_ENERGIZED_CHARGE_BASE", Material.CRIMSON_FENCE, TextUtil.colorPseudorandomString("充能充电基座"));
+    public static final SlimefunItemStack OVERLOAD_CHARGE_BASE = new SlimefunItemStack("FINALTECH_OVERLOAD_CHARGE_BASE", Material.WARPED_FENCE, TextUtil.colorPseudorandomString("过载充电基座"));
+    public static final SlimefunItemStack ENERGIZED_ACCELERATOR = new SlimefunItemStack("FINALTECH_ENERGY_ACCELERATOR", Material.TARGET, TextUtil.colorPseudorandomString("充能加速器"));
+    public static final SlimefunItemStack OVERLOADED_ACCELERATOR = new SlimefunItemStack("FINALTECH_OVERLOADED_ACCELERATOR", Material.TARGET, TextUtil.colorPseudorandomString("过载加速器"));
 
     // cargo and storage
     public static final SlimefunItemStack BASIC_FRAME_MACHINE = new SlimefunItemStack("FINALTECH_BASIC_FRAME_MACHINE", Material.STONE, TextUtil.colorPseudorandomString("基础机器框架"), "§8可放置");
@@ -83,33 +132,6 @@ public final class FinalTechItems {
 //    public static final SlimefunItemStack STORAGE_ITEM_RED = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_RED", Material.RED_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-红"), StorageCardItem.ITEM_LORE);
 //    public static final SlimefunItemStack STORAGE_ITEM_BLACK = new SlimefunItemStack("FINALTECH_STORAGE_ITEM_BLACK", Material.BLACK_CONCRETE_POWDER, TextUtil.colorPseudorandomString("存储卡-黑"), StorageCardItem.ITEM_LORE);
 
-    // electric
-    public static final SlimefunItemStack BASIC_CHARGE_INCREASE_CAPACITOR = new SlimefunItemStack("FINALTECH_BASIC_CHARGE_INCREASE_CAPACITOR", Material.RED_STAINED_GLASS, TextUtil.colorPseudorandomString("基础充电增益电容"));
-    public static final SlimefunItemStack BASIC_CONSUME_REDUCE_CAPACITOR = new SlimefunItemStack("FINALTECH_BASIC_CONSUME_REDUCE_CAPACITOR", Material.RED_STAINED_GLASS, TextUtil.colorPseudorandomString("基础耗电减免电容"));
-    public static final SlimefunItemStack SMALL_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_SMALL_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("小型扩展电容"));
-    public static final SlimefunItemStack MEDIUM_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_MEDIUM_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("中型扩展电容"));
-    public static final SlimefunItemStack BIG_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_BIG_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("大型扩展电容"));
-    public static final SlimefunItemStack LARGE_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_LARGE_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("巨型扩展电容"));
-    public static final SlimefunItemStack CARBONADO_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_CARBONADO_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("黑金刚石扩展电容"));
-    public static final SlimefunItemStack ENERGIZED_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_ENERGIZED_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("终极扩展电容"));
-    public static final SlimefunItemStack ENERGIZED_STACK_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_ENERGIZED_STACK_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("终极扩展电容组"));
-    public static final SlimefunItemStack OVERLOADED_EXPANDED_CAPACITOR = new SlimefunItemStack("FINALTECH_OVERLOADED_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, TextUtil.colorPseudorandomString("过载扩展电容"));
-    public static final SlimefunItemStack ADVANCED_CHARGE_INCREASE_CAPACITOR = new SlimefunItemStack("FINALTECH_ADVANCED_CHARGE_INCREASE_CAPACITOR", Material.RED_STAINED_GLASS, TextUtil.colorPseudorandomString("高级充电增益电容"));
-    public static final SlimefunItemStack ADVANCED_CONSUME_REDUCE_CAPACITOR = new SlimefunItemStack("FINALTECH_ADVANCED_CONSUME_REDUCE_CAPACITOR", Material.RED_STAINED_GLASS, TextUtil.colorPseudorandomString("高级耗电减免电容"));
-    public static final SlimefunItemStack ESCAPE_CAPACITOR = new SlimefunItemStack("FINALTECH_ESCAPE_CAPACITOR", Material.GREEN_STAINED_GLASS, TextUtil.colorPseudorandomString("逸散电容"));
-    public static final SlimefunItemStack NORMAL_ELECTRICITY_SHOOT_PILE = new SlimefunItemStack("FINALTECH_NORMAL_ELECTRICITY_SHOOT_PILE", Material.DISPENSER, TextUtil.colorPseudorandomString("普通射电桩"));
-    public static final SlimefunItemStack ENERGIZED_ELECTRICITY_SHOOT_PILE = new SlimefunItemStack("FINALTECH_ENERGIZED_ELECTRICITY_SHOOT_PILE", Material.DISPENSER, TextUtil.colorPseudorandomString("充能射电桩"));
-    public static final SlimefunItemStack OVERLOADED_ELECTRICITY_SHOOT_PILE = new SlimefunItemStack("FINALTECH_EXCESS_LOAD_ELECTRICITY_SHOOT_PILE", Material.DISPENSER, TextUtil.colorPseudorandomString("过载射电桩"));
-    public static final SlimefunItemStack ORDERED_DUST_GENERATOR = new SlimefunItemStack("FINALTECH_ORDERED_DUST_GENERATOR", Material.BROWN_MUSHROOM_BLOCK, TextUtil.colorPseudorandomString("尘埃发电机"));
-    public static final SlimefunItemStack BASIC_GENERATOR = new SlimefunItemStack("FINALTECH_BASIC_GENERATOR", Material.GLOWSTONE, TextUtil.colorPseudorandomString("基础供电机"));
-    public static final SlimefunItemStack ADVANCED_GENERATOR = new SlimefunItemStack("FINALTECH_ADVANCED_GENERATOR", Material.GLOWSTONE, TextUtil.colorPseudorandomString("高级供电机"));
-    public static final SlimefunItemStack CARBONADO_GENERATOR = new SlimefunItemStack("FINALTECH_CARBONADO_GENERATOR", Material.GLOWSTONE, TextUtil.colorPseudorandomString("黑金刚石供电机"));
-    public static final SlimefunItemStack ENERGIZED_GENERATOR = new SlimefunItemStack("FINALTECH_ENERGIZED_GENERATOR", Material.GLOWSTONE, TextUtil.colorPseudorandomString("充能供电机"));
-    public static final SlimefunItemStack ENERGIZED_STACK_GENERATOR = new SlimefunItemStack("FINALTECH_ENERGIZED_STACK_GENERATOR", Material.GLOWSTONE, TextUtil.colorPseudorandomString("充能供电机组"));
-    public static final SlimefunItemStack OVERLOADED_GENERATOR = new SlimefunItemStack("FINALTECH_OVERLOADED_GENERATOR", Material.GLOWSTONE, TextUtil.colorPseudorandomString("过载供电机"));
-    public static final SlimefunItemStack ENERGIZED_ACCELERATOR = new SlimefunItemStack("FINALTECH_ENERGY_ACCELERATOR", Material.TARGET, TextUtil.colorPseudorandomString("充能加速器"));
-    public static final SlimefunItemStack OVERLOADED_ACCELERATOR = new SlimefunItemStack("FINALTECH_OVERLOADED_ACCELERATOR", Material.TARGET, TextUtil.colorPseudorandomString("过载加速器"));
-
     // function machine
     public static final SlimefunItemStack ORDERED_DUST_FACTORY_DIRT = new SlimefunItemStack("FINALTECH_ORDERED_DUST_FACTORY_DIRT", Material.DIRT, TextUtil.colorPseudorandomString("尘埃制造机"));
     public static final SlimefunItemStack ORDERED_DUST_FACTORY_STONE = new SlimefunItemStack("FINALTECH_ORDERED_DUST_FACTORY_STONE", Material.COBBLESTONE, TextUtil.colorPseudorandomString("尘埃制造机"));
@@ -120,13 +142,17 @@ public final class FinalTechItems {
     public static final SlimefunItemStack ITEM_DISMANTLE_TABLE = new SlimefunItemStack("FINALTECH_ITEM_DISMANTLE_TABLE", Material.CUT_COPPER, TextUtil.colorPseudorandomString("反向合成台"));
     public static final SlimefunItemStack EQUIVALENT_EXCHANGE_TABLE = new SlimefunItemStack("FINALTECH_EQUIVALENT_EXCHANGE_TABLE", Material.REDSTONE_LAMP, TextUtil.colorPseudorandomString("等价交换台"));
     public static final SlimefunItemStack ENTROPY_CONSTRUCTOR = new SlimefunItemStack("FINALTECH_ENTROPY_CONSTRUCTOR", Material.INFESTED_STONE, "§x§2§2§2§2§2§2熵化构造器");
+    public static final SlimefunItemStack FUEL_CHARGER = new SlimefunItemStack("FINALTECH_FUEL_CHARGER", Material.STONE, TextUtil.colorPseudorandomString("熔炉加热器"));
+    public static final SlimefunItemStack FUEL_OPERATOR = new SlimefunItemStack("FINALTECH_FUEL_OPERATOR", Material.STONE, TextUtil.colorPseudorandomString("燃料补充器"));
+    public static final SlimefunItemStack COBBLESTONE_ERUPTER = new SlimefunItemStack("FINALTECH_COBBLESTONE_ERUPTER", Material.STONE, TextUtil.colorPseudorandomString("圆石爆发器"));
+    public static final SlimefunItemStack ENTROPY_SEED = new SlimefunItemStack("FINALTECH_ENTROPY_SEED", Material.BLACK_CONCRETE, TextUtil.colorPseudorandomString("熵种"));
 
-    // basic machines
-    public static final SlimefunItemStack BASIC_COBBLE_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_COBBLE_FACTORY", Material.CHISELED_STONE_BRICKS, TextUtil.colorPseudorandomString("基础刷石工厂"));
-    public static final SlimefunItemStack BASIC_ORE_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_ORE_FACTORY", Material.CHISELED_DEEPSLATE, TextUtil.colorPseudorandomString("基础矿石工厂"));
-    public static final SlimefunItemStack BASIC_DUST_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_DUST_FACTORY", Material.POLISHED_DEEPSLATE, TextUtil.colorPseudorandomString("基础矿粉工厂"));
-    public static final SlimefunItemStack BASIC_FARM_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_FARM_FACTORY", Material.MOSS_BLOCK, TextUtil.colorPseudorandomString("基础作物工厂"));
-    public static final SlimefunItemStack BASIC_LIQUID_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_LIQUID_FACTORY", Material.BLUE_TERRACOTTA, TextUtil.colorPseudorandomString("基础流体工厂"));
+    // tower
+    public static final SlimefunItemStack CURE_TOWER = new SlimefunItemStack("FINALTECH_CURE_TOWER", Material.RED_GLAZED_TERRACOTTA, FinalTech.getLanguageString("items", SlimefunUtil.getIdFormatName(CureTower.class), "name"), FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CureTower.class), "lore"));
+    public static final SlimefunItemStack PURIFY_LEVEL_TOWER = new SlimefunItemStack("FINALTECH_PURIFY_LEVEL_TOWER", Material.RED_GLAZED_TERRACOTTA, FinalTech.getLanguageString("items", SlimefunUtil.getIdFormatName(PurifyLevelTower.class), "name"), FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(PurifyLevelTower.class), "lore"));
+    public static final SlimefunItemStack PURIFY_TIME_TOWER = new SlimefunItemStack("FINALTECH_PURIFY_TIME_TOWER", Material.RED_GLAZED_TERRACOTTA, FinalTech.getLanguageString("items", SlimefunUtil.getIdFormatName(PurifyTimeTower.class), "name"), FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(PurifyTimeTower.class), "lore"));
+
+    // manual machine
     public static final SlimefunItemStack MANUAL_CRAFTING_TABLE = new SlimefunItemStack("FINALTECH_MANUAL_CRAFTING_TABLE", Material.CRAFTING_TABLE, TextUtil.colorPseudorandomString("快捷原版工作台"));
     public static final SlimefunItemStack MANUAL_ENHANCED_CRAFTING_TABLE = new SlimefunItemStack("FINALTECH_MANUAL_ENHANCED_CRAFTING_TABLE", Material.CRAFTING_TABLE, TextUtil.colorPseudorandomString("快捷增强型工作台"));
     public static final SlimefunItemStack MANUAL_GRIND_STONE = new SlimefunItemStack("FINALTECH_MANUAL_GRIND_STONE", Material.DISPENSER, TextUtil.colorPseudorandomString("快捷磨石"));
@@ -143,8 +169,10 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MANUAL_JUICER = new SlimefunItemStack("FINALTECH_MANUAL_JUICER", Material.GLASS, TextUtil.colorPseudorandomString("快捷榨汁机"));
     public static final SlimefunItemStack MANUAL_ANCIENT_ALTAR = new SlimefunItemStack("FINALTECH_MANUAL_ANCIENT_ALTAR", Material.ENCHANTING_TABLE, TextUtil.colorPseudorandomString("快捷古代祭坛"));
     public static final SlimefunItemStack MANUAL_HEATED_PRESSURE_CHAMBER = new SlimefunItemStack("FINALTECH_MANUAL_HEATED_PRESSURE_CHAMBER", Material.LIGHT_GRAY_STAINED_GLASS, TextUtil.colorPseudorandomString("快捷加热压力舱"));
-    public static final SlimefunItemStack STONE_CHUNK_PRODUCTION_STATION = new SlimefunItemStack("FINALTECH_STONE_CHUNK_PRODUCTION_STATION", Material.CHISELED_STONE_BRICKS, TextUtil.colorPseudorandomString("石块生产厂"));
-    public static final SlimefunItemStack DUST_WORKSHOP = new SlimefunItemStack("FINALTECH_DUST_WORKSHOP", Material.POLISHED_DEEPSLATE, TextUtil.colorPseudorandomString("矿粉加工站"));
+
+    // basic machines
+    public static final SlimefunItemStack BASIC_COBBLE_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_COBBLE_FACTORY", Material.CHISELED_STONE_BRICKS, TextUtil.colorPseudorandomString("基础刷石工厂"));
+    public static final SlimefunItemStack BASIC_DUST_FACTORY = new SlimefunItemStack("FINALTECH_BASIC_DUST_FACTORY", Material.POLISHED_DEEPSLATE, TextUtil.colorPseudorandomString("基础矿粉工厂"));
 
     // advanced machines
     public static final SlimefunItemStack ADVANCED_COMPOSTER = new SlimefunItemStack("FINALTECH_COMPOSTER", Material.CAULDRON, TextUtil.colorPseudorandomString("高级搅拌机"));
@@ -163,11 +191,30 @@ public final class FinalTechItems {
     public static final SlimefunItemStack ADVANCED_FREEZER = new SlimefunItemStack("FINALTECH_ADVANCED_FREEZER", Material.LIGHT_BLUE_STAINED_GLASS, TextUtil.colorPseudorandomString("高级冰箱"));
     public static final SlimefunItemStack ADVANCED_CARBON_PRESS = new SlimefunItemStack("FINALTECH_ADVANCED_CARBON_PRESS", Material.BLACK_STAINED_GLASS, TextUtil.colorPseudorandomString("高级碳压机"));
     public static final SlimefunItemStack ADVANCED_ELECTRIC_SMELTERY = new SlimefunItemStack("FINALTECH_ADVANCED_ELECTRIC_SMELTERY", Material.FURNACE, TextUtil.colorPseudorandomString("高级冶炼炉"));
-    public static final SlimefunItemStack ADVANCED_ORE_FACTORY = new SlimefunItemStack("FINALTECH_ADVANCED_ORE_FACTORY", Material.PURPUR_PILLAR, TextUtil.colorPseudorandomString("高级矿石工厂"));
     public static final SlimefunItemStack ADVANCED_DUST_FACTORY = new SlimefunItemStack("FINALTECH_ADVANCED_DUST_FACTORY", Material.RED_NETHER_BRICKS, TextUtil.colorPseudorandomString("高级矿粉工厂"));
-    public static final SlimefunItemStack ADVANCED_FARM_FACTORY = new SlimefunItemStack("FINALTECH_ADVANCED_FARM_FACTORY", new ItemStack(Material.MOSS_BLOCK), TextUtil.colorPseudorandomString("高级作物工厂"));
 
-    // best item
+    // conversion
+    public static final SlimefunItemStack DUST_CONVERSION = new SlimefunItemStack("FINALTECH_DUST_CONVERSION", Material.STONE, FinalTech.getLanguageString("item", "dust-conversion", "name"));
+    public static final SlimefunItemStack GRAVEL_CONVERSION = new SlimefunItemStack("FINALTECH_GRAVEL_CONVERSION", Material.STONE, FinalTech.getLanguageString("item", "gravel-conversion", "name"));
+    public static final SlimefunItemStack SOUL_SAND_CONVERSION = new SlimefunItemStack("FINALTECH_SOUL_SAND_CONVERSION", Material.STONE, FinalTech.getLanguageString("item", "soul-sand-conversion", "name"));
+    public static final SlimefunItemStack CONCRETE_CONVERSION = new SlimefunItemStack("FINALTECH_CONCRETE_CONVERSION", Material.STONE, FinalTech.getLanguageString("item", "concrete-conversion", "name"));
+    public static final SlimefunItemStack GLASS_CONVERSION = new SlimefunItemStack("FINALTECH_GLASS_CONVERSION", Material.STONE, FinalTech.getLanguageString("item", "glass-conversion", "name"));
+    public static final SlimefunItemStack WOOL_CONVERSION = new SlimefunItemStack("FINALTECH_WOOL_CONVERSION", Material.STONE, FinalTech.getLanguageString("item", "wool-conversion", "name"));
+    public static final SlimefunItemStack WATER_CONVERSION = new SlimefunItemStack("FINALTECH_WATER_CONVERSION", Material.STONE, FinalTech.getLanguageString("item", "water-conversion", "name"));
+    public static final SlimefunItemStack RUNE_CONVERSION = new SlimefunItemStack("FINALTECH_RUNE_CONVERSION", Material.STONE, FinalTech.getLanguageString("item", "rune-conversion", "name"));
+
+    // extraction
+    public static final SlimefunItemStack ORE_EXTRACTION = new SlimefunItemStack("FINALTECH_ORE_EXTRACTION", Material.STONE, FinalTech.getLanguageString("item", "ore-extraction", "name"));
+
+    // generator
+    public static final SlimefunItemStack STONE_GENERATOR = new SlimefunItemStack("FINALTECH_STONE_GENERATOR", Material.STONE, FinalTech.getLanguageString("item", "stone-generator", "name"));
+    public static final SlimefunItemStack RAW_STONE_GENERATOR = new SlimefunItemStack("FINALTECH_RAW_STONE_GENERATOR", Material.STONE, FinalTech.getLanguageString("item", "raw-stone-generator", "name"));
+    public static final SlimefunItemStack NETHER_STONE_GENERATOR = new SlimefunItemStack("FINALTECH_NETHER_STONE_GENERATOR", Material.STONE, FinalTech.getLanguageString("item", "nether-stone-generator", "name"));
+    public static final SlimefunItemStack PLANK_GENERATOR = new SlimefunItemStack("FINALTECH_PLANK_GENERATOR", Material.STONE, FinalTech.getLanguageString("item", "plank-generator", "name"));
+    public static final SlimefunItemStack SAND_GENERATOR = new SlimefunItemStack("FINALTECH_SAND_GENERATOR", Material.STONE, FinalTech.getLanguageString("item", "sand-generator", "name"));
+    public static final SlimefunItemStack LIQUID_CARD_GENERATOR = new SlimefunItemStack("FINALTECH_LIQUID_CARD_GENERATOR", Material.BLUE_TERRACOTTA, TextUtil.colorPseudorandomString("基础流体工厂"));
+
+    // final items
     public static final SlimefunItemStack MACHINE_CHARGE_CARD_INFINITY = new SlimefunItemStack("FINALTECH_MACHINE_CHARGE_CARD_INFINITY", Material.PAPER, TextUtil.colorPseudorandomString("无限充能卡"));
     public static final SlimefunItemStack MACHINE_ACCELERATE_CARD_INFINITY = new SlimefunItemStack("FINALTECH_MACHINE_ACCELERATE_CARD_INFINITY", Material.PAPER, TextUtil.colorPseudorandomString("无限过载卡"));
     public static final SlimefunItemStack MACHINE_ACTIVATE_CARD_L4 = new SlimefunItemStack("FINALTECH_MACHINE_ACTIVATE_CARD_L4", Material.PAPER, TextUtil.colorPseudorandomString("带电超频卡L4"));

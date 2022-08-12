@@ -3,8 +3,8 @@ package io.taraxacum.finaltech.util;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.api.dto.ItemStackWithWrapperAmount;
-import io.taraxacum.finaltech.api.dto.ItemStackWithWrapper;
+import io.taraxacum.finaltech.api.dto.ItemAmountWrapper;
+import io.taraxacum.finaltech.api.dto.ItemWrapper;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -85,6 +85,9 @@ public final class MachineUtil {
         };
     }
 
+    /**
+     * @return Number of slots the machine has and can be interacted.
+     */
     public static Integer calMachineSlotSize(@Nonnull AbstractMachine abstractMachine) {
         Set<Integer> slots = new HashSet<>();
         for(int slot : abstractMachine.getInputSlot()) {
@@ -97,10 +100,7 @@ public final class MachineUtil {
     }
 
     /**
-     * How many slot has item on it.
-     * @param inventory
-     * @param slots
-     * @return
+     * @return How many slot that has item on it.
      */
     public static int itemCount(@Nonnull Inventory inventory, int[] slots) {
         int count = 0;
@@ -113,23 +113,9 @@ public final class MachineUtil {
         }
         return count;
     }
-    public static int itemCount(@Nonnull BlockMenu blockMenu, int[] slots) {
-        int count = 0;
-        ItemStack itemStack;
-        for (int slot : slots) {
-            itemStack = blockMenu.getItemInSlot(slot);
-            if (!ItemStackUtil.isItemNull(itemStack)) {
-                count++;
-            }
-        }
-        return count;
-    }
 
     /**
-     * If all slot in the inventory has item on it.
-     * @param inventory
-     * @param slots
-     * @return
+     * @return Whether all item on the specified slots is full.
      */
     public static boolean isFull(@Nonnull Inventory inventory, int[] slots) {
         ItemStack itemStack;
@@ -141,22 +127,9 @@ public final class MachineUtil {
         }
         return true;
     }
-    public static boolean isFull(@Nonnull BlockMenu blockMenu, int[] slots) {
-        ItemStack itemStack;
-        for (int slot : slots) {
-            itemStack = blockMenu.getItemInSlot(slot);
-            if (ItemStackUtil.isItemNull(itemStack) || itemStack.getAmount() < itemStack.getMaxStackSize()) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     /**
-     * If all slot in the inventory has no item on it.
-     * @param inventory
-     * @param slots
-     * @return
+     * @return Whether all item on the specified slots is null.
      */
     public static boolean isEmpty(@Nonnull Inventory inventory, int[] slots) {
         ItemStack itemStack;
@@ -168,194 +141,92 @@ public final class MachineUtil {
         }
         return true;
     }
-    public static boolean isEmpty(@Nonnull BlockMenu blockMenu, int[] slots) {
-        ItemStack itemStack;
+
+    /**
+     * Stock same items in the specified area of slots.
+     */
+    public static void stockSlots(@Nonnull Inventory inventory, int[] slots) {
+        List<ItemWrapper> items = new ArrayList<>(slots.length);
+        ItemWrapper itemWrapper = new ItemWrapper();
         for (int slot : slots) {
-            itemStack = blockMenu.getItemInSlot(slot);
-            if (!ItemStackUtil.isItemNull(itemStack)) {
-                return false;
+            ItemStack stockingItem = inventory.getItem(slot);
+            if (ItemStackUtil.isItemNull(stockingItem)) {
+                continue;
+            }
+            itemWrapper.newWrap(stockingItem);
+            for (ItemWrapper stockedItem : items) {
+                ItemStackUtil.stack(itemWrapper, stockedItem);
+            }
+            if (stockingItem.getAmount() > 0 && stockingItem.getAmount() < stockingItem.getMaxStackSize()) {
+                items.add(itemWrapper.shallowClone());
             }
         }
-        return true;
     }
 
     /**
-     * 堆叠指定容器指定范围的物品
-     * @param blockMenu 容器
-     * @param slots 指定范围
+     * @return Get the List of ItemWrapper by specified slots.
      */
-    public static void stockSlots(@Nonnull BlockMenu blockMenu, int[] slots) {
-        List<ItemStackWithWrapper> items = new ArrayList<>(slots.length);
-        for (int slot : slots) {
-            ItemStack item1 = blockMenu.getItemInSlot(slot);
-            if (ItemStackUtil.isItemNull(item1) || item1.getAmount() >= item1.getMaxStackSize()) {
-                continue;
-            }
-            for (ItemStackWithWrapper item2 : items) {
-                ItemStackUtil.stack(item1, item2);
-            }
-            if (item1.getAmount() > 0 && item1.getAmount() < item1.getMaxStackSize()) {
-                items.add(new ItemStackWithWrapper(item1));
+    public static List<ItemWrapper> getItemList(@Nonnull Inventory inventory, int[] slots) {
+        List<ItemWrapper> itemWrapperList = new ArrayList<>();
+        for (int filterSlot : slots) {
+            if (!ItemStackUtil.isItemNull(inventory.getItem(filterSlot))) {
+                itemWrapperList.add(new ItemWrapper(inventory.getItem(filterSlot)));
             }
         }
-    }
-    public static void stockSlots(@Nonnull Inventory inventory, int[] slots) {
-        List<ItemStackWithWrapper> items = new ArrayList<>(slots.length);
-        for (int slot : slots) {
-            ItemStack item1 = inventory.getItem(slot);
-            if (ItemStackUtil.isItemNull(item1)) {
-                continue;
-            }
-            for (ItemStackWithWrapper item2 : items) {
-                ItemStackUtil.stack(item1, item2);
-            }
-            if (item1.getAmount() > 0 && item1.getAmount() < item1.getMaxStackSize()) {
-                items.add(new ItemStackWithWrapper(item1));
-            }
-        }
+        return itemWrapperList;
     }
 
-    public static List<ItemStackWithWrapper> getItemList(@Nonnull Inventory inventory, int[] filterSlots) {
-        List<ItemStackWithWrapper> filterList = new ArrayList<>();
-        for (int i = 0; i < filterSlots.length; i++) {
-            if (!ItemStackUtil.isItemNull(inventory.getItem(filterSlots[i]))) {
-                filterList.add(new ItemStackWithWrapper(inventory.getItem(filterSlots[i])));
-            }
-        }
-        return filterList;
-    }
-    public static List<ItemStackWithWrapper> getItemList(@Nonnull BlockMenu blockMenu, int[] filterSlots) {
-        List<ItemStackWithWrapper> filterList = new ArrayList<>();
-        for (int i = 0; i < filterSlots.length; i++) {
-            if (!ItemStackUtil.isItemNull(blockMenu.getItemInSlot(filterSlots[i]))) {
-                filterList.add(new ItemStackWithWrapper(blockMenu.getItemInSlot(filterSlots[i])));
-            }
-        }
-        return filterList;
-    }
-
-    public static Map<Integer, ItemStackWithWrapper> calSlotItemWithWrapperMap(@Nonnull Inventory inventory, int[] slots) {
-        Map<Integer, ItemStackWithWrapper> itemMap = new HashMap<>(slots.length);
+    /**
+     * @return Get the Map of ItemWrapper by specified slots.
+     */
+    public static Map<Integer, ItemWrapper> getSlotItemWrapperMap(@Nonnull Inventory inventory, int[] slots) {
+        Map<Integer, ItemWrapper> itemMap = new HashMap<>(slots.length);
         for (int slot : slots) {
             ItemStack item = inventory.getItem(slot);
             if (!ItemStackUtil.isItemNull(item)) {
-                itemMap.put(slot, new ItemStackWithWrapper(item));
-            }
-        }
-        return itemMap;
-    }
-    public static Map<Integer, ItemStackWithWrapper> calSlotItemWithWrapperMap(@Nonnull BlockMenu blockMenu, int[] slots) {
-        Map<Integer, ItemStackWithWrapper> itemMap = new HashMap<>(slots.length);
-        for (int slot : slots) {
-            ItemStack item = blockMenu.getItemInSlot(slot);
-            if (!ItemStackUtil.isItemNull(item)) {
-                itemMap.put(slot, new ItemStackWithWrapper(item));
+                itemMap.put(slot, new ItemWrapper(item));
             }
         }
         return itemMap;
     }
 
-    public static List<ItemStackWithWrapperAmount> calItemListWithAmount(@Nonnull BlockMenu blockMenu, int[] slots) {
-        List<ItemStackWithWrapperAmount> itemWithWrapperList = new ArrayList<>(slots.length);
-        for (int slot : slots) {
-            ItemStack item = blockMenu.getItemInSlot(slot);
-            if (ItemStackUtil.isItemNull(item)) {
-                continue;
-            }
-            ItemStackWrapper itemStackWrapper = ItemStackWrapper.wrap(item);
-            boolean find = false;
-            for (ItemStackWithWrapperAmount resultItem : itemWithWrapperList) {
-                if (ItemStackUtil.isItemSimilar(itemStackWrapper, resultItem.getItemStackWrapper())) {
-                    resultItem.addAmount(item.getAmount());
-                    find = true;
-                    break;
-                }
-            }
-            if (!find) {
-                itemWithWrapperList.add(new ItemStackWithWrapperAmount(item, itemStackWrapper));
-            }
-        }
-        return itemWithWrapperList;
-    }
-    public static List<ItemStackWithWrapperAmount> calItemListWithAmount(@Nonnull Inventory inventory, int[] slots) {
-        List<ItemStackWithWrapperAmount> itemWithWrapperList = new ArrayList<>(slots.length);
+    /**
+     * @return Get the List of ItemWrapper and its amount by specified slots. The ItemStack in return list is not the same of ItemStack in the Inventory.
+     */
+    public static List<ItemAmountWrapper> calItemListWithAmount(@Nonnull Inventory inventory, int[] slots) {
+        List<ItemAmountWrapper> itemAmountWrapperList = new ArrayList<>(slots.length);
+        ItemAmountWrapper itemAmountWrapper = new ItemAmountWrapper();
         for (int slot : slots) {
             ItemStack item = inventory.getItem(slot);
             if (ItemStackUtil.isItemNull(item)) {
                 continue;
             }
-            ItemStackWrapper itemStackWrapper = ItemStackWrapper.wrap(item);
+            itemAmountWrapper.newWrap(item);
             boolean find = false;
-            for (ItemStackWithWrapperAmount resultItem : itemWithWrapperList) {
-                if (ItemStackUtil.isItemSimilar(itemStackWrapper, resultItem.getItemStackWrapper())) {
-                    resultItem.addAmount(item.getAmount());
+            for (ItemAmountWrapper existedItemWrapper : itemAmountWrapperList) {
+                if (ItemStackUtil.isItemSimilar(itemAmountWrapper, existedItemWrapper)) {
+                    existedItemWrapper.addAmount(item.getAmount());
                     find = true;
                     break;
                 }
             }
             if (!find) {
-                itemWithWrapperList.add(new ItemStackWithWrapperAmount(item, itemStackWrapper));
+                itemAmountWrapperList.add(itemAmountWrapper.shallowClone());
             }
         }
-        return itemWithWrapperList;
+        return itemAmountWrapperList;
     }
 
-    public static int calMaxMatch(@Nonnull BlockMenu blockMenu, int[] slots, @Nonnull List<ItemStackWithWrapperAmount> itemWithWrapperList) {
-        List<Integer> countList = new ArrayList<>(itemWithWrapperList.size());
-        List<Integer> stackList = new ArrayList<>(itemWithWrapperList.size());
-        for (int i = 0; i < itemWithWrapperList.size(); i++) {
+    public static int calMaxMatch(@Nonnull Inventory inventory, int[] slots, @Nonnull List<ItemAmountWrapper> itemAmountWrapperList) {
+        List<Integer> countList = new ArrayList<>(itemAmountWrapperList.size());
+        List<Integer> stackList = new ArrayList<>(itemAmountWrapperList.size());
+        for (int i = 0; i < itemAmountWrapperList.size(); i++) {
             countList.add(0);
             stackList.add(0);
         }
 
         int emptySlot = 0;
-        for (int slot : slots) {
-            ItemStack item = blockMenu.getItemInSlot(slot);
-            if (ItemStackUtil.isItemNull(item)) {
-                emptySlot++;
-                continue;
-            } else if (item.getAmount() >= item.getMaxStackSize()) {
-                continue;
-            }
-            ItemStackWrapper itemWrapper = ItemStackWrapper.wrap(item);
-            for (int i = 0; i < itemWithWrapperList.size(); i++) {
-                if (ItemStackUtil.isItemSimilar(itemWrapper, itemWithWrapperList.get(i))) {
-                    countList.set(i, countList.get(i) + (item.getMaxStackSize() - item.getAmount()));
-                    stackList.set(i, countList.get(i) / itemWithWrapperList.get(i).getAmount());
-                    break;
-                }
-            }
-        }
-
-        while (emptySlot > 0) {
-            int minStackP = 0;
-            int minStack = stackList.get(0);
-            for (int i = 1; i < itemWithWrapperList.size(); i++) {
-                if (minStack > stackList.get(i)) {
-                    minStack = stackList.get(i);
-                    minStackP = i;
-                }
-            }
-            countList.set(minStackP, countList.get(minStackP) + itemWithWrapperList.get(minStackP).getItemStack().getMaxStackSize());
-            stackList.set(minStackP, countList.get(minStackP) / itemWithWrapperList.get(minStackP).getAmount());
-            emptySlot--;
-        }
-
-        int min = stackList.get(0);
-        for (int stack : stackList) {
-            min = Math.min(min, stack);
-        }
-        return min;
-    }
-    public static int calMaxMatch(@Nonnull Inventory inventory, int[] slots, @Nonnull List<ItemStackWithWrapperAmount> itemWithWrapperList) {
-        List<Integer> countList = new ArrayList<>(itemWithWrapperList.size());
-        List<Integer> stackList = new ArrayList<>(itemWithWrapperList.size());
-        for (int i = 0; i < itemWithWrapperList.size(); i++) {
-            countList.add(0);
-            stackList.add(0);
-        }
-
-        int emptySlot = 0;
+        ItemWrapper itemWrapper = new ItemWrapper();
         for (int slot : slots) {
             ItemStack item = inventory.getItem(slot);
             if (ItemStackUtil.isItemNull(item)) {
@@ -364,11 +235,11 @@ public final class MachineUtil {
             } else if (item.getAmount() >= item.getMaxStackSize()) {
                 continue;
             }
-            ItemStackWrapper itemWrapper = ItemStackWrapper.wrap(item);
-            for (int i = 0; i < itemWithWrapperList.size(); i++) {
-                if (ItemStackUtil.isItemSimilar(itemWrapper, itemWithWrapperList.get(i))) {
+            itemWrapper.newWrap(item);
+            for (int i = 0; i < itemAmountWrapperList.size(); i++) {
+                if (ItemStackUtil.isItemSimilar(itemWrapper, itemAmountWrapperList.get(i))) {
                     countList.set(i, countList.get(i) + (item.getMaxStackSize() - item.getAmount()));
-                    stackList.set(i, countList.get(i) / itemWithWrapperList.get(i).getAmount());
+                    stackList.set(i, countList.get(i) / itemAmountWrapperList.get(i).getAmount());
                     break;
                 }
             }
@@ -377,14 +248,14 @@ public final class MachineUtil {
         while (emptySlot > 0) {
             int minStackP = 0;
             int minStack = stackList.get(0);
-            for (int i = 1; i < itemWithWrapperList.size(); i++) {
+            for (int i = 1; i < itemAmountWrapperList.size(); i++) {
                 if (minStack > stackList.get(i)) {
                     minStack = stackList.get(i);
                     minStackP = i;
                 }
             }
-            countList.set(minStackP, countList.get(minStackP) + itemWithWrapperList.get(minStackP).getItemStack().getMaxStackSize());
-            stackList.set(minStackP, countList.get(minStackP) / itemWithWrapperList.get(minStackP).getAmount());
+            countList.set(minStackP, countList.get(minStackP) + itemAmountWrapperList.get(minStackP).getItemStack().getMaxStackSize());
+            stackList.set(minStackP, countList.get(minStackP) / itemAmountWrapperList.get(minStackP).getAmount());
             emptySlot--;
         }
 
@@ -395,6 +266,7 @@ public final class MachineUtil {
         return min;
     }
 
+    // TODO
     public static int updateQuantityModule(@Nonnull BlockMenu blockMenu, int quantityModuleSlot, int statusSlot) {
         ItemStack item = blockMenu.getItemInSlot(quantityModuleSlot);
         int amount;

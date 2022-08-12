@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.common.util.StringNumberUtil;
@@ -14,12 +15,14 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
+
 /**
  * @author Final_ROOT
  * @since 1.0
  */
 public class EnergizedElectricityShootPile extends AbstractElectricityShootPile implements AntiAccelerationMachine {
-    public static final int RANGE = 16;
+    public final Integer range = FinalTech.getValueManager().getOrDefault(16, "items", SlimefunUtil.getIdFormatName(EnergizedElectricityShootPile.class), "range");
 
     public EnergizedElectricityShootPile(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -27,11 +30,11 @@ public class EnergizedElectricityShootPile extends AbstractElectricityShootPile 
 
     @Override
     public int getRange() {
-        return RANGE;
+        return range;
     }
 
     @Override
-    protected Function doFunction(Summary summary) {
+    protected Function doFunction(@Nonnull Summary summary) {
         return location -> {
             if (summary.getCapacitorEnergy() <= 0) {
                 return -1;
@@ -60,6 +63,8 @@ public class EnergizedElectricityShootPile extends AbstractElectricityShootPile 
 
     @Override
     public void registerDefaultRecipes() {
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.range));
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
                 "",
                 TextUtil.COLOR_NORMAL + "将自身背向的电容的电量",

@@ -44,7 +44,8 @@ public abstract class AbstractMySlimefunItem extends SlimefunItem {
         }
     }
 
-    public void register() {
+    public AbstractMySlimefunItem register() {
         this.register(JavaPlugin.getPlugin(FinalTech.class));
+        return this;
     }
 }

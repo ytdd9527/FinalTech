@@ -5,11 +5,13 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.DividedStorageUnitMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.block.Block;
@@ -39,12 +41,9 @@ public class DividedStorageUnit extends AbstractCargo implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
-                "",
-                TextUtil.COLOR_NORMAL + "可存储 " + TextUtil.COLOR_NUMBER + MachineUtil.calMachineSlotSize(this) + "格" + TextUtil.COLOR_NORMAL + " 物品");
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "分层",
-                "",
-                TextUtil.COLOR_NORMAL + "输入槽被限制为上面的 " + TextUtil.COLOR_NUMBER + this.getInputSlot().length + "格",
-                TextUtil.COLOR_NORMAL + "输出槽被限制为下面的 " + TextUtil.COLOR_NUMBER + this.getOutputSlot().length + "格");
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(MachineUtil.calMachineSlotSize(this)),
+                String.valueOf(this.getInputSlot().length),
+                String.valueOf(this.getOutputSlot().length));
     }
 }

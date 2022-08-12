@@ -9,14 +9,18 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.common.util.StringNumberUtil;
-import io.taraxacum.finaltech.api.dto.ItemStackWithWrapperAmount;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.dto.ItemAmountWrapper;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.api.factory.ItemValueTable;
+import io.taraxacum.finaltech.core.items.machine.manual.AbstractManualMachine;
+import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
 import io.taraxacum.finaltech.core.menu.manual.EquivalentExchangeTableMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -52,13 +56,25 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
         return MachineUtil.simpleBlockBreakerHandler(this, EquivalentExchangeTableMenu.PARSE_ITEM_SLOT);
     }
 
+    @Nonnull
+    @Override
+    protected AbstractManualMachineMenu newMachineMenu() {
+        return new EquivalentExchangeTableMenu(this);
+    }
+
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         String value = config.contains(KEY) ? config.getString(KEY) : StringNumberUtil.ZERO;
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if (ItemStackUtil.isItemSimilar(item, FinalTechItems.ORDERED_DUST)) {
+            if(ItemStackUtil.isItemNull(item)) {
+                continue;
+            }
+            if (ItemStackUtil.isItemSimilar(item, FinalTechItems.UNORDERED_DUST)) {
+                if (MachineUtil.itemCount(blockMenu.toInventory(), this.getOutputSlot()) == this.getOutputSlot().length) {
+                    continue;
+                }
                 this.doCraft(blockMenu, config);
                 value = config.getString(KEY);
                 item.setAmount(item.getAmount() - 1);
@@ -73,19 +89,13 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
         }
         BlockStorage.addBlockInfo(block.getLocation(), KEY, value);
         if (blockMenu.hasViewer()) {
-            this.getMachineMenu().updateMenu(blockMenu, block);
+            this.getMachineMenu().updateInventory(blockMenu.toInventory(), block.getLocation());
         }
     }
 
     @Override
     protected boolean isSynchronized() {
         return false;
-    }
-
-    @Nonnull
-    @Override
-    protected AbstractManualMachineMenu newMachineMenu() {
-        return new EquivalentExchangeTableMenu(this);
     }
 
     //todo
@@ -95,9 +105,6 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
         List<String> valueList = new ArrayList<>(ItemValueTable.getInstance().getValueItemListOutputMap().keySet());
         Collections.shuffle(valueList);
         for (String targetValue : valueList) {
-            if (MachineUtil.itemCount(blockMenu, this.getOutputSlot()) == this.getOutputSlot().length) {
-                break;
-            }
             if (StringNumberUtil.compare(value, targetValue) >= 0) {
                 List<String> idList = ItemValueTable.getInstance().getValueItemListOutputMap().get(targetValue);
                 String id = idList.get((int) (Math.random() * idList.size()));
@@ -106,9 +113,10 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
                     continue;
                 }
                 ItemStack item = new CustomItemStack(slimefunItem.getItem(), 1);
-                if (MachineUtil.calMaxMatch(blockMenu, this.getOutputSlot(), List.of(new ItemStackWithWrapperAmount(item))) >= 1) {
+                if (MachineUtil.calMaxMatch(blockMenu.toInventory(), this.getOutputSlot(), List.of(new ItemAmountWrapper(item))) >= 1) {
                     blockMenu.pushItem(item, this.getOutputSlot());
                     value = StringNumberUtil.sub(value, targetValue);
+                    break;
                 }
             }
         }
@@ -117,6 +125,7 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
 
     @Override
     public void registerDefaultRecipes() {
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
                 "",
                 TextUtil.COLOR_NORMAL + "输入物品后 该物品会被转化为价值并被该机器记录",

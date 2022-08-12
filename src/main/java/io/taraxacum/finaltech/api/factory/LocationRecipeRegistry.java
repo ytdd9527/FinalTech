@@ -32,6 +32,7 @@ public class LocationRecipeRegistry {
         LOCATION_RECIPE_MAP.put(location, advancedMachineRecipe);
     }
 
+    @Nonnull
     public static LocationRecipeRegistry getInstance() {
         if(instance == null) {
             synchronized (LocationRecipeRegistry.class) {

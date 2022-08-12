@@ -3,37 +3,44 @@ package io.taraxacum.finaltech.core.items.machine.capacitor.expanded;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import org.bukkit.inventory.ItemStack;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class CarbonadoExpandedCapacitor extends AbstractExpandedElectricCapacitor {
-    public static final int CAPACITY = 65536;
-    public static final int STACK = 65536;
-    public static final double CHARGE_INCREASE = 1.4;
-    public static final double CONSUME_REDUCE = 0.8;
+    public final int capacity = FinalTech.getValueManager().getOrDefault(65536, "capacitor", SlimefunUtil.getIdFormatName(CarbonadoExpandedCapacitor.class), "capacity");
+    public final int stack = FinalTech.getValueManager().getOrDefault(65536, "capacitor", SlimefunUtil.getIdFormatName(CarbonadoExpandedCapacitor.class), "stack");
+    public final double chargeIncrease = FinalTech.getValueManager().getOrDefault(1.4, "capacitor", SlimefunUtil.getIdFormatName(CarbonadoExpandedCapacitor.class), "charge-increase");
+    public final double consumeReduce = FinalTech.getValueManager().getOrDefault(0.8, "capacitor", SlimefunUtil.getIdFormatName(CarbonadoExpandedCapacitor.class), "consume-reduce");
+
     public CarbonadoExpandedCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
     public int getCapacity() {
-        return CAPACITY * 2;
+        return this.capacity * 2;
     }
 
+    @Nonnull
     @Override
     public String getMaxStack() {
-        return String.valueOf(STACK - 2);
+        return String.valueOf(this.stack - 2);
     }
 
     @Override
     public double chargeIncrease() {
-        return CHARGE_INCREASE;
+        return this.chargeIncrease;
     }
 
     @Override
     public double consumeReduce() {
-        return CONSUME_REDUCE;
+        return this.consumeReduce;
     }
 }

@@ -30,6 +30,7 @@ public class MenuViewer extends UsableSlimefunItem implements RecipeItem {
     private static final int WITHDRAW_SLOT_VALUE = 2;
     private static final int INSERT_AND_WITHDRAW_SLOT_VALUE = INSERT_SLOT_VALUE + WITHDRAW_SLOT_VALUE;
 
+    // TODO
     private static final ItemStack VOID_ICON = new CustomItemStack(Material.GRAY_STAINED_GLASS_PANE, "§7不可交互槽", " ");
     private static final ItemStack INPUT_ICON = new CustomItemStack(Material.BLUE_STAINED_GLASS_PANE, "§9输入槽", " ");
     private static final ItemStack OUTPUT_ICON = new CustomItemStack(Material.ORANGE_STAINED_GLASS_PANE, "§6输出槽", " ");
@@ -80,6 +81,7 @@ public class MenuViewer extends UsableSlimefunItem implements RecipeItem {
         }
     }
 
+    // TODO
     @Override
     public void registerDefaultRecipes() {
         this.registerDescriptiveRecipe(TextUtil.COLOR_INITIATIVE + "使用方式",

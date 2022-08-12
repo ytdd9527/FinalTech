@@ -6,9 +6,9 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.dto.InvWithSlots;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.api.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.LocationTransferMenu;
 import io.taraxacum.finaltech.core.helper.*;
@@ -21,7 +21,6 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
@@ -70,6 +69,7 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
+        Location location = blockMenu.getLocation();
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
         boolean primaryThread = javaPlugin.getServer().isPrimaryThread();
         boolean drawParticle = blockMenu.hasViewer();
@@ -78,18 +78,14 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
         if(ItemStackUtil.isItemNull(locationRecorder)) {
             return;
         }
-        ItemMeta itemMeta = locationRecorder.getItemMeta();
-        Location targetLocation = LocationUtil.parseLocationInItem(itemMeta);
-        if (targetLocation == null) {
+        Location targetLocation = LocationUtil.parseLocationInItem(locationRecorder);
+        if (targetLocation == null || targetLocation.equals(location)) {
             return;
         }
         Block targetBlock = targetLocation.getBlock();
 
-        String uuid = PlayerUtil.parseIdInItem(itemMeta);
-        if (uuid != null) {
-            if (!SlimefunUtil.hasPermission(uuid, targetLocation, Interaction.INTERACT_BLOCK, Interaction.INTERACT_BLOCK)) {
-                return;
-            }
+        if(!SlimefunUtil.checkOfflinePermission(location, locationRecorder, targetLocation)) {
+            return;
         }
 
         if(drawParticle) {
@@ -103,18 +99,22 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
         String cargoMode = CargoMode.HELPER.getOrDefaultValue(config);
         String cargoOrder = CargoOrder.HELPER.getOrDefaultValue(config);
 
-        Runnable runnable = () -> {
-            if (CargoOrder.VALUE_POSITIVE.equals(cargoOrder)) {
-                CargoUtil.doCargo(block, targetBlock, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, slotSearchSize, slotSearchOrder, cargoNumber, cargoLimit, CargoFilter.VALUE_BLACK, blockMenu.toInventory(), new int[0], cargoMode);
-            } else {
-                CargoUtil.doCargo(targetBlock, block, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, slotSearchSize, slotSearchOrder, cargoNumber, cargoLimit, CargoFilter.VALUE_BLACK, blockMenu.toInventory(), new int[0], cargoMode);
-            }
-        };
-
         if(primaryThread) {
-            runnable.run();
+            switch (cargoOrder) {
+                case CargoOrder.VALUE_POSITIVE -> CargoUtil.doCargo(javaPlugin, block, targetBlock, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, slotSearchSize, slotSearchOrder, cargoNumber, cargoLimit, CargoFilter.VALUE_BLACK, blockMenu.toInventory(), new int[0], cargoMode);
+                case CargoOrder.VALUE_REVERSE -> CargoUtil.doCargo(javaPlugin, targetBlock, block, slotSearchSize, slotSearchOrder, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, cargoNumber, cargoLimit, CargoFilter.VALUE_BLACK, blockMenu.toInventory(), new int[0], cargoMode);
+            }
         } else {
-            BlockTaskFactory.getInstance().registerRunnable(slimefunItem, false, runnable, block.getLocation(), targetLocation);
+            javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
+                InvWithSlots invWithSlots = CargoUtil.getInvWithSlots(block, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT);
+                InvWithSlots targetInvWithSlots = CargoUtil.getInvWithSlots(targetBlock, slotSearchSize, slotSearchOrder);
+                FinalTech.getLocationRunnableFactory().waitThenRun(() -> {
+                    switch (cargoOrder) {
+                        case CargoOrder.VALUE_POSITIVE -> CargoUtil.doSimpleCargo(invWithSlots, block, targetInvWithSlots, targetBlock, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, slotSearchSize, slotSearchOrder, cargoNumber, cargoLimit, CargoFilter.VALUE_BLACK, blockMenu.toInventory(), new int[0], cargoMode);
+                        case CargoOrder.VALUE_REVERSE -> CargoUtil.doSimpleCargo(targetInvWithSlots, targetBlock, invWithSlots, block, slotSearchSize, slotSearchOrder, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, cargoNumber, cargoLimit, CargoFilter.VALUE_BLACK, blockMenu.toInventory(), new int[0], cargoMode);
+                    }
+                }, targetLocation, location);
+            });
         }
     }
 
@@ -125,10 +125,6 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "功能",
-                "",
-                TextUtil.COLOR_NORMAL + "该机器会不断把物品",
-                TextUtil.COLOR_NORMAL + "从输入侧方块的容器",
-                TextUtil.COLOR_NORMAL + "传输到输出侧方块的容器");
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

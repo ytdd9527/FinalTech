@@ -2,18 +2,21 @@ package io.taraxacum.finaltech.core.menu.manual;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.items.machine.manual.CardOperationTable;
 import io.taraxacum.finaltech.core.items.unusable.*;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
-import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.finaltech.util.StringItemUtil;
 import io.taraxacum.common.util.StringNumberUtil;
-import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -33,7 +36,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
     private static final int[] INPUT_SLOT = new int[] {10, 16};
     private static final int[] OUTPUT_SLOT = new int[] {40};
     private static final int CRAFT_SLOT = 13;
-    private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, TextUtil.COLOR_NEGATIVE + "操作");
+    private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "craft-icon", "name"), FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "craft-icon", "lore"));
 
     private static final List<Craft> CRAFT_LIST = new ArrayList<>();
     static {
@@ -51,11 +54,11 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, TextUtil.COLOR_NORMAL + "合并存储卡");
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "action1-icon", "lore"));
             }
 
             @Override
-            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull Inventory inventory, int outputSlot) {
                 if (!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2) && item1.hasItemMeta() && item2.hasItemMeta()) {
                     ItemMeta itemMeta1 = item1.getItemMeta();
                     ItemMeta itemMeta2 = item2.getItemMeta();
@@ -70,7 +73,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                             StorageCardItem.updateLore(outputItem);
                             item1.setAmount(item1.getAmount() - 1);
                             item2.setAmount(item2.getAmount() - 1);
-                            blockMenu.replaceExistingItem(outputSlot, outputItem);
+                            inventory.setItem(outputSlot, outputItem);
                             return true;
                         }
                     }
@@ -89,22 +92,21 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem,
-                        TextUtil.COLOR_NORMAL + "复制复制卡");
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "action2-icon", "lore"));
             }
 
             @Override
-            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull Inventory inventory, int outputSlot) {
                 if (!ItemStackUtil.isItemNull(item1) && CopyCardItem.isValid(item1) && Shell.isValid(item2)) {
                     item2.setAmount(item2.getAmount() - 1);
                     ItemStack outputItem = ItemStackUtil.cloneItem(item1);
                     outputItem.setAmount(1);
-                    blockMenu.replaceExistingItem(outputSlot, outputItem);
+                    inventory.setItem(outputSlot, outputItem);
                 } else if (!ItemStackUtil.isItemNull(item2) && CopyCardItem.isValid(item2) && Shell.isValid(item1)) {
                     item1.setAmount(item1.getAmount() - 1);
                     ItemStack outputItem = ItemStackUtil.cloneItem(item2);
                     outputItem.setAmount(1);
-                    blockMenu.replaceExistingItem(outputSlot, outputItem);
+                    inventory.setItem(outputSlot, outputItem);
                     return true;
                 }
                 return false;
@@ -124,11 +126,11 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, TextUtil.COLOR_NORMAL + "制造 " + FinalTechItems.ANNULAR.getDisplayName());
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "action3-icon", "lore"));
             }
 
             @Override
-            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull Inventory inventory, int outputSlot) {
                 ItemStack storageCardItem = null;
                 ItemMeta storageCardItemMeta = null;
                 if (!ItemStackUtil.isItemNull(item1) && StorageCardItem.isValid(item1) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
@@ -142,7 +144,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                 }
                 if (storageCardItemMeta != null) {
                     Player player = null;
-                    for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                    for (HumanEntity humanEntity : inventory.getViewers()) {
                         if (humanEntity instanceof Player) {
                             player = (Player) humanEntity;
                             break;
@@ -152,7 +154,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                     outputItem.setAmount(1);
                     StringItemUtil.setAmountInCard(storageCardItem, StringNumberUtil.sub(StringItemUtil.parseAmountInCard(storageCardItemMeta), String.valueOf(CopyCardItem.DIFFICULTY)));
                     StorageCardItem.updateLore(storageCardItem);
-                    blockMenu.replaceExistingItem(outputSlot, outputItem);
+                    inventory.setItem(outputSlot, outputItem);
                     return true;
                 }
                 return false;
@@ -169,23 +171,22 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem,
-                        TextUtil.COLOR_NORMAL + "制作 " + FinalTechItems.PHONY.getDisplayName());
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "action4-icon", "lore"));
             }
 
             @Override
-            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull Inventory inventory, int outputSlot) {
                 if (this.canCraft(item1, item2)) {
                     item1.setAmount(item1.getAmount() - 1);
                     item2.setAmount(item2.getAmount() - 1);
                     Player player = null;
-                    for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                    for (HumanEntity humanEntity : inventory.getViewers()) {
                         if (humanEntity instanceof Player) {
                             player = (Player) humanEntity;
                             break;
                         }
                     }
-                    blockMenu.replaceExistingItem(outputSlot, ItemPhony.newItem(item1, item2, player));
+                    inventory.setItem(outputSlot, ItemPhony.newItem(item1, item2, player));
                     return true;
                 }
                 return false;
@@ -203,34 +204,33 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem,
-                        TextUtil.COLOR_NORMAL + "制造 " + FinalTechItems.SHELL.getDisplayName());
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "action5-icon", "lore"));
             }
 
             @Override
-            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull Inventory inventory, int outputSlot) {
                 if (Singularity.isValid(item1) || Spirochete.isValid(item1)) {
                     item1.setAmount(item1.getAmount() - 1);
                     Player player = null;
-                    for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                    for (HumanEntity humanEntity : inventory.getViewers()) {
                         if (humanEntity instanceof Player) {
                             player = (Player) humanEntity;
                             break;
                         }
                     }
                     ItemStack outputItem = Shell.newItem(item1, player);
-                    blockMenu.replaceExistingItem(outputSlot, outputItem);
+                    inventory.setItem(outputSlot, outputItem);
                 } else if (Singularity.isValid(item2) || Spirochete.isValid(item2)) {
                     item2.setAmount(item2.getAmount() - 1);
                     Player player = null;
-                    for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                    for (HumanEntity humanEntity : inventory.getViewers()) {
                         if (humanEntity instanceof Player) {
                             player = (Player) humanEntity;
                             break;
                         }
                     }
                     ItemStack outputItem = Shell.newItem(item2, player);
-                    blockMenu.replaceExistingItem(outputSlot, outputItem);
+                    inventory.setItem(outputSlot, outputItem);
                 }
                 return false;
             }
@@ -244,32 +244,31 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem,
-                        TextUtil.COLOR_NORMAL + "制造 " + FinalTechItems.ANNULAR.getDisplayName());
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "action6-icon", "lore"));
             }
 
             @Override
-            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot) {
+            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull Inventory inventory, int outputSlot) {
                 if (CopyCardItem.isValid(item1)) {
                     item1.setAmount(item1.getAmount() - 1);
                     Player player = null;
-                    for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                    for (HumanEntity humanEntity : inventory.getViewers()) {
                         if (humanEntity instanceof Player) {
                             player = (Player) humanEntity;
                             break;
                         }
                     }
-                    blockMenu.replaceExistingItem(outputSlot, Annular.newItem(item1, player));
+                    inventory.setItem(outputSlot, Annular.newItem(item1, player));
                 } else if (CopyCardItem.isValid(item2)) {
                     item2.setAmount(item2.getAmount() - 1);
                     Player player = null;
-                    for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
+                    for (HumanEntity humanEntity : inventory.getViewers()) {
                         if (humanEntity instanceof Player) {
                             player = (Player) humanEntity;
                             break;
                         }
                     }
-                    blockMenu.replaceExistingItem(outputSlot, Annular.newItem(item2, player));
+                    inventory.setItem(outputSlot, Annular.newItem(item2, player));
                 }
                 return false;
             }
@@ -316,33 +315,20 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
     public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
         blockMenu.addMenuClickHandler(CRAFT_SLOT, ((player, i, itemStack, clickAction) -> {
-            if(!ItemStackUtil.isItemNull(blockMenu.getItemInSlot(this.getOutputSlot()[0]))) {
-                blockMenu.replaceExistingItem(CRAFT_SLOT, CRAFT_ICON);
-                return false;
-            }
-            ItemStack inputItem1 = blockMenu.getItemInSlot(INPUT_SLOT[0]);
-            ItemStack inputItem2 = blockMenu.getItemInSlot(INPUT_SLOT[1]);
-            if (ItemStackUtil.isItemNull(inputItem1) && ItemStackUtil.isItemNull(inputItem2)) {
-                return false;
-            }
-            for (Craft craft : CRAFT_LIST) {
-                if (craft.craft(inputItem1, inputItem2, blockMenu, OUTPUT_SLOT[0])) {
-                    break;
-                }
-            }
+            CardOperationPortMenu.this.doFunction(blockMenu.toInventory());
             return false;
         }));
     }
 
     @Override
-    public void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-        if(!ItemStackUtil.isItemNull(blockMenu.getItemInSlot(this.getOutputSlot()[0]))) {
-            blockMenu.replaceExistingItem(CRAFT_SLOT, CRAFT_ICON);
+    public void updateInventory(@Nonnull Inventory inventory, @Nonnull Location location) {
+        if(!ItemStackUtil.isItemNull(inventory.getItem(this.getOutputSlot()[0]))) {
+            inventory.setItem(CRAFT_SLOT, CRAFT_ICON);
             return;
         }
-        ItemStack inputItem1 = blockMenu.getItemInSlot(INPUT_SLOT[0]);
-        ItemStack inputItem2 = blockMenu.getItemInSlot(INPUT_SLOT[1]);
-        ItemStack iconItem = blockMenu.getItemInSlot(CRAFT_SLOT);
+        ItemStack inputItem1 = inventory.getItem(INPUT_SLOT[0]);
+        ItemStack inputItem2 = inventory.getItem(INPUT_SLOT[1]);
+        ItemStack iconItem = inventory.getItem(CRAFT_SLOT);
         boolean work = false;
         for (Craft craft : CRAFT_LIST) {
             if (craft.canCraft(inputItem1, inputItem2)) {
@@ -352,7 +338,24 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             }
         }
         if (!work) {
-            blockMenu.replaceExistingItem(CRAFT_SLOT, CRAFT_ICON);
+            inventory.setItem(CRAFT_SLOT, CRAFT_ICON);
+        }
+    }
+
+    private void doFunction(@Nonnull Inventory inventory) {
+        if(!ItemStackUtil.isItemNull(inventory.getItem(this.getOutputSlot()[0]))) {
+            inventory.setItem(CRAFT_SLOT, CRAFT_ICON);
+            return;
+        }
+        ItemStack inputItem1 = inventory.getItem(INPUT_SLOT[0]);
+        ItemStack inputItem2 = inventory.getItem(INPUT_SLOT[1]);
+        if (ItemStackUtil.isItemNull(inputItem1) && ItemStackUtil.isItemNull(inputItem2)) {
+            return;
+        }
+        for (Craft craft : CRAFT_LIST) {
+            if (craft.craft(inputItem1, inputItem2, inventory, OUTPUT_SLOT[0])) {
+                break;
+            }
         }
     }
 
@@ -361,6 +364,6 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
         void doUpdateIcon(@Nonnull ItemStack iconItem);
 
-        boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull BlockMenu blockMenu, int outputSlot);
+        boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull Inventory inventory, int outputSlot);
     }
 }

@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.ItemDismantleTableMenu;
@@ -26,6 +27,7 @@ import java.util.*;
  */
 public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
     private static final List<RecipeType> RECIPE_TYPE_LIST = new ArrayList<>();
+    // TODO 可配置化
     static {
         RECIPE_TYPE_LIST.add(RecipeType.ENHANCED_CRAFTING_TABLE);
         RECIPE_TYPE_LIST.add(RecipeType.GRIND_STONE);
@@ -70,10 +72,10 @@ public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if (MachineUtil.isEmpty(blockMenu, this.getOutputSlot())) {
+        if (MachineUtil.isEmpty(blockMenu.toInventory(), this.getOutputSlot())) {
             ItemStack item = blockMenu.getItemInSlot(this.getInputSlot()[0]);
             SlimefunItem sfItem = SlimefunItem.getByItem(item);
-            if (sfItem != null && item.getAmount() >= sfItem.getRecipeOutput().getAmount() && sfItem.getRecipe().length <= this.getOutputSlot().length && RECIPE_TYPE_LIST.contains(sfItem.getRecipeType()) && ItemStackUtil.isItemSimilar(item, sfItem.getRecipeOutput())) {
+            if (sfItem != null && item.getAmount() >= sfItem.getRecipeOutput().getAmount() && sfItem.getRecipe().length <= this.getOutputSlot().length && RECIPE_TYPE_LIST.contains(sfItem.getRecipeType()) && ItemStackUtil.isEnchantmentSame(item, sfItem.getRecipeOutput()) && ItemStackUtil.isItemSimilar(item, sfItem.getRecipeOutput())) {
                 int amount = item.getAmount() / sfItem.getRecipeOutput().getAmount();
                 for (ItemStack outputItem : sfItem.getRecipe()) {
                     if (!ItemStackUtil.isItemNull(outputItem)) {

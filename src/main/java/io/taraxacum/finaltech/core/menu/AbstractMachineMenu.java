@@ -9,8 +9,10 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -22,6 +24,7 @@ import javax.annotation.Nullable;
  * @since 1.0
  */
 public abstract class AbstractMachineMenu extends BlockMenuPreset {
+    @Nonnull
     private final AbstractMachine machine;
 
     public AbstractMachineMenu(@Nonnull String id, @Nonnull String title, @Nonnull AbstractMachine machine) {
@@ -32,12 +35,6 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
     public AbstractMachineMenu(@Nonnull AbstractMachine machine) {
         super(machine.getId(), machine.getItemName());
         this.machine = machine;
-    }
-
-    @Override
-    public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-        super.newInstance(blockMenu, block);
-        this.updateMenu(blockMenu, block);
     }
 
     @Override
@@ -54,6 +51,12 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
             this.addItem(slot, Icon.OUTPUT_BORDER_ICON);
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
+    }
+
+    @Override
+    public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
+        super.newInstance(blockMenu, block);
+        this.updateInventory(blockMenu.toInventory(), block.getLocation());
     }
 
     @Override
@@ -77,6 +80,11 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
         return this.getSlotsAccessedByItemTransport(flow);
     }
 
+    @Nonnull
+    protected AbstractMachine getMachine() {
+        return this.machine;
+    }
+
     protected abstract int[] getBorder();
 
     protected abstract int[] getInputBorder();
@@ -87,9 +95,5 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
 
     public abstract int[] getOutputSlot();
 
-    protected AbstractMachine getMachine() {
-        return this.machine;
-    }
-
-    protected abstract void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block);
+    protected abstract void updateInventory(@Nonnull Inventory inventory, @Nonnull Location location);
 }

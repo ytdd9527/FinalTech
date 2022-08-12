@@ -6,10 +6,11 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.RemoteAccessorMenu;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.block.Block;
@@ -24,8 +25,8 @@ import javax.annotation.Nonnull;
  */
 public class RemoteAccessor extends AbstractCargo implements RecipeItem {
     public static final String KEY = "times";
-    public static final String THRESHOLD = String.valueOf(Slimefun.getTickerTask().getTickRate() / 2);
-    public static final int SEARCH_LIMIT = 8;
+    public static final Integer RANGE = FinalTech.getValueManager().getOrDefault(16, "items", SlimefunUtil.getIdFormatName(RemoteAccessor.class), "range");
+    public static final String THRESHOLD = FinalTech.getValueManager().getOrDefault(String.valueOf(Slimefun.getTickerTask().getTickRate() / 2), "items", SlimefunUtil.getIdFormatName(RemoteAccessor.class), "threshold");
 
     public RemoteAccessor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -56,9 +57,7 @@ public class RemoteAccessor extends AbstractCargo implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
-                "",
-                TextUtil.COLOR_NORMAL + "玩家访问该机器时",
-                TextUtil.COLOR_NORMAL + "变更为访问该机器面向方向 " + TextUtil.COLOR_NUMBER + "直线" + SEARCH_LIMIT + "格" + TextUtil.COLOR_NORMAL + " 距离内最近的粘液科技机器");
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(),
+                this, String.valueOf(RANGE));
     }
 }

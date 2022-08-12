@@ -3,7 +3,9 @@ package io.taraxacum.finaltech.core.menu.unit;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.Inventory;
 
 import javax.annotation.Nonnull;
 
@@ -48,13 +50,13 @@ public class AllOutputStorageUnitMenu extends AbstractMachineMenu {
     }
 
     @Override
-    public void init() {
-        super.init();
-        this.setSize(54);
+    protected void updateInventory(@Nonnull Inventory inventory, @Nonnull Location location) {
+
     }
 
     @Override
-    protected void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-
+    public void init() {
+        super.init();
+        this.setSize(54);
     }
 }

@@ -7,7 +7,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
 import io.taraxacum.finaltech.api.factory.MachineRecipeFactory;
-import io.taraxacum.finaltech.core.items.unusable.laquid.LiquidCard;
+import io.taraxacum.finaltech.core.items.unusable.liquid.LiquidCard;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.Material;
@@ -58,14 +58,32 @@ public interface RecipeItem extends RecipeDisplayItem {
         this.getMachineRecipes().add(recipe);
     }
 
+    @Deprecated
     default void registerRecipe(int seconds, @Nonnull ItemStack[] input, @Nonnull ItemStack[] output) {
         this.registerRecipe(new MachineRecipe(seconds, input, output));
+    }
+
+    default void registerRecipe(@Nonnull ItemStack input, @Nonnull ItemStack output) {
+        this.registerRecipe(new MachineRecipe(0, new ItemStack[] {input}, new ItemStack[] {output}));
+    }
+
+    default void registerRecipe(@Nonnull ItemStack input, @Nonnull Material output) {
+        this.registerRecipe(new MachineRecipe(0, new ItemStack[] {input}, new ItemStack[] {new ItemStack(output)}));
+    }
+
+    default void registerRecipe(@Nonnull Material input, @Nonnull ItemStack output) {
+        this.registerRecipe(new MachineRecipe(0, new ItemStack[] {new ItemStack(input)}, new ItemStack[] {output}));
+    }
+
+    default void registerRecipe(@Nonnull Material input, @Nonnull Material output) {
+        this.registerRecipe(new MachineRecipe(0, new ItemStack[] {new ItemStack(input)}, new ItemStack[] {new ItemStack(output)}));
     }
 
     default void registerRecipe(@Nonnull ItemStack[] input, @Nonnull ItemStack[] output) {
         this.registerRecipe(new MachineRecipe(0, input, output));
     }
 
+    @Deprecated
     default void registerRecipe(int seconds, @Nonnull ItemStack input, @Nonnull ItemStack output) {
         this.registerRecipe(new MachineRecipe(seconds, new ItemStack[] {input}, new ItemStack[] {output}));
     }
@@ -107,10 +125,10 @@ public interface RecipeItem extends RecipeDisplayItem {
             }
         }
         if (extraRecipe) {
-            this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItemList(inputList1))), ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItemList(outputList1)));
-            this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItemList(inputList2))), ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItemList(outputList2)));
+            this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(inputList1))), ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(outputList1)));
+            this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(inputList2))), ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(outputList2)));
         } else {
-            this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.calMergeItemList(input)), ItemStackWrapper.wrapArray(ItemStackUtil.calMergeItemList(output)));
+            this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.calMergeItems(input)), ItemStackWrapper.wrapArray(ItemStackUtil.calMergeItems(output)));
         }
     }
 

@@ -7,8 +7,8 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.common.util.JavaUtil;
+import io.taraxacum.finaltech.api.dto.ItemWrapper;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.api.dto.ItemStackWithWrapper;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.OrderedDustFactoryStoneMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
@@ -57,11 +57,11 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(MachineUtil.itemCount(blockMenu, this.getInputSlot()) != this.getInputSlot().length) {
+        if(MachineUtil.itemCount(blockMenu.toInventory(), this.getInputSlot()) != this.getInputSlot().length) {
             return;
         }
         Set<Integer> amountList = new HashSet<>(this.getInputSlot().length);
-        ItemStackWithWrapper firstItem = new ItemStackWithWrapper(blockMenu.getItemInSlot(this.getInputSlot()[0]));
+        ItemWrapper firstItem = new ItemWrapper(blockMenu.getItemInSlot(this.getInputSlot()[0]));
         boolean allSameItem = true;
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);

@@ -10,12 +10,12 @@ import java.util.List;
  */
 public class AdvancedMachineRecipe {
     @Nonnull
-    private List<ItemStackWithWrapperAmount> inputList;
+    private final List<ItemAmountWrapper> inputList;
     @Nonnull
-    private List<AdvancedRandomOutput> outputList;
+    private final List<AdvancedRandomOutput> outputList;
     private int weightSum = 0;
 
-    public AdvancedMachineRecipe(@Nonnull List<ItemStackWithWrapperAmount> inputList, @Nonnull List<AdvancedRandomOutput> outputList) {
+    public AdvancedMachineRecipe(@Nonnull List<ItemAmountWrapper> inputList, @Nonnull List<AdvancedRandomOutput> outputList) {
         this.inputList = inputList;
         this.outputList = outputList;
         for (AdvancedRandomOutput advancedRandomOutput : this.outputList) {
@@ -24,12 +24,12 @@ public class AdvancedMachineRecipe {
     }
 
     @Nonnull
-    public List<ItemStackWithWrapperAmount> getInput() {
+    public List<ItemAmountWrapper> getInput() {
         return this.inputList;
     }
 
     @Nonnull
-    public List<ItemStackWithWrapperAmount> getOutput() {
+    public List<ItemAmountWrapper> getOutput() {
         int r = (int)(Math.random() * this.weightSum);
         for (AdvancedRandomOutput advancedRandomOutput : this.outputList) {
             if (r >= advancedRandomOutput.getWeight()) {
@@ -43,38 +43,26 @@ public class AdvancedMachineRecipe {
 
     @Nonnull
     public List<AdvancedRandomOutput> getOutputList() {
-        return outputList;
+        return this.outputList;
     }
 
     public int getWeightSum() {
-        return weightSum;
+        return this.weightSum;
     }
 
-    public static class AdvancedRandomOutput {
-        @Nonnull
-        private List<ItemStackWithWrapperAmount> outputItem;
-        private int weight;
-
-        public AdvancedRandomOutput(@Nonnull List<ItemStackWithWrapperAmount> outputItem, int weight) {
+    public record AdvancedRandomOutput(@Nonnull List<ItemAmountWrapper> outputItem, int weight) {
+        public AdvancedRandomOutput(@Nonnull List<ItemAmountWrapper> outputItem, int weight) {
             this.outputItem = outputItem;
             this.weight = weight;
         }
 
         @Nonnull
-        public List<ItemStackWithWrapperAmount> getOutputItem() {
+        public List<ItemAmountWrapper> getOutputItem() {
             return outputItem;
-        }
-
-        public void setOutputItem(@Nonnull List<ItemStackWithWrapperAmount> outputItem) {
-            this.outputItem = outputItem;
         }
 
         public int getWeight() {
             return weight;
-        }
-
-        public void setWeight(int weight) {
-            this.weight = weight;
         }
     }
 }

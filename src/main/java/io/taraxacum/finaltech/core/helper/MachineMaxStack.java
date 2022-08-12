@@ -1,21 +1,21 @@
 package io.taraxacum.finaltech.core.helper;
 
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.factory.BlockStorageHelper;
 import io.taraxacum.finaltech.api.factory.BlockStorageLoreHelper;
-import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -24,12 +24,12 @@ import java.util.Objects;
 public final class MachineMaxStack {
     public static final String KEY = "mms";
 
-    public static final ItemStack ICON = new CustomItemStack(Material.CHEST, TextUtil.colorPseudorandomString("输入数量限制"), TextUtil.colorPseudorandomString("未限制"));
+    public static final ItemStack ICON = new CustomItemStack(Material.CHEST, FinalTech.getLanguageString("helper", "machine-max-stack", "icon", "name"));
 
     public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, new LinkedHashMap<>() {{
-        this.put("0", List.of(TextUtil.colorPseudorandomString("未限制")));
+        this.put("0", FinalTech.getLanguageStringList("helper", "machine-max-stack", "0", "lore"));
         for (int i = 1; i <= 54; i++) {
-            this.put(String.valueOf(i), List.of(TextUtil.colorRandomString("限制数量= " + i)));
+            this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "machine-max-stack", "value", "lore"), String.valueOf(i)));
         }
     }}) {
         @Nonnull
@@ -66,22 +66,26 @@ public final class MachineMaxStack {
 
         @Nonnull
         @Override
-        public ChestMenu.MenuClickHandler getHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
-            return (player, i, itemStack, clickAction) -> {
-                int quantity = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), MachineMaxStack.KEY));
-                if (clickAction.isShiftClicked()) {
-                    quantity = 0;
-                } else {
-                    if (clickAction.isRightClicked()) {
-                        quantity = (quantity + abstractMachineMenu.getInputSlot().length) % (abstractMachineMenu.getInputSlot().length + 1);
+        public ChestMenu.MenuClickHandler getHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
+            if(slimefunItem instanceof AbstractMachine) {
+                return (player, i, itemStack, clickAction) -> {
+                    int quantity = Integer.parseInt(BlockStorage.getLocationInfo(location, MachineMaxStack.KEY));
+                    if (clickAction.isShiftClicked()) {
+                        quantity = 0;
                     } else {
-                        quantity = (quantity + 1) % (abstractMachineMenu.getInputSlot().length + 1);
+                        if (clickAction.isRightClicked()) {
+                            quantity = (quantity + ((AbstractMachine) slimefunItem).getInputSlot().length) % (((AbstractMachine) slimefunItem).getInputSlot().length + 1);
+                        } else {
+                            quantity = (quantity + 1) % (((AbstractMachine) slimefunItem).getInputSlot().length + 1);
+                        }
                     }
-                }
-                MachineMaxStack.HELPER.setIcon(blockMenu.getItemInSlot(slot), String.valueOf(quantity));
-                BlockStorage.addBlockInfo(block, MachineMaxStack.KEY, String.valueOf(quantity));
-                return false;
-            };
+                    MachineMaxStack.HELPER.setIcon(inventory.getItem(slot), String.valueOf(quantity));
+                    BlockStorage.addBlockInfo(location, MachineMaxStack.KEY, String.valueOf(quantity));
+                    return false;
+                };
+            } else {
+                return super.getHandler(inventory, location, slimefunItem, slot);
+            }
         }
     };
 }

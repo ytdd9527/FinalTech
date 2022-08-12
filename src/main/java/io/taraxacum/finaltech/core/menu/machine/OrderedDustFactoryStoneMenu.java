@@ -3,7 +3,9 @@ package io.taraxacum.finaltech.core.menu.machine;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.Inventory;
 
 import javax.annotation.Nonnull;
 
@@ -48,7 +50,7 @@ public class OrderedDustFactoryStoneMenu extends AbstractMachineMenu {
     }
 
     @Override
-    protected void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
+    protected void updateInventory(@Nonnull Inventory inventory, @Nonnull Location location) {
 
     }
 }

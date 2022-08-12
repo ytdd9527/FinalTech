@@ -11,7 +11,9 @@ import io.taraxacum.finaltech.core.helper.Icon;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -70,6 +72,11 @@ public class MatrixReactorMenu extends AbstractMachineMenu {
     }
 
     @Override
+    protected void updateInventory(@Nonnull Inventory inventory, @Nonnull Location location) {
+
+    }
+
+    @Override
     public void init() {
         super.init();
         this.addItem(ORDERED_DUST_SLOT, ORDERED_DUST_ICON);
@@ -106,10 +113,5 @@ public class MatrixReactorMenu extends AbstractMachineMenu {
         } else {
             return OTHER_ITEM_INPUT_SLOT;
         }
-    }
-
-    @Override
-    protected void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-
     }
 }

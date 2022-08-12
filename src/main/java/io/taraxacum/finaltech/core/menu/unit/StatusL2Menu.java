@@ -5,7 +5,9 @@ import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.helper.Icon;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.Inventory;
 
 import javax.annotation.Nonnull;
 
@@ -51,14 +53,14 @@ public class StatusL2Menu extends AbstractMachineMenu {
     }
 
     @Override
+    protected void updateInventory(@Nonnull Inventory inventory, @Nonnull Location location) {
+
+    }
+
+    @Override
     public void init() {
         super.init();
         this.addItem(STATUS_SLOT, Icon.STATUS_ICON);
         this.addMenuClickHandler(STATUS_SLOT, ChestMenuUtils.getEmptyClickHandler());
-    }
-
-    @Override
-    protected void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-
     }
 }

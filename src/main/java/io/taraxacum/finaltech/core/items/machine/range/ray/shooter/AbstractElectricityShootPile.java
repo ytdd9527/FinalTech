@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.machine.range.AbstractRangeMachine;
 import io.taraxacum.finaltech.core.items.machine.range.ray.AbstractRayMachine;
@@ -78,7 +79,7 @@ public abstract class AbstractElectricityShootPile extends AbstractRayMachine im
 
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         if(blockMenu.hasViewer()) {
-            this.updateMenu(blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT), count, summary);
+            this.updateMenu(blockMenu, count, summary);
         }
     }
 
@@ -87,7 +88,11 @@ public abstract class AbstractElectricityShootPile extends AbstractRayMachine im
         return false;
     }
 
-    protected void updateMenu(ItemStack item, int count, Summary summary) {
+    protected void updateMenu(@Nonnull BlockMenu blockMenu, int count, @Nonnull Summary summary) {
+        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
+        ItemStackUtil.setLore(item, SlimefunUtil.updateMenuLore(FinalTech.getLanguageManager(), this,
+                String.valueOf(count),
+                summary.getEnergyCharge()));
         ItemStackUtil.setLore(item,
                 TextUtil.COLOR_NORMAL + "当前生效机器= " + TextUtil.COLOR_NUMBER + count + "个",
                 TextUtil.COLOR_NORMAL + "实际传输电量= " + TextUtil.COLOR_NUMBER + summary.getEnergyCharge() + "J");
@@ -95,9 +100,9 @@ public abstract class AbstractElectricityShootPile extends AbstractRayMachine im
 
     public abstract int getRange();
 
-    protected abstract AbstractRangeMachine.Function doFunction(Summary summary);
+    protected abstract AbstractRangeMachine.Function doFunction(@Nonnull Summary summary);
 
-    protected class Summary {
+    protected static class Summary {
         private String energyCharge;
         private int capacitorEnergy;
 

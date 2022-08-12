@@ -1,15 +1,23 @@
 package io.taraxacum.common.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * @author Final_ROOT
  */
 public class JavaUtil {
+
+    public static <T> Set<T> toSet(T... objects) {
+        Set<T> result = new HashSet<>(objects.length);
+        result.addAll(Arrays.asList(objects));
+        return result;
+    }
+    public static <T> List<T> toList(T... objects) {
+        List<T> result = new ArrayList<>(objects.length);
+        result.addAll(Arrays.asList(objects));
+        return result;
+    }
     public static int[] reserve(int[] objects) {
         int[] result = objects.clone();
         for (int i = 0; i < objects.length; i++) {
@@ -43,7 +51,6 @@ public class JavaUtil {
         }
         return result;
     }
-
     public static <T> List<T> shuffle(List<T> objectList) {
         List<T> list = new ArrayList<>(objectList);
         Collections.shuffle(list);

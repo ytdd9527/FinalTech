@@ -49,25 +49,21 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem imp
         Location location = interactEvent.getClickedBlock().getLocation();
         Config config = BlockStorage.getLocationInfo(location);
         if (config.contains(SlimefunUtil.KEY_ID)) {
-            if (!SlimefunUtil.hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
-                //todo
-                // 可配置化
-                player.sendRawMessage("您似乎没有在此处使用该物品的权限");
+            if (!SlimefunUtil.checkPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
+                player.sendRawMessage(FinalTech.getLanguageManager().getString("messages", "no-permission", "location"));
                 return;
             }
             if (!this.conditionMatch(player)) {
-                //todo
-                // 可配置化
-                player.sendRawMessage("您似乎无法使用该物品");
+                player.sendRawMessage(FinalTech.getLanguageManager().getString("messages", "no-permission", "location"));
                 return;
             }
-            if (this.consume()) {
-                ItemStack item = playerRightClickEvent.getItem();
-                item.setAmount(item.getAmount() - 1);
-            }
-            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             SlimefunItem slimefunItem = SlimefunItem.getById(config.getString(SlimefunUtil.KEY_ID));
             if (slimefunItem != null) {
+                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+                if (this.consume()) {
+                    ItemStack item = playerRightClickEvent.getItem();
+                    item.setAmount(item.getAmount() - 1);
+                }
                 boolean chargeable = slimefunItem instanceof EnergyNetComponent && this.energy() > 0;
                 String capacity = StringNumberUtil.ZERO;
                 String chargeEnergy = StringNumberUtil.ZERO;
@@ -93,6 +89,8 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem imp
                     final String finalChargeEnergy = chargeEnergy;
                     final String finalCapacity = capacity;
                     BlockTicker bT = new BlockTicker() {
+                        private final int limit = AbstractMachineActivateCard.this.consume() ? AbstractMachineActivateCard.this.times() : AbstractMachineActivateCard.this.times() * playerRightClickEvent.getItem().getAmount();
+
                         @Override
                         public boolean isSynchronized() {
                             return blockTicker.isSynchronized();
@@ -100,18 +98,16 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem imp
 
                         @Override
                         public void tick(Block b, SlimefunItem item, Config data) {
-                            String energy = SlimefunUtil.getCharge(config);
-                            energy = StringNumberUtil.add(energy, finalChargeEnergy);
-                            energy = StringNumberUtil.min(energy, finalCapacity);
-                            SlimefunUtil.setCharge(data, energy);
-                            blockTicker.tick(b, item, data);
+                            for(int i = 0; i < this.limit; i++) {
+                                String energy = SlimefunUtil.getCharge(config);
+                                energy = StringNumberUtil.add(energy, finalChargeEnergy);
+                                energy = StringNumberUtil.min(energy, finalCapacity);
+                                SlimefunUtil.setCharge(data, energy);
+                                blockTicker.tick(b, item, data);
+                            }
                         }
                     };
-                    this.getAddon().getJavaPlugin().getServer().getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> {
-                        for (int i = 0, limit = AbstractMachineActivateCard.this.consume() ? AbstractMachineActivateCard.this.times() : AbstractMachineActivateCard.this.times() * playerRightClickEvent.getItem().getAmount(); i < limit; i++) {
-                            SlimefunUtil.runBlockTicker(bT, block, slimefunItem, config);
-                        }
-                    });
+                    SlimefunUtil.runBlockTicker(FinalTech.getLocationRunnableFactory(), bT, block, slimefunItem, config, block.getLocation());
                     if(this.times() == 0) {
                         String energy = SlimefunUtil.getCharge(config);
                         energy = StringNumberUtil.add(energy, chargeEnergy);
@@ -119,11 +115,22 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem imp
                         SlimefunUtil.setCharge(config, energy);
                     }
                 } else if (blockTicker != null) {
-                    this.getAddon().getJavaPlugin().getServer().getScheduler().runTaskAsynchronously(this.getAddon().getJavaPlugin(), () -> {
-                        for (int i = 0, limit = AbstractMachineActivateCard.this.consume() ? AbstractMachineActivateCard.this.times() : AbstractMachineActivateCard.this.times() * playerRightClickEvent.getItem().getAmount(); i < limit; i++) {
-                            SlimefunUtil.runBlockTicker(blockTicker, block, slimefunItem, config);
+                    BlockTicker bT = new BlockTicker() {
+                        private final int limit = AbstractMachineActivateCard.this.consume() ? AbstractMachineActivateCard.this.times() : AbstractMachineActivateCard.this.times() * playerRightClickEvent.getItem().getAmount();
+
+                        @Override
+                        public boolean isSynchronized() {
+                            return blockTicker.isSynchronized();
                         }
-                    });
+
+                        @Override
+                        public void tick(Block b, SlimefunItem item, Config data) {
+                            for(int i = 0; i < this.limit; i++) {
+                                blockTicker.tick(b, item, data);
+                            }
+                        }
+                    };
+                    SlimefunUtil.runBlockTicker(FinalTech.getLocationRunnableFactory(), bT, block, slimefunItem, config, block.getLocation());
                 } else if (chargeable) {
                     String chargeEnergyResult = StringNumberUtil.add(chargeEnergy, chargeEnergy);
                     for (int i = 1, limit = this.consume() ? this.times() : this.times() * playerRightClickEvent.getItem().getAmount(); i < limit; i++) {

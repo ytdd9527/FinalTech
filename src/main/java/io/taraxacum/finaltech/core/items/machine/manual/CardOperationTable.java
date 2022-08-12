@@ -6,11 +6,13 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.manual.CardOperationPortMenu;
 import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -44,8 +46,8 @@ public class CardOperationTable extends AbstractManualMachine implements RecipeI
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if (blockMenu != null && !blockMenu.hasViewer()) {
-            this.getMachineMenu().updateMenu(BlockStorage.getInventory(block.getLocation()), block);
+        if (blockMenu != null && blockMenu.hasViewer()) {
+            this.getMachineMenu().updateInventory(blockMenu.toInventory(), block.getLocation());
         }
     }
 
@@ -57,6 +59,7 @@ public class CardOperationTable extends AbstractManualMachine implements RecipeI
 
     @Override
     public void registerDefaultRecipes() {
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "合并存储卡",
                 "",
                 TextUtil.COLOR_NORMAL + "在左右两侧放置相同物品的存储卡",

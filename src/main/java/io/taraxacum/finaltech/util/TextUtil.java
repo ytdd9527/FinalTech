@@ -15,7 +15,7 @@ import java.util.Random;
 public class TextUtil {
     public static final String COLOR_NORMAL = "§x§8§8§f§f§f§f"; // 通常
     public static final String COLOR_STRESS = "§x§f§f§f§f§8§8"; // 强调
-    public static final String COLOR_ACTION = "§x§f§f§8§8§0§0"; // 主动操作
+    public static final String COLOR_ACTION = "§x§f§f§8§8§0§0"; // 操作
     public static final String COLOR_INITIATIVE = "§x§0§0§8§8§f§f"; // 主动
     public static final String COLOR_PASSIVE = "§x§0§0§f§f§8§8"; // 被动
     public static final String COLOR_NUMBER = "§x§f§f§8§8§f§f"; // 数字
@@ -40,14 +40,13 @@ public class TextUtil {
             int blue = (int)(color1.getBlue() * (1 - p + Math.floor(p)) + color2.getBlue() * (p - Math.floor(p)));
             int green = (int)(color1.getGreen() * (1 - p + Math.floor(p)) + color2.getGreen() * (p - Math.floor(p)));
             int red = (int)(color1.getRed() * (1 - p + Math.floor(p)) + color2.getRed() * (p - Math.floor(p)));
-            String color = "§x" +
-                    "§" + TextUtil.codeColor(red / 16) +
-                    "§" + TextUtil.codeColor(red % 16) +
-                    "§" + TextUtil.codeColor(green / 16) +
-                    "§" + TextUtil.codeColor(green % 16) +
-                    "§" + TextUtil.codeColor(blue / 16) +
-                    "§" + TextUtil.codeColor(blue % 16);
-            stringBuilder.append(color);
+            stringBuilder.append("§x")
+                    .append("§").append(TextUtil.codeColor(red / 16))
+                    .append("§").append(TextUtil.codeColor(red % 16))
+                    .append("§").append(TextUtil.codeColor(green / 16))
+                    .append("§").append(TextUtil.codeColor(green % 16))
+                    .append("§").append(TextUtil.codeColor(blue / 16))
+                    .append("§").append(TextUtil.codeColor(blue % 16));
             stringBuilder.append(string.charAt(i));
         }
         return stringBuilder.toString();
@@ -80,6 +79,16 @@ public class TextUtil {
             r++;
         }
         return TextUtil.colorString(string, colorList);
+    }
+
+    public static String getRandomColor() {
+        return "§x" +
+                "§" + (TextUtil.codeColor((int) (Math.random() * 8) + 8)) +
+                "§" + (TextUtil.codeColor((int) (Math.random() * 8) + 8)) +
+                "§" + (TextUtil.codeColor((int) (Math.random() * 8) + 8)) +
+                "§" + (TextUtil.codeColor((int) (Math.random() * 8) + 8)) +
+                "§" + (TextUtil.codeColor((int) (Math.random() * 8) + 8)) +
+                "§" + (TextUtil.codeColor((int) (Math.random() * 8) + 8));
     }
 
     @Nonnull

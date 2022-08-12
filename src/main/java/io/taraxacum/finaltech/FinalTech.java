@@ -1,53 +1,199 @@
 package io.taraxacum.finaltech;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
-import io.taraxacum.finaltech.api.factory.BlockTaskFactory;
+import io.taraxacum.finaltech.api.factory.ConfigFileManager;
 import io.taraxacum.finaltech.api.factory.ItemValueTable;
+import io.taraxacum.finaltech.api.factory.LanguageManager;
+import io.taraxacum.finaltech.api.factory.ServerRunnableLockFactory;
 import io.taraxacum.finaltech.setup.SetupUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
 import javax.annotation.Nonnull;
-import java.nio.file.Files;
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author Final_ROOT
  */
 public class FinalTech extends JavaPlugin implements SlimefunAddon {
-    private BukkitTask bukkitTask = null;
-    public final Config configFile = new Config(this);
-    public final Config valueFile = new Config(this, "value.yml");
-    public static FinalTech instance;
-    public static int SLIMEFUN_TICK_TIME_MILLIS = 50 * 1000 * 10;
-    private static int TIME_COUNT = 0;
-    private static long MILLISECONDS_PER_20_TICK = 1000;
+    /**
+     * Force other slimefun item machine to run async.
+     */
+    private boolean forceSlimefunMultiThread = false;
+    /**
+     * 0: nothing change, all task will run at slimefun #{@link io.github.thebusybiscuit.slimefun4.implementation.tasks.TickerTask}
+     * 1: async task will be put in #{@link io.taraxacum.finaltech.api.factory.ServerRunnableLockFactory}, so they will be really async
+     * 2: sync task will be run as async, so all (FinalTech's machines') task will be put in #{@link io.taraxacum.finaltech.api.factory.ServerRunnableLockFactory}
+     */
+    private int multiThreadLevel = 0;
+    /**
+     * Add by 1 every slimefun tick.
+     */
+    private int slimefunTickCount = 0;
+    private long tps = 20;
+    private ServerRunnableLockFactory<Location> locationRunnableFactory;
+    private ServerRunnableLockFactory<Entity> entityRunnableFactory;
+    private ConfigFileManager config;
+    private ConfigFileManager value;
+    private LanguageManager languageManager;
+    private Set<String> asyncSlimefunIdSet = new HashSet<>();
+    private Set<String> antiAccelerateSlimefunIdSet = new HashSet<>();
+    private Set<String> performanceLimitSlimefunIdSet = new HashSet<>();
+    private BukkitTask bukkitTask;
+    private final int version = 20220811;
+    private static FinalTech instance;
 
     @Override
     public void onEnable() {
+        hello?
         super.onEnable();
 
         instance = this;
 
-        this.init();
+        /* set runnable factory */
+        this.locationRunnableFactory = ServerRunnableLockFactory.getInstance(this, Location.class);
+        this.entityRunnableFactory = ServerRunnableLockFactory.getInstance(this, Entity.class);
+
+        /* read config file */
+        try {
+            this.config = ConfigFileManager.getOrNewInstance(this, "config");
+            this.value = ConfigFileManager.getOrNewInstance(this, "value");
+            String language = this.config.getOrDefault("en-US", "language");
+            this.languageManager = LanguageManager.getOrNewInstance(this, language);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        /* Disabled if you installed this plugin just for slimefun add quantity */
+        if(!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 20 && !FinalTech.getConfigManager().getOrDefault(false, "I'm_not_just_for_quantity_of_slimefun_addon_to_install_this_plugin")) {
+            this.getLogger().warning("It seems you are just for quantity of slimefun addon to install this plugin.");
+            this.getLogger().warning("So this plugin is disabled now.");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        } else if(!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 20 && !FinalTech.getConfigManager().getOrDefault(false, "I_know_there_may_be_incompatibilities_between_slimefun_addons_and_I_will_be_responsible_for_it")) {
+            this.getLogger().warning("It seems you don't know there may be incompatibilities between slimefun addons or you don't want to be responsible for it.");
+            this.getLogger().warning("So this plugin is disabled now due to possible incompatibilities.");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        // TODO version update.
+        if(!FinalTech.getConfigManager().containPath("version")) {
+            FinalTech.getConfigManager().setValue(version, "version");
+        }
+
+        /* configure multi thread level */
+        this.multiThreadLevel = FinalTech.getConfigManager().getOrDefault(0, "multi-thread", "level");
+        if(this.multiThreadLevel > 2 || this.multiThreadLevel < 0) {
+            this.multiThreadLevel = 0;
+        }
+        if(this.multiThreadLevel >= 1 && !FinalTech.getConfigManager().getOrDefault(false, "multi-thread", "warn-I_know_what_I'm_doing")) {
+            this.getLogger().warning("It seems you don't know what you are doing. So multi thread level is set to 0");
+            this.multiThreadLevel = 0;
+        }
+        if(this.multiThreadLevel >= 2 && !FinalTech.getConfigManager().getOrDefault(false, "multi-thread", "warn-I_really_know_what_I'm_doing")) {
+            this.getLogger().warning("It seems you don't know what you are doing. So multi thread level is set to 0");
+            this.multiThreadLevel = 0;
+        }
+
+        /* configure whether to force slimefun items to run async */
+        this.forceSlimefunMultiThread = FinalTech.getConfigManager().getOrDefault(false, "force-slimefun-multi-thread", "enable");
+        if(this.forceSlimefunMultiThread && !FinalTech.getConfigManager().getOrDefault(false, "force-slimefun-multi-thread", "warn-I_know_what_I'm_doing_and_I_will_be_responsible_for_it")) {
+            this.getLogger().warning("It seems you don't know what you are doing. So force-slimefun-multi-thread.enable is set to false!");
+            this.forceSlimefunMultiThread = false;
+        }
+
+        /* read tweak for machine */
+        this.antiAccelerateSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "anti-accelerate"));
+        this.performanceLimitSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "performance-limit"));
+        this.asyncSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "force-async"));
+        if(this.asyncSlimefunIdSet.size() > 0) {
+            this.getLogger().warning("You set force-async for some SlimefunItems! It's ok but you should be aware that this may cause some strange error.");
+        }
+
+        /* run task timer to do some function */
+        int tickRate = Slimefun.getTickerTask().getTickRate();
+        this.bukkitTask = this.getServer().getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
+            private final AtomicLong currentTimeMillis = new AtomicLong();
+            private final AtomicLong lastTimeMillis = new AtomicLong(System.currentTimeMillis());
+            private final int FULL_SLIMEFUN_TICK = 20 * 50 * tickRate;
+
+            @Override
+            public void run() {
+                currentTimeMillis.set(System.currentTimeMillis());
+                instance.tps = FULL_SLIMEFUN_TICK / (currentTimeMillis.get() - lastTimeMillis.get());
+                lastTimeMillis.set(currentTimeMillis.get());
+                instance.slimefunTickCount++;
+            }
+        }, 0, tickRate);
+
+        SetupUtil.initLanguageManager(instance.languageManager);
+
+        /* setup my items and menu and... */
+        SetupUtil.init(this);
+
+        /* setup item value table */
+        this.getServer().getScheduler().runTaskLater(this, () -> ItemValueTable.getInstance().init(), FinalTech.getConfigManager().getOrDefault(10, "setups", "item-value-table", "delay"));
+
+        /* setup slimefun machine block ticker */
+        this.getServer().getScheduler().runTaskLater(this, () -> {
+            for(SlimefunItem slimefunItem : Slimefun.getRegistry().getAllSlimefunItems()) {
+                if(!slimefunItem.getAddon().getJavaPlugin().equals(FinalTech.getInstance()) && slimefunItem.getBlockTicker() != null) {
+                    BlockTicker blockTicker = slimefunItem.getBlockTicker();
+                    boolean forceAsync = !blockTicker.isSynchronized() && (FinalTech.getForceSlimefunMultiThread() || FinalTech.isAsyncSlimefunItem(slimefunItem.getId()));
+                    slimefunItem.addItemHandler(SetupUtil.generateBlockTicker(blockTicker, forceAsync, FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId()), FinalTech.isPerformanceLimitSlimefunItem(slimefunItem.getId())));
+                    if(forceAsync) {
+                        FinalTech.getInstance().getJavaPlugin().getLogger().info(slimefunItem.getItemName() + "§f is optimized for multithreading！！！");
+                        FinalTech.addAsyncSlimefunItem(slimefunItem.getId());
+                    }
+                }
+            }
+        }, FinalTech.getConfigManager().getOrDefault(20, "setups", "slimefun-machine", "delay"));
+    }
+
+    @Override
+    public void reloadConfig() {
+        super.reloadConfig();
+        // TODO reload more...
     }
 
     @Override
     public void onDisable() {
-        if (this.bukkitTask != null) {
+        if(this.bukkitTask != null) {
             this.bukkitTask.cancel();
+        }
+        try {
+            FinalTech.getLocationRunnableFactory().waitAllTask();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            BlockStorage.saveChunks();
+        }
+        try {
+            FinalTech.getEntityRunnableFactory().waitAllTask();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            BlockStorage.saveChunks();
         }
     }
 
     @Override
     public String getBugTrackerURL() {
-        return null;
+        return "https://github.com/ecro-fun/FinalTECH/issues";
     }
 
     @Nonnull
@@ -56,59 +202,75 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         return this;
     }
 
-    public Config getConfigFile() {
-        return this.configFile;
-    }
-
-    public Config getValueFile() {
-        return valueFile;
-    }
-
-    private void init() {
-        BukkitScheduler scheduler = FinalTech.getInstance().getServer().getScheduler();
-        AtomicLong lastTimeMillis = new AtomicLong(System.currentTimeMillis());
-        int tickRate = Slimefun.getTickerTask().getTickRate();
-        SLIMEFUN_TICK_TIME_MILLIS = 50 * 1000 * tickRate;
-        AtomicLong currentTimeMillis = new AtomicLong();
-        scheduler.runTaskTimerAsynchronously(this, () -> {
-            currentTimeMillis.set(System.currentTimeMillis());
-            FinalTech.MILLISECONDS_PER_20_TICK = SLIMEFUN_TICK_TIME_MILLIS / (currentTimeMillis.get() - lastTimeMillis.get());
-            lastTimeMillis.set(currentTimeMillis.get());
-            FinalTech.TIME_COUNT++;
-        }, 0, tickRate);
-
-        try {
-            if (!this.configFile.getFile().exists()) {
-                Files.copy(Objects.requireNonNull(this.getClass().getResourceAsStream("/config.yml")), this.configFile.getFile().toPath());
-            }
-            if (!this.valueFile.getFile().exists()) {
-                Files.copy(Objects.requireNonNull(this.getClass().getResourceAsStream("/value.yml")), this.valueFile.getFile().toPath());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        SetupUtil.init();
-        SetupUtil.setupItems(this);
-
-        ItemValueTable.getInstance().init();
-
-        this.bukkitTask = scheduler.runTaskTimerAsynchronously(this, () -> BlockTaskFactory.getInstance().tick(), 0, tickRate);
-
-        for(int i = 0; i < 32; i++) {
-            Bukkit.getLogger().info("[FinalTECH]" + TextUtil.COLOR_NEGATIVE + "测试版本 谨慎使用");
-        }
-    }
-
     public static FinalTech getInstance() {
         return instance;
     }
 
-    public static int getTimeCount() {
-        return TIME_COUNT;
+    public static int getMultiThreadLevel() {
+        return instance.multiThreadLevel;
     }
 
-    public static long getMSPS() {
-        return MILLISECONDS_PER_20_TICK;
+    public static boolean getForceSlimefunMultiThread() {
+        return instance.forceSlimefunMultiThread;
+    }
+
+    public static int getSlimefunTickCount() {
+        return instance.slimefunTickCount;
+    }
+
+    public static long getTps() {
+        return instance.tps;
+    }
+
+    public static ServerRunnableLockFactory<Location> getLocationRunnableFactory() {
+        return instance.locationRunnableFactory;
+    }
+
+    public static ServerRunnableLockFactory<Entity> getEntityRunnableFactory() {
+        return instance.entityRunnableFactory;
+    }
+
+    public static ConfigFileManager getConfigManager() {
+        return instance.config;
+    }
+
+    public static ConfigFileManager getValueManager() {
+        return instance.value;
+    }
+
+    public static LanguageManager getLanguageManager() {
+        return instance.languageManager;
+    }
+
+    public static String getLanguageString(@Nonnull String... paths) {
+        return instance.languageManager.getString(paths);
+    }
+
+    @Nonnull
+    public static List<String> getLanguageStringList(@Nonnull String... paths) {
+        return instance.languageManager.getStringList(paths);
+    }
+
+    @Nonnull
+    public static String[] getLanguageStringArray(@Nonnull String... paths) {
+        return instance.languageManager.getStringList(paths).toArray(new String[0]);
+    }
+
+    public static boolean isAsyncSlimefunItem(@Nonnull String id) {
+        return instance.asyncSlimefunIdSet.contains(id);
+    }
+
+    public static boolean addAsyncSlimefunItem(@Nonnull String id) {
+        return instance.asyncSlimefunIdSet.add(id);
+    }
+
+    public static boolean isAntiAccelerateSlimefunItem(@Nonnull String id) {
+        // TODO config GUI
+        return instance.antiAccelerateSlimefunIdSet.contains(id);
+    }
+
+    public static boolean isPerformanceLimitSlimefunItem(@Nonnull String id) {
+        // TODO config GUI
+        return instance.performanceLimitSlimefunIdSet.contains(id);
     }
 }

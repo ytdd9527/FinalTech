@@ -7,20 +7,25 @@ import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public abstract class BlockStorageIconHelper extends BlockStorageHelper {
     private final Map<String, ItemStack> valueIconMap;
-    private static final ItemStack ERROR_ICON = new CustomItemStack(Material.BARRIER, "&cERROR");
+    private static final ItemStack ERROR_ICON = new CustomItemStack(Material.BARRIER, " ");
 
     protected BlockStorageIconHelper(@Nonnull String id, @Nonnull Map<String, ItemStack> valueIconMap) {
         super(id, BlockStorageIconHelper.init(valueIconMap));
@@ -28,8 +33,7 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
     }
 
     protected BlockStorageIconHelper(@Nonnull SlimefunItem slimefunItem, @Nonnull Map<String, ItemStack> valueIconMap) {
-        super(slimefunItem.getId(), BlockStorageIconHelper.init(valueIconMap));
-        this.valueIconMap = valueIconMap;
+        this(slimefunItem.getId(), valueIconMap);
     }
 
     @Nonnull
@@ -42,62 +46,64 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
         return valueIconMap.get(this.defaultValue());
     }
 
-    public boolean checkAndUpdateIcon(@Nonnull BlockMenu blockMenu, int slot) {
-        String value = BlockStorage.getLocationInfo(blockMenu.getLocation(), this.getKey());
+    public boolean checkAndUpdateIcon(@Nonnull Inventory inventory, @Nonnull Location location, int slot) {
+        String value = BlockStorage.getLocationInfo(location, this.getKey());
         if (!this.validValue(value)) {
             value = this.defaultValue();
         }
-        blockMenu.replaceExistingItem(slot, this.getOrErrorIcon(value));
+        inventory.setItem(slot, this.getOrErrorIcon(value));
         return true;
     }
 
     @Nonnull
-    public ChestMenu.MenuClickHandler getHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
+    public ChestMenu.MenuClickHandler getHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
         return (player, i, itemStack, clickAction) -> {
-            String value = BlockStorageIconHelper.this.getOrDefaultValue(block.getLocation());
+            String value = BlockStorageIconHelper.this.getOrDefaultValue(location);
             if (clickAction.isRightClicked()) {
                 value = BlockStorageIconHelper.this.previousOrDefaultValue(value);
             } else {
                 value = BlockStorageIconHelper.this.nextOrDefaultValue(value);
             }
-            blockMenu.replaceExistingItem(slot, BlockStorageIconHelper.this.getOrErrorIcon(value));
-            BlockStorageIconHelper.this.setOrClearValue(block.getLocation(), value);
+            inventory.setItem(slot, BlockStorageIconHelper.this.getOrErrorIcon(value));
+            BlockStorageIconHelper.this.setOrClearValue(location, value);
             return false;
         };
     }
     @Nonnull
-    public ChestMenu.MenuClickHandler getUpdateHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
+    public ChestMenu.MenuClickHandler getUpdateHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
         return (player, i, itemStack, clickAction) -> {
-            String value = BlockStorageIconHelper.this.getOrDefaultValue(block.getLocation());
-            blockMenu.replaceExistingItem(slot, BlockStorageIconHelper.this.getOrErrorIcon(value));
-            BlockStorageIconHelper.this.setOrClearValue(block.getLocation(), value);
+            String value = BlockStorageIconHelper.this.getOrDefaultValue(location);
+            inventory.setItem(slot, BlockStorageIconHelper.this.getOrErrorIcon(value));
+            BlockStorageIconHelper.this.setOrClearValue(location, value);
             return false;
         };
     }
     @Nonnull
-    public ChestMenu.MenuClickHandler getNextHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
+    public ChestMenu.MenuClickHandler getNextHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
         return (player, i, itemStack, clickAction) -> {
-            String value = BlockStorageIconHelper.this.getOrDefaultValue(block.getLocation());
+            String value = BlockStorageIconHelper.this.getOrDefaultValue(location);
             value = BlockStorageIconHelper.this.clickNextValue(value, clickAction);
-            blockMenu.replaceExistingItem(slot, BlockStorageIconHelper.this.getOrErrorIcon(value));
-            BlockStorageIconHelper.this.setOrClearValue(block.getLocation(), value);
+            inventory.setItem(slot, BlockStorageIconHelper.this.getOrErrorIcon(value));
+            BlockStorageIconHelper.this.setOrClearValue(location, value);
             return false;
         };
     }
     @Nonnull
-    public ChestMenu.MenuClickHandler getPreviousHandler(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull AbstractMachineMenu abstractMachineMenu, int slot) {
+    public ChestMenu.MenuClickHandler getPreviousHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
         return (player, i, itemStack, clickAction) -> {
-            String value = BlockStorageIconHelper.this.getOrDefaultValue(block.getLocation());
+            String value = BlockStorageIconHelper.this.getOrDefaultValue(location);
             value = BlockStorageIconHelper.this.clickPreviousValue(value, clickAction);
-            blockMenu.replaceExistingItem(slot, BlockStorageIconHelper.this.getOrErrorIcon(value));
-            BlockStorageIconHelper.this.setOrClearValue(block.getLocation(), value);
+            inventory.setItem(slot, BlockStorageIconHelper.this.getOrErrorIcon(value));
+            BlockStorageIconHelper.this.setOrClearValue(location, value);
             return false;
         };
     }
 
+    @Nonnull
     public String clickNextValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
         return this.nextOrDefaultValue(value);
     }
+    @Nonnull
     public String clickPreviousValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
         return this.previousOrDefaultValue(value);
     }
@@ -105,74 +111,49 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
     @Nonnull
     public static BlockStorageIconHelper newInstanceOrGet(@Nonnull String id, @Nonnull String key, @Nonnull Map<String, ItemStack> valueIconMap) {
         if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(id);
+            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.get(id);
             if (stringBlockStorageHelperMap.containsKey(key)) {
                 BlockStorageHelper blockStorageHelper = stringBlockStorageHelperMap.get(key);
-                if (blockStorageHelper instanceof BlockStorageIconHelper) {
-                    return (BlockStorageIconHelper) blockStorageHelper;
-                } else {
-                    blockStorageHelper = new BlockStorageIconHelper(id, valueIconMap) {
+                return (BlockStorageIconHelper) blockStorageHelper;
+            } else {
+                synchronized (stringBlockStorageHelperMap) {
+                    if(stringBlockStorageHelperMap.containsKey(key)) {
+                        return (BlockStorageIconHelper)stringBlockStorageHelperMap.get(key);
+                    }
+                    BlockStorageIconHelper blockStorageIconHelper = new BlockStorageIconHelper(id, valueIconMap) {
                         @Nonnull
                         @Override
                         public String getKey() {
                             return key;
                         }
                     };
-                    stringBlockStorageHelperMap.put(key, blockStorageHelper);
-                    return (BlockStorageIconHelper) blockStorageHelper;
+                    stringBlockStorageHelperMap.put(key, blockStorageIconHelper);
+                    return blockStorageIconHelper;
                 }
             }
-        }
-        return new BlockStorageIconHelper(id, valueIconMap) {
-            @Nonnull
-            @Override
-            public String getKey() {
-                return key;
+        } else {
+            synchronized (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY) {
+                if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
+                    return BlockStorageIconHelper.newInstanceOrGet(id, key, valueIconMap);
+                }
+                Map<String, BlockStorageHelper> stringBlockStorageHelperMap = new HashMap<>();
+                BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.put(id, stringBlockStorageHelperMap);
+                BlockStorageIconHelper blockStorageIconHelper = new BlockStorageIconHelper(id, valueIconMap) {
+                    @Nonnull
+                    @Override
+                    public String getKey() {
+                        return key;
+                    }
+                };
+                stringBlockStorageHelperMap.put(key, blockStorageIconHelper);
+                return blockStorageIconHelper;
             }
-        };
+        }
     }
 
     @Nonnull
     public static BlockStorageHelper newInstanceOrGet(@Nonnull SlimefunItem slimefunItem, @Nonnull String key, @Nonnull Map<String, ItemStack> valueIconMap) {
-        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BLOCK_STORAGE_HELPER_FACTORY.get(slimefunItem.getId());
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                return stringBlockStorageHelperMap.get(key);
-            }
-        }
-        return new BlockStorageIconHelper(slimefunItem.getId(), valueIconMap) {
-            @Nonnull
-            @Override
-            public String getKey() {
-                return key;
-            }
-        };
-    }
-
-    public static ItemStack getOrErrorIcon(@Nonnull String id, @Nonnull String key, @Nullable String value) {
-        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.get(id);
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                BlockStorageHelper blockStorageHelper = stringBlockStorageHelperMap.get(key);
-                if (blockStorageHelper instanceof BlockStorageIconHelper) {
-                    return ((BlockStorageIconHelper) blockStorageHelper).getOrErrorIcon(value);
-                }
-            }
-        }
-        return ERROR_ICON;
-    }
-
-    public static ItemStack getOrErrorIcon(@Nonnull SlimefunItem slimefunItem, @Nonnull String key, @Nullable String value) {
-        if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(slimefunItem.getId())) {
-            Map<String, BlockStorageHelper> stringBlockStorageHelperMap = BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.get(slimefunItem.getId());
-            if (stringBlockStorageHelperMap.containsKey(key)) {
-                BlockStorageHelper blockStorageHelper = stringBlockStorageHelperMap.get(key);
-                if (blockStorageHelper instanceof BlockStorageIconHelper) {
-                    return ((BlockStorageIconHelper) blockStorageHelper).getOrErrorIcon(value);
-                }
-            }
-        }
-        return ERROR_ICON;
+        return BlockStorageIconHelper.newInstanceOrGet(slimefunItem.getId(), key, valueIconMap);
     }
 
     @Nonnull

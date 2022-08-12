@@ -1,6 +1,7 @@
 package io.taraxacum.finaltech.core.helper;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.factory.BlockStorageHelper;
 import io.taraxacum.finaltech.api.factory.BlockStorageLoreHelper;
 import io.taraxacum.finaltech.util.TextUtil;
@@ -9,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -20,14 +22,14 @@ public final class CargoNumber {
     public static final String KEY_INPUT = "cbi";
     public static final String KEY_OUTPUT = "cbo";
 
-    public static final ItemStack CARGO_NUMBER_ICON = new CustomItemStack(Material.TARGET, TextUtil.colorPseudorandomString("传输数量限制"));
-    public static final ItemStack CARGO_NUMBER_ADD_ICON = new CustomItemStack(Material.GREEN_CONCRETE, TextUtil.colorPseudorandomString("增加数量限制"));
-    public static final ItemStack CARGO_NUMBER_SUB_ICON = new CustomItemStack(Material.RED_CONCRETE, TextUtil.colorPseudorandomString("减少数量限制"));
+    public static final ItemStack CARGO_NUMBER_ICON = new CustomItemStack(Material.TARGET, FinalTech.getLanguageString("helper", "cargo-number", "icon", "name"), FinalTech.getLanguageStringArray("helper", "cargo-number", "icon", "lore"));
+    public static final ItemStack CARGO_NUMBER_ADD_ICON = new CustomItemStack(Material.GREEN_CONCRETE, FinalTech.getLanguageString("helper", "cargo-number", "add-icon", "name"), FinalTech.getLanguageStringArray("helper", "cargo-number", "add-icon", "lore"));
+    public static final ItemStack CARGO_NUMBER_SUB_ICON = new CustomItemStack(Material.RED_CONCRETE, FinalTech.getLanguageString("helper", "cargo-number", "sub-icon", "name"), FinalTech.getLanguageStringArray("helper", "cargo-number", "sub-icon", "lore"));
 
     public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, 0, new LinkedHashMap<>() {{
 //        this.put("0", List.of("number no limit"));
         for (int i = 1; i <= 64 * 9; i++) {
-            this.put(String.valueOf(i), List.of(TextUtil.colorRandomString("数量限制 " + i)));
+            this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "cargo-number", "icon", "lore0"), String.valueOf(i)));
         }
     }}) {
         @Nonnull
@@ -42,8 +44,9 @@ public final class CargoNumber {
             return "64";
         }
 
+        @Nonnull
         @Override
-        public String clickNextValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
+        public String clickNextValue(@Nullable String value, @Nonnull ClickAction clickAction) {
             if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return HELPER.nextOrDefaultValue(value);
             } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
@@ -53,8 +56,9 @@ public final class CargoNumber {
             }
         }
 
+        @Nonnull
         @Override
-        public String clickPreviousValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
+        public String clickPreviousValue(@Nullable String value, @Nonnull ClickAction clickAction) {
             if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return HELPER.previousOrDefaultValue(value);
             } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
@@ -66,8 +70,8 @@ public final class CargoNumber {
     };
     public static final BlockStorageLoreHelper INPUT_HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, 0, new LinkedHashMap<>() {{
 //        this.put("0", List.of("number no limit"));
-        for (int i = 1; i < 64 * 9; i++) {
-            this.put(String.valueOf(i), List.of(TextUtil.colorRandomString("数量限制: " + i)));
+        for (int i = 1; i <= 64 * 9; i++) {
+            this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "cargo-number", "icon", "lore0"), String.valueOf(i)));
         }
     }}) {
         @Nonnull
@@ -82,8 +86,9 @@ public final class CargoNumber {
             return "64";
         }
 
+        @Nonnull
         @Override
-        public String clickNextValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
+        public String clickNextValue(@Nullable String value, @Nonnull ClickAction clickAction) {
             if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return INPUT_HELPER.nextOrDefaultValue(value);
             } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
@@ -93,8 +98,9 @@ public final class CargoNumber {
             }
         }
 
+        @Nonnull
         @Override
-        public String clickPreviousValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
+        public String clickPreviousValue(@Nullable String value, @Nonnull ClickAction clickAction) {
             if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return INPUT_HELPER.previousOrDefaultValue(value);
             } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
@@ -106,8 +112,8 @@ public final class CargoNumber {
     };
     public static final BlockStorageLoreHelper OUTPUT_HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, 0, new LinkedHashMap<>() {{
 //        this.put("0", List.of("number no limit"));
-        for (int i = 1; i < 64 * 9; i++) {
-            this.put(String.valueOf(i), List.of(TextUtil.colorRandomString("数量限制: " + i)));
+        for (int i = 1; i <= 64 * 9; i++) {
+            this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "cargo-number", "icon", "lore0"), String.valueOf(i)));
         }
     }}) {
         @Nonnull
@@ -122,8 +128,9 @@ public final class CargoNumber {
             return "64";
         }
 
+        @Nonnull
         @Override
-        public String clickNextValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
+        public String clickNextValue(@Nullable String value, @Nonnull ClickAction clickAction) {
             if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return OUTPUT_HELPER.nextOrDefaultValue(value);
             } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
@@ -133,8 +140,9 @@ public final class CargoNumber {
             }
         }
 
+        @Nonnull
         @Override
-        public String clickPreviousValue(@Nonnull String value, @Nonnull ClickAction clickAction) {
+        public String clickPreviousValue(@Nullable String value, @Nonnull ClickAction clickAction) {
             if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return OUTPUT_HELPER.previousOrDefaultValue(value);
             } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {

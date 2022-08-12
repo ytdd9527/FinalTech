@@ -6,15 +6,16 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.dto.InvWithSlots;
+import io.taraxacum.finaltech.api.factory.ServerRunnableLockFactory;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.api.factory.BlockTaskFactory;
+import io.taraxacum.finaltech.core.helper.*;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.MeshTransferMenu;
-import io.taraxacum.finaltech.core.helper.*;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.*;
-import io.taraxacum.finaltech.api.dto.PositionHelper;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -38,7 +39,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 1.0
  */
 public class MeshTransfer extends AbstractCargo implements RecipeItem {
-    private static final double PARTICLE_DISTANCE = 0.22;
+    private final double particleDistance = 0.22;
 
     public MeshTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -53,9 +54,12 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
                 Block block = blockPlaceEvent.getBlock();
                 Location location = block.getLocation();
 
+                IgnorePermission.HELPER.checkOrSetBlockStorage(location);
+                BlockStorage.addBlockInfo(location, "UUID", blockPlaceEvent.getPlayer().getUniqueId().toString());
+
                 CargoFilter.HELPER.checkOrSetBlockStorage(location);
-                BlockSearchMode.STATION_INPUT_HELPER.checkOrSetBlockStorage(location);
-                BlockSearchMode.STATION_OUTPUT_HELPER.checkOrSetBlockStorage(location);
+                BlockSearchMode.MESH_INPUT_HELPER.checkOrSetBlockStorage(location);
+                BlockSearchMode.MESH_OUTPUT_HELPER.checkOrSetBlockStorage(location);
 
                 CargoNumber.INPUT_HELPER.checkOrSetBlockStorage(location);
                 CargoNumberMode.INPUT_HELPER.getOrDefaultValue(location);
@@ -83,42 +87,39 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new MeshTransferMenu(this.getId(), this.getItemName(), this);
+        return new MeshTransferMenu(this);
     }
 
     @Override
     public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         // do something now?
         BlockMenu blockMenu = BlockStorage.getInventory(block);
+        Location location = block.getLocation();
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
         boolean primaryThread = javaPlugin.getServer().isPrimaryThread();
         boolean drawParticle = blockMenu.hasViewer();
 
-        String cargoFilter = CargoFilter.HELPER.getOrDefaultValue(config);
-        String locationInfo = config.getString(PositionInfo.KEY);
-        PositionHelper positionHelper = new PositionHelper(locationInfo);
-
-        String[] outputs = positionHelper.getOutputs();
-        String[] inputs = positionHelper.getInputs();
-        Block[] outputBlocks = new Block[outputs.length];
-        Block[] inputBlocks = new Block[inputs.length];
-        String outputBlockSearchMode = BlockSearchMode.STATION_OUTPUT_HELPER.getOrDefaultValue(config);
-        String inputBlockSearchMode = BlockSearchMode.STATION_INPUT_HELPER.getOrDefaultValue(config);
+        BlockFace[] outputBlockFaces = PositionInfo.getBlockFaces(config, PositionInfo.VALUE_OUTPUT, PositionInfo.VALUE_INPUT_AND_OUTPUT);
+        BlockFace[] inputBlockFaces = PositionInfo.getBlockFaces(config, PositionInfo.VALUE_INPUT, PositionInfo.VALUE_INPUT_AND_OUTPUT);
+        Block[] outputBlocks = new Block[inputBlockFaces.length];
+        Block[] inputBlocks = new Block[outputBlockFaces.length];
+        String outputBlockSearchMode = BlockSearchMode.MESH_OUTPUT_HELPER.getOrDefaultValue(config);
+        String inputBlockSearchMode = BlockSearchMode.MESH_INPUT_HELPER.getOrDefaultValue(config);
         if(primaryThread) {
             for(int i = 0; i < outputBlocks.length; i++) {
-                outputBlocks[i] = this.searchBlock(block, PositionInfo.getBlockFaceByPosition(outputs[i]), outputBlockSearchMode, drawParticle);
+                outputBlocks[i] = this.searchBlock(block, inputBlockFaces[i], outputBlockSearchMode, drawParticle);
             }
             for(int i = 0; i < inputBlocks.length; i++) {
-                inputBlocks[i] = this.searchBlock(block, PositionInfo.getBlockFaceByPosition(inputs[i]), inputBlockSearchMode, drawParticle);
+                inputBlocks[i] = this.searchBlock(block, outputBlockFaces[i], inputBlockSearchMode, drawParticle);
             }
         } else {
             try {
                 javaPlugin.getServer().getScheduler().callSyncMethod(javaPlugin, () -> {
                     for (int i = 0; i < outputBlocks.length; i++) {
-                        outputBlocks[i] = this.searchBlock(block, PositionInfo.getBlockFaceByPosition(outputs[i]), outputBlockSearchMode, drawParticle);
+                        outputBlocks[i] = this.searchBlock(block, inputBlockFaces[i], outputBlockSearchMode, drawParticle);
                     }
                     for (int i = 0; i < inputBlocks.length; i++) {
-                        inputBlocks[i] = this.searchBlock(block, PositionInfo.getBlockFaceByPosition(inputs[i]), inputBlockSearchMode, drawParticle);
+                        inputBlocks[i] = this.searchBlock(block, outputBlockFaces[i], inputBlockSearchMode, drawParticle);
                     }
                     return null;
                 }).get();
@@ -126,13 +127,15 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
                 e.printStackTrace();
             }
         }
-        if(inputBlocks.length == 0 && outputBlocks.length == 0) {
-            return;
-        } else if(drawParticle) {
+        if(drawParticle) {
             javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> {
                 ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, inputBlocks);
                 ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, outputBlocks);
-            }, FinalTech.SLIMEFUN_TICK_TIME_MILLIS / 1000 / 50);
+            }, Slimefun.getTickerTask().getTickRate());
+        }
+
+        if(!SlimefunUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(inputBlocks)) || !SlimefunUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(outputBlocks))) {
+            return;
         }
 
         // parse output
@@ -149,9 +152,12 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
         String inputCargoNumberMode = CargoNumberMode.INPUT_HELPER.getOrDefaultValue(config);
         String inputCargoLimit = CargoLimit.INPUT_HELPER.getOrDefaultValue(config);
 
-        Runnable runnable = () -> {
+        String cargoFilter = CargoFilter.HELPER.getOrDefaultValue(config);
+
+        // do cargo
+        if(primaryThread) {
             for (Block outputBlock : outputBlocks) {
-                int result = CargoUtil.doCargoInputMain(block, outputBlock, SlotSearchSize.VALUE_OUTPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, outputSlotSearchSize, outputSlotSearchOrder, outputCargoNumber.get(), outputCargoLimit, cargoFilter, blockMenu.toInventory(), MeshTransferMenu.ITEM_MATCH);
+                int result = CargoUtil.doCargoInputMain(javaPlugin, block, outputBlock, SlotSearchSize.VALUE_OUTPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, outputSlotSearchSize, outputSlotSearchOrder, outputCargoNumber.get(), outputCargoLimit, cargoFilter, blockMenu.toInventory(), MeshTransferMenu.ITEM_MATCH);
                 if (CargoNumberMode.VALUE_UNIVERSAL.equals(outputCargoNumberMode)) {
                     outputCargoNumber.addAndGet(-result);
                     if (outputCargoNumber.get() == 0) {
@@ -160,24 +166,10 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
                 }
             }
 
-            for (int i = 0; i < MeshTransfer.this.getInputSlot().length; i++) {
-                ItemStack inputItem = blockMenu.getItemInSlot(MeshTransfer.this.getInputSlot()[i]);
-                if (ItemStackUtil.isItemNull(inputItem)) {
-                    continue;
-                }
-                ItemStack outputItem = blockMenu.getItemInSlot(MeshTransfer.this.getOutputSlot()[i]);
-                if (ItemStackUtil.isItemNull(outputItem)) {
-                    blockMenu.toInventory().setItem(MeshTransfer.this.getOutputSlot()[i], new ItemStack(inputItem));
-                    inputItem.setAmount(0);
-                } else if (ItemStackUtil.isItemSimilar(inputItem, outputItem)) {
-                    ItemStackUtil.stack(inputItem, outputItem);
-                }
-            }
+            CargoUtil.doSimpleCargoStrongSymmetry(new InvWithSlots(blockMenu.toInventory(), this.getInputSlot()), new InvWithSlots(blockMenu.toInventory(), this.getOutputSlot()), 576, CargoLimit.VALUE_ALL, CargoFilter.VALUE_BLACK, blockMenu.toInventory(), new int[0]);
 
-            for (String inputPosition : inputs) {
-                BlockFace blockFace = PositionInfo.getBlockFaceByPosition(inputPosition);
-                Block inputBlock = MeshTransfer.this.searchBlock(block, blockFace, BlockSearchMode.STATION_INPUT_HELPER.getOrDefaultValue(config), drawParticle);
-                int result = CargoUtil.doCargoOutputMain(inputBlock, block, inputSlotSearchSize, inputSlotSearchOrder, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, inputCargoNumber.get(), inputCargoLimit, cargoFilter, blockMenu.toInventory(), MeshTransferMenu.ITEM_MATCH);
+            for (Block inputBlock : inputBlocks) {
+                int result = CargoUtil.doCargoOutputMain(javaPlugin, inputBlock, block, inputSlotSearchSize, inputSlotSearchOrder, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, inputCargoNumber.get(), inputCargoLimit, cargoFilter, blockMenu.toInventory(), MeshTransferMenu.ITEM_MATCH);
                 if (CargoNumberMode.VALUE_UNIVERSAL.equals(inputCargoNumberMode)) {
                     inputCargoNumber.addAndGet(-result);
                     if (inputCargoNumber.get() == 0) {
@@ -185,11 +177,6 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
                     }
                 }
             }
-        };
-
-        // do cargo
-        if(primaryThread) {
-            runnable.run();
         } else {
             Location[] locations = new Location[outputBlocks.length + inputBlocks.length + 1];
             int p = 0;
@@ -200,8 +187,41 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
                 locations[i + p] = inputBlocks[i].getLocation();
             }
             locations[locations.length - 1] = block.getLocation();
+            javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
+                InvWithSlots[] inputInvWithSlots = new InvWithSlots[inputBlocks.length];
+                InvWithSlots[] outputInvWithSlots = new InvWithSlots[outputBlocks.length];
+                InvWithSlots invWithSlots1 = new InvWithSlots(blockMenu.toInventory(), MeshTransfer.this.getInputSlot());
+                InvWithSlots invWithSlots2 = new InvWithSlots(blockMenu.toInventory(), MeshTransfer.this.getOutputSlot());
+                for(int i = 0; i < inputBlocks.length; i++) {
+                    inputInvWithSlots[i] = CargoUtil.getInvWithSlots(inputBlocks[i], outputSlotSearchSize, outputSlotSearchOrder);
+                }
+                for(int i = 0; i < outputBlocks.length; i++) {
+                    outputInvWithSlots[i] = CargoUtil.getInvWithSlots(outputBlocks[i], outputSlotSearchSize, outputSlotSearchOrder);
+                }
+                ServerRunnableLockFactory.getInstance(javaPlugin, Location.class).waitThenRun(() -> {
+                    for(int i = 0; i < outputBlocks.length; i++) {
+                        int result = CargoUtil.doSimpleCargoOutputMain(invWithSlots2, block, outputInvWithSlots[i], SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, inputCargoNumber.get(), inputCargoLimit, cargoFilter, blockMenu.toInventory(), MeshTransferMenu.ITEM_MATCH);
+                        if (CargoNumberMode.VALUE_UNIVERSAL.equals(inputCargoNumberMode)) {
+                            inputCargoNumber.addAndGet(-result);
+                            if (inputCargoNumber.get() == 0) {
+                                break;
+                            }
+                        }
+                    }
 
-            BlockTaskFactory.getInstance().registerRunnable(slimefunItem, false, runnable, locations);
+                    CargoUtil.doSimpleCargoStrongSymmetry(invWithSlots1, invWithSlots2, 576, CargoLimit.VALUE_ALL, CargoFilter.VALUE_BLACK, blockMenu.toInventory(), new int[0]);
+
+                    for(int i = 0; i < inputBlocks.length; i++) {
+                        int result = CargoUtil.doSimpleCargoInputMain(inputInvWithSlots[i], invWithSlots1, block, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, inputCargoNumber.get(), inputCargoLimit, cargoFilter, blockMenu.toInventory(), MeshTransferMenu.ITEM_MATCH);
+                        if (CargoNumberMode.VALUE_UNIVERSAL.equals(outputCargoNumberMode)) {
+                            outputCargoNumber.addAndGet(-result);
+                            if (outputCargoNumber.get() == 0) {
+                                break;
+                            }
+                        }
+                    }
+                }, locations);
+            });
         }
     }
 
@@ -211,15 +231,15 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
     }
 
     @Nonnull
-    public Block searchBlock(@Nonnull Block begin, @Nonnull BlockFace blockFace, @Nonnull String searchMode, boolean drawParticle) {
+    public Block searchBlock(@Nonnull Block sourceBlock, @Nonnull BlockFace blockFace, @Nonnull String searchMode, boolean drawParticle) {
         List<Location> particleLocationList = new ArrayList<>();
-        particleLocationList.add(LocationUtil.getCenterLocation(begin));
-        Block result = begin.getRelative(blockFace);
+        particleLocationList.add(LocationUtil.getCenterLocation(sourceBlock));
+        Block result = sourceBlock.getRelative(blockFace);
         if (BlockSearchMode.VALUE_ZERO.equals(searchMode)) {
             particleLocationList.add(LocationUtil.getCenterLocation(result));
             if (drawParticle) {
                 JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
-                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawLineByDistance(Particle.COMPOSTER, FinalTech.SLIMEFUN_TICK_TIME_MILLIS / particleLocationList.size() / 1000, PARTICLE_DISTANCE, particleLocationList));
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawLineByDistance(Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / particleLocationList.size(), particleDistance, particleLocationList));
             }
             return result;
         }
@@ -237,20 +257,13 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
         }
         if (drawParticle) {
             JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
-            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawLineByDistance(Particle.COMPOSTER, FinalTech.SLIMEFUN_TICK_TIME_MILLIS / particleLocationList.size() / 1000, PARTICLE_DISTANCE, particleLocationList));
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawLineByDistance(Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / particleLocationList.size(), particleDistance, particleLocationList));
         }
         return result;
     }
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "功能",
-                "",
-                TextUtil.COLOR_NORMAL + "该机器会不断把物品",
-                TextUtil.COLOR_NORMAL + "从输入侧方块的容器",
-                TextUtil.COLOR_NORMAL + "传输到输出侧方块的容器");
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "锁链扩展",
-                "",
-                TextUtil.COLOR_NORMAL + "非零模式下 可使用对应方向放置的锁链延长搜索范围");
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

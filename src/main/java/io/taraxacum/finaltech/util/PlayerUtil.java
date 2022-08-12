@@ -16,6 +16,9 @@ import javax.annotation.Nonnull;
  */
 public class PlayerUtil {
     public static final NamespacedKey KEY_UUID = new NamespacedKey(FinalTech.getInstance(), "UUID");
+    public static final NamespacedKey KEY_IGNORE_PERMISSION = new NamespacedKey(FinalTech.getInstance(), "IP");
+    public static final String IGNORE_PERMISSION_VALUE_FALSE = "f";
+    public static final String IGNORE_PERMISSION_VALUE_TRUE = "t";
 
     public static String parseIdInItem(@Nonnull ItemStack item) {
         if(ItemStackUtil.isItemNull(item)) {
@@ -31,6 +34,21 @@ public class PlayerUtil {
         } else {
             return null;
         }
+    }
+
+    public static Boolean parseIgnorePermissionInItem(@Nonnull ItemStack item) {
+        if(ItemStackUtil.isItemNull(item)) {
+            return null;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        return PlayerUtil.parseIgnorePermissionInItem(itemMeta);
+    }
+    public static Boolean parseIgnorePermissionInItem(@Nonnull ItemMeta itemMeta) {
+        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+        if(persistentDataContainer.has(KEY_IGNORE_PERMISSION, PersistentDataType.STRING)) {
+            return IGNORE_PERMISSION_VALUE_TRUE.equals(persistentDataContainer.get(KEY_IGNORE_PERMISSION, PersistentDataType.STRING));
+        }
+        return false;
     }
 
     public static boolean updateIdInItem(@Nonnull ItemStack item, @Nonnull Player player, boolean ignoreExisted) {
@@ -52,5 +70,21 @@ public class PlayerUtil {
             return true;
         }
         return false;
+    }
+
+    public static boolean updateIgnorePermissionInItem(@Nonnull ItemStack item, @Nonnull Boolean ignorePermission) {
+        if(ItemStackUtil.isItemNull(item)) {
+            return false;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        if(PlayerUtil.updateIgnorePermissionInItem(itemMeta, ignorePermission)) {
+            item.setItemMeta(itemMeta);
+            return true;
+        }
+        return false;
+    }
+    public static boolean updateIgnorePermissionInItem(@Nonnull ItemMeta itemMeta, @Nonnull Boolean ignorePermission) {
+        itemMeta.getPersistentDataContainer().set(KEY_IGNORE_PERMISSION, PersistentDataType.STRING, ignorePermission ? IGNORE_PERMISSION_VALUE_TRUE : IGNORE_PERMISSION_VALUE_FALSE);
+        return true;
     }
 }

@@ -2,6 +2,7 @@ package io.taraxacum.finaltech.api.dto;
 
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -29,6 +30,22 @@ public class RandomMachineRecipe extends MachineRecipe {
 
     public RandomMachineRecipe(int ticks, @Nonnull ItemStack[] input, @Nonnull List<RandomOutput> randomOutputList) {
         super(ticks, input, new ItemStack[0]);
+        this.randomOutputList = randomOutputList;
+        for (RandomOutput randomOutput : this.randomOutputList) {
+            this.weightSum += randomOutput.weight;
+        }
+    }
+
+    public RandomMachineRecipe(@Nonnull ItemStack[] input, @Nonnull List<RandomOutput> randomOutputList) {
+        super(0, input, new ItemStack[0]);
+        this.randomOutputList = randomOutputList;
+        for (RandomOutput randomOutput : this.randomOutputList) {
+            this.weightSum += randomOutput.weight;
+        }
+    }
+
+    public RandomMachineRecipe(@Nonnull ItemStack input, @Nonnull List<RandomOutput> randomOutputList) {
+        super(0, new ItemStack[] {input}, new ItemStack[0]);
         this.randomOutputList = randomOutputList;
         for (RandomOutput randomOutput : this.randomOutputList) {
             this.weightSum += randomOutput.weight;
@@ -99,6 +116,11 @@ public class RandomMachineRecipe extends MachineRecipe {
 
         public RandomOutput(@Nonnull ItemStack outputItem, int weight) {
             this.outputItem = List.of(outputItem);
+            this.weight = weight;
+        }
+
+        public RandomOutput(@Nonnull Material outputItem, int weight) {
+            this.outputItem = List.of(new ItemStack(outputItem));
             this.weight = weight;
         }
 

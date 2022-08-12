@@ -6,9 +6,9 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.AdvancedCraft;
 import io.taraxacum.finaltech.api.dto.AdvancedMachineRecipe;
-import io.taraxacum.finaltech.api.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.api.factory.LocationRecipeRegistry;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
@@ -82,9 +82,9 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
             return;
         }
 
-        InvWithSlots inputMap = CargoUtil.getInvAsync(containerBlock, SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config), SlotSearchOrder.VALUE_ASCENT);
-        InvWithSlots outputMap = CargoUtil.getInvAsync(containerBlock, SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config), SlotSearchOrder.VALUE_ASCENT);
-        if (inputMap.getSlots().length == 0 || outputMap.getSlots().length == 0) {
+        InvWithSlots inputMap = CargoUtil.getInvWithSlots(containerBlock, SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config), SlotSearchOrder.VALUE_ASCENT);
+        InvWithSlots outputMap = CargoUtil.getInvWithSlots(containerBlock, SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config), SlotSearchOrder.VALUE_ASCENT);
+        if (inputMap == null || outputMap == null || inputMap.getSlots().length == 0 || outputMap.getSlots().length == 0) {
             return;
         }
 
@@ -95,11 +95,11 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
         int quantity = MachineUtil.updateQuantityModule(blockMenu, AdvancedAutoCraftMenu.MODULE_SLOT, AdvancedAutoCraftMenu.STATUS_SLOT);
 
         Runnable runnable = () -> {
-            AdvancedCraft craft = AdvancedCraft.craftAsc(containerMenu, inputSlots, List.of(machineRecipe), quantity, 0);
+            AdvancedCraft craft = AdvancedCraft.craftAsc(containerMenu.toInventory(), inputSlots, List.of(machineRecipe), quantity, 0);
             if (craft != null) {
-                craft.setMatchCount(Math.min(craft.getMatchCount(), MachineUtil.calMaxMatch(containerMenu, outputSlots, craft.getOutputItemList())));
+                craft.setMatchCount(Math.min(craft.getMatchCount(), MachineUtil.calMaxMatch(containerMenu.toInventory(), outputSlots, craft.getOutputItemList())));
                 if (craft.getMatchCount() > 0) {
-                    craft.consumeItem(containerMenu);
+                    craft.consumeItem(containerMenu.toInventory());
                     for (ItemStack item : craft.calMachineRecipe(0).getOutput()) {
                         containerMenu.pushItem(ItemStackUtil.cloneItem(item), outputSlots);
                     }
@@ -110,7 +110,7 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
         if(primaryThread) {
             runnable.run();
         } else {
-            BlockTaskFactory.getInstance().registerRunnable(slimefunItem, false, runnable, location, containerBlock.getLocation());
+            FinalTech.getLocationRunnableFactory().waitThenRun(runnable, containerBlock.getLocation());
         }
     }
 

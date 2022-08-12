@@ -6,18 +6,17 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.dto.InvWithSlots;
+import io.taraxacum.finaltech.api.factory.ServerRunnableLockFactory;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.api.factory.BlockTaskFactory;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.LineTransferMenu;
 import io.taraxacum.finaltech.core.helper.*;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.common.util.JavaUtil;
-import io.taraxacum.finaltech.util.CargoUtil;
-import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.ParticleUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -54,6 +53,9 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                 Block block = blockPlaceEvent.getBlock();
                 Location location = block.getLocation();
 
+                IgnorePermission.HELPER.checkOrSetBlockStorage(location);
+                BlockStorage.addBlockInfo(location, "UUID", blockPlaceEvent.getPlayer().getUniqueId().toString());
+
                 BlockSearchMode.LINE_HELPER.checkOrSetBlockStorage(location);
                 BlockSearchOrder.HELPER.checkOrSetBlockStorage(location);
                 CargoOrder.HELPER.checkOrSetBlockStorage(location);
@@ -61,6 +63,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                 BlockSearchSelf.HELPER.checkOrSetBlockStorage(location);
 
                 CargoNumber.HELPER.checkOrSetBlockStorage(location);
+                CargoNumberMode.HELPER.checkOrSetBlockStorage(location);
                 CargoMode.HELPER.checkOrSetBlockStorage(location);
                 CargoFilter.HELPER.checkOrSetBlockStorage(location);
 
@@ -88,6 +91,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
+        Location location = blockMenu.getLocation();
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
         boolean primaryThread = javaPlugin.getServer().isPrimaryThread();
         boolean drawParticle = blockMenu.hasViewer();
@@ -125,18 +129,18 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
             }
         }
 
-        String blockSearchSelf = BlockSearchSelf.HELPER.getOrDefaultValue(config);
-        if (BlockSearchSelf.VALUE_BEGIN.equals(blockSearchSelf)) {
-            blockList.add(0, block);
-        } else if (BlockSearchSelf.VALUE_LAST.equals(blockSearchSelf)) {
-            blockList.add(block);
+        if(!SlimefunUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(blockList))) {
+            return;
         }
 
-        String blockSearchOrder = BlockSearchOrder.HELPER.getOrDefaultValue(config);
-        if (BlockSearchOrder.VALUE_REVERSE.equals(blockSearchOrder)) {
-            blockList = JavaUtil.reserve(blockList);
-        } else if(BlockSearchOrder.VALUE_RANDOM.equals(blockSearchOrder)) {
-            blockList = JavaUtil.shuffle(blockList);
+        switch (BlockSearchSelf.HELPER.getOrDefaultValue(config)) {
+            case BlockSearchSelf.VALUE_BEGIN -> blockList.add(0, block);
+            case BlockSearchSelf.VALUE_LAST -> blockList.add(block);
+        }
+
+        switch (BlockSearchOrder.HELPER.getOrDefaultValue(config)) {
+            case BlockSearchOrder.VALUE_REVERSE -> blockList = JavaUtil.reserve(blockList);
+            case BlockSearchOrder.VALUE_RANDOM -> blockList = JavaUtil.shuffle(blockList);
         }
 
         if (BlockSearchCycle.VALUE_TRUE.equals(BlockSearchCycle.HELPER.getOrDefaultValue(config)) && blockList.size() > 0) {
@@ -145,11 +149,12 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
 
         final List<Block> finalBlockList = blockList;
         if (drawParticle && blockList.size() > 0) {
-            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, FinalTech.SLIMEFUN_TICK_TIME_MILLIS / finalBlockList.size() / 1000, finalBlockList));
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / finalBlockList.size(), finalBlockList));
         }
 
         String cargoOrder = CargoOrder.HELPER.getOrDefaultValue(config);
         int cargoNumber = Integer.parseInt(CargoNumber.HELPER.getOrDefaultValue(config));
+        String cargoNumberMode = CargoNumberMode.HELPER.getOrDefaultValue(config);
         String cargoMode = CargoMode.HELPER.getOrDefaultValue(config);
         String cargoFilter = CargoFilter.HELPER.getOrDefaultValue(config);
         String inputSlotSearchSize = SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config);
@@ -158,27 +163,51 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
         String outputSlotSearchSize = SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config);
         String outputSlotSearchOrder = SlotSearchOrder.OUTPUT_HELPER.getOrDefaultValue(config);
 
-        Runnable runnable = () -> {
-            for(int i = 0, size = finalBlockList.size(); i< size - 1; i++) {
-                Block inputBlock = finalBlockList.get(i);
-                Block outputBlock = finalBlockList.get((i + 1) % size);
-                if (CargoOrder.VALUE_POSITIVE.equals(cargoOrder)) {
-                    CargoUtil.doCargo(inputBlock, outputBlock, inputSlotSearchSize, inputSlotSearchOrder, outputSlotSearchSize, outputSlotSearchOrder, cargoNumber, cargoLimit, cargoFilter, blockMenu.toInventory(), LineTransferMenu.ITEM_MATCH, cargoMode);
-                } else if (CargoOrder.VALUE_REVERSE.equals(cargoOrder)) {
-                    CargoUtil.doCargo(outputBlock, inputBlock, inputSlotSearchSize, inputSlotSearchOrder, outputSlotSearchSize, outputSlotSearchOrder, cargoNumber, cargoLimit, cargoFilter, blockMenu.toInventory(), LineTransferMenu.ITEM_MATCH, cargoMode);
+        if(!primaryThread) {
+            int number = 0;
+            for(int i = 0, size = blockList.size(); i < size - 1; i++) {
+                Block inputBlock = blockList.get(i);
+                Block outputBlock = blockList.get((i + 1) % size);
+                if(inputBlock.getLocation().equals(outputBlock.getLocation())) {
+                    continue;
+                }
+                switch (cargoOrder) {
+                    case CargoOrder.VALUE_POSITIVE -> number = CargoUtil.doCargo(javaPlugin, inputBlock, outputBlock, inputSlotSearchSize, inputSlotSearchOrder, outputSlotSearchSize, outputSlotSearchOrder, cargoNumber, cargoLimit, cargoFilter, blockMenu.toInventory(), LineTransferMenu.ITEM_MATCH, cargoMode);
+                    case CargoOrder.VALUE_REVERSE -> number = CargoUtil.doCargo(javaPlugin, outputBlock, inputBlock, inputSlotSearchSize, inputSlotSearchOrder, outputSlotSearchSize, outputSlotSearchOrder, cargoNumber, cargoLimit, cargoFilter, blockMenu.toInventory(), LineTransferMenu.ITEM_MATCH, cargoMode);
+                }
+                if(CargoNumberMode.VALUE_UNIVERSAL.equals(cargoNumberMode)) {
+                    cargoNumber -= number;
                 }
             }
-        };
-
-        if(primaryThread) {
-            runnable.run();
         } else {
-            Location[] locations = new Location[blockList.size() + 1];
-            for(int i = 0; i < blockList.size(); i++) {
-                locations[i] = blockList.get(i).getLocation();
-            }
-            locations[locations.length - 1] = block.getLocation();
-            BlockTaskFactory.getInstance().registerRunnable(slimefunItem, false, runnable, locations);
+            Location[] locations = LocationUtil.transferToLocation(blockList);
+            int finalCargoNumber = cargoNumber;
+            javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
+                InvWithSlots[] inputInvWithSlots = new InvWithSlots[finalBlockList.size()];
+                InvWithSlots[] outputInvWithSlots = new InvWithSlots[finalBlockList.size()];
+                for(int i = 0, size = finalBlockList.size(); i < size; i++) {
+                    inputInvWithSlots[i] = CargoUtil.getInvWithSlots(finalBlockList.get(i), inputSlotSearchSize, inputSlotSearchOrder);
+                    outputInvWithSlots[i] = CargoUtil.getInvWithSlots(finalBlockList.get(i), outputSlotSearchSize, outputSlotSearchOrder);
+                }
+                ServerRunnableLockFactory.getInstance(javaPlugin, Location.class).waitThenRun(() -> {
+                    int number = 0;
+                    int ffCargoNumber = finalCargoNumber;
+                    for(int i = 0, size = finalBlockList.size(); i < size - 1; i++) {
+                        Block inputBlock = finalBlockList.get(i);
+                        Block outputBlock = finalBlockList.get((i + 1) % size);
+                        if(inputBlock.getLocation().equals(outputBlock.getLocation())) {
+                            continue;
+                        }
+                        switch (cargoOrder) {
+                            case CargoOrder.VALUE_POSITIVE -> number = CargoUtil.doSimpleCargo(inputInvWithSlots[i], inputBlock, outputInvWithSlots[(i + 1) % size], outputBlock, inputSlotSearchSize, inputSlotSearchOrder, outputSlotSearchSize, outputSlotSearchOrder, ffCargoNumber, cargoLimit, cargoFilter, blockMenu.toInventory(), LineTransferMenu.ITEM_MATCH, cargoMode);
+                            case CargoOrder.VALUE_REVERSE -> number = CargoUtil.doSimpleCargo(outputInvWithSlots[(i + 1) % size], outputBlock, inputInvWithSlots[i], inputBlock, inputSlotSearchSize, inputSlotSearchOrder, outputSlotSearchSize, outputSlotSearchOrder, ffCargoNumber, cargoLimit, cargoFilter, blockMenu.toInventory(), LineTransferMenu.ITEM_MATCH, cargoMode);
+                        }
+                        if(CargoNumberMode.VALUE_UNIVERSAL.equals(cargoNumberMode)) {
+                            ffCargoNumber -= number;
+                        }
+                    }
+                }, locations);
+            });
         }
     }
 
@@ -219,10 +248,6 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "功能",
-                "",
-                TextUtil.COLOR_NORMAL + "该机器会不断把物品",
-                TextUtil.COLOR_NORMAL + "从输入侧方块的容器",
-                TextUtil.COLOR_NORMAL + "传输到输出侧方块的容器");
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

@@ -8,13 +8,13 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.SlimefunUtil;
-import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -53,9 +53,10 @@ public abstract class AbstractElectricCapacitor extends AbstractMachine implemen
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
         if(blockMenu.hasViewer()) {
-            this.updateMenu(item, config);
+            ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
+            String charge = SlimefunUtil.getCharge(config);
+            this.updateMenu(item, charge);
         }
     }
 
@@ -70,8 +71,8 @@ public abstract class AbstractElectricCapacitor extends AbstractMachine implemen
         return EnergyNetComponentType.CAPACITOR;
     }
 
-    protected void updateMenu(@Nonnull ItemStack item, @Nonnull Config config) {
-        String charge = SlimefunUtil.getCharge(config);
-        ItemStackUtil.setLore(item, TextUtil.COLOR_NORMAL + "当前流转电量= " + TextUtil.COLOR_NUMBER + charge + "J");
+    protected void updateMenu(@Nonnull ItemStack item, @Nonnull String charge) {
+        ItemStackUtil.setLore(item, SlimefunUtil.updateMenuLore(FinalTech.getLanguageManager(), this,
+                charge));
     }
 }

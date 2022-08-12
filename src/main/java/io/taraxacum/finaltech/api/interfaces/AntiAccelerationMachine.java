@@ -20,10 +20,10 @@ public interface AntiAccelerationMachine {
      * @return whether a machine can work
      */
     default boolean isAccelerated(@Nonnull Config config) {
-        if (config.contains(KEY) && Integer.parseInt(config.getValue(KEY).toString()) == FinalTech.getTimeCount()) {
+        if (config.contains(KEY) && Integer.parseInt(config.getValue(KEY).toString()) == FinalTech.getSlimefunTickCount()) {
             return true;
         }
-        config.setValue(KEY, String.valueOf(FinalTech.getTimeCount()));
+        config.setValue(KEY, String.valueOf(FinalTech.getSlimefunTickCount()));
         return false;
     }
 }

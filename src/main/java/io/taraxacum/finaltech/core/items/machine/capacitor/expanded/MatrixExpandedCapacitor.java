@@ -5,13 +5,14 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.common.util.StringNumberUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -23,13 +24,15 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
+ * @since 2.0
  */
 public class MatrixExpandedCapacitor extends AbstractExpandedElectricCapacitor implements AntiAccelerationMachine {
-    public static final int CAPACITY = Integer.MAX_VALUE;
-    public static final String STACK = StringNumberUtil.VALUE_INFINITY;
-    public static final double CHARGE_INCREASE = 4;
-    public static final double CONSUME_REDUCE = 0.25;
+    public final int capacity = FinalTech.getValueManager().getOrDefault(Integer.MAX_VALUE, "capacitor", SlimefunUtil.getIdFormatName(MatrixExpandedCapacitor.class), "capacity");
+    public final String stack = FinalTech.getValueManager().getOrDefault(StringNumberUtil.VALUE_INFINITY, "capacitor", SlimefunUtil.getIdFormatName(MatrixExpandedCapacitor.class), "stack");
+    public final double chargeIncrease = FinalTech.getValueManager().getOrDefault(4, "capacitor", SlimefunUtil.getIdFormatName(MatrixExpandedCapacitor.class), "charge-increase");
+    public final double consumeReduce = FinalTech.getValueManager().getOrDefault(0.25, "capacitor", SlimefunUtil.getIdFormatName(MatrixExpandedCapacitor.class), "consume-reduce");
     private static final String KEY = "stack";
+
     public MatrixExpandedCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -41,7 +44,7 @@ public class MatrixExpandedCapacitor extends AbstractExpandedElectricCapacitor i
     }
 
     @Override
-    protected void tick(Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+    protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         Location location = block.getLocation();
         BlockMenu blockMenu = BlockStorage.getInventory(location);
         for (int slot : this.getInputSlot()) {
@@ -58,37 +61,31 @@ public class MatrixExpandedCapacitor extends AbstractExpandedElectricCapacitor i
 
     @Override
     public int getCapacity() {
-        return CAPACITY;
+        return this.capacity * 2;
     }
 
+    @Nonnull
     @Override
     public String getMaxStack() {
-        return STACK;
+        return this.stack;
     }
 
     @Override
     public double chargeIncrease() {
-        return CHARGE_INCREASE;
+        return this.chargeIncrease;
     }
 
     @Override
     public double consumeReduce() {
-        return CONSUME_REDUCE;
+        return this.consumeReduce;
     }
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
-                "",
-                TextUtil.COLOR_NORMAL + "单组流转电量 " + TextUtil.COLOR_NUMBER + (this.getCapacity() / 2) + "J",
-                TextUtil.COLOR_NORMAL + "可流转电容组数 " + TextUtil.COLOR_NUMBER + StringNumberUtil.add(this.getMaxStack(), "2") + "S",
-                TextUtil.COLOR_NORMAL + "充电效率 " + TextUtil.COLOR_NUMBER + String.format("%.2f", this.chargeIncrease() * 100) + "%",
-                TextUtil.COLOR_NORMAL + "耗电效率 " + TextUtil.COLOR_NUMBER + String.format("%.2f", this.consumeReduce() * 100) + "%");
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "电力回转",
-                "",
-                TextUtil.COLOR_NORMAL + "每 " + TextUtil.COLOR_NUMBER + String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0) + "秒" + TextUtil.COLOR_NORMAL + " 回复等同于已存电组数的电量");
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "电力超载",
-                "",
-                TextUtil.COLOR_NORMAL + "输入并消耗 " + FinalTechItems.PHONY + TextUtil.COLOR_NORMAL + " 后 存电组数翻倍");
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf((this.getCapacity() / 2)),
+                StringNumberUtil.add(this.getMaxStack(), String.format("%.2f", this.chargeIncrease() * 100)),
+                String.format("%.2f", this.consumeReduce() * 100),
+                String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0));
     }
 }

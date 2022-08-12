@@ -4,6 +4,7 @@ import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
@@ -27,6 +28,26 @@ import java.util.Set;
 public class LocationUtil {
     private static final NamespacedKey KEY = new NamespacedKey(FinalTech.getInstance(), "location");
 
+    public static Location[] transferToLocation(@Nonnull Block... blocks) {
+        Location[] locations = new Location[blocks.length];
+        for(int i = 0; i < locations.length; i++) {
+            locations[i] = blocks[i].getLocation();
+        }
+        return locations;
+    }
+
+    public static Location[] transferToLocation(@Nonnull List<Block> blockList) {
+        Location[] locations = new Location[blockList.size()];
+        for(int i = 0; i < locations.length; i++) {
+            locations[i] = blockList.get(i).getLocation();
+        }
+        return locations;
+    }
+
+    /**
+     * Get the #{@link String}Number at the given #{@link Location} by the key of the #{@link BlockStorage}
+     */
+    @Nonnull
     public static String getNonNullStringNumber(@Nonnull Location location, @Nonnull String key) {
         String value = BlockStorage.getLocationInfo(location, key);
         if(value == null) {
@@ -34,6 +55,11 @@ public class LocationUtil {
         }
         return value;
     }
+
+    /**
+     * Get the #{@link String}Number from the given #{@link Config} by the key.
+     */
+    @Nonnull
     public static String getNonNullStringNumber(@Nonnull Config config, @Nonnull String key) {
         String value = config.getString(key);
         if(value == null) {
@@ -42,6 +68,7 @@ public class LocationUtil {
         return value;
     }
 
+    @Nullable
     public static Location parseLocationInItem(@Nullable ItemStack item) {
         if (ItemStackUtil.isItemNull(item)) {
             return null;
@@ -49,6 +76,7 @@ public class LocationUtil {
         ItemMeta itemMeta = item.getItemMeta();
         return LocationUtil.parseLocationInItem(itemMeta);
     }
+    @Nullable
     public static Location parseLocationInItem(@Nonnull ItemMeta itemMeta) {
         PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
         if (persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
@@ -69,6 +97,7 @@ public class LocationUtil {
         return true;
     }
 
+    // TODO
     public static boolean updateLocationItem(@Nullable ItemStack item) {
         if (ItemStackUtil.isItemNull(item)) {
             return false;
@@ -81,9 +110,6 @@ public class LocationUtil {
             List<String> loreList = new ArrayList<>();
             loreList.add(TextUtil.colorRandomString("记录的坐标"));
             loreList.add(TextUtil.colorRandomString("world= " + location.getWorld().getName()));
-            loreList.add(TextUtil.colorRandomString("x= " + String.format("%.2f", location.getX())));
-            loreList.add(TextUtil.colorRandomString("y= " + String.format("%.2f", location.getY())));
-            loreList.add(TextUtil.colorRandomString("z= " + String.format("%.2f", location.getZ())));
             itemMeta.setLore(loreList);
             item.setItemMeta(itemMeta);
             return true;
@@ -125,18 +151,9 @@ public class LocationUtil {
         Double x = null;
         Double y = null;
         Double z = null;
-        Float pitch = null;
-        Float yaw = null;
         for (String value : locationString.split(";")) {
-            if (value.startsWith("world")) {
-                world = FinalTech.getInstance().getServer().getWorld(value.substring("world".length() + 1));
-            }
-            if (value.startsWith("pitch")) {
-                pitch = Float.parseFloat(value.substring("pitch".length() + 1));
-                continue;
-            }
-            if (value.startsWith("yaw")) {
-                yaw = Float.parseFloat(value.substring("yaw".length() + 1));
+            if (value.startsWith("w")) {
+                world = Bukkit.getServer().getWorld(value.substring("world".length() + 1));
                 continue;
             }
             if (value.startsWith("x")) {
@@ -153,9 +170,6 @@ public class LocationUtil {
             }
         }
         if (world != null && x != null && y != null && z != null) {
-            if (yaw != null && pitch != null) {
-                return new Location(world, x, y, z, yaw, pitch);
-            }
             return new Location(world, x, y, z);
         }
         return null;
@@ -164,7 +178,7 @@ public class LocationUtil {
     @Nonnull
     public static String locationToString(@Nonnull Location location) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("world:");
+        stringBuilder.append("w:");
         stringBuilder.append(location.getWorld().getName());
         stringBuilder.append(";");
 
@@ -178,14 +192,6 @@ public class LocationUtil {
 
         stringBuilder.append("z:");
         stringBuilder.append(location.getZ());
-        stringBuilder.append(";");
-
-        stringBuilder.append("pitch:");
-        stringBuilder.append(location.getPitch());
-        stringBuilder.append(";");
-
-        stringBuilder.append("yaw:");
-        stringBuilder.append(location.getYaw());
         stringBuilder.append(";");
 
         return stringBuilder.toString();

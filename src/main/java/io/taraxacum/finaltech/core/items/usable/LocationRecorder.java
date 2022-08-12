@@ -32,7 +32,7 @@ public class LocationRecorder extends UsableSlimefunItem implements RecipeItem {
         PlayerInteractEvent interactEvent = playerRightClickEvent.getInteractEvent();
         if (playerRightClickEvent.getPlayer().isSneaking()) {
             Block block = interactEvent.getClickedBlock();
-            if (block != null && SlimefunUtil.hasPermission(playerRightClickEvent.getPlayer(), block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
+            if (block != null && SlimefunUtil.checkPermission(playerRightClickEvent.getPlayer(), block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
                 ItemStack item = playerRightClickEvent.getItem();
                 LocationUtil.saveLocationToItem(item, block.getLocation());
                 LocationUtil.updateLocationItem(item);
@@ -46,7 +46,8 @@ public class LocationRecorder extends UsableSlimefunItem implements RecipeItem {
             }
 
             Player player = playerRightClickEvent.getPlayer();
-            if (!SlimefunUtil.hasPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
+            if (!SlimefunUtil.checkPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
+                // TODO
                 player.sendRawMessage(TextUtil.COLOR_NEGATIVE + "您似乎没有在此处使用该物品的权限");
             }
 
@@ -57,6 +58,7 @@ public class LocationRecorder extends UsableSlimefunItem implements RecipeItem {
                     blockMenu.open(player);
                     ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
                 } else {
+                    // TODO
                     player.sendRawMessage(TextUtil.COLOR_NEGATIVE + "您似乎没有在此处使用该物品的权限");
                 }
             }
