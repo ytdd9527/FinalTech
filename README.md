@@ -20,11 +20,10 @@ It's not completed now, and more object will be added.
 
 > A simple try
 
-###2.0-preview1(now)
+###2.0-preview1(old)
 > May have some bugs.
 
-
-###2.0-preview2(next version)`
+###2.0-preview2(not finished yet)
 > Double more items and machines
 
 > Balance adjusted
@@ -34,3 +33,14 @@ It's not completed now, and more object will be added.
 > Full Multi thread feature support
 
 > More config support`
+
+###2.0-preview3(next version)
+> more mechanism about rpg
+
+> papi support
+
+> more api for developers
+
+> optimization for language support 
+
+> template machine support

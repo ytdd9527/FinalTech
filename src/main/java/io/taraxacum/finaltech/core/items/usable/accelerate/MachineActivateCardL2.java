@@ -3,6 +3,9 @@ package io.taraxacum.finaltech.core.items.usable.accelerate;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.finaltech.util.TextUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,9 +16,9 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class MachineActivateCardL2 extends AbstractMachineActivateCard {
-    private static final int TIMES = 32;
-    private static final double ENERGY = 256.08;
+public class MachineActivateCardL2 extends AbstractMachineActivateCardV2 implements RecipeItem {
+    private final int TIMES = FinalTech.getValueManager().getOrDefault(1, "items", SlimefunUtil.getIdFormatName(MachineActivateCardL2.class), "times");
+    private final double ENERGY = FinalTech.getValueManager().getOrDefault(16.04, "items", SlimefunUtil.getIdFormatName(MachineActivateCardL2.class), "energy");
 
     public MachineActivateCardL2(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -48,12 +51,9 @@ public class MachineActivateCardL2 extends AbstractMachineActivateCard {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_INITIATIVE + "使用方式",
-                "",
-                TextUtil.COLOR_ACTION + "[右键] " + TextUtil.COLOR_NORMAL + "机器使其",
-                TextUtil.COLOR_NORMAL + "立即工作 " + TextUtil.COLOR_NUMBER + TIMES + "次",
-                TextUtil.COLOR_NORMAL + "并在每次工作前 充电 " + TextUtil.COLOR_NUMBER + (int)(Math.floor(ENERGY)) + "J + " + String.format("%.2f", (ENERGY - Math.floor(ENERGY)) * 100) + "%J" + TextUtil.COLOR_NORMAL + " 的电量",
-                TextUtil.COLOR_NEGATIVE + "每次使用损失 1 点生命值 和 1 点经验值",
-                TextUtil.COLOR_NEGATIVE + "消耗品");
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.times()),
+                String.valueOf((int)(Math.floor(ENERGY))),
+                String.format("%.2f", (ENERGY - Math.floor(ENERGY)) * 100));
     }
 }

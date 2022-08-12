@@ -3,7 +3,9 @@ package io.taraxacum.finaltech.core.items.usable.accelerate;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -13,16 +15,11 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class InfinityMachineChargeCard extends AbstractMachineActivateCard {
-    private static final double ENERGY = 16.04;
+public class InfinityMachineChargeCard extends AbstractMachineChargeCard implements RecipeItem {
+    private final double ENERGY = FinalTech.getValueManager().getOrDefault(16.04, "items", SlimefunUtil.getIdFormatName(InfinityMachineChargeCard.class), "energy");
 
     public InfinityMachineChargeCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-    }
-
-    @Override
-    protected int times() {
-        return 0;
     }
 
     @Override
@@ -46,10 +43,8 @@ public class InfinityMachineChargeCard extends AbstractMachineActivateCard {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_INITIATIVE + "使用方式",
-                "",
-                TextUtil.COLOR_ACTION + "[右键] " + TextUtil.COLOR_NORMAL + "机器使其立即充电 " + TextUtil.COLOR_NUMBER + (int)(Math.floor(ENERGY)) + "J + " + String.format("%.2f", (ENERGY - Math.floor(ENERGY)) * 100) + "%J" + TextUtil.COLOR_NORMAL + " 的电量",
-                TextUtil.COLOR_NEGATIVE + "百分比充电量不作用于电容",
-                TextUtil.COLOR_NEGATIVE + "每次使用损失 1 点经验值");
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf((int)(Math.floor(ENERGY))),
+                String.format("%.2f", (ENERGY - Math.floor(ENERGY)) * 100));
     }
 }

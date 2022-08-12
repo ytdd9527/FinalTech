@@ -3,7 +3,9 @@ package io.taraxacum.finaltech.core.items.usable.accelerate;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.util.SlimefunUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -13,8 +15,8 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class InfinityMachineAccelerateCard extends AbstractMachineActivateCard {
-    private static final int TIMES = 1;
+public class InfinityMachineAccelerateCard extends AbstractMachineAccelerateCard implements RecipeItem {
+    private final int TIMES = FinalTech.getValueManager().getOrDefault(1, "items", SlimefunUtil.getIdFormatName(InfinityMachineAccelerateCard.class), "times");
 
     public InfinityMachineAccelerateCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -23,11 +25,6 @@ public class InfinityMachineAccelerateCard extends AbstractMachineActivateCard {
     @Override
     protected int times() {
         return TIMES;
-    }
-
-    @Override
-    protected double energy() {
-        return 0;
     }
 
     @Override
@@ -46,9 +43,7 @@ public class InfinityMachineAccelerateCard extends AbstractMachineActivateCard {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_INITIATIVE + "使用方式",
-                "",
-                TextUtil.COLOR_ACTION + "[右键] " + TextUtil.COLOR_NORMAL + "机器使其立即工作 " + TextUtil.COLOR_NUMBER + TIMES + " 次",
-                TextUtil.COLOR_NEGATIVE + "每次使用损失 1 点生命值");
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.times()));
     }
 }

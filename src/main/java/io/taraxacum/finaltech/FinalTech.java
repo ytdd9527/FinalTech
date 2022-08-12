@@ -56,7 +56,6 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onEnable() {
-        hello?
         super.onEnable();
 
         instance = this;
@@ -73,6 +72,11 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             this.languageManager = LanguageManager.getOrNewInstance(this, language);
         } catch (Exception e) {
             e.printStackTrace();
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        if(FinalTech.getConfigManager().getOrDefault(false, "I'm_testing_it!")) {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
