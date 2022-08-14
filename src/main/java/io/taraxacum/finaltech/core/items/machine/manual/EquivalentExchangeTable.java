@@ -58,7 +58,7 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
         String value = config.contains(KEY) ? config.getString(KEY) : StringNumberUtil.ZERO;
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if (ItemStackUtil.isItemSimilar(item, FinalTechItems.ORDERED_DUST)) {
+            if (ItemStackUtil.isItemSimilar(item, FinalTechItems.UNORDERED_DUST)) {
                 this.doCraft(blockMenu, config);
                 value = config.getString(KEY);
                 item.setAmount(item.getAmount() - 1);
@@ -105,10 +105,11 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
                 if(slimefunItem == null || slimefunItem instanceof MultiBlockMachine) {
                     continue;
                 }
-                ItemStack item = new CustomItemStack(slimefunItem.getItem(), 1);
-                if (MachineUtil.calMaxMatch(blockMenu, this.getOutputSlot(), List.of(new ItemStackWithWrapperAmount(item))) >= 1) {
+                if (MachineUtil.calMaxMatch(blockMenu, this.getOutputSlot(), List.of(new ItemStackWithWrapperAmount(slimefunItem.getItem()))) >= 1) {
+                    ItemStack item = new CustomItemStack(slimefunItem.getItem(), 1);
                     blockMenu.pushItem(item, this.getOutputSlot());
                     value = StringNumberUtil.sub(value, targetValue);
+                    break;
                 }
             }
         }
@@ -120,7 +121,7 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
                 "",
                 TextUtil.COLOR_NORMAL + "输入物品后 该物品会被转化为价值并被该机器记录",
-                TextUtil.COLOR_NORMAL + "输入 " + FinalTechItems.ORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 时 消耗随机价值并随机输出与消耗价值等价的物品");
+                TextUtil.COLOR_NORMAL + "输入 " + FinalTechItems.UNORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 时 消耗随机价值并随机输出与消耗价值等价的物品");
         this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "价值计算",
                 "",
                 TextUtil.COLOR_NORMAL + "将物品放于上方槽中 会显示该物品的价值",
