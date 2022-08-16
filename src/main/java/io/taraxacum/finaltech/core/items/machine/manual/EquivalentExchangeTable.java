@@ -91,12 +91,16 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
     //todo
     // support plugin reload
     private void doCraft(@Nonnull BlockMenu blockMenu, @Nonnull Config config) {
+        if (MachineUtil.itemCount(blockMenu, this.getOutputSlot()) == this.getOutputSlot().length) {
+            return;
+        }
         String value = config.contains(KEY) ? config.getString(KEY) : StringNumberUtil.ZERO;
         List<String> valueList = new ArrayList<>(ItemValueTable.getInstance().getValueItemListOutputMap().keySet());
         Collections.shuffle(valueList);
+        int i = 0;
         for (String targetValue : valueList) {
-            if (MachineUtil.itemCount(blockMenu, this.getOutputSlot()) == this.getOutputSlot().length) {
-                break;
+            if(i++ > 3) {
+                return;
             }
             if (StringNumberUtil.compare(value, targetValue) >= 0) {
                 List<String> idList = ItemValueTable.getInstance().getValueItemListOutputMap().get(targetValue);
