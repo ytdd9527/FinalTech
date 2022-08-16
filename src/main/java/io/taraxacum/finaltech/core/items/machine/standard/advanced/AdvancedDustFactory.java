@@ -74,10 +74,10 @@ public class AdvancedDustFactory extends AbstractAdvanceMachine {
         }, new ItemStack[] {
                 new CustomItemStack(SlimefunItems.GOLD_DUST, 2)
         });
-        this.registerRecipe(0, new ItemStack[] {
-                new CustomItemStack(SlimefunItems.SIFTED_ORE, 2)
-        }, new ItemStack[] {
-                new CustomItemStack(SlimefunItems.URANIUM, 1)
-        });
+//        this.registerRecipe(0, new ItemStack[] {
+//                new CustomItemStack(SlimefunItems.SIFTED_ORE, 2)
+//        }, new ItemStack[] {
+//                new CustomItemStack(SlimefunItems.URANIUM, 1)
+//        });
     }
 }
