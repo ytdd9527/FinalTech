@@ -62,7 +62,7 @@ public class CargoUtil {
             }
         }
 
-        if (inputMap == null || outputMap == null) {
+        if (inputMap == null || outputMap == null || inputMap.getSlots().length == 0 || outputMap.getSlots().length == 0) {
             return 0;
         }
         Inventory inputInv = inputMap.getInventory();
@@ -145,7 +145,7 @@ public class CargoUtil {
             }
         }
 
-        if (inputMap == null || outputMap == null) {
+        if (inputMap == null || outputMap == null || inputMap.getSlots().length == 0 || outputMap.getSlots().length == 0) {
             return 0;
         }
         Inventory inputInv = inputMap.getInventory();
