@@ -106,6 +106,10 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         blockMenu.addMenuClickHandler(CRAFT_SLOT, ((player, i, itemStack, clickAction) -> {
             BlockStorage.addBlockInfo(block.getLocation(), AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(block.getLocation(), AbstractManualCraftMachine.KEY_COUNT)));
 
+            if(MachineUtil.itemCount(blockMenu, OUTPUT_SLOT) == OUTPUT_SLOT.length) {
+                return false;
+            }
+
             ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
             Config config = BlockStorage.getLocationInfo(block.getLocation());
 
