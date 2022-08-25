@@ -9,7 +9,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.function.RemoteAccessorMenu;
+import io.taraxacum.finaltech.core.menu.function.AreaAccessorMenu;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -23,12 +23,12 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class RemoteAccessor extends AbstractCargo implements RecipeItem {
+public class AreaAccessor extends AbstractCargo implements RecipeItem {
     public static final String KEY = "times";
-    public static final Integer RANGE = FinalTech.getValueManager().getOrDefault(8, "items", SlimefunUtil.getIdFormatName(RemoteAccessor.class), "range");
-    public static final String THRESHOLD = FinalTech.getValueManager().getOrDefault(String.valueOf(Slimefun.getTickerTask().getTickRate() / 2), "items", SlimefunUtil.getIdFormatName(RemoteAccessor.class), "threshold");
+    public static final Integer RANGE = FinalTech.getValueManager().getOrDefault(16, "items", SlimefunUtil.getIdFormatName(AreaAccessor.class), "range");
+    public static final String THRESHOLD = FinalTech.getValueManager().getOrDefault(String.valueOf(Slimefun.getTickerTask().getTickRate() / 2), "items", SlimefunUtil.getIdFormatName(AreaAccessor.class), "threshold");
 
-    public RemoteAccessor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public AreaAccessor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -47,7 +47,7 @@ public class RemoteAccessor extends AbstractCargo implements RecipeItem {
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new RemoteAccessorMenu(this);
+        return new AreaAccessorMenu(this);
     }
 
     @Override
@@ -57,7 +57,6 @@ public class RemoteAccessor extends AbstractCargo implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(),
-                this, String.valueOf(RANGE));
+
     }
 }

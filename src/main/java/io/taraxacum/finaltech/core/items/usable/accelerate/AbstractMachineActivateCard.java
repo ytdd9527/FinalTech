@@ -28,8 +28,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Final_ROOT
  * @since 2.0
  */
-public abstract class AbstractMachineActivateCardV2 extends UsableSlimefunItem {
-    public AbstractMachineActivateCardV2(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public abstract class AbstractMachineActivateCard extends UsableSlimefunItem {
+    public AbstractMachineActivateCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 

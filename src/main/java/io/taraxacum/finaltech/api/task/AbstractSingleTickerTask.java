@@ -1,11 +1,9 @@
-package io.taraxacum.finaltech.api.dto;
-
-import io.taraxacum.finaltech.api.factory.TickerTaskRunner;
+package io.taraxacum.finaltech.api.task;
 
 import javax.annotation.Nonnull;
 
 /**
- * This task will be run every tick after being started.
+ * This task should be run every tick after being started.
  * #{@link TickerTaskRunner}
  * @author Final_ROOT
  * @since 2.0

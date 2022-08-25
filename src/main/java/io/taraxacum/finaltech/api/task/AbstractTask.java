@@ -1,6 +1,5 @@
-package io.taraxacum.finaltech.api.dto;
+package io.taraxacum.finaltech.api.task;
 
-import io.taraxacum.finaltech.api.factory.TickerTaskRunner;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;

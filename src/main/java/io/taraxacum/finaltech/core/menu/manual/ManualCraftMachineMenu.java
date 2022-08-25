@@ -263,6 +263,11 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
 
     public void doFunction(@Nonnull BlockMenu blockMenu, @Nonnull ClickAction clickAction, @Nonnull Player player, int offset) {
         Inventory inventory = blockMenu.toInventory();
+
+        if(MachineUtil.itemCount(inventory, OUTPUT_SLOT) == OUTPUT_SLOT.length) {
+            return;
+        }
+
         int quantity = 1;
         if(clickAction.isShiftClicked()) {
             quantity = 3456;

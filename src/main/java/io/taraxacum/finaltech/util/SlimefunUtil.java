@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
+import io.github.thebusybiscuit.slimefun4.core.guide.GuideHistory;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.taraxacum.finaltech.FinalTech;
@@ -310,5 +311,15 @@ public class SlimefunUtil {
             stringBuilder.delete(0, 1);
         }
         return stringBuilder.toString();
+    }
+
+    public static void removeLastEntry(@Nonnull GuideHistory guideHistory) {
+        try {
+            Method getLastEntry = guideHistory.getClass().getDeclaredMethod("getLastEntry", boolean.class);
+            getLastEntry.setAccessible(true);
+            getLastEntry.invoke(guideHistory, true);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }

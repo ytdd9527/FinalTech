@@ -82,9 +82,14 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         }
 
         /* Disabled if you installed this plugin just for slimefun add quantity */
+        if(!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 70) {
+            this.getLogger().warning("I don't want to say anything.");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
         if(!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 20 && !FinalTech.getConfigManager().getOrDefault(false, "I'm_not_just_for_quantity_of_slimefun_addon_to_install_this_plugin")) {
             this.getLogger().warning("It seems you are just for quantity of slimefun addon to install this plugin.");
-            this.getLogger().warning("So this plugin is disabled now.");
+            this.getLogger().warning("So this plugin is disabled now.(Open config file and set true of 'I'm_not_just_for_quantity_of_slimefun_addon_to_install_this_plugin', as you want to enable this plugin.)");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         } else if(!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 20 && !FinalTech.getConfigManager().getOrDefault(false, "I_know_there_may_be_incompatibilities_between_slimefun_addons_and_I_will_be_responsible_for_it")) {

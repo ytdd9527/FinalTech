@@ -3,6 +3,7 @@
 //import javax.annotation.Nonnull;
 //import java.util.HashMap;
 //import java.util.Map;
+//import java.util.concurrent.Callable;
 //import java.util.concurrent.ExecutionException;
 //import java.util.concurrent.FutureTask;
 //
@@ -16,8 +17,8 @@
 //
 //    @Override
 //    @SafeVarargs
-//    public final FutureTask<Object> waitThenRun(@Nonnull Runnable runnable, @Nonnull T... objects) {
-//        FutureTask<Object> futureTask = new FutureTask<>(runnable, new Object());
+//    public final FutureTask<Void> waitThenRun(@Nonnull Runnable runnable, @Nonnull T... objects) {
+//        FutureTask<Void> futureTask = new FutureTask<Void>(runnable, );
 //        Runnable run = () -> {
 //            boolean work = false;
 //            while (!work) {
@@ -51,6 +52,11 @@
 //        };
 //        new Thread(run).start();
 //        return futureTask;
+//    }
+//
+//    @Override
+//    public <C> FutureTask<C> waitThenRun(@Nonnull Callable<C> callable, @Nonnull T... objects) {
+//        return null;
 //    }
 //
 //    public static <T> RunnableLockFactory<T> getInstance() {

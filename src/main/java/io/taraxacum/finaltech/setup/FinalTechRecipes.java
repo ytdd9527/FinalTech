@@ -113,6 +113,60 @@ public final class FinalTechRecipes {
     public static final ItemStack[] JUSTIFIABILITY = new ItemStack[] {
 
     };
+    public static final ItemStack[] LOGIC_FALSE = new ItemStack[] {
+
+    };
+    public static final ItemStack[] LOGIC_TRUE = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_ZERO = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_ONE = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_TWO = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_THREE = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_FOUR = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_FIVE = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_SIX = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_SEVEN = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_EIGHT = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_NINE = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_TEN = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_ELEVEN = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_TWELVE = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_THIRTEEN = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_FOURTEEN = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGITAL_FIFTEEN = new ItemStack[] {
+
+    };
 
     // tool
 
@@ -409,6 +463,9 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, new ItemStack(Material.OBSERVER), FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
+    public static final ItemStack[] AREA_ACCESSOR = new ItemStack[] {
+
+    };
     public static final ItemStack[] LINK_TRANSFER = new ItemStack[] {
             new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN), new ItemStack(Material.TRIPWIRE_HOOK),
             new ItemStack(Material.STRING), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.STRING),
@@ -599,6 +656,12 @@ public final class FinalTechRecipes {
 
     };
     public static final ItemStack[] ENTROPY_SEED = new ItemStack[] {
+
+    };
+    public static final ItemStack[] LOGIC_CRAFTER = new ItemStack[] {
+
+    };
+    public static final ItemStack[] DIGIT_ADDER = new ItemStack[] {
 
     };
 
@@ -876,6 +939,10 @@ public final class FinalTechRecipes {
             new ItemStack(Material.WATER_BUCKET), new ItemStack(Material.PISTON), new ItemStack(Material.WATER_BUCKET),
             new ItemStack(Material.LAVA_BUCKET), FinalTechItems.BASIC_COBBLE_FACTORY, new ItemStack(Material.LAVA_BUCKET),
             new ItemStack(Material.MILK_BUCKET), new ItemStack(Material.DROPPER), new ItemStack(Material.MILK_BUCKET)
+    };
+    public static final ItemStack[] LOGIC_GENERATOR = new ItemStack[] {
+    };
+    public static final ItemStack[] DIGITAL_GENERATOR = new ItemStack[] {
     };
 
     // best item

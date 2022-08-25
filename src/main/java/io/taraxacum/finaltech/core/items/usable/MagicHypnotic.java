@@ -12,7 +12,11 @@ import org.bukkit.potion.PotionEffectType;
 import javax.annotation.Nonnull;
 import java.util.Random;
 
-public class MagicHypnotic extends UsableSlimefunItem{
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
+public class MagicHypnotic extends UsableSlimefunItem {
     public MagicHypnotic(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }

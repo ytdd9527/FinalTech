@@ -1,10 +1,7 @@
 package io.taraxacum.finaltech.core.task.effect;
 
-import io.taraxacum.finaltech.util.ParticleUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 
 import javax.annotation.Nonnull;

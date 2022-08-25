@@ -407,6 +407,10 @@ public class CargoUtil {
         Inventory outputInv = outputMap.getInventory();
         int[] outputSlots = outputMap.getSlots();
 
+        if(inputSlots.length == 0 || outputSlots.length == 0) {
+            return 0;
+        }
+
         List<ItemWrapper> filterItemList = MachineUtil.getItemList(filterInv, filterSlots);
 
         boolean nonnull = CargoLimit.VALUE_NONNULL.equals(cargoLimit);

@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.factory.TickerTaskRunner;
+import io.taraxacum.finaltech.api.task.TickerTaskRunner;
 import io.taraxacum.finaltech.core.task.effect.UntreatableEffect;
 import io.taraxacum.finaltech.util.SlimefunUtil;
 import org.bukkit.Location;

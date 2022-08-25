@@ -38,6 +38,7 @@ import java.util.List;
  * @since 2.0
  */
 public class EquivalentExchangeTable extends AbstractManualMachine implements RecipeItem {
+    private final int retryTimes = FinalTech.getValueManager().getOrDefault(3, "items", SlimefunUtil.getIdFormatName(EquivalentExchangeTable.class), "retry-times");
     private static final String KEY = "value";
 
     public EquivalentExchangeTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -98,13 +99,15 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
         return false;
     }
 
-    //todo
-    // support plugin reload
     private void doCraft(@Nonnull BlockMenu blockMenu, @Nonnull Config config) {
         String value = config.contains(KEY) ? config.getString(KEY) : StringNumberUtil.ZERO;
         List<String> valueList = new ArrayList<>(ItemValueTable.getInstance().getValueItemListOutputMap().keySet());
         Collections.shuffle(valueList);
+        int i = 0;
         for (String targetValue : valueList) {
+            if(i++ > this.retryTimes) {
+                break;
+            }
             if (StringNumberUtil.compare(value, targetValue) >= 0) {
                 List<String> idList = ItemValueTable.getInstance().getValueItemListOutputMap().get(targetValue);
                 String id = idList.get((int) (Math.random() * idList.size()));
@@ -125,16 +128,7 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
-                "",
-                TextUtil.COLOR_NORMAL + "输入物品后 该物品会被转化为价值并被该机器记录",
-                TextUtil.COLOR_NORMAL + "输入 " + FinalTechItems.ORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 时 消耗随机价值并随机输出与消耗价值等价的物品");
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "价值计算",
-                "",
-                TextUtil.COLOR_NORMAL + "将物品放于上方槽中 会显示该物品的价值",
-                TextUtil.COLOR_NORMAL + "物品的输入价值和输出价值计算方式不同",
-                TextUtil.COLOR_NORMAL + "输入价值= 物品可以被转换为多少价值",
-                TextUtil.COLOR_NORMAL + "输出价值= 多少价值可以转换为该物品");
+        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.retryTimes));
     }
 }

@@ -4,6 +4,8 @@ import io.github.thebusybiscuit.slimefun4.api.items.groups.NestedItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.SubItemGroup;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.group.MainItemGroup;
+import io.taraxacum.finaltech.core.group.SubFlexItemGroup;
 import io.taraxacum.finaltech.util.TextUtil;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -28,4 +30,9 @@ public final class FinalTechMenus {
     public static final SubItemGroup MENU_EXTRACTION_MACHINE = new SubItemGroup(new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "FINALTECH_EXTRACTION_MACHINE"), MAIN_MENU, new CustomItemStack(Material.STICKY_PISTON, FinalTech.getLanguageString("category", "productive-machine-extraction", "name")));
     public static final SubItemGroup MENU_GENERATOR_MACHINE = new SubItemGroup(new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "FINALTECH_GENERATOR_MACHINE"), MAIN_MENU, new CustomItemStack(Material.STICKY_PISTON, FinalTech.getLanguageString("category", "productive-machine-generator", "name")));
     public static final SubItemGroup MENU_FINAL_ITEM = new SubItemGroup(new NamespacedKey(FinalTech.getPlugin(FinalTech.class), "FINALTECH_FINAL_ITEM"), MAIN_MENU, new CustomItemStack(Material.AMETHYST_BLOCK, FinalTech.getLanguageString("category", "final-item", "name")));
+
+    public static final MainItemGroup MAIN_MENU_T = new MainItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_CATEGORY_MAIN_T"), new CustomItemStack(Material.OBSERVER, FinalTech.getLanguageString("category", "main", "name")), 0);
+    public static final SubFlexItemGroup SUB_MENU_T = new SubFlexItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_CATEGORY_MAIN_T1"), new CustomItemStack(Material.STONE, TextUtil.colorRandomString("测试-付")), 1);
+    public static final SubFlexItemGroup SUB_MENU_T2 = new SubFlexItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_CATEGORY_MAIN_T2"), new CustomItemStack(Material.STONE, TextUtil.colorRandomString("测试-子")), 1);
+    public static final SubFlexItemGroup SUB_MENU_T3 = new SubFlexItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_CATEGORY_MAIN_T3"), new CustomItemStack(Material.STONE, TextUtil.colorRandomString("测试-子2")), 1);
 }

@@ -6,7 +6,6 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.util.SlimefunUtil;
-import io.taraxacum.finaltech.util.TextUtil;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +19,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class MatrixMachineActivateCard extends AbstractMachineActivateCardV2 implements RecipeItem {
+public class MatrixMachineActivateCard extends AbstractMachineActivateCard implements RecipeItem {
     private final int TIMES = FinalTech.getValueManager().getOrDefault(21600, "items", SlimefunUtil.getIdFormatName(MatrixMachineActivateCard.class), "times");
     private final double ENERGY = FinalTech.getValueManager().getOrDefault(Integer.MAX_VALUE / 2 + 0.5, "items", SlimefunUtil.getIdFormatName(MatrixMachineActivateCard.class), "energy");
 

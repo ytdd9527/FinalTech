@@ -38,6 +38,25 @@ public final class FinalTechItems {
     public static final SlimefunItemStack PHONY = new SlimefunItemStack("FINALTECH_PHONY", Material.END_CRYSTAL, TextUtil.colorPseudorandomString("伪物"));
     public static final SlimefunItemStack EQUIVALENT_CONCEPT = new SlimefunItemStack("FINALTECH_EQUIVALENT_CONCEPT", Material.BLACK_CONCRETE, TextUtil.colorPseudorandomString("熵块"));
     public static final SlimefunItemStack JUSTIFIABILITY = new SlimefunItemStack("FINALTECH_JUSTIFIABILITY", Material.BLACK_CONCRETE, TextUtil.colorPseudorandomString("静态熵块"));
+    public static final SlimefunItemStack LOGIC_FALSE = new SlimefunItemStack("FINALTECH_LOGIC_FALSE", Material.PAPER, "FALSE");
+    public static final SlimefunItemStack LOGIC_TRUE = new SlimefunItemStack("FINALTECH_LOGIC_TRUE", Material.PAPER, "TRUE");
+    public static final SlimefunItemStack DIGITAL_ZERO = new SlimefunItemStack("FINALTECH_DIGITAL_ZERO", Material.PAPER, "ZERO");
+    public static final SlimefunItemStack DIGITAL_ONE = new SlimefunItemStack("FINALTECH_DIGITAL_ONE", Material.PAPER, "ONE");
+    public static final SlimefunItemStack DIGITAL_TWO = new SlimefunItemStack("FINALTECH_DIGITAL_TWO", Material.PAPER, "TWO");
+    public static final SlimefunItemStack DIGITAL_THREE = new SlimefunItemStack("FINALTECH_DIGITAL_THREE", Material.PAPER, "THREE");
+    public static final SlimefunItemStack DIGITAL_FOUR = new SlimefunItemStack("FINALTECH_DIGITAL_FOUR", Material.PAPER, "FOUR");
+    public static final SlimefunItemStack DIGITAL_FIVE = new SlimefunItemStack("FINALTECH_DIGITAL_FIVE", Material.PAPER, "FIVE");
+    public static final SlimefunItemStack DIGITAL_SIX = new SlimefunItemStack("FINALTECH_DIGITAL_SIX", Material.PAPER, "SIX");
+    public static final SlimefunItemStack DIGITAL_SEVEN = new SlimefunItemStack("FINALTECH_DIGITAL_SEVEN", Material.PAPER, "SEVEN");
+    public static final SlimefunItemStack DIGITAL_EIGHT = new SlimefunItemStack("FINALTECH_DIGITAL_EIGHT", Material.PAPER, "EIGHT");
+    public static final SlimefunItemStack DIGITAL_NINE = new SlimefunItemStack("FINALTECH_DIGITAL_NINE", Material.PAPER, "NINE");
+    public static final SlimefunItemStack DIGITAL_TEN = new SlimefunItemStack("FINALTECH_DIGITAL_TEN", Material.PAPER, "TEN");
+    public static final SlimefunItemStack DIGITAL_ELEVEN = new SlimefunItemStack("FINALTECH_DIGITAL_ELEVEN", Material.PAPER, "ELEVEN");
+    public static final SlimefunItemStack DIGITAL_TWELVE = new SlimefunItemStack("FINALTECH_DIGITAL_TWELVE", Material.PAPER, "TWELVE");
+    public static final SlimefunItemStack DIGITAL_THIRTEEN = new SlimefunItemStack("FINALTECH_DIGITAL_THIRTEEN", Material.PAPER, "THIRTEEN");
+    public static final SlimefunItemStack DIGITAL_FOURTEEN = new SlimefunItemStack("FINALTECH_DIGITAL_FOURTEEN", Material.PAPER, "FOURTEEN");
+    public static final SlimefunItemStack DIGITAL_FIFTEEN = new SlimefunItemStack("FINALTECH_DIGITAL_FIFTEEN", Material.PAPER, "FIFTEEN");
+
 
     // tool
     public static final SlimefunItemStack MACHINE_CHARGE_CARD_L1 = new SlimefunItemStack("FINALTECH_MACHINE_CHARGE_CARD_L1", Material.BRICK, TextUtil.colorPseudorandomString("充能卡L1"));
@@ -58,6 +77,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack STAFF_ELEMENTAL_LINE = new SlimefunItemStack("FINALTECH_STAFF_ELEMENTAL_LINE", Material.STICK, TextUtil.colorPseudorandomString("元素法杖 线"));
     public static final SlimefunItemStack UNTREATABLE_RUNE = new SlimefunItemStack("FINALTECH_UNTREATABLE_RUNE", Material.FEATHER, TextUtil.colorPseudorandomString("无法治疗符文"));
     public static final SlimefunItemStack RESEARCH_UNLOCK_TICKET = new SlimefunItemStack("FINALTECH_RESEARCH_UNLOCK_TICKET", Material.PAPER, TextUtil.colorPseudorandomString("研究解锁券"));
+
 
     // weapon
     public static final SlimefunItemStack DUST_WOODEN_SWORD = new SlimefunItemStack("FINALTECH_DUST_WOODEN_SWORD", Material.WOODEN_SWORD, TextUtil.colorPseudorandomString("尘埃化木剑"));
@@ -107,6 +127,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack DISTRIBUTE_LEFT_STORAGE_UNIT = new SlimefunItemStack("FINALTECH_DISTRIBUTE_LEFT_STORAGE_UNIT", Material.GLASS, TextUtil.colorPseudorandomString("左平均存储单元"));
     public static final SlimefunItemStack DISTRIBUTE_RIGHT_STORAGE_UNIT = new SlimefunItemStack("FINALTECH_DISTRIBUTE_RIGHT_STORAGE_UNIT", Material.GLASS, TextUtil.colorPseudorandomString("右平均存储单元"));
     public static final SlimefunItemStack REMOTE_ACCESSOR = new SlimefunItemStack("FINALTECH_REMOTE_ACCESSOR", Material.OBSERVER, TextUtil.colorPseudorandomString("远程访问器"));
+    public static final SlimefunItemStack AREA_ACCESSOR = new SlimefunItemStack("FINALTECH_AREA_ACCESSOR", Material.STONE, TextUtil.colorPseudorandomString("区域访问器"));
     public static final SlimefunItemStack LINK_TRANSFER = new SlimefunItemStack("FINALTECH_LINK_TRANSFER", Material.END_ROD, TextUtil.colorPseudorandomString("对点传输器"), "§8即放即用");
     public static final SlimefunItemStack LINE_TRANSFER = new SlimefunItemStack("FINALTECH_LINE_TRANSFER", Material.DROPPER, TextUtil.colorPseudorandomString("链式传输器"), "§8即放即用");
     public static final SlimefunItemStack STATION_TRANSFER = new SlimefunItemStack("FINALTECH_STATION_TRANSFER", Material.TINTED_GLASS, TextUtil.colorPseudorandomString("网状传输器"));
@@ -146,6 +167,8 @@ public final class FinalTechItems {
     public static final SlimefunItemStack FUEL_OPERATOR = new SlimefunItemStack("FINALTECH_FUEL_OPERATOR", Material.STONE, TextUtil.colorPseudorandomString("燃料补充器"));
     public static final SlimefunItemStack COBBLESTONE_ERUPTER = new SlimefunItemStack("FINALTECH_COBBLESTONE_ERUPTER", Material.STONE, TextUtil.colorPseudorandomString("圆石爆发器"));
     public static final SlimefunItemStack ENTROPY_SEED = new SlimefunItemStack("FINALTECH_ENTROPY_SEED", Material.BLACK_CONCRETE, TextUtil.colorPseudorandomString("熵种"));
+    public static final SlimefunItemStack LOGIC_CRAFTER = new SlimefunItemStack("FINALTECH_LOGIC_CRAFTER", Material.STONE, TextUtil.colorPseudorandomString("逻辑合成器"));
+    public static final SlimefunItemStack DIGIT_ADDER = new SlimefunItemStack("FINALTECH_DIGIT_ADDER", Material.STONE, TextUtil.colorPseudorandomString("加法器"));
 
     // tower
     public static final SlimefunItemStack CURE_TOWER = new SlimefunItemStack("FINALTECH_CURE_TOWER", Material.RED_GLAZED_TERRACOTTA, FinalTech.getLanguageString("items", SlimefunUtil.getIdFormatName(CureTower.class), "name"), FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CureTower.class), "lore"));
@@ -213,6 +236,8 @@ public final class FinalTechItems {
     public static final SlimefunItemStack PLANK_GENERATOR = new SlimefunItemStack("FINALTECH_PLANK_GENERATOR", Material.STONE, FinalTech.getLanguageString("item", "plank-generator", "name"));
     public static final SlimefunItemStack SAND_GENERATOR = new SlimefunItemStack("FINALTECH_SAND_GENERATOR", Material.STONE, FinalTech.getLanguageString("item", "sand-generator", "name"));
     public static final SlimefunItemStack LIQUID_CARD_GENERATOR = new SlimefunItemStack("FINALTECH_LIQUID_CARD_GENERATOR", Material.BLUE_TERRACOTTA, TextUtil.colorPseudorandomString("基础流体工厂"));
+    public static final SlimefunItemStack LOGIC_GENERATOR = new SlimefunItemStack("FINALTECH_LOGIC_GENERATOR", Material.STONE, TextUtil.colorPseudorandomString("逻辑矿机"));
+    public static final SlimefunItemStack DIGITAL_GENERATOR = new SlimefunItemStack("FINALTECH_DIGITAL_GENERATOR", Material.STONE, TextUtil.colorPseudorandomString("数字矿机"));
 
     // final items
     public static final SlimefunItemStack MACHINE_CHARGE_CARD_INFINITY = new SlimefunItemStack("FINALTECH_MACHINE_CHARGE_CARD_INFINITY", Material.PAPER, TextUtil.colorPseudorandomString("无限充能卡"));

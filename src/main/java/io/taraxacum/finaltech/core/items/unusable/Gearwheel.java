@@ -23,20 +23,13 @@ public class Gearwheel extends UnusableSlimefunItem implements RecipeItem {
     }
 
     @Override
-    public AbstractMySlimefunItem register() {
-        super.register();
-        // TODO
+    public void registerDefaultRecipes() {
         ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(this.getAddon().getJavaPlugin(), this.getId()), this.getItem());
+        recipe.shape("ggg","ddd","aaa");
         recipe.setIngredient('g', Material.GRANITE);
         recipe.setIngredient('d', Material.DIORITE);
         recipe.setIngredient('a', Material.ANDESITE);
-        recipe.shape("ggg","ddd","aaa");
         Bukkit.addRecipe(recipe);
-        return this;
-    }
-
-    @Override
-    public void registerDefaultRecipes() {
         SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }
