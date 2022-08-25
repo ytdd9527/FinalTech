@@ -1,5 +1,6 @@
 package io.taraxacum.common.util;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -71,5 +72,11 @@ public class JavaUtil {
             result[i] = value1 + value2;
         }
         return result;
+    }
+
+    public static long testTime(@Nonnull Runnable runnable) {
+        long beginTime = System.nanoTime();
+        runnable.run();
+        return System.nanoTime() - beginTime;
     }
 }
