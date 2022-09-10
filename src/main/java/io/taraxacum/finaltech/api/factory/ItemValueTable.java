@@ -95,6 +95,10 @@ public class ItemValueTable {
             this.removeFromOutputMap(id);
         }
 
+        this.removeFromOutputMap(FinalTechItems.SINGULARITY.getItemId());
+        this.removeFromOutputMap(FinalTechItems.SPIROCHETE.getItemId());
+        this.removeFromOutputMap(FinalTechItems.PHONY.getItemId());
+
         init = true;
     }
 
