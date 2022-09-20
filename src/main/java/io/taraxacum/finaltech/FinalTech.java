@@ -62,6 +62,11 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
     public void onEnable() {
         super.onEnable();
 
+        if(true) {
+            this.onDisable();
+            return;
+        }
+
         instance = this;
         this.logger = this.getJavaPlugin().getServer().getLogger();
 
