@@ -6,9 +6,9 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.AdvancedMachineRecipe;
 import io.taraxacum.finaltech.api.dto.ItemAmountWrapper;
-import io.taraxacum.finaltech.api.dto.ItemWrapper;
 import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.api.factory.MachineRecipeFactory;
@@ -69,12 +69,12 @@ public abstract class AbstractGeneratorMachine extends AbstractMachine implement
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         List<AdvancedMachineRecipe> advancedMachineRecipeList = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getClass());
-        AdvancedMachineRecipe advancedMachineRecipe = advancedMachineRecipeList.get((int) (new Random().nextDouble() * advancedMachineRecipeList.size()));
-        List<ItemAmountWrapper> outputList = advancedMachineRecipe.getOutput();
+        AdvancedMachineRecipe advancedMachineRecipe = advancedMachineRecipeList.get((int) (FinalTech.getRandom().nextDouble() * advancedMachineRecipeList.size()));
+        ItemAmountWrapper[] outputs = advancedMachineRecipe.getOutput();
         int quantityModule = MachineUtil.updateQuantityModule(blockMenu, GeneratorMachineMenu.MODULE_SLOT, GeneratorMachineMenu.STATUS_SLOT);
-        int maxMatch = Math.min(quantityModule, MachineUtil.calMaxMatch(blockMenu.toInventory(), this.getOutputSlot(), outputList));
+        int maxMatch = Math.min(quantityModule, MachineUtil.calMaxMatch(blockMenu.toInventory(), this.getOutputSlot(), outputs));
         if(maxMatch > 0) {
-            for(ItemStack itemStack : ItemStackUtil.calEnlargeItemArray(outputList, maxMatch)) {
+            for(ItemStack itemStack : ItemStackUtil.calEnlargeItemArray(outputs, maxMatch)) {
                 blockMenu.pushItem(ItemStackUtil.cloneItem(itemStack), this.getOutputSlot());
             }
         }
@@ -96,15 +96,15 @@ public abstract class AbstractGeneratorMachine extends AbstractMachine implement
         if(recipe instanceof RandomMachineRecipe) {
             randomMachineRecipe = (RandomMachineRecipe) recipe;
         } else {
-            List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>(1);
-            randomOutputList.add(new RandomMachineRecipe.RandomOutput(recipe.getOutput(), 1));
-            randomMachineRecipe = new RandomMachineRecipe(recipe, randomOutputList);
+            RandomMachineRecipe.RandomOutput[] randomOutputs = new RandomMachineRecipe.RandomOutput[1];
+            randomOutputs[0] = new RandomMachineRecipe.RandomOutput(recipe.getOutput(), 1);
+            randomMachineRecipe = new RandomMachineRecipe(recipe, randomOutputs);
         }
 
         if(this.emptyInputRecipe == null) {
-            this.emptyInputRecipe = new RandomMachineRecipe(0, new ItemStack[0], randomMachineRecipe.getRandomOutputList());
+            this.emptyInputRecipe = new RandomMachineRecipe(new ItemStack[0], randomMachineRecipe.getRandomOutputs());
         } else {
-            this.emptyInputRecipe.addRandomOutput(randomMachineRecipe.getRandomOutputList());
+            this.emptyInputRecipe.addRandomOutput(randomMachineRecipe.getRandomOutputs());
         }
     }
 
@@ -113,22 +113,22 @@ public abstract class AbstractGeneratorMachine extends AbstractMachine implement
     public void registerRecipe(@Nonnull ItemStack output, int weight) {
         List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>(1);
         randomOutputList.add(new RandomMachineRecipe.RandomOutput(output, weight));
-        this.registerRecipe(new RandomMachineRecipe(0, new ItemStack[0], randomOutputList));
+        this.registerRecipe(new RandomMachineRecipe(new ItemStack[0], randomOutputList));
     }
     public void registerRecipe(@Nonnull ItemStack output) {
         List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>(1);
         randomOutputList.add(new RandomMachineRecipe.RandomOutput(output, 1));
-        this.registerRecipe(new RandomMachineRecipe(0, new ItemStack[0], randomOutputList));
+        this.registerRecipe(new RandomMachineRecipe(new ItemStack[0], randomOutputList));
     }
     public void registerRecipe(@Nonnull Material output, int weight) {
         List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>(1);
         randomOutputList.add(new RandomMachineRecipe.RandomOutput(output, weight));
-        this.registerRecipe(new RandomMachineRecipe(0, new ItemStack[0], randomOutputList));
+        this.registerRecipe(new RandomMachineRecipe(new ItemStack[0], randomOutputList));
     }
     public void registerRecipe(@Nonnull Material output) {
         List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>(1);
         randomOutputList.add(new RandomMachineRecipe.RandomOutput(output, 1));
-        this.registerRecipe(new RandomMachineRecipe(0, new ItemStack[0], randomOutputList));
+        this.registerRecipe(new RandomMachineRecipe(new ItemStack[0], randomOutputList));
     }
     public void registerRecipe(@Nonnull Tag<Material> tag) {
         for(Material material : tag.getValues()) {

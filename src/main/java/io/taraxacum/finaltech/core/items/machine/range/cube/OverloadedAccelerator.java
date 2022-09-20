@@ -8,22 +8,23 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.api.dto.LocationWithConfig;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.ParticleUtil;
+import io.taraxacum.finaltech.util.slimefun.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -32,8 +33,8 @@ import java.util.*;
  * @author Final_ROOT
  * @since 2.0
  */
-public class OverloadedAccelerator extends AbstractCubeMachine implements AntiAccelerationMachine, RecipeItem {
-    public static final int RANGE = FinalTech.getValueManager().getOrDefault(2, "items", SlimefunUtil.getIdFormatName(OverloadedAccelerator.class), "range");;
+public class OverloadedAccelerator extends AbstractCubeMachine implements RecipeItem {
+    private final int range = ConfigUtil.getOrDefaultItemSetting(2, this, "range");
 
     public OverloadedAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -59,12 +60,16 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements AntiAc
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        Map<Integer, List<LocationWithConfig>> componentConfigMap = new HashMap<>(RANGE * 3);
         Location blockLocation = block.getLocation();
-        int count = this.function(block, RANGE, location -> {
+        BlockMenu blockMenu = BlockStorage.getInventory(block);
+        boolean drawParticle = blockMenu.hasViewer();
+        JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
+
+        Map<Integer, List<LocationWithConfig>> componentConfigMap = new HashMap<>(range * 3);
+        int count = this.function(block, range, location -> {
             if (BlockStorage.hasBlockInfo(location)) {
                 Config componentConfig = BlockStorage.getLocationInfo(location);
-                if (componentConfig.contains(SlimefunUtil.KEY_ID)) {
+                if (componentConfig.contains(ConstantTableUtil.CONFIG_ID)) {
                     int distance = Math.abs(location.getBlockX() - blockLocation.getBlockX()) + Math.abs(location.getBlockY() - blockLocation.getBlockY()) + Math.abs(location.getBlockZ() - blockLocation.getBlockZ());
                     List<LocationWithConfig> componentConfigList = componentConfigMap.computeIfAbsent(distance, d -> new ArrayList<>(d * d * 4 + 2));
                     componentConfigList.add(new LocationWithConfig(location.clone(), componentConfig));
@@ -74,50 +79,50 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements AntiAc
             return 0;
         });
 
-        count--; // not include itself
+        if(count <= 1) {
+            this.updateMenu(blockMenu, 0, 0);
+            return;
+        }
         int accelerateMachineCount = 0;
 
         List<LocationWithConfig> locationConfigList;
-        SlimefunItem sfItem;
-        Block componentBlock;
-        for (int distance = 1; distance <= RANGE * 3; distance++) {
+        for (int distance = 1; distance <= range * 3; distance++) {
             locationConfigList = componentConfigMap.get(distance);
             if (locationConfigList != null) {
                 Collections.shuffle(locationConfigList);
                 for (LocationWithConfig locationConfig : locationConfigList) {
-                    Config componentConfig = locationConfig.getConfig();
-                    sfItem = SlimefunItem.getById(componentConfig.getString(SlimefunUtil.KEY_ID));
-                    if(sfItem instanceof EnergyNetComponent) {
-                        BlockTicker blockTicker = sfItem.getBlockTicker();
-                        if (blockTicker != null) {
-                            int componentCapacity = ((EnergyNetComponent) sfItem).getCapacity();
-                            int componentEnergy = Integer.parseInt(SlimefunUtil.getCharge(componentConfig));
-                            if (componentCapacity > 0 && componentEnergy > componentCapacity) {
-                                accelerateMachineCount++;
-                                componentBlock = locationConfig.getLocation().getBlock();
-                                BlockTicker finalBlockTicker = blockTicker;
-                                blockTicker = new BlockTicker() {
-                                    @Override
-                                    public boolean isSynchronized() {
-                                        return finalBlockTicker.isSynchronized();
+                    Config machineConfig = locationConfig.getConfig();
+                    SlimefunItem machineItem = SlimefunItem.getById(machineConfig.getString(ConstantTableUtil.CONFIG_ID));
+                    if(machineItem instanceof EnergyNetComponent && machineItem.getBlockTicker() != null) {
+                        BlockTicker blockTicker = machineItem.getBlockTicker();
+                        int componentCapacity = ((EnergyNetComponent) machineItem).getCapacity();
+                        int componentEnergy = Integer.parseInt(EnergyUtil.getCharge(machineConfig));
+                        if (componentCapacity > 0 && componentEnergy > componentCapacity) {
+                            accelerateMachineCount++;
+                            Block machineBlock = locationConfig.getLocation().getBlock();
+                            if(blockTicker.isSynchronized()) {
+                                javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
+                                    int machineEnergy = componentEnergy;
+                                    while (machineEnergy > componentCapacity) {
+                                        blockTicker.tick(machineBlock, machineItem, machineConfig);
+                                        machineEnergy = Integer.parseInt(EnergyUtil.getCharge(machineConfig));
+                                        machineEnergy /= 2;
+                                        EnergyUtil.setCharge(machineConfig, machineEnergy);
                                     }
-
-                                    @Override
-                                    public void tick(Block b, SlimefunItem item, Config data) {
-                                        int fComponentEnergy = componentEnergy;
-                                        while (fComponentEnergy > componentCapacity) {
-                                            finalBlockTicker.tick(b, item, data);
-                                            fComponentEnergy = Integer.parseInt(SlimefunUtil.getCharge(componentConfig));
-                                            fComponentEnergy /= 2;
-                                            SlimefunUtil.setCharge(componentConfig, fComponentEnergy);
-                                        }
+                                });
+                            } else {
+                                BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineItem.getId()), () -> {
+                                    int machineEnergy = componentEnergy;
+                                    while (machineEnergy > componentCapacity) {
+                                        blockTicker.tick(machineBlock, machineItem, machineConfig);
+                                        machineEnergy = Integer.parseInt(EnergyUtil.getCharge(machineConfig));
+                                        machineEnergy /= 2;
+                                        EnergyUtil.setCharge(machineConfig, machineEnergy);
                                     }
-                                };
-                                if(FinalTech.getForceSlimefunMultiThread() && FinalTech.getMultiThreadLevel() >= 1) {
-                                    SlimefunUtil.runBlockTicker(FinalTech.getLocationRunnableFactory(), blockTicker, componentBlock, sfItem, componentConfig, locationConfig.getLocation());
-                                } else {
-                                    SlimefunUtil.runBlockTickerLocal(this.getAddon().getJavaPlugin(), blockTicker, componentBlock, sfItem, componentConfig);
-                                }
+                                }, locationConfig.getLocation());
+                            }
+                            if(drawParticle) {
+                                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, locationConfig.getLocation().getBlock()));
                             }
                         }
                     }
@@ -125,10 +130,7 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements AntiAc
             }
         }
 
-        BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(blockMenu.hasViewer()) {
-            this.updateMenu(blockMenu, accelerateMachineCount);
-        }
+        this.updateMenu(blockMenu, --count, accelerateMachineCount);
     }
 
     @Override
@@ -136,18 +138,18 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements AntiAc
         return false;
     }
 
-    private void updateMenu(@Nonnull BlockMenu blockMenu, int accelerateMachineCount) {
-        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
-        ItemStackUtil.setLore(item, SlimefunUtil.updateMenuLore(FinalTech.getLanguageManager(), this, String.valueOf(accelerateMachineCount)));
-        ItemStackUtil.setLore(item,
-                TextUtil.COLOR_NORMAL + "检测到的机器个数= " + TextUtil.COLOR_NUMBER + accelerateMachineCount + "个");
+    private void updateMenu(@Nonnull BlockMenu blockMenu, int count, int accelerateMachineCount) {
+        if(blockMenu.hasViewer()) {
+            ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
+            ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
+                    String.valueOf(count),
+                    String.valueOf(accelerateMachineCount)));
+        }
     }
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
-                TextUtil.COLOR_NORMAL + "对于周围 " + TextUtil.COLOR_NUMBER + RANGE + "格" + TextUtil.COLOR_NORMAL + " 的耗电机器",
-                TextUtil.COLOR_NORMAL + "对其进行加速",
-                TextUtil.COLOR_NORMAL + "每次加速时 使其存电量减半 直至其存电量小于最大电容量");
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.range));
     }
 }

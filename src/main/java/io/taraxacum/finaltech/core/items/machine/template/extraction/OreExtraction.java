@@ -7,6 +7,10 @@ import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class OreExtraction extends AbstractExtractionMachine implements RecipeItem {
     public OreExtraction(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

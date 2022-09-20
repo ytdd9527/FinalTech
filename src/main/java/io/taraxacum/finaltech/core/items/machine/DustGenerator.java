@@ -8,17 +8,18 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetProvider;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
-import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.common.util.MathUtil;
 import io.taraxacum.common.util.StringNumberUtil;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.core.items.unusable.Annular;
 import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.machine.OrderDustGeneratorMenu;
+import io.taraxacum.finaltech.core.menu.machine.DustGeneratorMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -35,9 +36,11 @@ import javax.annotation.Nonnull;
  */
 // TODO use operation
 public class DustGenerator extends AbstractMachine implements RecipeItem, EnergyNetProvider {
-    public static final String KEY_COUNT = "count";
-    public static final String KEY_MAX = "max";
-    public static final int LIMIT = Integer.MAX_VALUE / 4;
+    private final String KEY_COUNT = "count";
+    private final int CAPACITY = ConfigUtil.getOrDefaultItemSetting(Integer.MAX_VALUE / 4, this, "capacity");
+    // default = 144115188344291328
+    // long.max= 9223372036854775808
+    private final long COUNT_LIMIT = (long) this.CAPACITY * (this.CAPACITY + 1) / 2;
 
     public DustGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -50,7 +53,6 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
             @Override
             public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {
                 BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), KEY_COUNT, StringNumberUtil.ZERO);
-                BlockStorage.addBlockInfo(blockPlaceEvent.getBlock().getLocation(), KEY_MAX, StringNumberUtil.ZERO);
             }
         };
     }
@@ -64,7 +66,7 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new OrderDustGeneratorMenu(this);
+        return new DustGeneratorMenu(this);
     }
 
     @Override
@@ -72,58 +74,34 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         Location location = block.getLocation();
 
-        int count = Integer.parseInt(config.getValue(KEY_COUNT).toString());
-        int max = Integer.parseInt(config.getValue(KEY_MAX).toString());
-        int oldCount = count;
-        int oldMax = max;
+        long count = Long.parseLong(config.getString(KEY_COUNT));
         boolean work = false;
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (ItemStackUtil.isItemSimilar(item, FinalTechItems.UNORDERED_DUST)) {
                 item.setAmount(item.getAmount() - 1);
-                count = Math.min(count + 1, LIMIT);
-                if (count > max) {
-                    max = count;
-                }
-                work = true;
-                break;
-            } else if (Annular.isValid(item)) {
-                item.setAmount(item.getAmount() - 1);
-                if (count < max) {
-                    count = (count + max) / 2;
-                    max = count;
-                } else {
-                    count = Math.min(count + 1, LIMIT);
-                    if (count > max) {
-                        max = count;
-                    }
-                }
+                count = Math.min(++count, this.COUNT_LIMIT);
                 work = true;
                 break;
             } else if (ItemPhony.isValid(item)) {
                 item.setAmount(item.getAmount() - 1);
-                count = this.getCapacity();
-                max = this.getCapacity();
+                count *= 2;
+                count = Math.min(count, this.COUNT_LIMIT);
                 work = true;
                 break;
             }
         }
         if (!work) {
-            count = 0;
+            count /= 2;
+        }
+        int charge = (int) MathUtil.getBig(1, 1, -2 * count);
+
+        BlockStorage.addBlockInfo(location, KEY_COUNT, String.valueOf(count));
+        if (count > 0) {
+            this.addCharge(location, charge);
         }
 
-        if (max != oldMax || count != oldCount) {
-            if (max != oldMax) {
-                BlockStorage.addBlockInfo(location, KEY_MAX, String.valueOf(max));
-            }
-            if (count != oldCount) {
-                BlockStorage.addBlockInfo(location, KEY_COUNT, String.valueOf(count));
-            }
-            this.updateMenu(blockMenu, block);
-        }
-        if (count > 0) {
-            this.addCharge(location, count);
-        }
+        this.updateMenu(blockMenu, count, charge);
     }
 
     @Override
@@ -146,32 +124,21 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
 
     @Override
     public int getCapacity() {
-        return LIMIT;
+        return CAPACITY;
     }
 
-    private void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
+    private void updateMenu(@Nonnull BlockMenu blockMenu, long count, int charge) {
         if(blockMenu.hasViewer()) {
-            ItemStack item = blockMenu.getItemInSlot(OrderDustGeneratorMenu.STATUS_SLOT);
-            ItemStackUtil.setLore(item,
-                    TextUtil.COLOR_NORMAL + "当前发电量= " + TextUtil.COLOR_NUMBER + BlockStorage.getLocationInfo(block.getLocation(), DustGenerator.KEY_COUNT) + "J/t",
-                    TextUtil.COLOR_NORMAL + "已达到的最大发电量= " + TextUtil.COLOR_NUMBER + BlockStorage.getLocationInfo(block.getLocation(), DustGenerator.KEY_MAX) + "J/t");
+            ItemStack item = blockMenu.getItemInSlot(DustGeneratorMenu.STATUS_SLOT);
+            ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
+                    String.valueOf(count),
+                    String.valueOf(charge)));
         }
     }
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
-                "",
-                TextUtil.COLOR_NORMAL + "每 " + TextUtil.COLOR_NUMBER + String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0) + "秒" + TextUtil.COLOR_NORMAL + " 消耗一个 " + FinalTechItems.ORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 或 " + FinalTechItems.UNORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 并使发电量加 " + TextUtil.COLOR_NUMBER + "1J/t",
-                TextUtil.COLOR_NORMAL + "未消耗成功时 发电量置零",
-                "",
-                TextUtil.COLOR_NORMAL + "最大发电量 " + TextUtil.COLOR_NUMBER + this.getCapacity() + "J/t");
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "电力回溯",
-                "",
-                TextUtil.COLOR_NORMAL + "消耗 " + FinalTechItems.ANNULAR.getDisplayName() + TextUtil.COLOR_NORMAL + " 时",
-                TextUtil.COLOR_NORMAL + "若当前发电量小于已达到的最大发电量",
-                TextUtil.COLOR_NORMAL + "则将当前发电量提升至当前发电量与已达到的最大发电量的平均值",
-                TextUtil.COLOR_NORMAL + "然后重置已达到的最大发电量");
-        // 使用伪物可以直接将电量拉满
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.CAPACITY));
     }
 }

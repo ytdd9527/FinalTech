@@ -5,8 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.core.items.AbstractMySlimefunItem;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -30,6 +29,6 @@ public class Gearwheel extends UnusableSlimefunItem implements RecipeItem {
         recipe.setIngredient('d', Material.DIORITE);
         recipe.setIngredient('a', Material.ANDESITE);
         Bukkit.addRecipe(recipe);
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

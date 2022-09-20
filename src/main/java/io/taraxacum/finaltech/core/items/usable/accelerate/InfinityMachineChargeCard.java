@@ -5,7 +5,8 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,7 +17,7 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class InfinityMachineChargeCard extends AbstractMachineChargeCard implements RecipeItem {
-    private final double ENERGY = FinalTech.getValueManager().getOrDefault(16.04, "items", SlimefunUtil.getIdFormatName(InfinityMachineChargeCard.class), "energy");
+    private final double energy = ConfigUtil.getOrDefaultItemSetting(16.04, this, "energy");
 
     public InfinityMachineChargeCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -24,7 +25,7 @@ public class InfinityMachineChargeCard extends AbstractMachineChargeCard impleme
 
     @Override
     protected double energy() {
-        return ENERGY;
+        return this.energy;
     }
 
     @Override
@@ -43,8 +44,8 @@ public class InfinityMachineChargeCard extends AbstractMachineChargeCard impleme
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
-                String.valueOf((int)(Math.floor(ENERGY))),
-                String.format("%.2f", (ENERGY - Math.floor(ENERGY)) * 100));
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf((int)(Math.floor(energy))),
+                String.format("%.2f", (energy - Math.floor(energy)) * 100));
     }
 }

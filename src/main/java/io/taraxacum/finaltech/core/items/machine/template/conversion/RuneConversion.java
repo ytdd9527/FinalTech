@@ -12,6 +12,10 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class RuneConversion extends AbstractConversionMachine{
     public RuneConversion(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

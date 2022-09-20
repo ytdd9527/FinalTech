@@ -1,8 +1,8 @@
 package io.taraxacum.finaltech.api.dto;
 
+import io.taraxacum.common.util.CompareUtil;
+
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Final_ROOT
@@ -10,54 +10,50 @@ import java.util.List;
  */
 public class AdvancedMachineRecipe {
     @Nonnull
-    private final List<ItemAmountWrapper> inputList;
+    private final ItemAmountWrapper[] inputs;
     @Nonnull
-    private final List<AdvancedRandomOutput> outputList;
+    private final AdvancedRandomOutput[] randomOutputs;
+    private final int[] weightBeginValues;
     private int weightSum = 0;
 
-    public AdvancedMachineRecipe(@Nonnull List<ItemAmountWrapper> inputList, @Nonnull List<AdvancedRandomOutput> outputList) {
-        this.inputList = inputList;
-        this.outputList = outputList;
-        for (AdvancedRandomOutput advancedRandomOutput : this.outputList) {
-            this.weightSum += advancedRandomOutput.getWeight();
+    public AdvancedMachineRecipe(@Nonnull ItemAmountWrapper[] inputs, @Nonnull AdvancedRandomOutput[] randomOutputs) {
+        this.inputs = inputs;
+        this.randomOutputs = randomOutputs;
+        this.weightBeginValues = new int[randomOutputs.length];
+        for(int i = 0; i < this.randomOutputs.length; i++) {
+            this.weightBeginValues[i] = this.weightSum;
+            this.weightSum += this.randomOutputs[i].getWeight();
         }
     }
 
     @Nonnull
-    public List<ItemAmountWrapper> getInput() {
-        return this.inputList;
+    public ItemAmountWrapper[] getInput() {
+        return this.inputs;
     }
 
     @Nonnull
-    public List<ItemAmountWrapper> getOutput() {
+    public ItemAmountWrapper[] getOutput() {
         int r = (int)(Math.random() * this.weightSum);
-        for (AdvancedRandomOutput advancedRandomOutput : this.outputList) {
-            if (r >= advancedRandomOutput.getWeight()) {
-                r -= advancedRandomOutput.getWeight();
-                continue;
-            }
-            return advancedRandomOutput.getOutputItem();
-        }
-        return new ArrayList<>();
+        return this.randomOutputs[CompareUtil.getIntSmallFuzzyIndex(this.weightBeginValues, r)].outputItem;
     }
 
     @Nonnull
-    public List<AdvancedRandomOutput> getOutputList() {
-        return this.outputList;
+    public AdvancedRandomOutput[] getOutputs() {
+        return this.randomOutputs;
     }
 
     public int getWeightSum() {
         return this.weightSum;
     }
 
-    public record AdvancedRandomOutput(@Nonnull List<ItemAmountWrapper> outputItem, int weight) {
-        public AdvancedRandomOutput(@Nonnull List<ItemAmountWrapper> outputItem, int weight) {
+    public record AdvancedRandomOutput(@Nonnull ItemAmountWrapper[] outputItem, int weight) {
+        public AdvancedRandomOutput(@Nonnull ItemAmountWrapper[] outputItem, int weight) {
             this.outputItem = outputItem;
             this.weight = weight;
         }
 
         @Nonnull
-        public List<ItemAmountWrapper> getOutputItem() {
+        public ItemAmountWrapper[] getOutputItem() {
             return outputItem;
         }
 

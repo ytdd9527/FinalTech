@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class SoulSandConversion extends AbstractConversionMachine{
     public SoulSandConversion(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -32,7 +36,7 @@ public class SoulSandConversion extends AbstractConversionMachine{
             for (GoldPanDrop goldPanDrop : invoke) {
                 randomOutputList.add(new RandomMachineRecipe.RandomOutput(goldPanDrop.getOutput(), goldPanDrop.getValue()));
             }
-            this.registerRecipe(new RandomMachineRecipe(0, new ItemStack[] {new ItemStack(netherGoldPan.getInputMaterial())}, randomOutputList));
+            this.registerRecipe(new RandomMachineRecipe(new ItemStack[] {new ItemStack(netherGoldPan.getInputMaterial())}, randomOutputList));
         } catch (Exception e) {
             List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>();
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {new ItemStack(Material.QUARTZ)}, 50));
@@ -41,7 +45,7 @@ public class SoulSandConversion extends AbstractConversionMachine{
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {new ItemStack(Material.BLAZE_POWDER)}, 8));
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {new ItemStack(Material.GLOWSTONE_DUST)}, 5));
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {new ItemStack(Material.GHAST_TEAR)}, 2));
-            this.registerRecipe(new RandomMachineRecipe(0, new ItemStack[] {new ItemStack(netherGoldPan.getInputMaterial())}, randomOutputList));
+            this.registerRecipe(new RandomMachineRecipe(new ItemStack[] {new ItemStack(Material.SOUL_SAND)}, randomOutputList));
         }
     }
 }

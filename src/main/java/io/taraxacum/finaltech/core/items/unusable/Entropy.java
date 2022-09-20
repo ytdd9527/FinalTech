@@ -7,7 +7,7 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
@@ -31,6 +31,6 @@ public class Entropy extends UnusableSlimefunItem implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

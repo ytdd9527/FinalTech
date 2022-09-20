@@ -12,7 +12,7 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.OneLineStorageUnitMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -91,6 +91,6 @@ public class DistributeLeftStorageUnit extends AbstractCargo implements RecipeIt
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this, String.valueOf(MachineUtil.calMachineSlotSize(this)));
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this, String.valueOf(MachineUtil.calMachineSlotSize(this)));
     }
 }

@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -18,7 +18,7 @@ public class ManualCompressor extends AbstractManualCraftMachine {
 
     @Override
     public void registerDefaultRecipes() {
-//        SlimefunUtil.registerRecipeByRecipeType(this, RecipeType.COMPRESSOR);
-        SlimefunUtil.registerRecipeBySlimefunId(this, SlimefunItems.COMPRESSOR.getItemId());
+//        RecipeUtil.registerRecipeByRecipeType(this, RecipeType.COMPRESSOR);
+        RecipeUtil.registerRecipeBySlimefunId(this, SlimefunItems.COMPRESSOR.getItemId());
     }
 }

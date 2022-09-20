@@ -5,9 +5,11 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.api.task.TickerTaskRunner;
 import io.taraxacum.finaltech.core.task.effect.UntreatableEffect;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -20,9 +22,9 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class UntreatableRune extends UsableSlimefunItem {
-    private int time = FinalTech.getValueManager().getOrDefault(200, "items", SlimefunUtil.getIdFormatName(UntreatableRune.class), "time");
-    private double range = FinalTech.getValueManager().getOrDefault(8.0, "items", SlimefunUtil.getIdFormatName(UntreatableRune.class), "range");
+public class UntreatableRune extends UsableSlimefunItem implements RecipeItem {
+    private final int time = ConfigUtil.getOrDefaultItemSetting(200, this, "time");
+    private final double range = ConfigUtil.getOrDefaultItemSetting(8.0, this, "range");
 
     public UntreatableRune(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -38,12 +40,18 @@ public class UntreatableRune extends UsableSlimefunItem {
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
         Player player = playerRightClickEvent.getPlayer();
         // TODO particle
-        Location location = player.getLocation();
         for(Entity entity : player.getNearbyEntities(this.range, this.range, this.range)) {
             if(entity instanceof LivingEntity livingEntity) {
                 TickerTaskRunner.applyOrAddTo(new UntreatableEffect(this.time, 1), livingEntity, this.getAddon().getJavaPlugin());
             }
         }
         TickerTaskRunner.applyOrAddTo(new UntreatableEffect(this.time, 1), player, this.getAddon().getJavaPlugin());
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.time),
+                String.valueOf(this.range));
     }
 }

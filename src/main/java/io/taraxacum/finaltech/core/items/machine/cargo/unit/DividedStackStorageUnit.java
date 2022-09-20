@@ -11,8 +11,7 @@ import io.taraxacum.finaltech.core.items.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.DividedStorageUnitMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -45,7 +44,7 @@ public class DividedStackStorageUnit extends AbstractCargo implements RecipeItem
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(MachineUtil.calMachineSlotSize(this)),
                 String.valueOf(this.getInputSlot().length),
                 String.valueOf(this.getOutputSlot().length),

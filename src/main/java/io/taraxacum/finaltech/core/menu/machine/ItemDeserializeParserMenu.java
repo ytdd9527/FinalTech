@@ -2,9 +2,7 @@ package io.taraxacum.finaltech.core.menu.machine;
 
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
 
 import javax.annotation.Nonnull;
@@ -14,11 +12,11 @@ import javax.annotation.Nonnull;
  * @since 1.0
  */
 public class ItemDeserializeParserMenu extends AbstractMachineMenu {
-    private static final int[] BORDER = new int[] {3, 4, 5, 12, 13, 14, 21, 22, 23};
-    private static final int[] INPUT_BORDER = new int[] {30, 31, 32, 39, 41, 48, 49, 50};
-    private static final int[] OUTPUT_BORDER = new int[] {2, 6, 11, 15, 20, 24, 29, 33, 38, 42, 47, 51};
-    private static final int[] INPUT_SLOT = new int[] {40};
-    private static final int[] OUTPUT_SLOT = new int[] {0, 1, 7, 8, 9, 10, 16, 17, 18, 19, 25, 26, 27, 28, 34, 35, 36, 37, 43, 44, 45, 46, 52, 53};
+    private static final int[] BORDER = new int[] {45, 46, 47, 51, 52, 53};
+    private static final int[] INPUT_BORDER = new int[] {48, 50};
+    private static final int[] OUTPUT_BORDER = new int[] {36, 37, 38, 39, 41, 42, 43, 44};
+    private static final int[] INPUT_SLOT = new int[] {49};
+    private static final int[] OUTPUT_SLOT = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35};
 
     public ItemDeserializeParserMenu(@Nonnull AbstractMachine abstractMachine) {
         super(abstractMachine);

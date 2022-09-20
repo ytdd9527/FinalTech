@@ -2,10 +2,15 @@ package io.taraxacum.finaltech.core.operation;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.items.machine.operation.ItemSerializationConstructor;
 import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
 import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
+import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
+import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -21,14 +26,19 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
     private final ItemStack matchItem;
     private final ItemStack copyCardItem;
     private final ItemStack showItem;
+    public static final double RATE = ConfigUtil.getOrDefaultItemSetting(0.1, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "rate");
 
     protected ItemCopyCardOperation(@Nonnull ItemStack item) {
         this.count = item.getAmount();
-        this.difficulty = CopyCardItem.DIFFICULTY;
+        this.difficulty = ConstantTableUtil.ITEM_COPY_CARD_AMOUNT;
         this.matchItem = item.clone();
         this.matchItem.setAmount(1);
         this.copyCardItem = CopyCardItem.newItem(this.matchItem, "1");
-        this.showItem = new CustomItemStack(item.getType(), TextUtil.COLOR_NORMAL + "完成进度", TextUtil.COLOR_NORMAL + "物品名称= &f" + ItemStackUtil.getItemName(item), TextUtil.COLOR_NORMAL + "压缩数量= " + TextUtil.COLOR_NUMBER + String.format("%.8f", this.count) + "/" + this.difficulty);
+        this.showItem = new CustomItemStack(item.getType(), ConfigUtil.getStatusMenuName(FinalTech.getLanguageManager(), FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId()),
+                ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(),
+                        ItemStackUtil.getItemName(this.matchItem),
+                        String.format("%.8f", this.count),
+                        String.valueOf(this.difficulty)));
     }
 
     public double getCount() {
@@ -57,14 +67,17 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
 
     @Override
     public void updateShowItem() {
-        ItemStackUtil.setLastLore(this.showItem, TextUtil.COLOR_NORMAL + "压缩数量= " + TextUtil.COLOR_NUMBER + TextUtil.COLOR_NUMBER + String.format("%.8f", this.count) + "/" + this.difficulty);
+        ItemStackUtil.setLore(this.showItem, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(),
+                ItemStackUtil.getItemName(this.matchItem),
+                String.format("%.8f", this.count),
+                String.valueOf(this.difficulty)));
     }
 
     @Override
     public int addItem(@Nullable ItemStack item) {
         if (!this.isFinished()) {
             if (ItemStackUtil.isItemSimilar(item, this.matchItem)) {
-                double efficiency = Math.pow(0.5, 20.0 - FinalTech.getTps());
+                double efficiency = Math.pow(RATE, 20.0 - FinalTech.getTps());
                 efficiency = Math.min(efficiency, 1);
                 if(item.getAmount() * efficiency + this.count < this.difficulty) {
                     int amount = item.getAmount();

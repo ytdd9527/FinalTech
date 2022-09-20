@@ -12,8 +12,8 @@ import io.taraxacum.finaltech.core.menu.manual.CardOperationPortMenu;
 import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -59,37 +59,6 @@ public class CardOperationTable extends AbstractManualMachine implements RecipeI
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "合并存储卡",
-                "",
-                TextUtil.COLOR_NORMAL + "在左右两侧放置相同物品的存储卡",
-                TextUtil.COLOR_NORMAL + "点击合成",
-                TextUtil.COLOR_NORMAL + "将获得一个 合并数量的存储卡");
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "制造 " + FinalTechItems.ANNULAR.getDisplayName(),
-                "",
-                TextUtil.COLOR_NORMAL + "在左侧或右侧放置一个存储卡",
-                TextUtil.COLOR_NORMAL + "存储卡的物品数量需达到制作复制卡的数量",
-                TextUtil.COLOR_NORMAL + "点击合成",
-                TextUtil.COLOR_NORMAL + "将会获得一个 " + FinalTechItems.ANNULAR.getDisplayName());
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "制造 " + FinalTechItems.PHONY.getDisplayName(),
-                "",
-                TextUtil.COLOR_NORMAL + "在左右两侧分别放置 " + FinalTechItems.SINGULARITY.getDisplayName() + TextUtil.COLOR_NORMAL + " 与 " + FinalTechItems.SPIROCHETE.getDisplayName(),
-                TextUtil.COLOR_NORMAL + "点击合成",
-                TextUtil.COLOR_NORMAL + "将会获得一个 " + FinalTechItems.PHONY.getDisplayName());
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "复制复制卡",
-                "",
-                TextUtil.COLOR_NORMAL + "在左右两侧分别放置复制卡和 " + FinalTechItems.SHELL.getDisplayName(),
-                TextUtil.COLOR_NORMAL + "点击合成",
-                TextUtil.COLOR_NORMAL + "将会获得一张相同的复制卡");
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "制造 " + FinalTechItems.SHELL.getDisplayName(),
-                "",
-                TextUtil.COLOR_NORMAL + "在左侧或右侧放置一个 " + FinalTechItems.SINGULARITY.getDisplayName() + TextUtil.COLOR_NORMAL + " 或 " + FinalTechItems.SPIROCHETE.getDisplayName(),
-                TextUtil.COLOR_NORMAL + "点击合成",
-                TextUtil.COLOR_NORMAL + "将会获得一个 " + FinalTechItems.SHELL.getDisplayName());
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "制造 " + FinalTechItems.ANNULAR.getDisplayName(),
-                "",
-                TextUtil.COLOR_NORMAL + "在左侧或右侧放置一个复制卡",
-                TextUtil.COLOR_NORMAL + "点击合成",
-                TextUtil.COLOR_NORMAL + "将会获得一个 " + FinalTechItems.ANNULAR.getDisplayName());
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

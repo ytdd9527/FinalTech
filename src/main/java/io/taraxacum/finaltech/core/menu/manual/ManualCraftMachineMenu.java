@@ -15,7 +15,6 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -216,7 +215,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
 
         if (craft != null) {
             config.setValue(KEY, String.valueOf(craft.getOffset()));
-            ItemStack item = ItemStackUtil.cloneItem(craft.getOutputItemList().get(0).getItemStack());
+            ItemStack item = ItemStackUtil.cloneItem(craft.getOutputItemList()[0].getItemStack());
             ItemStackUtil.addLoreToLast(item, FinalTech.getLanguageManager().replaceString(FinalTech.getLanguageString("items", "ManualCraftMachine", "match-item", "lore"), String.valueOf(craft.getMatchCount())));
             inventory.setItem(STATUS_SLOT, item);
             int offsetR = offset + 1;
@@ -225,7 +224,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
                 if(craft != null) {
                     config.setValue(KEY_R[i], String.valueOf(craft.getOffset()));
                     offsetR = craft.getOffset() + 1;
-                    item = ItemStackUtil.cloneItem(craft.getOutputItemList().get(0).getItemStack());
+                    item = ItemStackUtil.cloneItem(craft.getOutputItemList()[0].getItemStack());
                     ItemStackUtil.addLoreToLast(item, FinalTech.getLanguageManager().replaceString(FinalTech.getLanguageString("items", "ManualCraftMachine", "match-item", "lore"), String.valueOf(craft.getMatchCount())));
                     inventory.setItem(STATUS_R_SLOT[i], item);
                 } else {
@@ -239,7 +238,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
                 if(craft != null) {
                     config.setValue(KEY_L[i], String.valueOf(craft.getOffset()));
                     offsetL = craft.getOffset() - 1;
-                    item = ItemStackUtil.cloneItem(craft.getOutputItemList().get(0).getItemStack());
+                    item = ItemStackUtil.cloneItem(craft.getOutputItemList()[0].getItemStack());
                     ItemStackUtil.addLoreToLast(item, FinalTech.getLanguageManager().replaceString(FinalTech.getLanguageString("items", "ManualCraftMachine", "match-item", "lore"), String.valueOf(craft.getMatchCount())));
                     inventory.setItem(STATUS_L_SLOT[i], item);
                 } else {
@@ -285,8 +284,8 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             return;
         }
 
-        List<ItemAmountWrapper> outputItemList = craft.getOutputItemList();
-        for(ItemAmountWrapper itemAmountWrapper : outputItemList) {
+        ItemAmountWrapper[] outputItems = craft.getOutputItemList();
+        for(ItemAmountWrapper itemAmountWrapper : outputItems) {
             SlimefunItem slimefunItem = SlimefunItem.getByItem(itemAmountWrapper.getItemStack());
             if(slimefunItem != null && !slimefunItem.canUse(player, true)) {
                 return;
@@ -299,7 +298,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         }
 
         AdvancedMachineRecipe advancedMachineRecipe = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getSlimefunItem().getClass()).get(craft.getOffset());
-        if(advancedMachineRecipe.getOutputList().size() > 1) {
+        if(advancedMachineRecipe.getOutputs().length > 1) {
             craft.setMatchCount(Math.min(64, craft.getMatchCount()));
         }
 

@@ -9,6 +9,10 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class GlassConversion extends AbstractConversionMachine{
     public GlassConversion(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

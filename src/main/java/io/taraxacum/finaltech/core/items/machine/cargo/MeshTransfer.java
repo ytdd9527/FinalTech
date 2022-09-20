@@ -16,12 +16,15 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.MeshTransferMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.*;
+import io.taraxacum.finaltech.util.slimefun.PermissionUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -134,7 +137,7 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
             }, Slimefun.getTickerTask().getTickRate());
         }
 
-        if(!SlimefunUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(inputBlocks)) || !SlimefunUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(outputBlocks))) {
+        if(!PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(inputBlocks)) || !PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(outputBlocks))) {
             return;
         }
 
@@ -235,6 +238,7 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
         List<Location> particleLocationList = new ArrayList<>();
         particleLocationList.add(LocationUtil.getCenterLocation(sourceBlock));
         Block result = sourceBlock.getRelative(blockFace);
+        Material type = sourceBlock.getType();
         if (BlockSearchMode.VALUE_ZERO.equals(searchMode)) {
             particleLocationList.add(LocationUtil.getCenterLocation(result));
             if (drawParticle) {
@@ -264,6 +268,6 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

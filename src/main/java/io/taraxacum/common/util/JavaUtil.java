@@ -9,11 +9,13 @@ import java.util.stream.Collectors;
  */
 public class JavaUtil {
 
+    @SafeVarargs
     public static <T> Set<T> toSet(T... objects) {
         Set<T> result = new HashSet<>(objects.length);
         result.addAll(Arrays.asList(objects));
         return result;
     }
+    @SafeVarargs
     public static <T> List<T> toList(T... objects) {
         List<T> result = new ArrayList<>(objects.length);
         result.addAll(Arrays.asList(objects));
@@ -71,6 +73,21 @@ public class JavaUtil {
             double value2 = value[(int) Math.ceil(p)].doubleValue() * (p - Math.floor(p));
             result[i] = value1 + value2;
         }
+        return result;
+    }
+
+    public static String[] split(String string) {
+        String[] result = new String[string.length()];
+        for(int i = 0; i < string.length(); i++) {
+            result[i] = String.valueOf(string.charAt(i));
+        }
+        return result;
+    }
+
+        public static String[] addToFirst(String value, String... values) {
+        String[] result = new String[values.length + 1];
+        result[0] = value;
+        System.arraycopy(values, 0, result, 1, values.length);
         return result;
     }
 

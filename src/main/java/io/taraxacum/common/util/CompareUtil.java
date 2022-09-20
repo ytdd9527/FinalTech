@@ -1,5 +1,7 @@
 package io.taraxacum.common.util;
 
+import java.util.Random;
+
 /**
  * @author Final_ROOT
  */
@@ -147,7 +149,7 @@ public class CompareUtil {
         return left;
     }
 
-    public static interface SimpleComparator<T> {
+    public interface SimpleComparator<T> {
 
         /**
          * @return

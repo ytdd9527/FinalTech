@@ -44,7 +44,7 @@ public final class MachineUtil {
     };
 
     public static BlockBreakHandler simpleBlockBreakerHandler() {
-        return new BlockBreakHandler(false, false) {
+        return new BlockBreakHandler(false, true) {
             @Override
             public void onPlayerBreak(@Nonnull BlockBreakEvent blockBreakEvent, @Nonnull ItemStack itemStack, @Nonnull List<ItemStack> list) {
 
@@ -52,7 +52,7 @@ public final class MachineUtil {
         };
     }
     public static BlockBreakHandler simpleBlockBreakerHandler(@Nonnull AbstractMachine abstractMachine) {
-        return new BlockBreakHandler(false, false) {
+        return new BlockBreakHandler(false, true) {
             @Override
             public void onPlayerBreak(@Nonnull BlockBreakEvent blockBreakEvent, @Nonnull ItemStack itemStack, @Nonnull List<ItemStack> list) {
                 Location location = blockBreakEvent.getBlock().getLocation();
@@ -63,7 +63,7 @@ public final class MachineUtil {
         };
     }
     public static BlockBreakHandler simpleBlockBreakerHandler(@Nonnull int... slot) {
-        return new BlockBreakHandler(false, false) {
+        return new BlockBreakHandler(false, true) {
             @Override
             public void onPlayerBreak(@Nonnull BlockBreakEvent blockBreakEvent, @Nonnull ItemStack itemStack, @Nonnull List<ItemStack> list) {
                 Location location = blockBreakEvent.getBlock().getLocation();
@@ -73,7 +73,7 @@ public final class MachineUtil {
         };
     }
     public static BlockBreakHandler simpleBlockBreakerHandler(@Nonnull AbstractMachine abstractMachine, int... slot) {
-        return new BlockBreakHandler(false, false) {
+        return new BlockBreakHandler(false, true) {
             @Override
             public void onPlayerBreak(@Nonnull BlockBreakEvent blockBreakEvent, @Nonnull ItemStack itemStack, @Nonnull List<ItemStack> list) {
                 Location location = blockBreakEvent.getBlock().getLocation();
@@ -220,6 +220,8 @@ public final class MachineUtil {
     public static int calMaxMatch(@Nonnull Inventory inventory, int[] slots, @Nonnull List<ItemAmountWrapper> itemAmountWrapperList) {
         List<Integer> countList = new ArrayList<>(itemAmountWrapperList.size());
         List<Integer> stackList = new ArrayList<>(itemAmountWrapperList.size());
+        int[] counts = new int[itemAmountWrapperList.size()];
+        int[] stacks = new int[itemAmountWrapperList.size()];
         for (int i = 0; i < itemAmountWrapperList.size(); i++) {
             countList.add(0);
             stackList.add(0);
@@ -238,8 +240,8 @@ public final class MachineUtil {
             itemWrapper.newWrap(item);
             for (int i = 0; i < itemAmountWrapperList.size(); i++) {
                 if (ItemStackUtil.isItemSimilar(itemWrapper, itemAmountWrapperList.get(i))) {
-                    countList.set(i, countList.get(i) + (item.getMaxStackSize() - item.getAmount()));
-                    stackList.set(i, countList.get(i) / itemAmountWrapperList.get(i).getAmount());
+                    counts[i] = counts[i] + item.getMaxStackSize() - item.getAmount();
+                    stacks[i] = counts[i] / itemAmountWrapperList.get(i).getAmount();
                     break;
                 }
             }
@@ -254,8 +256,59 @@ public final class MachineUtil {
                     minStackP = i;
                 }
             }
+            counts[minStackP] = counts[minStackP] + itemAmountWrapperList.get(minStackP).getItemStack().getMaxStackSize();
             countList.set(minStackP, countList.get(minStackP) + itemAmountWrapperList.get(minStackP).getItemStack().getMaxStackSize());
+            stacks[minStackP] = counts[minStackP] / itemAmountWrapperList.get(minStackP).getAmount();
             stackList.set(minStackP, countList.get(minStackP) / itemAmountWrapperList.get(minStackP).getAmount());
+            emptySlot--;
+        }
+
+        int min = stackList.get(0);
+        for (int stack : stackList) {
+            min = Math.min(min, stack);
+        }
+        return min;
+    }
+
+    public static int calMaxMatch(@Nonnull Inventory inventory, int[] slots, @Nonnull ItemAmountWrapper[] itemAmountWrapperList) {
+        List<Integer> countList = new ArrayList<>(itemAmountWrapperList.length);
+        List<Integer> stackList = new ArrayList<>(itemAmountWrapperList.length);
+        for (int i = 0; i < itemAmountWrapperList.length; i++) {
+            countList.add(0);
+            stackList.add(0);
+        }
+
+        int emptySlot = 0;
+        ItemWrapper itemWrapper = new ItemWrapper();
+        for (int slot : slots) {
+            ItemStack item = inventory.getItem(slot);
+            if (ItemStackUtil.isItemNull(item)) {
+                emptySlot++;
+                continue;
+            } else if (item.getAmount() >= item.getMaxStackSize()) {
+                continue;
+            }
+            itemWrapper.newWrap(item);
+            for (int i = 0; i < itemAmountWrapperList.length; i++) {
+                if (ItemStackUtil.isItemSimilar(itemWrapper, itemAmountWrapperList[i])) {
+                    countList.set(i, countList.get(i) + (item.getMaxStackSize() - item.getAmount()));
+                    stackList.set(i, countList.get(i) / itemAmountWrapperList[i].getAmount());
+                    break;
+                }
+            }
+        }
+
+        while (emptySlot > 0) {
+            int minStackP = 0;
+            int minStack = stackList.get(0);
+            for (int i = 1; i < itemAmountWrapperList.length; i++) {
+                if (minStack > stackList.get(i)) {
+                    minStack = stackList.get(i);
+                    minStackP = i;
+                }
+            }
+            countList.set(minStackP, countList.get(minStackP) + itemAmountWrapperList[minStackP].getItemStack().getMaxStackSize());
+            stackList.set(minStackP, countList.get(minStackP) / itemAmountWrapperList[minStackP].getAmount());
             emptySlot--;
         }
 

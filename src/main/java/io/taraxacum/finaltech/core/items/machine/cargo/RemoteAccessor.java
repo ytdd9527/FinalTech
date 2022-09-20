@@ -10,7 +10,9 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.RemoteAccessorMenu;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
+import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.block.Block;
@@ -25,8 +27,8 @@ import javax.annotation.Nonnull;
  */
 public class RemoteAccessor extends AbstractCargo implements RecipeItem {
     public static final String KEY = "times";
-    public static final Integer RANGE = FinalTech.getValueManager().getOrDefault(8, "items", SlimefunUtil.getIdFormatName(RemoteAccessor.class), "range");
-    public static final String THRESHOLD = FinalTech.getValueManager().getOrDefault(String.valueOf(Slimefun.getTickerTask().getTickRate() / 2), "items", SlimefunUtil.getIdFormatName(RemoteAccessor.class), "threshold");
+    public static final int RANGE = ConfigUtil.getOrDefaultItemSetting(8, SfItemUtil.getIdFormatName(RemoteAccessor.class), "range");
+    public static final String THRESHOLD = FinalTech.getValueManager().getOrDefault(String.valueOf(Slimefun.getTickerTask().getTickRate() / 2), SfItemUtil.getIdFormatName(RemoteAccessor.class), "threshold");
 
     public RemoteAccessor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -57,7 +59,7 @@ public class RemoteAccessor extends AbstractCargo implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(),
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(),
                 this, String.valueOf(RANGE));
     }
 }

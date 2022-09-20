@@ -3,13 +3,8 @@ package io.taraxacum.finaltech.core.items.machine.template.generator;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
-import io.taraxacum.finaltech.core.items.machine.template.basic.AbstractBasicMachine;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Final_ROOT

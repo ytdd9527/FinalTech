@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.AdvancedMachineRecipe;
 import io.taraxacum.finaltech.api.dto.ItemAmountWrapper;
 import io.taraxacum.finaltech.api.dto.ItemWrapper;
@@ -25,6 +26,10 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public abstract class AbstractExtractionMachine extends AbstractMachine {
     public AbstractExtractionMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -50,28 +55,28 @@ public abstract class AbstractExtractionMachine extends AbstractMachine {
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        int itemSlot = this.getInputSlot()[new Random().nextInt(this.getInputSlot().length)];
         BlockMenu blockMenu = BlockStorage.getInventory(block);
+        int itemSlot = this.getInputSlot()[FinalTech.getRandom().nextInt(this.getInputSlot().length)];
         ItemStack item = blockMenu.getItemInSlot(itemSlot);
         if(ItemStackUtil.isItemNull(item)) {
             return;
         }
         ItemWrapper itemWrapper = new ItemWrapper(item);
         int matchAmount = 0;
-        List<ItemAmountWrapper> outputItemList = null;
+        ItemAmountWrapper[] outputItems = null;
         List<AdvancedMachineRecipe> advancedRecipeList = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getClass());
         for(AdvancedMachineRecipe advancedMachineRecipe : advancedRecipeList) {
-            if(itemWrapper.getItemStack().getAmount() >= advancedMachineRecipe.getInput().get(0).getAmount() && ItemStackUtil.isItemSimilar(advancedMachineRecipe.getInput().get(0), itemWrapper)) {
-                outputItemList = advancedMachineRecipe.getOutput();
-                matchAmount = itemWrapper.getItemStack().getAmount() / advancedMachineRecipe.getInput().get(0).getAmount();
+            if(itemWrapper.getItemStack().getAmount() >= advancedMachineRecipe.getInput()[0].getAmount() && ItemStackUtil.isItemSimilar(advancedMachineRecipe.getInput()[0], itemWrapper)) {
+                outputItems = advancedMachineRecipe.getOutput();
+                matchAmount = itemWrapper.getItemStack().getAmount() / advancedMachineRecipe.getInput()[0].getAmount();
                 break;
             }
         }
 
-        if(outputItemList != null) {
-            matchAmount = Math.min(matchAmount, MachineUtil.calMaxMatch(blockMenu.toInventory(), this.getOutputSlot(), outputItemList));
+        if(outputItems != null) {
+            matchAmount = Math.min(matchAmount, MachineUtil.calMaxMatch(blockMenu.toInventory(), this.getOutputSlot(), outputItems));
             if(matchAmount > 0) {
-                for(ItemStack outputItem : ItemStackUtil.calEnlargeItemArray(outputItemList, matchAmount)) {
+                for(ItemStack outputItem : ItemStackUtil.calEnlargeItemArray(outputItems, matchAmount)) {
                     blockMenu.pushItem(outputItem, this.getOutputSlot());
                 }
             }

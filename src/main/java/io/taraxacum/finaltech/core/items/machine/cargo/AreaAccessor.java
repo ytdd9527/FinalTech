@@ -10,7 +10,8 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.AreaAccessorMenu;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.block.Block;
@@ -25,8 +26,8 @@ import javax.annotation.Nonnull;
  */
 public class AreaAccessor extends AbstractCargo implements RecipeItem {
     public static final String KEY = "times";
-    public static final Integer RANGE = FinalTech.getValueManager().getOrDefault(16, "items", SlimefunUtil.getIdFormatName(AreaAccessor.class), "range");
-    public static final String THRESHOLD = FinalTech.getValueManager().getOrDefault(String.valueOf(Slimefun.getTickerTask().getTickRate() / 2), "items", SlimefunUtil.getIdFormatName(AreaAccessor.class), "threshold");
+    public static final int RANGE = ConfigUtil.getOrDefaultItemSetting(16, SfItemUtil.getIdFormatName(AreaAccessor.class), "range");
+    public static final String THRESHOLD = ConfigUtil.getOrDefaultItemSetting(String.valueOf(Slimefun.getTickerTask().getTickRate() / 2), SfItemUtil.getIdFormatName(AreaAccessor.class), "threshold");
 
     public AreaAccessor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

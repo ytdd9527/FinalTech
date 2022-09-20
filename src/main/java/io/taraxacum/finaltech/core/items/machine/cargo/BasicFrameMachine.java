@@ -13,7 +13,7 @@ import io.taraxacum.finaltech.core.menu.limit.AbstractLimitMachineMenu;
 import io.taraxacum.finaltech.core.menu.limit.BasicFrameMachineMenu;
 import io.taraxacum.finaltech.util.CargoUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -49,6 +49,6 @@ public class BasicFrameMachine extends AbstractOperationMachine {
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

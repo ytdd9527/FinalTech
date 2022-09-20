@@ -224,9 +224,9 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
                     List<ItemAmountWrapper> inputListTemp = new ArrayList<>();
                     for (ItemAmountWrapper oldInputItem : inputList) {
                         for (AdvancedMachineRecipe advancedMachineRecipe : machineRecipeList) {
-                            for (AdvancedMachineRecipe.AdvancedRandomOutput advancedRandomOutput : advancedMachineRecipe.getOutputList()) {
-                                ItemAmountWrapper outputItem = advancedRandomOutput.getOutputItem().get(0);
-                                if (advancedRandomOutput.getOutputItem().size() == 1 && oldInputItem.getAmount() >= outputItem.getAmount() && ItemStackUtil.isItemSimilar(oldInputItem, outputItem)) {
+                            for (AdvancedMachineRecipe.AdvancedRandomOutput advancedRandomOutput : advancedMachineRecipe.getOutputs()) {
+                                ItemAmountWrapper outputItem = advancedRandomOutput.getOutputItem()[0];
+                                if (advancedRandomOutput.getOutputItem().length == 1 && oldInputItem.getAmount() >= outputItem.getAmount() && ItemStackUtil.isItemSimilar(oldInputItem, outputItem)) {
                                     int count = oldInputItem.getAmount() / outputItem.getAmount();
                                     for (ItemAmountWrapper inputItem : advancedMachineRecipe.getInput()) {
                                         ItemAmountWrapper.addToList(inputListTemp, inputItem, count);
@@ -266,8 +266,8 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
             }
         }
 
-        AdvancedMachineRecipe.AdvancedRandomOutput advancedRandomOutput = new AdvancedMachineRecipe.AdvancedRandomOutput(List.of(new ItemAmountWrapper(slimefunItem.getRecipeOutput())), 1);
-        AdvancedMachineRecipe advancedMachineRecipe = new AdvancedMachineRecipe(inputList, List.of(advancedRandomOutput));
+        AdvancedMachineRecipe.AdvancedRandomOutput advancedRandomOutput = new AdvancedMachineRecipe.AdvancedRandomOutput(new ItemAmountWrapper[] {(new ItemAmountWrapper(slimefunItem.getRecipeOutput()))}, 1);
+        AdvancedMachineRecipe advancedMachineRecipe = new AdvancedMachineRecipe(inputList.toArray(new ItemAmountWrapper[0]), new AdvancedMachineRecipe.AdvancedRandomOutput[] {(advancedRandomOutput)});
         this.setParseSuccessMenu(inventory, location, advancedMachineRecipe);
     }
 
@@ -287,9 +287,9 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
         LocationRecipeRegistry.getInstance().setRecipe(location, advancedMachineRecipe);
         int i;
         for (i = 0; i < ITEM_INPUT_SLOT.length - 1; i++) {
-            if (advancedMachineRecipe.getInput().size() > i) {
-                int amount = advancedMachineRecipe.getInput().get(i).getAmount();
-                CustomItemStack icon = new CustomItemStack(advancedMachineRecipe.getInput().get(i).getItemStack());
+            if (advancedMachineRecipe.getInput().length > i) {
+                int amount = advancedMachineRecipe.getInput()[i].getAmount();
+                CustomItemStack icon = new CustomItemStack(advancedMachineRecipe.getInput()[i].getItemStack());
                 icon.setAmount(Math.min(amount, 64));
                 ItemStackUtil.addLoreToLast(icon, "§8数量= " + amount);
                 inventory.setItem(ITEM_INPUT_SLOT[i], icon);
@@ -298,11 +298,11 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
             }
             blockMenu.addMenuClickHandler(ITEM_INPUT_SLOT[i], ChestMenuUtils.getEmptyClickHandler());
         }
-        if (advancedMachineRecipe.getInput().size() < ITEM_INPUT_SLOT.length) {
+        if (advancedMachineRecipe.getInput().length < ITEM_INPUT_SLOT.length) {
             blockMenu.replaceExistingItem(ITEM_INPUT_SLOT[i], PARSE_SUCCESS_ICON);
-        } else if (advancedMachineRecipe.getInput().size() == ITEM_INPUT_SLOT.length) {
-            int amount = advancedMachineRecipe.getInput().get(i).getAmount();
-            CustomItemStack icon = new CustomItemStack(advancedMachineRecipe.getInput().get(i).getItemStack());
+        } else if (advancedMachineRecipe.getInput().length == ITEM_INPUT_SLOT.length) {
+            int amount = advancedMachineRecipe.getInput()[i].getAmount();
+            CustomItemStack icon = new CustomItemStack(advancedMachineRecipe.getInput()[i].getItemStack());
             icon.setAmount(Math.min(amount, 64));
             ItemStackUtil.addLoreToLast(icon, "§8数量= " + amount);
             blockMenu.replaceExistingItem(ITEM_INPUT_SLOT[i], icon);
@@ -310,11 +310,11 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
         } else {
             blockMenu.replaceExistingItem(ITEM_INPUT_SLOT[i], PARSE_EXTEND_ICON);
             blockMenu.addMenuClickHandler(ITEM_INPUT_SLOT[i], (player, i1, itemStack, clickAction) -> {
-                ChestMenu chestMenu = new ChestMenu(ItemStackUtil.getItemName(advancedMachineRecipe.getOutput().get(0).getItemStack()));
-                for (int slot = 0; slot < 54 && slot < advancedMachineRecipe.getInput().size(); slot++) {
-                    if (advancedMachineRecipe.getInput().size() > slot) {
-                        int amount = advancedMachineRecipe.getInput().get(slot).getAmount();
-                        CustomItemStack icon = new CustomItemStack(advancedMachineRecipe.getInput().get(slot).getItemStack());
+                ChestMenu chestMenu = new ChestMenu(ItemStackUtil.getItemName(advancedMachineRecipe.getOutput()[0].getItemStack()));
+                for (int slot = 0; slot < 54 && slot < advancedMachineRecipe.getInput().length; slot++) {
+                    if (advancedMachineRecipe.getInput().length > slot) {
+                        int amount = advancedMachineRecipe.getInput()[slot].getAmount();
+                        CustomItemStack icon = new CustomItemStack(advancedMachineRecipe.getInput()[slot].getItemStack());
                         icon.setAmount(Math.min(amount, 64));
                         ItemStackUtil.addLoreToLast(icon, "§8数量= " + amount);
                         chestMenu.addItem(slot, icon);
@@ -327,7 +327,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
                 return false;
             });
         }
-        ItemStack icon = new ItemStack(advancedMachineRecipe.getOutput().get(0).getItemStack());
+        ItemStack icon = new ItemStack(advancedMachineRecipe.getOutput()[0].getItemStack());
         ItemStackUtil.addLoreToLast(icon, "§8合成产物");
         blockMenu.replaceExistingItem(ITEM_OUTPUT_SLOT, icon);
     }

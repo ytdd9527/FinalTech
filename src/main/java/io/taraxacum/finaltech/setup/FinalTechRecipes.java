@@ -246,9 +246,20 @@ public final class FinalTechRecipes {
     public static final ItemStack[] RESEARCH_UNLOCK_TICKET = new ItemStack[] {
 
     };
+    public static final ItemStack[] MACHINE_CONFIGURATOR = new ItemStack[] {
+
+    };
+    public static final ItemStack[] PORTABLE_ENERGY_STORAGE = new ItemStack[] {
+
+    };
 
     /* weapon */
     public static final ItemStack[] DUST_WOODEN_SWORD = new ItemStack[] {
+            null, new ItemStack(Material.OAK_WOOD), null,
+            null, new ItemStack(Material.OAK_WOOD), null,
+            null, FinalTechItems.ORDERED_DUST, null
+    };
+    public static final ItemStack[] SUPER_PICKAXE = new ItemStack[] {
             null, new ItemStack(Material.OAK_WOOD), null,
             null, new ItemStack(Material.OAK_WOOD), null,
             null, FinalTechItems.ORDERED_DUST, null
@@ -382,6 +393,16 @@ public final class FinalTechRecipes {
             new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64)
     };
     public static final ItemStack[] OVERLOADED_ACCELERATOR = new ItemStack[] {
+            new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64),
+            new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.ANNULAR, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64),
+            new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64)
+    };
+    public static final ItemStack[] VARIABLE_WIRE_RESISTANCE = new ItemStack[] {
+            new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64),
+            new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.ANNULAR, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64),
+            new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64)
+    };
+    public static final ItemStack[] VARIABLE_WIRE_CAPACITOR = new ItemStack[] {
             new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64),
             new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.ANNULAR, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64),
             new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64)

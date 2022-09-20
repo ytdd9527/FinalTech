@@ -4,38 +4,33 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
-import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetProvider;
-import io.github.thebusybiscuit.slimefun4.core.attributes.MachineProcessHolder;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
-import io.github.thebusybiscuit.slimefun4.core.machines.MachineOperation;
-import io.github.thebusybiscuit.slimefun4.core.machines.MachineProcessor;
-import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.operations.FuelOperation;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.core.items.machine.range.point.AbstractPointMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.finaltech.core.menu.unit.VoidMenu;
-import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.BlockTickerUtil;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AGenerator;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineFuel;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Type;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class FuelOperator extends AbstractFaceMachine implements RecipeItem {
     public FuelOperator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -61,25 +56,27 @@ public class FuelOperator extends AbstractFaceMachine implements RecipeItem {
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        int count = this.function(block, 1, location -> {
+        this.function(block, 1, location -> {
             if(BlockStorage.hasBlockInfo(location)) {
                 Config targetConfig = BlockStorage.getLocationInfo(location);
-                if(targetConfig.contains(SlimefunUtil.KEY_ID)) {
-                    String targetSlimefunId = targetConfig.getString(SlimefunUtil.KEY_ID);
+                if(targetConfig.contains(ConstantTableUtil.CONFIG_ID)) {
+                    String targetSlimefunId = targetConfig.getString(ConstantTableUtil.CONFIG_ID);
                     SlimefunItem targetSlimefunItem = SlimefunItem.getById(targetSlimefunId);
                     if(targetSlimefunItem instanceof AGenerator) {
-                        FuelOperation operation = ((AGenerator) targetSlimefunItem).getMachineProcessor().getOperation(location);
-                        if(operation == null) {
-                            operation = new FuelOperation(new MachineFuel(2, new ItemStack(Material.COBBLESTONE)));
-                            ((AGenerator) targetSlimefunItem).getMachineProcessor().startOperation(location, operation);
-                            return 1;
-                        }
-
+                        BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(targetSlimefunId), () -> FuelOperator.this.doCharge((AGenerator) targetSlimefunItem, location), location);
                     }
                 }
             }
             return 0;
         });
+    }
+
+    private void doCharge(@Nonnull AGenerator aGenerator, @Nonnull Location location) {
+        FuelOperation operation = aGenerator.getMachineProcessor().getOperation(location);
+        if(operation == null) {
+            operation = new FuelOperation(new MachineFuel(2, new ItemStack(Material.COBBLESTONE)));
+            aGenerator.getMachineProcessor().startOperation(location, operation);
+        }
     }
 
     @Override

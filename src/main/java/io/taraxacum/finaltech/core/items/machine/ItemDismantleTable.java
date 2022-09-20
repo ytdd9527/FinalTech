@@ -6,12 +6,13 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.ItemDismantleTableMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -26,26 +27,24 @@ import java.util.*;
  * @since 2.0
  */
 public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
-    private static final List<RecipeType> RECIPE_TYPE_LIST = new ArrayList<>();
-    // TODO 可配置化
-    static {
-        RECIPE_TYPE_LIST.add(RecipeType.ENHANCED_CRAFTING_TABLE);
-        RECIPE_TYPE_LIST.add(RecipeType.GRIND_STONE);
-        RECIPE_TYPE_LIST.add(RecipeType.ARMOR_FORGE);
-        RECIPE_TYPE_LIST.add(RecipeType.ORE_CRUSHER);
-        RECIPE_TYPE_LIST.add(RecipeType.COMPRESSOR);
-        RECIPE_TYPE_LIST.add(RecipeType.SMELTERY);
-        RECIPE_TYPE_LIST.add(RecipeType.PRESSURE_CHAMBER);
-        RECIPE_TYPE_LIST.add(RecipeType.MAGIC_WORKBENCH);
-//        RECIPE_TYPE_LIST.add(RecipeType.ORE_WASHER);
-        RECIPE_TYPE_LIST.add(RecipeType.GOLD_PAN);
-        RECIPE_TYPE_LIST.add(RecipeType.JUICER);
-        RECIPE_TYPE_LIST.add(RecipeType.ANCIENT_ALTAR);
-        RECIPE_TYPE_LIST.add(RecipeType.HEATED_PRESSURE_CHAMBER);
-        RECIPE_TYPE_LIST.add(RecipeType.FOOD_COMPOSTER);
-        RECIPE_TYPE_LIST.add(RecipeType.FOOD_FABRICATOR);
-        RECIPE_TYPE_LIST.add(RecipeType.FREEZER);
-    }
+    private final Set<String> ALLOWED_RECIPE_ID = new HashSet<>(FinalTech.getItemManager().getStringList(SfItemUtil.getIdFormatName(this.getClass()), "allowed-recipe-id"));
+
+//        RECIPE_TYPE_LIST.add(RecipeType.ENHANCED_CRAFTING_TABLE);
+//        RECIPE_TYPE_LIST.add(RecipeType.GRIND_STONE);
+//        RECIPE_TYPE_LIST.add(RecipeType.ARMOR_FORGE);
+//        RECIPE_TYPE_LIST.add(RecipeType.ORE_CRUSHER);
+//        RECIPE_TYPE_LIST.add(RecipeType.COMPRESSOR);
+//        RECIPE_TYPE_LIST.add(RecipeType.SMELTERY);
+//        RECIPE_TYPE_LIST.add(RecipeType.PRESSURE_CHAMBER);
+//        RECIPE_TYPE_LIST.add(RecipeType.MAGIC_WORKBENCH);
+////        RECIPE_TYPE_LIST.add(RecipeType.ORE_WASHER);
+//        RECIPE_TYPE_LIST.add(RecipeType.GOLD_PAN);
+//        RECIPE_TYPE_LIST.add(RecipeType.JUICER);
+//        RECIPE_TYPE_LIST.add(RecipeType.ANCIENT_ALTAR);
+//        RECIPE_TYPE_LIST.add(RecipeType.HEATED_PRESSURE_CHAMBER);
+//        RECIPE_TYPE_LIST.add(RecipeType.FOOD_COMPOSTER);
+//        RECIPE_TYPE_LIST.add(RecipeType.FOOD_FABRICATOR);
+//        RECIPE_TYPE_LIST.add(RecipeType.FREEZER);
 
     public ItemDismantleTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -75,7 +74,7 @@ public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
         if (MachineUtil.isEmpty(blockMenu.toInventory(), this.getOutputSlot())) {
             ItemStack item = blockMenu.getItemInSlot(this.getInputSlot()[0]);
             SlimefunItem sfItem = SlimefunItem.getByItem(item);
-            if (sfItem != null && item.getAmount() >= sfItem.getRecipeOutput().getAmount() && sfItem.getRecipe().length <= this.getOutputSlot().length && RECIPE_TYPE_LIST.contains(sfItem.getRecipeType()) && ItemStackUtil.isEnchantmentSame(item, sfItem.getRecipeOutput()) && ItemStackUtil.isItemSimilar(item, sfItem.getRecipeOutput())) {
+            if (sfItem != null && item.getAmount() >= sfItem.getRecipeOutput().getAmount() && sfItem.getRecipe().length <= this.getOutputSlot().length && ALLOWED_RECIPE_ID.contains(sfItem.getRecipeType().getMachine().getId()) && ItemStackUtil.isEnchantmentSame(item, sfItem.getRecipeOutput()) && ItemStackUtil.isItemSimilar(item, sfItem.getRecipeOutput())) {
                 int amount = item.getAmount() / sfItem.getRecipeOutput().getAmount();
                 for (ItemStack outputItem : sfItem.getRecipe()) {
                     if (!ItemStackUtil.isItemNull(outputItem)) {
@@ -105,8 +104,11 @@ public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        for (RecipeType recipeType : RECIPE_TYPE_LIST) {
-            this.registerDescriptiveRecipe(recipeType.toItem());
+        for (String id : ALLOWED_RECIPE_ID) {
+            SlimefunItem slimefunItem = SlimefunItem.getById(id);
+            if(slimefunItem != null) {
+                this.registerDescriptiveRecipe(slimefunItem.getItem());
+            }
         }
     }
 }

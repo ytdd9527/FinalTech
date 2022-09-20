@@ -6,8 +6,12 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
+import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -26,15 +30,14 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class MenuViewer extends UsableSlimefunItem implements RecipeItem {
-    private static final int INSERT_SLOT_VALUE = 1;
-    private static final int WITHDRAW_SLOT_VALUE = 2;
-    private static final int INSERT_AND_WITHDRAW_SLOT_VALUE = INSERT_SLOT_VALUE + WITHDRAW_SLOT_VALUE;
+    private final int INSERT_SLOT_VALUE = 1;
+    private final int WITHDRAW_SLOT_VALUE = 2;
+    private final int INSERT_AND_WITHDRAW_SLOT_VALUE = INSERT_SLOT_VALUE + WITHDRAW_SLOT_VALUE;
 
-    // TODO
-    private static final ItemStack VOID_ICON = new CustomItemStack(Material.GRAY_STAINED_GLASS_PANE, "§7不可交互槽", " ");
-    private static final ItemStack INPUT_ICON = new CustomItemStack(Material.BLUE_STAINED_GLASS_PANE, "§9输入槽", " ");
-    private static final ItemStack OUTPUT_ICON = new CustomItemStack(Material.ORANGE_STAINED_GLASS_PANE, "§6输出槽", " ");
-    private static final ItemStack INPUT_AND_OUTPUT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, "§d输入输出槽", " ");
+    private final ItemStack VOID_ICON = new CustomItemStack(Material.GRAY_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(this.getClass()), "void-icon", "name"));
+    private final ItemStack INPUT_ICON = new CustomItemStack(Material.BLUE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(this.getClass()), "input-icon", "name"));
+    private final ItemStack OUTPUT_ICON = new CustomItemStack(Material.ORANGE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(this.getClass()), "output-icon", "name"));
+    private final ItemStack INPUT_AND_OUTPUT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(this.getClass()), "in-and-out-icon", "name"));
 
     public MenuViewer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -81,15 +84,8 @@ public class MenuViewer extends UsableSlimefunItem implements RecipeItem {
         }
     }
 
-    // TODO
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_INITIATIVE + "使用方式",
-                "",
-                TextUtil.COLOR_ACTION + "[右键]" + TextUtil.COLOR_NORMAL + "粘液科技方块",
-                TextUtil.COLOR_NORMAL + "显示其输入槽和输出槽位置",
-                "",
-                TextUtil.COLOR_NORMAL + "根据副手持有物品不同",
-                TextUtil.COLOR_NORMAL + "显示的效果可能不同");
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

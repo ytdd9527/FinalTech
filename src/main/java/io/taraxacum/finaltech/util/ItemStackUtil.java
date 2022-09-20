@@ -319,9 +319,39 @@ public final class ItemStackUtil {
      * @param amount The amount that the #{@link ItemStack} will be enlarged.
      * @return A new array that multiply the amount to the items.
      */
-    // TODO 调用这个方法的地方...
     @Nonnull
     public static ItemStack[] calEnlargeItemArray(@Nonnull List<ItemAmountWrapper> itemAmountWrapperList, int amount) {
+        int slot = 0;
+        for (ItemAmountWrapper itemAmountWrapper : itemAmountWrapperList) {
+            slot = slot + 1 + itemAmountWrapper.getAmount() * amount / itemAmountWrapper.getItemStack().getMaxStackSize();
+            if (itemAmountWrapper.getAmount() * amount % itemAmountWrapper.getItemStack().getMaxStackSize() == 0) {
+                slot--;
+            }
+        }
+        ItemStack[] result = new ItemStack[slot];
+        int pointer = 0;
+        for (ItemAmountWrapper itemAmountWrapper : itemAmountWrapperList) {
+            int resultAmount = itemAmountWrapper.getAmount() * amount;
+            while(resultAmount > itemAmountWrapper.getItemStack().getMaxStackSize()) {
+                result[pointer] = ItemStackUtil.cloneItem(itemAmountWrapper.getItemStack());
+                result[pointer++].setAmount(itemAmountWrapper.getItemStack().getMaxStackSize());
+                resultAmount -= itemAmountWrapper.getItemStack().getMaxStackSize();
+            }
+            if (resultAmount != 0) {
+                result[pointer] = ItemStackUtil.cloneItem(itemAmountWrapper.getItemStack());
+                result[pointer++].setAmount(resultAmount);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * @param itemAmountWrapperList The #{@link ItemAmountWrapper} to be enlarged.
+     * @param amount The amount that the #{@link ItemStack} will be enlarged.
+     * @return A new array that multiply the amount to the items.
+     */
+    @Nonnull
+    public static ItemStack[] calEnlargeItemArray(@Nonnull ItemAmountWrapper[] itemAmountWrapperList, int amount) {
         int slot = 0;
         for (ItemAmountWrapper itemAmountWrapper : itemAmountWrapperList) {
             slot = slot + 1 + itemAmountWrapper.getAmount() * amount / itemAmountWrapper.getItemStack().getMaxStackSize();
@@ -400,6 +430,26 @@ public final class ItemStackUtil {
             }
         }
         return itemWithWrapperList;
+    }
+
+    /**
+     * Transfer #{@link ItemStack} to A List of #{@link ItemAmountWrapper}.
+     * All returned #{@link ItemAmountWrapper} will contain different #{@link ItemStack} with its amount in items.
+     */
+    @Nonnull
+    public static ItemAmountWrapper[] calItemArrayWithAmount(@Nonnull ItemStack[] items) {
+        // TODO update it
+        return ItemStackUtil.calItemListWithAmount(items).toArray(new ItemAmountWrapper[0]);
+    }
+
+    /**
+     * Transfer #{@link ItemStack} to A List of #{@link ItemAmountWrapper}.
+     * All returned #{@link ItemAmountWrapper} will contain different #{@link ItemStack} with its amount in items.
+     */
+    @Nonnull
+    public static ItemAmountWrapper[] calItemArrayWithAmount(@Nonnull List<ItemStack> itemList) {
+        // TODO update it
+        return ItemStackUtil.calItemListWithAmount(itemList).toArray(new ItemAmountWrapper[0]);
     }
 
     /**

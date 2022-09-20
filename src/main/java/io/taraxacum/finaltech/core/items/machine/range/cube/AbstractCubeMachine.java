@@ -21,7 +21,7 @@ public abstract class AbstractCubeMachine extends AbstractRangeMachine {
     }
 
     @Override
-    protected final int function(@Nonnull Block block, int range, @Nonnull Function function) {
+    protected final int function(@Nonnull Block block, int range, @Nonnull RangeFunction function) {
         int count = 0;
         Location location = block.getLocation();
         World world = location.getWorld();
@@ -38,7 +38,7 @@ public abstract class AbstractCubeMachine extends AbstractRangeMachine {
                 location.setY(y);
                 for (int z = minZ; z <= maxZ; z++) {
                     location.setZ(z);
-                    result = function.function(location);
+                    result = function.apply(location);
                     if (result == -1) {
                         return count;
                     }

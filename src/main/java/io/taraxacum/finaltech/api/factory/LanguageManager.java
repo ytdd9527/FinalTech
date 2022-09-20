@@ -2,11 +2,10 @@ package io.taraxacum.finaltech.api.factory;
 
 import io.github.thebusybiscuit.slimefun4.libraries.commons.lang.StringUtils;
 import io.taraxacum.common.util.StringUtil;
+import io.taraxacum.finaltech.api.interfaces.StringReplacer;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginBase;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Function;
 

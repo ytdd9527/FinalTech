@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.function.Function;
 
 /**
  * @author Final_ROOT
@@ -19,9 +20,10 @@ public abstract class AbstractRangeMachine extends AbstractMachine {
         super(itemGroup, item, recipeType, recipe);
     }
 
-    protected abstract int function(@Nonnull Block block, int range, @Nonnull AbstractRangeMachine.Function function);
+    protected abstract int function(@Nonnull Block block, int range, @Nonnull AbstractRangeMachine.RangeFunction function);
 
-    protected interface Function {
-        int function(@Nonnull Location location);
+    protected interface RangeFunction extends Function<Location, Integer> {
+        @Override
+        Integer apply(Location location);
     }
 }

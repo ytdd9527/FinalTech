@@ -8,9 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Final_ROOT
@@ -18,15 +16,15 @@ import java.util.Map;
  */
 public class AdvancedCraft {
     @Nonnull
-    private List<ItemAmountWrapper> inputItemList;
+    private ItemAmountWrapper[] inputItemList;
     @Nonnull
-    private List<ItemAmountWrapper> outputItemList;
+    private ItemAmountWrapper[] outputItemList;
     @Nonnull
-    private List<List<Integer>> consumeSlotList;
+    private int[][] consumeSlotList;
     private int matchCount;
     private int offset;
 
-    private AdvancedCraft(@Nonnull List<ItemAmountWrapper> inputItemList, @Nonnull List<ItemAmountWrapper> outputItemList, @Nonnull List<List<Integer>> consumeSlotList, int matchCount, int offset) {
+    private AdvancedCraft(@Nonnull ItemAmountWrapper[] inputItemList, @Nonnull ItemAmountWrapper[] outputItemList, @Nonnull int[][] consumeSlotList, int matchCount, int offset) {
         this.inputItemList = inputItemList;
         this.outputItemList = outputItemList;
         this.consumeSlotList = consumeSlotList;
@@ -35,29 +33,29 @@ public class AdvancedCraft {
     }
 
     @Nonnull
-    public List<ItemAmountWrapper> getInputItemList() {
+    public ItemAmountWrapper[] getInputItemList() {
         return inputItemList;
     }
 
-    public void setInputItemList(@Nonnull List<ItemAmountWrapper> inputItemList) {
+    public void setInputItemList(@Nonnull ItemAmountWrapper[] inputItemList) {
         this.inputItemList = inputItemList;
     }
 
     @Nonnull
-    public List<ItemAmountWrapper> getOutputItemList() {
+    public ItemAmountWrapper[] getOutputItemList() {
         return outputItemList;
     }
 
-    public void setOutputItemList(@Nonnull List<ItemAmountWrapper> outputItemList) {
+    public void setOutputItemList(@Nonnull ItemAmountWrapper[] outputItemList) {
         this.outputItemList = outputItemList;
     }
 
     @Nonnull
-    public List<List<Integer>> getConsumeSlotList() {
+    public int[][] getConsumeSlotList() {
         return consumeSlotList;
     }
 
-    public void setConsumeSlotList(@Nonnull List<List<Integer>> consumeSlotList) {
+    public void setConsumeSlotList(@Nonnull int[][] consumeSlotList) {
         this.consumeSlotList = consumeSlotList;
     }
 
@@ -81,15 +79,17 @@ public class AdvancedCraft {
      * Consume item after we know how a machine should work.
      */
     public void consumeItem(@Nonnull Inventory inventory) {
-        for (int i = 0; i < this.inputItemList.size(); i++) {
-            int consumeItemAmount = this.inputItemList.get(i).getAmount() * this.matchCount;
-            for (int slot : this.consumeSlotList.get(i)) {
-                ItemStack item = inventory.getItem(slot);
-                int itemConsumeAmount = Math.min(consumeItemAmount, item.getAmount());
-                item.setAmount(item.getAmount() - itemConsumeAmount);
-                consumeItemAmount -= itemConsumeAmount;
-                if (consumeItemAmount == 0) {
-                    break;
+        for (int i = 0; i < this.inputItemList.length; i++) {
+            int consumeItemAmount = this.inputItemList[i].getAmount() * this.matchCount;
+            for (int slot : this.consumeSlotList[i]) {
+                if(slot != -1) {
+                    ItemStack item = inventory.getItem(slot);
+                    int itemConsumeAmount = Math.min(consumeItemAmount, item.getAmount());
+                    item.setAmount(item.getAmount() - itemConsumeAmount);
+                    consumeItemAmount -= itemConsumeAmount;
+                    if (consumeItemAmount == 0) {
+                        break;
+                    }
                 }
             }
         }
@@ -116,26 +116,28 @@ public class AdvancedCraft {
     @Nullable
     public static AdvancedCraft craftAsc(@Nonnull Inventory inventory, int[] inputSlots, @Nonnull List<AdvancedMachineRecipe> advancedMachineRecipeList, int quantityModule, int offset) {
         Map<Integer, ItemWrapper> inputItemSlotMap = MachineUtil.getSlotItemWrapperMap(inventory, inputSlots);
-        List<List<Integer>> consumeSlotList = new ArrayList<>(inputItemSlotMap.size());
-        List<Integer> skipSlotList = new ArrayList<>(inputItemSlotMap.size());
+        int[][] consumeSlots;
+        Set<Integer> skipSlotSet = new HashSet<>(inputItemSlotMap.size());
         int matchCount;
         int matchAmount;
-        List<Integer> slotList = new ArrayList<>(inputItemSlotMap.size());
         for (int i = 0, length = advancedMachineRecipeList.size(); i < length; i++) {
             AdvancedMachineRecipe advancedMachineRecipe = advancedMachineRecipeList.get((i + offset) % length);
-            List<ItemAmountWrapper> recipeInputItemList = advancedMachineRecipe.getInput();
+            ItemAmountWrapper[] recipeInputItems = advancedMachineRecipe.getInput();
+            consumeSlots = new int[recipeInputItems.length][];
             matchCount = quantityModule;
-            for (ItemAmountWrapper recipeInputItem : recipeInputItemList) {
+
+            for (ItemAmountWrapper recipeInputItem : recipeInputItems) {
                 matchAmount = 0;
-                slotList.clear();
+                int j = 0;
+                consumeSlots[i] = new int[inputItemSlotMap.size()];
                 for (Map.Entry<Integer, ItemWrapper> inputItemEntry : inputItemSlotMap.entrySet()) {
-                    if (skipSlotList.contains(inputItemEntry.getKey())) {
+                    if (skipSlotSet.contains(inputItemEntry.getKey())) {
                         continue;
                     }
                     if (ItemStackUtil.isItemSimilar(recipeInputItem, inputItemEntry.getValue())) {
                         matchAmount += inputItemEntry.getValue().getItemStack().getAmount();
-                        skipSlotList.add(inputItemEntry.getKey());
-                        slotList.add(inputItemEntry.getKey());
+                        skipSlotSet.add(inputItemEntry.getKey());
+                        consumeSlots[i][j++] = inputItemEntry.getKey();
                     }
                     if (matchAmount / recipeInputItem.getAmount() >= matchCount) {
                         break;
@@ -145,41 +147,44 @@ public class AdvancedCraft {
                 if (matchCount == 0) {
                     break;
                 }
-                consumeSlotList.add(slotList);
+                while (j < inputItemSlotMap.size()) {
+                    consumeSlots[i][j++] = -1;
+                }
             }
 
             if (matchCount > 0) {
-                List<ItemAmountWrapper> recipeOutputItemList = advancedMachineRecipe.getOutput();
-                return new AdvancedCraft(advancedMachineRecipe.getInput(), recipeOutputItemList, consumeSlotList, matchCount, (i + offset) % length);
+                ItemAmountWrapper[] recipeOutputItemList = advancedMachineRecipe.getOutput();
+                return new AdvancedCraft(advancedMachineRecipe.getInput(), recipeOutputItemList, consumeSlots, matchCount, (i + offset) % length);
             }
-            skipSlotList.clear();
-            consumeSlotList.clear();
+            skipSlotSet.clear();
         }
         return null;
     }
     @Nullable
     public static AdvancedCraft craftDesc(@Nonnull Inventory inventory, int[] inputSlots, @Nonnull List<AdvancedMachineRecipe> advancedMachineRecipeList, int quantityModule, int offset) {
         Map<Integer, ItemWrapper> inputItemSlotMap = MachineUtil.getSlotItemWrapperMap(inventory, inputSlots);
-        List<List<Integer>> consumeSlotList = new ArrayList<>(inputItemSlotMap.size());
-        List<Integer> skipSlotList = new ArrayList<>(inputItemSlotMap.size());
+        int[][] consumeSlots;
+        Set<Integer> skipSlotSet = new HashSet<>(inputItemSlotMap.size());
         int matchCount;
         int matchAmount;
-        List<Integer> slotList = new ArrayList<>(inputItemSlotMap.size());
         for (int i = 0, length = advancedMachineRecipeList.size(); i < length; i++) {
             AdvancedMachineRecipe advancedMachineRecipe = advancedMachineRecipeList.get((offset - i + length + length) % length);
-            List<ItemAmountWrapper> recipeInputItemList = advancedMachineRecipe.getInput();
+            ItemAmountWrapper[] recipeInputItems = advancedMachineRecipe.getInput();
+            consumeSlots = new int[recipeInputItems.length][];
             matchCount = quantityModule;
-            for (ItemAmountWrapper recipeInputItem : recipeInputItemList) {
+
+            for (ItemAmountWrapper recipeInputItem : recipeInputItems) {
                 matchAmount = 0;
-                slotList.clear();
+                int j = 0;
+                consumeSlots[i] = new int[inputItemSlotMap.size()];
                 for (Map.Entry<Integer, ItemWrapper> inputItemEntry : inputItemSlotMap.entrySet()) {
-                    if (skipSlotList.contains(inputItemEntry.getKey())) {
+                    if (skipSlotSet.contains(inputItemEntry.getKey())) {
                         continue;
                     }
                     if (ItemStackUtil.isItemSimilar(recipeInputItem, inputItemEntry.getValue())) {
                         matchAmount += inputItemEntry.getValue().getItemStack().getAmount();
-                        skipSlotList.add(inputItemEntry.getKey());
-                        slotList.add(inputItemEntry.getKey());
+                        skipSlotSet.add(inputItemEntry.getKey());
+                        consumeSlots[i][j++] = inputItemEntry.getKey();
                     }
                     if (matchAmount / recipeInputItem.getAmount() >= matchCount) {
                         break;
@@ -189,15 +194,16 @@ public class AdvancedCraft {
                 if (matchCount == 0) {
                     break;
                 }
-                consumeSlotList.add(slotList);
+                while (j < inputItemSlotMap.size()) {
+                    consumeSlots[i][j++] = -1;
+                }
             }
 
             if (matchCount > 0) {
-                List<ItemAmountWrapper> recipeOutputItemList = advancedMachineRecipe.getOutput();
-                return new AdvancedCraft(advancedMachineRecipe.getInput(), recipeOutputItemList, consumeSlotList, matchCount, (offset - i + length + length) % length);
+                ItemAmountWrapper[] recipeOutputItemList = advancedMachineRecipe.getOutput();
+                return new AdvancedCraft(advancedMachineRecipe.getInput(), recipeOutputItemList, consumeSlots, matchCount, (offset - i + length + length) % length);
             }
-            skipSlotList.clear();
-            consumeSlotList.clear();
+            skipSlotSet.clear();
         }
         return null;
     }

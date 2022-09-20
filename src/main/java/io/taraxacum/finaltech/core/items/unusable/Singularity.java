@@ -3,12 +3,12 @@ package io.taraxacum.finaltech.core.items.unusable;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,8 +19,6 @@ import javax.annotation.Nullable;
  * @since 2.0
  */
 public class Singularity extends UnusableSlimefunItem implements RecipeItem {
-    public static Integer DIFFICULTY = FinalTech.getValueManager().getOrDefault(256, "items", SlimefunUtil.getIdFormatName(Singularity.class), "difficulty") + Slimefun.getInstalledAddons().size() * 16;
-
     public Singularity(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -35,7 +33,7 @@ public class Singularity extends UnusableSlimefunItem implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
-                String.valueOf(DIFFICULTY));
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(ConstantTableUtil.ITEM_SINGULARITY_AMOUNT));
     }
 }

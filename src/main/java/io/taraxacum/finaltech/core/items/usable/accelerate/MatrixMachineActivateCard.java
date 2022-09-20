@@ -5,7 +5,8 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,8 +21,8 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class MatrixMachineActivateCard extends AbstractMachineActivateCard implements RecipeItem {
-    private final int TIMES = FinalTech.getValueManager().getOrDefault(21600, "items", SlimefunUtil.getIdFormatName(MatrixMachineActivateCard.class), "times");
-    private final double ENERGY = FinalTech.getValueManager().getOrDefault(Integer.MAX_VALUE / 2 + 0.5, "items", SlimefunUtil.getIdFormatName(MatrixMachineActivateCard.class), "energy");
+    private final int times = ConfigUtil.getOrDefaultItemSetting(21600, this, "times");
+    private final double energy = ConfigUtil.getOrDefaultItemSetting(Integer.MAX_VALUE / 2 + 0.5, this, "energy");
 
     public MatrixMachineActivateCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -29,12 +30,12 @@ public class MatrixMachineActivateCard extends AbstractMachineActivateCard imple
 
     @Override
     protected int times() {
-        return TIMES;
+        return times;
     }
 
     @Override
     protected double energy() {
-        return ENERGY;
+        return energy;
     }
 
     @Override
@@ -78,9 +79,9 @@ public class MatrixMachineActivateCard extends AbstractMachineActivateCard imple
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(this.times()),
-                String.valueOf((int)(Math.floor(ENERGY))),
-                String.format("%.2f", (ENERGY - Math.floor(ENERGY)) * 100));
+                String.valueOf((int)(Math.floor(energy))),
+                String.format("%.2f", (energy - Math.floor(energy)) * 100));
     }
 }

@@ -5,38 +5,49 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.common.util.StringNumberUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.*;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Final_ROOT
  * @since 1.0
  */
-public class MatrixGenerator extends AbstractCubeElectricGenerator implements AntiAccelerationMachine {
-    private final String electricity = FinalTech.getValueManager().getOrDefault(StringNumberUtil.VALUE_INFINITY, "items", SlimefunUtil.getIdFormatName(MatrixGenerator.class), "electricity");
-    private final int range = FinalTech.getValueManager().getOrDefault(10, "items", SlimefunUtil.getIdFormatName(MatrixGenerator.class), "range");
+public class MatrixGenerator extends AbstractCubeElectricGenerator {
+    private final String electricity = ConfigUtil.getOrDefaultItemSetting(StringNumberUtil.VALUE_INFINITY, this, "electricity");
+    private final int range = ConfigUtil.getOrDefaultItemSetting(10, this, "range");
+
+    @Nonnull
+    @Override
+    protected BlockPlaceHandler onBlockPlace() {
+        return new BlockPlaceHandler(false) {
+            @Override
+            public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {
+                Player player = blockPlaceEvent.getPlayer();
+                Location location = blockPlaceEvent.getBlock().getLocation();
+                BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_UUID, String.valueOf(player.getUniqueId()));
+            }
+        };
+    }
 
     @Nonnull
     @Override
@@ -51,76 +62,83 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator implements An
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        World world = block.getWorld();
-        int extraRange = 0;
+
+        int range = this.range;
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if (!ItemStackUtil.isItemNull(item) && ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY)) {
-                int amount = item.getAmount() / 2;
-                while (amount > 0) {
-                    extraRange++;
-                    amount /= 2;
+            if (!ItemStackUtil.isItemNull(item)) {
+                if(ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY)) {
+                    for (int i = item.getAmount(); i > 0; i /= 2) {
+                        range++;
+                    }
                 }
             }
         }
-        AtomicReference<String> energyCharge = new AtomicReference<>(StringNumberUtil.ZERO);
-        int count = this.function(block, extraRange + this.getRange(), location -> {
+
+        String uuid = config.getString(ConstantTableUtil.CONFIG_UUID);
+        int count = this.function(block, range + this.getRange(), location -> {
             if (BlockStorage.hasBlockInfo(location)) {
                 Config energyComponentConfig = BlockStorage.getLocationInfo(location);
-                if (energyComponentConfig.contains(SlimefunUtil.KEY_ID)) {
-                    String slimefunItemId = energyComponentConfig.getString(SlimefunUtil.KEY_ID);
-                    if (slimefunItemId.equals(this.getId()) && !location.equals(block.getLocation())) {
-                        //todo Event
-                        Slimefun.runSync(() -> {
-                            List<ItemStack> dropItemList = new ArrayList<>(this.getInputSlot().length + 1);
-                            for (int slot : MatrixGenerator.this.getInputSlot()) {
-                                ItemStack item = blockMenu.getItemInSlot(slot);
-                                if (!ItemStackUtil.isItemNull(item)) {
-                                    dropItemList.add(blockMenu.getItemInSlot(slot));
-                                }
-                            }
-                            dropItemList.add(this.getItem());
-                            block.setType(Material.AIR);
-                            BlockStorage.clearBlockInfo(block.getLocation());
-                            for (ItemStack item : dropItemList) {
-                                block.getWorld().dropItem(block.getLocation(), item);
-                            }
-                        });
+                if (energyComponentConfig.contains(ConstantTableUtil.CONFIG_ID)) {
+                    String machineId = energyComponentConfig.getString(ConstantTableUtil.CONFIG_ID);
+
+                    if (machineId.equals(MatrixGenerator.this.getId()) && !location.equals(block.getLocation())) {
+                        Player player = Bukkit.getPlayer(uuid);
+                        if(player != null) {
+                            BlockBreakEvent blockBreakEvent = new BlockBreakEvent(location.getBlock(), player);
+                            Bukkit.getPluginManager().callEvent(blockBreakEvent);
+                        }
+//                        Slimefun.runSync(() -> {
+//                            List<ItemStack> dropItemList = new ArrayList<>(this.getInputSlot().length + 1);
+//                            for (int slot : MatrixGenerator.this.getInputSlot()) {
+//                                ItemStack item = blockMenu.getItemInSlot(slot);
+//                                if (!ItemStackUtil.isItemNull(item)) {
+//                                    dropItemList.add(blockMenu.getItemInSlot(slot));
+//                                }
+//                            }
+//                            dropItemList.add(this.getItem());
+//                            block.setType(Material.AIR);
+//                            BlockStorage.clearBlockInfo(block.getLocation());
+//                            for (ItemStack item : dropItemList) {
+//                                block.getWorld().dropItem(block.getLocation(), item);
+//                            }
+//                        });
                         return -1;
                     }
-                    SlimefunItem item = SlimefunItem.getById(energyComponentConfig.getString(SlimefunUtil.KEY_ID));
-                    if (item instanceof EnergyNetComponent) {
-                        int componentCapacity = ((EnergyNetComponent) item).getCapacity();
-                        if (componentCapacity == 0) {
-                            return 0;
-                        }
-                        String componentEnergy = energyComponentConfig.contains(AbstractCubeElectricGenerator.KEY) ? energyComponentConfig.getString(AbstractCubeElectricGenerator.KEY) : StringNumberUtil.ZERO;
-                        if (StringNumberUtil.compare(componentEnergy, String.valueOf(componentCapacity)) >= 0) {
-                            return 0;
-                        }
-                        String transferEnergy = StringNumberUtil.min(StringNumberUtil.sub(String.valueOf(componentCapacity), componentEnergy), this.getElectricity());
-                        if (StringNumberUtil.compare(transferEnergy, StringNumberUtil.ZERO) > 0) {
-                            componentEnergy = StringNumberUtil.add(componentEnergy, transferEnergy);
-                            energyCharge.set(StringNumberUtil.add(energyCharge.get(), transferEnergy));
-                            SlimefunUtil.setCharge(energyComponentConfig, componentEnergy);
-                            world.spawnParticle(Particle.COMPOSTER, location.getX() + 0.5, location.getY() + 1, location.getZ() + 0.5, 1);
-                            return 1;
-                        }
+
+                    SlimefunItem machineItem = SlimefunItem.getById(energyComponentConfig.getString(ConstantTableUtil.CONFIG_ID));
+                    if (machineItem instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) machineItem).getEnergyComponentType())) {
+                        BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineId), new Runnable() {
+                            @Override
+                            public void run() {
+                                MatrixGenerator.this.chargeMachine((EnergyNetComponent) machineItem, energyComponentConfig);
+                            }
+                        }, location);
+                        return 1;
                     }
                 }
             }
             return 0;
         });
+
         if(blockMenu.hasViewer()) {
-            this.updateMenu(blockMenu, count, energyCharge.get());
+            this.updateMenu(blockMenu, count, range);
         }
     }
 
-    private void updateMenu(@Nonnull BlockMenu blockMenu, int count, String energyCharge) {
+    private void chargeMachine(@Nonnull EnergyNetComponent energyNetComponent, @Nonnull Config config) {
+        int capacity = energyNetComponent.getCapacity();
+        if (capacity == 0) {
+            return;
+        }
+        EnergyUtil.setCharge(config, String.valueOf(capacity));
+    }
+
+    private void updateMenu(@Nonnull BlockMenu blockMenu, int count, int range) {
         ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
-        ItemStackUtil.setLore(item,
-                TextUtil.COLOR_NORMAL + "当前生效的机器= " + TextUtil.COLOR_NUMBER + count + "个",
-                TextUtil.COLOR_NORMAL + "实际发电量= " + TextUtil.COLOR_NUMBER + energyCharge + "J");
+        ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
+                String.valueOf(count),
+                String.valueOf(range)));
         if (count == 0) {
             item.setType(Material.RED_STAINED_GLASS_PANE);
         } else {
@@ -130,17 +148,9 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator implements An
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
-                this.electricity,
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(this.range),
                 String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0));
-        registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
-                "",
-                TextUtil.COLOR_NORMAL + "每 " + TextUtil.COLOR_NUMBER + String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0) + "秒" + TextUtil.COLOR_NORMAL + " 对周围 " + TextUtil.COLOR_NUMBER + this.getRange() + "格" + TextUtil.COLOR_NORMAL + " 的机器进行充电",
-                TextUtil.COLOR_NORMAL + "每次充电使其电量充满至最大电容量");
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "极化扩展",
-                "",
-                TextUtil.COLOR_NORMAL + "放入 " + FinalTechItems.PHONY.getDisplayName() + TextUtil.COLOR_NORMAL + " 后 其工作范围会扩大");
     }
 
     @Override

@@ -12,6 +12,7 @@ import io.taraxacum.finaltech.core.items.unusable.Singularity;
 import io.taraxacum.finaltech.core.items.unusable.Spirochete;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -24,8 +25,8 @@ import java.util.*;
  */
 public class ItemValueTable {
     private boolean init = false;
-    private final Map<String, String> itemInputValueMap = new HashMap<>();
-    private final Map<String, String> itemOutputValueMap = new HashMap<>();
+    private final Map<String, String> itemInputValueMap = new HashMap<>(Slimefun.getRegistry().getAllSlimefunItems().size());
+    private final Map<String, String> itemOutputValueMap = new HashMap<>(Slimefun.getRegistry().getAllSlimefunItems().size());
     private final Map<String, List<String>> valueItemListOutputMap = new HashMap<>();
     public final String BASE_OUTPUT_VALUE = FinalTech.getValueManager().getOrDefault("64","itemValueTable","baseOutputValue");
     public final String BASE_INPUT_VALUE = FinalTech.getValueManager().getOrDefault("1","itemValueTable","baseInputValue");
@@ -39,6 +40,8 @@ public class ItemValueTable {
         if (this.init) {
             return;
         }
+
+        this.init = true;
 
         ConfigFileManager valueFile = FinalTech.getValueManager();
 
@@ -57,9 +60,9 @@ public class ItemValueTable {
             }
         }
 
-        this.manualInitId(FinalTechItems.SINGULARITY.getItemId(), StringNumberUtil.mul(String.valueOf(Singularity.DIFFICULTY), String.valueOf(CopyCardItem.DIFFICULTY)), false);
-        this.manualInitId(FinalTechItems.SPIROCHETE.getItemId(), StringNumberUtil.mul(String.valueOf(Spirochete.DIFFICULTY), String.valueOf(CopyCardItem.DIFFICULTY)), false);
-        this.manualInitId(FinalTechItems.PHONY.getItemId(), StringNumberUtil.mul(StringNumberUtil.mul(String.valueOf(Singularity.DIFFICULTY), String.valueOf(Spirochete.DIFFICULTY)), String.valueOf(CopyCardItem.DIFFICULTY)), false);
+        this.manualInitId(FinalTechItems.SINGULARITY.getItemId(), StringNumberUtil.mul(String.valueOf(ConstantTableUtil.ITEM_SINGULARITY_AMOUNT), String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT)), false);
+        this.manualInitId(FinalTechItems.SPIROCHETE.getItemId(), StringNumberUtil.mul(String.valueOf(ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT), String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT)), false);
+        this.manualInitId(FinalTechItems.PHONY.getItemId(), StringNumberUtil.mul(StringNumberUtil.mul(String.valueOf(ConstantTableUtil.ITEM_SINGULARITY_AMOUNT), String.valueOf(ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT)), String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT)), false);
         this.manualInitId(FinalTechItems.BUG.getItemId(), StringNumberUtil.ZERO, StringNumberUtil.ZERO, false);
 
         List<SlimefunItem> allSlimefunItems = Slimefun.getRegistry().getAllSlimefunItems();
@@ -100,8 +103,6 @@ public class ItemValueTable {
                 this.removeFromOutputMap(id);
             }
         }
-
-        init = true;
     }
 
     public String getOrCalItemInputValue(@Nullable ItemStack item) {

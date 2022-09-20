@@ -5,7 +5,9 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -16,9 +18,13 @@ import org.bukkit.potion.PotionEffect;
 
 import javax.annotation.Nonnull;
 
-public class PotionEffectPurifier extends UsableSlimefunItem {
-    private final double horizontalRange = FinalTech.getValueManager().getOrDefault(16, "items", SlimefunUtil.getIdFormatName(PotionEffectPurifier.class), "horizontal-range");
-    private final double verticalRange = FinalTech.getValueManager().getOrDefault(8, "items", SlimefunUtil.getIdFormatName(PotionEffectPurifier.class), "vertical-range");
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
+public class PotionEffectPurifier extends UsableSlimefunItem implements RecipeItem {
+    private final double horizontalRange = ConfigUtil.getOrDefaultItemSetting(16, this, "horizontal-range");
+    private final double verticalRange = ConfigUtil.getOrDefaultItemSetting(8, this, "vertical-range");
 
     public PotionEffectPurifier(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -51,5 +57,12 @@ public class PotionEffectPurifier extends UsableSlimefunItem {
             ItemStack item = playerRightClickEvent.getItem();
             item.setAmount(item.getAmount() - 1);
         }
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.horizontalRange),
+                String.valueOf(this.verticalRange));
     }
 }

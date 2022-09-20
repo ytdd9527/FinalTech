@@ -13,7 +13,8 @@ import io.taraxacum.finaltech.core.items.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.NormalStorageUnitMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +26,7 @@ import javax.annotation.Nonnull;
  * @since 1.0
  */
 public class ChargeableStorageUnit extends AbstractCargo implements EnergyNetComponent, RecipeItem {
-    private final int capacity = FinalTech.getValueManager().getOrDefault(Integer.MAX_VALUE / 4, "items", SlimefunUtil.getIdFormatName(ChargeableStorageUnit.class), "capacity");
+    private final int capacity = ConfigUtil.getOrDefaultItemSetting(Integer.MAX_VALUE / 4, this, "capacity");
 
     public ChargeableStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -59,7 +60,7 @@ public class ChargeableStorageUnit extends AbstractCargo implements EnergyNetCom
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this, String.valueOf(MachineUtil.calMachineSlotSize(this)),
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this, String.valueOf(MachineUtil.calMachineSlotSize(this)),
                 String.valueOf(this.getCapacity()));
     }
 }

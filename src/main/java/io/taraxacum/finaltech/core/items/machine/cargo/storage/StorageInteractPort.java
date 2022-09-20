@@ -9,13 +9,14 @@ import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.ItemWrapper;
-import io.taraxacum.finaltech.api.interfaces.PerformanceLimitMachine;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.unusable.StorageCardItem;
 import io.taraxacum.finaltech.core.items.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.StorageInteractPortMenu;
 import io.taraxacum.finaltech.util.*;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -37,8 +38,8 @@ import java.util.concurrent.ExecutionException;
  * @author Final_ROOT
  * @since 1.0
  */
-public class StorageInteractPort extends AbstractCargo implements PerformanceLimitMachine, RecipeItem {
-    private final int searchLimit = FinalTech.getValueManager().getOrDefault(3, "items", SlimefunUtil.getIdFormatName(StorageInteractPort.class), "search-limit");
+public class StorageInteractPort extends AbstractCargo implements RecipeItem {
+    private final int searchLimit = ConfigUtil.getOrDefaultItemSetting(3, this, "search-limit");
 
     public StorageInteractPort(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -59,6 +60,7 @@ public class StorageInteractPort extends AbstractCargo implements PerformanceLim
             boolean primaryThread = Bukkit.isPrimaryThread();
             Inventory targetInventory = null;
             BlockState blockState;
+            blockState = block.getState();
             if(primaryThread) {
                 blockState = PaperLib.getBlockState(targetBlock, false).getState();
 
@@ -184,7 +186,7 @@ public class StorageInteractPort extends AbstractCargo implements PerformanceLim
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(this.searchLimit));
     }
 }

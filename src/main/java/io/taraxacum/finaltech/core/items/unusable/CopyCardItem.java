@@ -9,9 +9,12 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.finaltech.util.StringItemUtil;
 import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
+import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -29,7 +32,6 @@ import java.util.List;
 public class CopyCardItem extends UnusableSlimefunItem implements RecipeItem {
     public static final String ITEM_LORE_WITHOUT_COLOR = "⌫⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌦";
     public static final String ITEM_LORE = TextUtil.colorPseudorandomString(ITEM_LORE_WITHOUT_COLOR);
-    public static Integer DIFFICULTY = FinalTech.getValueManager().getOrDefault(16777216, "items", SlimefunUtil.getIdFormatName(CopyCardItem.class), "difficulty");
 
     public CopyCardItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -39,7 +41,7 @@ public class CopyCardItem extends UnusableSlimefunItem implements RecipeItem {
         ItemStack result = ItemStackUtil.cloneItem(FinalTechItems.COPY_CARD);
         result.setAmount(1);
         StringItemUtil.setItemInCard(result, stringItem, amount);
-        List<String> loreList = JavaUtil.toList(SlimefunUtil.updateMenuLore(FinalTech.getLanguageManager(), SlimefunUtil.getIdFormatName(CopyCardItem.class),
+        List<String> loreList = JavaUtil.toList(ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), SfItemUtil.getIdFormatName(CopyCardItem.class),
                 ItemStackUtil.getItemName(stringItem),
                 amount));
         loreList.add(0, ITEM_LORE);
@@ -74,8 +76,8 @@ public class CopyCardItem extends UnusableSlimefunItem implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
-                String.valueOf(DIFFICULTY),
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT),
                 String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0));
     }
 }

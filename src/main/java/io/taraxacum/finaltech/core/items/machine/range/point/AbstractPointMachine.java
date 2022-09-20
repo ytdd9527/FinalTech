@@ -15,8 +15,8 @@ public abstract class AbstractPointMachine extends AbstractRangeMachine {
         super(itemGroup, item, recipeType, recipe);
     }
 
-    protected final int function(@Nonnull Block block, int range, @Nonnull AbstractRangeMachine.Function function) {
-        return function.function(this.getTargetLocation(block.getLocation(), range));
+    protected final int function(@Nonnull Block block, int range, @Nonnull AbstractRangeMachine.RangeFunction function) {
+        return function.apply(this.getTargetLocation(block.getLocation(), range));
     }
 
     protected abstract Location getTargetLocation(@Nonnull Location location, int range);

@@ -8,7 +8,7 @@ import io.taraxacum.finaltech.api.factory.ItemValueTable;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.items.machine.manual.EquivalentExchangeTable;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -36,9 +36,9 @@ public class EquivalentExchangeTableMenu extends AbstractManualMachineMenu {
 
     public static final int STATUS_SLOT = 40;
 
-    private static final ItemStack PARSE_BORDER_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SlimefunUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-border-icon", "name"), FinalTech.getLanguageString("items", SlimefunUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-border-icon", "lore"));
-    private static final ItemStack PARSE_STATUS_ICON = new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SlimefunUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-result-icon", "name"), FinalTech.getLanguageString("items", SlimefunUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-result-icon", "lore"));
-    private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SlimefunUtil.getIdFormatName(EquivalentExchangeTable.class), "status-icon", "name"), FinalTech.getLanguageString("items", SlimefunUtil.getIdFormatName(EquivalentExchangeTable.class), "status-icon", "lore"));
+    private static final ItemStack PARSE_BORDER_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-border-icon", "name"), FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-border-icon", "lore"));
+    private static final ItemStack PARSE_STATUS_ICON = new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-result-icon", "name"), FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-result-icon", "lore"));
+    private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "status-icon", "name"), FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "status-icon", "lore"));
 
     public EquivalentExchangeTableMenu(@Nonnull AbstractMachine machine) {
         super(machine);
@@ -90,15 +90,15 @@ public class EquivalentExchangeTableMenu extends AbstractManualMachineMenu {
         List<String> lore = new ArrayList<>();
         lore.add("§f" + ItemStackUtil.getItemName(item));
         if (slimefunItem == null) {
-            lore.addAll(FinalTech.getLanguageStringList("items", SlimefunUtil.getIdFormatName(EquivalentExchangeTable.class), "no-value", "lore"));
+            lore.addAll(FinalTech.getLanguageStringList("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "no-value", "lore"));
         } else {
-            lore.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("items", SlimefunUtil.getIdFormatName(EquivalentExchangeTable.class), "input-value", "lore"), ItemValueTable.getInstance().getOrCalItemOutputValue(item)));
-            lore.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("items", SlimefunUtil.getIdFormatName(EquivalentExchangeTable.class), "output-value", "lore"), ItemValueTable.getInstance().getOrCalItemOutputValue(item)));
+            lore.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "input-value", "lore"), ItemValueTable.getInstance().getOrCalItemOutputValue(item)));
+            lore.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "output-value", "lore"), ItemValueTable.getInstance().getOrCalItemOutputValue(item)));
         }
         ItemStack iconItem = inventory.getItem(PARSE_STATUS_SLOT);
         ItemStackUtil.setLore(iconItem, lore);
 
         iconItem = inventory.getItem(STATUS_SLOT);
-        ItemStackUtil.setLore(iconItem, FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("items", SlimefunUtil.getIdFormatName(EquivalentExchangeTable.class), "stored-value", "lore"), BlockStorage.getLocationInfo(location, "value")));
+        ItemStackUtil.setLore(iconItem, FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "stored-value", "lore"), BlockStorage.getLocationInfo(location, "value")));
     }
 }

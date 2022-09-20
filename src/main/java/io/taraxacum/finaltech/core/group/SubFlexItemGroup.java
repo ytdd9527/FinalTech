@@ -13,9 +13,8 @@ import io.github.thebusybiscuit.slimefun4.implementation.guide.SurvivalSlimefunG
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.GuideUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
-import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
@@ -143,7 +142,7 @@ public class SubFlexItemGroup extends FlexItemGroup {
 
         chestMenu.addItem(PREVIOUS_SLOT, ChestMenuUtils.getPreviousButton(player, this.page, (slimefunItemList.size() - 1) / MAIN_CONTENT_L.length + 1));
         chestMenu.addMenuClickHandler(PREVIOUS_SLOT, (p, slot, item, action) -> {
-            SlimefunUtil.removeLastEntry(playerProfile.getGuideHistory());
+            GuideUtil.removeLastEntry(playerProfile.getGuideHistory());
             SubFlexItemGroup subFlexItemGroup = SubFlexItemGroup.this.getByPage(Math.max(SubFlexItemGroup.this.page - 1, 1));
             Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> subFlexItemGroup.open(player, playerProfile, slimefunGuideMode));
             return false;
@@ -151,7 +150,7 @@ public class SubFlexItemGroup extends FlexItemGroup {
 
         chestMenu.addItem(NEXT_SLOT, ChestMenuUtils.getNextButton(player, this.page, (slimefunItemList.size() - 1) / MAIN_CONTENT_L.length + 1));
         chestMenu.addMenuClickHandler(NEXT_SLOT, (p, slot, item, action) -> {
-            SlimefunUtil.removeLastEntry(playerProfile.getGuideHistory());
+            GuideUtil.removeLastEntry(playerProfile.getGuideHistory());
             SubFlexItemGroup subFlexItemGroup = SubFlexItemGroup.this.getByPage(Math.min(this.page + 1, (slimefunItemList.size() - 1) / MAIN_CONTENT_L.length + 1));
             Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> subFlexItemGroup.open(player, playerProfile, slimefunGuideMode));
             return false;

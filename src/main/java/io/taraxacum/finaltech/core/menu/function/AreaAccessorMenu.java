@@ -1,7 +1,6 @@
 package io.taraxacum.finaltech.core.menu.function;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.common.util.StringNumberUtil;
@@ -11,10 +10,10 @@ import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.items.machine.cargo.AreaAccessor;
 import io.taraxacum.finaltech.core.items.machine.cargo.RemoteAccessor;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
+import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
-import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
@@ -111,7 +110,7 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
     /**
      * @param page begin from 0
      */
-    public static void generateMenu(@Nonnull Player player, @Nonnull Location location, @Nonnull Integer range, @Nonnull Integer page) {
+    public static void generateMenu(@Nonnull Player player, @Nonnull Location location, @Nonnull int range, @Nonnull int page) {
 
         World world = location.getWorld();
         if(world == null) {
@@ -163,19 +162,19 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
             Location l = locationList.get((i + page * TEMP_CONTENT.length) % locationList.size());
             if(BlockStorage.hasBlockInfo(l)) {
                 Config config = BlockStorage.getLocationInfo(l);
-                if(config.contains(SlimefunUtil.KEY_ID)) {
-                    SlimefunItem slimefunItem = SlimefunItem.getById(config.getString(SlimefunUtil.KEY_ID));
+                if(config.contains(ConstantTableUtil.CONFIG_ID)) {
+                    SlimefunItem slimefunItem = SlimefunItem.getById(config.getString(ConstantTableUtil.CONFIG_ID));
                     if(slimefunItem != null) {
                         BlockMenu blockMenu = BlockStorage.getInventory(l);
                         if(blockMenu != null) {
-                            ItemStack icon = new CustomItemStack(slimefunItem.getItem(), slimefunItem.getItemName(), FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(AreaAccessor.class), "temp-icon", "lore")));
+                            ItemStack icon = new CustomItemStack(slimefunItem.getItem(), slimefunItem.getItemName(), FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(AreaAccessor.class), "temp-icon", "lore")));
                             chestMenu.addItem(TEMP_CONTENT[i], icon);
                             chestMenu.addMenuClickHandler(TEMP_CONTENT[i], (p, slot, item, action) -> {
                                 // BlockMenu may be updated after the menu generated.
                                 if(BlockStorage.hasBlockInfo(l) && BlockStorage.hasInventory(l.getBlock()) && blockMenu.canOpen(l.getBlock(), player)) {
                                     blockMenu.open(player);
                                 } else {
-                                    player.sendMessage(FinalTech.getLanguageString("items", SlimefunUtil.getIdFormatName(AreaAccessor.class), "message", "no-permission"));
+                                    player.sendMessage(FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(AreaAccessor.class), "message", "no-permission"));
                                 }
                                 return false;
                             });

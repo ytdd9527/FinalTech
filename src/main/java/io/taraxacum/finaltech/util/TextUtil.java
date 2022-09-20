@@ -23,6 +23,7 @@ public class TextUtil {
     public static final String COLOR_NEGATIVE = "§x§f§f§8§8§8§8"; // 负面
     public static final String COLOR_INPUT = "§9";
     public static final String COLOR_OUTPUT = "§6";
+    public static final Color WHITE_COLOR = Color.fromRGB(255, 255, 255);
 
     @Nonnull
     public static String colorString(@Nonnull String string, @Nonnull List<Color> colorList) {
@@ -110,5 +111,48 @@ public class TextUtil {
             case 15 -> "f";
             default -> "0";
         };
+    }
+
+    @Nonnull
+    public static Color cloneColor(@Nonnull Color color) {
+        return Color.fromRGB(color.getRed(), color.getGreen(), color.getBlue());
+    }
+
+    public static Color[] disperse(int size, Color... colors) {
+        if (size == 1 && colors.length > 0) {
+            return new Color[] {TextUtil.cloneColor(colors[0])};
+        } else if (size == 0 || colors.length == 0) {
+            return new Color[0];
+        }
+        Color[] result = new Color[size--];
+        for (int i = 0; i <= size; i++) {
+            double p = ((double) i) / size * (colors.length - 1);
+
+            int r = (int) (colors[(int) Math.floor(p)].getRed() * (1 - p + Math.floor(p)) + colors[(int) Math.ceil(p)].getRed() * (p - Math.floor(p)));
+            int g = (int) (colors[(int) Math.floor(p)].getGreen() * (1 - p + Math.floor(p)) + colors[(int) Math.ceil(p)].getGreen() * (p - Math.floor(p)));
+            int b = (int) (colors[(int) Math.floor(p)].getBlue() * (1 - p + Math.floor(p)) + colors[(int) Math.ceil(p)].getBlue() * (p - Math.floor(p)));
+
+            result[i] = Color.fromRGB(r, g, b);
+        }
+        return result;
+    }
+
+    public static Color[] disperse(int size, List<Color> colorList) {
+        if (size == 1 && colorList.size() > 0) {
+            return new Color[] {TextUtil.cloneColor(colorList.get(0))};
+        } else if (size == 0 || colorList.size() == 0) {
+            return new Color[0];
+        }
+        Color[] result = new Color[size--];
+        for (int i = 0; i <= size; i++) {
+            double p = ((double) i) / size * (colorList.size() - 1);
+
+            int r = (int) (colorList.get((int) Math.floor(p)).getRed() * (1 - p + Math.floor(p)) + colorList.get((int) Math.ceil(p)).getRed() * (p - Math.floor(p)));
+            int g = (int) (colorList.get((int) Math.floor(p)).getGreen() * (1 - p + Math.floor(p)) + colorList.get((int) Math.ceil(p)).getGreen() * (p - Math.floor(p)));
+            int b = (int) (colorList.get((int) Math.floor(p)).getBlue() * (1 - p + Math.floor(p)) + colorList.get((int) Math.ceil(p)).getBlue() * (p - Math.floor(p)));
+
+            result[i] = Color.fromRGB(r, g, b);
+        }
+        return result;
     }
 }

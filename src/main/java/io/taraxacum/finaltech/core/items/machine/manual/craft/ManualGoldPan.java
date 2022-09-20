@@ -36,14 +36,14 @@ public class ManualGoldPan extends AbstractManualCraftMachine{
             for (GoldPanDrop goldPanDrop : invoke) {
                 randomOutputList.add(new RandomMachineRecipe.RandomOutput(goldPanDrop.getOutput(), goldPanDrop.getValue()));
             }
-            this.registerRecipe(new RandomMachineRecipe(0, new ItemStack[] {new ItemStack(goldPan.getInputMaterial())}, randomOutputList));
+            this.registerRecipe(new RandomMachineRecipe(new ItemStack[] {new ItemStack(goldPan.getInputMaterial())}, randomOutputList));
         } catch (Exception e) {
             List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>();
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {new ItemStack(Material.FLINT)}, 40));
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {new ItemStack(Material.CLAY_BALL)}, 20));
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {SlimefunItems.SIFTED_ORE}, 35));
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {new ItemStack(Material.IRON_NUGGET)}, 5));
-            this.registerRecipe(new RandomMachineRecipe(0, new ItemStack[] {new ItemStack(goldPan.getInputMaterial())}, randomOutputList));
+            this.registerRecipe(new RandomMachineRecipe(new ItemStack[] {new ItemStack(goldPan.getInputMaterial())}, randomOutputList));
         }
 
         GoldPan netherGoldPan = SlimefunItems.NETHER_GOLD_PAN.getItem(GoldPan.class);
@@ -55,7 +55,7 @@ public class ManualGoldPan extends AbstractManualCraftMachine{
             for (GoldPanDrop goldPanDrop : invoke) {
                 randomOutputList.add(new RandomMachineRecipe.RandomOutput(goldPanDrop.getOutput(), goldPanDrop.getValue()));
             }
-            this.registerRecipe(new RandomMachineRecipe(0, new ItemStack[] {new ItemStack(netherGoldPan.getInputMaterial())}, randomOutputList));
+            this.registerRecipe(new RandomMachineRecipe(new ItemStack[] {new ItemStack(netherGoldPan.getInputMaterial())}, randomOutputList));
         } catch (Exception e) {
             List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>();
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {new ItemStack(Material.QUARTZ)}, 50));
@@ -64,7 +64,7 @@ public class ManualGoldPan extends AbstractManualCraftMachine{
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {new ItemStack(Material.BLAZE_POWDER)}, 8));
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {new ItemStack(Material.GLOWSTONE_DUST)}, 5));
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {new ItemStack(Material.GHAST_TEAR)}, 2));
-            this.registerRecipe(new RandomMachineRecipe(0, new ItemStack[] {new ItemStack(goldPan.getInputMaterial())}, randomOutputList));
+            this.registerRecipe(new RandomMachineRecipe(new ItemStack[] {new ItemStack(goldPan.getInputMaterial())}, randomOutputList));
         }
     }
 }

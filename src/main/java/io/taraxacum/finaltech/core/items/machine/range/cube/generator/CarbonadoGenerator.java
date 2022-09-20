@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -12,8 +12,8 @@ import org.bukkit.inventory.ItemStack;
  * @since 1.0
  */
 public class CarbonadoGenerator extends AbstractCubeElectricGenerator {
-    private final String electricity = FinalTech.getValueManager().getOrDefault("16", "items", SlimefunUtil.getIdFormatName(CarbonadoGenerator.class), "electricity");
-    private final int range = FinalTech.getValueManager().getOrDefault(3, "items", SlimefunUtil.getIdFormatName(CarbonadoGenerator.class), "range");
+    private final String electricity = ConfigUtil.getOrDefaultItemSetting("16", this, "electricity");
+    private final int range = ConfigUtil.getOrDefaultItemSetting(3, this, "range");
 
     public CarbonadoGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

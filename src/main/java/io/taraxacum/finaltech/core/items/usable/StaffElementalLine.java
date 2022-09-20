@@ -5,9 +5,11 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.util.LocationUtil;
 import io.taraxacum.finaltech.util.ParticleUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -19,9 +21,13 @@ import org.bukkit.util.RayTraceResult;
 
 import javax.annotation.Nonnull;
 
-public class StaffElementalLine extends UsableSlimefunItem{
-    private final double shortRange = FinalTech.getValueManager().getOrDefault(2.5, "items", SlimefunUtil.getIdFormatName(StaffElementalLine.class), "short-range");
-    private final double longRange = FinalTech.getValueManager().getOrDefault(16, "items", SlimefunUtil.getIdFormatName(StaffElementalLine.class), "long-range");
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
+public class StaffElementalLine extends UsableSlimefunItem implements RecipeItem {
+    private final double shortRange = ConfigUtil.getOrDefaultItemSetting(2.5, this, "short-range");
+    private final double longRange = ConfigUtil.getOrDefaultItemSetting(16, this, "long-range");
 
     public StaffElementalLine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -73,5 +79,12 @@ public class StaffElementalLine extends UsableSlimefunItem{
             targetLocation.setY(targetLocation.getY() + player.getEyeHeight());
             ParticleUtil.drawLineByDistance(Particle.GLOW, 0, 0.1, playerLocation, targetLocation);
         }
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.shortRange),
+                String.valueOf(this.longRange));
     }
 }

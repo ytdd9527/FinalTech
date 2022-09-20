@@ -2,6 +2,7 @@ package io.taraxacum.finaltech.core.operation;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
 import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.items.unusable.Singularity;
@@ -9,6 +10,8 @@ import io.taraxacum.finaltech.core.items.unusable.Spirochete;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -26,14 +29,20 @@ public class ItemPhonyOperation implements ItemSerializationConstructorOperation
     private final int itemTypeDifficulty;
     private final int itemAmountDifficulty;
     private final ItemStack showItem;
-    private final List<ItemStackWrapper> itemTypeList = new ArrayList<>(Spirochete.DIFFICULTY);
+    private final List<ItemStackWrapper> itemTypeList = new ArrayList<>(ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT);
 
     protected ItemPhonyOperation(@Nonnull ItemStack item) {
         this.itemTypeCount = 1;
         this.itemAmountCount = item.getAmount();
-        this.itemTypeDifficulty = Spirochete.DIFFICULTY;
-        this.itemAmountDifficulty = Singularity.DIFFICULTY;
-        this.showItem = new CustomItemStack(FinalTechItems.PHONY.getType(), TextUtil.COLOR_NORMAL + "完成进度", TextUtil.COLOR_NORMAL + "物品个数= " + TextUtil.COLOR_NUMBER + this.itemAmountCount + "/" + this.itemAmountDifficulty, TextUtil.COLOR_NORMAL + "物品种数= " + TextUtil.COLOR_NUMBER + this.itemTypeCount + "/" + this.itemTypeDifficulty);
+        this.itemTypeDifficulty = ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT;
+        this.itemAmountDifficulty = ConstantTableUtil.ITEM_SINGULARITY_AMOUNT;
+        this.showItem = new CustomItemStack(FinalTechItems.PHONY.getType(),
+                ConfigUtil.getStatusMenuName(FinalTech.getLanguageManager(), FinalTechItems.PHONY.getItemId()),
+                ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), FinalTechItems.PHONY.getItemId(),
+                        String.valueOf(this.itemAmountCount),
+                        String.valueOf(this.itemAmountDifficulty),
+                        String.valueOf(this.itemTypeCount),
+                        String.valueOf(this.itemTypeDifficulty)));
         this.itemTypeList.add(ItemStackWrapper.wrap(item));
     }
 
@@ -50,7 +59,11 @@ public class ItemPhonyOperation implements ItemSerializationConstructorOperation
 
     @Override
     public void updateShowItem() {
-        ItemStackUtil.setLore(this.showItem, TextUtil.COLOR_NORMAL + "物品个数= " + TextUtil.COLOR_NUMBER + this.itemAmountCount + "/" + this.itemAmountDifficulty, TextUtil.COLOR_NORMAL + "物品种数= " + TextUtil.COLOR_NUMBER + this.itemTypeCount + "/" + this.itemTypeDifficulty);
+        ItemStackUtil.setLore(this.showItem, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), FinalTechItems.PHONY.getItemId(),
+            String.valueOf(this.itemAmountCount),
+            String.valueOf(this.itemAmountDifficulty),
+            String.valueOf(this.itemTypeCount),
+            String.valueOf(this.itemTypeDifficulty)));
     }
 
     @Override

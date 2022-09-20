@@ -5,8 +5,11 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.util.*;
+import io.taraxacum.finaltech.util.slimefun.PermissionUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
@@ -32,7 +35,7 @@ public class LocationRecorder extends UsableSlimefunItem implements RecipeItem {
         PlayerInteractEvent interactEvent = playerRightClickEvent.getInteractEvent();
         if (playerRightClickEvent.getPlayer().isSneaking()) {
             Block block = interactEvent.getClickedBlock();
-            if (block != null && SlimefunUtil.checkPermission(playerRightClickEvent.getPlayer(), block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
+            if (block != null && PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
                 ItemStack item = playerRightClickEvent.getItem();
                 LocationUtil.saveLocationToItem(item, block.getLocation());
                 LocationUtil.updateLocationItem(item);
@@ -46,7 +49,7 @@ public class LocationRecorder extends UsableSlimefunItem implements RecipeItem {
             }
 
             Player player = playerRightClickEvent.getPlayer();
-            if (!SlimefunUtil.checkPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
+            if (!PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
                 // TODO
                 player.sendRawMessage(TextUtil.COLOR_NEGATIVE + "您似乎没有在此处使用该物品的权限");
             }
@@ -67,16 +70,6 @@ public class LocationRecorder extends UsableSlimefunItem implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_INITIATIVE + "使用方式",
-                "",
-                TextUtil.COLOR_ACTION + "[右键]" + TextUtil.COLOR_NORMAL + "方块",
-                TextUtil.COLOR_NORMAL + "记录该方块的位置",
-                "",
-                TextUtil.COLOR_ACTION + "蹲下[右键]",
-                TextUtil.COLOR_NORMAL + "打开对应位置的粘液科技机器");
-        this.registerDescriptiveRecipe(TextUtil.COLOR_POSITIVE + "权限保护",
-                "",
-                TextUtil.COLOR_NORMAL + "该物品在记录方块位置的同时",
-                TextUtil.COLOR_NORMAL + "会记录使用者的相关信息");
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

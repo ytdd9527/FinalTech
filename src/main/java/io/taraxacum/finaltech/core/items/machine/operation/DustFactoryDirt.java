@@ -5,33 +5,27 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.operation.DustFactoryOperation;
 import io.taraxacum.finaltech.core.menu.limit.DustFactoryDirtMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-// TODO translate
 /**
  * @author Final_ROOT
  * @since 1.0
  */
 public class DustFactoryDirt extends AbstractOperationMachine {
-    public static final int TYPE_DIFFICULTY = FinalTech.getValueManager().getOrDefault(16, "items", SlimefunUtil.getIdFormatName(DustFactoryDirt.class), "difficulty-type");
-    public static final int AMOUNT_DIFFICULTY = FinalTech.getValueManager().getOrDefault(1024, "items", SlimefunUtil.getIdFormatName(DustFactoryDirt.class), "difficulty-amount");
-
     public DustFactoryDirt(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -52,23 +46,20 @@ public class DustFactoryDirt extends AbstractOperationMachine {
             if (ItemStackUtil.isItemNull(inputItem)) {
                 continue;
             }
+
             if (operation == null) {
                 operation = new DustFactoryOperation();
                 this.getMachineProcessor().startOperation(block, operation);
             }
             operation.addItem(inputItem);
 
-            if (operation.isFinished()) {
-                if (operation.isOrderedDust() && InvUtils.fitAll(blockMenu.toInventory(), new ItemStack[] {FinalTechItems.ORDERED_DUST}, this.getOutputSlot())) {
-                    blockMenu.pushItem(new ItemStack(FinalTechItems.ORDERED_DUST), this.getOutputSlot());
-                    this.getMachineProcessor().endOperation(block);
-                    operation = null;
-                } else if (InvUtils.fitAll(blockMenu.toInventory(), new ItemStack[] {FinalTechItems.UNORDERED_DUST}, this.getOutputSlot())) {
-                    blockMenu.pushItem(new ItemStack(FinalTechItems.UNORDERED_DUST), this.getOutputSlot());
-                    this.getMachineProcessor().endOperation(block);
-                    operation = null;
-                }
+            ItemStack operationResult = operation.getResult();
+            if(operationResult != null && InvUtils.fitAll(blockMenu.toInventory(), new ItemStack[] {operationResult}, this.getOutputSlot())) {
+                blockMenu.pushItem(operationResult, this.getOutputSlot());
+                this.getMachineProcessor().endOperation(block);
+                operation = null;
             }
+
             blockMenu.consumeItem(slot, inputItem.getAmount());
         }
 
@@ -77,24 +68,17 @@ public class DustFactoryDirt extends AbstractOperationMachine {
             this.getMachineProcessor().startOperation(block, operation);
         }
         if(blockMenu.hasViewer()) {
-            CustomItemStack progress = new CustomItemStack(Material.REDSTONE, TextUtil.COLOR_NORMAL + "完成进度",
-                    TextUtil.COLOR_NORMAL + "匹配的物品种类= " + TextUtil.COLOR_NUMBER + operation.getTypeCount() + "/" + TYPE_DIFFICULTY,
-                    TextUtil.COLOR_NORMAL + "输入的物品总数= " + TextUtil.COLOR_NUMBER + operation.getAmountCount() + "/" + AMOUNT_DIFFICULTY);
-            blockMenu.replaceExistingItem(DustFactoryDirtMenu.STATUS_SLOT, progress);
+            ItemStack itemStack = blockMenu.getItemInSlot(DustFactoryDirtMenu.STATUS_SLOT);
+            ItemStackUtil.setLore(itemStack, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
+                    String.valueOf(operation.getAmountCount()),
+                    String.valueOf(operation.getTypeCount())));
         }
     }
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "制造 " + FinalTechItems.UNORDERED_DUST.getDisplayName(),
-                "",
-                TextUtil.COLOR_NORMAL + "输入至少 " + TextUtil.COLOR_NUMBER + AMOUNT_DIFFICULTY + "个" + TextUtil.COLOR_NORMAL + " 任意物品",
-                TextUtil.COLOR_NORMAL + "输入至少 " + TextUtil.COLOR_NUMBER + TYPE_DIFFICULTY + "种" + TextUtil.COLOR_NORMAL + " 不同物品",
-                TextUtil.COLOR_NORMAL + "同时满足以上两个条件时生成一个 " + FinalTechItems.UNORDERED_DUST.getDisplayName());
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "制造 " + FinalTechItems.ORDERED_DUST.getDisplayName(),
-                "",
-                TextUtil.COLOR_NORMAL + "输入恰好 " + TextUtil.COLOR_NUMBER + AMOUNT_DIFFICULTY + "个" + TextUtil.COLOR_NORMAL + " 任意物品",
-                TextUtil.COLOR_NORMAL + "输入恰好 " + TextUtil.COLOR_NUMBER + TYPE_DIFFICULTY + "种" + TextUtil.COLOR_NORMAL + " 不同物品",
-                TextUtil.COLOR_NORMAL + "同时满足以上两个条件时生成一个 " + FinalTechItems.ORDERED_DUST.getDisplayName());
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(DustFactoryOperation.AMOUNT_DIFFICULTY),
+                String.valueOf(DustFactoryOperation.TYPE_DIFFICULTY));
     }
 }

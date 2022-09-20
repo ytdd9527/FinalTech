@@ -36,6 +36,7 @@ import java.util.List;
  * @author Final_ROOT
  * @since 2.0
  */
+// TODO...
 public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
     public AdvancedAutoCraft(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

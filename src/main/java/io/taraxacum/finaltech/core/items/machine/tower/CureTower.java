@@ -13,30 +13,28 @@ import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.LocationUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffect;
 
 import javax.annotation.Nonnull;
-import java.util.Collection;
 
 /**
  * @author Final_ROOT
  * @since 2.0
  */
 public class CureTower extends AbstractTower implements RecipeItem {
-    private final double baseRange = FinalTech.getValueManager().getOrDefault(1.6, "items", SlimefunUtil.getIdFormatName(CureTower.class), "range-base");
-    private final double mulRange = FinalTech.getValueManager().getOrDefault(0.1, "items", SlimefunUtil.getIdFormatName(CureTower.class), "range-mul");
-    private final double health = FinalTech.getValueManager().getOrDefault(0.1, "items", SlimefunUtil.getIdFormatName(CureTower.class), "health");
+    private final double baseRange = ConfigUtil.getOrDefaultItemSetting(1.6, this, "range-base");
+    private final double mulRange = ConfigUtil.getOrDefaultItemSetting(0.1, this, "range-mul");
+    private final double health = ConfigUtil.getOrDefaultItemSetting(0.025, this, "health");
 
     public CureTower(@Nonnull ItemGroup itemGroup, @Nonnull SlimefunItemStack item, @Nonnull RecipeType recipeType, @Nonnull ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -91,14 +89,14 @@ public class CureTower extends AbstractTower implements RecipeItem {
 
     private void updateMenu(@Nonnull BlockMenu blockMenu, int amount, double range) {
         ItemStack item = blockMenu.getItemInSlot(StatusL2Menu.STATUS_SLOT);
-        ItemStackUtil.setLore(item, SlimefunUtil.updateMenuLore(FinalTech.getLanguageManager(), this,
+        ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
                 String.valueOf(amount),
                 String.valueOf(range)));
     }
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(this.baseRange),
                 String.valueOf(this.mulRange),
                 String.valueOf(this.health));

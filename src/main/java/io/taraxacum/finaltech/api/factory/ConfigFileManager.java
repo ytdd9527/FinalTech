@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.*;
 
@@ -28,7 +29,8 @@ public class ConfigFileManager {
         this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), configFileName + ".yml");
         if(!file.exists()) {
             try {
-                Files.copy(Objects.requireNonNull(this.getClass().getResourceAsStream(configFileName + ".yml")), this.file.toPath());
+                InputStream resourceAsStream = this.getClass().getResourceAsStream("/" + configFileName + ".yml");
+                Files.copy(resourceAsStream, this.file.toPath());
             } catch (Exception e) {
                 e.printStackTrace();
             }

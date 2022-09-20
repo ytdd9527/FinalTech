@@ -71,12 +71,6 @@
             <artifactId>Slimefun4</artifactId>
             <version>RC-32</version>
             <scope>provided</scope>
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>io.github.baked-libs</groupId>-->
-<!--                    <artifactId>dough-api</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
         </dependency>
     </dependencies>
 </project>

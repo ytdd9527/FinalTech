@@ -97,7 +97,9 @@ public class ItemAmountWrapper extends ItemWrapper {
     @Nonnull
     @Override
     public ItemAmountWrapper deepClone() {
-        return new ItemAmountWrapper(new ItemStack(this.getItemStack()), amount);
+        ItemStack itemStack = ItemStackUtil.cloneItem(this.getItemStack());
+        itemStack.setAmount(this.getItemStack().getAmount());
+        return new ItemAmountWrapper(ItemStackUtil.cloneItem(this.getItemStack()), amount);
     }
 
     @Override

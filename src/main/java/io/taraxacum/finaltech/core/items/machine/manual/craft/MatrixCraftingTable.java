@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.setup.FinalTechRecipes;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -18,6 +18,6 @@ public class MatrixCraftingTable extends AbstractManualCraftMachine {
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerRecipeByRecipeType(this, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE);
+        RecipeUtil.registerRecipeByRecipeType(this, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE);
     }
 }

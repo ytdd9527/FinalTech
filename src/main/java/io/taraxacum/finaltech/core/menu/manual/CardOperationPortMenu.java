@@ -7,9 +7,11 @@ import io.taraxacum.finaltech.core.items.machine.manual.CardOperationTable;
 import io.taraxacum.finaltech.core.items.unusable.*;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
 import io.taraxacum.finaltech.util.StringItemUtil;
 import io.taraxacum.common.util.StringNumberUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
+import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -36,7 +38,9 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
     private static final int[] INPUT_SLOT = new int[] {10, 16};
     private static final int[] OUTPUT_SLOT = new int[] {40};
     private static final int CRAFT_SLOT = 13;
-    private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "craft-icon", "name"), FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "craft-icon", "lore"));
+    private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.RED_STAINED_GLASS_PANE,
+            ConfigUtil.getStatusMenuName(FinalTech.getLanguageManager(), SfItemUtil.getIdFormatName(CardOperationTable.class)),
+            ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), SfItemUtil.getIdFormatName(CardOperationTable.class)));
 
     private static final List<Craft> CRAFT_LIST = new ArrayList<>();
     static {
@@ -54,7 +58,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "action1-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(CardOperationTable.class), "action1-icon", "lore"));
             }
 
             @Override
@@ -92,7 +96,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "action2-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(CardOperationTable.class), "action2-icon", "lore"));
             }
 
             @Override
@@ -115,9 +119,9 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         CRAFT_LIST.add(new Craft() {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if (!ItemStackUtil.isItemNull(item1) && StorageCardItem.isValid(item1) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
+                if (!ItemStackUtil.isItemNull(item1) && StorageCardItem.isValid(item1) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item1), String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT)) >= 0) {
                     return true;
-                } else if (!ItemStackUtil.isItemNull(item2) && StorageCardItem.isValid(item2) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item2), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
+                } else if (!ItemStackUtil.isItemNull(item2) && StorageCardItem.isValid(item2) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item2), String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT)) >= 0) {
                     return true;
                 }
                 return false;
@@ -126,17 +130,17 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "action3-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(CardOperationTable.class), "action3-icon", "lore"));
             }
 
             @Override
             public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull Inventory inventory, int outputSlot) {
                 ItemStack storageCardItem = null;
                 ItemMeta storageCardItemMeta = null;
-                if (!ItemStackUtil.isItemNull(item1) && StorageCardItem.isValid(item1) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item1), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
+                if (!ItemStackUtil.isItemNull(item1) && StorageCardItem.isValid(item1) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item1), String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT)) >= 0) {
                     storageCardItem = item1;
                     storageCardItemMeta = item1.getItemMeta();
-                } else if (!ItemStackUtil.isItemNull(item2) && StorageCardItem.isValid(item2) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item2), String.valueOf(CopyCardItem.DIFFICULTY)) >= 0) {
+                } else if (!ItemStackUtil.isItemNull(item2) && StorageCardItem.isValid(item2) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item2), String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT)) >= 0) {
                     storageCardItem = item2;
                     storageCardItemMeta = item2.getItemMeta();
                 } else {
@@ -152,7 +156,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                     }
                     ItemStack outputItem = Annular.newItem(storageCardItem, player);
                     outputItem.setAmount(1);
-                    StringItemUtil.setAmountInCard(storageCardItem, StringNumberUtil.sub(StringItemUtil.parseAmountInCard(storageCardItemMeta), String.valueOf(CopyCardItem.DIFFICULTY)));
+                    StringItemUtil.setAmountInCard(storageCardItem, StringNumberUtil.sub(StringItemUtil.parseAmountInCard(storageCardItemMeta), String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT)));
                     StorageCardItem.updateLore(storageCardItem);
                     inventory.setItem(outputSlot, outputItem);
                     return true;
@@ -171,7 +175,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "action4-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(CardOperationTable.class), "action4-icon", "lore"));
             }
 
             @Override
@@ -204,7 +208,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "action5-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(CardOperationTable.class), "action5-icon", "lore"));
             }
 
             @Override
@@ -244,7 +248,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SlimefunUtil.getIdFormatName(CardOperationTable.class), "action6-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(CardOperationTable.class), "action6-icon", "lore"));
             }
 
             @Override

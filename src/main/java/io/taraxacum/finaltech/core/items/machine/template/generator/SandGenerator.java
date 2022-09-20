@@ -7,6 +7,10 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class SandGenerator extends AbstractGeneratorMachine{
     public SandGenerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

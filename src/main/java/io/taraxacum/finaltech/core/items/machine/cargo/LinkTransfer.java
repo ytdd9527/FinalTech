@@ -17,6 +17,9 @@ import io.taraxacum.finaltech.core.menu.function.LinkTransferMenu;
 import io.taraxacum.finaltech.core.helper.*;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.*;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.PermissionUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -41,7 +44,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class LinkTransfer extends AbstractCargo implements RecipeItem {
     private final double particleDistance = 0.22;
-    private final Integer range = FinalTech.getValueManager().getOrDefault(8, "items", SlimefunUtil.getIdFormatName(LineTransfer.class), "range");
+    private final int range = ConfigUtil.getOrDefaultItemSetting(8, this, "range");
 
     public LinkTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -131,7 +134,7 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
             javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, finalInputBlock, finalOutputBlock), Slimefun.getTickerTask().getTickRate());
         }
 
-        if(!SlimefunUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(inputBlock, outputBlock))) {
+        if(!PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(inputBlock, outputBlock))) {
             return;
         }
 
@@ -221,7 +224,7 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(this.range));
     }
 }

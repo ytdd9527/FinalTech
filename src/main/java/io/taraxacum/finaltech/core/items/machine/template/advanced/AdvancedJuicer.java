@@ -3,7 +3,7 @@ package io.taraxacum.finaltech.core.items.machine.template.advanced;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -17,6 +17,6 @@ public class AdvancedJuicer extends AbstractAdvanceMachine{
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerRecipeByRecipeType(this, RecipeType.JUICER);
+        RecipeUtil.registerRecipeByRecipeType(this, RecipeType.JUICER);
     }
 }

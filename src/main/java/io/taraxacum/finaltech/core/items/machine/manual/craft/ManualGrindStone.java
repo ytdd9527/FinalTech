@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -18,7 +18,7 @@ public class ManualGrindStone extends AbstractManualCraftMachine {
 
     @Override
     public void registerDefaultRecipes() {
-//        SlimefunUtil.registerRecipeByRecipeType(this, RecipeType.GRIND_STONE);
-        SlimefunUtil.registerRecipeBySlimefunId(this, SlimefunItems.GRIND_STONE.getItemId());
+//        RecipeUtil.registerRecipeByRecipeType(this, RecipeType.GRIND_STONE);
+        RecipeUtil.registerRecipeBySlimefunId(this, SlimefunItems.GRIND_STONE.getItemId());
     }
 }

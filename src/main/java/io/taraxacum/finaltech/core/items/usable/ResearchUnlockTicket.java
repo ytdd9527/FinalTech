@@ -8,6 +8,9 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.common.util.JavaUtil;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +23,7 @@ import java.util.Optional;
  * @author Final_ROOT
  * @since 2.0
  */
-public class ResearchUnlockTicket extends UsableSlimefunItem {
+public class ResearchUnlockTicket extends UsableSlimefunItem implements RecipeItem {
     public ResearchUnlockTicket(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -47,5 +50,10 @@ public class ResearchUnlockTicket extends UsableSlimefunItem {
                 }
             }
         }
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

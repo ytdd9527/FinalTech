@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class GravelConversion extends AbstractConversionMachine{
     public GravelConversion(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -31,14 +35,14 @@ public class GravelConversion extends AbstractConversionMachine{
             for (GoldPanDrop goldPanDrop : invoke) {
                 randomOutputList.add(new RandomMachineRecipe.RandomOutput(goldPanDrop.getOutput(), goldPanDrop.getValue()));
             }
-            this.registerRecipe(new RandomMachineRecipe(0, new ItemStack[] {new ItemStack(goldPan.getInputMaterial())}, randomOutputList));
+            this.registerRecipe(new RandomMachineRecipe(new ItemStack[] {new ItemStack(goldPan.getInputMaterial())}, randomOutputList));
         } catch (Exception e) {
             List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>();
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {new ItemStack(Material.FLINT)}, 40));
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {new ItemStack(Material.CLAY_BALL)}, 20));
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {SlimefunItems.SIFTED_ORE}, 35));
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {new ItemStack(Material.IRON_NUGGET)}, 5));
-            this.registerRecipe(new RandomMachineRecipe(new ItemStack[] {new ItemStack(goldPan.getInputMaterial())}, randomOutputList));
+            this.registerRecipe(new RandomMachineRecipe(new ItemStack[] {new ItemStack(Material.GRAVEL)}, randomOutputList));
         }
     }
 }

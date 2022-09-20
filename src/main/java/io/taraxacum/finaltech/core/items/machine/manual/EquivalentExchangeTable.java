@@ -13,15 +13,13 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.ItemAmountWrapper;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.api.factory.ItemValueTable;
-import io.taraxacum.finaltech.core.items.machine.manual.AbstractManualMachine;
-import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
 import io.taraxacum.finaltech.core.menu.manual.EquivalentExchangeTableMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -32,14 +30,14 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Final_ROOT
  * @since 2.0
  */
 public class EquivalentExchangeTable extends AbstractManualMachine implements RecipeItem {
-    private final int retryTimes = FinalTech.getValueManager().getOrDefault(3, "items", SlimefunUtil.getIdFormatName(EquivalentExchangeTable.class), "retry-times");
-    private static final String KEY = "value";
+    private final String key = "value";
 
     public EquivalentExchangeTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -66,7 +64,7 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        String value = config.contains(KEY) ? config.getString(KEY) : StringNumberUtil.ZERO;
+        String value = config.contains(this.key) ? config.getString(this.key) : StringNumberUtil.ZERO;
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if(ItemStackUtil.isItemNull(item)) {
@@ -77,7 +75,7 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
                     continue;
                 }
                 this.doCraft(blockMenu, config);
-                value = config.getString(KEY);
+                value = config.getString(this.key);
                 item.setAmount(item.getAmount() - 1);
                 continue;
             }
@@ -85,10 +83,10 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
             if (sfItem != null) {
                 value = StringNumberUtil.add(value, StringNumberUtil.mul(ItemValueTable.getInstance().getOrCalItemInputValue(sfItem), String.valueOf(item.getAmount())));
                 item.setAmount(0);
-                config.setValue(KEY, value);
+                config.setValue(this.key, value);
             }
         }
-        BlockStorage.addBlockInfo(block.getLocation(), KEY, value);
+        BlockStorage.addBlockInfo(block.getLocation(), this.key, value);
         if (blockMenu.hasViewer()) {
             this.getMachineMenu().updateInventory(blockMenu.toInventory(), block.getLocation());
         }
@@ -100,14 +98,10 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
     }
 
     private void doCraft(@Nonnull BlockMenu blockMenu, @Nonnull Config config) {
-        String value = config.contains(KEY) ? config.getString(KEY) : StringNumberUtil.ZERO;
+        String value = config.contains(this.key) ? config.getString(this.key) : StringNumberUtil.ZERO;
         List<String> valueList = new ArrayList<>(ItemValueTable.getInstance().getValueItemListOutputMap().keySet());
-        Collections.shuffle(valueList);
-        int i = 0;
-        for (String targetValue : valueList) {
-            if(i++ > this.retryTimes) {
-                break;
-            }
+        for(int i = 0, retryTimes = value.length(); i < retryTimes; i++) {
+            String targetValue = valueList.get(new Random().nextInt(valueList.size()));
             if (StringNumberUtil.compare(value, targetValue) >= 0) {
                 List<String> idList = ItemValueTable.getInstance().getValueItemListOutputMap().get(targetValue);
                 String id = idList.get((int) (Math.random() * idList.size()));
@@ -123,12 +117,11 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
                 }
             }
         }
-        config.setValue(KEY, value);
+        config.setValue(this.key, value);
     }
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
-                String.valueOf(this.retryTimes));
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

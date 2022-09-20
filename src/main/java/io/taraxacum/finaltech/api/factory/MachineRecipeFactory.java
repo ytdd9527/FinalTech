@@ -5,7 +5,6 @@ import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
 import io.taraxacum.finaltech.api.dto.AdvancedMachineRecipe;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
-import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -51,20 +50,21 @@ public class MachineRecipeFactory {
         }
         List<AdvancedMachineRecipe> advancedMachineRecipeList = new ArrayList<>(machineRecipeList.size());
         for (MachineRecipe machineRecipe : machineRecipeList) {
-            ItemStack[] inputItems = machineRecipe.getInput();
-            List<ItemAmountWrapper> inputItemList = ItemStackUtil.calItemListWithAmount(inputItems);
-            List<AdvancedMachineRecipe.AdvancedRandomOutput> outputItemList;
+            ItemAmountWrapper[] inputItems = ItemStackUtil.calItemArrayWithAmount(machineRecipe.getInput());
+
+            AdvancedMachineRecipe.AdvancedRandomOutput[] advancedRandomOutputs;
             if (machineRecipe instanceof RandomMachineRecipe) {
-                outputItemList = new ArrayList<>(((RandomMachineRecipe) machineRecipe).getRandomOutputList().size());
-                List<RandomMachineRecipe.RandomOutput> randomOutputList = ((RandomMachineRecipe) machineRecipe).getRandomOutputList();
-                for (RandomMachineRecipe.RandomOutput randomOutput : randomOutputList) {
-                    outputItemList.add(new AdvancedMachineRecipe.AdvancedRandomOutput(ItemStackUtil.calItemListWithAmount(randomOutput.getOutputItem()), randomOutput.getWeight()));
+                advancedRandomOutputs = new AdvancedMachineRecipe.AdvancedRandomOutput[((RandomMachineRecipe) machineRecipe).getRandomOutputs().length];
+                RandomMachineRecipe.RandomOutput[] randomOutputs = ((RandomMachineRecipe) machineRecipe).getRandomOutputs();
+                for(int i = 0; i < randomOutputs.length; i++) {
+                    advancedRandomOutputs[i] = new AdvancedMachineRecipe.AdvancedRandomOutput(ItemStackUtil.calItemArrayWithAmount(randomOutputs[i].getOutputItem()), randomOutputs[i].getWeight());
                 }
             } else {
-                outputItemList = new ArrayList<>(1);
-                outputItemList.add(new AdvancedMachineRecipe.AdvancedRandomOutput(ItemStackUtil.calItemListWithAmount(machineRecipe.getOutput()), 1));
+                advancedRandomOutputs = new AdvancedMachineRecipe.AdvancedRandomOutput[1];
+                advancedRandomOutputs[0] = new AdvancedMachineRecipe.AdvancedRandomOutput(ItemStackUtil.calItemArrayWithAmount(machineRecipe.getOutput()), 1);
             }
-            advancedMachineRecipeList.add(new AdvancedMachineRecipe(inputItemList, outputItemList));
+
+            advancedMachineRecipeList.add(new AdvancedMachineRecipe(inputItems, advancedRandomOutputs));
         }
         this.advancedRecipeMap.put(clazz, advancedMachineRecipeList);
     }

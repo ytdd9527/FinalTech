@@ -9,7 +9,7 @@ import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
 import io.github.thebusybiscuit.slimefun4.implementation.guide.SurvivalSlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.GuideUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -18,7 +18,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.nio.Buffer;
 import java.util.*;
 
 /**
@@ -58,29 +57,11 @@ public class MainItemGroup extends FlexItemGroup {
         this.item = item;
     }
 
-    /**
-     * This method returns whether this {@link FlexItemGroup} is visible under the given context.
-     * Implementing this method gives full flexibility over who can see the ItemGroup when and where.
-     *
-     * @param p       The {@link Player} who opened his {@link SlimefunGuide}
-     * @param profile The {@link PlayerProfile} of the {@link Player}
-     * @param layout  The {@link SlimefunGuideMode} in which this {@link FlexItemGroup} is viewed
-     * @return Whether to display this {@link FlexItemGroup}
-     */
     @Override
     public boolean isVisible(@Nonnull Player p, @Nonnull PlayerProfile profile, @Nonnull SlimefunGuideMode layout) {
         return layout.equals(SlimefunGuideMode.SURVIVAL_MODE) && this.page == 1;
     }
 
-    /**
-     * This method is called when a {@link Player} opens this {@link FlexItemGroup}.
-     * This is an abstract method which needs to be implemented in order to determine what this
-     * {@link FlexItemGroup} should actually do as it cannot hold any items.
-     *
-     * @param player       The {@link Player} who wants to open this {@link FlexItemGroup}
-     * @param playerProfile The corresponding {@link PlayerProfile} for that {@link Player}
-     * @param slimefunGuideMode  The current {@link SlimefunGuideMode}
-     */
     @Override
     public void open(@Nonnull Player player, @Nonnull PlayerProfile playerProfile, @Nonnull SlimefunGuideMode slimefunGuideMode) {
         playerProfile.getGuideHistory().add(MainItemGroup.this, this.page);
@@ -116,7 +97,7 @@ public class MainItemGroup extends FlexItemGroup {
 
         chestMenu.addItem(PREVIOUS_SLOT, ChestMenuUtils.getPreviousButton(player, this.page, (this.fatherItemGroupList.size() - 1) / MAIN_CONTENT.length + 1));
         chestMenu.addMenuClickHandler(PREVIOUS_SLOT, (p, slot, item, action) -> {
-            SlimefunUtil.removeLastEntry(playerProfile.getGuideHistory());
+            GuideUtil.removeLastEntry(playerProfile.getGuideHistory());
             MainItemGroup mainItemGroup = MainItemGroup.this.getByPage(Math.max(MainItemGroup.this.page - 1, 1));
             Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> mainItemGroup.open(player, playerProfile, slimefunGuideMode));
             return false;
@@ -124,7 +105,7 @@ public class MainItemGroup extends FlexItemGroup {
 
         chestMenu.addItem(NEXT_SLOT, ChestMenuUtils.getNextButton(player, this.page, (this.fatherItemGroupList.size() - 1) / MAIN_CONTENT.length + 1));
         chestMenu.addMenuClickHandler(NEXT_SLOT, (p, slot, item, action) -> {
-            SlimefunUtil.removeLastEntry(playerProfile.getGuideHistory());
+            GuideUtil.removeLastEntry(playerProfile.getGuideHistory());
             MainItemGroup mainItemGroup = MainItemGroup.this.getByPage(Math.min(MainItemGroup.this.page + 1, (this.fatherItemGroupList.size() - 1) / MAIN_CONTENT.length + 1));
             Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> mainItemGroup.open(player, playerProfile, slimefunGuideMode));
             return false;

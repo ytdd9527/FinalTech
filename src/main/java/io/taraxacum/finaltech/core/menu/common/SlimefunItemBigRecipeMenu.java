@@ -7,14 +7,12 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.core.guide.GuideHistory;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
-import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.guide.SurvivalSlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.group.RecipeItemGroup;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.GuideUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
-import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -135,7 +133,7 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
             chestMenu.addItem(WORK_BACK_SLOT, ChestMenuUtils.getBackButton(player));
             chestMenu.addMenuClickHandler(WORK_BACK_SLOT, (p, slot, item, action) -> {
                 GuideHistory guideHistory = playerProfile.getGuideHistory();
-                SlimefunUtil.removeLastEntry(guideHistory);
+                GuideUtil.removeLastEntry(guideHistory);
                 if(itemGroup instanceof RecipeItemGroup) {
                     ((RecipeItemGroup) itemGroup).open(player, playerProfile, slimefunGuideMode
                     );

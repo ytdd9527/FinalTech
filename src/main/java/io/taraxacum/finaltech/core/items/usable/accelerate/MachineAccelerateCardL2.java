@@ -5,8 +5,8 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.util.SlimefunUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class MachineAccelerateCardL2 extends AbstractMachineAccelerateCard implements RecipeItem {
-    private final int TIMES = FinalTech.getValueManager().getOrDefault(64, "items", SlimefunUtil.getIdFormatName(MachineAccelerateCardL2.class), "times");
+    private final int times = ConfigUtil.getOrDefaultItemSetting(64, this, "times");
 
     public MachineAccelerateCardL2(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -25,7 +25,7 @@ public class MachineAccelerateCardL2 extends AbstractMachineAccelerateCard imple
 
     @Override
     protected int times() {
-        return TIMES;
+        return times;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class MachineAccelerateCardL2 extends AbstractMachineAccelerateCard imple
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(this.times()));
     }
 }

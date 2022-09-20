@@ -13,7 +13,9 @@ import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.LocationUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
+import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -26,15 +28,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 
 import javax.annotation.Nonnull;
-import java.util.Collection;
 
 /**
  * @author Final_ROOT
  * @since 2.0
  */
 public class PurifyTimeTower extends AbstractTower implements RecipeItem {
-    private final double baseRange = FinalTech.getValueManager().getOrDefault(3.2, "items", SlimefunUtil.getIdFormatName(PurifyTimeTower.class), "range-base");
-    private final double mulRange = FinalTech.getValueManager().getOrDefault(0.2, "items", SlimefunUtil.getIdFormatName(PurifyTimeTower.class), "range-mul");
+    private final double baseRange = FinalTech.getItemManager().getOrDefault(3.2, SfItemUtil.getIdFormatName(this.getClass()), "range-base");
+    private final double mulRange = FinalTech.getItemManager().getOrDefault(3.2, SfItemUtil.getIdFormatName(this.getClass()), "range-mul");
 
     public PurifyTimeTower(@Nonnull ItemGroup itemGroup, @Nonnull SlimefunItemStack item, @Nonnull RecipeType recipeType, @Nonnull ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -91,14 +92,14 @@ public class PurifyTimeTower extends AbstractTower implements RecipeItem {
 
     private void updateMenu(@Nonnull BlockMenu blockMenu, int amount, double range) {
         ItemStack item = blockMenu.getItemInSlot(StatusL2Menu.STATUS_SLOT);
-        ItemStackUtil.setLore(item, SlimefunUtil.updateMenuLore(FinalTech.getLanguageManager(), this,
+        ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
                 String.valueOf(amount),
                 String.valueOf(range)));
     }
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(this.baseRange),
                 String.valueOf(this.mulRange));
     }

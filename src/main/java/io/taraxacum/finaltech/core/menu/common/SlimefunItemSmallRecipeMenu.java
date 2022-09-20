@@ -11,7 +11,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.guide.SurvivalSlimefunG
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.group.RecipeItemGroup;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.GuideUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -115,7 +115,7 @@ public class SlimefunItemSmallRecipeMenu extends ChestMenu {
                 SlimefunItemSmallRecipeMenu instance = SlimefunItemSmallRecipeMenu.this;
                 RecipeItemGroup recipeItemGroup = RecipeItemGroup.getByItemStack(instance.player, instance.playerProfile, instance.slimefunGuideMode, instance.slimefunItem.getItem(), Math.max(page - 1, 1));
                 if(recipeItemGroup != null) {
-                    SlimefunUtil.removeLastEntry(instance.playerProfile.getGuideHistory());
+                    GuideUtil.removeLastEntry(instance.playerProfile.getGuideHistory());
                     Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> recipeItemGroup.open(instance.player, instance.playerProfile, instance.slimefunGuideMode));
                 }
                 return false;
@@ -126,7 +126,7 @@ public class SlimefunItemSmallRecipeMenu extends ChestMenu {
                 SlimefunItemSmallRecipeMenu instance = SlimefunItemSmallRecipeMenu.this;
                 RecipeItemGroup recipeItemGroup = RecipeItemGroup.getByItemStack(instance.player, instance.playerProfile, instance.slimefunGuideMode, instance.slimefunItem.getItem(), Math.min(page + 1, (displayRecipes.size() - 1) / WORK_CONTENT.length + 1));
                 if(recipeItemGroup != null) {
-                    SlimefunUtil.removeLastEntry(instance.playerProfile.getGuideHistory());
+                    GuideUtil.removeLastEntry(instance.playerProfile.getGuideHistory());
                     Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> recipeItemGroup.open(instance.player, instance.playerProfile, instance.slimefunGuideMode));
                 }
                 return false;

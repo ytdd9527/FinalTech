@@ -8,13 +8,13 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
 import io.taraxacum.finaltech.core.items.machine.manual.AbstractManualMachine;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
 import io.taraxacum.finaltech.core.menu.manual.ManualCraftMachineMenu;
 import io.taraxacum.finaltech.util.LocationUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -32,9 +32,9 @@ import java.util.List;
  * @author Final_ROOT
  * @since 1.0
  */
-public abstract class AbstractManualCraftMachine extends AbstractManualMachine implements AntiAccelerationMachine, RecipeItem {
+public abstract class AbstractManualCraftMachine extends AbstractManualMachine implements RecipeItem {
     public static final String KEY_COUNT = "count";
-    public static Integer COUNT_THRESHOLD = FinalTech.getValueManager().getOrDefault(Slimefun.getTickerTask().getTickRate(), "items", "ManualCraftMachine", "threshold");
+    public static int COUNT_THRESHOLD = ConfigUtil.getOrDefaultItemSetting(Slimefun.getTickerTask().getTickRate(), "ManualCraftMachine", "threshold");
 
     public AbstractManualCraftMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

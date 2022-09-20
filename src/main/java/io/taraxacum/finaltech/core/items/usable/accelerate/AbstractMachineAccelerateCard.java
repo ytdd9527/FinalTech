@@ -9,7 +9,9 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.items.usable.UsableSlimefunItem;
 import io.taraxacum.finaltech.util.ParticleUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.BlockTickerUtil;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
+import io.taraxacum.finaltech.util.slimefun.PermissionUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -19,6 +21,7 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 
@@ -34,70 +37,77 @@ public abstract class AbstractMachineAccelerateCard extends UsableSlimefunItem {
     @Override
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
         playerRightClickEvent.cancel();
+
         Block block = playerRightClickEvent.getInteractEvent().getClickedBlock();
         if (block == null) {
             return;
         }
+
         Player player = playerRightClickEvent.getPlayer();
         if (player.isDead()) {
             return;
         }
+
         Location location = block.getLocation();
         Config config = BlockStorage.getLocationInfo(location);
-        if (config.contains(SlimefunUtil.KEY_ID)) {
-            if (!SlimefunUtil.checkPermission(player, location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
+        if (!config.contains(ConstantTableUtil.CONFIG_ID)) {
+            return;
+        }
+
+        if (!PermissionUtil.checkPermission(player, location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
+            player.sendRawMessage(FinalTech.getLanguageManager().getString("messages", "no-permission", "location"));
+            return;
+        }
+
+        if(BlockStorage.hasInventory(block)) {
+            BlockMenu blockMenu = BlockStorage.getInventory(location);
+            if(!blockMenu.canOpen(block, player)) {
                 player.sendRawMessage(FinalTech.getLanguageManager().getString("messages", "no-permission", "location"));
                 return;
             }
-            if(BlockStorage.hasInventory(block)) {
-                BlockMenu blockMenu = BlockStorage.getInventory(location);
-                if(!blockMenu.canOpen(block, player)) {
-                    player.sendRawMessage(FinalTech.getLanguageManager().getString("messages", "no-permission", "location"));
-                    return;
-                }
-            }
-            if (!this.conditionMatch(player)) {
-                player.sendRawMessage(FinalTech.getLanguageManager().getString("messages", "no-condition", "player"));
-                return;
-            }
-            SlimefunItem slimefunItem = SlimefunItem.getById(config.getString(SlimefunUtil.KEY_ID));
-            if(slimefunItem == null || FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId())) {
-                return;
-            }
-            BlockTicker blockTicker = slimefunItem.getBlockTicker();
-            if(blockTicker != null) {
-                int time;
-                if (this.consume()) {
-                    if(playerRightClickEvent.getItem().getAmount() > 0) {
-                        ItemStack item = playerRightClickEvent.getItem();
-                        item.setAmount(item.getAmount() - 1);
-                        time = this.times();
-                    } else {
-                        return;
-                    }
-                } else {
-                    time = this.times() * playerRightClickEvent.getItem().getAmount();
-                }
-                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
-                BlockTicker blockTickerWrapper = new BlockTicker() {
-                    @Override
-                    public boolean isSynchronized() {
-                        return blockTicker.isSynchronized();
-                    }
+        }
 
-                    @Override
-                    public void tick(Block b, SlimefunItem item, Config data) {
-                        for (int i = 0; i < time; i++) {
-                            blockTicker.tick(b, item, data);
-                        }
-                    }
-                };
-                if(FinalTech.isAsyncSlimefunItem(slimefunItem.getId())) {
-                    SlimefunUtil.runBlockTicker(FinalTech.getLocationRunnableFactory(), blockTickerWrapper, block, slimefunItem, config, location);
-                } else {
-                    SlimefunUtil.runBlockTickerLocal(this.getAddon().getJavaPlugin(), blockTickerWrapper, block, slimefunItem, config);
-                }
+        if (!this.conditionMatch(player)) {
+            player.sendRawMessage(FinalTech.getLanguageManager().getString("messages", "no-condition", "player"));
+            return;
+        }
+
+        SlimefunItem slimefunItem = SlimefunItem.getById(config.getString(ConstantTableUtil.CONFIG_ID));
+        if(slimefunItem == null || FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId())) {
+            return;
+        }
+
+        BlockTicker blockTicker = slimefunItem.getBlockTicker();
+        if(blockTicker == null) {
+            return;
+        }
+
+        int time;
+        if (this.consume()) {
+            if(playerRightClickEvent.getItem().getAmount() > 0) {
+                ItemStack item = playerRightClickEvent.getItem();
+                item.setAmount(item.getAmount() - 1);
+                time = this.times();
+            } else {
+                return;
             }
+        } else {
+            time = this.times() * playerRightClickEvent.getItem().getAmount();
+        }
+
+        ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+
+        Runnable runnable = () -> {
+            for(int i = 0; i < time; i++) {
+                blockTicker.tick(block, slimefunItem, config);
+            }
+        };
+
+        JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
+        if(blockTicker.isSynchronized() || !FinalTech.isAsyncSlimefunItem(slimefunItem.getId())) {
+            javaPlugin.getServer().getScheduler().runTask(javaPlugin, runnable);
+        } else {
+            FinalTech.getLocationRunnableFactory().waitThenRun(runnable, location);
         }
     }
 

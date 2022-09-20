@@ -13,7 +13,8 @@ import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.LocationUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -32,8 +33,8 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class PurifyLevelTower extends AbstractTower implements RecipeItem {
-    private final double baseRange = FinalTech.getValueManager().getOrDefault(3.2, "items", SlimefunUtil.getIdFormatName(PurifyLevelTower.class), "range-base");
-    private final double mulRange = FinalTech.getValueManager().getOrDefault(0.2, "items", SlimefunUtil.getIdFormatName(PurifyLevelTower.class), "range-mul");
+    private final double baseRange = ConfigUtil.getOrDefaultItemSetting(3.2, this, "range-base");
+    private final double mulRange = ConfigUtil.getOrDefaultItemSetting(0.2, this, "range-mul");
 
     public PurifyLevelTower(@Nonnull ItemGroup itemGroup, @Nonnull SlimefunItemStack item, @Nonnull RecipeType recipeType, @Nonnull ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -90,14 +91,14 @@ public class PurifyLevelTower extends AbstractTower implements RecipeItem {
 
     private void updateMenu(@Nonnull BlockMenu blockMenu, int amount, double range) {
         ItemStack item = blockMenu.getItemInSlot(StatusL2Menu.STATUS_SLOT);
-        ItemStackUtil.setLore(item, SlimefunUtil.updateMenuLore(FinalTech.getLanguageManager(), this,
+        ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
                 String.valueOf(amount),
                 String.valueOf(range)));
     }
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(this.baseRange),
                 String.valueOf(this.mulRange));
     }

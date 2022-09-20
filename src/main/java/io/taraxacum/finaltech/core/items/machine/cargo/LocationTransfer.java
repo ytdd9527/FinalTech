@@ -13,6 +13,8 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.LocationTransferMenu;
 import io.taraxacum.finaltech.core.helper.*;
 import io.taraxacum.finaltech.util.*;
+import io.taraxacum.finaltech.util.slimefun.PermissionUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -84,7 +86,7 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
         }
         Block targetBlock = targetLocation.getBlock();
 
-        if(!SlimefunUtil.checkOfflinePermission(location, locationRecorder, targetLocation)) {
+        if(!PermissionUtil.checkOfflinePermission(locationRecorder, targetLocation)) {
             return;
         }
 
@@ -125,6 +127,6 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

@@ -69,8 +69,8 @@ public abstract class AbstractConversionMachine extends AbstractMachine implemen
             }
             itemWrapper.newWrap(item);
             for(AdvancedMachineRecipe advancedMachineRecipe : advancedMachineRecipeList) {
-                if(ItemStackUtil.isItemSimilar(itemWrapper, advancedMachineRecipe.getInput().get(0))) {
-                    inventory.setItem(slot, new CustomItemStack(advancedMachineRecipe.getOutput().get(0).getItemStack(), item.getAmount()));
+                if(ItemStackUtil.isItemSimilar(itemWrapper, advancedMachineRecipe.getInput()[0])) {
+                    inventory.setItem(slot, new CustomItemStack(advancedMachineRecipe.getOutput()[0].getItemStack(), item.getAmount()));
                 }
             }
         }
@@ -92,13 +92,13 @@ public abstract class AbstractConversionMachine extends AbstractMachine implemen
             recipe.getInput()[0] = new CustomItemStack(recipe.getInput()[0], 1);
         }
         if(recipe instanceof RandomMachineRecipe) {
-            for(RandomMachineRecipe.RandomOutput randomOutput : ((RandomMachineRecipe) recipe).getRandomOutputList()) {
-                if(randomOutput.getOutputItem().size() != 1) {
+            for(RandomMachineRecipe.RandomOutput randomOutput : ((RandomMachineRecipe) recipe).getRandomOutputs()) {
+                if(randomOutput.getOutputItem().length != 1) {
                     throw new IllegalArgumentException("Register recipe for " + this.getItemName() + " has made a error: " + " out item type should only just one");
                 }
-                if(randomOutput.getOutputItem().get(0).getAmount() != 1) {
+                if(randomOutput.getOutputItem()[0].getAmount() != 1) {
                     this.getAddon().getJavaPlugin().getServer().getLogger().info("Register recipe for " + this.getItemName() + " has made a error: " + " output item amount should be one");
-                    randomOutput.getOutputItem().set(0, new CustomItemStack(randomOutput.getOutputItem().get(0), 1));
+                    randomOutput.getOutputItem()[0] = new CustomItemStack(randomOutput.getOutputItem()[0], 1);
                 }
             }
         } else {

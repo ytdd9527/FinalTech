@@ -10,6 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public abstract class AbstractDigitalNumber extends UnusableSlimefunItem implements DigitalItem {
     public static final Map<Integer, ItemStack> INTEGER_ITEM_STACK_MAP = new HashMap<>(16);
 
