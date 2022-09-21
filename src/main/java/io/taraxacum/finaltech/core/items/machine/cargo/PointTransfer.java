@@ -42,11 +42,11 @@ import java.util.concurrent.ExecutionException;
  * @author Final_ROOT
  * @since 1.0
  */
-public class LinkTransfer extends AbstractCargo implements RecipeItem {
+public class PointTransfer extends AbstractCargo implements RecipeItem {
     private final double particleDistance = 0.22;
     private final int range = ConfigUtil.getOrDefaultItemSetting(8, this, "range");
 
-    public LinkTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public PointTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -114,8 +114,8 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
                     Block[] result = new Block[2];
                     if (blockData instanceof Directional) {
                         BlockFace blockFace = ((Directional) blockData).getFacing();
-                        result[0] = LinkTransfer.this.searchBlockPiPe(block, BlockSearchMode.LINK_INPUT_HELPER.getOrDefaultValue(config), blockFace.getOppositeFace(), true, drawParticle);
-                        result[1] = LinkTransfer.this.searchBlockPiPe(block, BlockSearchMode.LINK_OUTPUT_HELPER.getOrDefaultValue(config), blockFace, false, drawParticle);
+                        result[0] = PointTransfer.this.searchBlockPiPe(block, BlockSearchMode.LINK_INPUT_HELPER.getOrDefaultValue(config), blockFace.getOppositeFace(), true, drawParticle);
+                        result[1] = PointTransfer.this.searchBlockPiPe(block, BlockSearchMode.LINK_OUTPUT_HELPER.getOrDefaultValue(config), blockFace, false, drawParticle);
                     }
                     return result;
                 }).get();
@@ -187,13 +187,13 @@ public class LinkTransfer extends AbstractCargo implements RecipeItem {
         locationSet.add(begin.getLocation());
         while(true) {
             particleLocationList.add(LocationUtil.getCenterLocation(result));
-            if (BlockStorage.hasInventory(result) && !result.getType().equals(FinalTechItems.LINK_TRANSFER.getType())) {
+            if (BlockStorage.hasInventory(result) && !result.getType().equals(FinalTechItems.POINT_TRANSFER.getType())) {
                 break;
             }
             if (PaperLib.getBlockState(result, false).getState() instanceof InventoryHolder) {
                 break;
             }
-            if (result.getType() == FinalTechItems.LINK_TRANSFER.getType()) {
+            if (result.getType() == FinalTechItems.POINT_TRANSFER.getType()) {
                 count = 0;
                 if (locationSet.contains(result.getLocation())) {
                     particleLocationList.add(LocationUtil.getCenterLocation(result));

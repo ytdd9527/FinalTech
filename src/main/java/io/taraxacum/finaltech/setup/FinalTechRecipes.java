@@ -20,7 +20,8 @@ public final class FinalTechRecipes {
     public static final RecipeType RECIPE_TYPE_CARD_OPERATION_PORT = new RecipeType(FinalTechItems.CARD_OPERATION_PORT, "FINALTECH_CARD_OPERATION_PORT");
     public static final RecipeType RECIPE_TYPE_ENTROPY = new RecipeType(FinalTechItems.ENTROPY, "FINALTECH_ENTROPY");
 
-    // items
+    /* items */
+    // materials
     public static final ItemStack[] WATER_CARD = new ItemStack[] {
             null, null, null,
             null, new ItemStack(Material.WATER_BUCKET), null,
@@ -107,12 +108,13 @@ public final class FinalTechRecipes {
             FinalTechItems.SHELL, null, FinalTechItems.SHELL,
             FinalTechItems.SHELL, FinalTechItems.SHELL, FinalTechItems.SHELL
     };
-    public static final ItemStack[] EQUIVALENT_CONCEPT = new ItemStack[] {
-
-    };
     public static final ItemStack[] JUSTIFIABILITY = new ItemStack[] {
 
     };
+    public static final ItemStack[] EQUIVALENT_CONCEPT = new ItemStack[] {
+
+    };
+    // logic items
     public static final ItemStack[] LOGIC_FALSE = new ItemStack[] {
 
     };
@@ -167,9 +169,7 @@ public final class FinalTechRecipes {
     public static final ItemStack[] DIGITAL_FIFTEEN = new ItemStack[] {
 
     };
-
-    // tool
-
+    // consumables
     public static final ItemStack[] MACHINE_CHARGE_CARD_L1 = new ItemStack[] {
             FinalTechItems.UNORDERED_DUST, null, FinalTechItems.UNORDERED_DUST,
             null, FinalTechItems.GEARWHEEL, null,
@@ -215,17 +215,17 @@ public final class FinalTechRecipes {
             FinalTechItems.MACHINE_ACTIVATE_CARD_L2, FinalTechItems.ANNULAR, FinalTechItems.MACHINE_ACTIVATE_CARD_L2,
             FinalTechItems.MACHINE_ACTIVATE_CARD_L2, FinalTechItems.MACHINE_ACTIVATE_CARD_L2, FinalTechItems.MACHINE_ACTIVATE_CARD_L2
     };
-    public static final ItemStack[] MENU_VIEWER = new ItemStack[] {
-            null, FinalTechItems.GEARWHEEL, null,
-            null, new ItemStack(Material.SPYGLASS), null,
-            null, null, null
-    };
-    public static final ItemStack[] LOCATION_RECORDER = new ItemStack[] {
-            null, FinalTechItems.GEARWHEEL, null,
-            null, new ItemStack(Material.COMPASS), null,
-            null, null, null
-    };
     public static final ItemStack[] MAGIC_HYPNOTIC = new ItemStack[] {
+
+    };
+    public static final ItemStack[] RESEARCH_UNLOCK_TICKET = new ItemStack[] {
+
+    };
+    public static final ItemStack[] UNTREATABLE_RUNE = new ItemStack[] {
+
+    };
+    // tools
+    public static final ItemStack[] STAFF_ELEMENTAL_LINE = new ItemStack[] {
 
     };
     public static final ItemStack[] POTION_EFFECT_COMPRESSOR = new ItemStack[] {
@@ -237,14 +237,15 @@ public final class FinalTechRecipes {
     public static final ItemStack[] POTION_EFFECT_PURIFIER = new ItemStack[] {
 
     };
-    public static final ItemStack[] STAFF_ELEMENTAL_LINE = new ItemStack[] {
-
+    public static final ItemStack[] MENU_VIEWER = new ItemStack[] {
+            null, FinalTechItems.GEARWHEEL, null,
+            null, new ItemStack(Material.SPYGLASS), null,
+            null, null, null
     };
-    public static final ItemStack[] UNTREATABLE_RUNE = new ItemStack[] {
-
-    };
-    public static final ItemStack[] RESEARCH_UNLOCK_TICKET = new ItemStack[] {
-
+    public static final ItemStack[] LOCATION_RECORDER = new ItemStack[] {
+            null, FinalTechItems.GEARWHEEL, null,
+            null, new ItemStack(Material.COMPASS), null,
+            null, null, null
     };
     public static final ItemStack[] MACHINE_CONFIGURATOR = new ItemStack[] {
 
@@ -252,20 +253,77 @@ public final class FinalTechRecipes {
     public static final ItemStack[] PORTABLE_ENERGY_STORAGE = new ItemStack[] {
 
     };
-
-    /* weapon */
-    public static final ItemStack[] DUST_WOODEN_SWORD = new ItemStack[] {
-            null, new ItemStack(Material.OAK_WOOD), null,
-            null, new ItemStack(Material.OAK_WOOD), null,
-            null, FinalTechItems.ORDERED_DUST, null
-    };
+    // weapons
     public static final ItemStack[] SUPER_PICKAXE = new ItemStack[] {
             null, new ItemStack(Material.OAK_WOOD), null,
             null, new ItemStack(Material.OAK_WOOD), null,
             null, FinalTechItems.ORDERED_DUST, null
     };
+    public static final ItemStack[] SWORD1 = new ItemStack[] {
+            null, new ItemStack(Material.OAK_WOOD), null,
+            null, new ItemStack(Material.OAK_WOOD), null,
+            null, FinalTechItems.ORDERED_DUST, null
+    };
+    public static final ItemStack[] SWORD2 = new ItemStack[] {
+            null, new ItemStack(Material.OAK_WOOD), null,
+            null, new ItemStack(Material.OAK_WOOD), null,
+            null, FinalTechItems.ORDERED_DUST, null
+    };
+    public static final ItemStack[] SWORD3 = new ItemStack[] {
+            null, new ItemStack(Material.OAK_WOOD), null,
+            null, new ItemStack(Material.OAK_WOOD), null,
+            null, FinalTechItems.ORDERED_DUST, null
+    };
+    public static final ItemStack[] SWORD4 = new ItemStack[] {
+            null, new ItemStack(Material.OAK_WOOD), null,
+            null, new ItemStack(Material.OAK_WOOD), null,
+            null, FinalTechItems.ORDERED_DUST, null
+    };
 
-    // electric
+    /*electricity system*/
+    // electric generator
+    public static final ItemStack[] BASIC_GENERATOR = new ItemStack[] {
+            new ItemStack(Material.GLOWSTONE), new ItemStack(Material.GLOWSTONE), new ItemStack(Material.GLOWSTONE),
+            SlimefunItems.SOLAR_PANEL, FinalTechItems.ORDERED_DUST, SlimefunItems.SOLAR_PANEL,
+            null, SlimefunItems.SOLAR_PANEL, null
+    };
+    public static final ItemStack[] ADVANCED_GENERATOR = new ItemStack[] {
+            FinalTechItems.BASIC_GENERATOR, FinalTechItems.BUG, FinalTechItems.BASIC_GENERATOR,
+            FinalTechItems.BUG, new ItemStack(Material.REDSTONE), FinalTechItems.BUG,
+            FinalTechItems.BASIC_GENERATOR, FinalTechItems.BUG, FinalTechItems.BASIC_GENERATOR
+    };
+    public static final ItemStack[] CARBONADO_GENERATOR = new ItemStack[] {
+            FinalTechItems.ADVANCED_GENERATOR, FinalTechItems.BUG, FinalTechItems.ADVANCED_GENERATOR,
+            FinalTechItems.BUG, SlimefunItems.CARBONADO, FinalTechItems.BUG,
+            FinalTechItems.ADVANCED_GENERATOR, FinalTechItems.BUG, FinalTechItems.ADVANCED_GENERATOR
+    };
+    public static final ItemStack[] ENERGIZED_GENERATOR = new ItemStack[] {
+            FinalTechItems.CARBONADO_GENERATOR, FinalTechItems.BUG, FinalTechItems.CARBONADO_GENERATOR,
+            FinalTechItems.BUG, SlimefunItems.SOLAR_GENERATOR_4, FinalTechItems.BUG,
+            FinalTechItems.CARBONADO_GENERATOR, FinalTechItems.BUG, FinalTechItems.CARBONADO_GENERATOR
+    };
+    public static final ItemStack[] ENERGIZED_STACK_GENERATOR = new ItemStack[] {
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64), new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
+            new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64), new CustomItemStack(FinalTechItems.ENERGIZED_GENERATOR, 8), new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64),
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64), new CustomItemStack(FinalTechItems.GEARWHEEL, 64)
+    };
+    public static final ItemStack[] OVERLOADED_GENERATOR = new ItemStack[] {
+            new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64), new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64),
+            new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.ENERGIZED_GENERATOR, 8), new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
+            new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64), new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64)
+    };
+    public static final ItemStack[] ORDERED_DUST_GENERATOR = new ItemStack[] {
+            FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST,
+            FinalTechItems.UNORDERED_DUST, null, FinalTechItems.UNORDERED_DUST,
+            FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST
+    };
+    public static final ItemStack[] ENERGIZED_CHARGE_BASE = new ItemStack[] {
+
+    };
+    public static final ItemStack[] OVERLOAD_CHARGE_BASE = new ItemStack[] {
+
+    };
+    // electric storage
     public static final ItemStack[] BASIC_CHARGE_INCREASE_CAPACITOR = new ItemStack[] {
             FinalTechItems.UNORDERED_DUST, FinalTechItems.BUG, FinalTechItems.UNORDERED_DUST,
             FinalTechItems.GEARWHEEL, SlimefunItems.ENERGIZED_CAPACITOR, FinalTechItems.GEARWHEEL,
@@ -326,11 +384,7 @@ public final class FinalTechRecipes {
             null, null, null,
             null, new CustomItemStack(FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR, 64), null
     };
-    public static final ItemStack[] ESCAPE_CAPACITOR = new ItemStack[] {
-            FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, FinalTechItems.CARBONADO_EXPANDED_CAPACITOR,
-            FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, FinalTechItems.BUG, FinalTechItems.CARBONADO_EXPANDED_CAPACITOR,
-            FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, FinalTechItems.CARBONADO_EXPANDED_CAPACITOR
-    };
+    // electric transmission
     public static final ItemStack[] NORMAL_ELECTRICITY_SHOOT_PILE = new ItemStack[] {
             FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.BUG,
             FinalTechItems.BUG, SlimefunItems.ENERGY_CONNECTOR, FinalTechItems.BUG,
@@ -346,56 +400,10 @@ public final class FinalTechRecipes {
             null, FinalTechItems.NORMAL_ELECTRICITY_SHOOT_PILE, null,
             FinalTechItems.ORDERED_DUST, null, FinalTechItems.ORDERED_DUST
     };
-    public static final ItemStack[] ORDERED_DUST_GENERATOR = new ItemStack[] {
-            FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST,
-            FinalTechItems.UNORDERED_DUST, null, FinalTechItems.UNORDERED_DUST,
-            FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST
-    };
-    public static final ItemStack[] BASIC_GENERATOR = new ItemStack[] {
-            new ItemStack(Material.GLOWSTONE), new ItemStack(Material.GLOWSTONE), new ItemStack(Material.GLOWSTONE),
-            SlimefunItems.SOLAR_PANEL, FinalTechItems.ORDERED_DUST, SlimefunItems.SOLAR_PANEL,
-            null, SlimefunItems.SOLAR_PANEL, null
-    };
-    public static final ItemStack[] ADVANCED_GENERATOR = new ItemStack[] {
-            FinalTechItems.BASIC_GENERATOR, FinalTechItems.BUG, FinalTechItems.BASIC_GENERATOR,
-            FinalTechItems.BUG, new ItemStack(Material.REDSTONE), FinalTechItems.BUG,
-            FinalTechItems.BASIC_GENERATOR, FinalTechItems.BUG, FinalTechItems.BASIC_GENERATOR
-    };
-    public static final ItemStack[] CARBONADO_GENERATOR = new ItemStack[] {
-            FinalTechItems.ADVANCED_GENERATOR, FinalTechItems.BUG, FinalTechItems.ADVANCED_GENERATOR,
-            FinalTechItems.BUG, SlimefunItems.CARBONADO, FinalTechItems.BUG,
-            FinalTechItems.ADVANCED_GENERATOR, FinalTechItems.BUG, FinalTechItems.ADVANCED_GENERATOR
-    };
-    public static final ItemStack[] ENERGIZED_GENERATOR = new ItemStack[] {
-            FinalTechItems.CARBONADO_GENERATOR, FinalTechItems.BUG, FinalTechItems.CARBONADO_GENERATOR,
-            FinalTechItems.BUG, SlimefunItems.SOLAR_GENERATOR_4, FinalTechItems.BUG,
-            FinalTechItems.CARBONADO_GENERATOR, FinalTechItems.BUG, FinalTechItems.CARBONADO_GENERATOR
-    };
-    public static final ItemStack[] ENERGIZED_STACK_GENERATOR = new ItemStack[] {
-            new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64), new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
-            new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64), new CustomItemStack(FinalTechItems.ENERGIZED_GENERATOR, 8), new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64),
-            new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64), new CustomItemStack(FinalTechItems.GEARWHEEL, 64)
-    };
-    public static final ItemStack[] OVERLOADED_GENERATOR = new ItemStack[] {
-            new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64), new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64),
-            new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.ENERGIZED_GENERATOR, 8), new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
-            new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64), new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.UNORDERED_DUST, 64)
-    };
-    public static final ItemStack[] ENERGIZED_CHARGE_BASE = new ItemStack[] {
-
-    };
-    public static final ItemStack[] OVERLOAD_CHARGE_BASE = new ItemStack[] {
-
-    };
-    public static final ItemStack[] ENERGIZED_ACCELERATOR = new ItemStack[] {
-            new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64),
-            new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.ANNULAR, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64),
-            new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64)
-    };
-    public static final ItemStack[] OVERLOADED_ACCELERATOR = new ItemStack[] {
-            new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64),
-            new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.ANNULAR, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64),
-            new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64)
+    public static final ItemStack[] ESCAPE_CAPACITOR = new ItemStack[] {
+            FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, FinalTechItems.CARBONADO_EXPANDED_CAPACITOR,
+            FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, FinalTechItems.BUG, FinalTechItems.CARBONADO_EXPANDED_CAPACITOR,
+            FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, FinalTechItems.CARBONADO_EXPANDED_CAPACITOR
     };
     public static final ItemStack[] VARIABLE_WIRE_RESISTANCE = new ItemStack[] {
             new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64),
@@ -407,13 +415,20 @@ public final class FinalTechRecipes {
             new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.ANNULAR, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64),
             new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64)
     };
-
-    // cargo and storage
-    public static final ItemStack[] BASIC_FRAME_MACHINE = new ItemStack[] {
-            new ItemStack(Material.STONE), new ItemStack(Material.CHAIN), new ItemStack(Material.STONE),
-            new ItemStack(Material.CHAIN), FinalTechItems.ORDERED_DUST, new ItemStack(Material.CHAIN),
-            new ItemStack(Material.STONE), new ItemStack(Material.CHAIN), new ItemStack(Material.STONE)
+    // electric accelerator
+    public static final ItemStack[] ENERGIZED_ACCELERATOR = new ItemStack[] {
+            new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64),
+            new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.ANNULAR, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64),
+            new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64)
     };
+    public static final ItemStack[] OVERLOADED_ACCELERATOR = new ItemStack[] {
+            new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64),
+            new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.ANNULAR, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64),
+            new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64)
+    };
+
+    /* cargo system */
+    // storage unit
     public static final ItemStack[] NORMAL_STORAGE_UNIT = new ItemStack[] {
             new ItemStack(Material.GLASS), new ItemStack(Material.CHEST), new ItemStack(Material.GLASS),
             new ItemStack(Material.CHEST), null, new ItemStack(Material.CHEST),
@@ -479,34 +494,7 @@ public final class FinalTechRecipes {
             null, FinalTechItems.NORMAL_STORAGE_UNIT, FinalTechItems.ORDERED_DUST,
             null, null, null,
     };
-    public static final ItemStack[] REMOTE_ACCESSOR = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
-            FinalTechItems.GEARWHEEL, new ItemStack(Material.OBSERVER), FinalTechItems.GEARWHEEL,
-            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
-    };
-    public static final ItemStack[] AREA_ACCESSOR = new ItemStack[] {
-
-    };
-    public static final ItemStack[] LINK_TRANSFER = new ItemStack[] {
-            new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN), new ItemStack(Material.TRIPWIRE_HOOK),
-            new ItemStack(Material.STRING), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.STRING),
-            new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN), new ItemStack(Material.TRIPWIRE_HOOK)
-    };
-    public static final ItemStack[] LINE_TRANSFER = new ItemStack[] {
-            new ItemStack(Material.STRING), new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.STRING),
-            new ItemStack(Material.TRIPWIRE_HOOK), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.TRIPWIRE_HOOK),
-            new ItemStack(Material.CHEST), new ItemStack(Material.CHEST), new ItemStack(Material.CHEST)
-    };
-    public static final ItemStack[] STATION_TRANSFER = new ItemStack[] {
-            new ItemStack(Material.HOPPER), new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN),
-            new ItemStack(Material.HOPPER), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.STRING),
-            new ItemStack(Material.HOPPER), new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN)
-    };
-    public static final ItemStack[] LOCATION_TRANSFER = new ItemStack[] {
-            new ItemStack(Material.CHAIN), new ItemStack(Material.CHEST), new ItemStack(Material.CHAIN),
-            new ItemStack(Material.TRIPWIRE_HOOK), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.TRIPWIRE_HOOK),
-            new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.STRING), new ItemStack(Material.TRIPWIRE_HOOK)
-    };
+    // advanced storage
     public static final ItemStack[] STORAGE_INTERACT_PORT = new ItemStack[] {
             new ItemStack(Material.STONE), new ItemStack(Material.STONE), new ItemStack(Material.STONE),
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
@@ -517,7 +505,6 @@ public final class FinalTechRecipes {
             new ItemStack(Material.STONE), new ItemStack(Material.STONE), new ItemStack(Material.STONE),
             new ItemStack(Material.STONE), new ItemStack(Material.STONE), new ItemStack(Material.STONE)
     };
-
     public static final ItemStack[] STORAGE_WITHDRAW_PORT = new ItemStack[] {
             new ItemStack(Material.STONE), new ItemStack(Material.STONE), new ItemStack(Material.STONE),
             new ItemStack(Material.STONE), new ItemStack(Material.STONE), new ItemStack(Material.STONE),
@@ -528,100 +515,44 @@ public final class FinalTechRecipes {
             new ItemStack(Material.CHEST), new ItemStack(Material.CHEST), new ItemStack(Material.TRAPPED_CHEST),
             new ItemStack(Material.TRAPPED_CHEST), new ItemStack(Material.TRAPPED_CHEST), new ItemStack(Material.TRAPPED_CHEST)
     };
-    public static final ItemStack[] STORAGE_ITEM_WHITE = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.WHITE_CONCRETE_POWDER), new ItemStack(Material.WHITE_CONCRETE_POWDER),
-            new ItemStack(Material.WHITE_CONCRETE_POWDER), new ItemStack(Material.WHITE_CONCRETE_POWDER), new ItemStack(Material.WHITE_CONCRETE),
-            new ItemStack(Material.WHITE_CONCRETE), new ItemStack(Material.WHITE_CONCRETE), new ItemStack(Material.WHITE_CONCRETE)
+    // accessor
+    public static final ItemStack[] REMOTE_ACCESSOR = new ItemStack[] {
+            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+            FinalTechItems.GEARWHEEL, new ItemStack(Material.OBSERVER), FinalTechItems.GEARWHEEL,
+            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
-    public static final ItemStack[] STORAGE_ITEM_ORANGE = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.ORANGE_CONCRETE_POWDER), new ItemStack(Material.ORANGE_CONCRETE_POWDER),
-            new ItemStack(Material.ORANGE_CONCRETE_POWDER), new ItemStack(Material.ORANGE_CONCRETE_POWDER), new ItemStack(Material.ORANGE_CONCRETE),
-            new ItemStack(Material.ORANGE_CONCRETE), new ItemStack(Material.ORANGE_CONCRETE), new ItemStack(Material.ORANGE_CONCRETE)
-    };
-    public static final ItemStack[] STORAGE_ITEM_MAGENTA = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.MAGENTA_CONCRETE_POWDER), new ItemStack(Material.MAGENTA_CONCRETE_POWDER),
-            new ItemStack(Material.MAGENTA_CONCRETE_POWDER), new ItemStack(Material.MAGENTA_CONCRETE_POWDER), new ItemStack(Material.MAGENTA_CONCRETE),
-            new ItemStack(Material.MAGENTA_CONCRETE), new ItemStack(Material.MAGENTA_CONCRETE), new ItemStack(Material.MAGENTA_CONCRETE)
-    };
-    public static final ItemStack[] STORAGE_ITEM_LIGHT_BLUE = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.LIGHT_BLUE_CONCRETE_POWDER), new ItemStack(Material.LIGHT_BLUE_CONCRETE_POWDER),
-            new ItemStack(Material.LIGHT_BLUE_CONCRETE_POWDER), new ItemStack(Material.LIGHT_BLUE_CONCRETE_POWDER), new ItemStack(Material.LIGHT_BLUE_CONCRETE),
-            new ItemStack(Material.LIGHT_BLUE_CONCRETE), new ItemStack(Material.LIGHT_BLUE_CONCRETE), new ItemStack(Material.LIGHT_BLUE_CONCRETE)
-    };
-    public static final ItemStack[] STORAGE_ITEM_YELLOW = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.YELLOW_CONCRETE_POWDER), new ItemStack(Material.YELLOW_CONCRETE_POWDER),
-            new ItemStack(Material.YELLOW_CONCRETE_POWDER), new ItemStack(Material.YELLOW_CONCRETE_POWDER), new ItemStack(Material.YELLOW_CONCRETE),
-            new ItemStack(Material.YELLOW_CONCRETE), new ItemStack(Material.YELLOW_CONCRETE), new ItemStack(Material.YELLOW_CONCRETE)
-    };
-    public static final ItemStack[] STORAGE_ITEM_LIME = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.LIME_CONCRETE_POWDER), new ItemStack(Material.LIME_CONCRETE_POWDER),
-            new ItemStack(Material.LIME_CONCRETE_POWDER), new ItemStack(Material.LIME_CONCRETE_POWDER), new ItemStack(Material.LIME_CONCRETE),
-            new ItemStack(Material.LIME_CONCRETE), new ItemStack(Material.LIME_CONCRETE), new ItemStack(Material.LIME_CONCRETE)
-    };
-    public static final ItemStack[] STORAGE_ITEM_PINK = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.PINK_CONCRETE_POWDER), new ItemStack(Material.PINK_CONCRETE_POWDER),
-            new ItemStack(Material.PINK_CONCRETE_POWDER), new ItemStack(Material.PINK_CONCRETE_POWDER), new ItemStack(Material.PINK_CONCRETE),
-            new ItemStack(Material.PINK_CONCRETE), new ItemStack(Material.PINK_CONCRETE), new ItemStack(Material.PINK_CONCRETE)
-    };
-    public static final ItemStack[] STORAGE_ITEM_GRAY = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.GRAY_CONCRETE_POWDER), new ItemStack(Material.GRAY_CONCRETE_POWDER),
-            new ItemStack(Material.GRAY_CONCRETE_POWDER), new ItemStack(Material.GRAY_CONCRETE_POWDER), new ItemStack(Material.GRAY_CONCRETE),
-            new ItemStack(Material.GRAY_CONCRETE), new ItemStack(Material.GRAY_CONCRETE), new ItemStack(Material.GRAY_CONCRETE)
-    };
-    public static final ItemStack[] STORAGE_ITEM_LIGHT_GRAY = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.LIGHT_GRAY_CONCRETE_POWDER), new ItemStack(Material.LIGHT_GRAY_CONCRETE_POWDER),
-            new ItemStack(Material.LIGHT_GRAY_CONCRETE_POWDER), new ItemStack(Material.LIGHT_GRAY_CONCRETE_POWDER), new ItemStack(Material.LIGHT_GRAY_CONCRETE),
-            new ItemStack(Material.LIGHT_GRAY_CONCRETE), new ItemStack(Material.LIGHT_GRAY_CONCRETE), new ItemStack(Material.LIGHT_GRAY_CONCRETE)
-    };
-    public static final ItemStack[] STORAGE_ITEM_CYAN = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.CYAN_CONCRETE_POWDER), new ItemStack(Material.CYAN_CONCRETE_POWDER),
-            new ItemStack(Material.CYAN_CONCRETE_POWDER), new ItemStack(Material.CYAN_CONCRETE_POWDER), new ItemStack(Material.CYAN_CONCRETE),
-            new ItemStack(Material.CYAN_CONCRETE), new ItemStack(Material.CYAN_CONCRETE), new ItemStack(Material.CYAN_CONCRETE)
-    };
-    public static final ItemStack[] STORAGE_ITEM_PURPLE = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.PURPLE_CONCRETE_POWDER), new ItemStack(Material.PURPLE_CONCRETE_POWDER),
-            new ItemStack(Material.PURPLE_CONCRETE_POWDER), new ItemStack(Material.PURPLE_CONCRETE_POWDER), new ItemStack(Material.PURPLE_CONCRETE),
-            new ItemStack(Material.PURPLE_CONCRETE), new ItemStack(Material.PURPLE_CONCRETE), new ItemStack(Material.PURPLE_CONCRETE)
-    };
-    public static final ItemStack[] STORAGE_ITEM_BLUE = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.BLUE_CONCRETE_POWDER), new ItemStack(Material.BLUE_CONCRETE_POWDER),
-            new ItemStack(Material.BLUE_CONCRETE_POWDER), new ItemStack(Material.BLUE_CONCRETE_POWDER), new ItemStack(Material.BLUE_CONCRETE),
-            new ItemStack(Material.BLUE_CONCRETE), new ItemStack(Material.BLUE_CONCRETE), new ItemStack(Material.BLUE_CONCRETE)
-    };
-    public static final ItemStack[] STORAGE_ITEM_BROWN = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.BROWN_CONCRETE_POWDER), new ItemStack(Material.BROWN_CONCRETE_POWDER),
-            new ItemStack(Material.BROWN_CONCRETE_POWDER), new ItemStack(Material.BROWN_CONCRETE_POWDER), new ItemStack(Material.BROWN_CONCRETE),
-            new ItemStack(Material.BROWN_CONCRETE), new ItemStack(Material.BROWN_CONCRETE), new ItemStack(Material.BROWN_CONCRETE)
-    };
-    public static final ItemStack[] STORAGE_ITEM_GREEN = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.GREEN_CONCRETE_POWDER), new ItemStack(Material.GREEN_CONCRETE_POWDER),
-            new ItemStack(Material.GREEN_CONCRETE_POWDER), new ItemStack(Material.GREEN_CONCRETE_POWDER), new ItemStack(Material.GREEN_CONCRETE),
-            new ItemStack(Material.GREEN_CONCRETE), new ItemStack(Material.GREEN_CONCRETE), new ItemStack(Material.GREEN_CONCRETE)
-    };
-    public static final ItemStack[] STORAGE_ITEM_RED = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.RED_CONCRETE_POWDER), new ItemStack(Material.RED_CONCRETE_POWDER),
-            new ItemStack(Material.RED_CONCRETE_POWDER), new ItemStack(Material.RED_CONCRETE_POWDER), new ItemStack(Material.RED_CONCRETE),
-            new ItemStack(Material.RED_CONCRETE), new ItemStack(Material.RED_CONCRETE), new ItemStack(Material.RED_CONCRETE)
-    };
-    public static final ItemStack[] STORAGE_ITEM_BLACK = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, new ItemStack(Material.BLACK_CONCRETE_POWDER), new ItemStack(Material.BLACK_CONCRETE_POWDER),
-            new ItemStack(Material.BLACK_CONCRETE_POWDER), new ItemStack(Material.BLACK_CONCRETE_POWDER), new ItemStack(Material.BLACK_CONCRETE),
-            new ItemStack(Material.BLACK_CONCRETE), new ItemStack(Material.BLACK_CONCRETE), new ItemStack(Material.BLACK_CONCRETE)
-    };
-
-    // tower machine
-
-    public static final ItemStack[] CURE_TOWER = new ItemStack[] {
+    public static final ItemStack[] AREA_ACCESSOR = new ItemStack[] {
 
     };
-    public static final ItemStack[] PURIFY_LEVEL_TOWER = new ItemStack[] {
-
+    // cargo
+    public static final ItemStack[] BASIC_FRAME_MACHINE = new ItemStack[] {
+            new ItemStack(Material.STONE), new ItemStack(Material.CHAIN), new ItemStack(Material.STONE),
+            new ItemStack(Material.CHAIN), FinalTechItems.ORDERED_DUST, new ItemStack(Material.CHAIN),
+            new ItemStack(Material.STONE), new ItemStack(Material.CHAIN), new ItemStack(Material.STONE)
     };
-    public static final ItemStack[] PURIFY_TIME_TOWER = new ItemStack[] {
-
+    public static final ItemStack[] POINT_TRANSFER = new ItemStack[] {
+            new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN), new ItemStack(Material.TRIPWIRE_HOOK),
+            new ItemStack(Material.STRING), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.STRING),
+            new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN), new ItemStack(Material.TRIPWIRE_HOOK)
+    };
+    public static final ItemStack[] STATION_TRANSFER = new ItemStack[] {
+            new ItemStack(Material.HOPPER), new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN),
+            new ItemStack(Material.HOPPER), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.STRING),
+            new ItemStack(Material.HOPPER), new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN)
+    };
+    public static final ItemStack[] LINE_TRANSFER = new ItemStack[] {
+            new ItemStack(Material.STRING), new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.STRING),
+            new ItemStack(Material.TRIPWIRE_HOOK), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.TRIPWIRE_HOOK),
+            new ItemStack(Material.CHEST), new ItemStack(Material.CHEST), new ItemStack(Material.CHEST)
+    };
+    public static final ItemStack[] LOCATION_TRANSFER = new ItemStack[] {
+            new ItemStack(Material.CHAIN), new ItemStack(Material.CHEST), new ItemStack(Material.CHAIN),
+            new ItemStack(Material.TRIPWIRE_HOOK), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.TRIPWIRE_HOOK),
+            new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.STRING), new ItemStack(Material.TRIPWIRE_HOOK)
     };
 
-    // function machine
+    /* functional machines */
+    // core machines
     public static final ItemStack[] ORDERED_DUST_FACTORY_DIRT = new ItemStack[] {
             SlimefunItems.PORTABLE_DUSTBIN, SlimefunItems.PORTABLE_DUSTBIN, SlimefunItems.PORTABLE_DUSTBIN,
             SlimefunItems.PORTABLE_DUSTBIN, new ItemStack(Material.DIRT), SlimefunItems.PORTABLE_DUSTBIN,
@@ -632,25 +563,10 @@ public final class FinalTechRecipes {
             SlimefunItems.PORTABLE_DUSTBIN, new ItemStack(Material.COBBLESTONE), SlimefunItems.PORTABLE_DUSTBIN,
             SlimefunItems.PORTABLE_DUSTBIN, SlimefunItems.PORTABLE_DUSTBIN, SlimefunItems.PORTABLE_DUSTBIN
     };
-    public static final ItemStack[] ALL_COMPRESSION = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST,
-            FinalTechItems.ORDERED_DUST, SlimefunItems.TRASH_CAN, FinalTechItems.ORDERED_DUST,
-            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST
-    };
-    public static final ItemStack[] ALL_FACTORY = new ItemStack[] {
-            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST,
-            FinalTechItems.ORDERED_DUST, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechItems.ORDERED_DUST,
-            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST
-    };
     public static final ItemStack[] MATRIX_CRAFTING_TABLE = new ItemStack[] {
             FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST,
             FinalTechItems.ORDERED_DUST, new ItemStack(Material.HEART_OF_THE_SEA), FinalTechItems.ORDERED_DUST,
             FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST
-    };
-    public static final ItemStack[] CARD_OPERATION_PORT = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
-            FinalTechItems.GEARWHEEL, new CustomItemStack(Material.CRAFTING_TABLE), FinalTechItems.GEARWHEEL,
-            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
     public static final ItemStack[] ITEM_DISMANTLE_TABLE = new ItemStack[] {
             FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST,
@@ -667,17 +583,20 @@ public final class FinalTechRecipes {
             new CustomItemStack(FinalTechItems.BUG, 64), null, new CustomItemStack(FinalTechItems.BUG, 64),
             new CustomItemStack(FinalTechItems.BUG, 64), new CustomItemStack(FinalTechItems.BUG, 64), new CustomItemStack(FinalTechItems.BUG, 64)
     };
-    public static final ItemStack[] FUEL_CHARGER = new ItemStack[] {
-
+    public static final ItemStack[] ITEM_SERIALIZATION_CONSTRUCTOR = new ItemStack[] {
+            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, SlimefunItems.TRASH_CAN, FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST
     };
-    public static final ItemStack[] FUEL_OPERATOR = new ItemStack[] {
-
+    public static final ItemStack[] ITEM_DESERIALIZE_PARSER = new ItemStack[] {
+            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST
     };
-    public static final ItemStack[] COBBLESTONE_ERUPTER = new ItemStack[] {
-
-    };
-    public static final ItemStack[] ENTROPY_SEED = new ItemStack[] {
-
+    public static final ItemStack[] CARD_OPERATION_PORT = new ItemStack[] {
+            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+            FinalTechItems.GEARWHEEL, new CustomItemStack(Material.CRAFTING_TABLE), FinalTechItems.GEARWHEEL,
+            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
     public static final ItemStack[] LOGIC_CRAFTER = new ItemStack[] {
 
@@ -685,81 +604,93 @@ public final class FinalTechRecipes {
     public static final ItemStack[] DIGIT_ADDER = new ItemStack[] {
 
     };
+    // special machines
+    public static final ItemStack[] COBBLESTONE_ERUPTER = new ItemStack[] {
 
+    };
+    public static final ItemStack[] FUEL_CHARGER = new ItemStack[] {
 
-    // manual machine
+    };
+    public static final ItemStack[] FUEL_OPERATOR = new ItemStack[] {
+
+    };
+    public static final ItemStack[] FUEL_ACCELERATOR = new ItemStack[] {
+
+    };
+    public static final ItemStack[] OPERATION_ACCELERATOR = new ItemStack[] {
+
+    };
+    // tower
+    public static final ItemStack[] CURE_TOWER = new ItemStack[] {
+
+    };
+    public static final ItemStack[] PURIFY_LEVEL_TOWER = new ItemStack[] {
+
+    };
+    public static final ItemStack[] PURIFY_TIME_TOWER = new ItemStack[] {
+
+    };
+    // manual machines
     public static final ItemStack[] MANUAL_CRAFTING_TABLE = new ItemStack[] {
             FinalTechItems.GEARWHEEL, SlimefunItems.PORTABLE_CRAFTER, null,
             null, null, null,
             null, null, null
     };
-
     public static final ItemStack[] MANUAL_ENHANCED_CRAFTING_TABLE = new ItemStack[] {
             null, new ItemStack(Material.CRAFTING_TABLE), null,
             null, new ItemStack(Material.DISPENSER), null,
             null, FinalTechItems.GEARWHEEL, null
     };
-
     public static final ItemStack[] MANUAL_GRIND_STONE = new ItemStack[] {
             null, new ItemStack(Material.OAK_FENCE), null,
             null, new ItemStack(Material.DISPENSER), null,
             null, FinalTechItems.GEARWHEEL, null
     };
-
     public static final ItemStack[] MANUAL_ARMOR_FORGE = new ItemStack[] {
             null, new ItemStack(Material.ANVIL), null,
             null, new ItemStack(Material.DISPENSER), null,
             null, FinalTechItems.GEARWHEEL, null
     };
-
     public static final ItemStack[] MANUAL_ORE_CRUSHER = new ItemStack[] {
             null, new ItemStack(Material.NETHER_BRICK_FENCE), null,
             new ItemStack(Material.IRON_BARS), new ItemStack(Material.DISPENSER), new ItemStack(Material.IRON_BARS),
             null, FinalTechItems.GEARWHEEL, null
     };
-
     public static final ItemStack[] MANUAL_COMPRESSOR = new ItemStack[] {
             null, new ItemStack(Material.NETHER_BRICK_FENCE), null,
             new ItemStack(Material.PISTON), new ItemStack(Material.DISPENSER), new ItemStack(Material.PISTON),
             null, FinalTechItems.GEARWHEEL, null
     };
-
     public static final ItemStack[] MANUAL_SMELTERY = new ItemStack[] {
             FinalTechItems.GEARWHEEL, new ItemStack(Material.NETHER_BRICK_FENCE), FinalTechItems.GEARWHEEL,
             new ItemStack(Material.NETHER_BRICK), new ItemStack(Material.DISPENSER), new ItemStack(Material.NETHER_BRICK),
             new ItemStack(Material.FLINT_AND_STEEL), SlimefunItems.IGNITION_CHAMBER, new ItemStack(Material.FLINT_AND_STEEL)
     };
-
     public static final ItemStack[] MANUAL_PRESSURE_CHAMBER = new ItemStack[] {
             FinalTechItems.GEARWHEEL, new ItemStack(Material.DISPENSER), FinalTechItems.GEARWHEEL,
             new ItemStack(Material.PISTON), new ItemStack(Material.GLASS), new ItemStack(Material.PISTON),
             new ItemStack(Material.PISTON), new ItemStack(Material.CAULDRON), new ItemStack(Material.PISTON)
     };
-
     public static final ItemStack[] MANUAL_MAGIC_WORKBENCH = new ItemStack[] {
             FinalTechItems.GEARWHEEL, null, FinalTechItems.GEARWHEEL,
             new ItemStack(Material.BOOKSHELF), new ItemStack(Material.CRAFTING_TABLE), new ItemStack(Material.DISPENSER),
             FinalTechItems.GEARWHEEL, null, FinalTechItems.GEARWHEEL
     };
-
     public static final ItemStack[] MANUAL_ORE_WASHER = new ItemStack[] {
             null, new ItemStack(Material.DISPENSER), null,
             FinalTechItems.GEARWHEEL, new ItemStack(Material.OAK_FENCE), FinalTechItems.GEARWHEEL,
             null, new ItemStack(Material.CAULDRON), null
     };
-
     public static final ItemStack[] MANUAL_COMPOSTER = new ItemStack[] {
             new ItemStack(Material.OAK_SLAB), FinalTechItems.GEARWHEEL, new ItemStack(Material.OAK_SLAB),
             new ItemStack(Material.OAK_SLAB), FinalTechItems.GEARWHEEL, new ItemStack(Material.OAK_SLAB),
             new ItemStack(Material.OAK_SLAB), new ItemStack(Material.CAULDRON), new ItemStack(Material.OAK_SLAB)
     };
-
     public static final ItemStack[] MANUAL_GOLD_PAN = new ItemStack[] {
             null, new ItemStack(Material.OAK_TRAPDOOR), null,
             null, new ItemStack(Material.CAULDRON), null,
             null, FinalTechItems.GEARWHEEL, null
     };
-
     public static final ItemStack[] MANUAL_CRUCIBLE = new ItemStack[] {
             new ItemStack(Material.TERRACOTTA), FinalTechItems.GEARWHEEL, new ItemStack(Material.TERRACOTTA),
             new ItemStack(Material.TERRACOTTA), FinalTechItems.GEARWHEEL, new ItemStack(Material.TERRACOTTA),
@@ -780,8 +711,7 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, SlimefunItems.HEATED_PRESSURE_CHAMBER, FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
-
-    // basic machine
+    // basic machines
     public static final ItemStack[] BASIC_COBBLE_FACTORY = new ItemStack[] {
             new ItemStack(Material.OBSIDIAN), new ItemStack(Material.LAVA_BUCKET), new ItemStack(Material.OBSIDIAN),
             new ItemStack(Material.WATER_BUCKET), FinalTechItems.GEARWHEEL, new ItemStack(Material.WATER_BUCKET),
@@ -793,7 +723,6 @@ public final class FinalTechRecipes {
             SlimefunItems.ELECTRIC_GOLD_PAN, FinalTechItems.BASIC_COBBLE_FACTORY, SlimefunItems.ELECTRIC_GOLD_PAN,
             SlimefunItems.ELECTRIC_DUST_WASHER, new ItemStack(Material.DROPPER), SlimefunItems.ELECTRIC_DUST_WASHER
     };
-
     // advanced machines
     public static final ItemStack[] ADVANCED_COMPOSTER = new ItemStack[] {
             FinalTechItems.MANUAL_COMPOSTER, FinalTechItems.ANNULAR, FinalTechItems.MANUAL_COMPOSTER,
@@ -880,7 +809,6 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.GEARWHEEL,
             FinalTechItems.BASIC_DUST_FACTORY, FinalTechItems.UNORDERED_DUST, FinalTechItems.BASIC_DUST_FACTORY
     };
-
     // conversion
     public static final ItemStack[] DUST_CONVERSION = new ItemStack[] {
             null, null, null,
@@ -922,14 +850,17 @@ public final class FinalTechRecipes {
             null, null, null,
             null, null, null
     };
-
+    public static final ItemStack[] LOGIC_TO_DIGITAL_CONVERSION = new ItemStack[] {
+            null, null, null,
+            null, null, null,
+            null, null, null
+    };
     // extraction
     public static final ItemStack[] ORE_EXTRACTION = new ItemStack[] {
             null, null, null,
             null, null, null,
             null, null, null
     };
-
     // generator
     public static final ItemStack[] STONE_GENERATOR = new ItemStack[] {
             null, null, null,
@@ -966,50 +897,51 @@ public final class FinalTechRecipes {
     public static final ItemStack[] DIGITAL_GENERATOR = new ItemStack[] {
     };
 
-    // best item
+    /* final stage items */
+    public static final ItemStack[] ENTROPY_SEED = new ItemStack[] {
 
+    };
     public static final ItemStack[] MACHINE_CHARGE_CARD_INFINITY = new ItemStack[] {
             new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L3, 8), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L3, 8),
             new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), FinalTechItems.PHONY, new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64),
             new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L3, 8), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_CHARGE_CARD_L3, 8)
     };
-
     public static final ItemStack[] MACHINE_ACCELERATE_CARD_INFINITY = new ItemStack[] {
             new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 8), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 8),
             new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), FinalTechItems.PHONY, new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64),
             new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 8), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 64), new CustomItemStack(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 8)
     };
-
     public static final ItemStack[] MACHINE_ACTIVATE_CARD_L4 = new ItemStack[] {
             FinalTechItems.MACHINE_ACCELERATE_CARD_INFINITY, new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
             new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.PHONY, 2), new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
             new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.GEARWHEEL, 64), FinalTechItems.MACHINE_CHARGE_CARD_INFINITY
     };
+    public static final ItemStack[] MATRIX_ITEM_DISMANTLE_TABLE = new ItemStack[] {
 
+    };
+    public static final ItemStack[] MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR = new ItemStack[] {
+
+    };
     public static final ItemStack[] ADVANCED_AUTO_CRAFT = new ItemStack[] {
             new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
             new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.PHONY, 3), new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
             new CustomItemStack(FinalTechItems.ORDERED_DUST, 64), new CustomItemStack(SlimefunItems.CARGO_MANAGER, 64), new CustomItemStack(FinalTechItems.ORDERED_DUST, 64)
     };
-
     public static final ItemStack[] MATRIX_EXPANDED_CAPACITOR = new ItemStack[] {
             new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.QUANTITY_MODULE, 64), new CustomItemStack(FinalTechItems.GEARWHEEL, 64),
             new CustomItemStack(FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, 64), new CustomItemStack(FinalTechItems.PHONY, 4), new CustomItemStack(FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, 64),
             new CustomItemStack(FinalTechItems.GEARWHEEL, 64), new CustomItemStack(FinalTechItems.QUANTITY_MODULE, 64), new CustomItemStack(FinalTechItems.GEARWHEEL, 64)
     };
-
     public static final ItemStack[] MATRIX_GENERATOR = new ItemStack[] {
             new CustomItemStack(FinalTechItems.ENERGIZED_GENERATOR, 8), new CustomItemStack(FinalTechItems.BUG, 8), new CustomItemStack(FinalTechItems.ENERGIZED_GENERATOR, 8),
             new CustomItemStack(FinalTechItems.BUG, 8), new CustomItemStack(FinalTechItems.PHONY, 6), new CustomItemStack(FinalTechItems.BUG, 8),
             new CustomItemStack(FinalTechItems.ENERGIZED_GENERATOR, 8), new CustomItemStack(FinalTechItems.BUG, 8), new CustomItemStack(FinalTechItems.ENERGIZED_GENERATOR, 8)
     };
-
     public static final ItemStack[] MATRIX_ACCELERATOR = new ItemStack[] {
             new CustomItemStack(FinalTechItems.ANNULAR, 8), new CustomItemStack(FinalTechItems.ANNULAR, 8), new CustomItemStack(FinalTechItems.ANNULAR, 8),
             new CustomItemStack(FinalTechItems.ANNULAR, 8), new CustomItemStack(FinalTechItems.PHONY, 7), new CustomItemStack(FinalTechItems.ANNULAR, 8),
             new CustomItemStack(FinalTechItems.ANNULAR, 8), new CustomItemStack(FinalTechItems.ANNULAR, 8), new CustomItemStack(FinalTechItems.ANNULAR, 8)
     };
-
     public static final ItemStack[] MATRIX_REACTOR = new ItemStack[] {
             CopyCardItem.newItem(FinalTechItems.UNORDERED_DUST, "1"), CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCardItem.newItem(FinalTechItems.UNORDERED_DUST, "1"),
             CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), new CustomItemStack(FinalTechItems.PHONY, 9), CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"),

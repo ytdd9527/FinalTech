@@ -51,7 +51,7 @@ import io.taraxacum.finaltech.core.items.machine.electric.capacitor.AdvancedCons
 import io.taraxacum.finaltech.core.items.machine.range.cube.EnergizedAccelerator;
 import io.taraxacum.finaltech.core.items.machine.range.cube.MatrixAccelerator;
 import io.taraxacum.finaltech.core.items.machine.range.cube.OverloadedAccelerator;
-import io.taraxacum.finaltech.core.items.machine.range.cube.EscapeCapacitor;
+import io.taraxacum.finaltech.core.items.machine.range.cube.DispersalCapacitor;
 import io.taraxacum.finaltech.core.items.machine.range.cube.generator.*;
 import io.taraxacum.finaltech.core.items.machine.electric.capacitor.BasicChargeIncreaseCapacitor;
 import io.taraxacum.finaltech.core.items.machine.electric.capacitor.BasicConsumeReduceCapacitor;
@@ -293,7 +293,7 @@ public final class SetupUtil {
         new OverloadedExpandedCapacitor(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.OVERLOADED_EXPANDED_CAPACITOR).register();
         new AdvancedChargeIncreaseCapacitor(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.ADVANCED_CHARGE_INCREASE_CAPACITOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_CHARGE_INCREASE_CAPACITOR).register();
         new AdvancedConsumeReduceCapacitor(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.ADVANCED_CONSUME_REDUCE_CAPACITOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_CONSUME_REDUCE_CAPACITOR).register();
-        new EscapeCapacitor(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.ESCAPE_CAPACITOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ESCAPE_CAPACITOR).register();
+        new DispersalCapacitor(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.DISPERSAL_CAPACITOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ESCAPE_CAPACITOR).register();
         new NormalElectricityShootPile(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.NORMAL_ELECTRICITY_SHOOT_PILE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.NORMAL_ELECTRICITY_SHOOT_PILE).register();
         new EnergizedElectricityShootPile(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.ENERGIZED_ELECTRICITY_SHOOT_PILE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ENERGIZED_ELECTRICITY_SHOOT_PILE).register();
         new OverloadedElectricityShootPile(FinalTechMenus.MENU_ELECTRIC, FinalTechItems.OVERLOADED_ELECTRICITY_SHOOT_PILE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.OVERLOADED_ELECTRICITY_SHOOT_PILE).register();
@@ -328,7 +328,7 @@ public final class SetupUtil {
         new DistributeRightStorageUnit(FinalTechMenus.MENU_CARGO, FinalTechItems.DISTRIBUTE_RIGHT_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DISTRIBUTE_RIGHT_STORAGE_UNIT).register();
         new RemoteAccessor(FinalTechMenus.MENU_CARGO, FinalTechItems.REMOTE_ACCESSOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.REMOTE_ACCESSOR).register();
         new AreaAccessor(FinalTechMenus.MENU_CARGO, FinalTechItems.AREA_ACCESSOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.AREA_ACCESSOR).register();
-        new LinkTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.LINK_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LINK_TRANSFER).register();
+        new PointTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.POINT_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.POINT_TRANSFER).register();
         new LineTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.LINE_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LINE_TRANSFER).register();
         new MeshTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.STATION_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STATION_TRANSFER).register();
         new LocationTransfer(FinalTechMenus.MENU_CARGO, FinalTechItems.LOCATION_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LOCATION_TRANSFER).register();
@@ -361,8 +361,8 @@ public final class SetupUtil {
         /* function machine */
         new DustFactoryDirt(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ORDERED_DUST_FACTORY_DIRT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ORDERED_DUST_FACTORY_DIRT).register();
         new DustFactoryStone(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ORDERED_DUST_FACTORY_STONE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ORDERED_DUST_FACTORY_STONE).register();
-        new ItemSerializationConstructor(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_COMPRESSION).register();
-        new ItemDeserializeParser(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_DESERIALIZE_PARSER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ALL_FACTORY).register();
+        new ItemSerializationConstructor(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ITEM_SERIALIZATION_CONSTRUCTOR).register();
+        new ItemDeserializeParser(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_DESERIALIZE_PARSER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ITEM_DESERIALIZE_PARSER).register();
         new MatrixCraftingTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.MATRIX_CRAFTING_TABLE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MATRIX_CRAFTING_TABLE).register();
         new CardOperationTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.CARD_OPERATION_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CARD_OPERATION_PORT).register();
         new ItemDismantleTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_DISMANTLE_TABLE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ITEM_DISMANTLE_TABLE).register();

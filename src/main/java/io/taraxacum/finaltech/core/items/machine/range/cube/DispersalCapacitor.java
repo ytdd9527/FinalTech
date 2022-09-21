@@ -36,12 +36,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 1.0
  */
 @Deprecated
-public class EscapeCapacitor extends AbstractCubeMachine implements EnergyNetComponent, RecipeItem {
+public class DispersalCapacitor extends AbstractCubeMachine implements EnergyNetComponent, RecipeItem {
     private final int range = ConfigUtil.getOrDefaultItemSetting(4, this, "range");
     private final int capacity = ConfigUtil.getOrDefaultItemSetting(Integer.MAX_VALUE / 4, this, "capacity");
     private final double loss = ConfigUtil.getOrDefaultItemSetting(16, this, "loss");
 
-    public EscapeCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public DispersalCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
