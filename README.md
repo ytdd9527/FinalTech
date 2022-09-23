@@ -21,7 +21,7 @@ It's not completed now, and more object will be added.
 
 
 ###2.0-preview2(next version)
-> Double more items and machines
+> ~~Double more~~ Up to two hundred items and machines
 
 > Balance adjusted
 
