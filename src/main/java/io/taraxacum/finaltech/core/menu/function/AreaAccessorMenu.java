@@ -113,7 +113,7 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
     /**
      * @param page begin from 0
      */
-    public void generateMenu(@Nonnull Player player, @Nonnull Location location, @Nonnull int range, @Nonnull int page) {
+    public void generateMenu(@Nonnull Player player, @Nonnull Location location, int range, int page) {
 
         World world = location.getWorld();
         if(world == null) {

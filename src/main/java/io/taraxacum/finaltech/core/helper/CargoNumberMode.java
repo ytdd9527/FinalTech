@@ -19,8 +19,8 @@ public final class CargoNumberMode {
     public static final String VALUE_UNIVERSAL = "u";
     public static final String VALUE_STANDALONE = "s";
 
-    private static final String UNIVERSAL_LORE = FinalTech.getLanguageString("helper", "cargo-number-mode", "universal", "lore1");
-    private static final String STANDALONE_LORE = FinalTech.getLanguageString("helper", "cargo-number-mode", "standalone", "lore1");
+    private static final String UNIVERSAL_LORE = FinalTech.getLanguageString("helper", "CARGO_NUMBER_MODE", "universal", "lore1");
+    private static final String STANDALONE_LORE = FinalTech.getLanguageString("helper", "CARGO_NUMBER_MODE", "standalone", "lore1");
 
     public static final BlockStorageLoreHelper HELPER = BlockStorageLoreHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, 1, new LinkedHashMap<>() {{
         this.put(VALUE_UNIVERSAL, List.of(UNIVERSAL_LORE));

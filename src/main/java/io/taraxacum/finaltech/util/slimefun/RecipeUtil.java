@@ -74,7 +74,7 @@ public class RecipeUtil {
     }
 
     public static void registerDescriptiveRecipe(@Nonnull LanguageManager languageManager, @Nonnull RecipeItem recipeItem, String... strings) {
-        String id = recipeItem.getId().toLowerCase(Locale.ROOT).replace("_", "-");
+        String id = recipeItem.getId();
         List<String> infoList = languageManager.getStringList("items", id, "info");
         infoList.sort(String::compareTo);
         for(String infoIndex : infoList) {

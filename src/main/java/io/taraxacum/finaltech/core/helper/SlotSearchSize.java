@@ -24,10 +24,10 @@ public final class SlotSearchSize {
     public static final String VALUE_INPUTS_AND_OUTPUTS = "iao";
     public static final String VALUE_OUTPUTS_AND_INPUTS = "oai";
 
-    public static final ItemStack INPUTS_ONLY_ICON = new CustomItemStack(Material.SOUL_TORCH, FinalTech.getLanguageString("helper", "slot-search-size", "inputs-only", "name"), FinalTech.getLanguageStringArray("helper", "slot-search-size", "inputs-only", "lore"));
-    public static final ItemStack OUTPUTS_ONLY_ICON = new CustomItemStack(Material.TORCH, FinalTech.getLanguageString("helper", "slot-search-size", "outputs-only", "name"), FinalTech.getLanguageStringArray("helper", "slot-search-size", "outputs-only", "lore"));
-    public static final ItemStack INPUTS_AND_OUTPUTS_ICON = new CustomItemStack(Material.REDSTONE_TORCH, FinalTech.getLanguageString("helper", "slot-search-size", "inputs-and-outputs", "name"), FinalTech.getLanguageStringArray("helper", "slot-search-size", "inputs-and-outputs", "lore"));
-    public static final ItemStack OUTPUTS_AND_INPUTS_ICON = new CustomItemStack(Material.REDSTONE_TORCH, FinalTech.getLanguageString("helper", "slot-search-size", "outputs-and-inputs", "name"), FinalTech.getLanguageStringArray("helper", "slot-search-size", "outputs-and-inputs", "lore"));
+    public static final ItemStack INPUTS_ONLY_ICON = new CustomItemStack(Material.SOUL_TORCH, FinalTech.getLanguageString("helper", "SLOT_SEARCH_SIZE", "inputs-only", "name"), FinalTech.getLanguageStringArray("helper", "SLOT_SEARCH_SIZE", "inputs-only", "lore"));
+    public static final ItemStack OUTPUTS_ONLY_ICON = new CustomItemStack(Material.TORCH, FinalTech.getLanguageString("helper", "SLOT_SEARCH_SIZE", "outputs-only", "name"), FinalTech.getLanguageStringArray("helper", "SLOT_SEARCH_SIZE", "outputs-only", "lore"));
+    public static final ItemStack INPUTS_AND_OUTPUTS_ICON = new CustomItemStack(Material.REDSTONE_TORCH, FinalTech.getLanguageString("helper", "SLOT_SEARCH_SIZE", "inputs-and-outputs", "name"), FinalTech.getLanguageStringArray("helper", "SLOT_SEARCH_SIZE", "inputs-and-outputs", "lore"));
+    public static final ItemStack OUTPUTS_AND_INPUTS_ICON = new CustomItemStack(Material.REDSTONE_TORCH, FinalTech.getLanguageString("helper", "SLOT_SEARCH_SIZE", "outputs-and-inputs", "name"), FinalTech.getLanguageStringArray("helper", "SLOT_SEARCH_SIZE", "outputs-and-inputs", "lore"));
 
     public static final BlockStorageIconHelper HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
         this.put(VALUE_INPUTS_ONLY, INPUTS_ONLY_ICON);

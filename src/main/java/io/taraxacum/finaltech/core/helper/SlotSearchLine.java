@@ -29,19 +29,19 @@ public class SlotSearchLine {
     public static final String VALUE_KEY_L2 = "l2";
     public static final String VALUE_KEY_L3 = "l3";
 
-    public static final ItemStack L1_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "slot-search-line", "l1", "name"), FinalTech.getLanguageStringArray("helper", "slot-search-line", "l1", "lore"));
-    public static final ItemStack L2_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "slot-search-line", "l2", "name"), FinalTech.getLanguageStringArray("helper", "slot-search-line", "l2", "lore"));
-    public static final ItemStack L3_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "slot-search-line", "l3", "name"), FinalTech.getLanguageStringArray("helper", "slot-search-line", "l3", "lore"));
+    public static final ItemStack L1_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "SLOT_SEARCH_LINE", "l1", "name"), FinalTech.getLanguageStringArray("helper", "SLOT_SEARCH_LINE", "l1", "lore"));
+    public static final ItemStack L2_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "SLOT_SEARCH_LINE", "l2", "name"), FinalTech.getLanguageStringArray("helper", "SLOT_SEARCH_LINE", "l2", "lore"));
+    public static final ItemStack L3_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "SLOT_SEARCH_LINE", "l3", "name"), FinalTech.getLanguageStringArray("helper", "SLOT_SEARCH_LINE", "l3", "lore"));
 
     public static final String VALUE_NULL = null;
     public static final String VALUE_POSITIVE = "p";
     public static final String VALUE_RESERVE = "re";
     public static final String VALUE_RANDOM = "ra";
 
-    public static final List<String> NULL_LORE = FinalTech.getLanguageStringList("helper", "slot-search-line", "null", "lore");
-    public static final List<String> POSITIVE_LORE = FinalTech.getLanguageStringList("helper", "slot-search-line", "positive", "lore");
-    public static final List<String> RESERVE_LORE = FinalTech.getLanguageStringList("helper", "slot-search-line", "reserve", "lore");
-    public static final List<String> RANDOM_LORE = FinalTech.getLanguageStringList("helper", "slot-search-line", "random", "lore");
+    public static final List<String> NULL_LORE = FinalTech.getLanguageStringList("helper", "SLOT_SEARCH_LINE", "null", "lore");
+    public static final List<String> POSITIVE_LORE = FinalTech.getLanguageStringList("helper", "SLOT_SEARCH_LINE", "positive", "lore");
+    public static final List<String> RESERVE_LORE = FinalTech.getLanguageStringList("helper", "SLOT_SEARCH_LINE", "reserve", "lore");
+    public static final List<String> RANDOM_LORE = FinalTech.getLanguageStringList("helper", "SLOT_SEARCH_LINE", "random", "lore");
 
     public static final Material NULL_MATERIAL = Material.GRAY_STAINED_GLASS_PANE;
     public static final Material POSITIVE_MATERIAL = Material.BLUE_STAINED_GLASS_PANE;

@@ -21,10 +21,10 @@ public final class CargoMode {
     public static final String VALUE_STRONG_SYMMETRY = "ss";
     public static final String VALUE_WEAK_SYMMETRY = "ws";
 
-    private static final ItemStack INPUT_MAIN_ICON = new CustomItemStack(Material.WATER_BUCKET, FinalTech.getLanguageString("helper", "cargo-mode", "input-main", "name"), FinalTech.getLanguageStringArray("helper", "cargo-mode", "input-main", "lore"));
-    private static final ItemStack OUTPUT_MAIN_ICON = new CustomItemStack(Material.LAVA_BUCKET, FinalTech.getLanguageString("helper", "cargo-mode", "output-main", "name"), FinalTech.getLanguageStringArray("helper", "cargo-mode", "output-main", "lore"));
-    private static final ItemStack STRONG_SYMMETRY_ICON = new CustomItemStack(Material.MILK_BUCKET, FinalTech.getLanguageString("helper", "cargo-mode", "strong-symmetry", "name"), FinalTech.getLanguageStringArray("helper", "cargo-mode", "strong-symmetry", "lore"));
-    private static final ItemStack WEAK_SYMMETRY_ICON = new CustomItemStack(Material.MILK_BUCKET, FinalTech.getLanguageString("helper", "cargo-mode", "weak-symmetry", "name"), FinalTech.getLanguageStringArray("helper", "cargo-mode", "weak-symmetry", "lore"));
+    private static final ItemStack INPUT_MAIN_ICON = new CustomItemStack(Material.WATER_BUCKET, FinalTech.getLanguageString("helper", "CARGO_MODE", "input-main", "name"), FinalTech.getLanguageStringArray("helper", "CARGO_MODE", "input-main", "lore"));
+    private static final ItemStack OUTPUT_MAIN_ICON = new CustomItemStack(Material.LAVA_BUCKET, FinalTech.getLanguageString("helper", "CARGO_MODE", "output-main", "name"), FinalTech.getLanguageStringArray("helper", "CARGO_MODE", "output-main", "lore"));
+    private static final ItemStack STRONG_SYMMETRY_ICON = new CustomItemStack(Material.MILK_BUCKET, FinalTech.getLanguageString("helper", "CARGO_MODE", "strong-symmetry", "name"), FinalTech.getLanguageStringArray("helper", "CARGO_MODE", "strong-symmetry", "lore"));
+    private static final ItemStack WEAK_SYMMETRY_ICON = new CustomItemStack(Material.MILK_BUCKET, FinalTech.getLanguageString("helper", "CARGO_MODE", "weak-symmetry", "name"), FinalTech.getLanguageStringArray("helper", "CARGO_MODE", "weak-symmetry", "lore"));
 
     public static final BlockStorageIconHelper HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
         this.put(VALUE_STRONG_SYMMETRY, STRONG_SYMMETRY_ICON);

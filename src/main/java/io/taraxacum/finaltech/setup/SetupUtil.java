@@ -105,6 +105,7 @@ public final class SetupUtil {
         FinalTechMenus.MENU_ITEMS.setTier(0);
         FinalTechMenus.MENU_CARGO_SYSTEM.setTier(0);
         FinalTechMenus.MENU_ELECTRICITY_SYSTEM.setTier(0);
+        FinalTechMenus.MENU_FUNCTIONAL_MACHINE.setTier(0);
         FinalTechMenus.MENU_PRODUCTIVE_MACHINE.setTier(0);
         FinalTechMenus.MENU_FINAL_ITEM.setTier(0);
 
@@ -667,7 +668,6 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_CARBON_PRESS, SlimefunItems.CARBON_PRESS_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_SMELTERY, SlimefunItems.ELECTRIC_SMELTERY_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_COMPOSTER, SlimefunItems.FOOD_COMPOSTER_2);
-
 
         /* Listeners */
         PluginManager pluginManager = FinalTech.getInstance().getServer().getPluginManager();

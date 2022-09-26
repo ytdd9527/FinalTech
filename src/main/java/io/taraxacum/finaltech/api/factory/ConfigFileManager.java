@@ -90,6 +90,7 @@ public class ConfigFileManager {
             String result = this.configFile.getString(path);
             return result == null ? path : result;
         } else {
+            this.setValue("---===---", paths);
             return path;
         }
     }
@@ -105,6 +106,10 @@ public class ConfigFileManager {
                 return new ArrayList<>();
             }
         } else {
+            ArrayList<String> objects = new ArrayList<>();
+            objects.add("Fill me!");
+            objects.add("I'm list!");
+            this.setValue(objects, paths);
             return new ArrayList<>();
         }
     }

@@ -25,11 +25,11 @@ public final class SlotSearchOrder {
     public static final String VALUE_LAST_ONLY = "l";
     public static final String VALUE_RANDOM = "r";
 
-    public static final ItemStack ASCENT_ICON = new CustomItemStack(Material.BLUE_WOOL, FinalTech.getLanguageString("helper", "machine-max-stack", "ascent", "name"), FinalTech.getLanguageStringArray("helper", "machine-max-stack", "ascent", "lore"));
-    public static final ItemStack DESCEND_ICON = new CustomItemStack(Material.ORANGE_WOOL, FinalTech.getLanguageString("helper", "machine-max-stack", "descend", "name"), FinalTech.getLanguageStringArray("helper", "machine-max-stack", "descend", "lore"));
-    public static final ItemStack FIRST_ONLY_ICON = new CustomItemStack(Material.BLUE_CARPET, FinalTech.getLanguageString("helper", "machine-max-stack", "first-only", "name"), FinalTech.getLanguageStringArray("helper", "machine-max-stack", "first-only", "lore"));
-    public static final ItemStack LAST_ONLY_ICON = new CustomItemStack(Material.ORANGE_CARPET, FinalTech.getLanguageString("helper", "machine-max-stack", "last-only", "name"), FinalTech.getLanguageStringArray("helper", "machine-max-stack", "last-only", "lore"));
-    public static final ItemStack RANDOM_ICON = new CustomItemStack(Material.PAPER, FinalTech.getLanguageString("helper", "machine-max-stack", "random", "name"), FinalTech.getLanguageStringArray("helper", "machine-max-stack", "random", "lore"));
+    public static final ItemStack ASCENT_ICON = new CustomItemStack(Material.BLUE_WOOL, FinalTech.getLanguageString("helper", "SLOT_SEARCH_ORDER", "ascent", "name"), FinalTech.getLanguageStringArray("helper", "SLOT_SEARCH_ORDER", "ascent", "lore"));
+    public static final ItemStack DESCEND_ICON = new CustomItemStack(Material.ORANGE_WOOL, FinalTech.getLanguageString("helper", "SLOT_SEARCH_ORDER", "descend", "name"), FinalTech.getLanguageStringArray("helper", "SLOT_SEARCH_ORDER", "descend", "lore"));
+    public static final ItemStack FIRST_ONLY_ICON = new CustomItemStack(Material.BLUE_CARPET, FinalTech.getLanguageString("helper", "SLOT_SEARCH_ORDER", "first-only", "name"), FinalTech.getLanguageStringArray("helper", "SLOT_SEARCH_ORDER", "first-only", "lore"));
+    public static final ItemStack LAST_ONLY_ICON = new CustomItemStack(Material.ORANGE_CARPET, FinalTech.getLanguageString("helper", "SLOT_SEARCH_ORDER", "last-only", "name"), FinalTech.getLanguageStringArray("helper", "SLOT_SEARCH_ORDER", "last-only", "lore"));
+    public static final ItemStack RANDOM_ICON = new CustomItemStack(Material.PAPER, FinalTech.getLanguageString("helper", "SLOT_SEARCH_ORDER", "random", "name"), FinalTech.getLanguageStringArray("helper", "SLOT_SEARCH_ORDER", "random", "lore"));
 
     public static final BlockStorageIconHelper HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
         this.put(VALUE_ASCENT, ASCENT_ICON);

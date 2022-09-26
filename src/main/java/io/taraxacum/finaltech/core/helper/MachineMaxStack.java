@@ -24,12 +24,12 @@ import java.util.Objects;
 public final class MachineMaxStack {
     public static final String KEY = "mms";
 
-    public static final ItemStack ICON = new CustomItemStack(Material.CHEST, FinalTech.getLanguageString("helper", "machine-max-stack", "icon", "name"));
+    public static final ItemStack ICON = new CustomItemStack(Material.CHEST, FinalTech.getLanguageString("helper", "MACHINE_MAX_STACK", "icon", "name"));
 
     public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, new LinkedHashMap<>() {{
-        this.put("0", FinalTech.getLanguageStringList("helper", "machine-max-stack", "0", "lore"));
+        this.put("0", FinalTech.getLanguageStringList("helper", "MACHINE_MAX_STACK", "0", "lore"));
         for (int i = 1; i <= 54; i++) {
-            this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "machine-max-stack", "value", "lore"), String.valueOf(i)));
+            this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "MACHINE_MAX_STACK", "value", "lore"), String.valueOf(i)));
         }
     }}) {
         @Nonnull

@@ -25,7 +25,7 @@ Version history
 -
 > A simple try
 
-2.0-preview1(old)
+2.0-preview1(now)
 -
 > May have some bugs.
 

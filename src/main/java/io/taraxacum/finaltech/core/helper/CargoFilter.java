@@ -20,8 +20,8 @@ public final class CargoFilter {
     public static final String VALUE_BLACK = "b";
     public static final String VALUE_WHITE = "w";
 
-    public static final ItemStack FILTER_MODE_BLACK_ICON = new CustomItemStack(Material.BLACK_WOOL, FinalTech.getLanguageString("helper", "cargo-filter", "black-filter-mode", "name"), FinalTech.getLanguageStringArray("helper", "cargo-filter", "black-filter-mode", "lore"));
-    public static final ItemStack FILTER_MODE_WHITE_ICON = new CustomItemStack(Material.WHITE_WOOL, FinalTech.getLanguageString("helper", "cargo-filter", "white-filter-mode", "name"), FinalTech.getLanguageStringArray("helper", "cargo-filter", "white-filter-mode", "lore"));
+    public static final ItemStack FILTER_MODE_BLACK_ICON = new CustomItemStack(Material.BLACK_WOOL, FinalTech.getLanguageString("helper", "CARGO_FILTER", "black-filter-mode", "name"), FinalTech.getLanguageStringArray("helper", "CARGO_FILTER", "black-filter-mode", "lore"));
+    public static final ItemStack FILTER_MODE_WHITE_ICON = new CustomItemStack(Material.WHITE_WOOL, FinalTech.getLanguageString("helper", "CARGO_FILTER", "white-filter-mode", "name"), FinalTech.getLanguageStringArray("helper", "CARGO_FILTER", "white-filter-mode", "lore"));
 
     public static final BlockStorageIconHelper HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
         this.put(VALUE_BLACK, FILTER_MODE_BLACK_ICON);

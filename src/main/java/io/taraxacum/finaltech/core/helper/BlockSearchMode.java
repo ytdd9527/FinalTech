@@ -29,11 +29,11 @@ public final class BlockSearchMode {
     public static final String VALUE_RESPECT = "r";
     public static final String VALUE_INTERRUPT = "it";
 
-    public static final ItemStack ZERO_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, FinalTech.getLanguageString("helper", "block-search-mode", "zero", "name"), FinalTech.getLanguageStringArray("helper", "block-search-mode", "zero", "lore"));
-    public static final ItemStack INHERIT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, FinalTech.getLanguageString("helper", "block-search-mode", "inherit", "name"), FinalTech.getLanguageStringArray("helper", "block-search-mode", "inherit", "lore"));
-    public static final ItemStack PENETRATE_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, FinalTech.getLanguageString("helper", "block-search-mode", "penetrate", "name"), FinalTech.getLanguageStringArray("helper", "block-search-mode", "penetrate", "lore"));
-    public static final ItemStack RESPECT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, FinalTech.getLanguageString("helper", "block-search-mode", "respect", "name"), FinalTech.getLanguageStringArray("helper", "block-search-mode", "respect", "lore"));
-    public static final ItemStack INTERRUPT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, FinalTech.getLanguageString("helper", "block-search-mode", "interrupt", "name"), FinalTech.getLanguageStringArray("helper", "block-search-mode", "interrupt", "lore"));
+    public static final ItemStack ZERO_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, FinalTech.getLanguageString("helper", "BLOCK_SEARCH_MODE", "zero", "name"), FinalTech.getLanguageStringArray("helper", "BLOCK_SEARCH_MODE", "zero", "lore"));
+    public static final ItemStack INHERIT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, FinalTech.getLanguageString("helper", "BLOCK_SEARCH_MODE", "inherit", "name"), FinalTech.getLanguageStringArray("helper", "BLOCK_SEARCH_MODE", "inherit", "lore"));
+    public static final ItemStack PENETRATE_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, FinalTech.getLanguageString("helper", "BLOCK_SEARCH_MODE", "penetrate", "name"), FinalTech.getLanguageStringArray("helper", "BLOCK_SEARCH_MODE", "penetrate", "lore"));
+    public static final ItemStack RESPECT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, FinalTech.getLanguageString("helper", "BLOCK_SEARCH_MODE", "respect", "name"), FinalTech.getLanguageStringArray("helper", "BLOCK_SEARCH_MODE", "respect", "lore"));
+    public static final ItemStack INTERRUPT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS, FinalTech.getLanguageString("helper", "BLOCK_SEARCH_MODE", "interrupt", "name"), FinalTech.getLanguageStringArray("helper", "BLOCK_SEARCH_MODE", "interrupt", "lore"));
 
     public static final BlockStorageIconHelper HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
         this.put(VALUE_ZERO, ZERO_ICON);

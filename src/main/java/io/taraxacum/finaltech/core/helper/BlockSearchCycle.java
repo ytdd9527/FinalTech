@@ -20,8 +20,8 @@ public final class BlockSearchCycle {
     public static final String VALUE_FALSE = "f";
     public static final String VALUE_TRUE = "t";
 
-    public static final ItemStack FALSE_ICON = new CustomItemStack(Material.MINECART, FinalTech.getLanguageString("helper", "block-search-cycle", "false", "name"), FinalTech.getLanguageStringArray("helper", "block-search-cycle", "false", "lore"));
-    public static final ItemStack TRUE_ICON = new CustomItemStack(Material.CHEST_MINECART, FinalTech.getLanguageString("helper", "block-search-cycle", "true", "name"), FinalTech.getLanguageStringArray("helper", "block-search-cycle", "true", "lore"));
+    public static final ItemStack FALSE_ICON = new CustomItemStack(Material.MINECART, FinalTech.getLanguageString("helper", "BLOCK_SEARCH_CYCLE", "false", "name"), FinalTech.getLanguageStringArray("helper", "BLOCK_SEARCH_CYCLE", "false", "lore"));
+    public static final ItemStack TRUE_ICON = new CustomItemStack(Material.CHEST_MINECART, FinalTech.getLanguageString("helper", "BLOCK_SEARCH_CYCLE", "true", "name"), FinalTech.getLanguageStringArray("helper", "BLOCK_SEARCH_CYCLE", "true", "lore"));
 
     public static final BlockStorageIconHelper HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
         this.put(VALUE_FALSE, FALSE_ICON);

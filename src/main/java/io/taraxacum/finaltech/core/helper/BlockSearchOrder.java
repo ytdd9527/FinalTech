@@ -21,9 +21,9 @@ public final class BlockSearchOrder {
     public static final String VALUE_REVERSE = "re";
     public static final String VALUE_RANDOM = "ra";
 
-    public static final ItemStack POSITIVE_ICON = new CustomItemStack(Material.CRIMSON_DOOR, FinalTech.getLanguageString("helper", "block-search-order", "positive", "name"), FinalTech.getLanguageStringArray("helper", "block-search-order", "positive", "lore"));
-    public static final ItemStack REVERSE_ICON = new CustomItemStack(Material.CRIMSON_DOOR, FinalTech.getLanguageString("helper", "block-search-order", "reverse", "name"), FinalTech.getLanguageStringArray("helper", "block-search-order", "reverse", "lore"));
-    public static final ItemStack RANDOM_ICON = new CustomItemStack(Material.CRIMSON_DOOR, FinalTech.getLanguageString("helper", "block-search-order", "random", "name"), FinalTech.getLanguageStringArray("helper", "block-search-order", "random", "lore"));
+    public static final ItemStack POSITIVE_ICON = new CustomItemStack(Material.CRIMSON_DOOR, FinalTech.getLanguageString("helper", "BLOCK_SEARCH_ORDER", "positive", "name"), FinalTech.getLanguageStringArray("helper", "BLOCK_SEARCH_ORDER", "positive", "lore"));
+    public static final ItemStack REVERSE_ICON = new CustomItemStack(Material.CRIMSON_DOOR, FinalTech.getLanguageString("helper", "BLOCK_SEARCH_ORDER", "reverse", "name"), FinalTech.getLanguageStringArray("helper", "BLOCK_SEARCH_ORDER", "reverse", "lore"));
+    public static final ItemStack RANDOM_ICON = new CustomItemStack(Material.CRIMSON_DOOR, FinalTech.getLanguageString("helper", "BLOCK_SEARCH_ORDER", "random", "name"), FinalTech.getLanguageStringArray("helper", "BLOCK_SEARCH_ORDER", "random", "lore"));
 
     public static final BlockStorageIconHelper HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
         this.put(VALUE_POSITIVE, POSITIVE_ICON);

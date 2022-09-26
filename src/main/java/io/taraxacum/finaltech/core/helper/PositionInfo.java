@@ -33,22 +33,22 @@ public class PositionInfo {
     public static final String VALUE_KEY_UP = "u";
     public static final String VALUE_KEY_DOWN = "d";
 
-    public static final ItemStack NORTH_ICON = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "position-info", "north", "name"), FinalTech.getLanguageStringArray("helper", "position-info", "north", "lore"));
-    public static final ItemStack EAST_ICON = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "position-info", "east", "name"), FinalTech.getLanguageStringArray("helper", "position-info", "east", "lore"));
-    public static final ItemStack SOUTH_ICON = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "position-info", "south", "name"), FinalTech.getLanguageStringArray("helper", "position-info", "south", "lore"));
-    public static final ItemStack WEST_ICON = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "position-info", "west", "name"), FinalTech.getLanguageStringArray("helper", "position-info", "west", "lore"));
-    public static final ItemStack UP_ICON = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "position-info", "up", "name"), FinalTech.getLanguageStringArray("helper", "position-info", "up", "lore"));
-    public static final ItemStack DOWN_ICON = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "position-info", "down", "name"), FinalTech.getLanguageStringArray("helper", "position-info", "down", "lore"));
+    public static final ItemStack NORTH_ICON = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "POSITION_INFO", "north", "name"), FinalTech.getLanguageStringArray("helper", "POSITION_INFO", "north", "lore"));
+    public static final ItemStack EAST_ICON = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "POSITION_INFO", "east", "name"), FinalTech.getLanguageStringArray("helper", "POSITION_INFO", "east", "lore"));
+    public static final ItemStack SOUTH_ICON = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "POSITION_INFO", "south", "name"), FinalTech.getLanguageStringArray("helper", "POSITION_INFO", "south", "lore"));
+    public static final ItemStack WEST_ICON = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "POSITION_INFO", "west", "name"), FinalTech.getLanguageStringArray("helper", "POSITION_INFO", "west", "lore"));
+    public static final ItemStack UP_ICON = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "POSITION_INFO", "up", "name"), FinalTech.getLanguageStringArray("helper", "POSITION_INFO", "up", "lore"));
+    public static final ItemStack DOWN_ICON = new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, FinalTech.getLanguageString("helper", "POSITION_INFO", "down", "name"), FinalTech.getLanguageStringArray("helper", "POSITION_INFO", "down", "lore"));
 
     public static final String VALUE_NULL = null;
     public static final String VALUE_INPUT = "i";
     public static final String VALUE_OUTPUT = "o";
     public static final String VALUE_INPUT_AND_OUTPUT = "io";
 
-    public static final List<String> NULL_LORE = FinalTech.getLanguageStringList("helper", "position-info", "null", "lore");
-    public static final List<String> INPUT_LORE = FinalTech.getLanguageStringList("helper", "position-info", "input", "lore");
-    public static final List<String> OUTPUT_LORE = FinalTech.getLanguageStringList("helper", "position-info", "output", "lore");
-    public static final List<String> INPUT_AND_OUTPUT_LORE = FinalTech.getLanguageStringList("helper", "position-info", "input-and-output", "lore");
+    public static final List<String> NULL_LORE = FinalTech.getLanguageStringList("helper", "POSITION_INFO", "null", "lore");
+    public static final List<String> INPUT_LORE = FinalTech.getLanguageStringList("helper", "POSITION_INFO", "input", "lore");
+    public static final List<String> OUTPUT_LORE = FinalTech.getLanguageStringList("helper", "POSITION_INFO", "output", "lore");
+    public static final List<String> INPUT_AND_OUTPUT_LORE = FinalTech.getLanguageStringList("helper", "POSITION_INFO", "input-and-output", "lore");
 
     public static final Material NULL_MATERIAL = Material.GRAY_STAINED_GLASS_PANE;
     public static final Material INPUT_MATERIAL = Material.BLUE_STAINED_GLASS_PANE;
