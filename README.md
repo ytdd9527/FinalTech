@@ -9,7 +9,7 @@ It includes many items with unique function, which will make a hole change to Sl
 
 It's not completed now, and more object will be added.
 
-⚠⚠⚠ This project is still in progess.
+⚠⚠⚠ This project is still in progress.
 -
 ⚠⚠⚠ This branch is just for save my work, not to be used in real server.
 -
