@@ -1,5 +1,6 @@
 package io.taraxacum.finaltech.core.group;
 
+import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.FlexItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
@@ -68,6 +69,17 @@ public class MainItemGroup extends FlexItemGroup {
         this.generateMenu(player, playerProfile, slimefunGuideMode).open(player);
     }
 
+    @Override
+    public void register(@Nonnull SlimefunAddon addon) {
+        super.register(addon);
+        for(int i = 0; i < this.fatherItemGroupList.size(); i++) {
+            this.fatherItemGroupList.get(i).register(addon);
+            for(ItemGroup itemGroup : this.sonItemGroupList.get(i)) {
+                itemGroup.register(addon);
+            }
+        }
+    }
+
     public void addTo(@Nonnull ItemGroup fatherItemGroup, @Nonnull ItemGroup... itemGroup) {
         if(this.fatherItemGroupList.contains(fatherItemGroup) && this.sonItemGroupList.size() > this.fatherItemGroupList.indexOf(fatherItemGroup)) {
             this.sonItemGroupList.get(this.fatherItemGroupList.indexOf(fatherItemGroup)).addAll(Arrays.stream(itemGroup).toList());
@@ -84,7 +96,7 @@ public class MainItemGroup extends FlexItemGroup {
         chestMenu.setEmptySlotsClickable(false);
         chestMenu.addMenuOpeningHandler(pl -> pl.playSound(pl.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1));
 
-        chestMenu.addItem(BACK_SLOT, ChestMenuUtils.getBackButton(player, "测试"));
+        chestMenu.addItem(BACK_SLOT, ChestMenuUtils.getBackButton(player));
         chestMenu.addMenuClickHandler(1, (pl, s, is, action) -> {
             GuideHistory guideHistory = playerProfile.getGuideHistory();
             if(action.isShiftClicked()) {
@@ -115,9 +127,6 @@ public class MainItemGroup extends FlexItemGroup {
             chestMenu.addItem(slot, ChestMenuUtils.getBackground());
             chestMenu.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
-
-        Bukkit.getLogger().info(this.fatherItemGroupList.size() + "");
-        Bukkit.getLogger().info(this.sonItemGroupList.size() + "");
 
         for(int i = this.page * MAIN_CONTENT.length - MAIN_CONTENT.length; i < this.page * MAIN_CONTENT.length; i++) {
             if(i < this.fatherItemGroupList.size() && i < this.sonItemGroupList.size()) {

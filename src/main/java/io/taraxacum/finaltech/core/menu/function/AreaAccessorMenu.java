@@ -10,6 +10,7 @@ import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.items.machine.cargo.AreaAccessor;
 import io.taraxacum.finaltech.core.items.machine.cargo.RemoteAccessor;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.util.ParticleUtil;
 import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -17,11 +18,13 @@ import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -72,7 +75,7 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
             blockMenu.close();
 
             if(p.getPlayer() != null) {
-                AreaAccessorMenu.generateMenu(p.getPlayer(), location, AreaAccessor.RANGE, 0);
+                AreaAccessorMenu.this.generateMenu(p.getPlayer(), location, AreaAccessor.RANGE, 0);
             }
         });
     }
@@ -110,7 +113,7 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
     /**
      * @param page begin from 0
      */
-    public static void generateMenu(@Nonnull Player player, @Nonnull Location location, @Nonnull int range, @Nonnull int page) {
+    public void generateMenu(@Nonnull Player player, @Nonnull Location location, @Nonnull int range, @Nonnull int page) {
 
         World world = location.getWorld();
         if(world == null) {
@@ -172,6 +175,8 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
                             chestMenu.addMenuClickHandler(TEMP_CONTENT[i], (p, slot, item, action) -> {
                                 // BlockMenu may be updated after the menu generated.
                                 if(BlockStorage.hasBlockInfo(l) && BlockStorage.hasInventory(l.getBlock()) && blockMenu.canOpen(l.getBlock(), player)) {
+                                    JavaPlugin javaPlugin = AreaAccessorMenu.this.getMachine().getAddon().getJavaPlugin();
+                                    javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, blockMenu.getBlock()));
                                     blockMenu.open(player);
                                 } else {
                                     player.sendMessage(FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(AreaAccessor.class), "message", "no-permission"));
@@ -193,14 +198,14 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
         for(int slot : TEMP_NEXT_PAGE) {
             chestMenu.addItem(slot, Icon.NEXT_PAGE_ICON);
             chestMenu.addMenuClickHandler(slot, (p, slot1, item, action) -> {
-                AreaAccessorMenu.generateMenu(player, location, range, Math.min(page + 1, locationList.size() / TEMP_CONTENT.length));
+                AreaAccessorMenu.this.generateMenu(player, location, range, Math.min(page + 1, locationList.size() / TEMP_CONTENT.length));
                 return false;
             });
         }
         for(int slot : TEMP_PREVIOUS_PAGE) {
             chestMenu.addItem(slot, Icon.PREVIOUS_PAGE_ICON);
             chestMenu.addMenuClickHandler(slot, (p, slot1, item, action) -> {
-                AreaAccessorMenu.generateMenu(player, location, range, Math.max(page - 1, 0));
+                AreaAccessorMenu.this.generateMenu(player, location, range, Math.max(page - 1, 0));
                 return false;
             });
         }

@@ -58,7 +58,7 @@ public class SlimefunItemSmallRecipeMenu extends ChestMenu {
         this.addMenuOpeningHandler(pl -> pl.playSound(pl.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1));
 
 
-        this.addItem(BACK_SLOT, ChestMenuUtils.getBackButton(player, "测试"));
+        this.addItem(BACK_SLOT, ChestMenuUtils.getBackButton(player));
         this.addMenuClickHandler(BACK_SLOT, (pl, s, is, action) -> {
             GuideHistory guideHistory = playerProfile.getGuideHistory();
             if(action.isShiftClicked()) {

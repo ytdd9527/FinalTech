@@ -56,17 +56,18 @@ public class EnergizedChargeBase extends AbstractFaceMachine implements RecipeIt
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         this.function(block, 1, location -> {
-            Config targetConfig = BlockStorage.getLocationInfo(location);
-            if(targetConfig.contains(ConstantTableUtil.CONFIG_ID)) {
-                String targetSlimefunId = targetConfig.getString(ConstantTableUtil.CONFIG_ID);
-                BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(targetSlimefunId), () -> EnergizedChargeBase.this.doCharge(block, targetConfig), location);
-            } else {
-                BlockMenu blockMenu = BlockStorage.getInventory(block);
-                if(blockMenu.hasViewer()) {
-                    this.updateMenu(blockMenu, 0, 0);
+            if(BlockStorage.hasBlockInfo(location)) {
+                Config targetConfig = BlockStorage.getLocationInfo(location);
+                if(targetConfig.contains(ConstantTableUtil.CONFIG_ID)) {
+                    String targetSlimefunId = targetConfig.getString(ConstantTableUtil.CONFIG_ID);
+                    BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(targetSlimefunId), () -> EnergizedChargeBase.this.doCharge(block, targetConfig), location);
+                } else {
+                    BlockMenu blockMenu = BlockStorage.getInventory(block);
+                    if(blockMenu.hasViewer()) {
+                        this.updateMenu(blockMenu, 0, 0);
+                    }
                 }
             }
-
             return 0;
         });
     }
@@ -86,6 +87,7 @@ public class EnergizedChargeBase extends AbstractFaceMachine implements RecipeIt
     private void doCharge(@Nonnull Block block, @Nonnull Config targetConfig) {
         int storedEnergy = 0;
         int chargeEnergy = 0;
+
         String slimefunItemId = targetConfig.getString(ConstantTableUtil.CONFIG_ID);
         SlimefunItem slimefunItem = SlimefunItem.getById(slimefunItemId);
         if(slimefunItem instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType()) && !EnergyNetComponentType.GENERATOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType())) {

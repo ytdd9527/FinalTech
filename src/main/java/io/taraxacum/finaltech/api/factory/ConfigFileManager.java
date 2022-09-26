@@ -19,6 +19,7 @@ import java.util.*;
  * @since 2.0
  */
 public class ConfigFileManager {
+    private Plugin plugin;
     @Nonnull
     protected final FileConfiguration configFile;
     @Nullable
@@ -26,6 +27,7 @@ public class ConfigFileManager {
     protected static final Map<Plugin, Map<String, ConfigFileManager>> INSTANCE_MAP = new HashMap<>();
 
     protected ConfigFileManager(@Nonnull Plugin plugin, @Nonnull String configFileName) {
+        this.plugin = plugin;
         this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), configFileName + ".yml");
         if(!file.exists()) {
             try {
@@ -39,6 +41,7 @@ public class ConfigFileManager {
     }
 
     protected ConfigFileManager(@Nonnull Plugin plugin, @Nonnull String path, @Nonnull String configFileName) {
+        this.plugin = plugin;
         this.file = new File("plugins/" + plugin.getName().replace(" ", "_") + "/" + path, configFileName + ".yml");
         if(!file.exists()) {
             try {
@@ -51,6 +54,11 @@ public class ConfigFileManager {
             }
         }
         this.configFile = YamlConfiguration.loadConfiguration(this.file);
+    }
+
+    @Nonnull
+    public Plugin getPlugin() {
+        return this.plugin;
     }
 
     @Nonnull

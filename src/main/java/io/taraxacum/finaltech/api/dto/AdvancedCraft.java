@@ -126,10 +126,11 @@ public class AdvancedCraft {
             consumeSlots = new int[recipeInputItems.length][];
             matchCount = quantityModule;
 
-            for (ItemAmountWrapper recipeInputItem : recipeInputItems) {
+            for (int k = 0; k < recipeInputItems.length; k++) {
+                ItemAmountWrapper recipeInputItem = recipeInputItems[k];
                 matchAmount = 0;
                 int j = 0;
-                consumeSlots[i] = new int[inputItemSlotMap.size()];
+                consumeSlots[k] = new int[inputItemSlotMap.size()];
                 for (Map.Entry<Integer, ItemWrapper> inputItemEntry : inputItemSlotMap.entrySet()) {
                     if (skipSlotSet.contains(inputItemEntry.getKey())) {
                         continue;
@@ -137,7 +138,7 @@ public class AdvancedCraft {
                     if (ItemStackUtil.isItemSimilar(recipeInputItem, inputItemEntry.getValue())) {
                         matchAmount += inputItemEntry.getValue().getItemStack().getAmount();
                         skipSlotSet.add(inputItemEntry.getKey());
-                        consumeSlots[i][j++] = inputItemEntry.getKey();
+                        consumeSlots[k][j++] = inputItemEntry.getKey();
                     }
                     if (matchAmount / recipeInputItem.getAmount() >= matchCount) {
                         break;
@@ -148,7 +149,7 @@ public class AdvancedCraft {
                     break;
                 }
                 while (j < inputItemSlotMap.size()) {
-                    consumeSlots[i][j++] = -1;
+                    consumeSlots[k][j++] = -1;
                 }
             }
 
@@ -173,10 +174,11 @@ public class AdvancedCraft {
             consumeSlots = new int[recipeInputItems.length][];
             matchCount = quantityModule;
 
-            for (ItemAmountWrapper recipeInputItem : recipeInputItems) {
+            for (int k = 0; k < recipeInputItems.length; k++) {
+                ItemAmountWrapper recipeInputItem = recipeInputItems[k];
                 matchAmount = 0;
                 int j = 0;
-                consumeSlots[i] = new int[inputItemSlotMap.size()];
+                consumeSlots[k] = new int[inputItemSlotMap.size()];
                 for (Map.Entry<Integer, ItemWrapper> inputItemEntry : inputItemSlotMap.entrySet()) {
                     if (skipSlotSet.contains(inputItemEntry.getKey())) {
                         continue;
@@ -184,7 +186,7 @@ public class AdvancedCraft {
                     if (ItemStackUtil.isItemSimilar(recipeInputItem, inputItemEntry.getValue())) {
                         matchAmount += inputItemEntry.getValue().getItemStack().getAmount();
                         skipSlotSet.add(inputItemEntry.getKey());
-                        consumeSlots[i][j++] = inputItemEntry.getKey();
+                        consumeSlots[k][j++] = inputItemEntry.getKey();
                     }
                     if (matchAmount / recipeInputItem.getAmount() >= matchCount) {
                         break;
@@ -195,7 +197,7 @@ public class AdvancedCraft {
                     break;
                 }
                 while (j < inputItemSlotMap.size()) {
-                    consumeSlots[i][j++] = -1;
+                    consumeSlots[k][j++] = -1;
                 }
             }
 

@@ -99,16 +99,23 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
         String extraEnergyString = StringNumberUtil.ZERO;
         int extraEnergy;
 
+        int validMachine = 0;
         for(Map.Entry<Integer, List<LocationWithConfig>> entry : configMap.entrySet()) {
             Iterator<LocationWithConfig> iterator = entry.getValue().iterator();
             while (iterator.hasNext()) {
                 SlimefunItem sfItem = SlimefunItem.getById(iterator.next().getConfig().getString(ConstantTableUtil.CONFIG_ID));
-                if(sfItem == null || sfItem.getBlockTicker() == null || !(sfItem instanceof EnergyNetComponent)) {
+                if(sfItem == null || sfItem.getBlockTicker() == null || !(sfItem instanceof EnergyNetComponent) || EnergyNetComponentType.CONNECTOR.equals(((EnergyNetComponent) sfItem).getEnergyComponentType()) || sfItem == this) {
                     iterator.remove();
                     continue;
                 }
                 extraEnergyString = StringNumberUtil.add(extraEnergyString, String.valueOf(((EnergyNetComponent) sfItem).getCapacity()));
+                validMachine++;
             }
+        }
+
+        if(validMachine == 0) {
+            this.updateMenu(blockMenu, machineEnergy, 0, 0, 0);
+            return;
         }
 
         if(StringNumberUtil.compare(extraEnergyString, StringNumberUtil.INTEGER_MAX_VALUE) >= 0) {
@@ -149,13 +156,17 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
                 }
             }
             accelerateAverageTime++;
-            machineEnergy /= count - 1;
+            machineEnergy /= validMachine;
             machineEnergy /= accelerateAverageTime;
             machineEnergy -= extraEnergy;
+
+            drawParticle = false;
         }
 
-        EnergyUtil.setCharge(config, 0);
-        this.updateMenu(blockMenu, finalMachineEnergy, count - 1, accelerateAverageTime, accelerateTotalTime);
+        if(accelerateTotalTime > 0) {
+            EnergyUtil.setCharge(config, 0);
+        }
+        this.updateMenu(blockMenu, finalMachineEnergy, validMachine, accelerateAverageTime, accelerateTotalTime);
     }
 
     @Override
@@ -181,7 +192,7 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
                     String.valueOf(machineEnergy),
                     String.valueOf(accelerateMachine),
                     String.valueOf(accelerateEachTime),
-                    String.valueOf(accelerateEachTime)));
+                    String.valueOf(accelerateTime)));
         }
     }
     @Override

@@ -57,7 +57,7 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         if(BlockTickerUtil.hasSleep(config)) {
-            int sleep = BlockTickerUtil.getSleep(config);
+            double sleep = BlockTickerUtil.getSleep(config);
             if(--sleep <= 0) {
                 BlockTickerUtil.setSleep(config, null);
             } else {
@@ -84,9 +84,9 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
         if (amountList.size() == this.getInputSlot().length && allSameItem) {
             blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
         } else if (Math.random() < (double)(amountList.size()) / this.getInputSlot().length) {
-            BlockTickerUtil.setSleep(config, FinalTech.getRandom().nextInt(this.getInputSlot().length - amountList.size() + 1));
+            BlockTickerUtil.setSleep(config, Double.longBitsToDouble(FinalTech.getRandom().nextInt(this.getInputSlot().length - amountList.size() + 1)));
             blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
-            BlockTickerUtil.setSleep(config, 1);
+            BlockTickerUtil.setSleep(config, 1.0);
         }
     }
 

@@ -3,6 +3,7 @@ package io.taraxacum.finaltech.util.slimefun;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
+import io.taraxacum.finaltech.api.factory.LanguageManager;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,6 +35,15 @@ public class ResearchUtil {
     @Nonnull
     public static Research setResearches(@Nonnull JavaPlugin javaPlugin, @Nonnull String key, int id, @Nonnull String defaultName, int defaultCost, boolean forceCost, @Nonnull ItemStack... itemStacks) {
         Research research = new Research(new NamespacedKey(javaPlugin, key), id, defaultName, defaultCost);
+        research.addItems(itemStacks).register();
+        if(forceCost) {
+            research.setCost(defaultCost);
+        }
+        return research;
+    }
+
+    public static Research setResearches(@Nonnull LanguageManager languageManager, @Nonnull String key, int defaultCost, boolean forceCost, @Nonnull ItemStack... itemStacks) {
+        Research research = new Research(new NamespacedKey(languageManager.getPlugin(), key), key.hashCode(), languageManager.getString("research", key), defaultCost);
         research.addItems(itemStacks).register();
         if(forceCost) {
             research.setCost(defaultCost);

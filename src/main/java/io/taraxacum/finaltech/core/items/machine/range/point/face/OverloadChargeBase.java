@@ -59,19 +59,16 @@ public class OverloadChargeBase extends AbstractFaceMachine implements RecipeIte
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         this.function(block, 1, location -> {
-            Config targetConfig = BlockStorage.getLocationInfo(location);
-            if(targetConfig.contains(ConstantTableUtil.CONFIG_ID)) {
-                String targetSlimefunId = targetConfig.getString(ConstantTableUtil.CONFIG_ID);
-                BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(targetSlimefunId), new Runnable() {
-                    @Override
-                    public void run() {
-
+            if(BlockStorage.hasBlockInfo(location)) {
+                Config targetConfig = BlockStorage.getLocationInfo(location);
+                if(targetConfig.contains(ConstantTableUtil.CONFIG_ID)) {
+                    String targetSlimefunId = targetConfig.getString(ConstantTableUtil.CONFIG_ID);
+                    BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(targetSlimefunId), () -> OverloadChargeBase.this.doCharge(block, targetConfig), location);
+                } else {
+                    BlockMenu blockMenu = BlockStorage.getInventory(block);
+                    if(blockMenu.hasViewer()) {
+                        this.updateMenu(blockMenu, 0, 0);
                     }
-                }, location);
-            } else {
-                BlockMenu blockMenu = BlockStorage.getInventory(block);
-                if(blockMenu.hasViewer()) {
-                    this.updateMenu(blockMenu, 0, 0);
                 }
             }
             return 0;

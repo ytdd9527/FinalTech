@@ -10,6 +10,9 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.machines.MachineOperation;
 import io.github.thebusybiscuit.slimefun4.core.machines.MachineProcessor;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
+import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
+import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -31,19 +34,19 @@ public class OperationAccelerator extends AbstractFaceMachine{
     @Nonnull
     @Override
     protected BlockPlaceHandler onBlockPlace() {
-        return null;
+        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_DENY;
     }
 
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return null;
+        return MachineUtil.simpleBlockBreakerHandler(this);
     }
 
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return null;
+        return new StatusMenu(this);
     }
 
     @Override

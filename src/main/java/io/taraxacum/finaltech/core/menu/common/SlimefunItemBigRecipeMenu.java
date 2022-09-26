@@ -64,8 +64,8 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
 
         GuideHistory guideHistory = playerProfile.getGuideHistory();
 
-        this.addItem(BACK_SLOT, ChestMenuUtils.getBackButton(player, "测试"));
-        this.addMenuClickHandler(1, (pl, s, is, action) -> {
+        this.addItem(BACK_SLOT, ChestMenuUtils.getBackButton(player));
+        this.addMenuClickHandler(BACK_SLOT, (pl, s, is, action) -> {
             if(action.isShiftClicked()) {
                 SlimefunGuide.openMainMenu(playerProfile, slimefunGuideMode, guideHistory.getMainMenuPage());
             } else {

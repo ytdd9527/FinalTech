@@ -1,5 +1,6 @@
 package io.taraxacum.finaltech.core.group;
 
+import io.github.thebusybiscuit.slimefun4.api.events.PlayerPreResearchEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -9,6 +10,7 @@ import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.core.guide.GuideHistory;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.guide.SurvivalSlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
@@ -20,12 +22,14 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author Final_ROOT
@@ -71,9 +75,19 @@ public class SubFlexItemGroup extends FlexItemGroup {
     }
 
     @Override
+    public boolean isAccessible(@Nonnull Player p) {
+        return false;
+    }
+
+    @Override
     public void open(@Nonnull Player player, @Nonnull PlayerProfile playerProfile, @Nonnull SlimefunGuideMode slimefunGuideMode) {
         playerProfile.getGuideHistory().add(this, this.page);
         this.generateMenu(player, playerProfile, slimefunGuideMode).open(player);
+    }
+
+    public void refresh(@Nonnull Player player, @Nonnull PlayerProfile playerProfile, @Nonnull SlimefunGuideMode slimefunGuideMode) {
+        GuideUtil.removeLastEntry(playerProfile.getGuideHistory());
+        this.open(player, playerProfile, slimefunGuideMode);
     }
 
     public void addTo(@Nonnull SlimefunItem... slimefunItems) {
@@ -129,7 +143,7 @@ public class SubFlexItemGroup extends FlexItemGroup {
         chestMenu.setEmptySlotsClickable(false);
         chestMenu.addMenuOpeningHandler(pl -> pl.playSound(pl.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1));
 
-        chestMenu.addItem(BACK_SLOT, ChestMenuUtils.getBackButton(player, "测试"));
+        chestMenu.addItem(BACK_SLOT, ChestMenuUtils.getBackButton(player));
         chestMenu.addMenuClickHandler(1, (pl, s, is, action) -> {
             GuideHistory guideHistory = playerProfile.getGuideHistory();
             if(action.isShiftClicked()) {
@@ -168,8 +182,10 @@ public class SubFlexItemGroup extends FlexItemGroup {
                 for(int j = 0; j < slimefunItemList.size(); j++) {
                     SlimefunItem slimefunItem = slimefunItemList.get(j);
                     Research research = slimefunItem.getResearch();
-                    if(playerProfile.hasUnlocked(slimefunItem.getResearch())) {
-                        chestMenu.addItem(MAIN_CONTENT_L[i][j], ItemStackUtil.cloneItem(slimefunItem.getItem()));
+                    if(playerProfile.hasUnlocked(research)) {
+                        ItemStack itemStack = ItemStackUtil.cloneItem(slimefunItem.getItem());
+                        ItemStackUtil.addLoreToFirst(itemStack, "§7" + slimefunItem.getId());
+                        chestMenu.addItem(MAIN_CONTENT_L[i][j], itemStack);
                         chestMenu.addMenuClickHandler(MAIN_CONTENT_L[i][j], (p, slot, item, action) -> {
                             RecipeItemGroup recipeItemGroup = RecipeItemGroup.getByItemStack(player, playerProfile, slimefunGuideMode, slimefunItem.getItem());
                             if(recipeItemGroup != null) {
@@ -179,12 +195,29 @@ public class SubFlexItemGroup extends FlexItemGroup {
                         });
                     } else {
                         ItemStack icon = ItemStackUtil.cloneItem(ChestMenuUtils.getNotResearchedItem());
-                        if(icon.hasItemMeta()) {
-                            icon.getItemMeta().setDisplayName(slimefunItem.getItemName());
-                        }
+                        ItemStackUtil.setLore(icon,
+                                "§7" + research.getName(player),
+                                "§4§l" + Slimefun.getLocalization().getMessage(player, "guide.locked"),
+                                "",
+                                "§a> Click to unlock",
+                                "",
+                                "§7Cost: §b" + research.getCost() + " Level(s)");
                         chestMenu.addItem(MAIN_CONTENT_L[i][j], icon);
                         chestMenu.addMenuClickHandler(MAIN_CONTENT_L[i][j], (p, slot, item, action) -> {
-                            research.unlockFromGuide(new SurvivalSlimefunGuide(false, false), player, playerProfile, slimefunItem, slimefunItem.getItemGroup(), SubFlexItemGroup.this.page);
+                            PlayerPreResearchEvent event = new PlayerPreResearchEvent(player, research, slimefunItem);
+                            Bukkit.getPluginManager().callEvent(event);
+
+                            if (!event.isCancelled() && !playerProfile.hasUnlocked(research)) {
+                                if (research.canUnlock(player)) {
+                                    new SurvivalSlimefunGuide(false, false).unlockItem(player, slimefunItem, player1 -> SubFlexItemGroup.this.refresh(player, playerProfile, slimefunGuideMode));
+                                } else {
+                                    this.refresh(player, playerProfile, slimefunGuideMode);
+                                    Slimefun.getLocalization().sendMessage(player, "messages.not-enough-xp", true);
+                                }
+                            } else {
+                                GuideUtil.removeLastEntry(playerProfile.getGuideHistory());
+                                this.open(player, playerProfile, slimefunGuideMode);
+                            }
                             return false;
                         });
                     }

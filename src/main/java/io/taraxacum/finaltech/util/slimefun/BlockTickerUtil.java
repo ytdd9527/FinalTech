@@ -59,7 +59,7 @@ public class BlockTickerUtil {
         }
     }
 
-    public static void setSleep(@Nonnull Config config, @Nullable int sleep) {
+    public static void setSleep(@Nonnull Config config, Double sleep) {
         config.setValue(ConstantTableUtil.CONFIG_SLEEP, sleep);
     }
 
@@ -71,13 +71,13 @@ public class BlockTickerUtil {
         return config.contains(ConstantTableUtil.CONFIG_SLEEP);
     }
 
-    public static int getSleep(@Nonnull Config config) {
-        return Integer.parseInt(config.getString(ConstantTableUtil.CONFIG_SLEEP));
+    public static double getSleep(@Nonnull Config config) {
+        return Double.parseDouble(config.getString(ConstantTableUtil.CONFIG_SLEEP));
     }
 
     public static void subSleep(@Nonnull Config config) {
         if(config.contains(ConstantTableUtil.CONFIG_SLEEP)) {
-            int sleep = BlockTickerUtil.getSleep(config) - 1;
+            double sleep = BlockTickerUtil.getSleep(config) - 1;
             if(sleep > 0) {
                 config.setValue(ConstantTableUtil.CONFIG_SLEEP, String.valueOf(sleep));
             } else {

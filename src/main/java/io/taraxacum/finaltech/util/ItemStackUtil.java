@@ -37,6 +37,18 @@ public final class ItemStackUtil {
     }
 
     /**
+     * Clone an #{@link ItemStack}
+     * @param item to be cloned
+     * @param amount the amount of the result item
+     * @return a cloned #{@link ItemStack}
+     */
+    public static ItemStack cloneItem(@Nonnull ItemStack item, int amount) {
+        ItemStack itemStack = item instanceof ItemStackWrapper ? new ItemStack(item) : item.clone();
+        itemStack.setAmount(amount);
+        return itemStack;
+    }
+
+    /**
      * @return Whether the item seems to be null
      */
     public static boolean isItemNull(@Nullable ItemStack item) {
@@ -563,6 +575,28 @@ public final class ItemStackUtil {
             }
         }
         return "unknown";
+    }
+
+    public static void addLoreToFirst(@Nullable ItemStack item, @Nonnull String s) {
+        if(ItemStackUtil.isItemNull(item)) {
+            return;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        List<String> lore = itemMeta.getLore();
+        if(lore == null) {
+            lore = new ArrayList<>(8);
+            lore.add(s);
+            itemMeta.setLore(lore);
+            item.setItemMeta(itemMeta);
+        } else {
+            List<String> newLore = new ArrayList<>(lore.size() + 1);
+            newLore.add(s);
+            for(String string : lore) {
+                newLore.add(string);
+            }
+            itemMeta.setLore(newLore);
+            item.setItemMeta(itemMeta);
+        }
     }
 
     public static void addLoreToLast(@Nullable ItemStack item, @Nonnull String s) {
