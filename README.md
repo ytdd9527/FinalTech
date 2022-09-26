@@ -1,32 +1,48 @@
-# FinalTECH
+
+FinalTECH
+=
 
 A Slimefun addon about making the world so damn better
+
 
 It includes many items with unique function, which will make a hole change to Slimefun gameplay.
 
 It's not completed now, and more object will be added.
 
-#⚠⚠⚠ This project is still in progess.
+⚠⚠⚠ This project is still in progress.
+-
 
----
+Version history
+=
 
-#Version history
-
-###1.0(old)
-
+1.0(old)
+-
 > A simple try
 
-###2.0-preview1(now)
+2.0-preview1(old)
+-
 > May have some bugs.
 
-
-###2.0-preview2(next version)
-> ~~Double more~~ Up to two hundred items and machines
+2.0-preview2(not finished yet)
+-
+> ~~Double more~~ Up to 200 items and machines
 
 > Balance adjusted
 
 > Multi-language support
 
-> Full Multi thread feature support
+> Possible optimization for Slimefun(need to be enabled in the configuration and may be unstable)
 
 > More config support
+
+2.0-preview3(next version)
+-
+> More mechanism about rpg
+
+> Papi support
+
+> More api for developers
+
+> Optimization for language support
+
+> Template machine support
