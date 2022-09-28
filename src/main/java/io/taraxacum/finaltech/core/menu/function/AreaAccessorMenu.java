@@ -63,15 +63,15 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
         super.newInstance(blockMenu, block);
         blockMenu.addMenuOpeningHandler(p -> {
             Location location = block.getLocation();
-            String value = BlockStorage.getLocationInfo(location, RemoteAccessor.KEY);
+            String value = BlockStorage.getLocationInfo(location, AreaAccessor.KEY);
             if(value == null) {
-                value = RemoteAccessor.THRESHOLD;
+                value = AreaAccessor.THRESHOLD;
             }
             if(StringNumberUtil.compare(value, StringNumberUtil.ZERO) <= 0) {
                 p.closeInventory();
                 return;
             }
-            BlockStorage.addBlockInfo(block, RemoteAccessor.KEY, StringNumberUtil.sub(value));
+            BlockStorage.addBlockInfo(block, AreaAccessor.KEY, StringNumberUtil.sub(value));
             blockMenu.close();
 
             if(p.getPlayer() != null) {

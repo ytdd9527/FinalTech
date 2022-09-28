@@ -12,6 +12,7 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.ItemDismantleTableMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
 import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -27,7 +28,7 @@ import java.util.*;
  * @since 2.0
  */
 public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
-    private final Set<String> ALLOWED_RECIPE_ID = new HashSet<>(FinalTech.getItemManager().getStringList(SfItemUtil.getIdFormatName(this.getClass()), "allowed-recipe-id"));
+    private final Set<String> ALLOWED_RECIPE_ID = new HashSet<>(ConfigUtil.getItemStringList(this, "allowed-recipe-id"));
 
 //        RECIPE_TYPE_LIST.add(RecipeType.ENHANCED_CRAFTING_TABLE);
 //        RECIPE_TYPE_LIST.add(RecipeType.GRIND_STONE);

@@ -37,7 +37,7 @@ public class MachineConfigurator extends UsableSlimefunItem implements RecipeIte
         super(itemGroup, item, recipeType, recipe);
         this.ignoreInfoMap = new HashMap<>(this.allowedItemId.size());
         for(String itemId : this.allowedItemId) {
-            this.ignoreInfoMap.put(itemId, new HashSet<>(FinalTech.getConfigManager().getStringList("items", SfItemUtil.getIdFormatName(MachineConfigurator.class), "allowed-item-id", itemId)));
+            this.ignoreInfoMap.put(itemId, new HashSet<>(ConfigUtil.getItemStringList(this, "allowed-item-id", itemId)));
             this.ignoreInfoMap.get(itemId).add(ConstantTableUtil.CONFIG_ID);
             this.ignoreInfoMap.get(itemId).add("energy-charge");
         }

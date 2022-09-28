@@ -13,6 +13,7 @@ public class SfItemUtil {
     @Nonnull
     public static String getIdFormatName(@Nonnull Class<? extends SlimefunItem> clazz) {
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("FINALTECH_");
         boolean append = false;
         for(char c : clazz.getSimpleName().toCharArray()) {
             if(c >= 'A' && c <= 'Z') {

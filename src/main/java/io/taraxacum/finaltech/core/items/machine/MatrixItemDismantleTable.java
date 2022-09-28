@@ -12,6 +12,7 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.MatrixItemDismantleTableMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
 import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -28,9 +29,9 @@ import java.util.Set;
  * @since 2.0
  */
 public class MatrixItemDismantleTable extends AbstractMachine implements RecipeItem {
-    private final Set<String> NOT_ALLOWED_RECIPE_ID = new HashSet<>(FinalTech.getItemManager().getStringList(SfItemUtil.getIdFormatName(this.getClass()), "not-allowed-recipe-id"));
-    private final Set<String> ALLOWED_ID = new HashSet<>(FinalTech.getItemManager().getStringList(SfItemUtil.getIdFormatName(this.getClass()), "allowed-id"));
-    private final Set<String> NOT_ALLOWED_ID = new HashSet<>(FinalTech.getItemManager().getStringList(SfItemUtil.getIdFormatName(this.getClass()), "not-allowed-id"));
+    private final Set<String> NOT_ALLOWED_RECIPE_ID = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-recipe-id"));
+    private final Set<String> ALLOWED_ID = new HashSet<>(ConfigUtil.getItemStringList(this, "allowed-id"));
+    private final Set<String> NOT_ALLOWED_ID = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
 
     public MatrixItemDismantleTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

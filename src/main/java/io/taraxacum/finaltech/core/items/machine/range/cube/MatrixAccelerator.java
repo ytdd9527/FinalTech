@@ -38,7 +38,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
     // millisecond
     private final int syncThreshold = ConfigUtil.getOrDefaultItemSetting(400, this, "threshold-sync");
     private final int asyncThreshold = ConfigUtil.getOrDefaultItemSetting(150, this, "threshold-async");
-    private final Set<String> invalidIdSet = new HashSet<>(FinalTech.getItemManager().getStringList(SfItemUtil.getIdFormatName(this.getClass()), "invalid-ids"));
+    private final Set<String> invalidIdSet = new HashSet<>(ConfigUtil.getItemStringList(this, "invalid-ids"));
 
     public MatrixAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

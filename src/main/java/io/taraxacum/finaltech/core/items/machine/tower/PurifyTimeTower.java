@@ -34,8 +34,8 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class PurifyTimeTower extends AbstractTower implements RecipeItem {
-    private final double baseRange = FinalTech.getItemManager().getOrDefault(3.2, SfItemUtil.getIdFormatName(this.getClass()), "range-base");
-    private final double mulRange = FinalTech.getItemManager().getOrDefault(3.2, SfItemUtil.getIdFormatName(this.getClass()), "range-mul");
+    private final double baseRange = ConfigUtil.getOrDefaultItemSetting(3.2, this, "range-base");
+    private final double mulRange = ConfigUtil.getOrDefaultItemSetting(3.2, this, "range-mul");
 
     public PurifyTimeTower(@Nonnull ItemGroup itemGroup, @Nonnull SlimefunItemStack item, @Nonnull RecipeType recipeType, @Nonnull ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
