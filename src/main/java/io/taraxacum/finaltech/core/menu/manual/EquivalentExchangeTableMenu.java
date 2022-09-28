@@ -36,9 +36,9 @@ public class EquivalentExchangeTableMenu extends AbstractManualMachineMenu {
 
     public static final int STATUS_SLOT = 40;
 
-    private static final ItemStack PARSE_BORDER_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-border-icon", "name"), FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-border-icon", "lore"));
-    private static final ItemStack PARSE_STATUS_ICON = new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-result-icon", "name"), FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-result-icon", "lore"));
-    private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "status-icon", "name"), FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "status-icon", "lore"));
+    private final ItemStack PARSE_BORDER_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", this.getID(), "parse-border-icon", "name"), FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-border-icon", "lore"));
+    private final ItemStack PARSE_STATUS_ICON = new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", this.getID(), "parse-result-icon", "name"), FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-result-icon", "lore"));
+    private final ItemStack CRAFT_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", this.getID(), "status-icon", "name"), FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "status-icon", "lore"));
 
     public EquivalentExchangeTableMenu(@Nonnull AbstractMachine machine) {
         super(machine);

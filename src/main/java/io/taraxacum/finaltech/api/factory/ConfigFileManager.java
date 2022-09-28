@@ -31,8 +31,8 @@ public class ConfigFileManager {
         this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), configFileName + ".yml");
         if(!file.exists()) {
             try {
-                InputStream resourceAsStream = this.getClass().getResourceAsStream("/" + configFileName + ".yml");
-                Files.copy(resourceAsStream, this.file.toPath());
+                boolean mkdirs = file.getParentFile().mkdirs();
+                Files.copy(Objects.requireNonNull(this.getClass().getResourceAsStream("/" + configFileName + ".yml")), this.file.toPath());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -98,12 +98,17 @@ public class ConfigFileManager {
     @Nonnull
     public List<String> getStringList(@Nonnull String... paths) {
         String path = ConfigFileManager.calPath(paths);
-        if(this.configFile.contains(path) && this.configFile.isList(path)) {
+        if(this.configFile.contains(path)) {
             if(this.configFile.isList(path)) {
                 return this.configFile.getStringList(path);
             } else {
-                Bukkit.getLogger().info(this.getClass().getSimpleName() + ": " + "The paths " + Arrays.toString(paths) + " seems to need list.");
-                return new ArrayList<>();
+                this.plugin.getLogger().info(this.getClass().getSimpleName() + ": " + "The paths " + Arrays.toString(paths) + " seems to need list.");
+                try {
+                    return this.configFile.getStringList(path);
+                } catch (Exception e) {
+                    this.plugin.getLogger().info(e.getMessage());
+                    return new ArrayList<>();
+                }
             }
         } else {
             ArrayList<String> objects = new ArrayList<>();

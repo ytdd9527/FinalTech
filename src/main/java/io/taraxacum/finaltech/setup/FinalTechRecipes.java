@@ -22,7 +22,7 @@ public final class FinalTechRecipes {
     public static final RecipeType RECIPE_TYPE_ENTROPY_SEED = new RecipeType(FinalTechItems.ENTROPY_SEED, "FINALTECH_ENTROPY_SEED");
     public static final RecipeType RECIPE_TYPE_LOGIC_CRAFTER = new RecipeType(FinalTechItems.LOGIC_CRAFTER, "FINALTECH_LOGIC_CRAFTER");
     public static final RecipeType RECIPE_TYPE_LOGIC_GENERATOR = new RecipeType(FinalTechItems.LOGIC_GENERATOR, "FINALTECH_LOGIC_GENERATOR");
-    public static final RecipeType RECIPE_TYPE_CARD_OPERATION_PORT = new RecipeType(FinalTechItems.CARD_OPERATION_PORT, "FINALTECH_CARD_OPERATION_PORT");
+    public static final RecipeType RECIPE_TYPE_CARD_OPERATION_PORT = new RecipeType(FinalTechItems.CARD_OPERATION_TABLE, "FINALTECH_CARD_OPERATION_PORT");
     public static final RecipeType RECIPE_TYPE_ENTROPY = new RecipeType(FinalTechItems.ENTROPY, "FINALTECH_ENTROPY");
 
     /* items */
@@ -520,7 +520,7 @@ public final class FinalTechRecipes {
             null, FinalTechItems.NORMAL_STORAGE_UNIT, null,
             null, FinalTechItems.ORDERED_DUST, null,
     };
-    public static final ItemStack[] RANDOM_STORAGE_UNIT = new ItemStack[] {
+    public static final ItemStack[] RANDOM_ACCESS_STORAGE_UNIT = new ItemStack[] {
             null, FinalTechItems.ORDERED_DUST, null,
             null, FinalTechItems.NORMAL_STORAGE_UNIT, null,
             null, FinalTechItems.ORDERED_DUST, null,
@@ -651,7 +651,7 @@ public final class FinalTechRecipes {
             FinalTechItems.ORDERED_DUST, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.ORDERED_DUST,
             FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST
     };
-    public static final ItemStack[] CARD_OPERATION_PORT = new ItemStack[] {
+    public static final ItemStack[] CARD_OPERATION_TABLE = new ItemStack[] {
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, null, null, null, null, FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, null, new ItemStack(Material.CRAFTING_TABLE), new ItemStack(Material.CRAFTING_TABLE), null, FinalTechItems.GEARWHEEL,

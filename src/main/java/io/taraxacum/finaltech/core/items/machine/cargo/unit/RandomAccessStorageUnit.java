@@ -21,8 +21,8 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class RandomStorageUnit extends AbstractCargo implements RecipeItem {
-    public RandomStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class RandomAccessStorageUnit extends AbstractCargo implements RecipeItem {
+    public RandomAccessStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 

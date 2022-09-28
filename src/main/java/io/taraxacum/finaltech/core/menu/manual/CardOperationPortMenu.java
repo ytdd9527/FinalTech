@@ -38,12 +38,12 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
     private static final int[] INPUT_SLOT = new int[] {10, 16};
     private static final int[] OUTPUT_SLOT = new int[] {40};
     private static final int CRAFT_SLOT = 13;
-    private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.RED_STAINED_GLASS_PANE,
-            ConfigUtil.getStatusMenuName(FinalTech.getLanguageManager(), SfItemUtil.getIdFormatName(CardOperationTable.class)),
-            ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), SfItemUtil.getIdFormatName(CardOperationTable.class)));
+    private final ItemStack CRAFT_ICON = new CustomItemStack(Material.RED_STAINED_GLASS_PANE,
+            ConfigUtil.getStatusMenuName(FinalTech.getLanguageManager(), this.getID()),
+            ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this.getID()));
 
     private static final List<Craft> CRAFT_LIST = new ArrayList<>();
-    static {
+    {
         CRAFT_LIST.add(new Craft() {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
@@ -58,7 +58,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(CardOperationTable.class), "action1-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), "action1-icon", "lore"));
             }
 
             @Override
@@ -96,7 +96,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(CardOperationTable.class), "action2-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), "action2-icon", "lore"));
             }
 
             @Override
@@ -130,7 +130,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(CardOperationTable.class), "action3-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), "action3-icon", "lore"));
             }
 
             @Override
@@ -175,7 +175,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(CardOperationTable.class), "action4-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), "action4-icon", "lore"));
             }
 
             @Override
@@ -208,7 +208,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(CardOperationTable.class), "action5-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), "action5-icon", "lore"));
             }
 
             @Override
@@ -248,7 +248,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(CardOperationTable.class), "action6-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), "action6-icon", "lore"));
             }
 
             @Override

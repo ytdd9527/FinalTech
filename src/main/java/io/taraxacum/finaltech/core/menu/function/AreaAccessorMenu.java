@@ -114,7 +114,6 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
      * @param page begin from 0
      */
     public void generateMenu(@Nonnull Player player, @Nonnull Location location, int range, int page) {
-
         World world = location.getWorld();
         if(world == null) {
             return;
@@ -170,7 +169,10 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
                     if(slimefunItem != null) {
                         BlockMenu blockMenu = BlockStorage.getInventory(l);
                         if(blockMenu != null) {
-                            ItemStack icon = new CustomItemStack(slimefunItem.getItem(), slimefunItem.getItemName(), FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(AreaAccessor.class), "temp-icon", "lore")));
+                            ItemStack icon = new CustomItemStack(slimefunItem.getItem(), slimefunItem.getItemName(), FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(AreaAccessor.class), "temp-icon", "lore"),
+                                    String.valueOf(l.getBlockX() - location.getBlockX()),
+                                    String.valueOf(l.getBlockY() - location.getBlockY()),
+                                    String.valueOf(l.getBlockZ() - location.getBlockZ())));
                             chestMenu.addItem(TEMP_CONTENT[i], icon);
                             chestMenu.addMenuClickHandler(TEMP_CONTENT[i], (p, slot, item, action) -> {
                                 // BlockMenu may be updated after the menu generated.

@@ -118,33 +118,28 @@ public final class SetupUtil {
     }
 
     public static void initLanguageManager(@Nonnull LanguageManager languageManager) {
-
         // Color normal
         languageManager.addFunction(new Function<>() {
             @Override
             public String apply(String s) {
-                String[] split = StringUtil.split(s, "{", "}");
+                String[] split = StringUtil.split(s, "{color:", "}");
                 if (split.length == 3) {
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append(split[0]);
-                    String[] center = StringUtil.split(split[1], ":");
-                    if (center.length == 2 && "color".equals(center[0])) {
-                        switch (center[1]) {
-                            case "normal" -> stringBuilder.append(TextUtil.COLOR_NORMAL);
-                            case "stress" -> stringBuilder.append(TextUtil.COLOR_STRESS);
-                            case "action" -> stringBuilder.append(TextUtil.COLOR_ACTION);
-                            case "initiative" -> stringBuilder.append(TextUtil.COLOR_INITIATIVE);
-                            case "passive" -> stringBuilder.append(TextUtil.COLOR_PASSIVE);
-                            case "number" -> stringBuilder.append(TextUtil.COLOR_NUMBER);
-                            case "positive" -> stringBuilder.append(TextUtil.COLOR_POSITIVE);
-                            case "negative" -> stringBuilder.append(TextUtil.COLOR_NEGATIVE);
-                            case "input" -> stringBuilder.append(TextUtil.COLOR_INPUT);
-                            case "output" -> stringBuilder.append(TextUtil.COLOR_OUTPUT);
-                            case "random" -> stringBuilder.append(TextUtil.getRandomColor());
-                            default -> stringBuilder.append(split[1]);
-                        }
-                    } else {
-                        stringBuilder.append(split[1]);
+                    switch (split[1]) {
+                        case "normal" -> stringBuilder.append(TextUtil.COLOR_NORMAL);
+                        case "stress" -> stringBuilder.append(TextUtil.COLOR_STRESS);
+                        case "action" -> stringBuilder.append(TextUtil.COLOR_ACTION);
+                        case "initiative" -> stringBuilder.append(TextUtil.COLOR_INITIATIVE);
+                        case "passive" -> stringBuilder.append(TextUtil.COLOR_PASSIVE);
+                        case "number" -> stringBuilder.append(TextUtil.COLOR_NUMBER);
+                        case "positive" -> stringBuilder.append(TextUtil.COLOR_POSITIVE);
+                        case "negative" -> stringBuilder.append(TextUtil.COLOR_NEGATIVE);
+                        case "input" -> stringBuilder.append(TextUtil.COLOR_INPUT);
+                        case "output" -> stringBuilder.append(TextUtil.COLOR_OUTPUT);
+                        case "random" -> stringBuilder.append(TextUtil.getRandomColor());
+                        case "prandom" -> stringBuilder.append(TextUtil.getPseudorandomColor());
+                        default -> stringBuilder.append(split[1]);
                     }
                     return stringBuilder.append(this.apply(split[2])).toString();
                 } else {
@@ -156,18 +151,13 @@ public final class SetupUtil {
         languageManager.addFunction(new Function<>() {
             @Override
             public String apply(String s) {
-                String[] split = StringUtil.split(s, "{", "}");
+                String[] split = StringUtil.split(s, "{id:", "}");
                 if (split.length == 3) {
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append(split[0]);
-                    String[] center = StringUtil.split(split[1], ":");
-                    if (center.length == 2 && "id".equals(center[0])) {
-                        SlimefunItem slimefunItem = SlimefunItem.getById(center[1]);
-                        if (slimefunItem != null) {
-                            stringBuilder.append(slimefunItem.getItemName());
-                        } else {
-                            stringBuilder.append(center[1]);
-                        }
+                    SlimefunItem slimefunItem = SlimefunItem.getById(split[1]);
+                    if (slimefunItem != null) {
+                        stringBuilder.append(slimefunItem.getItemName());
                     } else {
                         stringBuilder.append(split[1]);
                     }
@@ -181,7 +171,7 @@ public final class SetupUtil {
         languageManager.addFunction(new Function<>() {
             @Override
             public String apply(String s) {
-                String[] split = StringUtil.split(s, "{color:random:start}", "{color:random:end}");
+                String[] split = StringUtil.split(s, "{random-color:start}", "{random-color:end}");
                 if (split.length == 3) {
                     return split[0] + TextUtil.colorRandomString(split[1]) + this.apply(split[2]);
                 } else {
@@ -193,7 +183,7 @@ public final class SetupUtil {
         languageManager.addFunction(new Function<>() {
             @Override
             public String apply(String s) {
-                String[] split = StringUtil.split(s, "{color:pseudorandom:start}", "{color:pseudorandom:end}");
+                String[] split = StringUtil.split(s, "{prandom-color:start}", "{prandom-color:end}");
                 if (split.length == 3) {
                     return split[0] + TextUtil.colorRandomString(split[1]) + this.apply(split[2]);
                 } else {
@@ -347,7 +337,7 @@ public final class SetupUtil {
         FinalTechMenus.SUB_MENU_STORAGE_UNIT.addTo(
                 new RandomInputStorageUnit(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.RANDOM_INPUT_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.RANDOM_INPUT_STORAGE_UNIT).register(),
                 new RandomOutputStorageUnit(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.RANDOM_OUTPUT_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.RANDOM_OUTPUT_STORAGE_UNIT).register(),
-                new RandomStorageUnit(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.RANDOM_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.RANDOM_STORAGE_UNIT).register(),
+                new RandomAccessStorageUnit(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.RANDOM_ACCESS_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.RANDOM_ACCESS_STORAGE_UNIT).register(),
                 new DistributeLeftStorageUnit(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.DISTRIBUTE_LEFT_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DISTRIBUTE_LEFT_STORAGE_UNIT).register(),
                 new DistributeRightStorageUnit(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.DISTRIBUTE_RIGHT_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DISTRIBUTE_RIGHT_STORAGE_UNIT).register());
         // advanced storage
@@ -380,7 +370,7 @@ public final class SetupUtil {
                 new EntropyConstructor(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ENTROPY_CONSTRUCTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ENTROPY_CONSTRUCTOR).register(),
                 new ItemSerializationConstructor(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ITEM_SERIALIZATION_CONSTRUCTOR).register(),
                 new ItemDeserializeParser(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_DESERIALIZE_PARSER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ITEM_DESERIALIZE_PARSER).register(),
-                new CardOperationTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.CARD_OPERATION_PORT, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.CARD_OPERATION_PORT).register());
+                new CardOperationTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.CARD_OPERATION_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.CARD_OPERATION_TABLE).register());
         FinalTechMenus.SUB_MENU_CORE_MACHINE.addTo(
                 new LogicCrafter(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.LOGIC_CRAFTER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.LOGIC_CRAFTER).register(),
                 new DigitAdder(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.DIGIT_ADDER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.DIGIT_ADDER).register());

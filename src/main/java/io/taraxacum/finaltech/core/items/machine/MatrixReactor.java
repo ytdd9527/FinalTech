@@ -190,7 +190,7 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem {
         ItemStack item = blockMenu.getItemInSlot(MatrixReactorMenu.OTHER_ITEM_INPUT_SLOT[0]);
         ItemStack iconItem = blockMenu.getItemInSlot(MatrixReactorMenu.STATUS_SLOT);
         if (ItemStackUtil.isItemNull(item)) {
-            ItemStackUtil.setLore(iconItem, FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageManager().getStringArray("items", SfItemUtil.getIdFormatName(this.getClass())),
+            ItemStackUtil.setLore(iconItem, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
                     String.valueOf(DIFFICULTY - item.getAmount())));
         } else {
             String count = config.contains(this.KEY_COUNT) ? config.getString(this.KEY_COUNT) : "0";

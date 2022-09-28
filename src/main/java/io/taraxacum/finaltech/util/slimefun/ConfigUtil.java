@@ -39,22 +39,31 @@ public class ConfigUtil {
 
     @Nonnull
     public static SlimefunItemStack getSlimefunItemStack(@Nonnull LanguageManager languageManager, @Nonnull String id, @Nonnull Material defaultMaterial, @Nonnull String defaultName) {
-        Material material = Material.getMaterial(languageManager.getString("items", id, "material"));
-        material = material == null ? defaultMaterial : material;
+        Material material = defaultMaterial;
+        if(languageManager.containPath("categories", id, "material")) {
+            material = Material.getMaterial(languageManager.getString("categories", id, "material"));
+            material = material == null ? defaultMaterial : material;
+        }
         String name = languageManager.containPath("items", id, "name") ? languageManager.getString("items", id, "name") : defaultName;
         return new SlimefunItemStack(id, material, name, languageManager.getStringArray("items", id, "lore"));
     }
 
     public static MainItemGroup getMainItemGroup(@Nonnull LanguageManager languageManager, @Nonnull String key, @Nonnull Material defaultMaterial, @Nonnull String defaultName) {
-        Material material = Material.getMaterial(languageManager.getString("categories", key, "material"));
-        material = material == null ? defaultMaterial : material;
+        Material material = defaultMaterial;
+        if(languageManager.containPath("categories", key, "material")) {
+            material = Material.getMaterial(languageManager.getString("categories", key, "material"));
+            material = material == null ? defaultMaterial : material;
+        }
         String name = languageManager.containPath("categories", key, "name") ? languageManager.getString("categories", key, "name") : defaultName;
         return new MainItemGroup(new NamespacedKey(languageManager.getPlugin(), key), new CustomItemStack(material, name), 0);
     }
 
     public static SubFlexItemGroup getSubFlexItemGroup(@Nonnull LanguageManager languageManager, @Nonnull String key, @Nonnull Material defaultMaterial, @Nonnull String defaultName) {
-        Material material = Material.getMaterial(languageManager.getString("categories", key, "material"));
-        material = material == null ? defaultMaterial : material;
+        Material material = defaultMaterial;
+        if(languageManager.containPath("categories", key, "material")) {
+            material = Material.getMaterial(languageManager.getString("categories", key, "material"));
+            material = material == null ? defaultMaterial : material;
+        }
         String name = languageManager.containPath("categories", key, "name") ? languageManager.getString("categories", key, "name") : defaultName;
         return new SubFlexItemGroup(new NamespacedKey(languageManager.getPlugin(), key), new CustomItemStack(material, name), 0);
     }

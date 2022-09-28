@@ -34,10 +34,10 @@ public class MenuViewer extends UsableSlimefunItem implements RecipeItem {
     private final int WITHDRAW_SLOT_VALUE = 2;
     private final int INSERT_AND_WITHDRAW_SLOT_VALUE = INSERT_SLOT_VALUE + WITHDRAW_SLOT_VALUE;
 
-    private final ItemStack VOID_ICON = new CustomItemStack(Material.GRAY_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(this.getClass()), "void-icon", "name"));
-    private final ItemStack INPUT_ICON = new CustomItemStack(Material.BLUE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(this.getClass()), "input-icon", "name"));
-    private final ItemStack OUTPUT_ICON = new CustomItemStack(Material.ORANGE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(this.getClass()), "output-icon", "name"));
-    private final ItemStack INPUT_AND_OUTPUT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(this.getClass()), "in-and-out-icon", "name"));
+    private final ItemStack VOID_ICON = new CustomItemStack(Material.GRAY_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", this.getId(), "void-icon", "name"));
+    private final ItemStack INPUT_ICON = new CustomItemStack(Material.BLUE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", this.getId(), "input-icon", "name"));
+    private final ItemStack OUTPUT_ICON = new CustomItemStack(Material.ORANGE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", this.getId(), "output-icon", "name"));
+    private final ItemStack INPUT_AND_OUTPUT_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", this.getId(), "in-and-out-icon", "name"));
 
     public MenuViewer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

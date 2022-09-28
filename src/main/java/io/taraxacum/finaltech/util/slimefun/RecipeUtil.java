@@ -75,15 +75,17 @@ public class RecipeUtil {
 
     public static void registerDescriptiveRecipe(@Nonnull LanguageManager languageManager, @Nonnull RecipeItem recipeItem, String... strings) {
         String id = recipeItem.getId();
-        List<String> infoList = languageManager.getStringList("items", id, "info");
-        infoList.sort(String::compareTo);
-        for(String infoIndex : infoList) {
-            if(languageManager.containPath("items", id, "info", infoIndex, "name")) {
+        int i = 1;
+        while(true) {
+            String index = String.valueOf(i++);
+            if(languageManager.containPath("items", id, "info", index, "name")) {
                 if(strings.length == 0) {
-                    recipeItem.registerDescriptiveRecipe(languageManager.getString("items", id, "info", infoIndex, "name"), languageManager.getStringArray("items", id, "info", infoIndex, "lore"));
+                    recipeItem.registerDescriptiveRecipe(languageManager.getString("items", id, "info", index, "name"), languageManager.getStringArray("items", id, "info", index, "lore"));
                 } else {
-                    recipeItem.registerDescriptiveRecipe(languageManager.getString("items", id, "info", infoIndex, "name"), languageManager.replaceStringArray(languageManager.getStringArray("items", id, "info", infoIndex, "lore"), strings));
+                    recipeItem.registerDescriptiveRecipe(languageManager.getString("items", id, "info", index, "name"), languageManager.replaceStringArray(languageManager.getStringArray("items", id, "info", index, "lore"), strings));
                 }
+            } else {
+                break;
             }
         }
     }
