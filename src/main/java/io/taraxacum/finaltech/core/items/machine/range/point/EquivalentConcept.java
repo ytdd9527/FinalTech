@@ -8,12 +8,14 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.slimefun.BlockTickerUtil;
 import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
 import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
@@ -28,7 +30,7 @@ import java.util.Random;
  * @author Final_ROOT
  * @since 2.0
  */
-public class EquivalentConcept extends AbstractPointMachine {
+public class EquivalentConcept extends AbstractPointMachine implements RecipeItem {
     public static final String KEY_LIFE = "l";
     public static final String KEY_RANGE = "r";
     private final double attenuationRate = ConfigUtil.getOrDefaultItemSetting(0.95, this, "attenuation-rate");
@@ -118,5 +120,10 @@ public class EquivalentConcept extends AbstractPointMachine {
         y = Math.min(location.getWorld().getMaxHeight(), y);
         y = Math.max(location.getWorld().getMinHeight(), y);
         return new Location(location.getWorld(), location.getX() - range + FinalTech.getRandom().nextInt(range + range), y, location.getZ() - range + new Random().nextInt(range + range));
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

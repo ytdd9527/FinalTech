@@ -1,6 +1,5 @@
 package io.taraxacum.finaltech.api.factory;
 
-import io.github.thebusybiscuit.slimefun4.libraries.commons.lang.StringUtils;
 import io.taraxacum.common.util.StringUtil;
 import io.taraxacum.finaltech.api.interfaces.StringReplacer;
 import org.bukkit.plugin.Plugin;
@@ -55,9 +54,9 @@ public class LanguageManager extends ConfigFileManager implements StringReplacer
         if(split.length == 3) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(split[0]);
-            if(StringUtils.isNumeric(split[1])) {
+            if(StringUtil.onlyContainsNumber(split[1])) {
                 int index = Integer.parseInt(split[1]) - 1;
-                if(targets.length > index) {
+                if(targets.length > index && index >= 0) {
                     stringBuilder.append(targets[index]);
                 } else {
                     stringBuilder.append("{").append(split[1]).append("}");

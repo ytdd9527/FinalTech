@@ -53,9 +53,8 @@ public class OverloadedElectricityShootPile extends AbstractElectricityShootPile
                             return 0;
                         }
                         transferEnergy = Math.min(transferEnergy, summary.getCapacitorEnergy());
-                        EnergyUtil.setCharge(location, String.valueOf(componentEnergy + transferEnergy * 2));
+                        EnergyUtil.setCharge(location, String.valueOf(componentEnergy + transferEnergy));
                         summary.setCapacitorEnergy(summary.getCapacitorEnergy() - transferEnergy);
-                        summary.setEnergyCharge(StringNumberUtil.add(summary.getEnergyCharge(), String.valueOf(transferEnergy)));
                         summary.setEnergyCharge(StringNumberUtil.add(summary.getEnergyCharge(), String.valueOf(transferEnergy)));
                         return 1;
                     }

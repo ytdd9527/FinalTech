@@ -77,13 +77,6 @@ public class EnergizedChargeBase extends AbstractFaceMachine implements RecipeIt
         return false;
     }
 
-    private void updateMenu(@Nonnull BlockMenu blockMenu, int storedEnergy, int chargeEnergy) {
-        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
-        ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
-                String.valueOf(storedEnergy),
-                String.valueOf(chargeEnergy)));
-    }
-
     private void doCharge(@Nonnull Block block, @Nonnull Config targetConfig) {
         int storedEnergy = 0;
         int chargeEnergy = 0;
@@ -95,7 +88,8 @@ public class EnergizedChargeBase extends AbstractFaceMachine implements RecipeIt
             storedEnergy = Integer.parseInt(EnergyUtil.getCharge(targetConfig));
             chargeEnergy = capacity * EnergizedChargeBase.this.effective > capacity - storedEnergy ? capacity - storedEnergy : (int)(capacity * EnergizedChargeBase.this.effective);
             if(chargeEnergy > 0) {
-                EnergyUtil.setCharge(targetConfig, storedEnergy + chargeEnergy);
+                storedEnergy += chargeEnergy;
+                EnergyUtil.setCharge(targetConfig, storedEnergy);
             }
         }
 
@@ -103,6 +97,13 @@ public class EnergizedChargeBase extends AbstractFaceMachine implements RecipeIt
         if(blockMenu.hasViewer()) {
             this.updateMenu(blockMenu, storedEnergy, chargeEnergy);
         }
+    }
+
+    private void updateMenu(@Nonnull BlockMenu blockMenu, int storedEnergy, int chargeEnergy) {
+        ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
+        ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
+                String.valueOf(storedEnergy),
+                String.valueOf(chargeEnergy)));
     }
 
     @Nonnull

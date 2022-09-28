@@ -198,7 +198,7 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
     @Override
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
-                String.valueOf(range),
+                String.valueOf(this.range),
                 String.valueOf(this.getCapacity()));
     }
 }

@@ -370,7 +370,7 @@ items:
     name: '{color:prandom}Water Card'
     info:
       1:
-        name: '{color:positive}Usage'
+        name: '{color:passive}Usage'
         lore:
           - '{color:normal}Can be used to replace water bucket in some machine'
   FINALTECH_LAVA_CARD:
@@ -393,826 +393,1026 @@ items:
       1:
         name: '{color:passive}Additional Crafting'
         lore:
-          - '{color:normal}Can be crafted in crafting table'
+          - '{color:normal}Can be crafted in vanilla crafting table'
   FINALTECH_UNORDERED_DUST:
     name: '{color:prandom}Unordered Dust'
     info:
       1:
         name: '{color:positive}Production method'
         lore:
-          - '{color:normal}Can be crafted in {id:FINALTECH_ORDERED_DUST_FACTORY_DIRT} {color:normal}and {id:FINALTECH_ORDERED_DUST_FACTORY_STONE}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_ORDERED_DUST_FACTORY_DIRT}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_ORDERED_DUST_FACTORY_STONE}'
   FINALTECH_ORDERED_DUST:
     name: '{color:prandom}Ordered Dust'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_ORDERED_DUST_FACTORY_DIRT}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_ORDERED_DUST_FACTORY_STONE}'
   FINALTECH_BUG:
     name: '{color:prandom}Bug'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be obtained in {id:FINALTECH_EQUIVALENT_EXCHANGE_TABLE}'
   FINALTECH_ENTROPY:
     name: '{color:prandom}Entropy'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be obtained in {id:FINALTECH_ENTROPY_CONSTRUCTOR}'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}No obvious use'
   FINALTECH_BOX:
     name: '{color:prandom}Box'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:positive}Obtaining method'
+        lore:
+          - '{color:normal}Can be obtained while:'
+          - '{color:normal}Player is dead'
+          - '{color:normal}The death place is 64 blocks above world max limit height'
   FINALTECH_SHINE:
     name: '{color:prandom}Shine'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:positive}Obtaining method'
+        lore:
+          - '{color:normal}Can be obtained while:'
+          - '{color:normal}Player is damaged'
+          - '{color:normal}Player is below 64 blocks in the world minimum height'
+          - '{color:normal}Player carries {id:FINALTECH_BOX}'
+      2:
+        name: '{color:negative}Notice'
+        lore:
+          - '{color:normal}If player dead at the place that can obtain {id:FINALTECH_SHINE} while carrying {id:FINALTECH_BOX}'
+          - '{color:normal}Player will lost all his items'
   FINALTECH_COPY_CARD:
     name: '{color:prandom}Copy Card'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_ITEM_SERIALIZATION_CONSTRUCTOR}(Only for Slimefun items)'
+          - '{color:normal}Can be crafted in {id:FINALTECH_MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR}(Support all items)'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Slowly produce specified item in {id:FINALTECH_ITEM_DESERIALIZE_PARSER}'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Item name: {1}'
+        - '{color:normal}Item amount: {2}'
   FINALTECH_ANNULAR:
     name: '{color:prandom}Annular'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_CARD_OPERATION_TABLE} manually'
   FINALTECH_QUANTITY_MODULE:
     name: '{color:prandom}Quantity Module'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can tweak the efficiency of some machines'
+          - '{color:normal}Efficiency tweak is Downward compatible'
   FINALTECH_QUANTITY_MODULE_INFINITY:
     name: '{color:prandom}Infinity Quantity Module'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can tweak some machines to an amazing efficiency'
+          - '{color:normal}Efficiency tweak is Downward compatible'
   FINALTECH_SINGULARITY:
     name: '{color:prandom}Singularity'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_ITEM_SERIALIZATION_CONSTRUCTOR}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR}'
   FINALTECH_SPIROCHETE:
     name: '{color:prandom}Spirochete'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_ITEM_SERIALIZATION_CONSTRUCTOR}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR}'
   FINALTECH_SHELL:
     name: '{color:prandom}Shell'
-    lore:
-      - Fill me!
-      - I'm list!
-    info:
-      - Fill me!
-      - I'm list!
   FINALTECH_PHONY:
     name: '{color:prandom}Phony'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_ITEM_SERIALIZATION_CONSTRUCTOR}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_CARD_OPERATION_TABLE} manually'
   FINALTECH_JUSTIFIABILITY:
     name: '{color:prandom}Justifiability'
-    lore:
-      - Fill me!
-      - I'm list!
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be obtained by using {id:FINALTECH_ENTROPY_SEED}'
   FINALTECH_EQUIVALENT_CONCEPT:
     name: '{color:prandom}Equivalent Concept'
-    lore:
-      - Fill me!
-      - I'm list!
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be obtained by using {id:FINALTECH_ENTROPY_SEED}'
   FINALTECH_LOGIC_FALSE:
-    name: '{color:prandom}Logic FALSE'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Logic {color:number}FALSE'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be obtained in {id:FINALTECH_LOGIC_GENERATOR}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_TO_DIGITAL_CONVERSION}'
   FINALTECH_LOGIC_TRUE:
-    name: '{color:prandom}Logic TRUE'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Logic {color:number}TRUE'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be obtained in {id:FINALTECH_LOGIC_GENERATOR}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_TO_DIGITAL_CONVERSION}'
   FINALTECH_DIGITAL_ZERO:
-    name: '{color:prandom}Digital 0'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}0'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be obtained in {id:FINALTECH_DIGITAL_GENERATOR}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_ONE:
-    name: '{color:prandom}Digital 1'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}1'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be obtained in {id:FINALTECH_DIGITAL_GENERATOR}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_TWO:
-    name: '{color:prandom}Digital 2'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}2'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be obtained in {id:FINALTECH_DIGITAL_GENERATOR}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_THREE:
-    name: '{color:prandom}Digital 3'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}3'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be obtained in {id:FINALTECH_DIGITAL_GENERATOR}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_FOUR:
-    name: '{color:prandom}Digital 4'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}4'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_FIVE:
-    name: '{color:prandom}Digital 5'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}5'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_SIX:
-    name: '{color:prandom}Digital 6'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}6'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_SEVEN:
-    name: '{color:prandom}Digital 7'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}7'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_EIGHT:
-    name: '{color:prandom}Digital 8'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}8'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_NINE:
-    name: '{color:prandom}Digital 9'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}9'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_TEN:
-    name: '{color:prandom}Digital 10'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}10'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_ELEVEN:
-    name: '{color:prandom}Digital 11'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}11'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_TWELVE:
-    name: '{color:prandom}Digital 12'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}12'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_THIRTEEN:
-    name: '{color:prandom}Digital 13'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}13'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_FOURTEEN:
-    name: '{color:prandom}Digital 14'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}14'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_DIGITAL_FIFTEEN:
-    name: '{color:prandom}Digital 15'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Digital {color:number}15'
+    info:
+      1:
+        name: '{color:positive}Production method'
+        lore:
+          - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
+          - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
   FINALTECH_MACHINE_CHARGE_CARD_L1:
     name: '{color:prandom}Machine Charge Card {color:number}L1'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Charge machine for {color:number}{1}J + {2} of machine capacity'
+          - '{color:normal}Percentage energy charge is not useful to capacitor'
   FINALTECH_MACHINE_CHARGE_CARD_L2:
     name: '{color:prandom}Machine Charge Card {color:number}L2'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Charge machine for {color:number}{1}J + {2} of machine capacity'
+          - '{color:normal}Percentage energy charge is not useful to capacitor'
   FINALTECH_MACHINE_CHARGE_CARD_L3:
     name: '{color:prandom}Machine Charge Card {color:number}L3'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Charge machine for {color:number}{1}J + {2} of machine capacity'
+          - '{color:normal}Percentage energy charge is not useful to capacitor'
   FINALTECH_MACHINE_ACCELERATE_CARD_L1:
     name: '{color:prandom}Machine Accelerate Card {color:number}L1'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Make machine work immediately for {color:number}{1}times'
   FINALTECH_MACHINE_ACCELERATE_CARD_L2:
     name: '{color:prandom}Machine Accelerate Card {color:number}L2'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Make machine work immediately for {color:number}{1}times'
   FINALTECH_MACHINE_ACCELERATE_CARD_L3:
     name: '{color:prandom}Machine Accelerate Card {color:number}L3'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Make machine work immediately for {color:number}{1}times'
   FINALTECH_MACHINE_ACTIVATE_CARD_L1:
     name: '{color:prandom}Machine Activate Card {color:number}L1'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Make machine work immediately for {color:number}{1}times'
+          - '{color:normal}Before every work, it will be charged for {color:number}{2}J + {3} of machine capacity'
+          - '{color:normal}Percentage energy charge is not useful to capacitor'
   FINALTECH_MACHINE_ACTIVATE_CARD_L2:
     name: '{color:prandom}Machine Activiate Card {color:number}L2'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Make machine work immediately for {color:number}{1}times'
+          - '{color:normal}Before every work, it will be charged for {color:number}{2}J + {3} of machine capacity'
+          - '{color:normal}Percentage energy charge is not useful to capacitor'
   FINALTECH_MACHINE_ACTIVATE_CARD_L3:
     name: '{color:prandom}Machine Activate Card {color:number}L3'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Make machine work immediately for {color:number}{1}times'
+          - '{color:normal}Before every work, it will be charged for {color:number}{2}J + {3} of machine capacity'
+          - '{color:normal}Percentage energy charge is not useful to capacitor'
   FINALTECH_MAGIC_HYPNOTIC:
     name: '{color:prandom}Magic Hypnotic'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Apply random normal potion effect to you'
   FINALTECH_RESEARCH_UNLOCK_TICKET:
     name: '{color:prandom}Research Unlock Ticket'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Unlock a research randomly'
   FINALTECH_UNTREATABLE_RUNE:
     name: '{color:prandom}Untreatable Rune'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Makes around lives(including you) difficult to be healed'
+          - '{color:normal}Range: {color:number}{1}'
+          - '{color:normal}Duration: {color:number}{2}'
   FINALTECH_STAFF_ELEMENTAL_LINE:
     name: '&6Elemental Staff &7- &f&oLine'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Makes you teleport to the place you are looking at'
+          - '{color:initiative}[Click] {color:normal}teleport to {color:number}{1} {color:normal}away'
+          - '{color:initiative}[Shift + Click] {color:normal}teleport to {color:number}{2} {color:normal}away'
   FINALTECH_POTION_EFFECT_COMPRESSOR:
     name: '{color:prandom}Potion Effect Compressor'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Level up your potion effect'
   FINALTECH_POTION_EFFECT_DILATOR:
     name: '{color:prandom}Potion Effect Dilator'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Enlarge your potion effect duration'
   FINALTECH_POTION_EFFECT_PURIFIER:
     name: '{color:prandom}Potion Effect Purifier'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Clear your potion effect'
   FINALTECH_MENU_VIEWER:
     name: '{color:prandom}Menu Viewer'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}To see how machine interactive with others'
     void-icon:
-      name: '---===---'
+      name: 'Non-interactive'
     input-icon:
-      name: '---===---'
+      name: 'Input-slot'
     output-icon:
-      name: '---===---'
+      name: 'Output-slot'
     in-and-out-icon:
-      name: '---===---'
+      name: 'Input and Output slot'
   FINALTECH_LOCATION_RECORDER:
     name: '{color:prandom}Location Recorder'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:initiative}[Shift + Right-click]{color:normal}Record and mark the location'
+          - '{color:initiative}[Right-click]{color:normal}Open the machine in the specified location if existed'
+          - ''
+          - '{color:normal}Can be used in {id:FINALTECH_LOCATION_TRANSFER}'
   FINALTECH_MACHINE_CONFIGURATOR:
-    name: '---===---'
-    lore:
-      - Fill me!
-      - I'm list!
+    name: '{color:prandom}Machine Configurator'
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:initiative}[Shift + Right-click]{color:normal}Copy the configuration of a machine'
+          - '{color:initiative}[Right-click]{color:normal}Paste the configuration to a machine with same type'
   FINALTECH_PORTABLE_ENERGY_STORAGE:
     name: '{color:prandom}Portable Energy Storage'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:initiative}[Shift + Right-click]{color:normal}Withdraw the energy of a machine'
+          - '{color:initiative}[Right-click]{color:normal}Insert the energy to a machine'
   FINALTECH_SUPER_PICKAXE:
     name: '{color:prandom}Super Pickaxe'
-    lore:
-      - Fill me!
-      - I'm list!
+    info:
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Drop 1 extra exp instead while breaking block'
   FINALTECH_SWORD1:
     name: '{color:prandom}Sword1'
-    lore:
-      - Fill me!
-      - I'm list!
   FINALTECH_BASIC_GENERATOR:
     name: '{color:prandom}Basic Generator'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Charge around machine'
+          - '{color:normal}Energy= {color:number}{1}J'
+          - '{color:normal}Range= {color:number}{2}Block'
+          - '{color:normal}Rate= {color:number}{3}s/times'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Total Energy= {color:number}{1}J'
+        - '{color:normal}Affected Machine= {color:number}{2}'
   FINALTECH_ADVANCED_GENERATOR:
     name: '{color:prandom}Advanced Generator'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Charge around machine'
+          - '{color:normal}Energy= {color:number}{1}J'
+          - '{color:normal}Range= {color:number}{2}Block'
+          - '{color:normal}Rate= {color:number}{3}s/times'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Total Energy= {color:number}{1}J'
+        - '{color:normal}Affected Machine= {color:number}{2}'
   FINALTECH_CARBONADO_GENERATOR:
     name: '{color:prandom}Carbonado Generator'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Charge around machine'
+          - '{color:normal}Energy= {color:number}{1}J'
+          - '{color:normal}Range= {color:number}{2}Block'
+          - '{color:normal}Rate= {color:number}{3}s/times'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Total Energy= {color:number}{1}J'
+        - '{color:normal}Affected Machine= {color:number}{2}'
   FINALTECH_ENERGIZED_GENERATOR:
     name: '{color:prandom}Energized Generator'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Charge around machine'
+          - '{color:normal}Energy= {color:number}{1}J'
+          - '{color:normal}Range= {color:number}{2}Block'
+          - '{color:normal}Rate= {color:number}{3}s/times'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Total Energy= {color:number}{1}J'
+        - '{color:normal}Affected Machine= {color:number}{2}'
   FINALTECH_ENERGIZED_STACK_GENERATOR:
     name: '{color:prandom}Energized Stack Generator'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Charge around machine'
+          - '{color:normal}Energy= {color:number}{1}J'
+          - '{color:normal}Range= {color:number}{2}Block'
+          - '{color:normal}Rate= {color:number}{3}s/times'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Total Energy= {color:number}{1}J'
+        - '{color:normal}Affected Machine= {color:number}{2}'
   FINALTECH_OVERLOADED_GENERATOR:
     name: '{color:prandom}Overloaded Generator'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Charge around machine'
+          - '{color:normal}Energy= {color:number}{1}J'
+          - '{color:normal}Range= {color:number}{2}Block'
+          - '{color:normal}Rate= {color:number}{3}s/times'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Total Energy= {color:number}{1}J'
+        - '{color:normal}Affected Machine= {color:number}{2}'
   FINALTECH_ORDERED_DUST_GENERATOR:
     name: '{color:prandom}Ordered Dust Generator'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Generate energy by consuming {id:FINALTECH_UNORDERED_DUST} {color:normal}or {id:FINALTECH_PHONY}'
+          - '{color:normal}Keep importing valid items, and it will generate energy more efficient'
+      2:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Generate energy every times: power * (power + 1) / 2'
+          - '{color:normal}Consuming {id:FINALTECH_UNORDERED_DUST}: power + 1'
+          - '{color:normal}Consuming {id:FINALTECH_PHONY}: power * 2'
+          - '{color:negative}If no valid item being consumed: power / 2'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Power= {color:number}{1}'
+        - '{color:normal}Generate Energy= {color:number}{2}J/times'
   FINALTECH_ENERGIZED_CHARGE_BASE:
     name: '{color:prandom}Energized Charge Base'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - "{color:normal}Charge machine on it's top"
+          - "{color:normal}Charge energy= {color:number}{1} * machine's capacity"
+    status:
+      lore:
+        - '{color:normal}Stored Energy= {color:number}{1}J'
+        - '{color:normal}Charged Energy= {color:number}{2}J'
   FINALTECH_OVERLOAD_CHARGE_BASE:
     name: '{color:prandom}Overload Charge Base'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - "{color:normal}Charge machine on it's top"
+          - "{color:normal}Charge energy= {color:number}{1} * machine's capacity"
+          - "{color:normal}Can charge energy to {color:number}{2}% of machine's capacity"
+    status:
+      lore:
+        - '{color:normal}Stored Energy= {color:number}{1}J'
+        - '{color:normal}Charged Energy= {color:number}{2}J'
   FINALTECH_BASIC_CHARGE_INCREASE_CAPACITOR:
     name: '{color:prandom}Basic Charge Increase Capacitor'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1}J {color:normal}of energy'
+          - '{color:normal}Get {color:number}{2}%J {color:normal}of energy while being charged'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Stored Energy= {color:number}{1}J'
   FINALTECH_BASIC_CONSUME_REDUCE_CAPACITOR:
     name: '{color:prandom}Basic Consume Reduce Capacitor'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1}J {color:normal}of energy'
+          - '{color:normal}Only consume {color:number}{2}%J {color:normal}of energy while transfer energy'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Stored Energy= {color:number}{1}J'
   FINALTECH_SMALL_EXPANDED_CAPACITOR:
     name: '{color:prandom}Small Expanded Capacitor'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1}J {color:normal}of energy every stack'
+          - '{color:normal}Can store {color:number}{2}J {color:normal}stack of energy'
+          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
+          - '{color:normal}Only consume {color:number}{4}%J {color:normal}of energy while transfer energy'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5}s'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Transferable Energy= {color:number}{1}J'
+        - '{color:normal}Stored Energy Stack= {color:number}{2}'
   FINALTECH_MEDIUM_EXPANDED_CAPACITOR:
     name: '{color:prandom}Medium Expanded Capacitor'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1}J {color:normal}of energy every stack'
+          - '{color:normal}Can store {color:number}{2}J {color:normal}stack of energy'
+          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
+          - '{color:normal}Only consume {color:number}{4}%J {color:normal}of energy while transfer energy'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5}s'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Transferable Energy= {color:number}{1}J'
+        - '{color:normal}Stored Energy Stack= {color:number}{2}'
   FINALTECH_BIG_EXPANDED_CAPACITOR:
     name: '{color:prandom}Big Expanded Capacitor'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1}J {color:normal}of energy every stack'
+          - '{color:normal}Can store {color:number}{2}J {color:normal}stack of energy'
+          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
+          - '{color:normal}Only consume {color:number}{4}%J {color:normal}of energy while transfer energy'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5}s'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Transferable Energy= {color:number}{1}J'
+        - '{color:normal}Stored Energy Stack= {color:number}{2}'
   FINALTECH_LARGE_EXPANDED_CAPACITOR:
     name: '{color:prandom}Large Expanded Capacitor'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1}J {color:normal}of energy every stack'
+          - '{color:normal}Can store {color:number}{2}J {color:normal}stack of energy'
+          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
+          - '{color:normal}Only consume {color:number}{4}%J {color:normal}of energy while transfer energy'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5}s'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Transferable Energy= {color:number}{1}J'
+        - '{color:normal}Stored Energy Stack= {color:number}{2}'
   FINALTECH_CARBONADO_EXPANDED_CAPACITOR:
     name: '{color:prandom}Carbonado Expanded Capacitor'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1}J {color:normal}of energy every stack'
+          - '{color:normal}Can store {color:number}{2}J {color:normal}stack of energy'
+          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
+          - '{color:normal}Only consume {color:number}{4}%J {color:normal}of energy while transfer energy'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5}s'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Transferable Energy= {color:number}{1}J'
+        - '{color:normal}Stored Energy Stack= {color:number}{2}'
   FINALTECH_ENERGIZED_EXPANDED_CAPACITOR:
     name: '{color:prandom}Energized Expanded Capacitor'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1}J {color:normal}of energy every stack'
+          - '{color:normal}Can store {color:number}{2}J {color:normal}stack of energy'
+          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
+          - '{color:normal}Only consume {color:number}{4}%J {color:normal}of energy while transfer energy'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5}s'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Transferable Energy= {color:number}{1}J'
+        - '{color:normal}Stored Energy Stack= {color:number}{2}'
   FINALTECH_ENERGIZED_STACK_EXPANDED_CAPACITOR:
     name: '{color:prandom}Energized Stack Expanded Capacitor'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1}J {color:normal}of energy every stack'
+          - '{color:normal}Can store {color:number}{2}J {color:normal}stack of energy'
+          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
+          - '{color:normal}Only consume {color:number}{4}%J {color:normal}of energy while transfer energy'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5}s'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Transferable Energy= {color:number}{1}J'
+        - '{color:normal}Stored Energy Stack= {color:number}{2}'
   FINALTECH_OVERLOADED_EXPANDED_CAPACITOR:
     name: '{color:prandom}Overloaded Expanded Capacitor'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1}J {color:normal}of energy every stack'
+          - '{color:normal}Can store {color:number}{2}J {color:normal}stack of energy'
+          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
+          - '{color:normal}Only consume {color:number}{4}%J {color:normal}of energy while transfer energy'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5}s'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Transferable Energy= {color:number}{1}J'
+        - '{color:normal}Stored Energy Stack= {color:number}{2}'
   FINALTECH_ADVANCED_CHARGE_INCREASE_CAPACITOR:
     name: '{color:prandom}Advanced Charge Increase Capacitor'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1}J {color:normal}of energy'
+          - '{color:normal}Get {color:number}{2}%J {color:normal}of energy while being charged'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Stored Energy= {color:number}{1}J'
   FINALTECH_ADVANCED_CONSUME_REDUCE_CAPACITOR:
     name: '{color:prandom}Advanced Consume Reduce Capacitor'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1}J {color:normal}of energy'
+          - '{color:normal}Only consume {color:number}{2}%J {color:normal}of energy while transfer energy'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Stored Energy= {color:number}{1}J'
   FINALTECH_NORMAL_ELECTRICITY_SHOOT_PILE:
     name: '{color:prandom}Normal Electricity Shoot Pile'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Transfer energy stored in a capacitor behind it'
+          - '{color:normal}To the machine it is pointing at'
+          - ''
+          - '{color:normal}It will charge only one machine at same time'
+          - '{color:normal}It will skip a machine with full energy'
+          - ''
+          - '{color:normal}Range= {color:number}{1}'
+          - '{color:negative}Can not transfer energy to another capacitor'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Affected Machine= {color:number}{1}'
+        - '{color:normal}Transfer Energy= {color:number}{2}J'
   FINALTECH_ENERGIZED_ELECTRICITY_SHOOT_PILE:
     name: '{color:prandom}Energized Electricity Shoot Pile'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Transfer energy stored in a capacitor behind it'
+          - '{color:normal}To the machine it is pointing at at one by one'
+          - ''
+          - '{color:normal}It will try to charge all machine at same time'
+          - '{color:normal}It will skip a machine with full energy'
+          - ''
+          - '{color:normal}Range= {color:number}{1}'
+          - '{color:negative}Can not transfer energy to another capacitor'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Affected Machine= {color:number}{1}'
+        - '{color:normal}Transfer Energy= {color:number}{2}J'
   FINALTECH_OVERLOADED_ELECTRICITY_SHOOT_PILE:
     name: '{color:prandom}Overloaded Electricity Shoot Pile'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Transfer energy stored in a capacitor behind it'
+          - '{color:normal}To the machine it is pointing at one by one'
+          - ''
+          - '{color:normal}It will try to charge all machine at same time'
+          - '{color:normal}It will charge a machine with full energy'
+          - ''
+          - '{color:normal}Range= {color:number}{1}'
+          - '{color:negative}Can not transfer energy to another capacitor'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Affected Machine= {color:number}{1}'
+        - '{color:normal}Transfer Energy= {color:number}{2}J'
   FINALTECH_DISPERSAL_CAPACITOR:
     name: '{color:prandom}Dispersal Capacitor'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Transfer energy to machines around directly'
   FINALTECH_VARIABLE_WIRE_RESISTANCE:
     name: '{color:prandom}Variable Wire Resistance'
-    lore:
-      - Fill me!
-      - I'm list!
+    info:
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can stored energy {color:number}{1}J'
+          - '{color:normal}Convert to {id:FINALTECH_VARIABLE_WIRE_CAPACITOR} while storing full energy'
   FINALTECH_VARIABLE_WIRE_CAPACITOR:
     name: '{color:prandom}Variable Wire Capacitor'
-    lore:
-      - Fill me!
-      - I'm list!
+    info:
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can stored energy {color:number}{1}J'
+          - '{color:normal}Convert to {id:FINALTECH_VARIABLE_WIRE_RESISTANCE} while not storing any energy'
   FINALTECH_ENERGY_ACCELERATOR:
     name: '{color:prandom}Energy Accelerator'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Consume energy to make around machine work several times'
+          - '{color:stress}Only support machine which can store energy'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Range= {color:number}{1}'
+          - '{color:normal}Store Energy= {color:number}{2}J'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Stored Energy= {color:number}{1}J'
+        - '{color:normal}Accelerate Machine= {color:number}{2}'
+        - '{color:normal}Accelerate Average Times= {color:number}{3}'
+        - '{color:normal}Accelerate Total Times= {color:number}{4}'
   FINALTECH_OVERLOADED_ACCELERATOR:
     name: '{color:prandom}Overloaded Accelerator'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Make around machine work several times which stored energy is beyond capacity'
+          - '{color:stress}Only support machine which can store energy'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Range= {color:number}{1}'
     status:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Accelerate Machine= {color:number}{1}'
+        - '{color:normal}Accelerate Total Times= {color:number}{2}'
   FINALTECH_NORMAL_STORAGE_UNIT:
     name: '{color:prandom}Storage Unit'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1} {color:normal}slots of items'
   FINALTECH_DIVIDED_STORAGE_UNIT:
     name: '{color:prandom}Storage Unit - {color:positive}DIVIDED'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1} slots {color:normal}of items'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}The first {color:number}{2} slots {color:normal}will be identified as input slot'
+          - '{color:normal}The last {color:number}{3} slots {color:normal}will be identified as output slot'
   FINALTECH_LIMITED_STORAGE_UNIT:
     name: '{color:prandom}Storage Unit - {color:positive}LIMITED'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1} slots {color:normal}of items'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can only input one slot items while being interact by other machine every times'
   FINALTECH_STACK_STORAGE_UNIT:
     name: '{color:prandom}Storage Unit - {color:positive}STACK'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1} slots {color:normal}of items'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}It will sort items every {color:number}{1}s'
   FINALTECH_DIVIDED_LIMITED_STORAGE_UNIT:
     name: '{color:prandom}Storage Unit - {color:positive}DIVIDED|LIMITED'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1} slots {color:normal}of items'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}The first {color:number}{1} slots {color:normal}will be identified as input slot'
+          - '{color:normal}The last {color:number}{2} slots {color:normal}will be identified as output slot'
+      3:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can only input one slot items while being interact by other machine every times'
   FINALTECH_DIVIDED_STACK_STORAGE_UNIT:
     name: '{color:prandom}Storage Unit - {color:positive}DIVIDED|STACK'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1} slots {color:normal}of items'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}The first {color:number}{1} slots {color:normal}will be identified as input slot'
+          - '{color:normal}The last {color:number}{2} slots {color:normal}will be identified as output slot'
+      3:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}It will sort items every {color:number}{3}s'
   FINALTECH_LIMITED_STACK_STORAGE_UNIT:
     name: '{color:prandom}Storage Unit - {color:positive}LIMITED|STACK'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1} slots {color:normal}of items'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can only input one slot items while being interact by other machine every times'
+      3:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}It will sort items every {color:number}{1}s'
   FINALTECH_CHARGEABLE_STORAGE_UNIT:
     name: '{color:prandom}Storage Unit - {color:positive}CHARGEABLE'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1} slots {color:normal}of items'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1}J {color:normal}energy'
   FINALTECH_RANDOM_INPUT_STORAGE_UNIT:
     name: '{color:prandom}Storage Unit - {color:positive}RANDOM INPUT'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1} slots {color:normal}of items'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Will be randomly interacted while input item to it by other machines'
   FINALTECH_RANDOM_OUTPUT_STORAGE_UNIT:
     name: '{color:prandom}Storage Unit - {color:positive}RANDOM OUTPUT'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1} slots {color:normal}of items'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Will be randomly interacted while output item to it by other machines'
   FINALTECH_RANDOM_STORAGE_UNIT:
     name: '{color:prandom}Storage Unit - {color:positive}RANDOM ACCESS'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1} slots {color:normal}of items'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Will be randomly interacted by other machines'
   FINALTECH_DISTRIBUTE_LEFT_STORAGE_UNIT:
     name: '{color:prandom}Storage Unit - {color:positive}DISTRIBUTE LEFT'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1} slots {color:normal}of items'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Will distribute items to left slots'
   FINALTECH_DISTRIBUTE_RIGHT_STORAGE_UNIT:
     name: '{color:prandom}Storage Unit - {color:positive}DISTRIBUTE RIGHT'
-    lore:
-      - Fill me!
-      - I'm list!
     info:
-      - Fill me!
-      - I'm list!
+      1:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Can store {color:number}{1} slots {color:normal}of items'
+      2:
+        name: '{color:passive}Usage'
+        lore:
+          - '{color:normal}Will distribute items to right slots'
   FINALTECH_STORAGE_INTERACT_PORT:
     name: '{color:prandom}Storage Interact Port'
     lore:
@@ -1270,7 +1470,7 @@ items:
     info:
       - Fill me!
       - I'm list!
-  FINALTECH_LINK_TRANSFER:
+  FINALTECH_POINT_TRANSFER:
     name: '{color:prandom}Link Transfer'
     lore:
       - Fill me!

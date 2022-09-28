@@ -92,7 +92,8 @@ public class OverloadChargeBase extends AbstractFaceMachine implements RecipeIte
             storedEnergy = Integer.parseInt(EnergyUtil.getCharge(config));
             chargeEnergy = maxValue - capacity * OverloadChargeBase.this.effective > storedEnergy ? (int)(capacity * OverloadChargeBase.this.effective) : (int)(maxValue - capacity * OverloadChargeBase.this.effective);
             if(chargeEnergy > 0) {
-                EnergyUtil.setCharge(config, storedEnergy + chargeEnergy);
+                storedEnergy += chargeEnergy;
+                EnergyUtil.setCharge(config, storedEnergy);
             }
         }
 
@@ -119,6 +120,6 @@ public class OverloadChargeBase extends AbstractFaceMachine implements RecipeIte
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(this.effective),
-                String.valueOf(this.maxLimit));
+                String.valueOf(this.maxLimit * 100));
     }
 }

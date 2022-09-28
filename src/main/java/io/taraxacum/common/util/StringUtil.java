@@ -20,4 +20,14 @@ public class StringUtil {
         result.add(source);
         return result.toArray(new String[0]);
     }
+
+    public static boolean onlyContainsNumber(@Nonnull String source) {
+        for(int i = 0; i < source.length(); i++) {
+            char c = source.charAt(i);
+            if(c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
+    }
 }

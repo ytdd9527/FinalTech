@@ -39,7 +39,7 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
     private final int WORK_PREVIOUS_SLOT = 1;
     private final int WORK_NEXT_SLOT = 7;
     private final int[] WORK_BORDER = new int[] {2, 3, 4, 5, 6, 8};
-    private final int[] WORK_CONTENT = new int[] {9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
+    private final int[] WORK_CONTENT = new int[] {9, 18, 10, 19, 11, 20, 12, 21, 13, 22, 14, 23, 15, 24, 16, 25, 17, 26};
 
     private final Player player;
     private final PlayerProfile playerProfile;
@@ -103,7 +103,7 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
 
-        if(slimefunItem instanceof RecipeDisplayItem) {
+        if(slimefunItem instanceof RecipeDisplayItem && ((RecipeDisplayItem) slimefunItem).getDisplayRecipes().size() > 0) {
             this.addItem(this.WORK_BUTTON, ChestMenuUtils.getWikiButton());
             this.addMenuClickHandler(this.WORK_BUTTON, (p, slot, item, action) -> {
                 ChestMenu chestMenu = SlimefunItemBigRecipeMenu.this.setupWorkContent(page);

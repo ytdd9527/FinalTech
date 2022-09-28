@@ -162,6 +162,7 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf((this.getCapacity() / 2)),
+                this.getMaxStack(),
                 String.format("%.2f", this.chargeIncrease() * 100),
                 String.format("%.2f", this.consumeReduce() * 100),
                 String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0));
