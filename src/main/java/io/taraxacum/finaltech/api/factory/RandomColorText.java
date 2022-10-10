@@ -1,6 +1,6 @@
 package io.taraxacum.finaltech.api.factory;
 
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.TextUtil;
 import org.bukkit.Color;
 
 import javax.annotation.Nonnull;

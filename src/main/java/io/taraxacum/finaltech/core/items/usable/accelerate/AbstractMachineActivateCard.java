@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
+import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.items.usable.UsableSlimefunItem;
@@ -103,7 +104,10 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem {
 
             Runnable runnable = () -> {
                 int capacity = ((EnergyNetComponent) slimefunItem).getCapacity();
-                int chargeEnergy = (int) AbstractMachineActivateCard.this.energy() + (int)((AbstractMachineActivateCard.this.energy() - (int) AbstractMachineActivateCard.this.energy()) * capacity);
+                int chargeEnergy = (int) AbstractMachineActivateCard.this.energy();
+                if(!EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType())) {
+                    chargeEnergy += (int)((this.energy() - (int) this.energy()) * capacity);
+                }
                 if(!AbstractMachineActivateCard.this.consume()) {
                     chargeEnergy *= playerRightClickEvent.getItem().getAmount();
                 }

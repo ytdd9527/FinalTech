@@ -8,7 +8,7 @@ import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.StringItemUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.TextUtil;
 import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

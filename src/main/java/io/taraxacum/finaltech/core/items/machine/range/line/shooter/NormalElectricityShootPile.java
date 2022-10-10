@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class NormalElectricityShootPile extends AbstractElectricityShootPile {
-    private final int range = ConfigUtil.getOrDefaultItemSetting(16, this, "range");
+    private final int range = ConfigUtil.getOrDefaultItemSetting(8, this, "range");
 
     public NormalElectricityShootPile(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

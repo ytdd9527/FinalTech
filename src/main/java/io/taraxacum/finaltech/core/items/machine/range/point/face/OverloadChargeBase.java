@@ -88,9 +88,9 @@ public class OverloadChargeBase extends AbstractFaceMachine implements RecipeIte
         SlimefunItem slimefunItem = SlimefunItem.getById(slimefunItemId);
         if(slimefunItem instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType()) && !EnergyNetComponentType.GENERATOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType())) {
             int capacity = ((EnergyNetComponent) slimefunItem).getCapacity();
-            int maxValue = Integer.MAX_VALUE / OverloadChargeBase.this.maxLimit > capacity ? (int)(capacity * OverloadChargeBase.this.maxLimit) : Integer.MAX_VALUE;
+            int maxValue = capacity < Integer.MAX_VALUE / OverloadChargeBase.this.maxLimit ? (int)(capacity * OverloadChargeBase.this.maxLimit) : Integer.MAX_VALUE;
             storedEnergy = Integer.parseInt(EnergyUtil.getCharge(config));
-            chargeEnergy = maxValue - capacity * OverloadChargeBase.this.effective > storedEnergy ? (int)(capacity * OverloadChargeBase.this.effective) : (int)(maxValue - capacity * OverloadChargeBase.this.effective);
+            chargeEnergy = storedEnergy < maxValue - capacity * OverloadChargeBase.this.effective ? (int)(capacity * OverloadChargeBase.this.effective) : (maxValue - storedEnergy);
             if(chargeEnergy > 0) {
                 storedEnergy += chargeEnergy;
                 EnergyUtil.setCharge(config, storedEnergy);

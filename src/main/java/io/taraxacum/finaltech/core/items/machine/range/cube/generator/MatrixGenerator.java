@@ -93,12 +93,7 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator {
 
                     SlimefunItem machineItem = SlimefunItem.getById(energyComponentConfig.getString(ConstantTableUtil.CONFIG_ID));
                     if (machineItem instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) machineItem).getEnergyComponentType())) {
-                        BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineId), new Runnable() {
-                            @Override
-                            public void run() {
-                                MatrixGenerator.this.chargeMachine((EnergyNetComponent) machineItem, energyComponentConfig);
-                            }
-                        }, location);
+                        BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineId), () -> MatrixGenerator.this.chargeMachine((EnergyNetComponent) machineItem, energyComponentConfig), location);
                         return 1;
                     }
                 }

@@ -80,7 +80,7 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
             }
         }
 
-        String finalExtraEnergy = extraEnergy;
+        String finalEnergy = extraEnergy;
         int count = this.function(block, this.getRange(), location -> {
             if (BlockStorage.hasBlockInfo(location)) {
                 Config energyComponentConfig = BlockStorage.getLocationInfo(location);
@@ -88,9 +88,10 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
                     String machineId = energyComponentConfig.getString(ConstantTableUtil.CONFIG_ID);
                     SlimefunItem machineItem = SlimefunItem.getById(machineId);
                     if (machineItem instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) machineItem).getEnergyComponentType())) {
-                        BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineId), () -> AbstractCubeElectricGenerator.this.chargeMachine((EnergyNetComponent) machineItem, finalExtraEnergy, energyComponentConfig, location), location);
+                        BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineId), () -> AbstractCubeElectricGenerator.this.chargeMachine((EnergyNetComponent) machineItem, finalEnergy, energyComponentConfig, location), location);
                         if(drawParticle) {
-                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, location.getBlock()));
+                            Location cloneLocation = location.clone();
+                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, cloneLocation.getBlock()));
                         }
                         return 1;
                     }
@@ -101,7 +102,7 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
 
         blockMenu = BlockStorage.getInventory(block);
         if(blockMenu.hasViewer()) {
-            this.updateMenu(blockMenu, finalExtraEnergy, count);
+            this.updateMenu(blockMenu, finalEnergy, count);
         }
     }
 

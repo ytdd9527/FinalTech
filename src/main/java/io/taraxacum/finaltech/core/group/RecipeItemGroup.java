@@ -98,9 +98,13 @@ public class RecipeItemGroup extends FlexItemGroup {
             }
         } else {
             Material material = itemStack.getType();
-            // TODO vanilla item recipe
-            return null;
+            if(ItemStackUtil.isItemSimilar(itemStack, new ItemStack(material))) {
+                // TODO vanilla item recipe
+            } else {
+                return null;
+            }
         }
+        return null;
     }
 
     @Nullable

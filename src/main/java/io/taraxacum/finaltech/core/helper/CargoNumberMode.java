@@ -3,7 +3,6 @@ package io.taraxacum.finaltech.core.helper;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.factory.BlockStorageHelper;
 import io.taraxacum.finaltech.api.factory.BlockStorageLoreHelper;
-import io.taraxacum.finaltech.util.TextUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;

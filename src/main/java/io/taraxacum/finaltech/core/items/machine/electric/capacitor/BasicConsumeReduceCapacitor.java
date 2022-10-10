@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class BasicConsumeReduceCapacitor extends AbstractElectricCapacitor implements RecipeItem {
+public class BasicConsumeReduceCapacitor extends AbstractConsumeReduceCapacitor implements RecipeItem {
     private final int capacity = ConfigUtil.getOrDefaultItemSetting(524288, this, "capacity");
     private final int efficient = ConfigUtil.getOrDefaultItemSetting(2, this, "efficient");
 
@@ -27,23 +27,6 @@ public class BasicConsumeReduceCapacitor extends AbstractElectricCapacitor imple
     @Override
     public int getCapacity() {
         return this.capacity;
-    }
-
-    @Override
-    public void removeCharge(@Nonnull Location l, int charge) {
-        charge *= 1.0 / this.getEfficient();
-        super.removeCharge(l, charge);
-    }
-
-    @Override
-    public void setCharge(@Nonnull Location l, int charge) {
-        int difference = charge - this.getCharge(l);
-        if (difference < 0) {
-            charge -= difference;
-            difference *= 1.0 / this.getEfficient();
-            charge += difference;
-        }
-        super.setCharge(l, charge);
     }
 
     protected int getEfficient() {

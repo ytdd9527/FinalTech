@@ -4,7 +4,6 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.factory.BlockStorageHelper;
 import io.taraxacum.finaltech.api.factory.BlockStorageIconHelper;
-import io.taraxacum.finaltech.util.TextUtil;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

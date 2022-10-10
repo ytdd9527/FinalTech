@@ -2,6 +2,7 @@ package io.taraxacum.finaltech.util;
 
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.util.slimefun.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;

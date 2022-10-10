@@ -165,7 +165,7 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
                 if(index < displayRecipes.size()) {
                     chestMenu.addItem(WORK_CONTENT[i], displayRecipes.get(index));
                     chestMenu.addMenuClickHandler(WORK_CONTENT[i], (p, slot, item, action) -> {
-                        RecipeItemGroup recipeItemGroup = RecipeItemGroup.getByItemStack(SlimefunItemBigRecipeMenu.this.player, SlimefunItemBigRecipeMenu.this.playerProfile, SlimefunItemBigRecipeMenu.this.slimefunGuideMode, SlimefunItemBigRecipeMenu.this.slimefunItem.getItem());
+                        RecipeItemGroup recipeItemGroup = RecipeItemGroup.getByItemStack(SlimefunItemBigRecipeMenu.this.player, SlimefunItemBigRecipeMenu.this.playerProfile, SlimefunItemBigRecipeMenu.this.slimefunGuideMode, displayRecipes.get(index));
                         if(recipeItemGroup != null) {
                             Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> recipeItemGroup.open(player, playerProfile, slimefunGuideMode));
                         }

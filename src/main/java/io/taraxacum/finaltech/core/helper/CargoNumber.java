@@ -4,7 +4,6 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.factory.BlockStorageHelper;
 import io.taraxacum.finaltech.api.factory.BlockStorageLoreHelper;
-import io.taraxacum.finaltech.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -12,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 /**
  * @author Final_ROOT

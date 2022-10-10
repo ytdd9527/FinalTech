@@ -17,6 +17,7 @@ import io.taraxacum.finaltech.core.command.ShowItemValue;
 import io.taraxacum.finaltech.core.command.TransferToCopyCardItem;
 import io.taraxacum.finaltech.core.enchantment.NullEnchantment;
 import io.taraxacum.finaltech.core.items.machine.range.point.face.*;
+import io.taraxacum.finaltech.core.listener.BoxListener;
 import io.taraxacum.finaltech.core.listener.ShineListener;
 import io.taraxacum.finaltech.core.items.SuperPickaxe;
 import io.taraxacum.finaltech.core.items.machine.*;
@@ -65,7 +66,7 @@ import io.taraxacum.finaltech.core.items.machine.range.line.shooter.OverloadedEl
 import io.taraxacum.finaltech.core.items.machine.template.advanced.*;
 import io.taraxacum.finaltech.util.AntiAccelerationUtil;
 import io.taraxacum.finaltech.util.PerformanceLimitUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.TextUtil;
 import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import io.taraxacum.finaltech.util.slimefun.ResearchUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -88,7 +89,7 @@ public final class SetupUtil {
     public static void init(@Nonnull SlimefunAddon slimefunAddon) {
         FinalTech finalTech = FinalTech.getInstance();
 
-        // setup config
+        /* setup config */
 
         ConfigFileManager config = FinalTech.getConfigManager();
 
@@ -97,7 +98,7 @@ public final class SetupUtil {
             AbstractManualCraftMachine.COUNT_THRESHOLD = Slimefun.getTickerTask().getTickRate();
         }
 
-        // setup menu
+        /* setup menu */
 
         FinalTechMenus.MAIN_MENU.setTier(0);
         FinalTechMenus.MAIN_MENU.register(finalTech);
@@ -109,94 +110,10 @@ public final class SetupUtil {
         FinalTechMenus.MENU_PRODUCTIVE_MACHINE.setTier(0);
         FinalTechMenus.MENU_FINAL_ITEM.setTier(0);
 
-        /* command */
-
-        finalTech.getCommand("finaltech-copy-card").setExecutor(new TransferToCopyCardItem());
-        finalTech.getCommand("finaltech-item-value").setExecutor(new ShowItemValue());
-
-        SetupUtil.setupItems();
-    }
-
-    public static void initLanguageManager(@Nonnull LanguageManager languageManager) {
-        // Color normal
-        languageManager.addFunction(new Function<>() {
-            @Override
-            public String apply(String s) {
-                String[] split = StringUtil.split(s, "{color:", "}");
-                if (split.length == 3) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append(split[0]);
-                    switch (split[1]) {
-                        case "normal" -> stringBuilder.append(TextUtil.COLOR_NORMAL);
-                        case "stress" -> stringBuilder.append(TextUtil.COLOR_STRESS);
-                        case "action" -> stringBuilder.append(TextUtil.COLOR_ACTION);
-                        case "initiative" -> stringBuilder.append(TextUtil.COLOR_INITIATIVE);
-                        case "passive" -> stringBuilder.append(TextUtil.COLOR_PASSIVE);
-                        case "number" -> stringBuilder.append(TextUtil.COLOR_NUMBER);
-                        case "positive" -> stringBuilder.append(TextUtil.COLOR_POSITIVE);
-                        case "negative" -> stringBuilder.append(TextUtil.COLOR_NEGATIVE);
-                        case "input" -> stringBuilder.append(TextUtil.COLOR_INPUT);
-                        case "output" -> stringBuilder.append(TextUtil.COLOR_OUTPUT);
-                        case "random" -> stringBuilder.append(TextUtil.getRandomColor());
-                        case "prandom" -> stringBuilder.append(TextUtil.getPseudorandomColor());
-                        default -> stringBuilder.append(split[1]);
-                    }
-                    return stringBuilder.append(this.apply(split[2])).toString();
-                } else {
-                    return s;
-                }
-            }
-        });
-        // SlimefunItem Name by id
-        languageManager.addFunction(new Function<>() {
-            @Override
-            public String apply(String s) {
-                String[] split = StringUtil.split(s, "{id:", "}");
-                if (split.length == 3) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append(split[0]);
-                    SlimefunItem slimefunItem = SlimefunItem.getById(split[1]);
-                    if (slimefunItem != null) {
-                        stringBuilder.append(slimefunItem.getItemName());
-                    } else {
-                        stringBuilder.append(split[1]);
-                    }
-                    return stringBuilder.append(this.apply(split[2])).toString();
-                } else {
-                    return s;
-                }
-            }
-        });
-        // Color random
-        languageManager.addFunction(new Function<>() {
-            @Override
-            public String apply(String s) {
-                String[] split = StringUtil.split(s, "{random-color:start}", "{random-color:end}");
-                if (split.length == 3) {
-                    return split[0] + TextUtil.colorRandomString(split[1]) + this.apply(split[2]);
-                } else {
-                    return s;
-                }
-            }
-        });
-        // Color pseudorandom
-        languageManager.addFunction(new Function<>() {
-            @Override
-            public String apply(String s) {
-                String[] split = StringUtil.split(s, "{prandom-color:start}", "{prandom-color:end}");
-                if (split.length == 3) {
-                    return split[0] + TextUtil.colorRandomString(split[1]) + this.apply(split[2]);
-                } else {
-                    return s;
-                }
-            }
-        });
-    }
-
-    public static void setupItems() {
         /* Enchantment */
         ReflectionUtil.setStaticValue(Enchantment.class, "acceptingNew", true);
         Enchantment.registerEnchantment(NullEnchantment.ENCHANTMENT);
+        FinalTechItems.ENTROPY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.SHINE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.PHONY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.MACHINE_CHARGE_CARD_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
@@ -209,6 +126,7 @@ public final class SetupUtil {
         FinalTechItems.MATRIX_GENERATOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.MATRIX_ACCELERATOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.MATRIX_ITEM_DESERIALIZE_PARSER.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+
         /* items */
         // material
         FinalTechMenus.SUB_MENU_MATERIAL.addTo(
@@ -541,7 +459,7 @@ public final class SetupUtil {
 
         FinalTechMenus.MAIN_ITEM_GROUP.addTo(FinalTechMenus.MAIN_MENU_FINAL_ITEM);
         FinalTechMenus.MAIN_ITEM_GROUP.setTier(0);
-        FinalTechMenus.MAIN_ITEM_GROUP.register(FinalTech.getInstance());
+        FinalTechMenus.MAIN_ITEM_GROUP.register(finalTech);
 
         /* Researches */
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "LIQUID_CARD", 1, false,
@@ -668,9 +586,90 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_SMELTERY, SlimefunItems.ELECTRIC_SMELTERY_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_COMPOSTER, SlimefunItems.FOOD_COMPOSTER_2);
 
+        /* command */
+        finalTech.getCommand("finaltech-copy-card").setExecutor(new TransferToCopyCardItem());
+        finalTech.getCommand("finaltech-item-value").setExecutor(new ShowItemValue());
+
         /* Listeners */
-        PluginManager pluginManager = FinalTech.getInstance().getServer().getPluginManager();
-        pluginManager.registerEvents(new ShineListener(), FinalTech.getInstance());
+        PluginManager pluginManager = finalTech.getServer().getPluginManager();
+        pluginManager.registerEvents(new ShineListener(), finalTech);
+        pluginManager.registerEvents(new BoxListener(), finalTech);
+    }
+
+    public static void initLanguageManager(@Nonnull LanguageManager languageManager) {
+        // Color normal
+        languageManager.addFunction(new Function<>() {
+            @Override
+            public String apply(String s) {
+                String[] split = StringUtil.split(s, "{color:", "}");
+                if (split.length == 3) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(split[0]);
+                    switch (split[1]) {
+                        case "normal" -> stringBuilder.append(TextUtil.COLOR_NORMAL);
+                        case "stress" -> stringBuilder.append(TextUtil.COLOR_STRESS);
+                        case "action" -> stringBuilder.append(TextUtil.COLOR_ACTION);
+                        case "initiative" -> stringBuilder.append(TextUtil.COLOR_INITIATIVE);
+                        case "passive" -> stringBuilder.append(TextUtil.COLOR_PASSIVE);
+                        case "number" -> stringBuilder.append(TextUtil.COLOR_NUMBER);
+                        case "positive" -> stringBuilder.append(TextUtil.COLOR_POSITIVE);
+                        case "negative" -> stringBuilder.append(TextUtil.COLOR_NEGATIVE);
+                        case "input" -> stringBuilder.append(TextUtil.COLOR_INPUT);
+                        case "output" -> stringBuilder.append(TextUtil.COLOR_OUTPUT);
+                        case "random" -> stringBuilder.append(TextUtil.getRandomColor());
+                        case "prandom" -> stringBuilder.append(TextUtil.getPseudorandomColor());
+                        default -> stringBuilder.append(split[1]);
+                    }
+                    return stringBuilder.append(this.apply(split[2])).toString();
+                } else {
+                    return s;
+                }
+            }
+        });
+        // SlimefunItem Name by id
+        languageManager.addFunction(new Function<>() {
+            @Override
+            public String apply(String s) {
+                String[] split = StringUtil.split(s, "{id:", "}");
+                if (split.length == 3) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(split[0]);
+                    SlimefunItem slimefunItem = SlimefunItem.getById(split[1]);
+                    if (slimefunItem != null) {
+                        stringBuilder.append(slimefunItem.getItemName());
+                    } else {
+                        stringBuilder.append(split[1]);
+                    }
+                    return stringBuilder.append(this.apply(split[2])).toString();
+                } else {
+                    return s;
+                }
+            }
+        });
+        // Color random
+        languageManager.addFunction(new Function<>() {
+            @Override
+            public String apply(String s) {
+                String[] split = StringUtil.split(s, "{random-color:start}", "{random-color:end}");
+                if (split.length == 3) {
+                    return split[0] + TextUtil.colorRandomString(split[1]) + this.apply(split[2]);
+                } else {
+                    return s;
+                }
+            }
+        });
+        // Color pseudorandom
+        languageManager.addFunction(new Function<>() {
+            @Override
+            public String apply(String s) {
+                String[] split = StringUtil.split(s, "{prandom-color:start}", "{prandom-color:end}");
+                if (split.length == 3) {
+                    return split[0] + TextUtil.colorRandomString(split[1]) + this.apply(split[2]);
+                } else {
+                    return s;
+                }
+            }
+        });
     }
 
     public static void registerBlockTicker(int begin) {

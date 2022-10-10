@@ -91,6 +91,7 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
+        // this is the only
         return null;
     }
 

@@ -23,12 +23,14 @@ public class Gearwheel extends UnusableSlimefunItem implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(this.getAddon().getJavaPlugin(), this.getId()), this.getItem());
-        recipe.shape("ggg","ddd","aaa");
-        recipe.setIngredient('g', Material.GRANITE);
-        recipe.setIngredient('d', Material.DIORITE);
-        recipe.setIngredient('a', Material.ANDESITE);
-        Bukkit.addRecipe(recipe);
+        // TODO
+//        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(this.getAddon().getJavaPlugin(), this.getId()), this.getItem());
+//        recipe.shape("ggg","ddd","aaa");
+//        recipe.setIngredient('g', Material.GRANITE);
+//        recipe.setIngredient('d', Material.DIORITE);
+//        recipe.setIngredient('a', Material.ANDESITE);
+//        Bukkit.addRecipe(recipe);
+
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

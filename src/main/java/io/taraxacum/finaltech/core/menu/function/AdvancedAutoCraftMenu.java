@@ -18,7 +18,7 @@ import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.helper.SlotSearchSize;
 import io.taraxacum.finaltech.util.StringItemUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;

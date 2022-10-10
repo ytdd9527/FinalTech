@@ -440,9 +440,14 @@ items:
       3:
         name: '{color:negative}Notice'
         lore:
-          - '{color:normal}If player die while carrying {id:FINALTECH_BOX}'
+          - '{color:normal}If player die at the place that can obtain {id:FINALTECH_SHINE}'
           - '{color:normal}Player will lose all {id:FINALTECH_SHINE} {color:normal}he is carrying'
       4:
+        name: '{color:negative}Notice'
+        lore:
+          - '{color:normal}If player die while carrying {id:FINALTECH_BOX}'
+          - '{color:normal}Player will lose all {id:FINALTECH_SHINE} {color:normal}he is carrying'
+      5:
         name: '{color:negative}Notice'
         lore:
           - '{color:normal}While carrying {id:FINALTECH_SHINE} {color:normal}or {id:FINALTECH_BOX}'
@@ -1083,6 +1088,10 @@ items:
         lore:
           - "{color:normal}Charge machine on it's top"
           - "{color:normal}Charge energy= {color:number}{1} * machine's capacity"
+      2:
+        name: '{color:negative}Limit'
+        lore:
+          - '{color:normal}Not charge capacitor and energy generator'
     status:
       lore:
         - '{color:normal}Stored Energy= {color:number}{1} J'
@@ -1096,6 +1105,10 @@ items:
           - "{color:normal}Charge machine on it's top"
           - "{color:normal}Charge energy= {color:number}{1} * machine's capacity"
           - "{color:normal}Can charge energy to {color:number}{2}% of machine's capacity"
+      2:
+        name: '{color:negative}Limit'
+        lore:
+          - '{color:normal}Not charge capacitor and energy generator'
     status:
       lore:
         - '{color:normal}Stored Energy= {color:number}{1} J'
@@ -1271,10 +1284,9 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Transfer energy stored in the capacitor behind it'
-          - '{color:normal}To the machine it is pointing at'
+          - '{color:normal}To the machine it is pointing at firstly'
           - ''
           - '{color:normal}It will charge only one machine at same time'
-          - '{color:normal}It will skip a machine with full energy'
           - ''
           - '{color:normal}Range= {color:number}{1}'
       2:

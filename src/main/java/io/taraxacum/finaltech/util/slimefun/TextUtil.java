@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.util;
+package io.taraxacum.finaltech.util.slimefun;
 
 import io.taraxacum.finaltech.FinalTech;
 import org.bukkit.Color;

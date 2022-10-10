@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
  */
 public class AreaAccessor extends AbstractCargo implements RecipeItem {
     public static final String KEY = "times";
-    public static final int RANGE = ConfigUtil.getOrDefaultItemSetting(16, SfItemUtil.getIdFormatName(AreaAccessor.class), "range");
+    public static final int RANGE = ConfigUtil.getOrDefaultItemSetting(8, SfItemUtil.getIdFormatName(AreaAccessor.class), "range");
     public static final String THRESHOLD = ConfigUtil.getOrDefaultItemSetting(String.valueOf(Slimefun.getTickerTask().getTickRate() / 2), SfItemUtil.getIdFormatName(AreaAccessor.class), "threshold");
 
     public AreaAccessor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

@@ -1,7 +1,7 @@
 package io.taraxacum.finaltech.core.dto;
 
 import io.taraxacum.finaltech.api.factory.RandomColorText;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.slimefun.TextUtil;
 import org.bukkit.Color;
 
 import javax.annotation.Nonnull;
