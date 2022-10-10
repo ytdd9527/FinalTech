@@ -199,6 +199,16 @@ public final class SetupUtil {
         Enchantment.registerEnchantment(NullEnchantment.ENCHANTMENT);
         FinalTechItems.SHINE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.PHONY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.MACHINE_CHARGE_CARD_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.MACHINE_ACCELERATE_CARD_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.MACHINE_ACTIVATE_CARD_L4.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.ADVANCED_AUTO_CRAFT.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.MATRIX_ITEM_DISMANTLE_TABLE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.MATRIX_EXPANDED_CAPACITOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.MATRIX_GENERATOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.MATRIX_ACCELERATOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.MATRIX_ITEM_DESERIALIZE_PARSER.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         /* items */
         // material
         FinalTechMenus.SUB_MENU_MATERIAL.addTo(
@@ -213,7 +223,7 @@ public final class SetupUtil {
                 new Entropy(FinalTechMenus.MENU_ITEMS, FinalTechItems.ENTROPY, FinalTechRecipes.RECIPE_TYPE_ENTROPY, FinalTechRecipes.ENTROPY).register(),
                 new Box(FinalTechMenus.MENU_ITEMS, FinalTechItems.BOX, FinalTechRecipes.RECIPE_TYPE_EQUIVALENT_EXCHANGE_TABLE, FinalTechRecipes.BOX).register(),
                 new Shine(FinalTechMenus.MENU_ITEMS, FinalTechItems.SHINE, FinalTechRecipes.RECIPE_TYPE_BOX, FinalTechRecipes.SHINE).register(),
-                new CopyCardItem(FinalTechMenus.MENU_ITEMS, FinalTechItems.COPY_CARD, FinalTechRecipes.RECIPE_TYPE_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.COPY_CARD).register());
+                new CopyCard(FinalTechMenus.MENU_ITEMS, FinalTechItems.COPY_CARD, FinalTechRecipes.RECIPE_TYPE_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.COPY_CARD).register());
         FinalTechMenus.SUB_MENU_MATERIAL.addTo(
                 new Annular(FinalTechMenus.MENU_ITEMS, FinalTechItems.ANNULAR, FinalTechRecipes.RECIPE_TYPE_CARD_OPERATION_PORT, FinalTechRecipes.ANNULAR).register(),
                 new QuantityModule(FinalTechMenus.MENU_ITEMS, FinalTechItems.QUANTITY_MODULE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.QUANTITY_MODULE).register(),

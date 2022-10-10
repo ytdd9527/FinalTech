@@ -252,7 +252,7 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem {
     @Override
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
-                String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0),
-                String.valueOf(this.difficulty));
+                String.valueOf(this.difficulty),
+                String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0));
     }
 }

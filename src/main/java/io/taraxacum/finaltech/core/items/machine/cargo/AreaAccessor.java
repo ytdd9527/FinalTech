@@ -11,6 +11,7 @@ import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.AreaAccessorMenu;
 import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -58,6 +59,7 @@ public class AreaAccessor extends AbstractCargo implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(RANGE));
     }
 }

@@ -1,11 +1,11 @@
 package io.taraxacum.finaltech.core.items.machine.range.point;
 
+import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.core.handlers.*;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
@@ -20,10 +20,17 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -39,6 +46,34 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
 
     public EquivalentConcept(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+        this.addItemHandler(new ItemUseHandler() {
+            @Override
+            @EventHandler(priority = EventPriority.LOWEST)
+            public void onRightClick(PlayerRightClickEvent e) {
+                e.cancel();
+            }
+        });
+        this.addItemHandler(new WeaponUseHandler() {
+            @Override
+            @EventHandler(priority = EventPriority.LOWEST)
+            public void onHit(@Nonnull EntityDamageByEntityEvent e, @Nonnull Player player, @Nonnull ItemStack item) {
+                e.setCancelled(true);
+            }
+        });
+        this.addItemHandler(new EntityInteractHandler() {
+            @Override
+            @EventHandler(priority = EventPriority.LOWEST)
+            public void onInteract(PlayerInteractEntityEvent e, ItemStack item, boolean offHand) {
+                e.setCancelled(true);
+            }
+        });
+        this.addItemHandler(new ToolUseHandler() {
+            @Override
+            @EventHandler(priority = EventPriority.LOWEST)
+            public void onToolUse(BlockBreakEvent e, ItemStack tool, int fortune, List<ItemStack> drops) {
+                e.setCancelled(true);
+            }
+        });
     }
 
     @Nonnull

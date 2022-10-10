@@ -35,7 +35,7 @@ import javax.annotation.Nonnull;
  */
 public class PurifyTimeTower extends AbstractTower implements RecipeItem {
     private final double baseRange = ConfigUtil.getOrDefaultItemSetting(3.2, this, "range-base");
-    private final double mulRange = ConfigUtil.getOrDefaultItemSetting(3.2, this, "range-mul");
+    private final double mulRange = ConfigUtil.getOrDefaultItemSetting(0.2, this, "range-mul");
 
     public PurifyTimeTower(@Nonnull ItemGroup itemGroup, @Nonnull SlimefunItemStack item, @Nonnull RecipeType recipeType, @Nonnull ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

@@ -2,15 +2,12 @@ package io.taraxacum.finaltech.core.operation;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.core.items.machine.operation.ItemSerializationConstructor;
-import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
+import io.taraxacum.finaltech.core.items.unusable.CopyCard;
 import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
 import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
-import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
-import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -33,7 +30,7 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
         this.difficulty = ConstantTableUtil.ITEM_COPY_CARD_AMOUNT;
         this.matchItem = item.clone();
         this.matchItem.setAmount(1);
-        this.copyCardItem = CopyCardItem.newItem(this.matchItem, "1");
+        this.copyCardItem = CopyCard.newItem(this.matchItem, "1");
         this.showItem = new CustomItemStack(item.getType(), ConfigUtil.getStatusMenuName(FinalTech.getLanguageManager(), FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId()),
                 ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(),
                         ItemStackUtil.getItemName(this.matchItem),

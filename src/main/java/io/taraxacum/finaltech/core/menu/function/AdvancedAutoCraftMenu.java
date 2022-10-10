@@ -11,7 +11,7 @@ import io.taraxacum.finaltech.api.dto.ItemAmountWrapper;
 import io.taraxacum.finaltech.api.factory.LocationRecipeRegistry;
 import io.taraxacum.finaltech.api.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
-import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
+import io.taraxacum.finaltech.core.items.unusable.CopyCard;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
@@ -247,7 +247,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
                     }
                 }
             } else {
-                if(CopyCardItem.isValid(machineItem)) {
+                if(CopyCard.isValid(machineItem)) {
                     ItemStack stringItem = StringItemUtil.parseItemInCard(machineItem);
                     String amount = StringItemUtil.parseAmountInCard(machineItem);
                     Iterator<ItemAmountWrapper> iterator = inputList.iterator();

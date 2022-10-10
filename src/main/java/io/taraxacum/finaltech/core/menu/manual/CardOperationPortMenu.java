@@ -3,7 +3,6 @@ package io.taraxacum.finaltech.core.menu.manual;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.core.items.machine.manual.CardOperationTable;
 import io.taraxacum.finaltech.core.items.unusable.*;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.ItemStackUtil;
@@ -11,7 +10,6 @@ import io.taraxacum.finaltech.util.StringItemUtil;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
 import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
-import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -88,9 +86,9 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         CRAFT_LIST.add(new Craft() {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if (!ItemStackUtil.isItemNull(item1) && CopyCardItem.isValid(item1) && Shell.isValid(item2)) {
+                if (!ItemStackUtil.isItemNull(item1) && CopyCard.isValid(item1) && Shell.isValid(item2)) {
                     return true;
-                } else return !ItemStackUtil.isItemNull(item2) && CopyCardItem.isValid(item2) && Shell.isValid(item1);
+                } else return !ItemStackUtil.isItemNull(item2) && CopyCard.isValid(item2) && Shell.isValid(item1);
             }
 
             @Override
@@ -101,12 +99,12 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull Inventory inventory, int outputSlot) {
-                if (!ItemStackUtil.isItemNull(item1) && CopyCardItem.isValid(item1) && Shell.isValid(item2)) {
+                if (!ItemStackUtil.isItemNull(item1) && CopyCard.isValid(item1) && Shell.isValid(item2)) {
                     item2.setAmount(item2.getAmount() - 1);
                     ItemStack outputItem = ItemStackUtil.cloneItem(item1);
                     outputItem.setAmount(1);
                     inventory.setItem(outputSlot, outputItem);
-                } else if (!ItemStackUtil.isItemNull(item2) && CopyCardItem.isValid(item2) && Shell.isValid(item1)) {
+                } else if (!ItemStackUtil.isItemNull(item2) && CopyCard.isValid(item2) && Shell.isValid(item1)) {
                     item1.setAmount(item1.getAmount() - 1);
                     ItemStack outputItem = ItemStackUtil.cloneItem(item2);
                     outputItem.setAmount(1);
@@ -242,7 +240,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         CRAFT_LIST.add(new Craft() {
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                return CopyCardItem.isValid(item1) || CopyCardItem.isValid(item2);
+                return CopyCard.isValid(item1) || CopyCard.isValid(item2);
             }
 
             @Override
@@ -253,7 +251,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull Inventory inventory, int outputSlot) {
-                if (CopyCardItem.isValid(item1)) {
+                if (CopyCard.isValid(item1)) {
                     item1.setAmount(item1.getAmount() - 1);
                     Player player = null;
                     for (HumanEntity humanEntity : inventory.getViewers()) {
@@ -263,7 +261,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                         }
                     }
                     inventory.setItem(outputSlot, Annular.newItem(item1, player));
-                } else if (CopyCardItem.isValid(item2)) {
+                } else if (CopyCard.isValid(item2)) {
                     item2.setAmount(item2.getAmount() - 1);
                     Player player = null;
                     for (HumanEntity humanEntity : inventory.getViewers()) {

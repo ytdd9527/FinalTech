@@ -3,7 +3,7 @@ package io.taraxacum.finaltech.setup;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
+import io.taraxacum.finaltech.core.items.unusable.CopyCard;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -1046,8 +1046,8 @@ public final class FinalTechRecipes {
     public static final ItemStack[] MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR = new ItemStack[] {
             ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64),
             ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY, ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64),
-            ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), FinalTechItems.PHONY, CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), FinalTechItems.PHONY, ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64),
-            ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), FinalTechItems.PHONY, CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), FinalTechItems.PHONY, ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64),
+            ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), FinalTechItems.PHONY, CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), FinalTechItems.PHONY, ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64),
+            ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), FinalTechItems.PHONY, CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), FinalTechItems.PHONY, ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64),
             ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY, ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64),
             ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64),
     };
@@ -1080,11 +1080,11 @@ public final class FinalTechRecipes {
     };
     // 64
     public static final ItemStack[] MATRIX_REACTOR = new ItemStack[] {
-            ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), CopyCardItem.newItem(FinalTechItems.UNORDERED_DUST, "1"), CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCardItem.newItem(FinalTechItems.UNORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64),
-            CopyCardItem.newItem(FinalTechItems.UNORDERED_DUST, "1"), CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCardItem.newItem(FinalTechItems.UNORDERED_DUST, "1"),
-            CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.PHONY, 16), ItemStackUtil.cloneItem(FinalTechItems.PHONY, 16), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"),
-            CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.PHONY, 16), ItemStackUtil.cloneItem(FinalTechItems.PHONY, 16), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"),
-            CopyCardItem.newItem(FinalTechItems.UNORDERED_DUST, "1"), CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCardItem.newItem(FinalTechItems.UNORDERED_DUST, "1"),
-            ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), CopyCardItem.newItem(FinalTechItems.UNORDERED_DUST, "1"), CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCardItem.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCardItem.newItem(FinalTechItems.UNORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64)
+            ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), CopyCard.newItem(FinalTechItems.UNORDERED_DUST, "1"), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCard.newItem(FinalTechItems.UNORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64),
+            CopyCard.newItem(FinalTechItems.UNORDERED_DUST, "1"), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCard.newItem(FinalTechItems.UNORDERED_DUST, "1"),
+            CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.PHONY, 16), ItemStackUtil.cloneItem(FinalTechItems.PHONY, 16), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"),
+            CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.PHONY, 16), ItemStackUtil.cloneItem(FinalTechItems.PHONY, 16), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"),
+            CopyCard.newItem(FinalTechItems.UNORDERED_DUST, "1"), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), ItemStackUtil.cloneItem(FinalTechItems.SHINE, 64), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCard.newItem(FinalTechItems.UNORDERED_DUST, "1"),
+            ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), CopyCard.newItem(FinalTechItems.UNORDERED_DUST, "1"), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), CopyCard.newItem(FinalTechItems.UNORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64)
     };
 }

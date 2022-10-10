@@ -9,7 +9,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
+import io.taraxacum.finaltech.core.items.unusable.CopyCard;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.ItemDeserializeParserMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
@@ -59,7 +59,7 @@ public class ItemDeserializeParser extends AbstractMachine implements RecipeItem
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if (CopyCardItem.isValid(item)) {
+            if (CopyCard.isValid(item)) {
                 ItemStack stringItem = StringItemUtil.parseItemInCard(item);
                 if (!ItemStackUtil.isItemNull(stringItem)) {
                     stringItem.setAmount(item.getAmount());

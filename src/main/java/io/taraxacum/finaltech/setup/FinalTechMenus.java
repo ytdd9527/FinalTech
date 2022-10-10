@@ -25,56 +25,56 @@ public final class FinalTechMenus {
     /* Slimefun item group */
     public static final NestedItemGroup MAIN_MENU = new NestedItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_CATEGORY_MAIN"), new CustomItemStack(Material.OBSERVER, FinalTech.getLanguageString("categories", "MAIN", "name"))) {
         @Override
-        public boolean isVisible(Player p, PlayerProfile profile, SlimefunGuideMode mode) {
+        public boolean isVisible(@Nonnull Player p, @Nonnull PlayerProfile profile, @Nonnull SlimefunGuideMode mode) {
             return false;
         }
     };
     public static final SubItemGroup MENU_ITEMS = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_ITEM"), MAIN_MENU , new CustomItemStack(Material.AMETHYST_SHARD, FinalTech.getLanguageString("categories", "MATERIAL", "name")));
-    public static final SubItemGroup MENU_ELECTRICITY_SYSTEM = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_ELECTRIC_SYSTEM"), MAIN_MENU, new CustomItemStack(Material.MAGMA_BLOCK, FinalTech.getLanguageString("categories", "ELECTRIC", "name")));
-    public static final SubItemGroup MENU_CARGO_SYSTEM = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_CARGO_SYSTEM"), MAIN_MENU, new CustomItemStack(Material.CHAIN, FinalTech.getLanguageString("categories", "CARGO", "name")));
-    public static final SubItemGroup MENU_FUNCTIONAL_MACHINE = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_FUNCTIONAL_MACHINE"), MAIN_MENU, new CustomItemStack(Material.STONE, FinalTech.getLanguageString("categories", "FUNCTION_MACHINE", "name")));
-    public static final SubItemGroup MENU_PRODUCTIVE_MACHINE = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_PRODUCTIVE_MACHINE"), MAIN_MENU, new CustomItemStack(Material.STONE, FinalTech.getLanguageString("categories", "PRODUCTIVE_MACHINE", "name")));
-    public static final SubItemGroup MENU_FINAL_ITEM = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_FINAL_ITEM"), MAIN_MENU, new CustomItemStack(Material.AMETHYST_BLOCK, FinalTech.getLanguageString("categories", "FINAL_ITEM", "name")));
+    public static final SubItemGroup MENU_ELECTRICITY_SYSTEM = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_ELECTRIC_SYSTEM"), MAIN_MENU, new CustomItemStack(Material.BROWN_MUSHROOM_BLOCK, FinalTech.getLanguageString("categories", "ELECTRIC", "name")));
+    public static final SubItemGroup MENU_CARGO_SYSTEM = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_CARGO_SYSTEM"), MAIN_MENU, new CustomItemStack(Material.COBWEB, FinalTech.getLanguageString("categories", "CARGO", "name")));
+    public static final SubItemGroup MENU_FUNCTIONAL_MACHINE = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_FUNCTIONAL_MACHINE"), MAIN_MENU, new CustomItemStack(Material.LECTERN, FinalTech.getLanguageString("categories", "FUNCTION_MACHINE", "name")));
+    public static final SubItemGroup MENU_PRODUCTIVE_MACHINE = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_PRODUCTIVE_MACHINE"), MAIN_MENU, new CustomItemStack(Material.SPAWNER, FinalTech.getLanguageString("categories", "PRODUCTIVE_MACHINE", "name")));
+    public static final SubItemGroup MENU_FINAL_ITEM = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_FINAL_ITEM"), MAIN_MENU, new CustomItemStack(Material.EXPERIENCE_BOTTLE, FinalTech.getLanguageString("categories", "FINAL_ITEM", "name")));
 
     /* My item group */
-    public static final MainItemGroup MAIN_ITEM_GROUP = ConfigUtil.getMainItemGroup(FinalTech.getLanguageManager(), "FINALTECH_ITEM_GROUP", Material.STONE, "Main Group");
+    public static final MainItemGroup MAIN_ITEM_GROUP = ConfigUtil.getMainItemGroup(FinalTech.getLanguageManager(), "FINALTECH_ITEM_GROUP", Material.OBSERVER, "FINAL TECH");
     // item
-    public static final SubFlexItemGroup MAIN_MENU_ITEM = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_MAIN_MENU_ITEM", Material.STONE, "Item");
-    public static final SubFlexItemGroup SUB_MENU_MATERIAL = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_MATERIAL", Material.STONE, "Material");
-    public static final SubFlexItemGroup SUB_MENU_LOGIC_ITEM = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_LOGIC_ITEM", Material.STONE, "Logic Item");
-    public static final SubFlexItemGroup SUB_MENU_CONSUMABLE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_CONSUMABLE", Material.STONE, "Consumable");
-    public static final SubFlexItemGroup SUB_MENU_TOOL = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_TOOL", Material.STONE, "Tool");
-    public static final SubFlexItemGroup SUB_MENU_WEAPON = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_WEAPON", Material.STONE, "Weapon");
+    public static final SubFlexItemGroup MAIN_MENU_ITEM = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_MAIN_MENU_ITEM", Material.AMETHYST_SHARD, "Item");
+    public static final SubFlexItemGroup SUB_MENU_MATERIAL = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_MATERIAL", Material.FLINT, "Material");
+    public static final SubFlexItemGroup SUB_MENU_LOGIC_ITEM = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_LOGIC_ITEM", Material.STICK, "Logic Item");
+    public static final SubFlexItemGroup SUB_MENU_CONSUMABLE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_CONSUMABLE", Material.DRAGON_BREATH, "Consumable");
+    public static final SubFlexItemGroup SUB_MENU_TOOL = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_TOOL", Material.SPYGLASS, "Tool");
+    public static final SubFlexItemGroup SUB_MENU_WEAPON = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_WEAPON", Material.IRON_PICKAXE, "Weapon");
 
     // electricity system
-    public static final SubFlexItemGroup MAIN_MENU_ELECTRICITY_SYSTEM = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_MAIN_MENU_ELECTRICITY_SYSTEM", Material.STONE, "Electric System");
-    public static final SubFlexItemGroup SUB_MENU_ELECTRIC_GENERATOR = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_ELECTRIC_GENERATOR", Material.STONE, "Electric Generator");
-    public static final SubFlexItemGroup SUB_MENU_ELECTRIC_STORAGE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_ELECTRIC_STORAGE", Material.STONE, "Electric Storage");
-    public static final SubFlexItemGroup SUB_MENU_ELECTRIC_TRANSMISSION = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_ELECTRIC_TRANSMISSION", Material.STONE, "Electric Transmission");
-    public static final SubFlexItemGroup SUB_MENU_ELECTRIC_ACCELERATOR = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_ELECTRIC_ACCELERATOR", Material.STONE, "Electric Accelerator");
+    public static final SubFlexItemGroup MAIN_MENU_ELECTRICITY_SYSTEM = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_MAIN_MENU_ELECTRICITY_SYSTEM", Material.BROWN_MUSHROOM_BLOCK, "Electric System");
+    public static final SubFlexItemGroup SUB_MENU_ELECTRIC_GENERATOR = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_ELECTRIC_GENERATOR", Material.GLOWSTONE, "Electric Generator");
+    public static final SubFlexItemGroup SUB_MENU_ELECTRIC_STORAGE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_ELECTRIC_STORAGE", Material.YELLOW_STAINED_GLASS, "Electric Storage");
+    public static final SubFlexItemGroup SUB_MENU_ELECTRIC_TRANSMISSION = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_ELECTRIC_TRANSMISSION", Material.DISPENSER, "Electric Transmission");
+    public static final SubFlexItemGroup SUB_MENU_ELECTRIC_ACCELERATOR = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_ELECTRIC_ACCELERATOR", Material.TARGET, "Electric Accelerator");
 
     // cargo system
-    public static final SubFlexItemGroup MAIN_MENU_CARGO_SYSTEM = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_MAIN_MENU_CARGO_SYSTEM", Material.STONE, "Cargo System");
-    public static final SubFlexItemGroup SUB_MENU_STORAGE_UNIT = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_STORAGE_UNIT", Material.STONE, "Storage Unit");
-    public static final SubFlexItemGroup SUB_MENU_ADVANCED_STORAGE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_ADVANCED_STORAGE", Material.STONE, "Advanced Storage");
-    public static final SubFlexItemGroup SUB_MENU_ACCESSOR = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_ACCESSOR", Material.STONE, "Accessor");
-    public static final SubFlexItemGroup SUB_MENU_CARGO = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_CARGO", Material.STONE, "Cargo");
+    public static final SubFlexItemGroup MAIN_MENU_CARGO_SYSTEM = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_MAIN_MENU_CARGO_SYSTEM", Material.COBWEB, "Cargo System");
+    public static final SubFlexItemGroup SUB_MENU_STORAGE_UNIT = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_STORAGE_UNIT", Material.GLASS, "Storage Unit");
+    public static final SubFlexItemGroup SUB_MENU_ADVANCED_STORAGE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_ADVANCED_STORAGE", Material.BOOKSHELF, "Advanced Storage");
+    public static final SubFlexItemGroup SUB_MENU_ACCESSOR = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_ACCESSOR", Material.REDSTONE_LAMP, "Accessor");
+    public static final SubFlexItemGroup SUB_MENU_CARGO = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_CARGO", Material.END_ROD, "Cargo");
 
     // functional machine
-    public static final SubFlexItemGroup MAIN_MENU_FUNCTIONAL_MACHINE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_MAIN_MENU_FUNCTIONAL_MACHINE", Material.STONE, "Functional Machine");
-    public static final SubFlexItemGroup SUB_MENU_CORE_MACHINE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_CORE_MACHINE", Material.STONE, "Core Machine");
-    public static final SubFlexItemGroup SUB_MENU_SPECIAL_MACHINE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_SPECIAL_MACHINE", Material.STONE, "Special Machine");
-    public static final SubFlexItemGroup SUB_MENU_TOWER = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_TOWER", Material.STONE, "Tower");
+    public static final SubFlexItemGroup MAIN_MENU_FUNCTIONAL_MACHINE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_MAIN_MENU_FUNCTIONAL_MACHINE", Material.LECTERN, "Functional Machine");
+    public static final SubFlexItemGroup SUB_MENU_CORE_MACHINE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_CORE_MACHINE", Material.AMETHYST_BLOCK, "Core Machine");
+    public static final SubFlexItemGroup SUB_MENU_SPECIAL_MACHINE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_SPECIAL_MACHINE", Material.CHISELED_DEEPSLATE, "Special Machine");
+    public static final SubFlexItemGroup SUB_MENU_TOWER = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_TOWER", Material.RED_GLAZED_TERRACOTTA, "Tower");
 
     // productive machine
-    public static final SubFlexItemGroup MAIN_MENU_PRODUCTIVE_MACHINE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_MAIN_MENU_PRODUCTIVE_MACHINE", Material.STONE, "Productive Machine");
-    public static final SubFlexItemGroup SUB_MENU_MANUAL_MACHINE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_MANUAL_MACHINE", Material.STONE, "Manual Machine");
-    public static final SubFlexItemGroup SUB_MENU_BASIC_MACHINE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_BASIC_MACHINE", Material.STONE, "Basic Machine");
-    public static final SubFlexItemGroup SUB_MENU_ADVANCED_MACHINE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_ADVANCED_MACHINE", Material.STONE, "Advanced Machine");
-    public static final SubFlexItemGroup SUB_MENU_CONVERSION = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_CONVERSION", Material.STONE, "Conversion");
-    public static final SubFlexItemGroup SUB_MENU_EXTRACTION = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_EXTRACTION", Material.STONE, "Extraction");
-    public static final SubFlexItemGroup SUB_MENU_GENERATOR = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_GENERATOR", Material.STONE, "Generator");
+    public static final SubFlexItemGroup MAIN_MENU_PRODUCTIVE_MACHINE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_MAIN_MENU_PRODUCTIVE_MACHINE", Material.SPAWNER, "Productive Machine");
+    public static final SubFlexItemGroup SUB_MENU_MANUAL_MACHINE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_MANUAL_MACHINE", Material.CRAFTING_TABLE, "Manual Machine");
+    public static final SubFlexItemGroup SUB_MENU_BASIC_MACHINE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_BASIC_MACHINE", Material.CHISELED_STONE_BRICKS, "Basic Machine");
+    public static final SubFlexItemGroup SUB_MENU_ADVANCED_MACHINE = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_ADVANCED_MACHINE", Material.RED_NETHER_BRICKS, "Advanced Machine");
+    public static final SubFlexItemGroup SUB_MENU_CONVERSION = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_CONVERSION", Material.BONE_BLOCK, "Conversion");
+    public static final SubFlexItemGroup SUB_MENU_EXTRACTION = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_EXTRACTION", Material.CRYING_OBSIDIAN, "Extraction");
+    public static final SubFlexItemGroup SUB_MENU_GENERATOR = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_GENERATOR", Material.OAK_WOOD, "Generator");
 
     // final stage item
-    public static final SubFlexItemGroup MAIN_MENU_FINAL_ITEM = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_MAIN_MENU_FINAL_ITEM", Material.STONE, "Final Item");
+    public static final SubFlexItemGroup MAIN_MENU_FINAL_ITEM = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_MAIN_MENU_FINAL_ITEM", Material.EXPERIENCE_BOTTLE, "Final Item");
 }

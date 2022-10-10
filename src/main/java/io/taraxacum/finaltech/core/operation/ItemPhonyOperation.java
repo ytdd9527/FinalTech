@@ -3,13 +3,12 @@ package io.taraxacum.finaltech.core.operation;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
+import io.taraxacum.finaltech.core.items.unusable.CopyCard;
 import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.items.unusable.Singularity;
 import io.taraxacum.finaltech.core.items.unusable.Spirochete;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.TextUtil;
 import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
 import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import org.bukkit.inventory.ItemStack;
@@ -68,7 +67,7 @@ public class ItemPhonyOperation implements ItemSerializationConstructorOperation
 
     @Override
     public int addItem(@Nullable ItemStack item) {
-        if (!CopyCardItem.isValid(item)) {
+        if (!CopyCard.isValid(item)) {
             return 0;
         }
 

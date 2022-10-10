@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class MatrixExpandedCapacitor extends AbstractExpandedElectricCapacitor {
-    private final int capacity = ConfigUtil.getOrDefaultItemSetting(Integer.MAX_VALUE, this, "capacity");
+    private final int capacity = ConfigUtil.getOrDefaultItemSetting(Integer.MAX_VALUE - 1, this, "capacity");
     private final String stack = ConfigUtil.getOrDefaultItemSetting(StringNumberUtil.VALUE_INFINITY, this, "stack");
     private final double chargeIncrease = ConfigUtil.getOrDefaultItemSetting(4, this, "charge-increase");
     private final double consumeReduce = ConfigUtil.getOrDefaultItemSetting(0.25, this, "consume-reduce");
@@ -85,6 +85,7 @@ public class MatrixExpandedCapacitor extends AbstractExpandedElectricCapacitor {
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf((this.getCapacity() / 2)),
+                this.stack,
                 StringNumberUtil.add(this.getMaxStack(), String.format("%.2f", this.chargeIncrease() * 100)),
                 String.format("%.2f", this.consumeReduce() * 100),
                 String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0));

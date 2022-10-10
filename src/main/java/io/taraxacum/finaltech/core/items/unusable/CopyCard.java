@@ -29,11 +29,11 @@ import java.util.List;
  * @author Final_ROOT
  * @since 2.0
  */
-public class CopyCardItem extends UnusableSlimefunItem implements RecipeItem {
+public class CopyCard extends UnusableSlimefunItem implements RecipeItem {
     public static final String ITEM_LORE_WITHOUT_COLOR = "⌫⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌦";
     public static final String ITEM_LORE = TextUtil.colorPseudorandomString(ITEM_LORE_WITHOUT_COLOR);
 
-    public CopyCardItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public CopyCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -41,7 +41,7 @@ public class CopyCardItem extends UnusableSlimefunItem implements RecipeItem {
         ItemStack result = ItemStackUtil.cloneItem(FinalTechItems.COPY_CARD);
         result.setAmount(1);
         StringItemUtil.setItemInCard(result, stringItem, amount);
-        List<String> loreList = JavaUtil.toList(ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), SfItemUtil.getIdFormatName(CopyCardItem.class),
+        List<String> loreList = JavaUtil.toList(ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), SfItemUtil.getIdFormatName(CopyCard.class),
                 ItemStackUtil.getItemName(stringItem),
                 amount));
         loreList.add(0, ITEM_LORE);
@@ -59,7 +59,7 @@ public class CopyCardItem extends UnusableSlimefunItem implements RecipeItem {
             return false;
         }
         for (String l : lore) {
-            if (CopyCardItem.ITEM_LORE_WITHOUT_COLOR.equals(ChatColor.stripColor(l))) {
+            if (CopyCard.ITEM_LORE_WITHOUT_COLOR.equals(ChatColor.stripColor(l))) {
                 return true;
             }
         }

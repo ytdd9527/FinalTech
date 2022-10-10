@@ -110,7 +110,7 @@ public class ItemSerializationConstructor extends AbstractOperationMachine {
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT),
-                String.valueOf(ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT),
+                String.valueOf(ConstantTableUtil.ITEM_SINGULARITY_AMOUNT),
                 String.valueOf(ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT),
                 String.valueOf(ItemCopyCardOperation.RATE));
     }
