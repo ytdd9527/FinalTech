@@ -88,21 +88,6 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator {
                             BlockBreakEvent blockBreakEvent = new BlockBreakEvent(location.getBlock(), player);
                             Bukkit.getPluginManager().callEvent(blockBreakEvent);
                         }
-//                        Slimefun.runSync(() -> {
-//                            List<ItemStack> dropItemList = new ArrayList<>(this.getInputSlot().length + 1);
-//                            for (int slot : MatrixGenerator.this.getInputSlot()) {
-//                                ItemStack item = blockMenu.getItemInSlot(slot);
-//                                if (!ItemStackUtil.isItemNull(item)) {
-//                                    dropItemList.add(blockMenu.getItemInSlot(slot));
-//                                }
-//                            }
-//                            dropItemList.add(this.getItem());
-//                            block.setType(Material.AIR);
-//                            BlockStorage.clearBlockInfo(block.getLocation());
-//                            for (ItemStack item : dropItemList) {
-//                                block.getWorld().dropItem(block.getLocation(), item);
-//                            }
-//                        });
                         return -1;
                     }
 

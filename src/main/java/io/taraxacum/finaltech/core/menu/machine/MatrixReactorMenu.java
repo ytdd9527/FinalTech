@@ -30,17 +30,22 @@ public class MatrixReactorMenu extends AbstractMachineMenu {
     private static final int[] OUTPUT_SLOT = new int[] {40};
 
     private static final int ORDERED_DUST_SLOT = 1;
-    private static final ItemStack ORDERED_DUST_ICON = new CustomItemStack(FinalTechItems.UNORDERED_DUST);
+    private static final ItemStack ORDERED_DUST_ICON = ItemStackUtil.cloneItem(FinalTechItems.UNORDERED_DUST);
     public static final int[] ORDERED_DUST_INPUT_SLOT = new int[] {25, 34, 43};
 
     private static final int UNORDERED_DUST_SLOT = 7;
-    private static final ItemStack UNORDERED_DUST_ICON = new CustomItemStack(FinalTechItems.ORDERED_DUST);
+    private static final ItemStack UNORDERED_DUST_ICON = ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST);
     public static final int[] UNORDERED_DUST_INPUT_SLOT = new int[] {19, 28, 37};
 
     public static final int[] ITEM_PHONY_INPUT_SLOT = new int[] {4};
-    public static final int[] OTHER_ITEM_INPUT_SLOT = new int[] {22};
+    public static final int[] ITEM_INPUT_SLOT = new int[] {22};
 
     public static final int STATUS_SLOT = 49;
+
+    static {
+        ItemStackUtil.addLoreToLast(ORDERED_DUST_ICON, " ");
+        ItemStackUtil.addLoreToLast(UNORDERED_DUST_ICON, " ");
+    }
 
     public MatrixReactorMenu(@Nonnull AbstractMachine machine) {
         super(machine);
@@ -111,7 +116,7 @@ public class MatrixReactorMenu extends AbstractMachineMenu {
         } else if (ItemPhony.isValid(item)) {
             return ITEM_PHONY_INPUT_SLOT;
         } else {
-            return OTHER_ITEM_INPUT_SLOT;
+            return ITEM_INPUT_SLOT;
         }
     }
 }

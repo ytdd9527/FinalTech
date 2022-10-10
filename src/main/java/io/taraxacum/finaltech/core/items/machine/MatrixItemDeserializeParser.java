@@ -6,31 +6,33 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.dto.ItemWrapper;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.unit.NormalStorageUnitMenu;
+import io.taraxacum.finaltech.core.menu.machine.ItemDeserializeParserMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.StringItemUtil;
 import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
 /**
+ * This is a slimefun machine
+ * it will be used in gameplay
+ * It's not a function class!
  * @author Final_ROOT
- * @since 2.0
+ * @since 1.0
  */
-public class CobbleStoneErupter extends AbstractMachine implements RecipeItem {
-    private final ItemWrapper cobbleStone = new ItemWrapper(new ItemStack(Material.COBBLESTONE));
-
-    public CobbleStoneErupter(@Nonnull ItemGroup itemGroup, @Nonnull SlimefunItemStack item, @Nonnull RecipeType recipeType, @Nonnull ItemStack[] recipe) {
+public class MatrixItemDeserializeParser extends AbstractMachine implements RecipeItem {
+    public MatrixItemDeserializeParser(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -49,16 +51,20 @@ public class CobbleStoneErupter extends AbstractMachine implements RecipeItem {
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new NormalStorageUnitMenu(this);
+        return new ItemDeserializeParserMenu(this);
     }
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        for(int slot : this.getInputSlot()) {
+        for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(ItemStackUtil.isItemSimilar(item, this.cobbleStone)) {
-                item.setAmount(item.getMaxStackSize());
+            if (CopyCardItem.isValid(item)) {
+                ItemStack stringItem = StringItemUtil.parseItemInCard(item);
+                if (!ItemStackUtil.isItemNull(stringItem)) {
+                    stringItem.setAmount(item.getAmount());
+                    blockMenu.pushItem(stringItem, this.getOutputSlot());
+                }
             }
         }
     }
@@ -70,6 +76,7 @@ public class CobbleStoneErupter extends AbstractMachine implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0));
     }
 }

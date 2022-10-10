@@ -7,9 +7,12 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.VoidMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.block.*;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +24,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class FuelAccelerator extends AbstractFaceMachine{
+public class FuelAccelerator extends AbstractFaceMachine implements RecipeItem {
     public FuelAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -67,5 +70,10 @@ public class FuelAccelerator extends AbstractFaceMachine{
     @Override
     protected BlockFace getBlockFace() {
         return BlockFace.UP;
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

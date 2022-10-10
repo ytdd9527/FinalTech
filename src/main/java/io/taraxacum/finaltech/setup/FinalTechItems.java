@@ -130,7 +130,6 @@ public final class FinalTechItems {
     public static final SlimefunItemStack DIVIDED_LIMITED_STORAGE_UNIT = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_DIVIDED_LIMITED_STORAGE_UNIT", Material.GLASS, "Storage Unit - Divided | Limited");
     public static final SlimefunItemStack DIVIDED_STACK_STORAGE_UNIT = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_DIVIDED_STACK_STORAGE_UNIT", Material.GLASS, "Storage Unit - Divided | Stack");
     public static final SlimefunItemStack LIMITED_STACK_STORAGE_UNIT = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_LIMITED_STACK_STORAGE_UNIT", Material.GLASS, "Storage Unit - Limited | Stack");
-    public static final SlimefunItemStack CHARGEABLE_STORAGE_UNIT = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_CHARGEABLE_STORAGE_UNIT", Material.GLASS, "Chargeable Storage Unit");
     public static final SlimefunItemStack RANDOM_INPUT_STORAGE_UNIT = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_RANDOM_INPUT_STORAGE_UNIT", Material.GLASS, "Random Input Storage Unit");
     public static final SlimefunItemStack RANDOM_OUTPUT_STORAGE_UNIT = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_RANDOM_OUTPUT_STORAGE_UNIT", Material.GLASS, "Random Output Storage Unit");
     public static final SlimefunItemStack RANDOM_ACCESS_STORAGE_UNIT = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_RANDOM_ACCESS_STORAGE_UNIT", Material.GLASS, "Random Access Storage Unit");
@@ -140,7 +139,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack STORAGE_INTERACT_PORT = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_STORAGE_INTERACT_PORT", Material.BOOKSHELF, "Storage Interact Port");
     public static final SlimefunItemStack STORAGE_INSERT_PORT = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_STORAGE_INSERT_PORT", Material.BOOKSHELF, "Storage Insert Port");
     public static final SlimefunItemStack STORAGE_WITHDRAW_PORT = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_STORAGE_WITHDRAW_PORT", Material.BOOKSHELF, "Storage Withdraw Port");
-    public static final SlimefunItemStack STORAGE_CARD = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_STORAGE_ITEM_UNCOLORED", Material.WATER_BUCKET, "Storage Card");
+    public static final SlimefunItemStack STORAGE_CARD = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_STORAGE_CARD", Material.WATER_BUCKET, "Storage Card");
     // accessor
     public static final SlimefunItemStack REMOTE_ACCESSOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_REMOTE_ACCESSOR", Material.OBSERVER, "Remote Accessor");
     public static final SlimefunItemStack AREA_ACCESSOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_AREA_ACCESSOR", Material.STONE, "Area Accessor");
@@ -165,7 +164,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack LOGIC_CRAFTER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_LOGIC_CRAFTER", Material.STONE, "Logic Crafter");
     public static final SlimefunItemStack DIGIT_ADDER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_DIGIT_ADDER", Material.STONE, "Digit Adder");
     // special machine
-    public static final SlimefunItemStack COBBLESTONE_ERUPTER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_COBBLESTONE_ERUPTER", Material.STONE, "Cobblestone Erupter");
+    public static final SlimefunItemStack COBBLESTONE_FACTORY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_COBBLESTONE_FACTORY", Material.STONE, "Cobblestone Erupter");
     public static final SlimefunItemStack FUEL_CHARGER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_FUEL_CHARGER", Material.STONE, "Fuel Charger");
     public static final SlimefunItemStack FUEL_ACCELERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_FUEL_ACCELERATOR", Material.STONE, "Fuel Accelerator");
     public static final SlimefunItemStack FUEL_OPERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_FUEL_OPERATOR", Material.STONE, "Fuel Operator");
@@ -255,6 +254,8 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MATRIX_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_GENERATOR", Material.SEA_LANTERN, "Matrix Generator");
     // 20
     public static final SlimefunItemStack MATRIX_ACCELERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_ACCELERATOR", Material.TARGET, "Matrix Accelerator");
+    // 48
+    public static final SlimefunItemStack MATRIX_ITEM_DESERIALIZE_PARSER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_ITEM_DESERIALIZE_PARSER", Material.BUDDING_AMETHYST, "Item Deserialize Parser");
     // 64
     public static final SlimefunItemStack MATRIX_REACTOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_REACTOR", Material.COAL_BLOCK, "Matrix Reactor");
 }

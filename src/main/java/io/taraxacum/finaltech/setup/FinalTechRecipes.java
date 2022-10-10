@@ -505,11 +505,6 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, FinalTechItems.NORMAL_STORAGE_UNIT, FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, null, FinalTechItems.GEARWHEEL,
     };
-    public static final ItemStack[] CHARGEABLE_STORAGE_UNIT = new ItemStack[] {
-            new ItemStack(Material.GLASS), new ItemStack(Material.CHEST), new ItemStack(Material.GLASS),
-            new ItemStack(Material.CHEST), FinalTechItems.ORDERED_DUST_GENERATOR, new ItemStack(Material.CHEST),
-            new ItemStack(Material.GLASS), new ItemStack(Material.CHEST), new ItemStack(Material.GLASS),
-    };
     public static final ItemStack[] RANDOM_INPUT_STORAGE_UNIT = new ItemStack[] {
             null, FinalTechItems.ORDERED_DUST, null,
             null, FinalTechItems.NORMAL_STORAGE_UNIT, null,
@@ -551,7 +546,7 @@ public final class FinalTechRecipes {
             new ItemStack(Material.STONE), new ItemStack(Material.STONE), new ItemStack(Material.STONE),
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
-    public static final ItemStack[] STORAGE_ITEM_UNCOLORED = new ItemStack[] {
+    public static final ItemStack[] STORAGE_CARD = new ItemStack[] {
             new ItemStack(Material.TRAPPED_CHEST), new ItemStack(Material.TRAPPED_CHEST), new ItemStack(Material.TRAPPED_CHEST),
             new ItemStack(Material.TRAPPED_CHEST), FinalTechItems.ORDERED_DUST, new ItemStack(Material.TRAPPED_CHEST),
             new ItemStack(Material.TRAPPED_CHEST), new ItemStack(Material.TRAPPED_CHEST), new ItemStack(Material.TRAPPED_CHEST)
@@ -646,8 +641,8 @@ public final class FinalTechRecipes {
     public static final ItemStack[] ITEM_DESERIALIZE_PARSER = new ItemStack[] {
             FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST,
             FinalTechItems.ORDERED_DUST, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.ORDERED_DUST,
-            FinalTechItems.ORDERED_DUST, FinalTechItems.SHINE, FinalTechItems.ITEM_DESERIALIZE_PARSER, FinalTechItems.ITEM_DESERIALIZE_PARSER, FinalTechItems.SHINE, FinalTechItems.ORDERED_DUST,
-            FinalTechItems.ORDERED_DUST, FinalTechItems.SHINE, FinalTechItems.ITEM_DESERIALIZE_PARSER, FinalTechItems.ITEM_DESERIALIZE_PARSER, FinalTechItems.SHINE, FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.SHINE, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechItems.SHINE, FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.SHINE, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechItems.SHINE, FinalTechItems.ORDERED_DUST,
             FinalTechItems.ORDERED_DUST, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.ORDERED_DUST,
             FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST
     };
@@ -674,7 +669,7 @@ public final class FinalTechRecipes {
             null, ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), null,
     };
     // special machine
-    public static final ItemStack[] COBBLESTONE_ERUPTER = new ItemStack[] {
+    public static final ItemStack[] COBBLESTONE_FACTORY = new ItemStack[] {
             FinalTechItems.ANNULAR, FinalTechItems.ANNULAR, FinalTechItems.ANNULAR, FinalTechItems.ANNULAR, FinalTechItems.ANNULAR, null,
             FinalTechItems.ANNULAR, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.BASIC_COBBLE_FACTORY, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.ANNULAR, null,
             FinalTechItems.ANNULAR, FinalTechItems.ANNULAR, FinalTechItems.ANNULAR, FinalTechItems.ANNULAR, FinalTechItems.ANNULAR
@@ -1073,6 +1068,15 @@ public final class FinalTechRecipes {
             FinalTechItems.PHONY, FinalTechItems.OVERLOADED_ACCELERATOR, FinalTechItems.ENERGIZED_ACCELERATOR, FinalTechItems.ENERGIZED_ACCELERATOR, FinalTechItems.OVERLOADED_ACCELERATOR, FinalTechItems.PHONY,
             FinalTechItems.PHONY, FinalTechItems.ENERGIZED_ACCELERATOR, FinalTechItems.OVERLOADED_ACCELERATOR, FinalTechItems.OVERLOADED_ACCELERATOR, FinalTechItems.ENERGIZED_ACCELERATOR, FinalTechItems.PHONY,
             FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY,
+    };
+    // 48
+    public static final ItemStack[] MATRIX_ITEM_DESERIALIZE_PARSER = new ItemStack[] {
+            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.SHINE, FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechItems.SHINE, FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.SHINE, FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechItems.SHINE, FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.ORDERED_DUST,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST
     };
     // 64
     public static final ItemStack[] MATRIX_REACTOR = new ItemStack[] {

@@ -64,13 +64,16 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
                 BlockTickerUtil.setSleep(config, sleep);
             }
         }
+
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         if(MachineUtil.itemCount(blockMenu.toInventory(), this.getInputSlot()) != this.getInputSlot().length) {
             return;
         }
+
         Set<Integer> amountList = new HashSet<>(this.getInputSlot().length);
         ItemWrapper firstItem = new ItemWrapper(blockMenu.getItemInSlot(this.getInputSlot()[0]));
         boolean allSameItem = true;
+
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             amountList.add(item.getAmount());
@@ -83,8 +86,8 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
         }
         if (amountList.size() == this.getInputSlot().length && allSameItem) {
             blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
+            BlockTickerUtil.setSleep(config, 1.0);
         } else if (Math.random() < (double)(amountList.size()) / this.getInputSlot().length) {
-            BlockTickerUtil.setSleep(config, Double.longBitsToDouble(FinalTech.getRandom().nextInt(this.getInputSlot().length - amountList.size() + 1)));
             blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
             BlockTickerUtil.setSleep(config, 1.0);
         }

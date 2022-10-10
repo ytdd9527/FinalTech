@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.api.factory.LanguageManager;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -79,10 +80,28 @@ public class RecipeUtil {
         while(true) {
             String index = String.valueOf(i++);
             if(languageManager.containPath("items", id, "info", index, "name")) {
-                if(strings.length == 0) {
-                    recipeItem.registerDescriptiveRecipe(languageManager.getString("items", id, "info", index, "name"), languageManager.getStringArray("items", id, "info", index, "lore"));
+                ItemStack output = null;
+                if(languageManager.containPath("items", id, "info", index, "output")) {
+                    String outputId = languageManager.getString("items", id, "info", index, "output");
+                    SlimefunItem slimefunItem = SlimefunItem.getById(outputId);
+                    if(slimefunItem != null) {
+                        output = slimefunItem.getItem();
+                    } else if(Material.getMaterial(outputId) != null) {
+                        output = new ItemStack(Material.getMaterial(outputId));
+                    }
+                }
+                if (output != null) {
+                    if(strings.length == 0) {
+                        recipeItem.registerDescriptiveRecipe(output, languageManager.getString("items", id, "info", index, "name"), languageManager.getStringArray("items", id, "info", index, "lore"));
+                    } else {
+                        recipeItem.registerDescriptiveRecipe(output, languageManager.getString("items", id, "info", index, "name"), languageManager.replaceStringArray(languageManager.getStringArray("items", id, "info", index, "lore"), strings));
+                    }
                 } else {
-                    recipeItem.registerDescriptiveRecipe(languageManager.getString("items", id, "info", index, "name"), languageManager.replaceStringArray(languageManager.getStringArray("items", id, "info", index, "lore"), strings));
+                    if(strings.length == 0) {
+                        recipeItem.registerDescriptiveRecipe(languageManager.getString("items", id, "info", index, "name"), languageManager.getStringArray("items", id, "info", index, "lore"));
+                    } else {
+                        recipeItem.registerDescriptiveRecipe(languageManager.getString("items", id, "info", index, "name"), languageManager.replaceStringArray(languageManager.getStringArray("items", id, "info", index, "lore"), strings));
+                    }
                 }
             } else {
                 break;

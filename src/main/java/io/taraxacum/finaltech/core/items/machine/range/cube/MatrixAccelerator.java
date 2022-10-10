@@ -33,11 +33,10 @@ import java.util.*;
  * @since 2.0
  */
 public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem {
-    private final int capacity = ConfigUtil.getOrDefaultItemSetting(Integer.MAX_VALUE / 4, this, "capacity");
     private final int range = ConfigUtil.getOrDefaultItemSetting(1, this, "range");
-    // millisecond
-    private final int syncThreshold = ConfigUtil.getOrDefaultItemSetting(400, this, "threshold-sync");
-    private final int asyncThreshold = ConfigUtil.getOrDefaultItemSetting(150, this, "threshold-async");
+    // System.nanoTime
+    private final int syncThreshold = ConfigUtil.getOrDefaultItemSetting(400000000, this, "threshold-sync");
+    private final int asyncThreshold = ConfigUtil.getOrDefaultItemSetting(150000000, this, "threshold-async");
     private final Set<String> invalidIdSet = new HashSet<>(ConfigUtil.getItemStringList(this, "invalid-ids"));
 
     public MatrixAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -240,7 +239,6 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
     @Override
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
-                String.valueOf(this.capacity),
                 String.valueOf(this.range));
     }
 }

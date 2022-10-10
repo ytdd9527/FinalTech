@@ -98,6 +98,8 @@ public class DigitAdder extends AbstractMachine implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
+        for(ItemStack itemStack : AbstractDigitalNumber.INTEGER_ITEM_STACK_MAP.values()) {
+            this.registerRecipe(itemStack, ItemStackUtil.AIR);
+        }
     }
 }

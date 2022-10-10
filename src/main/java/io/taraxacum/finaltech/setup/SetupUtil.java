@@ -199,7 +199,6 @@ public final class SetupUtil {
         Enchantment.registerEnchantment(NullEnchantment.ENCHANTMENT);
         FinalTechItems.SHINE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.PHONY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-
         /* items */
         // material
         FinalTechMenus.SUB_MENU_MATERIAL.addTo(
@@ -332,8 +331,7 @@ public final class SetupUtil {
                 new StackStorageUnit(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.STACK_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STACK_STORAGE_UNIT).register(),
                 new DividedLimitedStorageUnit(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.DIVIDED_LIMITED_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DIVIDED_LIMITED_STORAGE_UNIT).register(),
                 new DividedStackStorageUnit(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.DIVIDED_STACK_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DIVIDED_STACK_STORAGE_UNIT).register(),
-                new LimitedStackStorageUnit(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LIMITED_STACK_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LIMITED_STACK_STORAGE_UNIT).register(),
-                new ChargeableStorageUnit(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.CHARGEABLE_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CHARGEABLE_STORAGE_UNIT).register());
+                new LimitedStackStorageUnit(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LIMITED_STACK_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LIMITED_STACK_STORAGE_UNIT).register());
         FinalTechMenus.SUB_MENU_STORAGE_UNIT.addTo(
                 new RandomInputStorageUnit(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.RANDOM_INPUT_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.RANDOM_INPUT_STORAGE_UNIT).register(),
                 new RandomOutputStorageUnit(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.RANDOM_OUTPUT_STORAGE_UNIT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.RANDOM_OUTPUT_STORAGE_UNIT).register(),
@@ -345,7 +343,7 @@ public final class SetupUtil {
                 new StorageInteractPort(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.STORAGE_INTERACT_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_INTERACT_PORT).register(),
                 new StorageInsertPort(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.STORAGE_INSERT_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_INSERT_PORT).register(),
                 new StorageWithdrawPort(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.STORAGE_WITHDRAW_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_WITHDRAW_PORT).register(),
-                new StorageCardItem(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.STORAGE_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_ITEM_UNCOLORED).register());
+                new StorageCardItem(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.STORAGE_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_CARD).register());
         // accessor
         FinalTechMenus.SUB_MENU_ACCESSOR.addTo(
                 new RemoteAccessor(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.REMOTE_ACCESSOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.REMOTE_ACCESSOR).register(),
@@ -376,7 +374,7 @@ public final class SetupUtil {
                 new DigitAdder(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.DIGIT_ADDER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.DIGIT_ADDER).register());
         // special machines
         FinalTechMenus.SUB_MENU_SPECIAL_MACHINE.addTo(
-                new CobbleStoneErupter(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.COBBLESTONE_ERUPTER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.COBBLESTONE_ERUPTER).register(),
+                new CobbleStoneFactory(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.COBBLESTONE_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.COBBLESTONE_FACTORY).register(),
                 new FuelCharger(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.FUEL_CHARGER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.FUEL_CHARGER).register(),
                 new FuelAccelerator(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.FUEL_ACCELERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.FUEL_ACCELERATOR).register(),
                 new FuelOperator(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.FUEL_OPERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.FUEL_OPERATOR).register(),
@@ -467,6 +465,7 @@ public final class SetupUtil {
                 new MatrixItemSerializationConstructor(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR).register(),
                 new MatrixGenerator(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_GENERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_GENERATOR).register(),
                 new MatrixAccelerator(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_ACCELERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ACCELERATOR).register(),
+                new MatrixItemDeserializeParser(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_ITEM_DESERIALIZE_PARSER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ITEM_DESERIALIZE_PARSER).register(),
                 new MatrixReactor(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_REACTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_REACTOR).register());
 
         /* Menus */
