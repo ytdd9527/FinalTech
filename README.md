@@ -37,8 +37,6 @@ Version history
 
 2.0-preview3(next version)
 -
-> More mechanism about rpg
-
 > Papi support
 
 > More api for developers
