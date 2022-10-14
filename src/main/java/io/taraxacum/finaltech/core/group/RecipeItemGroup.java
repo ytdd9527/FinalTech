@@ -3,8 +3,12 @@ package io.taraxacum.finaltech.core.group;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.FlexItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
+import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.factory.ItemValueTable;
+import io.taraxacum.finaltech.api.interfaces.ShowInfoItem;
+import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.menu.common.SlimefunItemBigRecipeMenu;
 import io.taraxacum.finaltech.core.menu.common.SlimefunItemSmallRecipeMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
@@ -110,5 +114,33 @@ public class RecipeItemGroup extends FlexItemGroup {
     @Nullable
     public static RecipeItemGroup getByItemStack(@Nonnull Player player, @Nonnull PlayerProfile playerProfile, @Nonnull SlimefunGuideMode slimefunGuideMode, @Nonnull ItemStack itemStack) {
         return RecipeItemGroup.getByItemStack(player, playerProfile, slimefunGuideMode, itemStack, 1);
+    }
+
+    @Nonnull
+    public static ItemStack generateInfoIcon(@Nonnull SlimefunItem slimefunItem, @Nonnull Player player) {
+        ItemStack infoIcon = ItemStackUtil.cloneItem(Icon.WIKI_ICON);
+        ItemStackUtil.setLore(infoIcon, FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("helper", "ICON", "wiki-icon", "lore"),
+                slimefunItem.getId(),
+                slimefunItem.getResearch() != null ? slimefunItem.getResearch().getName(player) : FinalTech.getLanguageString("helper", "ICON", "wiki-icon", "no-research"),
+                slimefunItem.getAddon().getName(),
+                String.valueOf(ItemValueTable.getInstance().getOrCalItemInputValue(slimefunItem)),
+                String.valueOf(ItemValueTable.getInstance().getOrCalItemOutputValue(slimefunItem))));
+
+        if(slimefunItem instanceof EnergyNetComponent) {
+            String energyLore = FinalTech.getLanguageString("helper", "ICON", "wiki-icon", ((EnergyNetComponent) slimefunItem).getEnergyComponentType().name());
+            ItemStackUtil.addLoresToLast(infoIcon, FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("helper", "ICON", "wiki-icon", "lore-energy"),
+                    energyLore,
+                    String.valueOf(((EnergyNetComponent) slimefunItem).getCapacity())));
+        }
+
+        if(slimefunItem instanceof ShowInfoItem) {
+            if(((ShowInfoItem) slimefunItem).isOverride()) {
+                ItemStackUtil.setLore(infoIcon, ((ShowInfoItem) slimefunItem).getInfos());
+            } else {
+                ItemStackUtil.addLoresToLast(infoIcon, ((ShowInfoItem) slimefunItem).getInfos());
+            }
+        }
+
+        return infoIcon;
     }
 }

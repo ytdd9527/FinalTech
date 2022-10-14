@@ -4,6 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
@@ -16,10 +17,14 @@ import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 /**
  * @author Final_ROOT
@@ -28,6 +33,22 @@ import javax.annotation.Nonnull;
 public class DustFactoryDirt extends AbstractOperationMachine {
     public DustFactoryDirt(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+    }
+
+    @Nonnull
+    @Override
+    protected BlockBreakHandler onBlockBreak() {
+        return new BlockBreakHandler(false, false) {
+            @Override
+            public void onPlayerBreak(@Nonnull BlockBreakEvent blockBreakEvent, @Nonnull ItemStack item, @Nonnull List<ItemStack> drops) {
+                Location location = blockBreakEvent.getBlock().getLocation();
+                BlockMenu blockMenu = BlockStorage.getInventory(location);
+                blockMenu.dropItems(location, DustFactoryDirt.this.getInputSlot());
+                blockMenu.dropItems(location, DustFactoryDirt.this.getOutputSlot());
+
+                DustFactoryDirt.this.getMachineProcessor().endOperation(location);
+            }
+        };
     }
 
     @Nonnull
@@ -72,6 +93,13 @@ public class DustFactoryDirt extends AbstractOperationMachine {
             ItemStackUtil.setLore(itemStack, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
                     String.valueOf(operation.getAmountCount()),
                     String.valueOf(operation.getTypeCount())));
+            if(operation.getAmountCount() == 0 && operation.getTypeCount() == 0) {
+                itemStack.setType(Material.RED_STAINED_GLASS_PANE);
+            } else if(operation.getAmountCount() > DustFactoryOperation.AMOUNT_DIFFICULTY || operation.getTypeCount() > DustFactoryOperation.TYPE_DIFFICULTY) {
+                itemStack.setType(Material.YELLOW_STAINED_GLASS_PANE);
+            } else {
+                itemStack.setType(Material.GREEN_STAINED_GLASS_PANE);
+            }
         }
     }
 

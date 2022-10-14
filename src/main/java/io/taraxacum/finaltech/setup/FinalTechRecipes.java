@@ -3,27 +3,30 @@ package io.taraxacum.finaltech.setup;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.items.unusable.CopyCard;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Locale;
 
 /**
  * @author Final_ROOT
  */
 public final class FinalTechRecipes {
-
     // RecipesType
-    public static final RecipeType RECIPE_TYPE_ORDERED_DUST_FACTORY = new RecipeType(FinalTechItems.ORDERED_DUST_FACTORY_DIRT, "FINALTECH_DUST_FACTORY");
-    public static final RecipeType RECIPE_TYPE_ITEM_SERIALIZATION_CONSTRUCTOR = new RecipeType(FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR, "FINALTECH_ALL_COMPRESSION");
-    public static final RecipeType RECIPE_TYPE_MATRIX_CRAFTING_TABLE = new RecipeType(FinalTechItems.MATRIX_CRAFTING_TABLE, "FINALTECH_MATRIX_CRAFTING_TABLE");
-    public static final RecipeType RECIPE_TYPE_BOX = new RecipeType(FinalTechItems.BOX, "FINALTECH_BOX");
-    public static final RecipeType RECIPE_TYPE_EQUIVALENT_EXCHANGE_TABLE = new RecipeType(FinalTechItems.EQUIVALENT_EXCHANGE_TABLE, "FINALTECH_EQUIVALENT_EXCHANGE_TABLE");
-    public static final RecipeType RECIPE_TYPE_ENTROPY_SEED = new RecipeType(FinalTechItems.ENTROPY_SEED, "FINALTECH_ENTROPY_SEED");
-    public static final RecipeType RECIPE_TYPE_LOGIC_CRAFTER = new RecipeType(FinalTechItems.LOGIC_CRAFTER, "FINALTECH_LOGIC_CRAFTER");
-    public static final RecipeType RECIPE_TYPE_LOGIC_GENERATOR = new RecipeType(FinalTechItems.LOGIC_GENERATOR, "FINALTECH_LOGIC_GENERATOR");
-    public static final RecipeType RECIPE_TYPE_CARD_OPERATION_PORT = new RecipeType(FinalTechItems.CARD_OPERATION_TABLE, "FINALTECH_CARD_OPERATION_PORT");
-    public static final RecipeType RECIPE_TYPE_ENTROPY = new RecipeType(FinalTechItems.ENTROPY, "FINALTECH_ENTROPY");
+    public static final RecipeType RECIPE_TYPE_ORDERED_DUST_FACTORY = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItems.ORDERED_DUST_FACTORY_DIRT.getItemId().toLowerCase(Locale.ROOT)), FinalTechItems.ORDERED_DUST_FACTORY_DIRT);
+    public static final RecipeType RECIPE_TYPE_ITEM_SERIALIZATION_CONSTRUCTOR = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId().toLowerCase(Locale.ROOT)), FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR);
+    public static final RecipeType RECIPE_TYPE_MATRIX_CRAFTING_TABLE = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItems.MATRIX_CRAFTING_TABLE.getItemId().toLowerCase(Locale.ROOT)), FinalTechItems.MATRIX_CRAFTING_TABLE);
+    public static final RecipeType RECIPE_TYPE_BOX = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItems.BOX.getItemId().toLowerCase(Locale.ROOT)), FinalTechItems.BOX);
+    public static final RecipeType RECIPE_TYPE_EQUIVALENT_EXCHANGE_TABLE = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItems.EQUIVALENT_EXCHANGE_TABLE.getItemId().toLowerCase(Locale.ROOT)), FinalTechItems.EQUIVALENT_EXCHANGE_TABLE);
+    public static final RecipeType RECIPE_TYPE_ENTROPY_SEED = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItems.ENTROPY_SEED.getItemId().toLowerCase(Locale.ROOT)), FinalTechItems.ENTROPY_SEED);
+    public static final RecipeType RECIPE_TYPE_LOGIC_CRAFTER = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItems.LOGIC_CRAFTER.getItemId().toLowerCase(Locale.ROOT)), FinalTechItems.LOGIC_CRAFTER);
+    public static final RecipeType RECIPE_TYPE_LOGIC_GENERATOR = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItems.LOGIC_GENERATOR.getItemId().toLowerCase(Locale.ROOT)), FinalTechItems.LOGIC_GENERATOR);
+    public static final RecipeType RECIPE_TYPE_CARD_OPERATION_PORT = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItems.CARD_OPERATION_TABLE.getItemId().toLowerCase(Locale.ROOT)), FinalTechItems.CARD_OPERATION_TABLE);
+    public static final RecipeType RECIPE_TYPE_ENTROPY = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItems.ENTROPY.getItemId().toLowerCase(Locale.ROOT)), FinalTechItems.ENTROPY);
 
     /* items */
     // material

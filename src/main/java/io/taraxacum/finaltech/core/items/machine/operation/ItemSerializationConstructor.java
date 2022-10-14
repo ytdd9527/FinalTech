@@ -4,6 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.inventory.InvUtils;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
@@ -18,11 +19,15 @@ import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.List;
+
 /**
  * This is a slimefun machine
  * it will be used in gameplay
@@ -31,12 +36,28 @@ import javax.annotation.Nonnull;
  * @since 1.0
  */
 public class ItemSerializationConstructor extends AbstractOperationMachine {
-    private final CustomItemStack nullInfoIcon = new CustomItemStack(Material.REDSTONE, ConfigUtil.getStatusMenuName(FinalTech.getLanguageManager(), this, "null-info"), ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this, "null-info"));
+    private final CustomItemStack nullInfoIcon = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, FinalTech.getLanguageManager().getString("items", this.getId(), "null-icon", "name"), FinalTech.getLanguageManager().getStringArray("items", this.getId(), "null-icon", "lore"));
     private final String blockStorageItemKey = "item";
     private final String blockStorageAmountKey = "amount";
 
     public ItemSerializationConstructor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+    }
+
+    @Nonnull
+    @Override
+    protected BlockBreakHandler onBlockBreak() {
+        return new BlockBreakHandler(false, false) {
+            @Override
+            public void onPlayerBreak(@Nonnull BlockBreakEvent blockBreakEvent, @Nonnull ItemStack item, @Nonnull List<ItemStack> drops) {
+                Location location = blockBreakEvent.getBlock().getLocation();
+                BlockMenu blockMenu = BlockStorage.getInventory(location);
+                blockMenu.dropItems(location, ItemSerializationConstructor.this.getInputSlot());
+                blockMenu.dropItems(location, ItemSerializationConstructor.this.getOutputSlot());
+
+                ItemSerializationConstructor.this.getMachineProcessor().endOperation(location);
+            }
+        };
     }
 
     @Nonnull

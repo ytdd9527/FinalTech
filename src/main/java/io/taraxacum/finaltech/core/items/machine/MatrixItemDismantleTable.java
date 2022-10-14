@@ -6,14 +6,13 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
-import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.factory.RecipeTypeRegistry;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.MatrixItemDismantleTableMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
-import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -29,9 +28,9 @@ import java.util.Set;
  * @since 2.0
  */
 public class MatrixItemDismantleTable extends AbstractMachine implements RecipeItem {
-    private final Set<String> NOT_ALLOWED_RECIPE_ID = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-recipe-id"));
-    private final Set<String> ALLOWED_ID = new HashSet<>(ConfigUtil.getItemStringList(this, "allowed-id"));
-    private final Set<String> NOT_ALLOWED_ID = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
+    private final Set<String> notAllowedRecipeType = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-recipe-type"));
+    private final Set<String> allowedId = new HashSet<>(ConfigUtil.getItemStringList(this, "allowed-id"));
+    private final Set<String> notAllowedId = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
 
     public MatrixItemDismantleTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -91,34 +90,36 @@ public class MatrixItemDismantleTable extends AbstractMachine implements RecipeI
 
     @Override
     public void registerDefaultRecipes() {
-        for (String id : NOT_ALLOWED_RECIPE_ID) {
-            SlimefunItem slimefunItem = SlimefunItem.getById(id);
-            if(slimefunItem != null) {
-                this.registerDescriptiveRecipe(slimefunItem.getItem());
+        RecipeTypeRegistry.getInstance().reload();
+
+        for(RecipeType recipeType : RecipeTypeRegistry.getInstance().getRecipeTypeSet()) {
+            if(!this.notAllowedRecipeType.contains(recipeType.getKey().getKey()) && !ItemStackUtil.isItemNull(recipeType.toItem())) {
+                this.registerDescriptiveRecipe(recipeType.toItem());
             }
         }
     }
 
     private boolean calAllowed(@Nonnull SlimefunItem slimefunItem) {
-        if(this.ALLOWED_ID.contains(slimefunItem.getId())) {
+        if(this.allowedId.contains(slimefunItem.getId())) {
             return true;
-        } else if(this.NOT_ALLOWED_ID.contains(slimefunItem.getId())) {
+        } else if(this.notAllowedId.contains(slimefunItem.getId())) {
             return false;
         } else {
+            String slimefunItemId = slimefunItem.getId();
             synchronized (this) {
-                if(this.ALLOWED_ID.contains(slimefunItem.getId())) {
+                if(this.allowedId.contains(slimefunItemId)) {
                     return true;
-                } else if(this.NOT_ALLOWED_ID.contains(slimefunItem.getId())) {
+                } else if(this.notAllowedId.contains(slimefunItemId)) {
                     return false;
                 }
 
-                if(this.NOT_ALLOWED_RECIPE_ID.contains(slimefunItem.getRecipeType().getMachine().getId())) {
-                    this.NOT_ALLOWED_ID.add(slimefunItem.getId());
+                if(this.notAllowedRecipeType.contains(slimefunItem.getRecipeType().getKey().getKey())) {
+                    this.notAllowedId.add(slimefunItemId);
                     return false;
                 }
 
                 if(slimefunItem.getRecipe().length > this.getOutputSlot().length) {
-                    this.NOT_ALLOWED_ID.add(slimefunItem.getId());
+                    this.notAllowedId.add(slimefunItemId);
                     return false;
                 }
 
@@ -129,16 +130,16 @@ public class MatrixItemDismantleTable extends AbstractMachine implements RecipeI
                     }
                     hasRecipe = true;
                     if(SlimefunItem.getByItem(itemStack) == null && !ItemStackUtil.isItemSimilar(itemStack, new ItemStack(itemStack.getType()))) {
-                        this.NOT_ALLOWED_ID.add(slimefunItem.getId());
+                        this.notAllowedId.add(slimefunItemId);
                         return false;
                     }
                 }
                 if(!hasRecipe) {
-                    this.NOT_ALLOWED_ID.add(slimefunItem.getId());
+                    this.notAllowedId.add(slimefunItemId);
                     return false;
                 }
 
-                this.ALLOWED_ID.add(slimefunItem.getId());
+                this.allowedId.add(slimefunItemId);
                 return true;
             }
         }

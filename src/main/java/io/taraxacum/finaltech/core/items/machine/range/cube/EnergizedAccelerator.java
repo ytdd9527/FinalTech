@@ -77,7 +77,7 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
         int count = this.function(block, this.range, targetLocation -> {
             if (BlockStorage.hasBlockInfo(targetLocation)) {
                 Config targetConfig = BlockStorage.getLocationInfo(targetLocation);
-                if (targetConfig.contains(ConstantTableUtil.CONFIG_ID)) {
+                if (targetConfig.contains(ConstantTableUtil.CONFIG_ID) && SlimefunItem.getById(targetConfig.getString(ConstantTableUtil.CONFIG_ID)) instanceof EnergyNetComponent) {
                     int distance = Math.abs(targetLocation.getBlockX() - blockLocation.getBlockX()) + Math.abs(targetLocation.getBlockY() - blockLocation.getBlockY()) + Math.abs(targetLocation.getBlockZ() - blockLocation.getBlockZ());
                     List<LocationWithConfig> configList = configMap.computeIfAbsent(distance, d -> new ArrayList<>(d * d * 4 + 2));
                     configList.add(new LocationWithConfig(targetLocation.clone(), targetConfig));

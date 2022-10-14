@@ -100,6 +100,10 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
     private void doCraft(@Nonnull BlockMenu blockMenu, @Nonnull Config config) {
         String value = config.contains(this.key) ? config.getString(this.key) : StringNumberUtil.ZERO;
         List<String> valueList = new ArrayList<>(ItemValueTable.getInstance().getValueItemListOutputMap().keySet());
+        System.out.println("======");
+        System.out.println(ItemValueTable.getInstance().getValueItemListOutputMap().keySet());
+        System.out.println(valueList);
+        System.out.println("======");
         for(int i = 0, retryTimes = value.length(); i < retryTimes; i++) {
             String targetValue = valueList.get(new Random().nextInt(valueList.size()));
             if (StringNumberUtil.compare(value, targetValue) >= 0) {

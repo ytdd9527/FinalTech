@@ -27,11 +27,12 @@ import java.util.List;
  * @since 2.0
  */
 public class SlimefunItemBigRecipeMenu extends ChestMenu {
-    private final int BACK_SLOT = 0;
+    private final int BACK_SLOT = 1;
     private final int RECIPE_TYPE = 10;
     private final int RECIPE_RESULT = 37;
     private final int[] RECIPE_CONTENT = new int[] {3, 4, 5, 6, 7, 8, 12, 13, 14, 15, 16, 17, 21, 22, 23, 24, 25, 26, 30, 31, 32, 33, 34, 35, 39, 40, 41, 42, 43, 44, 48, 49, 50, 51, 52, 53};
-    private final int[] BORDER = new int[] {1, 2, 9, 11, 18, 19, 20, 27, 28, 29, 36, 38, 45, 47};
+    private final int[] BORDER = new int[] {0, 2, 11, 18, 19, 20, 27, 28, 29, 36, 38, 45, 47};
+    private final int INFO_SLOT = 9;
 
     private final int WORK_BUTTON = 46;
 
@@ -97,6 +98,9 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
                 return false;
             });
         }
+
+        this.addItem(INFO_SLOT, RecipeItemGroup.generateInfoIcon(slimefunItem, player));
+        this.addMenuClickHandler(INFO_SLOT, ChestMenuUtils.getEmptyClickHandler());
 
         for(int slot : BORDER) {
             this.addItem(slot, ChestMenuUtils.getBackground());

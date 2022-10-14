@@ -9,24 +9,26 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.machines.MachineOperation;
 import io.github.thebusybiscuit.slimefun4.core.machines.MachineProcessor;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AGenerator;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
-// TODO
-// TODO
-// TODO
-public class OperationAccelerator extends AbstractFaceMachine{
+/**
+ * @author Final_ROOT
+ */
+public class OperationAccelerator extends AbstractFaceMachine implements RecipeItem {
     public OperationAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -51,20 +53,30 @@ public class OperationAccelerator extends AbstractFaceMachine{
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        Block relative = block.getRelative(BlockFace.UP);
-        this.function(block, 1, new RangeFunction() {
-            @Override
-            public Integer apply(Location location) {
+        this.function(block, 1, location -> {
+            if(BlockStorage.hasBlockInfo(location)) {
                 Config machineConfig = BlockStorage.getLocationInfo(location);
-                String machineId = machineConfig.getString(ConstantTableUtil.CONFIG_ID);
-                SlimefunItem machineItem = SlimefunItem.getById(machineId);
-                if(machineItem instanceof MachineProcessHolder) {
-                    MachineProcessor<?> machineProcessor = ((MachineProcessHolder<?>) machineItem).getMachineProcessor();
-                    MachineOperation operation = machineProcessor.getOperation(location);
-                    operation.addProgress(1);
+                if(machineConfig.contains(ConstantTableUtil.CONFIG_ID)) {
+                    String machineId = machineConfig.getString(ConstantTableUtil.CONFIG_ID);
+                    SlimefunItem machineItem = SlimefunItem.getById(machineId);
+                    if(machineItem instanceof MachineProcessHolder) {
+                        MachineProcessor<?> machineProcessor = ((MachineProcessHolder<?>) machineItem).getMachineProcessor();
+                        Runnable runnable = () -> {
+                            MachineOperation operation = machineProcessor.getOperation(location);
+                            if(operation != null) {
+                                operation.addProgress(1);
+                            }
+                        };
+                        if(FinalTech.isAsyncSlimefunItem(machineId)) {
+                            FinalTech.getLocationRunnableFactory().waitThenRun(runnable, location);
+                        } else {
+                            runnable.run();
+                        }
+                        return 1;
+                    }
                 }
-                return 0;
             }
+            return 0;
         });
     }
 
@@ -77,5 +89,14 @@ public class OperationAccelerator extends AbstractFaceMachine{
     @Override
     protected BlockFace getBlockFace() {
         return BlockFace.UP;
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        for(SlimefunItem slimefunItem : Slimefun.getRegistry().getAllSlimefunItems()) {
+            if(slimefunItem instanceof MachineProcessHolder) {
+                this.registerDescriptiveRecipe(slimefunItem.getItem());
+            }
+        }
     }
 }

@@ -31,11 +31,8 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
         this.matchItem = item.clone();
         this.matchItem.setAmount(1);
         this.copyCardItem = CopyCard.newItem(this.matchItem, "1");
-        this.showItem = new CustomItemStack(item.getType(), ConfigUtil.getStatusMenuName(FinalTech.getLanguageManager(), FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId()),
-                ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(),
-                        ItemStackUtil.getItemName(this.matchItem),
-                        String.format("%.8f", this.count),
-                        String.valueOf(this.difficulty)));
+        this.showItem = new CustomItemStack(item.getType(), FinalTech.getLanguageString("items", FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "copy-card", "name"));
+        this.updateShowItem();
     }
 
     public double getCount() {
@@ -64,7 +61,7 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
 
     @Override
     public void updateShowItem() {
-        ItemStackUtil.setLore(this.showItem, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(),
+        ItemStackUtil.setLore(this.showItem, FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "copy-card", "lore"),
                 ItemStackUtil.getItemName(this.matchItem),
                 String.format("%.8f", this.count),
                 String.valueOf(this.difficulty)));

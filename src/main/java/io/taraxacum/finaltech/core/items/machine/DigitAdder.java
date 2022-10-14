@@ -73,12 +73,12 @@ public class DigitAdder extends AbstractMachine implements RecipeItem {
             }
         }
         if(digit > 15) {
-            itemStack = AbstractDigitalNumber.INTEGER_ITEM_STACK_MAP.get(digit / 15);
+            itemStack = AbstractDigitalNumber.INTEGER_ITEM_STACK_MAP.get(digit / 16);
             if(itemStack != null) {
                 inventory.setItem(this.getOutputSlot()[0], itemStack);
             }
         }
-        itemStack = AbstractDigitalNumber.INTEGER_ITEM_STACK_MAP.get(digit % 15);
+        itemStack = AbstractDigitalNumber.INTEGER_ITEM_STACK_MAP.get(digit % 16);
         if(itemStack != null) {
             inventory.setItem(this.getOutputSlot()[1], itemStack);
         }

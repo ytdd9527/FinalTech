@@ -1,14 +1,12 @@
 package io.taraxacum.finaltech;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.api.factory.*;
-import io.taraxacum.finaltech.core.dto.RainbowColorText;
 import io.taraxacum.finaltech.setup.SetupUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -66,29 +64,12 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         instance = this;
         this.logger = this.getJavaPlugin().getServer().getLogger();
 
-        List<Color> colorList = new ArrayList<>();
-        colorList.add(Color.fromRGB(255, 0,0));
-        colorList.add(Color.fromRGB(255, 165 ,0));
-        colorList.add(Color.fromRGB(255, 255,0));
-        colorList.add(Color.fromRGB(0, 255,0));
-        colorList.add(Color.fromRGB(0, 127,255));
-        colorList.add(Color.fromRGB(0, 0,255));
-        colorList.add(Color.fromRGB(139, 0,255));
-        colorList.add(Color.fromRGB(255, 0,0));
-
-        RainbowColorText randomColorText = new RainbowColorText(1, 3, colorList, JavaUtil.split("书山有路勤为径，学海无涯苦作舟"));
-
-//        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> logger.info(randomColorText.getNext()), 1, 1);
-
-        /* set runnable factory */
-        this.locationRunnableFactory = ServerRunnableLockFactory.getInstance(this, Location.class);
-        this.entityRunnableFactory = ServerRunnableLockFactory.getInstance(this, Entity.class);
-
         /* read config file */
         try {
             this.config = ConfigFileManager.getOrNewInstance(this, "config");
             this.value = ConfigFileManager.getOrNewInstance(this, "value");
             this.item = ConfigFileManager.getOrNewInstance(this, "item");
+
             String language = this.config.getOrDefault("en-US", "language");
             this.languageManager = LanguageManager.getOrNewInstance(this, language);
         } catch (Exception e) {
@@ -97,14 +78,19 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             return;
         }
 
+        /* set runnable factory */
+        this.locationRunnableFactory = ServerRunnableLockFactory.getInstance(this, Location.class);
+        this.entityRunnableFactory = ServerRunnableLockFactory.getInstance(this, Entity.class);
+
+        /* TODO: should be deleted after being published */
         if(FinalTech.getConfigManager().getOrDefault(false, "I'm_testing_it!")) {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
 
-        /* Disabled if you installed this plugin just for slimefun add quantity */
+        /* Disabled if you installed this plugin just for slimefun addon quantity. Not disable it as being loaded before. */
         if(!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 70) {
-            this.getLogger().warning("I don't want to say anything.");
+            this.getLogger().warning("You have installed so many slimefun addons. Change the source code to load this plugin!");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
@@ -120,7 +106,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             return;
         }
 
-        // TODO version update.
+        // TODO: version update.(Now this is the first version being recorded and will be supported to update)
         if(!FinalTech.getConfigManager().containPath("version")) {
             FinalTech.getConfigManager().setValue(version, "version");
         }
@@ -163,17 +149,17 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
             @Override
             public void run() {
-                currentTimeMillis.set(System.currentTimeMillis());
-                instance.tps = Math.max(FULL_SLIMEFUN_TICK / (currentTimeMillis.get() - lastTimeMillis.get()), 20);
-                lastTimeMillis.set(currentTimeMillis.get());
-                instance.slimefunTickCount++;
+                this.currentTimeMillis.set(System.currentTimeMillis());
+                FinalTech.instance.tps = Math.max(FULL_SLIMEFUN_TICK / (currentTimeMillis.get() - lastTimeMillis.get()), 20);
+                this.lastTimeMillis.set(currentTimeMillis.get());
+                FinalTech.instance.slimefunTickCount++;
             }
         }, 0, tickRate);
 
         SetupUtil.initLanguageManager(instance.languageManager);
 
-        /* setup my items and menu and... */
-        SetupUtil.init(this);
+        /* set up my items and menus and... */
+        SetupUtil.init();
 
         /* setup item value table */
         this.getServer().getScheduler().runTaskLater(this, () -> ItemValueTable.getInstance().init(), FinalTech.getConfigManager().getOrDefault(10, "setups", "item-value-table", "delay"));
@@ -185,6 +171,34 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         } else {
             SetupUtil.registerBlockTicker(0);
         }
+
+        SetupUtil.test(0, true, () -> {
+            RecipeTypeRegistry instance = RecipeTypeRegistry.getInstance();
+            instance.reload();
+            System.out.println("------");
+            System.out.println("------");
+            System.out.println("------");
+            for(RecipeType recipeType : instance.getRecipeTypeSet()) {
+                System.out.println(recipeType.getKey());
+            }
+            System.out.println("------");
+            System.out.println("------");
+            System.out.println("------");
+        });
+
+        SetupUtil.test(10, true, () -> {
+            RecipeTypeRegistry instance = RecipeTypeRegistry.getInstance();
+            instance.reload();
+            System.out.println("======");
+            System.out.println("======");
+            System.out.println("======");
+            for(RecipeType recipeType : instance.getRecipeTypeSet()) {
+                System.out.println(recipeType.getKey());
+            }
+            System.out.println("======");
+            System.out.println("======");
+            System.out.println("======");
+        });
     }
 
     @Override

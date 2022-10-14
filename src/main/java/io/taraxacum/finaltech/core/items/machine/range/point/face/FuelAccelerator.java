@@ -32,7 +32,7 @@ public class FuelAccelerator extends AbstractFaceMachine implements RecipeItem {
     @Nonnull
     @Override
     protected BlockPlaceHandler onBlockPlace() {
-        return MachineUtil.BLOCK_PLACE_HANDLER_DENY;
+        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_DENY;
     }
 
     @Nonnull

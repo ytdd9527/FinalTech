@@ -410,7 +410,7 @@ public final class ItemStackUtil {
                 }
             }
             if (!find) {
-                itemWithWrapperList.add(itemAmountWrapper);
+                itemWithWrapperList.add(itemAmountWrapper.shallowClone());
             }
         }
         return itemWithWrapperList;
@@ -438,7 +438,7 @@ public final class ItemStackUtil {
                 }
             }
             if (!find) {
-                itemWithWrapperList.add(itemAmountWrapper);
+                itemWithWrapperList.add(itemAmountWrapper.shallowClone());
             }
         }
         return itemWithWrapperList;
@@ -618,6 +618,28 @@ public final class ItemStackUtil {
             lore = new ArrayList<>(8);
         }
         lore.add(s);
+        itemMeta.setLore(lore);
+    }
+
+    public static void addLoresToLast(@Nullable ItemStack item, @Nonnull String... s) {
+        if (ItemStackUtil.isItemNull(item)) {
+            return;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        List<String> lore = itemMeta.getLore();
+        if (lore == null) {
+            lore = new ArrayList<>(8);
+        }
+        lore.addAll(Arrays.stream(s).toList());
+        itemMeta.setLore(lore);
+        item.setItemMeta(itemMeta);
+    }
+    public static void addLoresToLast(@Nonnull ItemMeta itemMeta, @Nonnull String... s) {
+        List<String> lore = itemMeta.getLore();
+        if (lore == null) {
+            lore = new ArrayList<>(8);
+        }
+        lore.addAll(Arrays.stream(s).toList());
         itemMeta.setLore(lore);
     }
 

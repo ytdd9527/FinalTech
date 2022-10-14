@@ -1,6 +1,5 @@
 package io.taraxacum.finaltech.core.menu;
 
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
@@ -40,15 +39,15 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
 
     @Override
     public void init() {
-        for (int slot : getBorder()) {
+        for (int slot : this.getBorder()) {
             this.addItem(slot, Icon.BORDER_ICON);
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
-        for (int slot : getInputBorder()) {
+        for (int slot : this.getInputBorder()) {
             this.addItem(slot, Icon.INPUT_BORDER_ICON);
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
-        for (int slot : getOutputBorder()) {
+        for (int slot : this.getOutputBorder()) {
             this.addItem(slot, Icon.OUTPUT_BORDER_ICON);
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }

@@ -1,7 +1,9 @@
 package io.taraxacum.finaltech.core.menu.manual;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.AdvancedCraft;
@@ -71,8 +73,8 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         for (int slot : STATUS_R_SLOT) {
             this.addItem(slot, STATUS_ICON);
         }
-        this.addItem(PREVIOUS_SLOT, new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", "ManualCraftMachine", "previous-icon", "name"), FinalTech.getLanguageStringArray("items", "ManualCraftMachine", "previous-icon", "lore")));
-        this.addItem(NEXT_SLOT, new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", "ManualCraftMachine", "next-icon", "name"), FinalTech.getLanguageStringArray("items", "ManualCraftMachine", "next-icon", "lore")));
+        this.addItem(PREVIOUS_SLOT, new CustomItemStack(new SlimefunItemStack("_UI_PREVIOUS_INACTIVE", Material.BLACK_STAINED_GLASS_PANE, "&8\u21E6 Previous Page"), FinalTech.getLanguageString("items", "ManualCraftMachine", "previous-icon", "name"), FinalTech.getLanguageStringArray("items", "ManualCraftMachine", "previous-icon", "lore")));
+        this.addItem(NEXT_SLOT, new CustomItemStack(new SlimefunItemStack("_UI_NEXT_INACTIVE", Material.BLACK_STAINED_GLASS_PANE, "&8Next Page \u21E8"), FinalTech.getLanguageString("items", "ManualCraftMachine", "next-icon", "name"), FinalTech.getLanguageStringArray("items", "ManualCraftMachine", "next-icon", "lore")));
         this.addItem(CRAFT_SLOT, CRAFT_ICON);
         for(int slot : CRAFT_L_SLOT) {
             this.addItem(slot, CRAFT_ICON);

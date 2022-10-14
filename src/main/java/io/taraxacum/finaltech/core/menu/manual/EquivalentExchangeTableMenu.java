@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -36,9 +37,9 @@ public class EquivalentExchangeTableMenu extends AbstractManualMachineMenu {
 
     public static final int STATUS_SLOT = 40;
 
-    private final ItemStack PARSE_BORDER_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", this.getID(), "parse-border-icon", "name"), FinalTech.getLanguageStringList("items", this.getID(), "parse-border-icon", "lore"));
-    private final ItemStack PARSE_STATUS_ICON = new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", this.getID(), "parse-result-icon", "name"), FinalTech.getLanguageStringList("items", this.getID(), "parse-result-icon", "lore"));
-    private final ItemStack CRAFT_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", this.getID(), "status-icon", "name"), FinalTech.getLanguageStringList("items", this.getID(), "status-icon", "lore"));
+    private static final ItemStack PARSE_BORDER_ICON = new CustomItemStack(Material.PURPLE_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-border-icon", "name"), FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-border-icon", "lore"));
+    private static final ItemStack PARSE_STATUS_ICON = new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-result-icon", "name"), FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "parse-result-icon", "lore"));
+    private static final ItemStack CRAFT_ICON = new CustomItemStack(Material.GREEN_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "status-icon", "name"), FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(EquivalentExchangeTable.class), "status-icon", "lore"));
 
     public EquivalentExchangeTableMenu(@Nonnull AbstractMachine machine) {
         super(machine);
@@ -88,11 +89,13 @@ public class EquivalentExchangeTableMenu extends AbstractManualMachineMenu {
         ItemStack item = inventory.getItem(PARSE_ITEM_SLOT);
         SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
         List<String> lore = new ArrayList<>();
-        lore.add("§f" + ItemStackUtil.getItemName(item));
+        if(!ItemStackUtil.isItemNull(item)) {
+            lore.add("§f" + ItemStackUtil.getItemName(item));
+        }
         if (slimefunItem == null) {
             lore.addAll(FinalTech.getLanguageStringList("items", this.getID(), "no-value", "lore"));
         } else {
-            lore.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("items", this.getID(), "input-value", "lore"), ItemValueTable.getInstance().getOrCalItemOutputValue(item)));
+            lore.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("items", this.getID(), "input-value", "lore"), ItemValueTable.getInstance().getOrCalItemInputValue(item)));
             lore.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("items", this.getID(), "output-value", "lore"), ItemValueTable.getInstance().getOrCalItemOutputValue(item)));
         }
         ItemStack iconItem = inventory.getItem(PARSE_STATUS_SLOT);

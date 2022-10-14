@@ -35,13 +35,7 @@ public class ItemPhonyOperation implements ItemSerializationConstructorOperation
         this.itemAmountCount = item.getAmount();
         this.itemTypeDifficulty = ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT;
         this.itemAmountDifficulty = ConstantTableUtil.ITEM_SINGULARITY_AMOUNT;
-        this.showItem = new CustomItemStack(FinalTechItems.PHONY.getType(),
-                ConfigUtil.getStatusMenuName(FinalTech.getLanguageManager(), FinalTechItems.PHONY.getItemId()),
-                ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), FinalTechItems.PHONY.getItemId(),
-                        String.valueOf(this.itemAmountCount),
-                        String.valueOf(this.itemAmountDifficulty),
-                        String.valueOf(this.itemTypeCount),
-                        String.valueOf(this.itemTypeDifficulty)));
+        this.showItem = new CustomItemStack(FinalTechItems.PHONY.getType(), FinalTech.getLanguageString("items", FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "phony", "name"));
         this.itemTypeList.add(ItemStackWrapper.wrap(item));
     }
 
@@ -58,7 +52,7 @@ public class ItemPhonyOperation implements ItemSerializationConstructorOperation
 
     @Override
     public void updateShowItem() {
-        ItemStackUtil.setLore(this.showItem, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), FinalTechItems.PHONY.getItemId(),
+        ItemStackUtil.setLore(this.showItem, FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "phony", "lore"),
             String.valueOf(this.itemAmountCount),
             String.valueOf(this.itemAmountDifficulty),
             String.valueOf(this.itemTypeCount),

@@ -91,7 +91,7 @@ public class ItemAmountWrapper extends ItemWrapper {
     @Nonnull
     @Override
     public ItemAmountWrapper shallowClone() {
-        return new ItemAmountWrapper(this.getItemStack(), this.getItemMeta(), amount);
+        return new ItemAmountWrapper(this.getItemStack(), this.getItemMeta(), this.amount);
     }
 
     @Nonnull
@@ -99,7 +99,7 @@ public class ItemAmountWrapper extends ItemWrapper {
     public ItemAmountWrapper deepClone() {
         ItemStack itemStack = ItemStackUtil.cloneItem(this.getItemStack());
         itemStack.setAmount(this.getItemStack().getAmount());
-        return new ItemAmountWrapper(ItemStackUtil.cloneItem(this.getItemStack()), amount);
+        return new ItemAmountWrapper(ItemStackUtil.cloneItem(this.getItemStack()), this.amount);
     }
 
     @Override

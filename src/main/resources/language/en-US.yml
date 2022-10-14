@@ -1,61 +1,62 @@
 FinalTech: 'FinalTECH'
 helper:
   ICON:
+    wiki-icon:
+      name: '{color:stress}WIKI'
+      lore:
+        - '§7{1}'
+        - '{color:normal}Research: {color:negative}{2}'
+        - '{color:normal}Addon: {color:initiative}{3}'
+        - '{color:normal}Value Input: {color:number}{4}'
+        - '{color:normal}Value Output: {color:number}{5}'
+      lore-energy:
+        - '{color:normal}Energy Type: {color:passive}{1}'
+        - '{color:normal}Energy Capacity: {color:number}{2}'
+      no-research: '{color:positive}NONE'
+      GENERATOR: 'Generator'
+      CAPACITOR: 'Capacitor'
+      CONSUMER: 'Consumer'
+      CONNECTOR: 'Connector'
+      NONE: 'None'
     quantity-module:
-      name: '---===---'
+      name: '{color:normal}Quantity Module'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Put {id:FINALTECH_QUANTITY_MODULE} {color:normal}to change '
     next-page:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}Next Page'
     previous-page:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}Previous Page'
     status:
       name: '{color:normal}Status'
     error:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}Error'
   CARGO_ORDER:
     positive:
-      name: '{color:random}CARGO ORDER'
+      name: '{color:normal}CARGO ORDER - {color:random}POSITIVE'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Iterate through the location queue in positive order'
     reverse:
-      name: '---===---'
+      name: '{color:normal}CARGO ORDER - {color:random}REVERSE'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Iterate through the location queue in reverse order'
   MACHINE_MAX_STACK:
     icon:
-      name: '---===---'
+      name: '{color:normal}Machine Max Stack'
     '0':
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}No Limit in input by cargo'
     value:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Max Stack to input by cargo: {color:number}{1}'
   CARGO_NUMBER:
     icon:
-      name: '---===---'
+      name: '{color:normal}Cargo Number'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Transfer up to {color:number}{1} items {color:normal}at one time'
       lore0:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}No Limit in transferring items at one time'
     add-icon:
-      name: '---===---'
+      name: '{color:normal}Cargo Number - Add'
       lore:
         - Fill me!
         - I'm list!
@@ -469,8 +470,8 @@ items:
         output: 'FINALTECH_ITEM_DESERIALIZE_PARSER'
     status:
       lore:
-        - '{color:normal}Item name: {1}'
-        - '{color:normal}Item amount: {2}'
+        - '{color:normal}Item name: {color:number}{1}'
+        - '{color:normal}Item amount: {color:number}{2}'
   FINALTECH_ANNULAR:
     name: '{color:prandom}Annular'
     info:
@@ -1605,6 +1606,11 @@ items:
         lore:
           - '{color:normal}Right click it to open menu and then you can directly open slimefun machine around it'
           - '{color:normal}Range= {color:number}{1}'
+    temp-icon:
+      lore:
+        - '{color:normal}X: {color:number}{1}'
+        - '{color:normal}Z: {color:number}{3}'
+        - '{color:normal}Y: {color:number}{2}'
   FINALTECH_BASIC_FRAME_MACHINE:
     name: '{color:prandom}Basic Frame Machine'
     info:
@@ -1662,6 +1668,10 @@ items:
           - '{color:normal}Input just {color:number}{2} different type of items'
           - '{color:normal}Then it will generate one {id:FINALTECH_ORDERED_DUST}'
         output: 'FINALTECH_ORDERED_DUST'
+    status:
+      lore:
+        - '{color:normal}Amount: {color:number}{1}'
+        - '{color:normal}Type: {color:number}{2}'
   FINALTECH_ORDERED_DUST_FACTORY_STONE:
     name: '{color:prandom}Ordered Dust Factory'
     info:
@@ -1689,6 +1699,11 @@ items:
           - '{color:normal}It will sleep for a while after generating an item'
   FINALTECH_MATRIX_CRAFTING_TABLE:
     name: '{color:prandom}Matrix Crafting Table'
+    parse-icon:
+      name: '{color:negative}Invalid'
+    show-icon:
+      lore:
+        - '{color:normal}Match Amount: {color:number}{1}'
   FINALTECH_ITEM_DISMANTLE_TABLE:
     name: '{color:prandom}Item Dismantle Table'
   FINALTECH_EQUIVALENT_EXCHANGE_TABLE:
@@ -1710,13 +1725,13 @@ items:
         - '{color:negative}Invalid or unsupported item'
     stored-value:
       lore:
-        - '{color:normal}Stored Value= {color:number}{1}'
+        - '{color:normal}Stored Value: {color:number}{1}'
     input-value:
       lore:
-        - '{color:normal}Value to input= {color:number}{1}'
+        - '{color:normal}Value to input: {color:number}{1}'
     output-value:
       lore:
-        - '{color:normal}Value to output= {color:number}{1}'
+        - '{color:normal}Value to output: {color:number}{1}'
   FINALTECH_ENTROPY_CONSTRUCTOR:
     name: '{color:prandom}Entropy Constructor'
     info:
@@ -1761,10 +1776,20 @@ items:
         name: '{color:negative}Limit'
         lore:
           - '{color:normal}Only items from Slimefun will be supported to make {id:FINALTECH_COPY_CARD}'
-    status:
+    null-icon:
       name: '{color:negative}Not Work'
       lore:
         - '{color:normal}Input something to make me work'
+    copy-card:
+      name: '{color:normal}Status'
+      lore:
+        - '{color:normal}Item Name: {color:number}{1}'
+        - '{color:normal}Item Amount: {color:number}{2}{color:normal}/{color:number}{3}'
+    phony:
+      name: '{color:normal}Status'
+      lore:
+        - '{color:normal}Copy Card Amount: {color:number}{1}{color:normal}/{color:number}{2}'
+        - '{color:normal}Copy Card Type: {color:number}{3}{color:normal}/{color:number}{4}'
   FINALTECH_ITEM_DESERIALIZE_PARSER:
     name: '{color:prandom}Item Deserialize Parser'
     info:
@@ -1812,9 +1837,6 @@ items:
       - '{color:normal}Place it below the machine to work'
   FINALTECH_OPERATION_ACCELERATOR:
     name: '{color:prandom}Operation Accelerator'
-    lore:
-      - Fill me!
-      - I'm list!
   FINALTECH_CURE_TOWER:
     name: '{color:prandom}Cure Tower'
     info:
@@ -2060,10 +2082,20 @@ items:
         name: '{color:negative}Limit'
         lore:
           - '{color:normal}Actual quantity to get a {id:FINALTECH_COPY_CARD} {color:normal}will be enlarged based on server tps'
-    status:
+    null-icon:
       name: '{color:negative}Not Work'
       lore:
         - '{color:normal}Input something to make me work'
+    copy-card:
+      name: '{color:normal}Status'
+      lore:
+        - '{color:normal}Item Name: {color:number}{1}'
+        - '{color:normal}Item Amount: {color:number}{2}{color:normal}/{color:number}{3}'
+    phony:
+      name: '{color:normal}Status'
+      lore:
+        - '{color:normal}Copy Card Amount: {color:number}{1}{color:normal}/{color:number}{2}'
+        - '{color:normal}Copy Card Type: {color:number}{3}{color:normal}/{color:number}{4}'
   FINALTECH_MATRIX_GENERATOR:
     name: '{color:prandom}Matrix Generator'
     info:
@@ -2152,31 +2184,19 @@ items:
         - '{color:normal}Progress: {color:number}{1} {color:normal}/ {color:number}{2}'
   ManualCraftMachine:
     craft-icon:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}Click To Craft'
     status-icon:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}No Valid Craft'
     previous-icon:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}Previous'
     next-icon:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}Next'
     match-item:
-      lore: '---===---'
+      lore: '{color:normal}Can be craft {color:number}{1} {color:normal}times'
 research:
   LIQUID_CARD: 'Liquid Card'
   ORDER_DUST: 'FinalTECH Basic Material'
-  BUG: 'Catch it!'
+  BUG: 'Try and Catch it!'
   ENTROPY: 'Bad thing'
   ANNULAR: 'FinalTECH Advanced Material'
   PHONY: 'Good thing'

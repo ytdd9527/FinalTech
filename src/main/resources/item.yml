@@ -1,0 +1,17 @@
+FINALTECH_ITEM_DISMANTLE_TABLE:
+  allowed-recipe-type:
+    - 'enhanced_crafting_table'
+    - 'grind_stone'
+    - 'armor_forge'
+    - 'ore_crusher'
+    - 'compressor'
+    - 'smeltery'
+    - 'pressure_chamber'
+    - 'magic_workbench'
+    - 'gold_pan'
+    - 'juicer'
+    - 'ancient_altar'
+    - 'heated_pressure_chamber'
+    - 'food_fabricator'
+    - 'food_composter'
+    - 'freezer'

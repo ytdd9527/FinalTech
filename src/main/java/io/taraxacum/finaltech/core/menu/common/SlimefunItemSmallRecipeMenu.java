@@ -3,6 +3,7 @@ package io.taraxacum.finaltech.core.menu.common;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
+import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.core.guide.GuideHistory;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
@@ -10,7 +11,12 @@ import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
 import io.github.thebusybiscuit.slimefun4.implementation.guide.SurvivalSlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.factory.ItemValueTable;
+import io.taraxacum.finaltech.api.interfaces.ShowInfoItem;
 import io.taraxacum.finaltech.core.group.RecipeItemGroup;
+import io.taraxacum.finaltech.core.helper.Icon;
+import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
 import io.taraxacum.finaltech.util.slimefun.GuideUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import org.bukkit.Bukkit;
@@ -30,6 +36,7 @@ public class SlimefunItemSmallRecipeMenu extends ChestMenu {
     private final int RECIPE_TYPE = 10;
     private final int RECIPE_RESULT = 16;
     private final int[] RECIPE_CONTENT = new int[] {3, 4, 5, 12, 13, 14, 21, 22, 23};
+    private final int INFO_SLOT = 9;
 
     private final int[] BORDER = new int[] {27, 29, 30, 31, 32, 33, 35};
     private final int PREVIOUS_SLOT =  28;
@@ -56,7 +63,6 @@ public class SlimefunItemSmallRecipeMenu extends ChestMenu {
 
         this.setEmptySlotsClickable(false);
         this.addMenuOpeningHandler(pl -> pl.playSound(pl.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1));
-
 
         this.addItem(BACK_SLOT, ChestMenuUtils.getBackButton(player));
         this.addMenuClickHandler(BACK_SLOT, (pl, s, is, action) -> {
@@ -92,6 +98,9 @@ public class SlimefunItemSmallRecipeMenu extends ChestMenu {
                 return false;
             });
         }
+
+        this.addItem(INFO_SLOT, RecipeItemGroup.generateInfoIcon(slimefunItem, player));
+        this.addMenuClickHandler(INFO_SLOT, ChestMenuUtils.getEmptyClickHandler());
 
         if(slimefunItem instanceof RecipeDisplayItem) {
             List<ItemStack> displayRecipeItemList = ((RecipeDisplayItem) slimefunItem).getDisplayRecipes();

@@ -1,6 +1,5 @@
 package io.taraxacum.finaltech.setup;
 
-import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
@@ -25,7 +24,7 @@ import io.taraxacum.finaltech.core.items.machine.cargo.unit.*;
 import io.taraxacum.finaltech.core.items.machine.electric.VariableWireCapacitor;
 import io.taraxacum.finaltech.core.items.machine.electric.VariableWireResistance;
 import io.taraxacum.finaltech.core.items.machine.manual.EquivalentExchangeTable;
-import io.taraxacum.finaltech.core.items.machine.manual.craft.MatrixCraftingTable;
+import io.taraxacum.finaltech.core.items.machine.manual.MatrixCraftingTable;
 import io.taraxacum.finaltech.core.items.machine.operation.*;
 import io.taraxacum.finaltech.core.items.machine.range.point.EquivalentConcept;
 import io.taraxacum.finaltech.core.items.machine.template.basic.*;
@@ -49,7 +48,6 @@ import io.taraxacum.finaltech.core.items.machine.electric.capacitor.AdvancedCons
 import io.taraxacum.finaltech.core.items.machine.range.cube.EnergizedAccelerator;
 import io.taraxacum.finaltech.core.items.machine.range.cube.MatrixAccelerator;
 import io.taraxacum.finaltech.core.items.machine.range.cube.OverloadedAccelerator;
-import io.taraxacum.finaltech.core.items.machine.range.cube.DispersalCapacitor;
 import io.taraxacum.finaltech.core.items.machine.range.cube.generator.*;
 import io.taraxacum.finaltech.core.items.machine.electric.capacitor.BasicChargeIncreaseCapacitor;
 import io.taraxacum.finaltech.core.items.machine.electric.capacitor.BasicConsumeReduceCapacitor;
@@ -86,7 +84,7 @@ import java.util.function.Function;
  * @since 1.0
  */
 public final class SetupUtil {
-    public static void init(@Nonnull SlimefunAddon slimefunAddon) {
+    public static void init() {
         FinalTech finalTech = FinalTech.getInstance();
 
         /* setup config */
@@ -242,7 +240,7 @@ public final class SetupUtil {
                 new NormalElectricityShootPile(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.NORMAL_ELECTRICITY_SHOOT_PILE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.NORMAL_ELECTRICITY_SHOOT_PILE).register(),
                 new EnergizedElectricityShootPile(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.ENERGIZED_ELECTRICITY_SHOOT_PILE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ENERGIZED_ELECTRICITY_SHOOT_PILE).register(),
                 new OverloadedElectricityShootPile(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.OVERLOADED_ELECTRICITY_SHOOT_PILE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.OVERLOADED_ELECTRICITY_SHOOT_PILE).register(),
-                new DispersalCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.DISPERSAL_CAPACITOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.DISPERSAL_CAPACITOR).register(),
+//                new DispersalCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.DISPERSAL_CAPACITOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.DISPERSAL_CAPACITOR).register(),
                 new VariableWireResistance(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.VARIABLE_WIRE_RESISTANCE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.VARIABLE_WIRE_RESISTANCE).register(),
                 new VariableWireCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.VARIABLE_WIRE_CAPACITOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.VARIABLE_WIRE_CAPACITOR).register());
         // electric accelerator
@@ -505,6 +503,7 @@ public final class SetupUtil {
                 FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR,
                 FinalTechItems.MATRIX_GENERATOR,
                 FinalTechItems.MATRIX_ACCELERATOR,
+                FinalTechItems.MATRIX_ITEM_DESERIALIZE_PARSER,
                 FinalTechItems.MATRIX_REACTOR);
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "LOGIC", 1, false,
                 FinalTechItems.LOGIC_FALSE,
@@ -807,6 +806,18 @@ public final class SetupUtil {
             };
         } else {
             return blockTicker;
+        }
+    }
+
+    public static void test(int delay, boolean async, Runnable runnable) {
+        if(delay == 0) {
+            runnable.run();
+        } else {
+            if(async) {
+                FinalTech.getInstance().getServer().getScheduler().runTaskLaterAsynchronously(FinalTech.getInstance(), runnable, delay);
+            } else {
+                FinalTech.getInstance().getServer().getScheduler().runTaskLater(FinalTech.getInstance(), runnable, delay);
+            }
         }
     }
 }

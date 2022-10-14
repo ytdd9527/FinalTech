@@ -69,7 +69,7 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
         int count = this.function(block, range, location -> {
             if (BlockStorage.hasBlockInfo(location)) {
                 Config componentConfig = BlockStorage.getLocationInfo(location);
-                if (componentConfig.contains(ConstantTableUtil.CONFIG_ID)) {
+                if (componentConfig.contains(ConstantTableUtil.CONFIG_ID) && SlimefunItem.getById(componentConfig.getString(ConstantTableUtil.CONFIG_ID)) instanceof EnergyNetComponent) {
                     int distance = Math.abs(location.getBlockX() - blockLocation.getBlockX()) + Math.abs(location.getBlockY() - blockLocation.getBlockY()) + Math.abs(location.getBlockZ() - blockLocation.getBlockZ());
                     List<LocationWithConfig> componentConfigList = componentConfigMap.computeIfAbsent(distance, d -> new ArrayList<>(d * d * 4 + 2));
                     componentConfigList.add(new LocationWithConfig(location.clone(), componentConfig));

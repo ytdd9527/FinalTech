@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
@@ -15,7 +16,10 @@ import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.block.*;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Lightable;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
@@ -53,9 +57,9 @@ public class FuelCharger extends AbstractFaceMachine implements RecipeItem {
         javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> FuelCharger.this.function(block, 1, location -> {
             BlockState blockState = PaperLib.getBlockState(location.getBlock(), false).getState();
             if(blockState instanceof Furnace) {
-                ((Furnace) blockState).setBurnTime((short) 200);
+                ((Furnace) blockState).setBurnTime((short)(200 + Slimefun.getTickerTask().getTickRate()));
             } else if(blockState instanceof BrewingStand) {
-                ((BrewingStand) blockState).setFuelLevel(200);
+                ((BrewingStand) blockState).setFuelLevel(200 + Slimefun.getTickerTask().getTickRate());
             }
             return 0;
         }));

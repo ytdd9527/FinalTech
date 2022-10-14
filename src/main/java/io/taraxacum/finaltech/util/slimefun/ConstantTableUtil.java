@@ -15,5 +15,5 @@ public class ConstantTableUtil {
 
     public static final int ITEM_SINGULARITY_AMOUNT = ConfigUtil.getOrDefaultItemSetting(256, "SINGULARITY", "amount") + Slimefun.getInstalledAddons().size() * 16;
 
-    public static final int ITEM_SPIROCHETE_AMOUNT = ConfigUtil.getOrDefaultConfigSetting(64, "SPIROCHETE", "amount") + (int) (Math.pow(Slimefun.getRegistry().getAllSlimefunItems().size(), 0.5) * 4);
+    public static final int ITEM_SPIROCHETE_AMOUNT = ConfigUtil.getOrDefaultItemSetting(64, "SPIROCHETE", "amount") + (int) (Math.pow(Slimefun.getRegistry().getAllSlimefunItems().size(), 0.5) * 4);
 }

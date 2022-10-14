@@ -9,6 +9,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.dto.LocationWithConfig;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
@@ -25,6 +26,10 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -37,7 +42,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DispersalCapacitor extends AbstractCubeMachine implements EnergyNetComponent, RecipeItem {
     private final int range = ConfigUtil.getOrDefaultItemSetting(4, this, "range");
     private final int capacity = ConfigUtil.getOrDefaultItemSetting(Integer.MAX_VALUE / 4, this, "capacity");
-    private final double loss = ConfigUtil.getOrDefaultItemSetting(16, this, "loss");
 
     public DispersalCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -63,44 +67,66 @@ public class DispersalCapacitor extends AbstractCubeMachine implements EnergyNet
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        Location blockLocation = block.getLocation();
-        int charge = Integer.parseInt(EnergyUtil.getCharge(config));
-        int count = 0;
-        AtomicInteger maxEnergy = new AtomicInteger();
-        AtomicInteger totalEnergy = new AtomicInteger();
-        int validCharge = (int)(charge / loss);
-        if (charge > 0) {
-            count = this.function(block, range, location -> {
-                if (BlockStorage.hasBlockInfo(location)) {
-                    Config energyComponentConfig = BlockStorage.getLocationInfo(location);
-                    if (energyComponentConfig.contains(ConstantTableUtil.CONFIG_ID)) {
-                        SlimefunItem item = SlimefunItem.getById(energyComponentConfig.getString(ConstantTableUtil.CONFIG_ID));
-                        if (item instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) item).getEnergyComponentType())) {
-                            int componentCapacity = ((EnergyNetComponent) item).getCapacity();
-                            if (componentCapacity == 0) {
-                                return 0;
-                            }
-                            int componentEnergy = Integer.parseInt(EnergyUtil.getCharge(energyComponentConfig));
-                            int transferEnergy = Math.min(componentCapacity - componentEnergy, validCharge);
-                            if (transferEnergy > 0) {
-                                EnergyUtil.setCharge(location, String.valueOf(transferEnergy + componentEnergy));
-                                maxEnergy.set(Math.max(maxEnergy.get(), transferEnergy));
-                                totalEnergy.addAndGet(transferEnergy);
-                                return 1;
-                            }
-                        }
-                    }
-                }
-                return 0;
-            });
-        }
-        BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(blockMenu.hasViewer()) {
-            this.updateMenu(blockMenu, charge, count, totalEnergy, maxEnergy);
-        }
-        charge = charge - (int) (maxEnergy.get() * loss);
-        charge = Math.max(charge, 0);
-        EnergyUtil.setCharge(blockLocation, String.valueOf(charge));
+        // TODO: how should it do function?
+
+//        Location blockLocation = block.getLocation();
+//        int charge = Integer.parseInt(EnergyUtil.getCharge(config));
+//        Map<Integer, List<LocationWithConfig>> configMap = new HashMap<>(this.range * 3);
+//        this.function(block, this.range, location -> {
+//            if (BlockStorage.hasBlockInfo(location)) {
+//                Config targetConfig = BlockStorage.getLocationInfo(location);
+//                if (targetConfig.contains(ConstantTableUtil.CONFIG_ID) && SlimefunItem.getById(targetConfig.getString(ConstantTableUtil.CONFIG_ID)) instanceof EnergyNetComponent) {
+//                    int distance = Math.abs(location.getBlockX() - blockLocation.getBlockX()) + Math.abs(location.getBlockY() - blockLocation.getBlockY()) + Math.abs(location.getBlockZ() - blockLocation.getBlockZ());
+//                    List<LocationWithConfig> configList = configMap.computeIfAbsent(distance, d -> new ArrayList<>(d * d * 4 + 2));
+//                    configList.add(new LocationWithConfig(location.clone(), targetConfig));
+//                    return 1;
+//                }
+//            }
+//            return 0;
+//        });
+//
+//        List<LocationWithConfig> asyncMachineList = new ArrayList<>();
+
+
+//
+//        Location blockLocation = block.getLocation();
+//        int charge = Integer.parseInt(EnergyUtil.getCharge(config));
+//        int count = 0;
+//        AtomicInteger maxEnergy = new AtomicInteger();
+//        AtomicInteger totalEnergy = new AtomicInteger();
+//        int validCharge = (int)(charge / loss);
+//        if (charge > 0) {
+//            count = this.function(block, range, location -> {
+//                if (BlockStorage.hasBlockInfo(location)) {
+//                    Config energyComponentConfig = BlockStorage.getLocationInfo(location);
+//                    if (energyComponentConfig.contains(ConstantTableUtil.CONFIG_ID)) {
+//                        SlimefunItem item = SlimefunItem.getById(energyComponentConfig.getString(ConstantTableUtil.CONFIG_ID));
+//                        if (item instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) item).getEnergyComponentType())) {
+//                            int componentCapacity = ((EnergyNetComponent) item).getCapacity();
+//                            if (componentCapacity == 0) {
+//                                return 0;
+//                            }
+//                            int componentEnergy = Integer.parseInt(EnergyUtil.getCharge(energyComponentConfig));
+//                            int transferEnergy = Math.min(componentCapacity - componentEnergy, validCharge);
+//                            if (transferEnergy > 0) {
+//                                EnergyUtil.setCharge(location, String.valueOf(transferEnergy + componentEnergy));
+//                                maxEnergy.set(Math.max(maxEnergy.get(), transferEnergy));
+//                                totalEnergy.addAndGet(transferEnergy);
+//                                return 1;
+//                            }
+//                        }
+//                    }
+//                }
+//                return 0;
+//            });
+//        }
+//        BlockMenu blockMenu = BlockStorage.getInventory(block);
+//        if(blockMenu.hasViewer()) {
+//            this.updateMenu(blockMenu, charge, count, totalEnergy, maxEnergy);
+//        }
+//        charge = charge - (int) (maxEnergy.get() * loss);
+//        charge = Math.max(charge, 0);
+//        EnergyUtil.setCharge(blockLocation, String.valueOf(charge));
     }
 
     @Override
@@ -108,7 +134,7 @@ public class DispersalCapacitor extends AbstractCubeMachine implements EnergyNet
         return false;
     }
 
-    private void updateMenu(@Nonnull BlockMenu blockMenu, int charge, int count, AtomicInteger totalEnergy, AtomicInteger maxEnergy) {
+    private void updateMenu(@Nonnull BlockMenu blockMenu, int energy, int count, int charge) {
         ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
     }
 
@@ -127,7 +153,6 @@ public class DispersalCapacitor extends AbstractCubeMachine implements EnergyNet
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(this.range),
-                String.valueOf(this.capacity),
-                String.valueOf(this.loss));
+                String.valueOf(this.capacity));
     }
 }

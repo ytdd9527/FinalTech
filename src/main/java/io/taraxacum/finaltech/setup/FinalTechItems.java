@@ -20,14 +20,14 @@ public final class FinalTechItems {
     public static final SlimefunItemStack BUG = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_BUG", Material.BONE_MEAL, "Bug");
     public static final SlimefunItemStack ENTROPY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ENTROPY", Material.COAL, "Entropy");
     public static final SlimefunItemStack BOX = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_BOX", Material.CHEST, "Box");
-    public static final SlimefunItemStack SHINE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_SHINE", Material.BONE_MEAL, "Shine");
+    public static final SlimefunItemStack SHINE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_SHINE", Material.GLOWSTONE_DUST, "Shine");
     public static final SlimefunItemStack COPY_CARD = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_COPY_CARD", Material.FLINT, "Copy Card");
     public static final SlimefunItemStack ANNULAR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ANNULAR", Material.BOWL, "Annular");
     public static final SlimefunItemStack QUANTITY_MODULE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_QUANTITY_MODULE", Material.AMETHYST_SHARD, "Quantity Module");
     public static final SlimefunItemStack QUANTITY_MODULE_INFINITY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_QUANTITY_MODULE_INFINITY", Material.AMETHYST_SHARD, "Infinity Quantity Module");
     public static final SlimefunItemStack SINGULARITY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_SINGULARITY", Material.NETHER_STAR, "Singularity");
     public static final SlimefunItemStack SPIROCHETE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_SPIROCHETE", Material.STRING, "Spirochete");
-    public static final SlimefunItemStack SHELL = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_SHELL", Material.AMETHYST_SHARD, "Shell");
+    public static final SlimefunItemStack SHELL = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_SHELL", Material.NETHERITE_SCRAP, "Shell");
     public static final SlimefunItemStack PHONY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_PHONY", Material.END_CRYSTAL, "Phony");
     public static final SlimefunItemStack JUSTIFIABILITY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_JUSTIFIABILITY", Material.IRON_NUGGET, "Justifiability");
     public static final SlimefunItemStack EQUIVALENT_CONCEPT = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_EQUIVALENT_CONCEPT", Material.BLACK_CONCRETE, "Equivalent Concept");
