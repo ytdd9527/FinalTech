@@ -1000,25 +1000,25 @@ public final class FinalTechRecipes {
     // 2
     public static final ItemStack[] MACHINE_CHARGE_CARD_INFINITY = new ItemStack[] {
             ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L1, 64), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L1, 64), null,
-            ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L1, 64), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L2, 16), null,
+            ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L2, 16), null,
             ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.PHONY, 2), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L3, 4), null,
-            ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L1, 64), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L2, 16), null,
+            ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L2, 16), null,
             ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L1, 64), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_CHARGE_CARD_L1, 64), null,
     };
     // 2
     public static final ItemStack[] MACHINE_ACCELERATE_CARD_INFINITY = new ItemStack[] {
             ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L1, 64), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L1, 64), null,
-            ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L1, 64), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 16), null,
+            ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 16), null,
             ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.PHONY, 2), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 4), null,
-            ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L1, 64), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 16), null,
+            ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 16), null,
             ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L1, 64), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACCELERATE_CARD_L1, 64), null,
     };
     // 2
     public static final ItemStack[] MACHINE_ACTIVATE_CARD_L4 = new ItemStack[] {
             ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L1, 64), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L1, 64), null,
-            ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L1, 64), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L2, 16), null,
+            ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L2, 16), null,
             ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.PHONY, 2), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L3, 4), null,
-            ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L1, 64), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L2, 16), null,
+            ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L3, 4), null, ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L2, 16), null,
             ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L1, 64), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L3, 4), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L2, 16), ItemStackUtil.cloneItem(FinalTechItems.MACHINE_ACTIVATE_CARD_L1, 64), null,
     };
     // 4
@@ -1039,10 +1039,10 @@ public final class FinalTechRecipes {
     // 12
     public static final ItemStack[] MATRIX_EXPANDED_CAPACITOR = new ItemStack[] {
             FinalTechItems.PHONY, FinalTechItems.ADVANCED_CHARGE_INCREASE_CAPACITOR, FinalTechItems.ADVANCED_CHARGE_INCREASE_CAPACITOR, FinalTechItems.ADVANCED_CHARGE_INCREASE_CAPACITOR, FinalTechItems.ADVANCED_CHARGE_INCREASE_CAPACITOR, FinalTechItems.PHONY,
-            FinalTechItems.PHONY, FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, FinalTechItems.PHONY,
-            FinalTechItems.PHONY, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.PHONY,
-            FinalTechItems.PHONY, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.PHONY,
-            FinalTechItems.PHONY, FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, FinalTechItems.PHONY,
+            FinalTechItems.PHONY, FinalTechItems.ENERGIZED_STACK_EXPANDED_CAPACITOR, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.ENERGIZED_STACK_EXPANDED_CAPACITOR, FinalTechItems.PHONY,
+            FinalTechItems.PHONY, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.ENERGIZED_STACK_EXPANDED_CAPACITOR, FinalTechItems.ENERGIZED_STACK_EXPANDED_CAPACITOR, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.PHONY,
+            FinalTechItems.PHONY, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.ENERGIZED_STACK_EXPANDED_CAPACITOR, FinalTechItems.ENERGIZED_STACK_EXPANDED_CAPACITOR, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.PHONY,
+            FinalTechItems.PHONY, FinalTechItems.ENERGIZED_STACK_EXPANDED_CAPACITOR, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechItems.ENERGIZED_STACK_EXPANDED_CAPACITOR, FinalTechItems.PHONY,
             FinalTechItems.PHONY, FinalTechItems.ADVANCED_CONSUME_REDUCE_CAPACITOR, FinalTechItems.ADVANCED_CONSUME_REDUCE_CAPACITOR, FinalTechItems.ADVANCED_CONSUME_REDUCE_CAPACITOR, FinalTechItems.ADVANCED_CONSUME_REDUCE_CAPACITOR, FinalTechItems.PHONY,
     };
     // 12
@@ -1057,10 +1057,10 @@ public final class FinalTechRecipes {
     // 20
     public static final ItemStack[] MATRIX_GENERATOR = new ItemStack[] {
             FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY,
-            FinalTechItems.PHONY, FinalTechItems.ENERGIZED_GENERATOR, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.ENERGIZED_GENERATOR, FinalTechItems.PHONY,
-            FinalTechItems.PHONY, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.ENERGIZED_GENERATOR, FinalTechItems.ENERGIZED_GENERATOR, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.PHONY,
-            FinalTechItems.PHONY, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.ENERGIZED_GENERATOR, FinalTechItems.ENERGIZED_GENERATOR, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.PHONY,
-            FinalTechItems.PHONY, FinalTechItems.ENERGIZED_GENERATOR, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.ENERGIZED_GENERATOR, FinalTechItems.PHONY,
+            FinalTechItems.PHONY, FinalTechItems.ENERGIZED_STACK_GENERATOR, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.ENERGIZED_STACK_GENERATOR, FinalTechItems.PHONY,
+            FinalTechItems.PHONY, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.ENERGIZED_STACK_GENERATOR, FinalTechItems.ENERGIZED_STACK_GENERATOR, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.PHONY,
+            FinalTechItems.PHONY, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.ENERGIZED_STACK_GENERATOR, FinalTechItems.ENERGIZED_STACK_GENERATOR, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.PHONY,
+            FinalTechItems.PHONY, FinalTechItems.ENERGIZED_STACK_GENERATOR, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.OVERLOADED_GENERATOR, FinalTechItems.ENERGIZED_STACK_GENERATOR, FinalTechItems.PHONY,
             FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY, FinalTechItems.PHONY,
     };
     // 20

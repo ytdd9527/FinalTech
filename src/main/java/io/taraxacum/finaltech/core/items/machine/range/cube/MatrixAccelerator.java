@@ -35,8 +35,9 @@ import java.util.*;
 public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem {
     private final int range = ConfigUtil.getOrDefaultItemSetting(1, this, "range");
     // System.nanoTime
-    private final int syncThreshold = ConfigUtil.getOrDefaultItemSetting(400000000, this, "threshold-sync");
-    private final int asyncThreshold = ConfigUtil.getOrDefaultItemSetting(150000000, this, "threshold-async");
+    // 1000000 = 1ms
+    private final int syncThreshold = ConfigUtil.getOrDefaultItemSetting(150000, this, "threshold-sync");
+    private final int asyncThreshold = ConfigUtil.getOrDefaultItemSetting(400000, this, "threshold-async");
     private final Set<String> invalidIdSet = new HashSet<>(ConfigUtil.getItemStringList(this, "invalid-ids"));
 
     public MatrixAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -159,13 +160,17 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
                         for (int i = 0; i < accelerate; i++) {
                             if(blockTicker.isSynchronized()) {
                                 javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
-                                    if(JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig)) > MatrixAccelerator.this.syncThreshold) {
+                                    long testTime = JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig));
+                                    System.out.println(finalMachineId + " : " + testTime);
+                                    if(testTime > MatrixAccelerator.this.syncThreshold) {
                                         MatrixAccelerator.this.invalidIdSet.add(finalMachineId);
                                     }
                                 });
                             } else {
                                 BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(finalMachineId), () -> {
-                                    if(JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig)) > MatrixAccelerator.this.asyncThreshold) {
+                                    long testTime = JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig));
+                                    System.out.println(finalMachineId + " : " + testTime);
+                                    if(testTime > MatrixAccelerator.this.asyncThreshold) {
                                         MatrixAccelerator.this.invalidIdSet.add(finalMachineId);
                                     }
                                 }, machineLocation);
@@ -231,6 +236,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
         if(blockMenu.hasViewer()) {
             ItemStack item = blockMenu.getItemInSlot(StatusL2Menu.STATUS_SLOT);
             ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
+                    String.valueOf(range),
                     String.valueOf(accelerateMachineCount),
                     String.valueOf(accelerateTimeCount)));
         }

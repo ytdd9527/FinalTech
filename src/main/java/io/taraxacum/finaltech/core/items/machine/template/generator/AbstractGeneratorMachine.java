@@ -12,6 +12,7 @@ import io.taraxacum.finaltech.api.dto.ItemAmountWrapper;
 import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.api.factory.MachineRecipeFactory;
+import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.GeneratorMachineMenu;
@@ -71,7 +72,7 @@ public abstract class AbstractGeneratorMachine extends AbstractMachine implement
         List<AdvancedMachineRecipe> advancedMachineRecipeList = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getClass());
         AdvancedMachineRecipe advancedMachineRecipe = advancedMachineRecipeList.get((int) (FinalTech.getRandom().nextDouble() * advancedMachineRecipeList.size()));
         ItemAmountWrapper[] outputs = advancedMachineRecipe.getOutput();
-        int quantityModule = MachineUtil.updateQuantityModule(blockMenu, GeneratorMachineMenu.MODULE_SLOT, GeneratorMachineMenu.STATUS_SLOT);
+        int quantityModule = Icon.updateQuantityModule(blockMenu, GeneratorMachineMenu.MODULE_SLOT, GeneratorMachineMenu.STATUS_SLOT);
         int maxMatch = Math.min(quantityModule, MachineUtil.calMaxMatch(blockMenu.toInventory(), this.getOutputSlot(), outputs));
         if(maxMatch > 0) {
             for(ItemStack itemStack : ItemStackUtil.calEnlargeItemArray(outputs, maxMatch)) {

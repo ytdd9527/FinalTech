@@ -13,6 +13,7 @@ import io.taraxacum.finaltech.core.menu.machine.MatrixItemDismantleTableMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -71,7 +72,7 @@ public class MatrixItemDismantleTable extends AbstractMachine implements RecipeI
                 for (int i = 0; i < this.getOutputSlot().length && i < sfItem.getRecipe().length; i++) {
                     if (!ItemStackUtil.isItemNull(sfItem.getRecipe()[i])) {
                         ItemStack outputItem = ItemStackUtil.cloneItem(sfItem.getRecipe()[i]);
-                        ItemStack liquidCard = ItemStackUtil.getLiquidCard(outputItem);
+                        ItemStack liquidCard = RecipeUtil.getLiquidCard(outputItem);
                         if(liquidCard != null) {
                             outputItem = liquidCard;
                         }

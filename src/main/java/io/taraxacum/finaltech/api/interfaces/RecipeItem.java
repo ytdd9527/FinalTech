@@ -9,6 +9,7 @@ import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
 import io.taraxacum.finaltech.api.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.core.items.unusable.liquid.LiquidCard;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -113,7 +114,7 @@ public interface RecipeItem extends RecipeDisplayItem {
             if (ItemStackUtil.isItemNull(item)) {
                 continue;
             }
-            ItemStack liquidCardItem = ItemStackUtil.getLiquidCard(item);
+            ItemStack liquidCardItem = RecipeUtil.getLiquidCard(item);
             if (liquidCardItem == null) {
                 inputList1.add(item);
                 inputList2.add(item);
@@ -124,7 +125,7 @@ public interface RecipeItem extends RecipeDisplayItem {
                 outputList1.add(new CustomItemStack(Material.BUCKET));
             }
         }
-        if (extraRecipe) {
+        if (extraRecipe && !outputList2.isEmpty()) {
             this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(inputList1))), ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(outputList1)));
             this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(inputList2))), ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(outputList2)));
         } else {
@@ -144,6 +145,10 @@ public interface RecipeItem extends RecipeDisplayItem {
     }
     default void registerDescriptiveRecipe(@Nonnull ItemStack item, @Nonnull String name, @Nonnull String... lore) {
         this.registerRecipe(0, new CustomItemStack(Material.BOOK, name, lore), item);
+    }
+
+    default void clearRecipe() {
+        this.getMachineRecipes().clear();
     }
 
     void registerDefaultRecipes();

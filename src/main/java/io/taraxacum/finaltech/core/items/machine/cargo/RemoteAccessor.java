@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
 public class RemoteAccessor extends AbstractCargo implements RecipeItem {
     public static final String KEY = "times";
     public static final int RANGE = ConfigUtil.getOrDefaultItemSetting(16, SfItemUtil.getIdFormatName(RemoteAccessor.class), "range");
-    public static final String THRESHOLD = FinalTech.getValueManager().getOrDefault(String.valueOf(Slimefun.getTickerTask().getTickRate() / 2), SfItemUtil.getIdFormatName(RemoteAccessor.class), "threshold");
+    public static final String THRESHOLD = ConfigUtil.getOrDefaultItemSetting(String.valueOf(Slimefun.getTickerTask().getTickRate() / 2), SfItemUtil.getIdFormatName(RemoteAccessor.class), "threshold");
 
     public RemoteAccessor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

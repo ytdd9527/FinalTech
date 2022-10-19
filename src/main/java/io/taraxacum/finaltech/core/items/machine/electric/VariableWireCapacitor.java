@@ -12,7 +12,7 @@ import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
+import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
@@ -54,7 +54,7 @@ public class VariableWireCapacitor extends AbstractElectricMachine implements Re
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new StatusL2Menu(this);
+        return new StatusMenu(this);
     }
 
     @Override
@@ -66,6 +66,7 @@ public class VariableWireCapacitor extends AbstractElectricMachine implements Re
             JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
             javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> block.setType(FinalTechItems.VARIABLE_WIRE_RESISTANCE.getType()));
         }
+        // TODO: show electricity
     }
 
     @Nonnull

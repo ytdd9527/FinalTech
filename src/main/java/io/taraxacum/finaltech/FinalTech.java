@@ -5,9 +5,11 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.api.factory.*;
 import io.taraxacum.finaltech.setup.SetupUtil;
+import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -171,34 +173,6 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         } else {
             SetupUtil.registerBlockTicker(0);
         }
-
-        SetupUtil.test(0, true, () -> {
-            RecipeTypeRegistry instance = RecipeTypeRegistry.getInstance();
-            instance.reload();
-            System.out.println("------");
-            System.out.println("------");
-            System.out.println("------");
-            for(RecipeType recipeType : instance.getRecipeTypeSet()) {
-                System.out.println(recipeType.getKey());
-            }
-            System.out.println("------");
-            System.out.println("------");
-            System.out.println("------");
-        });
-
-        SetupUtil.test(10, true, () -> {
-            RecipeTypeRegistry instance = RecipeTypeRegistry.getInstance();
-            instance.reload();
-            System.out.println("======");
-            System.out.println("======");
-            System.out.println("======");
-            for(RecipeType recipeType : instance.getRecipeTypeSet()) {
-                System.out.println(recipeType.getKey());
-            }
-            System.out.println("======");
-            System.out.println("======");
-            System.out.println("======");
-        });
     }
 
     @Override
@@ -218,6 +192,17 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             e.printStackTrace();
         } finally {
             BlockStorage.saveChunks();
+            try {
+                for(World world : Bukkit.getWorlds()) {
+                    BlockStorage storage = BlockStorage.getStorage(world);
+                    if(storage != null) {
+                        storage.save();
+                    }
+                }
+                BlockStorage.saveChunks();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         try {
             FinalTech.getEntityRunnableFactory().waitAllTask();
@@ -225,6 +210,17 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             e.printStackTrace();
         } finally {
             BlockStorage.saveChunks();
+            try {
+                for(World world : Bukkit.getWorlds()) {
+                    BlockStorage storage = BlockStorage.getStorage(world);
+                    if(storage != null) {
+                        storage.save();
+                    }
+                }
+                BlockStorage.saveChunks();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

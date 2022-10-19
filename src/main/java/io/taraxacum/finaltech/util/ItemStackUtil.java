@@ -794,25 +794,6 @@ public final class ItemStackUtil {
     }
 
     /**
-     * @return The #{@link io.taraxacum.finaltech.core.items.unusable.liquid.LiquidCard} in #{@link ItemStack}
-     */
-    @Nullable
-    public static ItemStack getLiquidCard(@Nullable ItemStack item) {
-        if (ItemStackUtil.isItemNull(item)) {
-            return null;
-        }
-        if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
-            return null;
-        }
-        return switch (item.getType()) {
-            case WATER_BUCKET, POTION -> new ItemStack(FinalTechItems.WATER_CARD);
-            case LAVA_BUCKET -> new ItemStack(FinalTechItems.LAVA_CARD);
-            case MILK_BUCKET -> new ItemStack(FinalTechItems.MILK_CARD);
-            default -> null;
-        };
-    }
-
-    /**
      * Transfer #{@link ItemStack} to #{@link String}
      */
     @Nonnull

@@ -1,6 +1,7 @@
 package io.taraxacum.common.util;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public class ReflectionUtil {
 
@@ -26,5 +27,29 @@ public class ReflectionUtil {
             return false;
         }
         return true;
+    }
+
+    public static Method getMethod(Class<?> clazz, String methodName) {
+        while (clazz != Object.class) {
+            for(Method method : clazz.getDeclaredMethods()) {
+                if(method.getName().equals(methodName)) {
+                    return method;
+                }
+            }
+            clazz = clazz.getSuperclass();
+        }
+        return null;
+    }
+
+    public static Field getField(Class<?> clazz, String fieldName) {
+        while (clazz != Object.class) {
+            for(Field field : clazz.getDeclaredFields()) {
+                if(field.getName().equals(fieldName)) {
+                    return field;
+                }
+            }
+            clazz = clazz.getSuperclass();
+        }
+        return null;
     }
 }

@@ -154,7 +154,7 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem {
                 }
             }
 
-            if (ItemStackUtil.isItemNull(stringItem) || !ItemStackUtil.isItemSimilar(item, stringItem)) {
+            if (ItemStackUtil.isItemNull(stringItem) || !ItemStackUtil.isItemSimilar(item, stringItem) || item.getAmount() != stringItem.getAmount()) {
                 BlockStorage.addBlockInfo(location, KEY_ITEM, ItemStackUtil.itemStackToString(item));
 
                 int count;
@@ -169,9 +169,9 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem {
                 BlockStorage.addBlockInfo(location, KEY_COUNT, String.valueOf(count));
             } else {
                 int count = config.contains(KEY_COUNT) ? Integer.parseInt(config.getString(KEY_COUNT)) : 0;
-                if (ItemPhony.isValid(blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0]))) {
+                if (ItemPhony.isValid(blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0])) && blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0]).getAmount() >= amount + count && amount + count <= 64) {
                     ItemStack itemPhony = blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0]);
-                    itemPhony.setAmount(itemPhony.getAmount() - 1);
+                    itemPhony.setAmount(itemPhony.getAmount() - count - amount);
                     count++;
                 } else {
                     count = FinalTech.getRandom().nextBoolean() ? count - 1 : count + 1;

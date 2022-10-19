@@ -9,6 +9,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.*;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.core.items.machine.EntropySeed;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.MachineUtil;
@@ -41,7 +42,7 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
     public static final String KEY_LIFE = "l";
     public static final String KEY_RANGE = "r";
     private final double attenuationRate = ConfigUtil.getOrDefaultItemSetting(0.95, this, "attenuation-rate");
-    private final double life = ConfigUtil.getOrDefaultItemSetting(8.0, this, "life");
+    private final double life = ConfigUtil.getOrDefaultItemSetting(4.0, this, "life");
     private final int range = ConfigUtil.getOrDefaultItemSetting(2, this, "range");
 
     public EquivalentConcept(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -102,36 +103,34 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
             return;
         }
 
-        double life = this.life;
-        if(config.contains(KEY_LIFE)) {
-            life = Double.parseDouble(config.getString(KEY_LIFE));
-        }
+        double life = config.contains(KEY_LIFE) ? Double.parseDouble(config.getString(KEY_LIFE)) : 0;
         if(life < 1) {
             Location location = block.getLocation();
-            Slimefun.getBlockDataService().setBlockData(block, FinalTechItems.JUSTIFIABILITY.getItemId());
-            BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, FinalTechItems.JUSTIFIABILITY.getItemId(), true);
             BlockStorage.addBlockInfo(location, KEY_LIFE, null);
+            BlockStorage.addBlockInfo(location, KEY_RANGE, null);
             BlockTickerUtil.setSleep(config, null);
+            BlockStorage.clearBlockInfo(location);
+            JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
+            javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> {
+                if(!location.getBlock().getType().isAir() && BlockStorage.getLocationInfo(location, ConstantTableUtil.CONFIG_ID) == null) {
+                    BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, FinalTechItems.JUSTIFIABILITY.getItemId(), true);
+                }
+            }, Slimefun.getTickerTask().getTickRate() + 1);
             return;
         }
 
-        int range = this.range;
-        if(config.contains(KEY_RANGE)) {
-            range = Integer.parseInt(config.getString(KEY_RANGE));
-        }
+        final int range = config.contains(KEY_RANGE) ? Integer.parseInt(config.getString(KEY_RANGE)) : this.range;
 
-        while (life-- > 1) {
-            final double finalLife = life;
-            final int finalRange = range;
+        while (life > 1) {
+            final double finalLife = life--;
             this.function(block, range, location -> {
                 FinalTech.getLocationRunnableFactory().waitThenRun(() -> {
                     Block targetBlock = location.getBlock();
                     if(!BlockStorage.hasBlockInfo(location)) {
                         if(targetBlock.getType().isAir()) {
-                            Slimefun.getBlockDataService().setBlockData(targetBlock, EquivalentConcept.this.getId());
                             BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, EquivalentConcept.this.getId(), true);
                             BlockStorage.addBlockInfo(location, KEY_LIFE, String.valueOf(finalLife * attenuationRate));
-                            BlockStorage.addBlockInfo(location, KEY_RANGE, String.valueOf(finalRange + 1));
+                            BlockStorage.addBlockInfo(location, KEY_RANGE, String.valueOf(range + 1));
                             BlockTickerUtil.setSleep(location, String.valueOf(EquivalentConcept.this.life - finalLife));
                             JavaPlugin javaPlugin = EquivalentConcept.this.getAddon().getJavaPlugin();
                             javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> targetBlock.setType(EquivalentConcept.this.getItem().getType()));

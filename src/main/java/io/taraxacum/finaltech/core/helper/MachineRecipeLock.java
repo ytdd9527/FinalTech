@@ -80,13 +80,17 @@ public final class MachineRecipeLock {
                     List<String> loreList;
                     if (advancedMachineRecipe.getOutputs().length == 1) {
                         loreList = new ArrayList<>(advancedMachineRecipe.getInput().length + advancedMachineRecipe.getOutputs()[0].getOutputItem().length + 3);
-                        loreList.addAll(FinalTech.getLanguageStringList("helper", "MACHINE_RECIPE_LOCK", "lock", "input", "title"));
+                        loreList.addAll(FinalTech.getLanguageStringList("helper", "MACHINE_RECIPE_LOCK", "input", "title"));
                         for (ItemAmountWrapper inputItem : advancedMachineRecipe.getInput()) {
-                            loreList.add(FinalTech.getLanguageManager().replaceString(FinalTech.getLanguageString("helper", "MACHINE_RECIPE_LOCK", "input", "items"), ItemStackUtil.getItemName(inputItem.getItemStack()), String.valueOf(inputItem.getAmount())));
+                            loreList.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "MACHINE_RECIPE_LOCK", "input", "items"),
+                                    ItemStackUtil.getItemName(inputItem.getItemStack()),
+                                    String.valueOf(inputItem.getAmount())));
                         }
-                        loreList.addAll(FinalTech.getLanguageStringList("helper", "MACHINE_RECIPE_LOCK", "lock", "output", "title"));
+                        loreList.addAll(FinalTech.getLanguageStringList("helper", "MACHINE_RECIPE_LOCK", "output", "title"));
                         for (ItemAmountWrapper outputItem : advancedMachineRecipe.getOutputs()[0].getOutputItem()) {
-                            loreList.add(FinalTech.getLanguageManager().replaceString(FinalTech.getLanguageString("helper", "MACHINE_RECIPE_LOCK", "output", "items"), ItemStackUtil.getItemName(outputItem.getItemStack()), String.valueOf(outputItem.getAmount())));
+                            loreList.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "MACHINE_RECIPE_LOCK", "output", "items"),
+                                    ItemStackUtil.getItemName(outputItem.getItemStack()),
+                                    String.valueOf(outputItem.getAmount())));
                         }
                     } else {
                         int outputLength = 0;
@@ -94,19 +98,24 @@ public final class MachineRecipeLock {
                             outputLength += advancedRandomOutput.getOutputItem().length + 1;
                         }
                         loreList = new ArrayList<>(advancedMachineRecipe.getInput().length + outputLength + 3);
-                        loreList.addAll(FinalTech.getLanguageStringList("helper", "MACHINE_RECIPE_LOCK", "lock", "input", "title"));
+                        loreList.addAll(FinalTech.getLanguageStringList("helper", "MACHINE_RECIPE_LOCK", "input", "title"));
                         for (ItemAmountWrapper inputItem : advancedMachineRecipe.getInput()) {
-                            loreList.add(FinalTech.getLanguageManager().replaceString(FinalTech.getLanguageString("helper", "MACHINE_RECIPE_LOCK", "input", "items"), ItemStackUtil.getItemName(inputItem.getItemStack()), String.valueOf(inputItem.getAmount())));
+                            loreList.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "MACHINE_RECIPE_LOCK", "input", "items"),
+                                    ItemStackUtil.getItemName(inputItem.getItemStack()),
+                                    String.valueOf(inputItem.getAmount())));
                         }
-                        loreList.addAll(FinalTech.getLanguageStringList("helper", "MACHINE_RECIPE_LOCK", "lock", "output", "title"));
+                        loreList.addAll(FinalTech.getLanguageStringList("helper", "MACHINE_RECIPE_LOCK", "output", "title"));
                         for (AdvancedMachineRecipe.AdvancedRandomOutput advancedRandomOutput : advancedMachineRecipe.getOutputs()) {
                             String random = String.valueOf(((double) advancedRandomOutput.getWeight()) / advancedMachineRecipe.getWeightSum() * 100.0);
                             if (random.contains(".")) {
                                 random = random.substring(0, Math.min(random.indexOf(".") + 3, random.length()));
                             }
-                            loreList.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "MACHINE_RECIPE_LOCK", "lock", "output-random", "title"), random));
+                            loreList.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "MACHINE_RECIPE_LOCK", "output-random", "title"),
+                                    random));
                             for (ItemAmountWrapper outputItem : advancedRandomOutput.getOutputItem()) {
-                                loreList.add(FinalTech.getLanguageManager().replaceString(FinalTech.getLanguageString("helper", "MACHINE_RECIPE_LOCK", "input", "items"), ItemStackUtil.getItemName(outputItem.getItemStack()), String.valueOf(outputItem.getAmount())));
+                                loreList.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "MACHINE_RECIPE_LOCK", "input", "items"),
+                                        ItemStackUtil.getItemName(outputItem.getItemStack()),
+                                        String.valueOf(outputItem.getAmount())));
                             }
                         }
                     }

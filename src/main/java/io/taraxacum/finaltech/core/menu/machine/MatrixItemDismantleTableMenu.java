@@ -16,7 +16,7 @@ public class MatrixItemDismantleTableMenu extends AbstractMachineMenu {
     private static final int[] INPUT_BORDER = new int[] {0, 1, 2, 9, 11, 18, 19, 20};
     private static final int[] OUTPUT_BORDER = new int[] {};
     private static final int[] INPUT_SLOT = new int[] {10};
-    private static final int[] OUTPUT_SLOT = new int[] {6, 7, 8, 15, 16, 17, 24, 25, 26, 33, 34, 35, 42, 43, 44, 51, 52, 53};
+    private static final int[] OUTPUT_SLOT = new int[] {3, 4, 5, 6, 7, 8, 12, 13, 14, 15, 16, 17, 21, 22, 23, 24, 25, 26, 30, 31, 32, 33, 34, 35, 39, 40, 41, 42, 43, 44, 48, 49, 50, 51, 52, 53};
 
     public MatrixItemDismantleTableMenu(@Nonnull AbstractMachine machine) {
         super(machine);

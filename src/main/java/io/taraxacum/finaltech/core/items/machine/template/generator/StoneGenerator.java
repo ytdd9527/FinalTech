@@ -17,6 +17,6 @@ public class StoneGenerator extends AbstractGeneratorMachine {
 
     @Override
     void registerRandomOutputRecipes() {
-        this.registerRecipe(Tag.BASE_STONE_OVERWORLD);
+        this.registerRecipe(Tag.STONE_ORE_REPLACEABLES);
     }
 }

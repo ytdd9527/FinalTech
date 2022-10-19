@@ -81,7 +81,7 @@ public class RecipeItemGroup extends FlexItemGroup {
     }
 
     @Nullable
-    public static RecipeItemGroup getByItemStack(@Nonnull Player player, @Nonnull PlayerProfile playerProfile, @Nonnull SlimefunGuideMode slimefunGuideMode, @Nonnull ItemStack itemStack, int page) {
+    public static RecipeItemGroup getByItemStack(@Nonnull Player player, @Nonnull PlayerProfile playerProfile, @Nonnull SlimefunGuideMode slimefunGuideMode, @Nullable ItemStack itemStack, int page) {
         SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
         if(slimefunItem != null) {
             if(page == 1) {
@@ -100,7 +100,7 @@ public class RecipeItemGroup extends FlexItemGroup {
             } else {
                 return new RecipeItemGroup(new NamespacedKey(FinalTech.getInstance(), "SLIMEFUN_ITEM" + slimefunItem.getId()), slimefunItem, page);
             }
-        } else {
+        } else if(!ItemStackUtil.isItemNull(itemStack)) {
             Material material = itemStack.getType();
             if(ItemStackUtil.isItemSimilar(itemStack, new ItemStack(material))) {
                 // TODO vanilla item recipe
@@ -112,7 +112,7 @@ public class RecipeItemGroup extends FlexItemGroup {
     }
 
     @Nullable
-    public static RecipeItemGroup getByItemStack(@Nonnull Player player, @Nonnull PlayerProfile playerProfile, @Nonnull SlimefunGuideMode slimefunGuideMode, @Nonnull ItemStack itemStack) {
+    public static RecipeItemGroup getByItemStack(@Nonnull Player player, @Nonnull PlayerProfile playerProfile, @Nonnull SlimefunGuideMode slimefunGuideMode, @Nullable ItemStack itemStack) {
         return RecipeItemGroup.getByItemStack(player, playerProfile, slimefunGuideMode, itemStack, 1);
     }
 

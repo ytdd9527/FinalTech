@@ -10,6 +10,7 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.AdvancedCraft;
 import io.taraxacum.finaltech.api.dto.AdvancedMachineRecipe;
 import io.taraxacum.finaltech.api.factory.LocationRecipeRegistry;
+import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.function.AdvancedAutoCraftMenu;
@@ -93,7 +94,7 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
         int[] inputSlots = inputMap.getSlots();
         int[] outputSlots = outputMap.getSlots();
 
-        int quantity = MachineUtil.updateQuantityModule(blockMenu, AdvancedAutoCraftMenu.MODULE_SLOT, AdvancedAutoCraftMenu.STATUS_SLOT);
+        int quantity = Icon.updateQuantityModule(blockMenu, AdvancedAutoCraftMenu.MODULE_SLOT, AdvancedAutoCraftMenu.STATUS_SLOT);
 
         Runnable runnable = () -> {
             AdvancedCraft craft = AdvancedCraft.craftAsc(containerMenu.toInventory(), inputSlots, List.of(machineRecipe), quantity, 0);

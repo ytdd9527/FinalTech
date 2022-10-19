@@ -318,41 +318,4 @@ public final class MachineUtil {
         }
         return min;
     }
-
-    // TODO
-    public static int updateQuantityModule(@Nonnull BlockMenu blockMenu, int quantityModuleSlot, int statusSlot) {
-        ItemStack item = blockMenu.getItemInSlot(quantityModuleSlot);
-        int amount;
-        String lore;
-        if (ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE)) {
-            amount = item.getAmount();
-            lore = "§7当前效率= " + amount;
-        } else if (ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE_INFINITY)) {
-            amount = Integer.MAX_VALUE / 64 - 1;
-            lore = "§7当前效率= " + "INFINITY";
-        } else {
-            amount = 1;
-            lore = "§7当前效率= " + amount;
-        }
-        ItemStack infoItem = blockMenu.getItemInSlot(statusSlot);
-        if (!infoItem.hasItemMeta()) {
-            return amount;
-        }
-        ItemMeta itemMeta = infoItem.getItemMeta();
-        List<String> loreList = itemMeta.getLore();
-        if (loreList == null) {
-            loreList = new ArrayList<>(2);
-        }
-        if (loreList.size() == 0) {
-            loreList.add("§7该机器可以通过添加[数量组件]进行升级");
-        }
-        if (loreList.size() == 1) {
-            loreList.add(lore);
-        } else {
-            loreList.set(1, lore);
-        }
-        itemMeta.setLore(loreList);
-        infoItem.setItemMeta(itemMeta);
-        return amount;
-    }
 }

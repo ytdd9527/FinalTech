@@ -62,7 +62,7 @@ public class MatrixExpandedCapacitor extends AbstractExpandedElectricCapacitor {
 
     @Override
     public int getCapacity() {
-        return this.capacity * 2;
+        return this.capacity;
     }
 
     @Nonnull
@@ -84,9 +84,9 @@ public class MatrixExpandedCapacitor extends AbstractExpandedElectricCapacitor {
     @Override
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
-                String.valueOf((this.getCapacity() / 2)),
+                String.valueOf((this.capacity / 2)),
                 this.stack,
-                StringNumberUtil.add(this.getMaxStack(), String.format("%.2f", this.chargeIncrease() * 100)),
+                StringNumberUtil.add(String.valueOf((int)this.chargeIncrease), String.format("%.2f", this.chargeIncrease() * 100)),
                 String.format("%.2f", this.consumeReduce() * 100),
                 String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0));
     }

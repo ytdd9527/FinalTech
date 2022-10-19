@@ -12,6 +12,7 @@ import io.taraxacum.finaltech.api.dto.ItemWrapper;
 import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.api.factory.MachineRecipeFactory;
+import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.ConversionMachineMenu;
@@ -60,7 +61,7 @@ public abstract class AbstractConversionMachine extends AbstractMachine implemen
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         Inventory inventory = blockMenu.toInventory();
         List<AdvancedMachineRecipe> advancedMachineRecipeList = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getClass());
-        int quantityModule = MachineUtil.updateQuantityModule(blockMenu, ConversionMachineMenu.MODULE_SLOT, ConversionMachineMenu.STATUS_SLOT);
+        int quantityModule = Icon.updateQuantityModule(blockMenu, ConversionMachineMenu.MODULE_SLOT, ConversionMachineMenu.STATUS_SLOT);
         ItemWrapper itemWrapper = new ItemWrapper();
         for(int slot : this.getInputSlot()) {
             ItemStack item = inventory.getItem(slot);

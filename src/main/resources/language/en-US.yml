@@ -21,7 +21,12 @@ helper:
     quantity-module:
       name: '{color:normal}Quantity Module'
       lore:
-        - '{color:normal}Put {id:FINALTECH_QUANTITY_MODULE} {color:normal}to change '
+        - '{color:normal}Put {id:FINALTECH_QUANTITY_MODULE} {color:normal}to change efficiency'
+      amount-lore:
+        - '{color:normal}Efficiency: {color:number}{1}'
+      amount-infinity: '{color:stress}Infinity'
+      amount-none-lore:
+        - '{color:normal}Efficiency: {color:negative}{1}'
     next-page:
       name: '{color:normal}Next Page'
     previous-page:
@@ -288,18 +293,29 @@ helper:
         - I'm list!
   MACHINE_RECIPE_LOCK:
     icon:
-      name: '---===---'
+      name: '{color:random}Recipe Lock'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Recipe Lock is disabled'
+        - '{color:action}[LEFT-click] {color:normal}Enable or reset {color:stress}Recipe Lock'
+        - '{color:action}[Right-click] {color:normal}Disable {color:stress}Recipe Lock'
+    input:
+      title:
+        - '{color:stress}Inputs:'
+      items:
+        - '    §f{1}{color:normal}x {color:number}{2}'
+    output:
+      title:
+        - '{color:stress}Outputs:'
+      items:
+        - '    §f{1}{color:normal}x {color:number}{2}'
     unlock:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Recipe Lock is disabled'
+        - '{color:action}[LEFT-click] {color:normal}Enable or reset {color:stress}Recipe Lock'
+        - '{color:action}[Right-click] {color:normal}Disable {color:stress}Recipe Lock'
     lock-off:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Make the machine work to lock one recipe'
   CARGO_NUMBER_MODE:
     universal:
       lore1: '---===---'
@@ -840,8 +856,8 @@ items:
         name: '{color:positive}Usage'
         lore:
           - '{color:normal}Makes you teleport to the place you are looking at'
-          - '{color:initiative}[Right-Click] {color:normal}teleport to {color:number}{1} blocks {color:normal}away'
-          - '{color:initiative}[Shift + Right-Click] {color:normal}teleport to {color:number}{2} blocks {color:normal}away'
+          - '{color:action}[Right-Click] {color:normal}teleport to {color:number}{1} blocks {color:normal}away'
+          - '{color:action}[Shift + Right-Click] {color:normal}teleport to {color:number}{2} blocks {color:normal}away'
   FINALTECH_POTION_EFFECT_COMPRESSOR:
     name: '{color:prandom}Potion Effect Compressor'
     info:
@@ -862,8 +878,8 @@ items:
       1:
         name: '{color:positive}Usage'
         lore:
-          - '{color:initiative}[Click] {color:normal}Clear your potion effect'
-          - "{color:initiative}[Shift + Click] {color:normal}Clear around lives' potion effect"
+          - '{color:action}[Click] {color:normal}Clear your potion effect'
+          - "{color:action}[Shift + Click] {color:normal}Clear around lives' potion effect"
           - "    {color:normal}Horizontal Range: {color:number}{1}"
           - "    {color:normal}Vertical Range: {color:number}{2}"
   FINALTECH_MENU_VIEWER:
@@ -887,8 +903,8 @@ items:
       1:
         name: '{color:positive}Usage'
         lore:
-          - '{color:initiative}[Right-click] {color:normal}Open the machine in the specified location if existed'
-          - '{color:initiative}[Shift + Right-click] {color:normal}Record and mark the location you are looking at'
+          - '{color:action}[Right-click] {color:normal}Open the machine in the specified location if existed'
+          - '{color:action}[Shift + Right-click] {color:normal}Record and mark the location you are looking at'
       2:
         name: '{color:passive}Mechanism'
         lore:
@@ -900,16 +916,16 @@ items:
       1:
         name: '{color:positive}Usage'
         lore:
-          - '{color:initiative}[Right-click] {color:normal}Paste the configuration to a machine with same type'
-          - '{color:initiative}[Shift + Right-click] {color:normal}Copy the configuration of a machine'
+          - '{color:action}[Right-click] {color:normal}Paste the configuration to a machine with same type'
+          - '{color:action}[Shift + Right-click] {color:normal}Copy the configuration of a machine'
   FINALTECH_PORTABLE_ENERGY_STORAGE:
     name: '{color:prandom}Portable Energy Storage'
     info:
       1:
         name: '{color:positive}Usage'
         lore:
-          - '{color:initiative}[Right-click] {color:normal}Insert the energy to a machine'
-          - '{color:initiative}[Shift + Right-click] {color:normal}Withdraw all the energy of a machine'
+          - '{color:action}[Right-click] {color:normal}Insert the energy to a machine'
+          - '{color:action}[Shift + Right-click] {color:normal}Withdraw all the energy of a machine'
   FINALTECH_SUPER_PICKAXE:
     name: '{color:prandom}Super Pickaxe'
     info:
@@ -1931,9 +1947,9 @@ items:
   FINALTECH_BASIC_DUST_FACTORY:
     name: '{color:prandom}Basic Dust Factory'
   FINALTECH_ADVANCED_COMPOSTER:
-    name: '{color:prandom}Composter'
+    name: '{color:prandom}Advanced Composter'
   FINALTECH_ADVANCED_JUICER:
-    name: '{color:prandom}Juicer'
+    name: '{color:prandom}Advanced Juicer'
   FINALTECH_ADVANCED_ELECTRIC_FURNACE:
     name: '{color:prandom}Advanced Electric Furance'
   FINALTECH_ADVANCED_GOLD_PAN:
@@ -2081,7 +2097,8 @@ items:
       6:
         name: '{color:negative}Limit'
         lore:
-          - '{color:normal}Actual quantity to get a {id:FINALTECH_COPY_CARD} {color:normal}will be enlarged based on server tps'
+          - '{color:normal}Actual quantity to get a {id:FINALTECH_COPY_CARD}'
+          - '{color:normal}will be enlarged based on server tps {color:stress}very greatly.'
     null-icon:
       name: '{color:negative}Not Work'
       lore:
@@ -2116,8 +2133,8 @@ items:
           - '{color:normal}Can not charge capacitor'
     status:
       lore:
-        - '{color:normal}Total Energy= {color:number}{1} J'
-        - '{color:normal}Affected Machine= {color:number}{2}'
+        - '{color:normal}Affected Machine= {color:number}{1}'
+        - '{color:normal}Range= {color:number}{2}'
   FINALTECH_MATRIX_ACCELERATOR:
     name: '{color:prandom}Matrix Accelerator'
     info:
@@ -2139,8 +2156,9 @@ items:
           - '{color:normal}Accelerate times and range will be enlarged by putting more {id:FINALTECH_PHONY}'
     status:
       lore:
-        - '{color:normal}Accelerate Machine: {color:number}{1}'
-        - '{color:normal}Accelerate Times: {color:number}{2}'
+        - '{color:normal}Accelerate Range: {color:number}{1}'
+        - '{color:normal}Accelerate Machine: {color:number}{2}'
+        - '{color:normal}Accelerate Times: {color:number}{3}'
   FINALTECH_MATRIX_ITEM_DESERIALIZE_PARSER:
     name: '{color:prandom}Matrix Item Deserialize Parser'
     info:
@@ -2170,6 +2188,8 @@ items:
         lore:
           - '{color:normal}The amount {id:FINALTECH_UNORDERED_DUST} {color:normal}and {id:FINALTECH_ORDERED_DUST} {color:normal}consumed every times'
           - '{color:normal}is equal to the amount of the input item'
+          - ''
+          - '{color:normal}Else the progress will be reduced by {color:number}1'
       4:
         name: '{color:passive}Mechanism'
         lore:
@@ -2179,6 +2199,12 @@ items:
         lore:
           - '{color:normal}Put {id:FINALTECH_PHONY} {color:normal}in the up side'
           - '{color:normal}will force the progress to increase instead of randomly change'
+          - ''
+          - '{color:normal}Consumed amount of {id:FINALTECH_PHONY} {color:normal}is equal to'
+          - '{color:stress}Progress + Item amount'
+          - ''
+          - '{color:negative}This mechanism will not work while'
+          - '{color:negative}Progress + Item amount > 64'
     status:
       lore:
         - '{color:normal}Progress: {color:number}{1} {color:normal}/ {color:number}{2}'
