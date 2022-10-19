@@ -2,8 +2,7 @@
 FinalTECH
 =
 
-A Slimefun addon about making the world so damn better
-
+A Slimefun addon about making the world a little better
 
 It includes many items with unique function, which will make a hole change to Slimefun gameplay.
 
@@ -11,6 +10,9 @@ It's not completed now, and more object will be added.
 
 ⚠⚠⚠ This project is still in progress.
 -
+
+A new version will come out soon. Check this branch to preview
+https://github.com/ecro-fun/FinalTECH/tree/2.0-preview2
 
 Version history
 =
