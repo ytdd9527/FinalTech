@@ -1,6 +1,8 @@
 package io.taraxacum.finaltech.core.menu.limit.lock;
 
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.block.Block;
 
 import javax.annotation.Nonnull;
 
@@ -42,5 +44,11 @@ public class BasicMachineMenu extends AbstractLockMachineMenu {
     @Override
     public int[] getOutputSlot() {
         return OUTPUT_SLOT;
+    }
+
+    @Override
+    public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
+        super.newInstance(blockMenu, block);
+        blockMenu.addMenuOpeningHandler(p -> BasicMachineMenu.this.updateInventory(blockMenu.toInventory(), block.getLocation()));
     }
 }

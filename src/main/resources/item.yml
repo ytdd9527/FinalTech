@@ -15,3 +15,9 @@ FINALTECH_ITEM_DISMANTLE_TABLE:
     - 'food_fabricator'
     - 'food_composter'
     - 'freezer'
+FINALTECH_MACHINE_CONFIGURATOR:
+  allowed-item-id:
+    - 'FINALTECH_ADVANCED_COMPOSTER'
+    - 'CARGO_NODE_INPUT'
+    - 'CARGO_NODE_OUTPUT'
+    - 'CARGO_NODE_OUTPUT_ADVANCED'

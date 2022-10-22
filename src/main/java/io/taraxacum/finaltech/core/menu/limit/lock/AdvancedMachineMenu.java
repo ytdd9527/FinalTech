@@ -3,6 +3,9 @@ package io.taraxacum.finaltech.core.menu.limit.lock;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.helper.Icon;
+import io.taraxacum.finaltech.core.menu.limit.AbstractLimitMachineMenu;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.block.Block;
 
 import javax.annotation.Nonnull;
 
@@ -53,5 +56,11 @@ public class AdvancedMachineMenu extends AbstractLockMachineMenu {
         super.init();
         this.addItem(STATUS_SLOT, Icon.QUANTITY_MODULE_ICON);
         this.addMenuClickHandler(STATUS_SLOT, ChestMenuUtils.getEmptyClickHandler());
+    }
+
+    @Override
+    public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
+        super.newInstance(blockMenu, block);
+        blockMenu.addMenuOpeningHandler(p -> AdvancedMachineMenu.this.updateInventory(blockMenu.toInventory(), block.getLocation()));
     }
 }

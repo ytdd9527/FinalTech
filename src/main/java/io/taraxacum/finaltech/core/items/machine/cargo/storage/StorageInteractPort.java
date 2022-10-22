@@ -4,7 +4,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTech;
@@ -60,14 +59,12 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
             boolean primaryThread = Bukkit.isPrimaryThread();
             Inventory targetInventory = null;
             BlockState blockState;
-            blockState = block.getState();
             if(primaryThread) {
-                blockState = PaperLib.getBlockState(targetBlock, false).getState();
-
+                blockState = targetBlock.getState();
             } else {
                 blockState = null;
                 try {
-                    blockState = javaPlugin.getServer().getScheduler().callSyncMethod(javaPlugin, () -> PaperLib.getBlockState(targetBlock, false).getState()).get();
+                    blockState = javaPlugin.getServer().getScheduler().callSyncMethod(javaPlugin, targetBlock::getState).get();
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
@@ -179,9 +176,13 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
         }
     }
 
+    private void doFunction() {
+
+    }
+
     @Override
     protected boolean isSynchronized() {
-        return true;
+        return false;
     }
 
     @Override

@@ -38,8 +38,9 @@ public class MachineConfigurator extends UsableSlimefunItem implements RecipeIte
         this.ignoreInfoMap = new HashMap<>(this.allowedItemId.size());
         for(String itemId : this.allowedItemId) {
             this.ignoreInfoMap.put(itemId, new HashSet<>(ConfigUtil.getItemStringList(this, "allowed-item-id", itemId)));
-            this.ignoreInfoMap.get(itemId).add(ConstantTableUtil.CONFIG_ID);
+            this.ignoreInfoMap.get(itemId).add("slimefun_item");
             this.ignoreInfoMap.get(itemId).add("energy-charge");
+            this.ignoreInfoMap.get(itemId).remove(ConstantTableUtil.CONFIG_ID);
         }
     }
 
@@ -51,55 +52,56 @@ public class MachineConfigurator extends UsableSlimefunItem implements RecipeIte
      */
     @Override
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
+        playerRightClickEvent.cancel();
+
         Optional<Block> clickedBlock = playerRightClickEvent.getClickedBlock();
         if(clickedBlock.isPresent()) {
             Block block = clickedBlock.get();
             Location location = block.getLocation();
-            if(PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), location, Interaction.BREAK_BLOCK, Interaction.INTERACT_BLOCK, Interaction.PLACE_BLOCK)) {
-                if(BlockStorage.hasBlockInfo(location)) {
-                    Config config = BlockStorage.getLocationInfo(location);
-                    if(config.contains(ConstantTableUtil.CONFIG_ID)) {
-                        String itemId = config.getString(ConstantTableUtil.CONFIG_ID);
-                        SlimefunItem slimefunItem = SlimefunItem.getById(itemId);
-                        if(this.allowedItemId.contains(config.getString(ConstantTableUtil.CONFIG_ID)) && slimefunItem != null && !slimefunItem.isDisabled()) {
+            if(PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), location, Interaction.BREAK_BLOCK, Interaction.INTERACT_BLOCK, Interaction.PLACE_BLOCK) && BlockStorage.hasBlockInfo(location)) {
+                Config config = BlockStorage.getLocationInfo(location);
+                if(config.contains(ConstantTableUtil.CONFIG_ID)) {
+                    String itemId = config.getString(ConstantTableUtil.CONFIG_ID);
+                    SlimefunItem slimefunItem = SlimefunItem.getById(itemId);
+                    if(this.allowedItemId.contains(itemId) && slimefunItem != null && !slimefunItem.isDisabled()) {
+                        ItemStack item = playerRightClickEvent.getItem();
+                        if(item.hasItemMeta()) {
+                            ItemMeta itemMeta = item.getItemMeta();
+                            PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+                            Set<String> ignoreInfoSet = this.ignoreInfoMap.get(itemId);
+
                             if(playerRightClickEvent.getPlayer().isSneaking()) {
                                 // save data
 
-                                ItemStack item = playerRightClickEvent.getItem();
-                                if(item.hasItemMeta()) {
-                                    ItemMeta itemMeta = item.getItemMeta();
-                                    PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-                                    Set<String> ignoreInfoSet = this.ignoreInfoMap.get(itemId);
-
-                                    for(String key : config.getKeys()) {
-                                        if(!ignoreInfoSet.contains(key)) {
-                                            persistentDataContainer.set(new NamespacedKey(this.addon.getJavaPlugin(), key), PersistentDataType.STRING, config.getString(key));
-                                        }
+                                for(String key : config.getKeys()) {
+                                    if(!ignoreInfoSet.contains(key)) {
+                                        persistentDataContainer.set(new NamespacedKey(this.addon.getJavaPlugin(), key), PersistentDataType.STRING, config.getString(key));
                                     }
-                                    item.setItemMeta(itemMeta);
-                                    ItemStackUtil.setLore(item, slimefunItem.getItemName());
-
-                                    ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
                                 }
+                                item.setItemMeta(itemMeta);
+                                ItemStackUtil.setLore(item, slimefunItem.getItemName());
+
+                                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
                             } else {
                                 // load data
 
-                                ItemStack item = playerRightClickEvent.getItem();
-                                if(item.hasItemMeta()) {
-                                    ItemMeta itemMeta = item.getItemMeta();
-                                    PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-                                    Set<String> ignoreInfoSet = this.ignoreInfoMap.get(itemId);
+                                Map<String, String> configMap = new HashMap<>(persistentDataContainer.getKeys().size());
 
-                                    for(NamespacedKey namespacedKey : persistentDataContainer.getKeys()) {
-                                        String key = namespacedKey.getKey();
-                                        if(!ignoreInfoSet.contains(key)) {
-                                            String value = persistentDataContainer.get(namespacedKey, PersistentDataType.STRING);
-                                            config.setValue(key, value);
+                                for(NamespacedKey namespacedKey : persistentDataContainer.getKeys()) {
+                                    String key = namespacedKey.getKey();
+                                    if(!ignoreInfoSet.contains(key)) {
+                                        String value = persistentDataContainer.get(namespacedKey, PersistentDataType.STRING);
+                                        configMap.put(key, value);
+                                        if(ConstantTableUtil.CONFIG_ID.equals(key) && !value.equals(itemId)) {
+                                            return;
                                         }
                                     }
-
-                                    ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
                                 }
+                                for(Map.Entry<String, String> entry : configMap.entrySet()) {
+                                    BlockStorage.addBlockInfo(location, entry.getKey(), entry.getValue());
+                                }
+
+                                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
                             }
                         }
                     }
@@ -110,6 +112,11 @@ public class MachineConfigurator extends UsableSlimefunItem implements RecipeIte
 
     @Override
     public void registerDefaultRecipes() {
-        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
+        for(String id : this.allowedItemId) {
+            SlimefunItem slimefunItem = SlimefunItem.getById(id);
+            if(slimefunItem != null) {
+                this.registerDescriptiveRecipe(slimefunItem.getItem());
+            }
+        }
     }
 }

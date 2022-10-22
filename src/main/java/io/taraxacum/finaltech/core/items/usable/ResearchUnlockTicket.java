@@ -11,11 +11,11 @@ import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,14 +31,11 @@ public class ResearchUnlockTicket extends UsableSlimefunItem implements RecipeIt
     @Override
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
         Player player = playerRightClickEvent.getPlayer();
-        List<Research> researchList = Slimefun.getRegistry().getResearches();
+        List<Research> researchList = new ArrayList<>(Slimefun.getRegistry().getResearches());
         researchList = JavaUtil.shuffle(researchList);
         Optional<PlayerProfile> playerProfile = PlayerProfile.find(player);
-        Bukkit.getLogger().info("1");
         if(playerProfile.isPresent()) {
-            Bukkit.getLogger().info("2");
             if(!playerProfile.get().hasUnlockedEverything()) {
-                Bukkit.getLogger().info("3");
                 PlayerProfile profile = playerProfile.get();
                 for(Research research : researchList) {
                     if(!profile.hasUnlocked(research) && research.canUnlock(player)) {

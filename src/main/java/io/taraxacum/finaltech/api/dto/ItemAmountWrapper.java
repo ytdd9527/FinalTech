@@ -59,11 +59,11 @@ public class ItemAmountWrapper extends ItemWrapper {
     }
 
     public void addAmount(int amount) {
-        this.amount++;
+        this.amount += amount;
     }
 
     public void subAmount(int amount) {
-        this.amount--;
+        this.amount -= amount;
     }
 
     @Override

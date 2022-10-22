@@ -61,8 +61,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MACHINE_ACTIVATE_CARD_L2 = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MACHINE_ACTIVATE_CARD_L2", Material.COPPER_INGOT, "Activate Card L2");
     public static final SlimefunItemStack MACHINE_ACTIVATE_CARD_L3 = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MACHINE_ACTIVATE_CARD_L3", Material.COPPER_INGOT, "Activate Card L3");
     public static final SlimefunItemStack MAGIC_HYPNOTIC = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MAGIC_HYPNOTIC", Material.DRAGON_BREATH, "Magic Hypnotic");
-    public static final SlimefunItemStack RESEARCH_UNLOCK_TICKET = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_RESEARCH_UNLOCK_TICKET", Material.KNOWLEDGE_BOOK, "Research Unlock Ticket");
-    public static final SlimefunItemStack UNTREATABLE_RUNE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_UNTREATABLE_RUNE", Material.FEATHER, "Untreatable Rune");
+    public static final SlimefunItemStack RESEARCH_UNLOCK_TICKET = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_RESEARCH_UNLOCK_TICKET", Material.ENCHANTED_BOOK, "Research Unlock Ticket");
     // tool
     public static final SlimefunItemStack STAFF_ELEMENTAL_LINE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_STAFF_ELEMENTAL_LINE", Material.STICK, "&6Elemental Staff &7- &f&oLine");
     public static final SlimefunItemStack POTION_EFFECT_COMPRESSOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_POTION_EFFECT_COMPRESSOR", Material.GOLD_INGOT, "Potion Effect Compressor");

@@ -47,52 +47,57 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
      */
     @Override
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
+        playerRightClickEvent.cancel();
+
         Optional<Block> clickedBlock = playerRightClickEvent.getClickedBlock();
+        System.out.println(1);
         if(clickedBlock.isPresent()) {
+            System.out.println(2);
             Block block = clickedBlock.get();
             Location location = block.getLocation();
-            if(PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.PLACE_BLOCK, Interaction.BREAK_BLOCK)) {
-                if(BlockStorage.hasBlockInfo(location)) {
-                    Config config = BlockStorage.getLocationInfo(location);
-                    if(config.contains(ConstantTableUtil.CONFIG_ID)) {
-                        String itemId = config.getString(ConstantTableUtil.CONFIG_ID);
-                        SlimefunItem slimefunItem = SlimefunItem.getById(itemId);
-                        if(slimefunItem instanceof EnergyNetComponent) {
-                            if(EnergyNetComponentType.CONSUMER.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType()) && ((EnergyNetComponent) slimefunItem).getCapacity() > 0) {
-                                // charge machine
+            if(PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.PLACE_BLOCK, Interaction.BREAK_BLOCK) && BlockStorage.hasBlockInfo(location)) {
+                System.out.println(3);
+                Config config = BlockStorage.getLocationInfo(location);
+                if(config.contains(ConstantTableUtil.CONFIG_ID)) {
+                    System.out.println(4);
+                    String itemId = config.getString(ConstantTableUtil.CONFIG_ID);
+                    SlimefunItem slimefunItem = SlimefunItem.getById(itemId);
+                    if(slimefunItem instanceof EnergyNetComponent energyNetComponent) {
+                        System.out.println(5);
+                        ItemStack item = playerRightClickEvent.getItem();
 
-                                ItemStack item = playerRightClickEvent.getItem();
+                        if(EnergyNetComponentType.CONSUMER.equals(energyNetComponent.getEnergyComponentType()) && energyNetComponent.getCapacity() > 0) {
+                            System.out.println("6a");
+                            // charge machine
 
-                                int capacity = ((EnergyNetComponent) slimefunItem).getCapacity();
-                                String energyInMachine = EnergyUtil.getCharge(config);
-                                String energyInItem = this.getEnergy(item);
-                                String charge = StringNumberUtil.min(StringNumberUtil.sub(String.valueOf(capacity), energyInMachine), energyInItem);
+                            int capacity = energyNetComponent.getCapacity();
+                            String energyInMachine = EnergyUtil.getCharge(config);
+                            String energyInItem = this.getEnergy(item);
+                            String charge = StringNumberUtil.min(StringNumberUtil.sub(String.valueOf(capacity), energyInMachine), energyInItem);
 
-                                EnergyUtil.setCharge(config, StringNumberUtil.add(energyInMachine, charge));
-                                this.subEnergy(item, charge);
+                            EnergyUtil.setCharge(config, StringNumberUtil.add(energyInMachine, charge));
+                            this.subEnergy(item, charge);
 
-                                this.updateLore(item);
+                            this.updateLore(item);
 
-                                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
-                            } else if(EnergyNetComponentType.GENERATOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType()) && ((EnergyNetComponent) slimefunItem).getCapacity() > 0) {
-                                // consume energy in machine, charge item
+                            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+                        } else if((EnergyNetComponentType.GENERATOR.equals(energyNetComponent.getEnergyComponentType()) || EnergyNetComponentType.CAPACITOR.equals(energyNetComponent.getEnergyComponentType()))
+                                && energyNetComponent.getCapacity() > 0) {
+                            System.out.println("6b");
+                            // consume energy in machine, charge item
 
-                                ItemStack item = playerRightClickEvent.getItem();
+                            String energyInMachine = EnergyUtil.getCharge(config);
 
-                                String energyInMachine = EnergyUtil.getCharge(config);
+                            this.addEnergy(item, energyInMachine);
+                            EnergyUtil.setCharge(config, StringNumberUtil.ZERO);
 
-                                this.addEnergy(item, energyInMachine);
-                                EnergyUtil.setCharge(config, StringNumberUtil.ZERO);
+                            this.updateLore(item);
 
-                                this.updateLore(item);
-
-                                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
-                            }
+                            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
                         }
                     }
                 }
             }
-
         }
     }
 

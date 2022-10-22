@@ -185,8 +185,7 @@ public final class SetupUtil {
                 new MachineActivateCardL3(FinalTechMenus.MENU_ITEMS, FinalTechItems.MACHINE_ACTIVATE_CARD_L3, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACTIVATE_CARD_L3).register());
         FinalTechMenus.SUB_MENU_CONSUMABLE.addTo(
                 new MagicHypnotic(FinalTechMenus.MENU_ITEMS, FinalTechItems.MAGIC_HYPNOTIC, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MAGIC_HYPNOTIC).register(),
-                new ResearchUnlockTicket(FinalTechMenus.MENU_ITEMS, FinalTechItems.RESEARCH_UNLOCK_TICKET, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.RESEARCH_UNLOCK_TICKET).register(),
-                new UntreatableRune(FinalTechMenus.MENU_ITEMS, FinalTechItems.UNTREATABLE_RUNE, RecipeType.NULL, FinalTechRecipes.UNTREATABLE_RUNE).register());
+                new ResearchUnlockTicket(FinalTechMenus.MENU_ITEMS, FinalTechItems.RESEARCH_UNLOCK_TICKET, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.RESEARCH_UNLOCK_TICKET).register());
         // tool
         FinalTechMenus.SUB_MENU_TOOL.addTo(
                 new StaffElementalLine(FinalTechMenus.MENU_ITEMS, FinalTechItems.STAFF_ELEMENTAL_LINE, RecipeType.MAGIC_WORKBENCH, FinalTechRecipes.STAFF_ELEMENTAL_LINE).register(),

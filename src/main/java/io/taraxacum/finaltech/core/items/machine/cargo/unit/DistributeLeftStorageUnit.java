@@ -42,10 +42,10 @@ public class DistributeLeftStorageUnit extends AbstractCargo implements RecipeIt
         int beginSlot = 0;
         int endSlot = 0;
         int i;
-        ItemAmountWrapper itemWithWrapperAmount = null;
+        ItemAmountWrapper itemAmountWrapper = null;
         for (i = this.getInputSlot().length - 1; i >= 0; i--) {
             if (!ItemStackUtil.isItemNull(blockMenu.getItemInSlot(i))) {
-                itemWithWrapperAmount = new ItemAmountWrapper(blockMenu.getItemInSlot(i));
+                itemAmountWrapper = new ItemAmountWrapper(blockMenu.getItemInSlot(i));
                 beginSlot = i;
                 endSlot = i--;
                 break;
@@ -54,36 +54,36 @@ public class DistributeLeftStorageUnit extends AbstractCargo implements RecipeIt
         for (; i >= 0; i--) {
             if (ItemStackUtil.isItemNull(blockMenu.getItemInSlot(i))) {
                 endSlot = i;
-            } else if (ItemStackUtil.isItemSimilar(itemWithWrapperAmount, blockMenu.getItemInSlot(i))) {
-                itemWithWrapperAmount.addAmount(blockMenu.getItemInSlot(i).getAmount());
+            } else if (ItemStackUtil.isItemSimilar(itemAmountWrapper, blockMenu.getItemInSlot(i))) {
+                itemAmountWrapper.addAmount(blockMenu.getItemInSlot(i).getAmount());
                 endSlot = i;
             } else {
-                int amount = itemWithWrapperAmount.getAmount() / (beginSlot + 1 - endSlot);
+                int amount = itemAmountWrapper.getAmount() / (beginSlot + 1 - endSlot);
                 if (amount > 0) {
-                    for (int j = beginSlot; j >= endSlot; j--) {
-                        ItemStack item = ItemStackUtil.cloneItem(itemWithWrapperAmount.getItemStack());
+                    for (int j = beginSlot - 1; j >= endSlot; j--) {
+                        ItemStack item = ItemStackUtil.cloneItem(itemAmountWrapper.getItemStack());
                         item.setAmount(amount);
                         blockMenu.replaceExistingItem(j, item);
                     }
-                    ItemStack item = ItemStackUtil.cloneItem(itemWithWrapperAmount.getItemStack());
-                    item.setAmount(amount + (itemWithWrapperAmount.getAmount() % (beginSlot + 1 - endSlot)));
+                    ItemStack item = ItemStackUtil.cloneItem(itemAmountWrapper.getItemStack());
+                    item.setAmount(amount + (itemAmountWrapper.getAmount() % (beginSlot + 1 - endSlot)));
                     blockMenu.replaceExistingItem(beginSlot, item);
                 }
-                itemWithWrapperAmount = new ItemAmountWrapper(blockMenu.getItemInSlot(i));
+                itemAmountWrapper = new ItemAmountWrapper(blockMenu.getItemInSlot(i));
                 beginSlot = i;
                 endSlot = i;
             }
         }
         if (beginSlot != endSlot) {
-            int amount = itemWithWrapperAmount.getAmount() / (beginSlot + 1 - endSlot);
+            int amount = itemAmountWrapper.getAmount() / (beginSlot + 1 - endSlot);
             if (amount > 0) {
-                for (int j = beginSlot; j >= endSlot; j--) {
-                    ItemStack item = ItemStackUtil.cloneItem(itemWithWrapperAmount.getItemStack());
+                for (int j = beginSlot - 1; j >= endSlot; j--) {
+                    ItemStack item = ItemStackUtil.cloneItem(itemAmountWrapper.getItemStack());
                     item.setAmount(amount);
                     blockMenu.replaceExistingItem(j, item);
                 }
-                ItemStack item = ItemStackUtil.cloneItem(itemWithWrapperAmount.getItemStack());
-                item.setAmount(amount + itemWithWrapperAmount.getAmount() % (beginSlot + 1 - endSlot));
+                ItemStack item = ItemStackUtil.cloneItem(itemAmountWrapper.getItemStack());
+                item.setAmount(amount + itemAmountWrapper.getAmount() % (beginSlot + 1 - endSlot));
                 blockMenu.replaceExistingItem(beginSlot, item);
             }
         }

@@ -840,15 +840,6 @@ items:
         name: '{color:positive}Usage'
         lore:
           - '{color:normal}Unlock a research randomly'
-  FINALTECH_UNTREATABLE_RUNE:
-    name: '{color:prandom}Untreatable Rune'
-    info:
-      1:
-        name: '{color:positive}Usage'
-        lore:
-          - '{color:normal}Makes around lives (including you) difficult to be healed'
-          - '{color:normal}Range: {color:number}{1}'
-          - '{color:normal}Duration: {color:number}{2}'
   FINALTECH_STAFF_ELEMENTAL_LINE:
     name: '&6Elemental Staff &7- &f&oLine'
     info:
@@ -912,12 +903,9 @@ items:
         output: 'FINALTECH_LOCATION_TRANSFER'
   FINALTECH_MACHINE_CONFIGURATOR:
     name: '{color:prandom}Machine Configurator'
-    info:
-      1:
-        name: '{color:positive}Usage'
-        lore:
-          - '{color:action}[Right-click] {color:normal}Paste the configuration to a machine with same type'
-          - '{color:action}[Shift + Right-click] {color:normal}Copy the configuration of a machine'
+    lore:
+      - '{color:action}[Right-click] {color:normal}Paste the configuration to a machine with same type'
+      - '{color:action}[Shift + Right-click] {color:normal}Copy the configuration of a machine'
   FINALTECH_PORTABLE_ENERGY_STORAGE:
     name: '{color:prandom}Portable Energy Storage'
     info:
@@ -926,6 +914,9 @@ items:
         lore:
           - '{color:action}[Right-click] {color:normal}Insert the energy to a machine'
           - '{color:action}[Shift + Right-click] {color:normal}Withdraw all the energy of a machine'
+    status:
+      lore:
+        - '{color:normal}Stored Energy: {color:number}{1} J'
   FINALTECH_SUPER_PICKAXE:
     name: '{color:prandom}Super Pickaxe'
     info:

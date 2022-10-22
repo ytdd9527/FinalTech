@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
@@ -32,8 +33,6 @@ public class MatrixExpandedCapacitor extends AbstractExpandedElectricCapacitor {
     private final double chargeIncrease = ConfigUtil.getOrDefaultItemSetting(4, this, "charge-increase");
     private final double consumeReduce = ConfigUtil.getOrDefaultItemSetting(0.25, this, "consume-reduce");
 
-    private static final String KEY = "stack";
-
     public MatrixExpandedCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -50,7 +49,7 @@ public class MatrixExpandedCapacitor extends AbstractExpandedElectricCapacitor {
         BlockMenu blockMenu = BlockStorage.getInventory(location);
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if (!ItemStackUtil.isItemNull(item) && ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY)) {
+            if (!ItemStackUtil.isItemNull(item) && ItemPhony.isValid(item)) {
                 String energyStack = String.valueOf(config.getValue(KEY));
                 energyStack = StringNumberUtil.add(energyStack, energyStack);
                 BlockStorage.addBlockInfo(location, KEY, energyStack);

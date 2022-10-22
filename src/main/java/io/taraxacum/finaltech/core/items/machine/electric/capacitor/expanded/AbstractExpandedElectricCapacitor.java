@@ -30,7 +30,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  */
 public abstract class AbstractExpandedElectricCapacitor extends AbstractElectricCapacitor implements RecipeItem {
-    private static final String KEY = "s";
+    protected static final String KEY = "s";
 
     public AbstractExpandedElectricCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

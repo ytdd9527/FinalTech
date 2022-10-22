@@ -208,7 +208,6 @@ public final class FinalTechRecipes {
             FinalTechItems.BUG, FinalTechItems.BOX, FinalTechItems.BUG,
             FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.BUG
     };
-    public static final ItemStack[] UNTREATABLE_RUNE = new ItemStack[] {};
     // tool
     public static final ItemStack[] STAFF_ELEMENTAL_LINE = new ItemStack[] {
             null, FinalTechItems.BUG, null,
