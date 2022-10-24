@@ -4,7 +4,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.ItemWrapper;
@@ -31,7 +30,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 /**
  * @author Final_ROOT
@@ -55,129 +53,130 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
         Block targetBlock = block.getRelative(BlockFace.UP);
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         if (!BlockStorage.hasInventory(targetBlock)) {
-            JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
-            boolean primaryThread = Bukkit.isPrimaryThread();
-            Inventory targetInventory = null;
-            BlockState blockState;
-            if(primaryThread) {
-                blockState = targetBlock.getState();
-            } else {
-                blockState = null;
-                try {
-                    blockState = javaPlugin.getServer().getScheduler().callSyncMethod(javaPlugin, targetBlock::getState).get();
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
+            if(Bukkit.isPrimaryThread()) {
+                BlockState blockState = targetBlock.getState();
+                if(blockState instanceof InventoryHolder) {
+                    Inventory targetInventory = ((InventoryHolder) blockState).getInventory();
+                    this.doFunction(targetInventory, blockMenu);
                 }
-            }
-            if(blockState instanceof InventoryHolder) {
-                targetInventory = ((InventoryHolder) blockState).getInventory();
-            }
-            if(targetInventory != null) {
-                Inventory finalTargetInventory = targetInventory;
-                FinalTech.getLocationRunnableFactory().waitThenRun(() -> {
-                    List<ItemStackWrapper> unOutputItem = new LinkedList<>();
-                    List<ItemStackWrapper> unInputItem = new LinkedList<>();
-                    for(int slot : JavaUtil.shuffle(StorageInteractPort.this.getInputSlot())) {
-                        ItemStack item = blockMenu.getItemInSlot(slot);
-                        if(!ItemStackUtil.isItemNull(item) && !StorageCardItem.storableItem(item)) {
-                            blockMenu.dropItems(block.getLocation(), slot);
-                            return;
-                        }
+            } else {
+                JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
+                javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
+                    BlockState blockState = targetBlock.getState();
+                    if(blockState instanceof InventoryHolder) {
+                        Inventory targetInventory = ((InventoryHolder) blockState).getInventory();
+                        FinalTech.getLocationRunnableFactory().waitThenRun(() -> StorageInteractPort.this.doFunction(targetInventory, blockMenu), targetBlock.getLocation(), block.getLocation());
                     }
-                    boolean canInput = !MachineUtil.isEmpty(blockMenu.toInventory(), StorageInteractPort.this.getInputSlot()) && MachineUtil.itemCount(blockMenu.toInventory(), StorageInteractPort.this.getInputSlot()) >= StorageInteractPort.this.getInputSlot().length / 2;
-                    boolean canOutput = !MachineUtil.isFull(blockMenu.toInventory(), StorageInteractPort.this.getOutputSlot()) && MachineUtil.itemCount(blockMenu.toInventory(), StorageInteractPort.this.getOutputSlot()) < StorageInteractPort.this.getOutputSlot().length / 2;
-                    if (!canOutput && !canInput) {
-                        return;
-                    }
-                    if (canOutput) {
-                        MachineUtil.stockSlots(blockMenu.toInventory(), StorageInteractPort.this.getOutputSlot());
-                    }
-                    if (canInput) {
-                        MachineUtil.stockSlots(blockMenu.toInventory(), StorageInteractPort.this.getInputSlot());
-                    }
-                    int pushItemAmount = 0;
-                    List<ItemWrapper> storageCardItemList = new ArrayList<>(Math.min(finalTargetInventory.getSize(), StorageInteractPort.this.searchLimit));
-                    for (int i = 0, size = Math.min(finalTargetInventory.getSize(), StorageInteractPort.this.searchLimit); i < size; i++) {
-                        ItemStack item = finalTargetInventory.getItem(i);
-                        if (ItemStackUtil.isItemNull(item) || !item.hasItemMeta()) {
-                            continue;
-                        }
-                        ItemMeta itemMeta = item.getItemMeta();
-                        if (StorageCardItem.isValid(itemMeta)) {
-                            storageCardItemList.add(new ItemWrapper(item));
-                            if (item.getAmount() == 1) {
-                                pushItemAmount++;
-                            }
-                        }
-                    }
-                    storageCardItemList = JavaUtil.shuffle(storageCardItemList);
-                    for (ItemWrapper storageCardItem : storageCardItemList) {
-                        if (!canInput && !canOutput) {
-                            continue;
-                        }
-                        ItemMeta itemMeta = storageCardItem.getItemMeta();
-                        ItemStack stringItemStack = StringItemUtil.parseItemInCard(itemMeta);
-                        ItemWrapper stringItem = stringItemStack == null ? null : new ItemWrapper(stringItemStack);
-                        boolean work = true;
-                        int pushCount = 0;
-                        int stackCount = 0;
-                        if (canOutput && storageCardItem.getItemStack().getAmount() == 1 && stringItem != null) {
-                            for (ItemStackWrapper unWorkItem : unOutputItem) {
-                                if (ItemStackUtil.isItemSimilar(stringItem, unWorkItem)) {
-                                    work = false;
-                                    break;
-                                }
-                            }
-                            if (work) {
-                                pushItemAmount--;
-                                pushCount = StringItemUtil.pullItemFromCard(itemMeta, stringItem, blockMenu.toInventory(), JavaUtil.shuffle(StorageInteractPort.this.getOutputSlot()));
-                                if (pushCount == 0) {
-                                    unOutputItem.add(ItemStackWrapper.wrap(stringItem.getItemStack()));
-                                } else {
-                                    MachineUtil.stockSlots(blockMenu.toInventory(), StorageInteractPort.this.getOutputSlot());
-                                    canOutput = !MachineUtil.isFull(blockMenu.toInventory(), StorageInteractPort.this.getOutputSlot());
-                                }
-                                if (pushItemAmount == 0) {
-                                    canOutput = false;
-                                }
-                            }
-                        }
-                        if (canInput) {
-                            work = true;
-                            if (stringItem != null) {
-                                for (ItemStackWrapper unWorkItem : unInputItem) {
-                                    if (ItemStackUtil.isItemSimilar(stringItem, unWorkItem)) {
-                                        work = false;
-                                        break;
-                                    }
-                                }
-                            }
-                            if (work) {
-                                stackCount = StringItemUtil.storageItemToCard(itemMeta, stringItem, storageCardItem.getItemStack().getAmount(), blockMenu.toInventory(), JavaUtil.shuffle(StorageInteractPort.this.getInputSlot()));
-                                if (stackCount == 0) {
-                                    if (stringItem != null) {
-                                        unInputItem.add(ItemStackWrapper.wrap(stringItem.getItemStack()));
-                                    }
-                                } else {
-                                    canInput = !MachineUtil.isEmpty(blockMenu.toInventory(), StorageInteractPort.this.getInputSlot());
-                                    if (stringItem == null) {
-                                        stringItem = new ItemWrapper(StringItemUtil.parseItemInCard(itemMeta));
-                                    }
-                                }
-                            }
-                        }
-                        if (pushCount != 0 || stackCount != 0) {
-                            StorageCardItem.updateLore(itemMeta, stringItem.getItemStack());
-                            storageCardItem.getItemStack().setItemMeta(itemMeta);
-                        }
-                    }
-                }, targetBlock.getLocation(), block.getLocation());
+                });
             }
         }
     }
 
-    private void doFunction() {
+    private void doFunction(Inventory targetInventory, BlockMenu blockMenu) {
+        List<ItemWrapper> unOutputItem = new LinkedList<>();
+        List<ItemWrapper> unInputItem = new LinkedList<>();
 
+        boolean canInput = !MachineUtil.isEmpty(blockMenu.toInventory(), this.getInputSlot()) && MachineUtil.slotCount(blockMenu.toInventory(), this.getInputSlot()) >= this.getInputSlot().length / 2;
+        boolean canOutput = !MachineUtil.isFull(blockMenu.toInventory(), this.getOutputSlot()) && MachineUtil.slotCount(blockMenu.toInventory(), this.getOutputSlot()) < this.getOutputSlot().length / 2;
+
+        if (!canInput && !canOutput) {
+            return;
+        }
+
+        if (canInput) {
+            MachineUtil.stockSlots(blockMenu.toInventory(), this.getInputSlot());
+        }
+        if (canOutput) {
+            MachineUtil.stockSlots(blockMenu.toInventory(), this.getOutputSlot());
+        }
+
+        for(int slot : this.getInputSlot()) {
+            ItemStack item = blockMenu.getItemInSlot(slot);
+            if(!ItemStackUtil.isItemNull(item) && !StorageCardItem.storableItem(item)) {
+                return;
+            }
+        }
+
+        int pushItemAmount = 0;
+        List<ItemWrapper> storageCardItemList = new ArrayList<>(Math.min(targetInventory.getSize(), this.searchLimit));
+        for (int i = 0, size = Math.min(targetInventory.getSize(), this.searchLimit); i < size; i++) {
+            ItemStack item = targetInventory.getItem(i);
+            if (ItemStackUtil.isItemNull(item) || !item.hasItemMeta()) {
+                continue;
+            }
+            ItemMeta itemMeta = item.getItemMeta();
+            if (StorageCardItem.isValid(itemMeta)) {
+                storageCardItemList.add(new ItemWrapper(item));
+                if (item.getAmount() == 1) {
+                    pushItemAmount++;
+                }
+            }
+        }
+
+        for (ItemWrapper storageCardItem : storageCardItemList) {
+            if (!canInput && !canOutput) {
+                continue;
+            }
+            ItemMeta itemMeta = storageCardItem.getItemMeta();
+            ItemStack stringItemStack = StringItemUtil.parseItemInCard(itemMeta);
+            ItemWrapper stringItem = stringItemStack == null ? null : new ItemWrapper(stringItemStack);
+
+            boolean work;
+
+            int pushCount = 0;
+            if (canOutput && storageCardItem.getItemStack().getAmount() == 1 && stringItem != null) {
+                work = true;
+                for (ItemWrapper unWorkItem : unOutputItem) {
+                    if (ItemStackUtil.isItemSimilar(stringItem, unWorkItem)) {
+                        work = false;
+                        break;
+                    }
+                }
+                if (work) {
+                    pushItemAmount--;
+                    pushCount = StringItemUtil.pullItemFromCard(itemMeta, stringItem, blockMenu.toInventory(), this.getOutputSlot());
+                    if (pushCount == 0) {
+                        unOutputItem.add(new ItemWrapper(stringItem.getItemStack()));
+                    } else {
+                        MachineUtil.stockSlots(blockMenu.toInventory(), this.getOutputSlot());
+                        canOutput = !MachineUtil.isFull(blockMenu.toInventory(), this.getOutputSlot());
+                    }
+                    if (pushItemAmount == 0) {
+                        canOutput = false;
+                    }
+                }
+            }
+
+            int stackCount = 0;
+            if (canInput) {
+                work = true;
+                if (stringItem != null) {
+                    for (ItemWrapper unWorkItem : unInputItem) {
+                        if (ItemStackUtil.isItemSimilar(stringItem, unWorkItem)) {
+                            work = false;
+                            break;
+                        }
+                    }
+                }
+                if (work) {
+                    stackCount = StringItemUtil.storageItemToCard(itemMeta, stringItem, storageCardItem.getItemStack().getAmount(), blockMenu.toInventory(), JavaUtil.shuffle(this.getInputSlot()));
+                    if (stackCount == 0) {
+                        if (stringItem != null) {
+                            unInputItem.add(new ItemWrapper(stringItem.getItemStack()));
+                        }
+                    } else {
+                        canInput = !MachineUtil.isEmpty(blockMenu.toInventory(), this.getInputSlot());
+                        if (stringItem == null) {
+                            stringItem = new ItemWrapper(StringItemUtil.parseItemInCard(itemMeta));
+                        }
+                    }
+                }
+            }
+            if (pushCount != 0 || stackCount != 0) {
+                StorageCardItem.updateLore(itemMeta, stringItem.getItemStack());
+                storageCardItem.getItemStack().setItemMeta(itemMeta);
+            }
+        }
     }
 
     @Override

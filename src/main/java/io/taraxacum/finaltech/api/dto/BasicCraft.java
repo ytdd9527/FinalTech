@@ -2,6 +2,7 @@ package io.taraxacum.finaltech.api.dto;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -62,7 +63,7 @@ public class BasicCraft {
             if(slimefunItem.getRecipe().length <= slots.length) {
                 ItemStack[] itemStacks = slimefunItem.getRecipe();
 
-                matchAmount = 64;
+                matchAmount = ConstantTableUtil.ITEM_MAX_STACK;
                 for(int i = 0; i < itemStacks.length; i++) {
                     itemStack = itemStacks[i];
                     if(ItemStackUtil.isItemNull(itemStack) && indexItemMap.containsKey(i)) {

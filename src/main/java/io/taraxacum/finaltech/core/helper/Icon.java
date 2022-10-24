@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -49,7 +50,7 @@ public class Icon {
                         String.valueOf(amount));
             }
         } else if (ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE_INFINITY)) {
-            amount = Integer.MAX_VALUE / 64 - 1;
+            amount = Integer.MAX_VALUE / ConstantTableUtil.ITEM_MAX_STACK - 1;
             if(updateLore) {
                 lores = FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "amount-lore"),
                         FinalTech.getLanguageString("helper", "ICON", "quantity-module", "amount-infinity"));

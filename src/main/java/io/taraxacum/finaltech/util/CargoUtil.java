@@ -6,6 +6,8 @@ import io.taraxacum.finaltech.api.dto.InvWithSlots;
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.api.dto.ItemWrapper;
 import io.taraxacum.finaltech.api.factory.ServerRunnableLockFactory;
+import io.taraxacum.finaltech.core.dto.CargoDTO;
+import io.taraxacum.finaltech.core.dto.SimpleCargoDTO;
 import io.taraxacum.finaltech.core.helper.*;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -22,8 +24,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 
 /**
  * @author Final_ROOT
@@ -32,318 +36,214 @@ import java.util.concurrent.Future;
 public class CargoUtil {
     public static final int SEARCH_MAP_LIMIT = 3;
 
+    private static final Future<Integer> ZERO_FUTURE = new FutureTask<>(() -> 0);
+
     /**
      * Do cargo action.
      * inputBlock should not be same with outputBlock
-     * @param inputBlock Source #{@link Location} of #{@link BlockMenu} or #{@link Inventory}
-     * @param outputBlock Target #{@link Location} of #{@link BlockMenu} or #{@link Inventory}
-     * @param inputSize #{@link SlotSearchSize}
-     * @param inputOrder #{@link SlotSearchOrder}
-     * @param outputSize #{@link SlotSearchSize}
-     * @param outputOrder #{@link SlotSearchOrder}
-     * @param cargoNumber Number limited in one cargo action.
-     * @param cargoLimit #{@link CargoLimit}
-     * @param cargoFilter #{@link CargoFilter}
-     * @param filterInv #{@link Inventory} for #{@link CargoFilter} to use
-     * @param filterSlots the slots of the filterInv to be used.
      * @param cargoMode #{@link CargoMode}
      * @return
      */
-    public static int doCargo(@Nonnull JavaPlugin javaPlugin, @Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots, @Nonnull String cargoMode) {
+    public static Future<Integer> doCargo(@Nonnull CargoDTO cargoDTO, @Nonnull String cargoMode) {
         return switch (cargoMode) {
-            case CargoMode.VALUE_INPUT_MAIN -> CargoUtil.doCargoInputMain(javaPlugin, inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
-            case CargoMode.VALUE_OUTPUT_MAIN -> CargoUtil.doCargoOutputMain(javaPlugin, inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
-            case CargoMode.VALUE_STRONG_SYMMETRY -> CargoUtil.doCargoStrongSymmetry(javaPlugin, inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
-            case CargoMode.VALUE_WEAK_SYMMETRY -> CargoUtil.doCargoWeakSymmetry(javaPlugin, inputBlock, outputBlock, inputSize, inputOrder, outputSize, outputOrder, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
-            default -> 0;
+            case CargoMode.VALUE_INPUT_MAIN -> CargoUtil.doCargoInputMain(cargoDTO);
+            case CargoMode.VALUE_OUTPUT_MAIN -> CargoUtil.doCargoOutputMain(cargoDTO);
+            case CargoMode.VALUE_STRONG_SYMMETRY -> CargoUtil.doCargoStrongSymmetry(cargoDTO);
+            case CargoMode.VALUE_WEAK_SYMMETRY -> CargoUtil.doCargoWeakSymmetry(cargoDTO);
+            default -> ZERO_FUTURE;
         };
     }
-    public static int doCargoStrongSymmetry(@Nonnull JavaPlugin javaPlugin, @Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots) {
-        // Get Inventory and it's slots.
-        InvWithSlots inputMap;
-        InvWithSlots outputMap;
-        if(javaPlugin.getServer().isPrimaryThread() || (BlockStorage.hasInventory(inputBlock) && BlockStorage.hasInventory(outputBlock))) {
-            inputMap = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
-            outputMap = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
+    public static Future<Integer> doCargoStrongSymmetry(@Nonnull CargoDTO cargoDTO) {
+        if(cargoDTO.getJavaPlugin().getServer().isPrimaryThread()) {
+            InvWithSlots inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
+            if(inputMap == null) {
+                return ZERO_FUTURE;
+            }
+            InvWithSlots outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
+            if(outputMap == null) {
+                return ZERO_FUTURE;
+            }
+            FutureTask<Integer> futureTask = new FutureTask<>(() -> CargoUtil.doSimpleCargoStrongSymmetry(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)));
+            // Hard to ensure data security in asynchronous threads. So just run it.
+            futureTask.run();
+            return futureTask;
         } else {
-            try {
-                InvWithSlots[] invWithSlots = javaPlugin.getServer().getScheduler().callSyncMethod(javaPlugin, () -> {
-                    InvWithSlots[] result = new InvWithSlots[2];
-                    result[0] = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
-                    result[1] = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
-                    return result;
-                }).get();
-                inputMap = invWithSlots[0];
-                outputMap = invWithSlots[1];
-            } catch (InterruptedException | ExecutionException e) {
-                if(e.getMessage() == null) {
-                    e.printStackTrace();
-                } else {
-                    javaPlugin.getServer().getLogger().severe(e.getMessage());
+            return cargoDTO.getJavaPlugin().getServer().getScheduler().callSyncMethod(cargoDTO.getJavaPlugin(), () -> {
+                InvWithSlots inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
+                if (inputMap == null) {
+                    return 0;
                 }
-                return 0;
-            }
-        }
-
-        // Verify whether inventory is null
-        if (inputMap == null || outputMap == null) {
-            return 0;
-        }
-
-        // Do cargo action.
-        if(javaPlugin.getServer().isPrimaryThread()) {
-            return CargoUtil.doSimpleCargoStrongSymmetry(inputMap, outputMap, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
-        } else {
-            // While this method is called in async thread.
-            final InvWithSlots finalInputMap = inputMap;
-            final InvWithSlots finalOutputMap = outputMap;
-            try {
-                return ServerRunnableLockFactory.getInstance(javaPlugin, Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoStrongSymmetry(finalInputMap, finalOutputMap, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots), inputBlock.getLocation(), outputBlock.getLocation()).get();
-            } catch (InterruptedException | ExecutionException e) {
-                Bukkit.getLogger().severe(e.getMessage());
-                return 0;
-            }
+                InvWithSlots outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
+                if (outputMap == null) {
+                    return 0;
+                }
+                return ServerRunnableLockFactory.getInstance(cargoDTO.getJavaPlugin(), Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoStrongSymmetry(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)), cargoDTO.getInputBlock().getLocation(), cargoDTO.getOutputBlock().getLocation()).get();
+            });
         }
     }
-    public static int doCargoWeakSymmetry(@Nonnull JavaPlugin javaPlugin, @Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots) {
-        // Get Inventory and it's slots.
-        InvWithSlots inputMap;
-        InvWithSlots outputMap;
-        if(javaPlugin.getServer().isPrimaryThread() || (BlockStorage.hasInventory(inputBlock) && BlockStorage.hasInventory(outputBlock))) {
-            inputMap = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
-            outputMap = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
+    public static Future<Integer> doCargoWeakSymmetry(@Nonnull CargoDTO cargoDTO) {
+        if(cargoDTO.getJavaPlugin().getServer().isPrimaryThread()) {
+            InvWithSlots inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
+            if(inputMap == null) {
+                return ZERO_FUTURE;
+            }
+            InvWithSlots outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
+            if(outputMap == null) {
+                return ZERO_FUTURE;
+            }
+            FutureTask<Integer> futureTask = new FutureTask<>(() -> CargoUtil.doSimpleCargoWeakSymmetry(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)));
+            // Hard to ensure data security in asynchronous threads. So just run it.
+            futureTask.run();
+            return futureTask;
         } else {
-            try {
-                InvWithSlots[] invWithSlots = javaPlugin.getServer().getScheduler().callSyncMethod(javaPlugin, () -> {
-                    InvWithSlots[] result = new InvWithSlots[2];
-                    result[0] = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
-                    result[1] = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
-                    return result;
-                }).get();
-                inputMap = invWithSlots[0];
-                outputMap = invWithSlots[1];
-            } catch (InterruptedException | ExecutionException e) {
-                if(e.getMessage() == null) {
-                    e.printStackTrace();
-                } else {
-                    javaPlugin.getServer().getLogger().severe(e.getMessage());
+            return cargoDTO.getJavaPlugin().getServer().getScheduler().callSyncMethod(cargoDTO.getJavaPlugin(), () -> {
+                InvWithSlots inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
+                if (inputMap == null) {
+                    return 0;
                 }
-                return 0;
-            }
-        }
-
-        // Verify whether inventory is null
-        if (inputMap == null || outputMap == null) {
-            return 0;
-        }
-
-        // Do cargo action.
-        if(javaPlugin.getServer().isPrimaryThread()) {
-            return CargoUtil.doSimpleCargoWeakSymmetry(inputMap, outputMap, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
-        } else {
-            // While this method is called in async thread.
-            final InvWithSlots finalInputMap = inputMap;
-            final InvWithSlots finalOutputMap = outputMap;
-            try {
-                return ServerRunnableLockFactory.getInstance(javaPlugin, Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoWeakSymmetry(finalInputMap, finalOutputMap, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots), inputBlock.getLocation(), outputBlock.getLocation()).get();
-            } catch (InterruptedException | ExecutionException e) {
-                Bukkit.getLogger().severe(e.getMessage());
-                return 0;
-            }
+                InvWithSlots outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
+                if (outputMap == null) {
+                    return 0;
+                }
+                return ServerRunnableLockFactory.getInstance(cargoDTO.getJavaPlugin(), Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoWeakSymmetry(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)), cargoDTO.getInputBlock().getLocation(), cargoDTO.getOutputBlock().getLocation()).get();
+            });
         }
     }
-    public static int doCargoInputMain(@Nonnull JavaPlugin javaPlugin, @Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots) {
-        final InvWithSlots inputMap;
-        final InvWithSlots outputMap;
+    public static Future<Integer> doCargoInputMain(@Nonnull CargoDTO cargoDTO) {
         // OutputMap will be null if BlockStorage has inventory in output block.
         //      In this situation, we will get output inventory dynamically.
         // If there is no output inventory, just return 0.
 
         // Get inventory.
-        if(javaPlugin.getServer().isPrimaryThread()) {
+        if(cargoDTO.getJavaPlugin().getServer().isPrimaryThread()) {
+            InvWithSlots inputMap;
+            InvWithSlots outputMap;
             // Just get inputMap.
-            inputMap = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
-            if(BlockStorage.hasInventory(outputBlock)) {
+            inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
+            if(BlockStorage.hasInventory(cargoDTO.getOutputBlock())) {
                 outputMap = null;
             } else {
-                if(PaperLib.getBlockState(outputBlock, false).getState() instanceof InventoryHolder) {
+                if(cargoDTO.getOutputBlock().getState() instanceof InventoryHolder) {
                     // Output Inventory is vanilla container.
-                    outputMap = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
+                    outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
                     if(outputMap == null) {
-                        return 0;
+                        return ZERO_FUTURE;
                     }
                 } else {
                     // Output Inventory not existed.
-                    return 0;
+                    return ZERO_FUTURE;
                 }
             }
-        } else if((BlockStorage.hasInventory(inputBlock) && BlockStorage.hasInventory(outputBlock))) {
-            // In this situation, we should get inventory dynamically, so outputMap is still null.
-            inputMap = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
-            outputMap = null;
+            FutureTask<Integer> futureTask = new FutureTask<>(() -> CargoUtil.doSimpleCargoInputMain(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)));
+            // Hard to ensure data security in asynchronous threads. So just run it.
+            futureTask.run();
+            return futureTask;
         } else {
-            // This method is not called in main thread, and we must get inventory in main thread.
-            try {
-                InvWithSlots[] invWithSlots = javaPlugin.getServer().getScheduler().callSyncMethod(javaPlugin, () -> {
-                    InvWithSlots[] result = new InvWithSlots[2];
-                    if(BlockStorage.hasInventory(outputBlock)) {
-                        result[0] = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
-                        result[1] = null;
-                    } else if(!CargoUtil.hasInventory(outputBlock)) {
-                        return result;
-                    } else {
-                        // Output inventory is vanilla container.
-                        result[0] = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
-                        if(result[0] == null) {
-                            // Input inventory is not existed. No need to get output inventory.
-                            return result;
+            return cargoDTO.getJavaPlugin().getServer().getScheduler().callSyncMethod(cargoDTO.getJavaPlugin(), () -> {
+                InvWithSlots inputMap;
+                InvWithSlots outputMap;
+                // Just get inputMap.
+                inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
+                if(BlockStorage.hasInventory(cargoDTO.getOutputBlock())) {
+                    outputMap = null;
+                } else {
+                    if(cargoDTO.getOutputBlock().getState() instanceof InventoryHolder) {
+                        // Output Inventory is vanilla container.
+                        outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
+                        if(outputMap == null) {
+                            return 0;
                         }
-                        result[1] = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
+                    } else {
+                        // Output Inventory not existed.
+                        return 0;
                     }
-                    return result;
-                }).get();
-                inputMap = invWithSlots[0];
-                outputMap = invWithSlots[1];
-            } catch (InterruptedException | ExecutionException e) {
-                if(e.getMessage() == null) {
-                    e.printStackTrace();
-                } else {
-                    javaPlugin.getServer().getLogger().severe(e.getMessage());
                 }
-                return 0;
-            }
-        }
-
-        if (inputMap == null) {
-            return 0;
-        }
-
-        if(javaPlugin.getServer().isPrimaryThread()) {
-            return CargoUtil.doSimpleCargoInputMain(inputMap, outputMap, outputBlock, outputSize, outputOrder, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
-        } else {
-            // While this method is called in async thread.
-            try {
-                return ServerRunnableLockFactory.getInstance(javaPlugin, Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoInputMain(inputMap, outputMap, outputBlock, outputSize, outputOrder, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots), inputBlock.getLocation(), outputBlock.getLocation()).get();
-            } catch (InterruptedException | ExecutionException e) {
-                if(e.getMessage() == null) {
-                    e.printStackTrace();
-                } else {
-                    javaPlugin.getServer().getLogger().severe(e.getMessage());
-                }
-                return 0;
-            }
+                return ServerRunnableLockFactory.getInstance(cargoDTO.getJavaPlugin(), Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoInputMain(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)), cargoDTO.getInputBlock().getLocation(), cargoDTO.getOutputBlock().getLocation()).get();
+            });
         }
     }
-    public static int doCargoOutputMain(@Nonnull JavaPlugin javaPlugin, @Nonnull Block inputBlock, @Nonnull Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots) {
-        final InvWithSlots inputMap;
-        final InvWithSlots outputMap;
+    public static Future<Integer> doCargoOutputMain(@Nonnull CargoDTO cargoDTO) {
         // InputMap will be null if BlockStorage has inventory in input block.
         //      In this situation, we will get input inventory dynamically.
         // If there is no input inventory, just return 0.
 
         // Get inventory.
-        if(javaPlugin.getServer().isPrimaryThread()) {
+        if(cargoDTO.getJavaPlugin().getServer().isPrimaryThread()) {
+            InvWithSlots inputMap;
+            InvWithSlots outputMap;
             // Just get outputMap.
-            outputMap = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
-            if(BlockStorage.hasInventory(inputBlock)) {
+            outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
+            if(BlockStorage.hasInventory(cargoDTO.getInputBlock())) {
                 inputMap = null;
             } else {
-                if(PaperLib.getBlockState(inputBlock, false).getState() instanceof InventoryHolder) {
+                if(cargoDTO.getInputBlock().getState() instanceof InventoryHolder) {
                     // Input Inventory is vanilla container.
-                    inputMap = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
+                    inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
                     if(inputMap == null) {
-                        return 0;
+                        return ZERO_FUTURE;
                     }
                 } else {
                     // Input Inventory not existed.
-                    return 0;
+                    return ZERO_FUTURE;
                 }
             }
-        } else if((BlockStorage.hasInventory(inputBlock) && BlockStorage.hasInventory(outputBlock))) {
-            // In this situation, we should get inventory dynamically, so inputMap is still null.
-            outputMap = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
-            inputMap = null;
+            FutureTask<Integer> futureTask = new FutureTask<>(() -> CargoUtil.doSimpleCargoOutputMain(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)));
+            // Hard to ensure data security in asynchronous threads. So just run it.
+            futureTask.run();
+            return futureTask;
         } else {
-            // This method is not called in main thread, and we must get inventory in main thread.
-            try {
-                InvWithSlots[] invWithSlots = javaPlugin.getServer().getScheduler().callSyncMethod(javaPlugin, () -> {
-                    InvWithSlots[] result = new InvWithSlots[2];
-                    if(BlockStorage.hasInventory(inputBlock)) {
-                        result[0] = null;
-                        result[1] = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
-                    } else if(!CargoUtil.hasInventory(inputBlock)) {
-                        return result;
-                    } else {
-                        // Input inventory is vanilla container.
-                        result[1] = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
-                        if(result[1] == null) {
-                            // Output inventory is not existed. No need to get input inventory.
-                            return result;
+            return cargoDTO.getJavaPlugin().getServer().getScheduler().callSyncMethod(cargoDTO.getJavaPlugin(), () -> {
+                InvWithSlots inputMap;
+                InvWithSlots outputMap;
+                // Just get outputMap.
+                outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
+                if(BlockStorage.hasInventory(cargoDTO.getInputBlock())) {
+                    inputMap = null;
+                } else {
+                    if(cargoDTO.getInputBlock().getState() instanceof InventoryHolder) {
+                        // Input Inventory is vanilla container.
+                        inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
+                        if(inputMap == null) {
+                            return 0;
                         }
-                        result[0] = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
+                    } else {
+                        // Input Inventory not existed.
+                        return 0;
                     }
-                    return result;
-                }).get();
-                inputMap = invWithSlots[0];
-                outputMap = invWithSlots[1];
-            } catch (InterruptedException | ExecutionException e) {
-                if(e.getMessage() == null) {
-                    e.printStackTrace();
-                } else {
-                    javaPlugin.getServer().getLogger().severe(e.getMessage());
                 }
-                return 0;
-            }
-        }
-
-        if (outputMap == null) {
-            return 0;
-        }
-
-        if(javaPlugin.getServer().isPrimaryThread()) {
-            return CargoUtil.doSimpleCargoOutputMain(inputMap, inputBlock, outputMap, inputSize, inputOrder, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
-        } else {
-            // While this method is called in async thread.
-            try {
-                return ServerRunnableLockFactory.getInstance(javaPlugin, Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoOutputMain(inputMap, inputBlock, outputMap, inputSize, inputOrder, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots), inputBlock.getLocation(), outputBlock.getLocation()).get();
-            } catch (InterruptedException | ExecutionException e) {
-                if(e.getMessage() == null) {
-                    e.printStackTrace();
-                } else {
-                    javaPlugin.getServer().getLogger().severe(e.getMessage());
-                }
-                return 0;
-            }
+                return ServerRunnableLockFactory.getInstance(cargoDTO.getJavaPlugin(), Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoInputMain(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)), cargoDTO.getInputBlock().getLocation(), cargoDTO.getOutputBlock().getLocation()).get();
+            });
         }
     }
 
     /**
      * @param cargoMode Check whether params could be null depend on it.#{@link CargoMode#VALUE_INPUT_MAIN} #{@link CargoMode#VALUE_OUTPUT_MAIN} #{@link CargoMode#VALUE_STRONG_SYMMETRY} #{@link CargoMode#VALUE_WEAK_SYMMETRY}
      */
-    public static int doSimpleCargo(@Nullable InvWithSlots inputMap, @Nullable Block inputBlock, @Nullable InvWithSlots outputMap, @Nullable Block outputBlock, @Nonnull String inputSize, @Nonnull String inputOrder, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots, @Nonnull String cargoMode) {
+    public static int doSimpleCargo(@Nonnull SimpleCargoDTO simpleCargoDTO, @Nonnull String cargoMode) {
         return switch (cargoMode) {
-            case CargoMode.VALUE_INPUT_MAIN -> CargoUtil.doSimpleCargoInputMain(inputMap, outputMap, outputBlock, outputSize, outputOrder, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
-            case CargoMode.VALUE_OUTPUT_MAIN -> CargoUtil.doSimpleCargoOutputMain(inputMap, inputBlock, outputMap, inputSize, inputOrder, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
-            case CargoMode.VALUE_STRONG_SYMMETRY -> CargoUtil.doSimpleCargoStrongSymmetry(inputMap, outputMap, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
-            case CargoMode.VALUE_WEAK_SYMMETRY -> CargoUtil.doSimpleCargoWeakSymmetry(inputMap, outputMap, cargoNumber, cargoLimit, cargoFilter, filterInv, filterSlots);
+            case CargoMode.VALUE_INPUT_MAIN -> CargoUtil.doSimpleCargoInputMain(simpleCargoDTO);
+            case CargoMode.VALUE_OUTPUT_MAIN -> CargoUtil.doSimpleCargoOutputMain(simpleCargoDTO);
+            case CargoMode.VALUE_STRONG_SYMMETRY -> CargoUtil.doSimpleCargoStrongSymmetry(simpleCargoDTO);
+            case CargoMode.VALUE_WEAK_SYMMETRY -> CargoUtil.doSimpleCargoWeakSymmetry(simpleCargoDTO);
             default -> 0;
         };
     }
 
-    public static int doSimpleCargoStrongSymmetry(@Nonnull InvWithSlots inputMap, @Nonnull InvWithSlots outputMap, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots) {
-        Inventory inputInv = inputMap.getInventory();
-        int[] inputSlots = inputMap.getSlots();
-        Inventory outputInv = outputMap.getInventory();
-        int[] outputSlots = outputMap.getSlots();
+    public static int doSimpleCargoStrongSymmetry(@Nonnull SimpleCargoDTO simpleCargoDTO) {
+        Inventory inputInv = simpleCargoDTO.getInputMap().getInventory();
+        int[] inputSlots = simpleCargoDTO.getInputMap().getSlots();
+        Inventory outputInv = simpleCargoDTO.getOutputMap().getInventory();
+        int[] outputSlots = simpleCargoDTO.getOutputMap().getSlots();
 
-        List<ItemWrapper> filterItemList = MachineUtil.getItemList(filterInv, filterSlots);
+        List<ItemWrapper> filterItemList = MachineUtil.getItemList(simpleCargoDTO.getFilterInv(), simpleCargoDTO.getFilterSlots());
 
-        boolean nonnull = CargoLimit.VALUE_NONNULL.equals(cargoLimit);
-        boolean stack = !nonnull && CargoLimit.VALUE_STACK.equals(cargoLimit);
-        boolean first = !nonnull && !stack && CargoLimit.VALUE_FIRST.equals(cargoLimit);
-        boolean typeLimit = !nonnull && !stack && !first && CargoLimit.typeLimit(cargoLimit);
+        boolean nonnull = CargoLimit.VALUE_NONNULL.equals(simpleCargoDTO.getCargoLimit());
+        boolean stack = !nonnull && CargoLimit.VALUE_STACK.equals(simpleCargoDTO.getCargoLimit());
+        boolean first = !nonnull && !stack && CargoLimit.VALUE_FIRST.equals(simpleCargoDTO.getCargoLimit());
+        boolean typeLimit = !nonnull && !stack && !first && CargoLimit.typeLimit(simpleCargoDTO.getCargoLimit());
 
         int number = 0;
+        int cargoNumber = simpleCargoDTO.getCargoNumber();
         ItemWrapper typeItem = null;
         ItemWrapper inputItemWrapper = new ItemWrapper();
 
@@ -353,7 +253,7 @@ public class CargoUtil {
                 continue;
             }
             inputItemWrapper.newWrap(inputItem);
-            if (!CargoUtil.isMatch(inputItemWrapper, filterItemList, cargoFilter)) {
+            if (!CargoUtil.isMatch(inputItemWrapper, filterItemList, simpleCargoDTO.getCargoFilter())) {
                 continue;
             }
             if (typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWrapper, typeItem)) {
@@ -378,12 +278,12 @@ public class CargoUtil {
                     continue;
                 }
             } else {
-                if (typeItem == null && typeLimit) {
-                    typeItem = new ItemWrapper(ItemStackUtil.cloneItem(inputItem), inputItemWrapper.getItemMeta());
-                }
                 count = ItemStackUtil.stack(inputItemWrapper, outputItem, cargoNumber);
                 if (count == 0) {
                     continue;
+                }
+                if (typeItem == null && typeLimit) {
+                    typeItem = new ItemWrapper(ItemStackUtil.cloneItem(inputItem), inputItemWrapper.getItemMeta());
                 }
             }
 
@@ -401,24 +301,25 @@ public class CargoUtil {
         }
         return number;
     }
-    public static int doSimpleCargoWeakSymmetry(@Nonnull InvWithSlots inputMap, @Nonnull InvWithSlots outputMap, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots) {
-        Inventory inputInv = inputMap.getInventory();
-        int[] inputSlots = inputMap.getSlots();
-        Inventory outputInv = outputMap.getInventory();
-        int[] outputSlots = outputMap.getSlots();
+    public static int doSimpleCargoWeakSymmetry(@Nonnull SimpleCargoDTO simpleCargoDTO) {
+        Inventory inputInv = simpleCargoDTO.getInputMap().getInventory();
+        int[] inputSlots = simpleCargoDTO.getInputMap().getSlots();
+        Inventory outputInv = simpleCargoDTO.getOutputMap().getInventory();
+        int[] outputSlots = simpleCargoDTO.getOutputMap().getSlots();
 
         if(inputSlots.length == 0 || outputSlots.length == 0) {
             return 0;
         }
 
-        List<ItemWrapper> filterItemList = MachineUtil.getItemList(filterInv, filterSlots);
+        List<ItemWrapper> filterItemList = MachineUtil.getItemList(simpleCargoDTO.getFilterInv(), simpleCargoDTO.getFilterSlots());
 
-        boolean nonnull = CargoLimit.VALUE_NONNULL.equals(cargoLimit);
-        boolean stack = !nonnull && CargoLimit.VALUE_STACK.equals(cargoLimit);
-        boolean first = !nonnull && !stack && CargoLimit.VALUE_FIRST.equals(cargoLimit);
-        boolean typeLimit = !nonnull && !stack && !first && CargoLimit.typeLimit(cargoLimit);
+        boolean nonnull = CargoLimit.VALUE_NONNULL.equals(simpleCargoDTO.getCargoLimit());
+        boolean stack = !nonnull && CargoLimit.VALUE_STACK.equals(simpleCargoDTO.getCargoLimit());
+        boolean first = !nonnull && !stack && CargoLimit.VALUE_FIRST.equals(simpleCargoDTO.getCargoLimit());
+        boolean typeLimit = !nonnull && !stack && !first && CargoLimit.typeLimit(simpleCargoDTO.getCargoLimit());
 
         int number = 0;
+        int cargoNumber = simpleCargoDTO.getCargoNumber();
         ItemWrapper typeItem = null;
         ItemWrapper inputItemWrapper = new ItemWrapper();
 
@@ -428,7 +329,7 @@ public class CargoUtil {
                 continue;
             }
             inputItemWrapper.newWrap(inputItem);
-            if (!CargoUtil.isMatch(inputItemWrapper, filterItemList, cargoFilter)) {
+            if (!CargoUtil.isMatch(inputItemWrapper, filterItemList, simpleCargoDTO.getCargoFilter())) {
                 continue;
             }
             if (typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWrapper, typeItem)) {
@@ -453,12 +354,12 @@ public class CargoUtil {
                     continue;
                 }
             } else {
-                if (typeItem == null && typeLimit) {
-                    typeItem = new ItemWrapper(ItemStackUtil.cloneItem(inputItem), inputItemWrapper.getItemMeta());
-                }
                 count = ItemStackUtil.stack(inputItemWrapper, outputItem, cargoNumber);
                 if (count == 0) {
                     continue;
+                }
+                if (typeItem == null && typeLimit) {
+                    typeItem = new ItemWrapper(ItemStackUtil.cloneItem(inputItem), inputItemWrapper.getItemMeta());
                 }
             }
 
@@ -477,28 +378,27 @@ public class CargoUtil {
         return number;
     }
 
-    /**
-     * @param outputMap Null while outputBlock is vanilla container
-     * @param outputBlock should not be null if outputMap is null
-     */
-    public static int doSimpleCargoInputMain(@Nonnull InvWithSlots inputMap, @Nullable InvWithSlots outputMap, @Nullable Block outputBlock, @Nonnull String outputSize, @Nonnull String outputOrder, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots) {
-        Inventory inputInv = inputMap.getInventory();
-        int[] inputSlots = inputMap.getSlots();
+    public static int doSimpleCargoInputMain(@Nonnull SimpleCargoDTO simpleCargoDTO) {
+        Inventory inputInv = simpleCargoDTO.getInputMap().getInventory();
+        int[] inputSlots = simpleCargoDTO.getInputMap().getSlots();
 
         List<ItemWrapper> skipItemList = new ArrayList<>(inputSlots.length);
-        List<ItemWrapper> filterItemList = MachineUtil.getItemList(filterInv, filterSlots);
+        List<ItemWrapper> filterItemList = MachineUtil.getItemList(simpleCargoDTO.getFilterInv(), simpleCargoDTO.getFilterSlots());
 
-        boolean dynamicOutputBlock = outputBlock != null && outputMap == null;
+        // If output block is a slimefun machine
+        boolean dynamicOutputBlock = simpleCargoDTO.getOutputBlock() != null && simpleCargoDTO.getOutputMap() == null;
         List<ItemWrapper> searchItemList = new ArrayList<>(SEARCH_MAP_LIMIT);
         List<InvWithSlots> searchInvList = new ArrayList<>(SEARCH_MAP_LIMIT);
         boolean newOutputMap = false;
+        InvWithSlots outputMap = simpleCargoDTO.getOutputMap();
 
-        boolean nonnull = CargoLimit.VALUE_NONNULL.equals(cargoLimit);
-        boolean stack = !nonnull && CargoLimit.VALUE_STACK.equals(cargoLimit);
-        boolean first = !nonnull && !stack && CargoLimit.VALUE_FIRST.equals(cargoLimit);
-        boolean typeLimit = !nonnull && !stack && !first && CargoLimit.typeLimit(cargoLimit);
+        boolean nonnull = CargoLimit.VALUE_NONNULL.equals(simpleCargoDTO.getCargoLimit());
+        boolean stack = !nonnull && CargoLimit.VALUE_STACK.equals(simpleCargoDTO.getCargoLimit());
+        boolean first = !nonnull && !stack && CargoLimit.VALUE_FIRST.equals(simpleCargoDTO.getCargoLimit());
+        boolean typeLimit = !nonnull && !stack && !first && CargoLimit.typeLimit(simpleCargoDTO.getCargoLimit());
 
         int number = 0;
+        int cargoNumber = simpleCargoDTO.getCargoNumber();
         ItemWrapper typeItem = null;
         ItemWrapper inputItemWrapper = new ItemWrapper();
 
@@ -511,7 +411,7 @@ public class CargoUtil {
             if (typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWrapper, typeItem)) {
                 continue;
             }
-            if (!CargoUtil.isMatch(inputItemWrapper, filterItemList, cargoFilter)) {
+            if (!CargoUtil.isMatch(inputItemWrapper, filterItemList, simpleCargoDTO.getCargoFilter())) {
                 continue;
             }
             if (CargoUtil.isMatch(inputItemWrapper, skipItemList, CargoFilter.VALUE_WHITE)) {
@@ -527,11 +427,11 @@ public class CargoUtil {
                     }
                 }
                 if (outputMap == null) {
-                    newOutputMap = true;
-                    outputMap = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder, inputItem);
+                    outputMap = CargoUtil.getInvWithSlots(simpleCargoDTO.getOutputBlock(), simpleCargoDTO.getOutputSize(), simpleCargoDTO.getOutputOrder(), inputItem);
                     if (outputMap == null) {
                         continue;
                     }
+                    newOutputMap = true;
                 }
             }
             Inventory outputInv = outputMap.getInventory();
@@ -585,7 +485,7 @@ public class CargoUtil {
                     break;
                 } else if (newOutputMap && searchItemList.size() < SEARCH_MAP_LIMIT) {
                     searchItemList.add(inputItemWrapper);
-                    searchInvList.add(inputMap);
+                    searchInvList.add(outputMap);
                 }
             } else {
                 skipItemList.add(inputItemWrapper);
@@ -594,32 +494,30 @@ public class CargoUtil {
         return number;
     }
 
-    /**
-     * @param inputMap Null while inputBlock is vanilla container
-     * @param inputBlock should not be null if outputMap is null
-     */
-    public static int doSimpleCargoOutputMain(@Nullable InvWithSlots inputMap, @Nullable Block inputBlock, @Nonnull InvWithSlots outputMap, @Nonnull String inputSize, @Nonnull String inputOrder, int cargoNumber, @Nonnull String cargoLimit, @Nonnull String cargoFilter, @Nonnull Inventory filterInv, int[] filterSlots) {
-        Inventory outputInv = outputMap.getInventory();
-        int[] outputSlots = outputMap.getSlots();
+    public static int doSimpleCargoOutputMain(@Nonnull SimpleCargoDTO simpleCargoDTO) {
+        Inventory outputInv = simpleCargoDTO.getOutputMap().getInventory();
+        int[] outputSlots = simpleCargoDTO.getOutputMap().getSlots();
 
-        List<ItemWrapper> skipItemList = new ArrayList<>(outputMap.getSlots().length);
-        List<ItemWrapper> filterList = MachineUtil.getItemList(filterInv, filterSlots);
+        List<ItemWrapper> skipItemList = new ArrayList<>(simpleCargoDTO.getOutputMap().getSlots().length);
+        List<ItemWrapper> filterList = MachineUtil.getItemList(simpleCargoDTO.getFilterInv(), simpleCargoDTO.getFilterSlots());
 
-        boolean dynamicInputBlock = inputBlock != null && inputMap == null;
+        boolean dynamicInputBlock = simpleCargoDTO.getInputBlock() != null && simpleCargoDTO.getInputMap() == null;
         List<ItemWrapper> searchItemList = new ArrayList<>(SEARCH_MAP_LIMIT);
         List<InvWithSlots> searchInvList = new ArrayList<>(SEARCH_MAP_LIMIT);
         InvWithSlots nullItemInputMap = null;
         boolean newInputMap = false;
+        InvWithSlots inputMap = simpleCargoDTO.getInputMap();
 
-        boolean nonnull = CargoLimit.VALUE_NONNULL.equals(cargoLimit);
-        boolean stack = !nonnull && CargoLimit.VALUE_STACK.equals(cargoLimit);
-        boolean first = !nonnull && !stack && CargoLimit.VALUE_FIRST.equals(cargoLimit);
-        boolean typeLimit = !nonnull && !stack && !first && CargoLimit.typeLimit(cargoLimit);
+        boolean nonnull = CargoLimit.VALUE_NONNULL.equals(simpleCargoDTO.getCargoLimit());
+        boolean stack = !nonnull && CargoLimit.VALUE_STACK.equals(simpleCargoDTO.getCargoLimit());
+        boolean first = !nonnull && !stack && CargoLimit.VALUE_FIRST.equals(simpleCargoDTO.getCargoLimit());
+        boolean typeLimit = !nonnull && !stack && !first && CargoLimit.typeLimit(simpleCargoDTO.getCargoLimit());
 
         int number = 0;
+        int cargoNumber = simpleCargoDTO.getCargoNumber();
         ItemWrapper typeItem = null;
         final ItemWrapper finalItemWrapper = new ItemWrapper();
-        ItemWrapper outputItemWrapper = finalItemWrapper;
+        ItemWrapper outputItemWrapper;
 
         for (int outputSlot : outputSlots) {
             ItemStack outputItem = outputInv.getItem(outputSlot);
@@ -634,7 +532,7 @@ public class CargoUtil {
                 }
                 outputItemWrapper = finalItemWrapper;
                 outputItemWrapper.newWrap(outputItem);
-                if (!CargoUtil.isMatch(outputItemWrapper, filterList, cargoFilter)) {
+                if (!CargoUtil.isMatch(outputItemWrapper, filterList, simpleCargoDTO.getCargoFilter())) {
                     continue;
                 }
                 if (CargoUtil.isMatch(outputItemWrapper, skipItemList, CargoFilter.VALUE_WHITE)) {
@@ -647,7 +545,7 @@ public class CargoUtil {
             if (dynamicInputBlock) {
                 if(outputItemWrapper == null) {
                     if(nullItemInputMap == null) {
-                        nullItemInputMap = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
+                        nullItemInputMap = CargoUtil.getInvWithSlots(simpleCargoDTO.getInputBlock(), simpleCargoDTO.getInputSize(), simpleCargoDTO.getInputOrder());
                     }
                     inputMap = nullItemInputMap;
                     newInputMap = false;
@@ -661,7 +559,7 @@ public class CargoUtil {
                         }
                     }
                     if (inputMap == null) {
-                        inputMap = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder, outputItem);
+                        inputMap = CargoUtil.getInvWithSlots(simpleCargoDTO.getInputBlock(), simpleCargoDTO.getInputSize(), simpleCargoDTO.getInputOrder(), outputItem);
                         if (inputMap == null) {
                             continue;
                         }
@@ -679,7 +577,7 @@ public class CargoUtil {
                 }
                 ItemWrapper inputItemWrapper = new ItemWrapper(inputItem);
                 if (outputItemWrapper == null) {
-                    if(!CargoUtil.isMatch(inputItemWrapper, filterList, cargoFilter)) {
+                    if(!CargoUtil.isMatch(inputItemWrapper, filterList, simpleCargoDTO.getCargoFilter())) {
                         continue;
                     }
                     if(typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWrapper, typeItem)) {
@@ -833,63 +731,62 @@ public class CargoUtil {
                     slots = new int[0];
             }
         } else {
-            if (Bukkit.isPrimaryThread()) {
-                BlockState blockState = PaperLib.getBlockState(block, false).getState();
-                if (blockState instanceof InventoryHolder) {
-                    inventory = ((InventoryHolder) blockState).getInventory();
-                    slots = new int[inventory.getSize()];
-                    for (int i = 0; i < slots.length; i++) {
-                        slots[i] = i;
-                    }
-                }
-            } else {
-                Future<InvWithSlots> future = Bukkit.getScheduler().callSyncMethod(FinalTech.getInstance(), () -> {
-                    BlockState blockState = PaperLib.getBlockState(block, false).getState();
-                    if (blockState instanceof InventoryHolder) {
-                        Inventory inv = ((InventoryHolder) blockState).getInventory();
-                        int[] slots1 = new int[inv.getSize()];
-                        for (int i = 0; i < slots1.length; i++) {
-                            slots1[i] = i;
-                        }
-                        return new InvWithSlots(inv, slots1);
-                    }
-                    return null;
-                });
-                try {
-                    InvWithSlots invWithSlots = future.get();
-                    if (invWithSlots == null) {
-                        return null;
-                    }
-                    inventory = invWithSlots.inventory();
-                    slots = invWithSlots.slots();
-                } catch (Exception e) {
-                    e.printStackTrace();
+            BlockState blockState = block.getState();
+            if (blockState instanceof InventoryHolder) {
+                inventory = ((InventoryHolder) blockState).getInventory();
+                slots = new int[inventory.getSize()];
+                // TODO:
+                for (int i = 0; i < slots.length; i++) {
+                    slots[i] = i;
                 }
             }
         }
 
-        if (inventory != null && slots != null) {
-            switch (order) {
-                case SlotSearchOrder.VALUE_DESCEND:
-                    slots = JavaUtil.reserve(slots);
-                    break;
-                case SlotSearchOrder.VALUE_FIRST_ONLY:
-                    if (slots.length > 0) {
-                        slots = new int[] {slots[0]};
-                    }
-                    break;
-                case SlotSearchOrder.VALUE_LAST_ONLY:
-                    if (slots.length > 0) {
-                        slots = new int[] {slots[slots.length - 1]};
-                    }
-                case SlotSearchOrder.VALUE_RANDOM:
-                    slots = JavaUtil.shuffle(slots);
-                default:
-                    break;
-            }
-            return new InvWithSlots(inventory, slots);
+        if(inventory == null || slots == null) {
+            return null;
+        }
+        return CargoUtil.calInvWithSlots(inventory, slots, order);
+    }
+
+    @Nullable
+    public static Inventory getVanillaInventory(@Nonnull Block block) {
+        if(block.getState() instanceof InventoryHolder inventoryHolder) {
+            return inventoryHolder.getInventory();
         }
         return null;
+    }
+
+    @Nonnull
+    public static InvWithSlots calInvWithSlots(@Nonnull Inventory inventory, @Nonnull int[] slots, @Nonnull String order) {
+        switch (order) {
+            case SlotSearchOrder.VALUE_DESCEND:
+                slots = JavaUtil.reserve(slots);
+                break;
+            case SlotSearchOrder.VALUE_FIRST_ONLY:
+                if (slots.length > 0) {
+                    slots = new int[] {slots[0]};
+                }
+                break;
+            case SlotSearchOrder.VALUE_LAST_ONLY:
+                if (slots.length > 0) {
+                    slots = new int[] {slots[slots.length - 1]};
+                }
+            case SlotSearchOrder.VALUE_RANDOM:
+                slots = JavaUtil.shuffle(slots);
+            default:
+                break;
+        }
+        return new InvWithSlots(inventory, slots);
+    }
+
+    @Nonnull
+    public static InvWithSlots calInvWithSlots(@Nonnull Inventory inventory, @Nonnull String order) {
+        int[] slots = new int[inventory.getSize()];
+        // TODO:
+        for (int i = 0; i < slots.length; i++) {
+            slots[i] = i;
+        }
+        return CargoUtil.calInvWithSlots(inventory, slots, order);
     }
 
     public static boolean hasInventory(@Nonnull Block block) {

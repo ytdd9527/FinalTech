@@ -18,7 +18,6 @@ import io.taraxacum.finaltech.core.menu.manual.EquivalentExchangeTableMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
 import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -28,7 +27,6 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -71,7 +69,7 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
                 continue;
             }
             if (ItemStackUtil.isItemSimilar(item, FinalTechItems.UNORDERED_DUST)) {
-                if (MachineUtil.itemCount(blockMenu.toInventory(), this.getOutputSlot()) == this.getOutputSlot().length) {
+                if (MachineUtil.slotCount(blockMenu.toInventory(), this.getOutputSlot()) == this.getOutputSlot().length) {
                     continue;
                 }
                 this.doCraft(blockMenu, config);

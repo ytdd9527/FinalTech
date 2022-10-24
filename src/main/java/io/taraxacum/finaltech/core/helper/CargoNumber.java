@@ -4,6 +4,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.factory.BlockStorageHelper;
 import io.taraxacum.finaltech.api.factory.BlockStorageLoreHelper;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -26,7 +27,7 @@ public final class CargoNumber {
 
     public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, 0, new LinkedHashMap<>() {{
 //        this.put("0", List.of("number no limit"));
-        for (int i = 1; i <= 64 * 9; i++) {
+        for (int i = 1; i <= ConstantTableUtil.ITEM_MAX_STACK * 9; i++) {
             this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "CARGO_NUMBER", "icon", "lore0"), String.valueOf(i)));
         }
     }}) {
@@ -39,7 +40,7 @@ public final class CargoNumber {
         @Nonnull
         @Override
         public String defaultValue() {
-            return "64";
+            return String.valueOf(ConstantTableUtil.ITEM_MAX_STACK);
         }
 
         @Nonnull
@@ -48,7 +49,7 @@ public final class CargoNumber {
             if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return HELPER.nextOrDefaultValue(value);
             } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
-                return HELPER.offsetOrDefaultValue(value, 64);
+                return HELPER.offsetOrDefaultValue(value, ConstantTableUtil.ITEM_MAX_STACK);
             } else {
                 return HELPER.offsetOrDefaultValue(value, 8);
             }
@@ -60,7 +61,7 @@ public final class CargoNumber {
             if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return HELPER.previousOrDefaultValue(value);
             } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
-                return HELPER.offsetOrDefaultValue(value, -64);
+                return HELPER.offsetOrDefaultValue(value, -ConstantTableUtil.ITEM_MAX_STACK);
             } else {
                 return HELPER.offsetOrDefaultValue(value, -8);
             }
@@ -68,7 +69,7 @@ public final class CargoNumber {
     };
     public static final BlockStorageLoreHelper INPUT_HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, 0, new LinkedHashMap<>() {{
 //        this.put("0", List.of("number no limit"));
-        for (int i = 1; i <= 64 * 9; i++) {
+        for (int i = 1; i <= ConstantTableUtil.ITEM_MAX_STACK * 9; i++) {
             this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "CARGO_NUMBER", "icon", "lore0"), String.valueOf(i)));
         }
     }}) {
@@ -81,7 +82,7 @@ public final class CargoNumber {
         @Nonnull
         @Override
         public String defaultValue() {
-            return "64";
+            return String.valueOf(ConstantTableUtil.ITEM_MAX_STACK);
         }
 
         @Nonnull
@@ -90,7 +91,7 @@ public final class CargoNumber {
             if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return INPUT_HELPER.nextOrDefaultValue(value);
             } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
-                return INPUT_HELPER.offsetOrDefaultValue(value, 64);
+                return INPUT_HELPER.offsetOrDefaultValue(value, ConstantTableUtil.ITEM_MAX_STACK);
             } else {
                 return INPUT_HELPER.offsetOrDefaultValue(value, 8);
             }
@@ -102,7 +103,7 @@ public final class CargoNumber {
             if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return INPUT_HELPER.previousOrDefaultValue(value);
             } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
-                return INPUT_HELPER.offsetOrDefaultValue(value, -64);
+                return INPUT_HELPER.offsetOrDefaultValue(value, -ConstantTableUtil.ITEM_MAX_STACK);
             } else {
                 return INPUT_HELPER.offsetOrDefaultValue(value, -8);
             }
@@ -110,7 +111,7 @@ public final class CargoNumber {
     };
     public static final BlockStorageLoreHelper OUTPUT_HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, 0, new LinkedHashMap<>() {{
 //        this.put("0", List.of("number no limit"));
-        for (int i = 1; i <= 64 * 9; i++) {
+        for (int i = 1; i <= ConstantTableUtil.ITEM_MAX_STACK * 9; i++) {
             this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "CARGO_NUMBER", "icon", "lore0"), String.valueOf(i)));
         }
     }}) {
@@ -123,7 +124,7 @@ public final class CargoNumber {
         @Nonnull
         @Override
         public String defaultValue() {
-            return "64";
+            return String.valueOf(ConstantTableUtil.ITEM_MAX_STACK);
         }
 
         @Nonnull
@@ -132,7 +133,7 @@ public final class CargoNumber {
             if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return OUTPUT_HELPER.nextOrDefaultValue(value);
             } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
-                return OUTPUT_HELPER.offsetOrDefaultValue(value, 64);
+                return OUTPUT_HELPER.offsetOrDefaultValue(value, ConstantTableUtil.ITEM_MAX_STACK);
             } else {
                 return OUTPUT_HELPER.offsetOrDefaultValue(value, 8);
             }
@@ -144,7 +145,7 @@ public final class CargoNumber {
             if (!clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
                 return OUTPUT_HELPER.previousOrDefaultValue(value);
             } else if (clickAction.isShiftClicked() && !clickAction.isRightClicked()) {
-                return OUTPUT_HELPER.offsetOrDefaultValue(value, -64);
+                return OUTPUT_HELPER.offsetOrDefaultValue(value, -ConstantTableUtil.ITEM_MAX_STACK);
             } else {
                 return OUTPUT_HELPER.offsetOrDefaultValue(value, -8);
             }

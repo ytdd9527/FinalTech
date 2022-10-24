@@ -277,10 +277,11 @@ public final class SetupUtil {
         // cargo
         FinalTechMenus.SUB_MENU_CARGO.addTo(
                 new BasicFrameMachine(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.BASIC_FRAME_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_FRAME_MACHINE).register(),
-                new PointTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.POINT_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.POINT_TRANSFER).register(),
-                new LineTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LINE_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LINE_TRANSFER).register(),
-                new MeshTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.STATION_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STATION_TRANSFER).register(),
-                new LocationTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LOCATION_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LOCATION_TRANSFER).register());
+                new PointTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.POINT_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.POINT_TRANSFER).register()
+//                new LineTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LINE_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LINE_TRANSFER).register(),
+//                new MeshTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.STATION_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STATION_TRANSFER).register(),
+//                new LocationTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LOCATION_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LOCATION_TRANSFER).register()
+                );
 
         /* functional machines */
         // core machines

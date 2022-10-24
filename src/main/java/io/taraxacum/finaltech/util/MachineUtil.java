@@ -102,7 +102,7 @@ public final class MachineUtil {
     /**
      * @return How many slot that has item on it.
      */
-    public static int itemCount(@Nonnull Inventory inventory, int[] slots) {
+    public static int slotCount(@Nonnull Inventory inventory, int[] slots) {
         int count = 0;
         ItemStack itemStack;
         for (int slot : slots) {

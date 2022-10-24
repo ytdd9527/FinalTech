@@ -3,7 +3,6 @@ package io.taraxacum.finaltech.core.menu.manual;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.AdvancedCraft;
@@ -13,6 +12,7 @@ import io.taraxacum.finaltech.api.factory.MachineRecipeFactory;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.items.machine.manual.craft.AbstractManualCraftMachine;
 import io.taraxacum.finaltech.util.*;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -265,7 +265,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
     public void doFunction(@Nonnull BlockMenu blockMenu, @Nonnull ClickAction clickAction, @Nonnull Player player, int offset) {
         Inventory inventory = blockMenu.toInventory();
 
-        if(MachineUtil.itemCount(inventory, OUTPUT_SLOT) == OUTPUT_SLOT.length) {
+        if(MachineUtil.slotCount(inventory, OUTPUT_SLOT) == OUTPUT_SLOT.length) {
             return;
         }
 
@@ -297,6 +297,9 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         craft.setMatchCount(Math.min(craft.getMatchCount(), MachineUtil.calMaxMatch(inventory, OUTPUT_SLOT, craft.getOutputItemList())));
         if (craft.getMatchCount() == 0) {
             return;
+        }
+        if(advancedRecipe.get(craft.getOffset()).isRandomOutput()) {
+            craft.setMatchCount(Math.min(craft.getMatchCount(), (OUTPUT_SLOT.length - MachineUtil.slotCount(inventory, OUTPUT_SLOT))) * ConstantTableUtil.ITEM_MAX_STACK);
         }
 
         AdvancedMachineRecipe advancedMachineRecipe = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getSlimefunItem().getClass()).get(craft.getOffset());

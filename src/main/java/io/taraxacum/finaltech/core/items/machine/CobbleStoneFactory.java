@@ -13,6 +13,7 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.NormalStorageUnitMenu;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -70,6 +71,6 @@ public class CobbleStoneFactory extends AbstractMachine implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerRecipe(Material.COBBLESTONE, new ItemStack(Material.COBBLESTONE, 64));
+        this.registerRecipe(Material.COBBLESTONE, new ItemStack(Material.COBBLESTONE, ConstantTableUtil.ITEM_MAX_STACK));
     }
 }

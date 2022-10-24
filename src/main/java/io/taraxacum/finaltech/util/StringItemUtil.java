@@ -59,6 +59,12 @@ public class StringItemUtil {
         String amount = persistentDataContainer.get(AMOUNT_KEY, PersistentDataType.STRING);
         int maxStackSize = stringItem.getItemStack().getMaxStackSize();
         int validAmount = StringNumberUtil.compare(amount, String.valueOf(maxStackSize * slots.length)) >= 1 ? maxStackSize * slots.length : Integer.parseInt(amount);
+        if(validAmount == 0) {
+            persistentDataContainer.remove(ITEM_KEY);
+            persistentDataContainer.remove(AMOUNT_KEY);
+            return 0;
+        }
+
         amount = StringNumberUtil.sub(amount, String.valueOf(validAmount));
         ItemStack targetItem;
         int count = 0;
@@ -93,6 +99,7 @@ public class StringItemUtil {
                 }
             }
         }
+
         amount = StringNumberUtil.add(amount, String.valueOf(validAmount));
         if (StringNumberUtil.ZERO.equals(amount)) {
             persistentDataContainer.remove(ITEM_KEY);

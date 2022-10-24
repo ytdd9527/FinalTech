@@ -2210,6 +2210,9 @@ items:
       name: '{color:normal}Next'
     match-item:
       lore: '{color:normal}Can be craft {color:number}{1} {color:normal}times'
+    warn:
+      - 'Player [{5}] in {1} [{2},{3},{4}] is clicking manual craft machine very quickly.'
+      - 'This may be due to server network, else it may cause server lag.'
 research:
   LIQUID_CARD: 'Liquid Card'
   ORDER_DUST: 'FinalTECH Basic Material'

@@ -66,7 +66,7 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
         }
 
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(MachineUtil.itemCount(blockMenu.toInventory(), this.getInputSlot()) != this.getInputSlot().length) {
+        if(MachineUtil.slotCount(blockMenu.toInventory(), this.getInputSlot()) != this.getInputSlot().length) {
             return;
         }
 

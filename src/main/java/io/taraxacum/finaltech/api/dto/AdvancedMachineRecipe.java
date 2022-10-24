@@ -42,6 +42,10 @@ public class AdvancedMachineRecipe {
         return this.randomOutputs;
     }
 
+    public boolean isRandomOutput() {
+        return this.randomOutputs.length > 1;
+    }
+
     public int getWeightSum() {
         return this.weightSum;
     }

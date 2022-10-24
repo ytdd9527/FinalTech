@@ -6,8 +6,11 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.dto.InvWithSlots;
+import io.taraxacum.finaltech.core.dto.SimpleCargoDTO;
 import io.taraxacum.finaltech.core.helper.CargoFilter;
 import io.taraxacum.finaltech.core.helper.CargoLimit;
+import io.taraxacum.finaltech.core.helper.SlotSearchOrder;
+import io.taraxacum.finaltech.core.helper.SlotSearchSize;
 import io.taraxacum.finaltech.core.items.machine.operation.AbstractOperationMachine;
 import io.taraxacum.finaltech.core.menu.limit.AbstractLimitMachineMenu;
 import io.taraxacum.finaltech.core.menu.limit.BasicFrameMachineMenu;
@@ -43,7 +46,7 @@ public class BasicFrameMachine extends AbstractOperationMachine {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         Inventory inventory = blockMenu.toInventory();
         MachineUtil.stockSlots(blockMenu.toInventory(), this.getInputSlot());
-        CargoUtil.doSimpleCargoStrongSymmetry(new InvWithSlots(inventory, this.getInputSlot()), new InvWithSlots(inventory, this.getOutputSlot()), this.getInputSlot().length, CargoLimit.VALUE_ALL, CargoFilter.VALUE_BLACK, inventory, new int[0]);
+        CargoUtil.doSimpleCargoStrongSymmetry(new SimpleCargoDTO(new InvWithSlots(inventory, this.getInputSlot()), block, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, new InvWithSlots(inventory, this.getOutputSlot()), block, SlotSearchSize.VALUE_OUTPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, this.getInputSlot().length, CargoLimit.VALUE_ALL, CargoFilter.VALUE_BLACK, inventory, new int[0]));
         MachineUtil.stockSlots(blockMenu.toInventory(), this.getOutputSlot());
     }
 
