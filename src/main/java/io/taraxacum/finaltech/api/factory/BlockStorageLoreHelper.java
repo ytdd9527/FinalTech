@@ -158,7 +158,7 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
                 return (BlockStorageLoreHelper) blockStorageHelper;
             } else {
                 synchronized (stringBlockStorageHelperMap) {
-                    if(stringBlockStorageHelperMap.containsKey(key)) {
+                    if (stringBlockStorageHelperMap.containsKey(key)) {
                         return (BlockStorageLoreHelper) stringBlockStorageHelperMap.get(key);
                     }
                     BlockStorageLoreHelper blockStorageLoreHelper = new BlockStorageLoreHelper(id, loreOffset, valueLoreMap) {
@@ -174,7 +174,7 @@ public abstract class BlockStorageLoreHelper extends BlockStorageHelper {
             }
         } else {
             synchronized (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY) {
-                if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
+                if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
                     return BlockStorageLoreHelper.newInstanceOrGet(id, key, loreOffset, valueLoreMap);
                 }
                 Map<String, BlockStorageHelper> stringBlockStorageHelperMap = new HashMap<>();

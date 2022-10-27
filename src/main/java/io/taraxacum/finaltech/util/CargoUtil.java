@@ -54,13 +54,13 @@ public class CargoUtil {
         };
     }
     public static Future<Integer> doCargoStrongSymmetry(@Nonnull CargoDTO cargoDTO) {
-        if(cargoDTO.getJavaPlugin().getServer().isPrimaryThread()) {
+        if (cargoDTO.getJavaPlugin().getServer().isPrimaryThread()) {
             InvWithSlots inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
-            if(inputMap == null) {
+            if (inputMap == null) {
                 return ZERO_FUTURE;
             }
             InvWithSlots outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
-            if(outputMap == null) {
+            if (outputMap == null) {
                 return ZERO_FUTURE;
             }
             FutureTask<Integer> futureTask = new FutureTask<>(() -> CargoUtil.doSimpleCargoStrongSymmetry(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)));
@@ -82,13 +82,13 @@ public class CargoUtil {
         }
     }
     public static Future<Integer> doCargoWeakSymmetry(@Nonnull CargoDTO cargoDTO) {
-        if(cargoDTO.getJavaPlugin().getServer().isPrimaryThread()) {
+        if (cargoDTO.getJavaPlugin().getServer().isPrimaryThread()) {
             InvWithSlots inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
-            if(inputMap == null) {
+            if (inputMap == null) {
                 return ZERO_FUTURE;
             }
             InvWithSlots outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
-            if(outputMap == null) {
+            if (outputMap == null) {
                 return ZERO_FUTURE;
             }
             FutureTask<Integer> futureTask = new FutureTask<>(() -> CargoUtil.doSimpleCargoWeakSymmetry(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)));
@@ -115,18 +115,18 @@ public class CargoUtil {
         // If there is no output inventory, just return 0.
 
         // Get inventory.
-        if(cargoDTO.getJavaPlugin().getServer().isPrimaryThread()) {
+        if (cargoDTO.getJavaPlugin().getServer().isPrimaryThread()) {
             InvWithSlots inputMap;
             InvWithSlots outputMap;
             // Just get inputMap.
             inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
-            if(BlockStorage.hasInventory(cargoDTO.getOutputBlock())) {
+            if (BlockStorage.hasInventory(cargoDTO.getOutputBlock())) {
                 outputMap = null;
             } else {
-                if(cargoDTO.getOutputBlock().getState() instanceof InventoryHolder) {
+                if (cargoDTO.getOutputBlock().getState() instanceof InventoryHolder) {
                     // Output Inventory is vanilla container.
                     outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
-                    if(outputMap == null) {
+                    if (outputMap == null) {
                         return ZERO_FUTURE;
                     }
                 } else {
@@ -144,13 +144,13 @@ public class CargoUtil {
                 InvWithSlots outputMap;
                 // Just get inputMap.
                 inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
-                if(BlockStorage.hasInventory(cargoDTO.getOutputBlock())) {
+                if (BlockStorage.hasInventory(cargoDTO.getOutputBlock())) {
                     outputMap = null;
                 } else {
-                    if(cargoDTO.getOutputBlock().getState() instanceof InventoryHolder) {
+                    if (cargoDTO.getOutputBlock().getState() instanceof InventoryHolder) {
                         // Output Inventory is vanilla container.
                         outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
-                        if(outputMap == null) {
+                        if (outputMap == null) {
                             return 0;
                         }
                     } else {
@@ -168,18 +168,18 @@ public class CargoUtil {
         // If there is no input inventory, just return 0.
 
         // Get inventory.
-        if(cargoDTO.getJavaPlugin().getServer().isPrimaryThread()) {
+        if (cargoDTO.getJavaPlugin().getServer().isPrimaryThread()) {
             InvWithSlots inputMap;
             InvWithSlots outputMap;
             // Just get outputMap.
             outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
-            if(BlockStorage.hasInventory(cargoDTO.getInputBlock())) {
+            if (BlockStorage.hasInventory(cargoDTO.getInputBlock())) {
                 inputMap = null;
             } else {
-                if(cargoDTO.getInputBlock().getState() instanceof InventoryHolder) {
+                if (cargoDTO.getInputBlock().getState() instanceof InventoryHolder) {
                     // Input Inventory is vanilla container.
                     inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
-                    if(inputMap == null) {
+                    if (inputMap == null) {
                         return ZERO_FUTURE;
                     }
                 } else {
@@ -197,13 +197,13 @@ public class CargoUtil {
                 InvWithSlots outputMap;
                 // Just get outputMap.
                 outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
-                if(BlockStorage.hasInventory(cargoDTO.getInputBlock())) {
+                if (BlockStorage.hasInventory(cargoDTO.getInputBlock())) {
                     inputMap = null;
                 } else {
-                    if(cargoDTO.getInputBlock().getState() instanceof InventoryHolder) {
+                    if (cargoDTO.getInputBlock().getState() instanceof InventoryHolder) {
                         // Input Inventory is vanilla container.
                         inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
-                        if(inputMap == null) {
+                        if (inputMap == null) {
                             return 0;
                         }
                     } else {
@@ -263,7 +263,7 @@ public class CargoUtil {
             ItemStack outputItem = outputInv.getItem(outputSlots[i]);
             int count;
             if (ItemStackUtil.isItemNull(outputItem)) {
-                if(!nonnull) {
+                if (!nonnull) {
                     // Move input item to output slot.
                     if (typeItem == null && typeLimit) {
                         typeItem = new ItemWrapper(ItemStackUtil.cloneItem(inputItem), inputItemWrapper.getItemMeta());
@@ -307,7 +307,7 @@ public class CargoUtil {
         Inventory outputInv = simpleCargoDTO.getOutputMap().getInventory();
         int[] outputSlots = simpleCargoDTO.getOutputMap().getSlots();
 
-        if(inputSlots.length == 0 || outputSlots.length == 0) {
+        if (inputSlots.length == 0 || outputSlots.length == 0) {
             return 0;
         }
 
@@ -339,7 +339,7 @@ public class CargoUtil {
             ItemStack outputItem = outputInv.getItem(outputSlots[i % outputSlots.length]);
             int count;
             if (ItemStackUtil.isItemNull(outputItem)) {
-                if(!nonnull) {
+                if (!nonnull) {
                     // Move input item to output slot.
                     if (typeItem == null && typeLimit) {
                         typeItem = new ItemWrapper(ItemStackUtil.cloneItem(inputItem), inputItemWrapper.getItemMeta());
@@ -440,7 +440,7 @@ public class CargoUtil {
             for (int outputSlot : outputSlots) {
                 ItemStack outputItem = outputInv.getItem(outputSlot);
                 if (ItemStackUtil.isItemNull(outputItem)) {
-                    if(!nonnull) {
+                    if (!nonnull) {
                         if (typeItem == null && typeLimit) {
                             typeItem = new ItemWrapper(ItemStackUtil.cloneItem(inputItem), inputItemWrapper.getItemMeta());
                         }
@@ -523,7 +523,7 @@ public class CargoUtil {
             ItemStack outputItem = outputInv.getItem(outputSlot);
             outputItemWrapper = null;
             if (ItemStackUtil.isItemNull(outputItem)) {
-                if(nonnull) {
+                if (nonnull) {
                     continue;
                 }
             } else {
@@ -543,8 +543,8 @@ public class CargoUtil {
                 }
             }
             if (dynamicInputBlock) {
-                if(outputItemWrapper == null) {
-                    if(nullItemInputMap == null) {
+                if (outputItemWrapper == null) {
+                    if (nullItemInputMap == null) {
                         nullItemInputMap = CargoUtil.getInvWithSlots(simpleCargoDTO.getInputBlock(), simpleCargoDTO.getInputSize(), simpleCargoDTO.getInputOrder());
                     }
                     inputMap = nullItemInputMap;
@@ -577,10 +577,10 @@ public class CargoUtil {
                 }
                 ItemWrapper inputItemWrapper = new ItemWrapper(inputItem);
                 if (outputItemWrapper == null) {
-                    if(!CargoUtil.isMatch(inputItemWrapper, filterList, simpleCargoDTO.getCargoFilter())) {
+                    if (!CargoUtil.isMatch(inputItemWrapper, filterList, simpleCargoDTO.getCargoFilter())) {
                         continue;
                     }
-                    if(typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWrapper, typeItem)) {
+                    if (typeItem != null && !ItemStackUtil.isItemSimilar(inputItemWrapper, typeItem)) {
                         continue;
                     }
                     if (typeItem == null && typeLimit) {
@@ -630,7 +630,7 @@ public class CargoUtil {
                     searchInvList.add(inputMap);
                 }
             } else {
-                if(outputItemWrapper == null) {
+                if (outputItemWrapper == null) {
                     break;
                 } else {
                     skipItemList.add(outputItemWrapper);
@@ -742,7 +742,7 @@ public class CargoUtil {
             }
         }
 
-        if(inventory == null || slots == null) {
+        if (inventory == null || slots == null) {
             return null;
         }
         return CargoUtil.calInvWithSlots(inventory, slots, order);
@@ -750,7 +750,7 @@ public class CargoUtil {
 
     @Nullable
     public static Inventory getVanillaInventory(@Nonnull Block block) {
-        if(block.getState() instanceof InventoryHolder inventoryHolder) {
+        if (block.getState() instanceof InventoryHolder inventoryHolder) {
             return inventoryHolder.getInventory();
         }
         return null;

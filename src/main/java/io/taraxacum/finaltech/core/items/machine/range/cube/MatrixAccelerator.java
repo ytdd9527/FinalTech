@@ -79,15 +79,15 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
         ItemStack matchItem = blockMenu.getItemInSlot(this.getInputSlot()[0]);
         if (ItemPhony.isValid(matchItem)) {
             int amount = matchItem.getAmount();
-            for(int i = 2, j = amount; j > 0; j /= i) {
+            for (int i = 2, j = amount; j > 0; j /= i) {
                 accelerate++;
             }
-            for(int i = 2, j = amount; j > 0; j /= i++) {
+            for (int i = 2, j = amount; j > 0; j /= i++) {
                 range++;
             }
         } else {
             machineItem = SlimefunItem.getByItem(matchItem);
-            if(machineItem == null || this.invalidIdSet.contains(machineItem.getId()) || machineItem.getBlockTicker() == null) {
+            if (machineItem == null || this.invalidIdSet.contains(machineItem.getId()) || machineItem.getBlockTicker() == null) {
                 this.updateMenu(blockMenu, range, 0, 0);
                 return;
             }
@@ -97,7 +97,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
 
         // search around block
         Map<Integer, List<LocationWithConfig>> machineConfigMap = new HashMap<>(range * 3);
-        if(machineId == null) {
+        if (machineId == null) {
             int count = this.function(block, range, location -> {
                 if (BlockStorage.hasBlockInfo(location)) {
                     Config machineConfig = BlockStorage.getLocationInfo(location);
@@ -139,7 +139,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
         int accelerateMachineCount = 0;
 
         // do accelerate
-        if(machineId == null) {
+        if (machineId == null) {
             List<LocationWithConfig> locationConfigList;
             for (int distance = 1; distance <= range * 3; distance++) {
                 locationConfigList = machineConfigMap.get(distance);
@@ -149,20 +149,20 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
                         Config machineConfig = locationConfig.getConfig();
                         Location machineLocation = locationConfig.getLocation();
                         final String finalMachineId = machineConfig.getString(ConstantTableUtil.CONFIG_ID);
-                        if(finalMachineId == null || this.invalidIdSet.contains(finalMachineId)) {
+                        if (finalMachineId == null || this.invalidIdSet.contains(finalMachineId)) {
                             continue;
                         }
                         final SlimefunItem finalMachineItem = SlimefunItem.getById(finalMachineId);
-                        if(finalMachineItem == null || finalMachineItem.getBlockTicker() == null) {
+                        if (finalMachineItem == null || finalMachineItem.getBlockTicker() == null) {
                             continue;
                         }
                         BlockTicker blockTicker = finalMachineItem.getBlockTicker();
                         for (int i = 0; i < accelerate; i++) {
-                            if(blockTicker.isSynchronized()) {
+                            if (blockTicker.isSynchronized()) {
                                 javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
                                     long testTime = JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig));
                                     System.out.println(finalMachineId + " : " + testTime);
-                                    if(testTime > MatrixAccelerator.this.syncThreshold) {
+                                    if (testTime > MatrixAccelerator.this.syncThreshold) {
                                         MatrixAccelerator.this.invalidIdSet.add(finalMachineId);
                                     }
                                 });
@@ -170,14 +170,14 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
                                 BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(finalMachineId), () -> {
                                     long testTime = JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig));
                                     System.out.println(finalMachineId + " : " + testTime);
-                                    if(testTime > MatrixAccelerator.this.asyncThreshold) {
+                                    if (testTime > MatrixAccelerator.this.asyncThreshold) {
                                         MatrixAccelerator.this.invalidIdSet.add(finalMachineId);
                                     }
                                 }, machineLocation);
                                 accelerateTimeCount++;
                             }
                         }
-                        if(drawParticle) {
+                        if (drawParticle) {
                             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, locationConfig.getLocation().getBlock()));
                         }
                         accelerateMachineCount++;
@@ -196,26 +196,26 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
                     for (LocationWithConfig locationConfig : locationConfigList) {
                         Config machineConfig = locationConfig.getConfig();
                         Location machineLocation = locationConfig.getLocation();
-                        if(!machineId.equals(machineConfig.getString(ConstantTableUtil.CONFIG_ID))) {
+                        if (!machineId.equals(machineConfig.getString(ConstantTableUtil.CONFIG_ID))) {
                             continue;
                         }
                         for (int i = 0; i < accelerate; i++) {
-                            if(blockTicker.isSynchronized()) {
+                            if (blockTicker.isSynchronized()) {
                                 javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
-                                    if(JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig)) > MatrixAccelerator.this.syncThreshold) {
+                                    if (JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig)) > MatrixAccelerator.this.syncThreshold) {
                                         MatrixAccelerator.this.invalidIdSet.add(finalMachineId);
                                     }
                                 });
                             } else {
                                 BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(finalMachineId), () -> {
-                                    if(JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig)) > MatrixAccelerator.this.asyncThreshold) {
+                                    if (JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig)) > MatrixAccelerator.this.asyncThreshold) {
                                         MatrixAccelerator.this.invalidIdSet.add(finalMachineId);
                                     }
                                 }, machineLocation);
                                 accelerateTimeCount++;
                             }
                         }
-                        if(drawParticle) {
+                        if (drawParticle) {
                             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, locationConfig.getLocation().getBlock()));
                         }
                         accelerateMachineCount++;
@@ -233,7 +233,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
     }
 
     private void updateMenu(@Nonnull BlockMenu blockMenu, int range, int accelerateTimeCount, int accelerateMachineCount) {
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             ItemStack item = blockMenu.getItemInSlot(StatusL2Menu.STATUS_SLOT);
             ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
                     String.valueOf(range),

@@ -34,9 +34,9 @@ public class LocationRecipeRegistry {
 
     @Nonnull
     public static LocationRecipeRegistry getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             synchronized (LocationRecipeRegistry.class) {
-                if(instance == null) {
+                if (instance == null) {
                     instance = new LocationRecipeRegistry();
                 }
             }

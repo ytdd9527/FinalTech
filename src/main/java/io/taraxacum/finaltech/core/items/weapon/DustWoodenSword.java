@@ -62,13 +62,13 @@
 //                double damage = entityDamageByEntityEvent.getFinalDamage();
 //                int noDamageTick = targetEntity.getMaximumNoDamageTicks();
 //                EntityEquipment equipment = targetEntity.getEquipment();
-//                if(equipment != null) {
+//                if (equipment != null) {
 //                    equipment.getArmorContents();
 //                    Set<Enchantment> enchantmentSet = new HashSet<>();
 //                    int totalEnchantmentLevel = 0;
-//                    for(ItemStack equipmentItem : equipment.getArmorContents()) {
-//                        if(!ItemStackUtil.isItemNull(equipmentItem)) {
-//                            for(Map.Entry<Enchantment, Integer> entry : equipmentItem.getEnchantments().entrySet()) {
+//                    for (ItemStack equipmentItem : equipment.getArmorContents()) {
+//                        if (!ItemStackUtil.isItemNull(equipmentItem)) {
+//                            for (Map.Entry<Enchantment, Integer> entry : equipmentItem.getEnchantments().entrySet()) {
 //                                enchantmentSet.add(entry.getKey());
 //                                totalEnchantmentLevel += entry.getValue();
 //                            }
@@ -84,7 +84,7 @@
 //                targetEntity.setLastDamage(damage);
 //                targetEntity.setLastDamageCause(entityDamageByEntityEvent);
 //                World world = targetEntity.getLocation().getWorld();
-//                if(world != null) {
+//                if (world != null) {
 //                    targetEntity.getLocation().getWorld().spawnParticle(Particle.CRIT, targetEntity.getLocation(), (int)(1 + Math.pow(damage, 0.5)));
 //                    targetEntity.getLocation().getWorld().playSound(targetEntity.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, (float) Math.log(damage), 1);
 //                }

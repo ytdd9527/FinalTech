@@ -59,9 +59,9 @@ public abstract class AbstractMachineAccelerateCard extends UsableSlimefunItem {
             return;
         }
 
-        if(BlockStorage.hasInventory(block)) {
+        if (BlockStorage.hasInventory(block)) {
             BlockMenu blockMenu = BlockStorage.getInventory(location);
-            if(!blockMenu.canOpen(block, player)) {
+            if (!blockMenu.canOpen(block, player)) {
                 player.sendRawMessage(FinalTech.getLanguageString("messages", "no-permission", "location"));
                 return;
             }
@@ -73,18 +73,18 @@ public abstract class AbstractMachineAccelerateCard extends UsableSlimefunItem {
         }
 
         SlimefunItem slimefunItem = SlimefunItem.getById(config.getString(ConstantTableUtil.CONFIG_ID));
-        if(slimefunItem == null || FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId())) {
+        if (slimefunItem == null || FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId())) {
             return;
         }
 
         BlockTicker blockTicker = slimefunItem.getBlockTicker();
-        if(blockTicker == null) {
+        if (blockTicker == null) {
             return;
         }
 
         int time;
         if (this.consume()) {
-            if(playerRightClickEvent.getItem().getAmount() > 0) {
+            if (playerRightClickEvent.getItem().getAmount() > 0) {
                 ItemStack item = playerRightClickEvent.getItem();
                 item.setAmount(item.getAmount() - 1);
                 time = this.times();
@@ -98,13 +98,13 @@ public abstract class AbstractMachineAccelerateCard extends UsableSlimefunItem {
         ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
 
         Runnable runnable = () -> {
-            for(int i = 0; i < time; i++) {
+            for (int i = 0; i < time; i++) {
                 blockTicker.tick(block, slimefunItem, config);
             }
         };
 
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
-        if(blockTicker.isSynchronized() || !FinalTech.isAsyncSlimefunItem(slimefunItem.getId())) {
+        if (blockTicker.isSynchronized() || !FinalTech.isAsyncSlimefunItem(slimefunItem.getId())) {
             javaPlugin.getServer().getScheduler().runTask(javaPlugin, runnable);
         } else {
             FinalTech.getLocationRunnableFactory().waitThenRun(runnable, location);

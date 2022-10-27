@@ -48,17 +48,17 @@ public class StaffElementalLine extends UsableSlimefunItem implements RecipeItem
         Location targetLocation = player.getLocation();
         boolean teleport = false;
         RayTraceResult rayTraceResult;
-        if(player.isSneaking()) {
+        if (player.isSneaking()) {
             rayTraceResult = player.rayTraceBlocks(this.longRange);
-            if(rayTraceResult != null) {
+            if (rayTraceResult != null) {
                 Block hitBlock = rayTraceResult.getHitBlock();
                 BlockFace hitBlockFace = rayTraceResult.getHitBlockFace();
-                if(hitBlock != null && hitBlockFace != null) {
+                if (hitBlock != null && hitBlockFace != null) {
                     Block targetBlock = hitBlock.getRelative(hitBlockFace);
                     targetLocation = LocationUtil.getCenterLocation(targetBlock);
                     targetLocation.setY(targetLocation.getY() - player.getEyeHeight());
                     teleport = true;
-                } else if(rayTraceResult.getHitEntity() != null) {
+                } else if (rayTraceResult.getHitEntity() != null) {
                     Entity hitEntity = rayTraceResult.getHitEntity();
                     targetLocation = hitEntity.getLocation();
                     teleport = true;
@@ -71,7 +71,7 @@ public class StaffElementalLine extends UsableSlimefunItem implements RecipeItem
             }
         } else {
             rayTraceResult = player.rayTraceBlocks(this.shortRange);
-            if(rayTraceResult != null) {
+            if (rayTraceResult != null) {
                 targetLocation = rayTraceResult.getHitPosition().toLocation(player.getWorld());
                 targetLocation.setY(targetLocation.getY() - player.getEyeHeight());
                 teleport = true;
@@ -81,13 +81,13 @@ public class StaffElementalLine extends UsableSlimefunItem implements RecipeItem
                 teleport = true;
             }
         }
-        if(teleport) {
+        if (teleport) {
             targetLocation.setPitch(playerLocation.getPitch());
             targetLocation.setYaw(playerLocation.getYaw());
-            if(!targetLocation.getWorld().getBlockAt(targetLocation).getType().isAir()) {
+            if (!targetLocation.getWorld().getBlockAt(targetLocation).getType().isAir()) {
                 targetLocation.setY(Math.ceil(targetLocation.getY()));
             }
-            if(!targetLocation.getWorld().getBlockAt(new Location(targetLocation.getWorld(), targetLocation.getBlockX() + 0.5, targetLocation.getBlockY() + 0.5, targetLocation.getBlockZ() + 0.5)).getType().isAir()) {
+            if (!targetLocation.getWorld().getBlockAt(new Location(targetLocation.getWorld(), targetLocation.getBlockX() + 0.5, targetLocation.getBlockY() + 0.5, targetLocation.getBlockZ() + 0.5)).getType().isAir()) {
                 targetLocation.setY(Math.ceil(targetLocation.getY() + 0.1));
             }
             player.teleport(targetLocation);

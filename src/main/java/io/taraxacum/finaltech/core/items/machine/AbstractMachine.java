@@ -43,7 +43,7 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
             this.getAddon().getJavaPlugin().getLogger().info(this.getItemName() + "§f is optimized for multithreading！！！");
         }
 
-        if(FinalTech.getMultiThreadLevel() == 2) {
+        if (FinalTech.getMultiThreadLevel() == 2) {
             this.addItemHandler(SetupUtil.generateBlockTicker(new BlockTicker() {
                 @Override
                 public boolean isSynchronized() {

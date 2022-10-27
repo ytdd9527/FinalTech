@@ -21,7 +21,7 @@ import java.util.concurrent.Future;
 public class BlockTickerUtil {
 
     public static void runBlockTickerLocal(@Nonnull JavaPlugin javaPlugin, @Nonnull BlockTicker blockTicker, @Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        if(!blockTicker.isSynchronized() || Bukkit.isPrimaryThread()) {
+        if (!blockTicker.isSynchronized() || Bukkit.isPrimaryThread()) {
             blockTicker.tick(block, slimefunItem, config);
         } else {
             Bukkit.getScheduler().runTask(javaPlugin, () -> blockTicker.tick(block, slimefunItem, config));
@@ -30,7 +30,7 @@ public class BlockTickerUtil {
 
     @SafeVarargs
     public static <T> void runBlockTicker(@Nonnull ServerRunnableLockFactory<T> serverRunnableLockFactory, @Nonnull BlockTicker blockTicker, @Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config, @Nonnull T... locks) {
-        if(!blockTicker.isSynchronized() || Bukkit.isPrimaryThread()) {
+        if (!blockTicker.isSynchronized() || Bukkit.isPrimaryThread()) {
             blockTicker.tick(block, slimefunItem, config);
         } else {
             serverRunnableLockFactory.waitThenRun(() -> blockTicker.tick(block, slimefunItem, config), locks);
@@ -40,7 +40,7 @@ public class BlockTickerUtil {
     @Nonnull
     @SafeVarargs
     public static <T> Future<Void> runBlockTickerCallable(@Nonnull ServerRunnableLockFactory<T> serverRunnableLockFactory, @Nonnull BlockTicker blockTicker, @Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config, @Nonnull T... locks) {
-        if(blockTicker.isSynchronized()) {
+        if (blockTicker.isSynchronized()) {
             return Bukkit.getScheduler().callSyncMethod(serverRunnableLockFactory.getPlugin(), () -> {
                 blockTicker.tick(block, slimefunItem, config);
                 return null;
@@ -52,7 +52,7 @@ public class BlockTickerUtil {
 
     @SafeVarargs
     public static <T> void runTask(@Nonnull ServerRunnableLockFactory<T> serverRunnableLockFactory, boolean async, @Nonnull Runnable runnable, T... locks) {
-        if(async) {
+        if (async) {
             serverRunnableLockFactory.waitThenRun(runnable, locks);
         } else {
             runnable.run();
@@ -76,9 +76,9 @@ public class BlockTickerUtil {
     }
 
     public static void subSleep(@Nonnull Config config) {
-        if(config.contains(ConstantTableUtil.CONFIG_SLEEP)) {
+        if (config.contains(ConstantTableUtil.CONFIG_SLEEP)) {
             double sleep = BlockTickerUtil.getSleep(config) - 1;
-            if(sleep > 0) {
+            if (sleep > 0) {
                 config.setValue(ConstantTableUtil.CONFIG_SLEEP, String.valueOf(sleep));
             } else {
                 config.setValue(ConstantTableUtil.CONFIG_SLEEP, null);

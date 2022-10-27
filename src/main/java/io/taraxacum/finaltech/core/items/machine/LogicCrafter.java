@@ -51,16 +51,16 @@ public class LogicCrafter extends AbstractMachine implements RecipeItem {
         int digit = 0;
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         Inventory inventory = blockMenu.toInventory();
-        if(MachineUtil.slotCount(inventory, this.getOutputSlot()) == this.getOutputSlot().length) {
+        if (MachineUtil.slotCount(inventory, this.getOutputSlot()) == this.getOutputSlot().length) {
             return;
         }
-        for(int slot : this.getInputSlot()) {
+        for (int slot : this.getInputSlot()) {
             ItemStack item = inventory.getItem(slot);
-            if(ItemStackUtil.isItemNull(item)) {
+            if (ItemStackUtil.isItemNull(item)) {
                 return;
             }
             SlimefunItem logicItem = SlimefunItem.getByItem(item);
-            if(logicItem instanceof LogicItem) {
+            if (logicItem instanceof LogicItem) {
                 boolean logic = ((LogicItem) logicItem).getLogic();
                 digit = digit << 1;
                 digit += logic ? 1 : 0;
@@ -69,10 +69,10 @@ public class LogicCrafter extends AbstractMachine implements RecipeItem {
             }
         }
         ItemStack result = AbstractDigitalNumber.INTEGER_ITEM_STACK_MAP.get(digit);
-        if(result != null) {
-            for(int slot : this.getInputSlot()) {
+        if (result != null) {
+            for (int slot : this.getInputSlot()) {
                 ItemStack itemStack = inventory.getItem(slot);
-                if(ItemStackUtil.isItemNull(itemStack)) {
+                if (ItemStackUtil.isItemNull(itemStack)) {
                     return;
                 }
                 itemStack.setAmount(itemStack.getAmount() - 1);

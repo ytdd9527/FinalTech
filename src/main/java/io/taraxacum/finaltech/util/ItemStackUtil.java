@@ -77,10 +77,10 @@ public final class ItemStackUtil {
         return !item1.hasItemMeta() && !item2.hasItemMeta();
     }
     public static boolean isItemSimilar(@Nullable ItemStack item1, @Nonnull ItemWrapper item2) {
-        if(ItemStackUtil.isItemNull(item1)) {
+        if (ItemStackUtil.isItemNull(item1)) {
             return false;
         }
-        if(!item1.getType().equals(item2.getItemStack().getType())) {
+        if (!item1.getType().equals(item2.getItemStack().getType())) {
             return false;
         }
         if (item1.hasItemMeta() && item2.hasItemMeta()) {
@@ -89,10 +89,10 @@ public final class ItemStackUtil {
         return !item1.hasItemMeta() && !item2.hasItemMeta();
     }
     public static boolean isItemSimilar(@Nonnull ItemWrapper item1, @Nullable ItemStack item2) {
-        if(ItemStackUtil.isItemNull(item2)) {
+        if (ItemStackUtil.isItemNull(item2)) {
             return false;
         }
-        if(!item1.getItemStack().getType().equals(item2.getType())) {
+        if (!item1.getItemStack().getType().equals(item2.getType())) {
             return false;
         }
         if (item1.hasItemMeta() && item2.hasItemMeta()) {
@@ -101,7 +101,7 @@ public final class ItemStackUtil {
         return !item1.hasItemMeta() && !item2.hasItemMeta();
     }
     public static boolean isItemSimilar(@Nonnull ItemWrapper item1, @Nonnull ItemWrapper item2) {
-        if(!item1.getItemStack().getType().equals(item2.getItemStack().getType())) {
+        if (!item1.getItemStack().getType().equals(item2.getItemStack().getType())) {
             return false;
         }
         if (item1.hasItemMeta() && item2.hasItemMeta()) {
@@ -170,11 +170,11 @@ public final class ItemStackUtil {
     public static boolean isEnchantmentSame(@Nonnull ItemStack itemStack1, @Nonnull ItemStack itemStack2) {
         Map<Enchantment, Integer> enchantments1 = itemStack1.getEnchantments();
         Map<Enchantment, Integer> enchantments2 = itemStack2.getEnchantments();
-        if(enchantments1.size() != enchantments2.size()) {
+        if (enchantments1.size() != enchantments2.size()) {
             return false;
         }
-        for(Map.Entry<Enchantment, Integer> entry : enchantments1.entrySet()) {
-            if(!enchantments2.containsKey(entry.getKey()) || !Objects.equals(enchantments2.get(entry.getKey()), entry.getValue())) {
+        for (Map.Entry<Enchantment, Integer> entry : enchantments1.entrySet()) {
+            if (!enchantments2.containsKey(entry.getKey()) || !Objects.equals(enchantments2.get(entry.getKey()), entry.getValue())) {
                 return false;
             }
         }
@@ -213,8 +213,8 @@ public final class ItemStackUtil {
     @Nonnull
     public static List<ItemStack> getNoNullItemList(@Nonnull ItemStack[] items) {
         List<ItemStack> itemList = new ArrayList<>(items.length);
-        for(ItemStack item : items) {
-            if(!ItemStackUtil.isItemNull(item)) {
+        for (ItemStack item : items) {
+            if (!ItemStackUtil.isItemNull(item)) {
                 itemList.add(item);
             }
         }
@@ -578,12 +578,12 @@ public final class ItemStackUtil {
     }
 
     public static void addLoreToFirst(@Nullable ItemStack item, @Nonnull String s) {
-        if(ItemStackUtil.isItemNull(item)) {
+        if (ItemStackUtil.isItemNull(item)) {
             return;
         }
         ItemMeta itemMeta = item.getItemMeta();
         List<String> lore = itemMeta.getLore();
-        if(lore == null) {
+        if (lore == null) {
             lore = new ArrayList<>(8);
             lore.add(s);
             itemMeta.setLore(lore);
@@ -591,7 +591,7 @@ public final class ItemStackUtil {
         } else {
             List<String> newLore = new ArrayList<>(lore.size() + 1);
             newLore.add(s);
-            for(String string : lore) {
+            for (String string : lore) {
                 newLore.add(string);
             }
             itemMeta.setLore(newLore);
@@ -739,14 +739,14 @@ public final class ItemStackUtil {
         }
         ItemMeta itemMeta = item.getItemMeta();
         List<String> oldLore = itemMeta.getLore();
-        if(oldLore == null) {
+        if (oldLore == null) {
             oldLore = new ArrayList<>();
         }
         while (oldLore.size() < loreOffset) {
             oldLore.add("");
         }
         for (int i = 0; i < lore.length; i++) {
-            if(oldLore.size() <= loreOffset + i) {
+            if (oldLore.size() <= loreOffset + i) {
                 oldLore.add(loreOffset + i, lore[i]);
             } else {
                 oldLore.set(loreOffset + i, lore[i]);
@@ -765,14 +765,14 @@ public final class ItemStackUtil {
         }
         ItemMeta itemMeta = item.getItemMeta();
         List<String> oldLore = itemMeta.getLore();
-        if(oldLore == null) {
+        if (oldLore == null) {
             oldLore = new ArrayList<>();
         }
         while (oldLore.size() < loreOffset) {
             oldLore.add("");
         }
         for (int i = 0; i < lore.size(); i++) {
-            if(oldLore.size() <= loreOffset + i) {
+            if (oldLore.size() <= loreOffset + i) {
                 oldLore.add(loreOffset + i, lore.get(i));
             } else {
                 oldLore.set(loreOffset + i, lore.get(i));

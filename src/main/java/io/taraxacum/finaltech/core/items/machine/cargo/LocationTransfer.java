@@ -76,7 +76,7 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
         boolean drawParticle = blockMenu.hasViewer();
 
         ItemStack locationRecorder = blockMenu.getItemInSlot(LocationTransferMenu.LOCATION_RECORDER_SLOT);
-        if(ItemStackUtil.isItemNull(locationRecorder)) {
+        if (ItemStackUtil.isItemNull(locationRecorder)) {
             return;
         }
         Location targetLocation = LocationUtil.parseLocationInItem(locationRecorder);
@@ -85,11 +85,11 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
         }
         Block targetBlock = targetLocation.getBlock();
 
-        if(!PermissionUtil.checkOfflinePermission(locationRecorder, targetLocation)) {
+        if (!PermissionUtil.checkOfflinePermission(locationRecorder, targetLocation)) {
             return;
         }
 
-        if(drawParticle) {
+        if (drawParticle) {
             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, targetBlock));
         }
 

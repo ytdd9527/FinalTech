@@ -67,7 +67,7 @@ public final class MachineMaxStack {
         @Nonnull
         @Override
         public ChestMenu.MenuClickHandler getHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
-            if(slimefunItem instanceof AbstractMachine) {
+            if (slimefunItem instanceof AbstractMachine) {
                 return (player, i, itemStack, clickAction) -> {
                     int quantity = Integer.parseInt(BlockStorage.getLocationInfo(location, MachineMaxStack.KEY));
                     if (clickAction.isShiftClicked()) {

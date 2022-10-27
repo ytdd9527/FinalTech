@@ -108,19 +108,19 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
         String outputBlockSearchMode = BlockSearchMode.MESH_OUTPUT_HELPER.getOrDefaultValue(config);
         String inputBlockSearchMode = BlockSearchMode.MESH_INPUT_HELPER.getOrDefaultValue(config);
 
-        if(primaryThread) {
-            for(int i = 0; i < outputBlocks.length; i++) {
+        if (primaryThread) {
+            for (int i = 0; i < outputBlocks.length; i++) {
                 outputBlocks[i] = this.searchBlock(block, outputBlockFaces[i], outputBlockSearchMode, drawParticle);
             }
-            for(int i = 0; i < inputBlocks.length; i++) {
+            for (int i = 0; i < inputBlocks.length; i++) {
                 inputBlocks[i] = this.searchBlock(block, inputBlockFaces[i], inputBlockSearchMode, drawParticle);
             }
 
-            if(!PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(inputBlocks)) || !PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(outputBlocks))) {
+            if (!PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(inputBlocks)) || !PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(outputBlocks))) {
                 return;
             }
 
-            if(drawParticle) {
+            if (drawParticle) {
                 javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> {
                     ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, inputBlocks);
                     ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, outputBlocks);
@@ -164,11 +164,11 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
 
             for (Block outputBlock : outputBlocks) {
                 InvWithSlots outputMap;
-                if(BlockStorage.hasInventory(outputBlock)) {
+                if (BlockStorage.hasInventory(outputBlock)) {
                     outputMap = null;
                 } else {
                     outputMap = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
-                    if(outputMap == null) {
+                    if (outputMap == null) {
                         continue;
                     }
                 }
@@ -216,11 +216,11 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
 
             for (Block inputBlock : inputBlocks) {
                 InvWithSlots inputMap;
-                if(BlockStorage.hasInventory(inputBlock)) {
+                if (BlockStorage.hasInventory(inputBlock)) {
                     inputMap = null;
                 } else {
                     inputMap = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
-                    if(inputMap == null) {
+                    if (inputMap == null) {
                         continue;
                     }
                 }
@@ -242,10 +242,10 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
             String inputOrder = SlotSearchOrder.INPUT_HELPER.getOrDefaultValue(config);
 
             javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
-                for(int i = 0; i < outputBlocks.length; i++) {
+                for (int i = 0; i < outputBlocks.length; i++) {
                     outputBlocks[i] = MeshTransfer.this.searchBlock(block, outputBlockFaces[i], outputBlockSearchMode, drawParticle);
                 }
-                for(int i = 0; i < inputBlocks.length; i++) {
+                for (int i = 0; i < inputBlocks.length; i++) {
                     inputBlocks[i] = MeshTransfer.this.searchBlock(block, inputBlockFaces[i], inputBlockSearchMode, drawParticle);
                 }
 
@@ -253,25 +253,25 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
                 Inventory[] inputVanillaInventories = new Inventory[inputBlocks.length];
                 Location[] locations = new Location[outputBlocks.length + inputBlocks.length + 1];
                 int p = 0;
-                for(; p < outputBlocks.length; p++) {
+                for (; p < outputBlocks.length; p++) {
                     locations[p] = outputBlocks[p].getLocation();
                     outputVanillaInventories[p] = CargoUtil.getVanillaInventory(outputBlocks[p]);
                 }
-                for(int i = 0; i < inputBlocks.length; i++) {
+                for (int i = 0; i < inputBlocks.length; i++) {
                     locations[i + p] = inputBlocks[i].getLocation();
                     inputVanillaInventories[i] = CargoUtil.getVanillaInventory(inputBlocks[i]);
                 }
                 locations[locations.length - 1] = block.getLocation();
                 ServerRunnableLockFactory.getInstance(javaPlugin, Location.class).waitThenRun(() -> {
-                    if(BlockStorage.hasBlockInfo(location)) {
+                    if (BlockStorage.hasBlockInfo(location)) {
                         return;
                     }
 
-                    if(!PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(inputBlocks)) || !PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(outputBlocks))) {
+                    if (!PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(inputBlocks)) || !PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(outputBlocks))) {
                         return;
                     }
 
-                    if(drawParticle) {
+                    if (drawParticle) {
                         javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> {
                             ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, inputBlocks);
                             ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, outputBlocks);
@@ -312,9 +312,9 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
                     for (int i = 0; i < outputBlocks.length; i++) {
                         Block outputBlock = outputBlocks[i];
                         InvWithSlots outputMap;
-                        if(BlockStorage.hasInventory(outputBlock)) {
+                        if (BlockStorage.hasInventory(outputBlock)) {
                             outputMap = null;
-                        } else if(outputVanillaInventories[i] != null) {
+                        } else if (outputVanillaInventories[i] != null) {
                             outputMap = CargoUtil.calInvWithSlots(outputVanillaInventories[i], outputOrder);
                         } else {
                             continue;
@@ -362,9 +362,9 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
                     for (int i = 0; i < inputBlocks.length; i++) {
                         Block inputBlock = inputBlocks[i];
                         InvWithSlots inputMap;
-                        if(BlockStorage.hasInventory(inputBlock)) {
+                        if (BlockStorage.hasInventory(inputBlock)) {
                             inputMap = null;
-                        } else if(inputVanillaInventories[i] != null) {
+                        } else if (inputVanillaInventories[i] != null) {
                             inputMap = CargoUtil.calInvWithSlots(inputVanillaInventories[i], inputOrder);
                         } else {
                             continue;

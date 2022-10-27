@@ -52,8 +52,8 @@ public class FuelAccelerator extends AbstractFaceMachine implements RecipeItem {
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
         javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> FuelAccelerator.this.function(block, 1, location -> {
             BlockState blockState = PaperLib.getBlockState(location.getBlock(), false).getState();
-            if(blockState instanceof Furnace) {
-                if(((Furnace) blockState).getCookTime() > 0 && ((Furnace) blockState).getCookTime() < ((Furnace) blockState).getCookTimeTotal() - 1) {
+            if (blockState instanceof Furnace) {
+                if (((Furnace) blockState).getCookTime() > 0 && ((Furnace) blockState).getCookTime() < ((Furnace) blockState).getCookTimeTotal() - 1) {
                     ((Furnace) blockState).setCookTime((short) (((Furnace) blockState).getCookTimeTotal() - 1));
                 }
             }

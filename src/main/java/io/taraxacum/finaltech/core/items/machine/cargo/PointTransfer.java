@@ -101,7 +101,7 @@ public class PointTransfer extends AbstractCargo implements RecipeItem {
         boolean primaryThread = javaPlugin.getServer().isPrimaryThread();
         boolean drawParticle = blockMenu.hasViewer();
 
-        if(primaryThread) {
+        if (primaryThread) {
             BlockData blockData = block.getState().getBlockData();
             if (!(blockData instanceof Directional)) {
                 return;
@@ -114,11 +114,11 @@ public class PointTransfer extends AbstractCargo implements RecipeItem {
                 return;
             }
 
-            if(!PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(inputBlock, outputBlock))) {
+            if (!PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(inputBlock, outputBlock))) {
                 return;
             }
 
-            if(drawParticle) {
+            if (drawParticle) {
                 javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, inputBlock, outputBlock), Slimefun.getTickerTask().getTickRate());
             }
 
@@ -152,7 +152,7 @@ public class PointTransfer extends AbstractCargo implements RecipeItem {
                 Inventory outputInventory = CargoUtil.getVanillaInventory(inputBlock);
 
                 ServerRunnableLockFactory.getInstance(javaPlugin, Location.class).waitThenRun(() -> {
-                    if(!BlockStorage.hasBlockInfo(location)) {
+                    if (!BlockStorage.hasBlockInfo(location)) {
                         return;
                     }
 
@@ -169,26 +169,26 @@ public class PointTransfer extends AbstractCargo implements RecipeItem {
                     String cargoMode = CargoMode.HELPER.getOrDefaultValue(config);
 
                     InvWithSlots inputMap;
-                    if(BlockStorage.hasInventory(inputBlock)) {
-                        if(CargoMode.VALUE_OUTPUT_MAIN.equals(cargoMode)) {
+                    if (BlockStorage.hasInventory(inputBlock)) {
+                        if (CargoMode.VALUE_OUTPUT_MAIN.equals(cargoMode)) {
                             inputMap = null;
                         } else {
                             inputMap = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
                         }
-                    } else if(inputInventory != null) {
+                    } else if (inputInventory != null) {
                         inputMap = CargoUtil.calInvWithSlots(inputInventory, inputOrder);
                     } else {
                         return;
                     }
 
                     InvWithSlots outputMap;
-                    if(BlockStorage.hasInventory(outputBlock)) {
-                        if(CargoMode.VALUE_INPUT_MAIN.equals(cargoMode)) {
+                    if (BlockStorage.hasInventory(outputBlock)) {
+                        if (CargoMode.VALUE_INPUT_MAIN.equals(cargoMode)) {
                             outputMap = null;
                         } else {
                             outputMap = CargoUtil.getInvWithSlots(outputBlock, inputSize, inputOrder);
                         }
-                    } else if(outputInventory != null) {
+                    } else if (outputInventory != null) {
                         outputMap = CargoUtil.calInvWithSlots(outputInventory, inputOrder);
                     } else {
                         return;

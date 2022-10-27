@@ -21,7 +21,7 @@ public class TransferToCopyCardItem implements CommandExecutor {
     public boolean onCommand(@Nonnull CommandSender commandSender, @Nonnull Command command, @Nonnull String s, @Nonnull String[] strings) {
         if (commandSender instanceof Player player) {
             ItemStack item = player.getItemInHand();
-            if(ItemStackUtil.isItemNull(item) || !CopyCard.copiableItem(item)) {
+            if (ItemStackUtil.isItemNull(item) || !CopyCard.copiableItem(item)) {
                 return false;
             }
             ItemStack copyCardItem = CopyCard.newItem(item, "1");

@@ -23,16 +23,16 @@ import java.util.Optional;
 public class ShowItemInfo implements CommandExecutor {
     @Override
     public boolean onCommand(@Nonnull CommandSender commandSender, @Nonnull Command command, @Nonnull String s, @Nonnull String[] strings) {
-        if(commandSender instanceof Player player) {
+        if (commandSender instanceof Player player) {
             ItemStack item = player.getItemInHand();
             SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
-            if(slimefunItem == null || slimefunItem.isDisabled() || !slimefunItem.canUse(player, false) || slimefunItem.isHidden()) {
+            if (slimefunItem == null || slimefunItem.isDisabled() || !slimefunItem.canUse(player, false) || slimefunItem.isHidden()) {
                 return true;
             }
             Optional<PlayerProfile> playerProfile = PlayerProfile.find(player);
-            if(playerProfile.isPresent()) {
+            if (playerProfile.isPresent()) {
                 RecipeItemGroup recipeItemGroup = RecipeItemGroup.getByItemStack(player, playerProfile.get(), SlimefunGuideMode.SURVIVAL_MODE, item);
-                if(recipeItemGroup != null) {
+                if (recipeItemGroup != null) {
                     recipeItemGroup.open(player, playerProfile.get(), SlimefunGuideMode.SURVIVAL_MODE);
                 }
             }

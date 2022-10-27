@@ -82,7 +82,7 @@ public class AdvancedCraft {
         for (int i = 0; i < this.inputItemList.length; i++) {
             int consumeItemAmount = this.inputItemList[i].getAmount() * this.matchCount;
             for (int slot : this.consumeSlotList[i]) {
-                if(slot != -1) {
+                if (slot != -1) {
                     ItemStack item = inventory.getItem(slot);
                     int itemConsumeAmount = Math.min(consumeItemAmount, item.getAmount());
                     item.setAmount(item.getAmount() - itemConsumeAmount);

@@ -22,8 +22,8 @@
 //        Runnable run = () -> {
 //            boolean work = false;
 //            while (!work) {
-//                for(T object : objects) {
-//                    if(SimpleRunnableLockFactory.this.MAP.containsKey(object)) {
+//                for (T object : objects) {
+//                    if (SimpleRunnableLockFactory.this.MAP.containsKey(object)) {
 //                        FutureTask<Object> task = SimpleRunnableLockFactory.this.MAP.get(object);
 //                        try {
 //                            task.get();
@@ -35,14 +35,14 @@
 //                }
 //                work = true;
 //                synchronized (SimpleRunnableLockFactory.this.lock) {
-//                    for(T object : objects) {
-//                        if(SimpleRunnableLockFactory.this.MAP.containsKey(object)) {
+//                    for (T object : objects) {
+//                        if (SimpleRunnableLockFactory.this.MAP.containsKey(object)) {
 //                            work = false;
 //                            break;
 //                        }
 //                    }
-//                    if(work) {
-//                        for(T object : objects) {
+//                    if (work) {
+//                        for (T object : objects) {
 //                            SimpleRunnableLockFactory.this.MAP.put(object, futureTask);
 //                        }
 //                        new Thread(futureTask).start();

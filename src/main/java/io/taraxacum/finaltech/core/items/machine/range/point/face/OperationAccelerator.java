@@ -54,20 +54,20 @@ public class OperationAccelerator extends AbstractFaceMachine implements RecipeI
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         this.function(block, 1, location -> {
-            if(BlockStorage.hasBlockInfo(location)) {
+            if (BlockStorage.hasBlockInfo(location)) {
                 Config machineConfig = BlockStorage.getLocationInfo(location);
-                if(machineConfig.contains(ConstantTableUtil.CONFIG_ID)) {
+                if (machineConfig.contains(ConstantTableUtil.CONFIG_ID)) {
                     String machineId = machineConfig.getString(ConstantTableUtil.CONFIG_ID);
                     SlimefunItem machineItem = SlimefunItem.getById(machineId);
-                    if(machineItem instanceof MachineProcessHolder) {
+                    if (machineItem instanceof MachineProcessHolder) {
                         MachineProcessor<?> machineProcessor = ((MachineProcessHolder<?>) machineItem).getMachineProcessor();
                         Runnable runnable = () -> {
                             MachineOperation operation = machineProcessor.getOperation(location);
-                            if(operation != null) {
+                            if (operation != null) {
                                 operation.addProgress(1);
                             }
                         };
-                        if(FinalTech.isAsyncSlimefunItem(machineId)) {
+                        if (FinalTech.isAsyncSlimefunItem(machineId)) {
                             FinalTech.getLocationRunnableFactory().waitThenRun(runnable, location);
                         } else {
                             runnable.run();
@@ -93,8 +93,8 @@ public class OperationAccelerator extends AbstractFaceMachine implements RecipeI
 
     @Override
     public void registerDefaultRecipes() {
-        for(SlimefunItem slimefunItem : Slimefun.getRegistry().getAllSlimefunItems()) {
-            if(slimefunItem instanceof MachineProcessHolder) {
+        for (SlimefunItem slimefunItem : Slimefun.getRegistry().getAllSlimefunItems()) {
+            if (slimefunItem instanceof MachineProcessHolder) {
                 this.registerDescriptiveRecipe(slimefunItem.getItem());
             }
         }

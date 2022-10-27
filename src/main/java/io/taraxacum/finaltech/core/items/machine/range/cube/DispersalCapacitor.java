@@ -121,7 +121,7 @@ public class DispersalCapacitor extends AbstractCubeMachine implements EnergyNet
 //            });
 //        }
 //        BlockMenu blockMenu = BlockStorage.getInventory(block);
-//        if(blockMenu.hasViewer()) {
+//        if (blockMenu.hasViewer()) {
 //            this.updateMenu(blockMenu, charge, count, totalEnergy, maxEnergy);
 //        }
 //        charge = charge - (int) (maxEnergy.get() * loss);

@@ -105,7 +105,7 @@ public class ItemWrapper {
     @Nonnull
     public static ItemStack[] getItemArray(@Nonnull ItemWrapper[] itemWrappers) {
         ItemStack[] itemStacks = new ItemStack[itemWrappers.length];
-        for(int i = 0, length = itemStacks.length; i < length; i++) {
+        for (int i = 0, length = itemStacks.length; i < length; i++) {
             itemStacks[i] = itemWrappers[i].getItemStack();
         }
         return itemStacks;
@@ -113,7 +113,7 @@ public class ItemWrapper {
     @Nonnull
     public static ItemStack[] getItemArray(@Nonnull List<? extends ItemWrapper> itemWrapperList) {
         ItemStack[] itemStacks = new ItemStack[itemWrapperList.size()];
-        for(int i = 0, length = itemStacks.length; i < length; i++) {
+        for (int i = 0, length = itemStacks.length; i < length; i++) {
             itemStacks[i] = itemWrapperList.get(i).getItemStack();
         }
         return itemStacks;
@@ -121,7 +121,7 @@ public class ItemWrapper {
     @Nonnull
     public static ItemStack[] getCopiedItemArray(@Nonnull List<? extends ItemWrapper> itemWrapperList) {
         ItemStack[] itemStacks = new ItemStack[itemWrapperList.size()];
-        for(int i = 0, length = itemStacks.length; i < length; i++) {
+        for (int i = 0, length = itemStacks.length; i < length; i++) {
             itemStacks[i] = ItemStackUtil.cloneItem(itemWrapperList.get(i).getItemStack());
         }
         return itemStacks;
@@ -138,7 +138,7 @@ public class ItemWrapper {
     @Nonnull
     public static List<ItemStack> getItemList(@Nonnull List<? extends ItemWrapper> itemWrapperList) {
         List<ItemStack> itemStackList = new ArrayList<>(itemWrapperList.size());
-        for(ItemWrapper itemWrapper : itemWrapperList) {
+        for (ItemWrapper itemWrapper : itemWrapperList) {
             itemStackList.add(itemWrapper.getItemStack());
         }
         return itemStackList;

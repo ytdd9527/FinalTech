@@ -31,8 +31,8 @@ public class ReflectionUtil {
 
     public static Method getMethod(Class<?> clazz, String methodName) {
         while (clazz != Object.class) {
-            for(Method method : clazz.getDeclaredMethods()) {
-                if(method.getName().equals(methodName)) {
+            for (Method method : clazz.getDeclaredMethods()) {
+                if (method.getName().equals(methodName)) {
                     return method;
                 }
             }
@@ -43,8 +43,8 @@ public class ReflectionUtil {
 
     public static Field getField(Class<?> clazz, String fieldName) {
         while (clazz != Object.class) {
-            for(Field field : clazz.getDeclaredFields()) {
-                if(field.getName().equals(fieldName)) {
+            for (Field field : clazz.getDeclaredFields()) {
+                if (field.getName().equals(fieldName)) {
                     return field;
                 }
             }

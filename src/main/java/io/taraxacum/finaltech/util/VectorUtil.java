@@ -9,10 +9,10 @@ public class VectorUtil {
     private static Random random = new Random();
 
     public static Vector fromYawPitch(float yaw, float pitch) {
-        if(pitch == 90) {
+        if (pitch == 90) {
             return new Vector(0, -1, 0);
         }
-        if(pitch == -90) {
+        if (pitch == -90) {
             return new Vector(0, 1, 0);
         }
         Vector vector = new Vector(0, 0, 1);

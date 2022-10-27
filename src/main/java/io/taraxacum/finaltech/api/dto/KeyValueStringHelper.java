@@ -68,8 +68,8 @@ public class KeyValueStringHelper {
         List<String> list = new ArrayList<>();
         for (Map.Entry<String, String> entry : this.map.entrySet()) {
             if (entry.getValue() != null) {
-                for(String value : values) {
-                    if(entry.getValue().equals(value)) {
+                for (String value : values) {
+                    if (entry.getValue().equals(value)) {
                         list.add(entry.getKey());
                         break;
                     }
@@ -86,8 +86,8 @@ public class KeyValueStringHelper {
 
     public int getKeyIndex(@Nonnull String key) {
         Object[] keys = this.map.keySet().toArray();
-        for(int i = 0; i < keys.length; i++) {
-            if(keys[i].equals(key)) {
+        for (int i = 0; i < keys.length; i++) {
+            if (keys[i].equals(key)) {
                 return i;
             }
         }

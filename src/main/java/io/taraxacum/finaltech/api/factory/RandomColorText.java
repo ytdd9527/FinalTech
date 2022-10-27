@@ -28,7 +28,7 @@ public abstract class RandomColorText {
     public String get() {
         this.stringBuilder.delete(0, this.stringBuilder.length());
 
-        for(ColorString colorString : this.colorStrings) {
+        for (ColorString colorString : this.colorStrings) {
             stringBuilder.append(TextUtil.toTextCode(colorString.color)).append(colorString.text);
         }
 

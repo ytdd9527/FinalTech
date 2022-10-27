@@ -20,17 +20,17 @@ import javax.annotation.Nonnull;
 public class ShowItemValue implements CommandExecutor {
     @Override
     public boolean onCommand(@Nonnull CommandSender commandSender, @Nonnull Command command, @Nonnull String s, @Nonnull String[] strings) {
-        if(commandSender instanceof Player player) {
+        if (commandSender instanceof Player player) {
             String id = null;
             ItemStack item = player.getItemInHand();
             SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
-            if(slimefunItem != null) {
+            if (slimefunItem != null) {
                 id = slimefunItem.getId();
             }
-            if(strings.length == 1) {
+            if (strings.length == 1) {
                 id = strings[0];
             }
-            if(id != null) {
+            if (id != null) {
                 String inputValue = ItemValueTable.getInstance().getOrCalItemInputValue(id);
                 String outputValue = ItemValueTable.getInstance().getOrCalItemOutputValue(id);
                 player.sendRawMessage("Item id: " + id);
@@ -39,10 +39,10 @@ public class ShowItemValue implements CommandExecutor {
             }
         } else {
             String id = null;
-            if(strings.length == 1) {
+            if (strings.length == 1) {
                 id = strings[0];
             }
-            if(id != null) {
+            if (id != null) {
                 String inputValue = ItemValueTable.getInstance().getOrCalItemInputValue(id);
                 String outputValue = ItemValueTable.getInstance().getOrCalItemOutputValue(id);
                 Bukkit.getLogger().info("Item id: " + id);

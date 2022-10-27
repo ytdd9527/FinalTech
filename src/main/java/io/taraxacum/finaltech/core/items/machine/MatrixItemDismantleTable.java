@@ -73,7 +73,7 @@ public class MatrixItemDismantleTable extends AbstractMachine implements RecipeI
                     if (!ItemStackUtil.isItemNull(sfItem.getRecipe()[i])) {
                         ItemStack outputItem = ItemStackUtil.cloneItem(sfItem.getRecipe()[i]);
                         ItemStack liquidCard = RecipeUtil.getLiquidCard(outputItem);
-                        if(liquidCard != null) {
+                        if (liquidCard != null) {
                             outputItem = liquidCard;
                         }
                         outputItem.setAmount(outputItem.getAmount() * amount);
@@ -93,49 +93,49 @@ public class MatrixItemDismantleTable extends AbstractMachine implements RecipeI
     public void registerDefaultRecipes() {
         RecipeTypeRegistry.getInstance().reload();
 
-        for(RecipeType recipeType : RecipeTypeRegistry.getInstance().getRecipeTypeSet()) {
-            if(!this.notAllowedRecipeType.contains(recipeType.getKey().getKey()) && !ItemStackUtil.isItemNull(recipeType.toItem())) {
+        for (RecipeType recipeType : RecipeTypeRegistry.getInstance().getRecipeTypeSet()) {
+            if (!this.notAllowedRecipeType.contains(recipeType.getKey().getKey()) && !ItemStackUtil.isItemNull(recipeType.toItem())) {
                 this.registerDescriptiveRecipe(recipeType.toItem());
             }
         }
     }
 
     private boolean calAllowed(@Nonnull SlimefunItem slimefunItem) {
-        if(this.allowedId.contains(slimefunItem.getId())) {
+        if (this.allowedId.contains(slimefunItem.getId())) {
             return true;
-        } else if(this.notAllowedId.contains(slimefunItem.getId())) {
+        } else if (this.notAllowedId.contains(slimefunItem.getId())) {
             return false;
         } else {
             String slimefunItemId = slimefunItem.getId();
             synchronized (this) {
-                if(this.allowedId.contains(slimefunItemId)) {
+                if (this.allowedId.contains(slimefunItemId)) {
                     return true;
-                } else if(this.notAllowedId.contains(slimefunItemId)) {
+                } else if (this.notAllowedId.contains(slimefunItemId)) {
                     return false;
                 }
 
-                if(this.notAllowedRecipeType.contains(slimefunItem.getRecipeType().getKey().getKey())) {
+                if (this.notAllowedRecipeType.contains(slimefunItem.getRecipeType().getKey().getKey())) {
                     this.notAllowedId.add(slimefunItemId);
                     return false;
                 }
 
-                if(slimefunItem.getRecipe().length > this.getOutputSlot().length) {
+                if (slimefunItem.getRecipe().length > this.getOutputSlot().length) {
                     this.notAllowedId.add(slimefunItemId);
                     return false;
                 }
 
                 boolean hasRecipe = false;
-                for(ItemStack itemStack : slimefunItem.getRecipe()) {
-                    if(ItemStackUtil.isItemNull(itemStack)) {
+                for (ItemStack itemStack : slimefunItem.getRecipe()) {
+                    if (ItemStackUtil.isItemNull(itemStack)) {
                         continue;
                     }
                     hasRecipe = true;
-                    if(SlimefunItem.getByItem(itemStack) == null && !ItemStackUtil.isItemSimilar(itemStack, new ItemStack(itemStack.getType()))) {
+                    if (SlimefunItem.getByItem(itemStack) == null && !ItemStackUtil.isItemSimilar(itemStack, new ItemStack(itemStack.getType()))) {
                         this.notAllowedId.add(slimefunItemId);
                         return false;
                     }
                 }
-                if(!hasRecipe) {
+                if (!hasRecipe) {
                     this.notAllowedId.add(slimefunItemId);
                     return false;
                 }

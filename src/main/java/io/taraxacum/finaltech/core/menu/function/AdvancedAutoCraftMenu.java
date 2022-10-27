@@ -75,10 +75,10 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     static {
         // TODO: interface support
 
-        for(String string : RECIPE_TYPE_ID_LIST) {
+        for (String string : RECIPE_TYPE_ID_LIST) {
             RecipeType recipeType = RecipeTypeRegistry.getInstance().getRecipeTypeById(string);
             SlimefunItem slimefunItem = null;
-            if(recipeType != null) {
+            if (recipeType != null) {
                 slimefunItem = recipeType.getMachine();
                 if (slimefunItem == null) {
                     slimefunItem = SlimefunItem.getByItem(recipeType.toItem());
@@ -90,7 +90,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
             if (slimefunItem != null) {
                 List<SlimefunItem> slimefunItemList = RecipeTypeRegistry.getInstance().getByRecipeType(recipeType);
                 List<AdvancedMachineRecipe> advancedMachineRecipeList = new ArrayList<>(slimefunItemList.size());
-                for(SlimefunItem sfItem : slimefunItemList) {
+                for (SlimefunItem sfItem : slimefunItemList) {
                     advancedMachineRecipeList.add(new AdvancedMachineRecipe(ItemStackUtil.calItemArrayWithAmount(sfItem.getRecipe()), new AdvancedMachineRecipe.AdvancedRandomOutput[] {new AdvancedMachineRecipe.AdvancedRandomOutput(new ItemAmountWrapper[] {new ItemAmountWrapper(sfItem.getRecipeOutput())}, 1)}));
                 }
                 RECIPE_MAP.put(slimefunItem.getId(), advancedMachineRecipeList);
@@ -222,7 +222,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
         }
 
         List<ItemAmountWrapper> inputList = null;
-        if(RECIPE_TYPE_ID_LIST.contains(slimefunItem.getRecipeType().getKey().getKey())) {
+        if (RECIPE_TYPE_ID_LIST.contains(slimefunItem.getRecipeType().getKey().getKey())) {
             inputList = ItemStackUtil.calItemListWithAmount(slimefunItem.getRecipe());
         }
         if (inputList == null || inputList.size() == 0) {
@@ -243,7 +243,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
                     boolean work = false;
                     List<ItemAmountWrapper> inputListTemp = new ArrayList<>();
                     for (ItemAmountWrapper oldInputItem : inputList) {
-                        if(oldInputItem.getAmount() < Integer.MAX_VALUE / ConstantTableUtil.ITEM_MAX_STACK) {
+                        if (oldInputItem.getAmount() < Integer.MAX_VALUE / ConstantTableUtil.ITEM_MAX_STACK) {
                             for (AdvancedMachineRecipe advancedMachineRecipe : advancedMachineRecipeList) {
                                 for (AdvancedMachineRecipe.AdvancedRandomOutput advancedRandomOutput : advancedMachineRecipe.getOutputs()) {
                                     ItemAmountWrapper outputItem = advancedRandomOutput.getOutputItem()[0];
@@ -268,16 +268,16 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
                         break;
                     }
                 }
-            } else if(CopyCard.isValid(machineItem)) {
+            } else if (CopyCard.isValid(machineItem)) {
                 ItemStack stringItem = StringItemUtil.parseItemInCard(machineItem);
                 String amount = StringItemUtil.parseAmountInCard(machineItem);
                 amount = StringNumberUtil.mul(amount, String.valueOf(machineItem.getAmount()));
-                if(stringItem != null && !StringNumberUtil.ZERO.equals(amount)) {
+                if (stringItem != null && !StringNumberUtil.ZERO.equals(amount)) {
                     Iterator<ItemAmountWrapper> iterator = inputList.iterator();
                     while (iterator.hasNext()) {
                         ItemAmountWrapper inputItem = iterator.next();
-                        if(ItemStackUtil.isItemSimilar(inputItem, stringItem)) {
-                            if(StringNumberUtil.compare(amount, String.valueOf(inputItem.getAmount())) >= 0) {
+                        if (ItemStackUtil.isItemSimilar(inputItem, stringItem)) {
+                            if (StringNumberUtil.compare(amount, String.valueOf(inputItem.getAmount())) >= 0) {
                                 iterator.remove();
                             } else {
                                 inputItem.setAmount(inputItem.getAmount() - Integer.parseInt(amount));

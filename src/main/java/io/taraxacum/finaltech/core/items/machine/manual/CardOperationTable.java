@@ -55,11 +55,11 @@ public class CardOperationTable extends AbstractManualMachine implements RecipeI
 
     @Override
     public void registerDefaultRecipes() {
-        for(CardOperationPortMenu.Craft craft : CardOperationPortMenu.CRAFT_LIST) {
-            if(craft.isEnabled()) {
+        for (CardOperationPortMenu.Craft craft : CardOperationPortMenu.CRAFT_LIST) {
+            if (craft.isEnabled()) {
                 String outputItemId = craft.getInfoOutput();
                 SlimefunItem slimefunItem = SlimefunItem.getById(outputItemId);
-                if(slimefunItem != null) {
+                if (slimefunItem != null) {
                     this.registerDescriptiveRecipe(slimefunItem.getItem(), craft.getInfoName(), craft.getInfoLore());
                 } else {
                     this.registerDescriptiveRecipe(craft.getInfoName(), craft.getInfoLore());

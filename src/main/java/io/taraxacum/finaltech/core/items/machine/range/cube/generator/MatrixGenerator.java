@@ -67,7 +67,7 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator {
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (!ItemStackUtil.isItemNull(item)) {
-                if(ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY)) {
+                if (ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY)) {
                     for (int i = item.getAmount(); i > 0; i /= 2) {
                         range++;
                     }
@@ -84,7 +84,7 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator {
 
                     if (machineId.equals(MatrixGenerator.this.getId()) && !location.equals(block.getLocation())) {
                         Player player = Bukkit.getPlayer(uuid);
-                        if(player != null) {
+                        if (player != null) {
                             BlockBreakEvent blockBreakEvent = new BlockBreakEvent(location.getBlock(), player);
                             Bukkit.getPluginManager().callEvent(blockBreakEvent);
                         }
@@ -101,7 +101,7 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator {
             return 0;
         });
 
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             this.updateMenu(blockMenu, count, range);
         }
     }

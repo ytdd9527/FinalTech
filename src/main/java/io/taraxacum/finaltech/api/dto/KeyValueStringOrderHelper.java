@@ -38,18 +38,18 @@ public class KeyValueStringOrderHelper extends KeyValueStringHelper {
 
     @Override
     public void putEntry(@Nullable String key, @Nullable String value) {
-        if(this.validKey(key)) {
-            if(value == null) {
+        if (this.validKey(key)) {
+            if (value == null) {
                 this.deleteEntry(key);
             } else {
-                for(Map.Entry<Integer, KeyValue> entry : this.map.entrySet()) {
-                    if(entry.getValue().key.equals(key)) {
+                for (Map.Entry<Integer, KeyValue> entry : this.map.entrySet()) {
+                    if (entry.getValue().key.equals(key)) {
                         entry.getValue().value = value;
                         return;
                     }
                 }
-                for(int i = 0; i < this.map.size(); i++) {
-                    if(!this.map.containsKey(i) || this.nullMark.equals(this.map.get(i).value)) {
+                for (int i = 0; i < this.map.size(); i++) {
+                    if (!this.map.containsKey(i) || this.nullMark.equals(this.map.get(i).value)) {
                         this.map.put(i, new KeyValue(key, value));
                         return;
                     }
@@ -60,8 +60,8 @@ public class KeyValueStringOrderHelper extends KeyValueStringHelper {
     }
 
     private void putEntry(int order, @Nullable String key, @Nullable String value) {
-        if(this.validKey(key)) {
-            if(value == null) {
+        if (this.validKey(key)) {
+            if (value == null) {
                 this.deleteEntry(key);
             } else {
                 this.map.put(order, new KeyValue(key, value));
@@ -74,7 +74,7 @@ public class KeyValueStringOrderHelper extends KeyValueStringHelper {
         Iterator<Map.Entry<Integer, KeyValue>> iterator = this.map.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<Integer, KeyValue> entry = iterator.next();
-            if(entry.getValue().key.equals(key)) {
+            if (entry.getValue().key.equals(key)) {
                 iterator.remove();
                 break;
             }
@@ -85,8 +85,8 @@ public class KeyValueStringOrderHelper extends KeyValueStringHelper {
     @Override
     public List<String> getAllMatchKey(@Nullable String value) {
         List<Map.Entry<Integer, KeyValue>> keyOrderList = new ArrayList<>();
-        for(Map.Entry<Integer, KeyValue> entry : this.map.entrySet()) {
-            if(entry.getValue().value.equals(value)) {
+        for (Map.Entry<Integer, KeyValue> entry : this.map.entrySet()) {
+            if (entry.getValue().value.equals(value)) {
                 keyOrderList.add(entry);
             }
         }
@@ -102,9 +102,9 @@ public class KeyValueStringOrderHelper extends KeyValueStringHelper {
     @Override
     public List<String> getAllMatchKey(@Nonnull String... values) {
         List<Map.Entry<Integer, KeyValue>> keyOrderList = new ArrayList<>();
-        for(Map.Entry<Integer, KeyValue> entry : this.map.entrySet()) {
-            for(String value : values) {
-                if(entry.getValue().value.equals(value)) {
+        for (Map.Entry<Integer, KeyValue> entry : this.map.entrySet()) {
+            for (String value : values) {
+                if (entry.getValue().value.equals(value)) {
                     keyOrderList.add(entry);
                     break;
                 }
@@ -121,8 +121,8 @@ public class KeyValueStringOrderHelper extends KeyValueStringHelper {
     @Nullable
     @Override
     public String getValue(@Nonnull String key) {
-        for(Map.Entry<Integer, KeyValue> entry : this.map.entrySet()) {
-            if(entry.getValue().key.equals(key)) {
+        for (Map.Entry<Integer, KeyValue> entry : this.map.entrySet()) {
+            if (entry.getValue().key.equals(key)) {
                 return entry.getValue().value;
             }
         }
@@ -131,8 +131,8 @@ public class KeyValueStringOrderHelper extends KeyValueStringHelper {
 
     @Override
     public int getKeyIndex(@Nonnull String key) {
-        for(Map.Entry<Integer, KeyValue> entry : this.map.entrySet()) {
-            if(entry.getValue().key.equals(key)) {
+        for (Map.Entry<Integer, KeyValue> entry : this.map.entrySet()) {
+            if (entry.getValue().key.equals(key)) {
                 return entry.getKey();
             }
         }
@@ -143,7 +143,7 @@ public class KeyValueStringOrderHelper extends KeyValueStringHelper {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for(Map.Entry<Integer, KeyValue> entry : this.map.entrySet()) {
+        for (Map.Entry<Integer, KeyValue> entry : this.map.entrySet()) {
             stringBuilder.append(entry.getKey()).append(":").append(entry.getValue().toString());
             stringBuilder.append("-");
         }

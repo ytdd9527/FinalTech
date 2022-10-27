@@ -17,7 +17,7 @@ public interface StringReplacer {
 
     @Nonnull
     default String getResult(@Nonnull String source) {
-        for(Function<String, String> function : this.getFunction()) {
+        for (Function<String, String> function : this.getFunction()) {
             source = function.apply(source);
         }
         return source;
@@ -26,8 +26,8 @@ public interface StringReplacer {
     @Nonnull
     default List<String> getResult(@Nonnull List<String> sourceList) {
         List<String> resultList = new ArrayList<>(sourceList.size());
-        for(String source : sourceList) {
-            for(Function<String, String> function : this.getFunction()) {
+        for (String source : sourceList) {
+            for (Function<String, String> function : this.getFunction()) {
                 source = function.apply(source);
             }
             resultList.add(source);

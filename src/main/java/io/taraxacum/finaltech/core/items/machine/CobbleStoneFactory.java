@@ -56,9 +56,9 @@ public class CobbleStoneFactory extends AbstractMachine implements RecipeItem {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        for(int slot : this.getInputSlot()) {
+        for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(ItemStackUtil.isItemSimilar(item, this.cobbleStone)) {
+            if (ItemStackUtil.isItemSimilar(item, this.cobbleStone)) {
                 item.setAmount(item.getMaxStackSize());
             }
         }

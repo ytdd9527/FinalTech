@@ -40,10 +40,10 @@ public class RemoteAccessorMenu extends AbstractMachineMenu {
         blockMenu.addMenuOpeningHandler(p -> {
             Location location = block.getLocation();
             String value = BlockStorage.getLocationInfo(location, RemoteAccessor.KEY);
-            if(value == null) {
+            if (value == null) {
                 value = RemoteAccessor.THRESHOLD;
             }
-            if(StringNumberUtil.compare(value, StringNumberUtil.ZERO) <= 0) {
+            if (StringNumberUtil.compare(value, StringNumberUtil.ZERO) <= 0) {
                 p.closeInventory();
                 return;
             }
@@ -51,15 +51,15 @@ public class RemoteAccessorMenu extends AbstractMachineMenu {
 
             BlockData blockData = block.getState().getBlockData();
             List<Block> blockList = new ArrayList<>();
-            if(blockData instanceof Directional) {
+            if (blockData instanceof Directional) {
                 BlockFace blockFace = ((Directional) blockData).getFacing();
                 Block targetBlock = block;
-                for(int i = 0; i < RemoteAccessor.RANGE; i++) {
+                for (int i = 0; i < RemoteAccessor.RANGE; i++) {
                     targetBlock = targetBlock.getRelative(blockFace);
                     blockList.add(targetBlock);
-                    if(BlockStorage.hasInventory(targetBlock)) {
+                    if (BlockStorage.hasInventory(targetBlock)) {
                         BlockMenu targetBlockMenu = BlockStorage.getInventory(targetBlock);
-                        if(targetBlockMenu.canOpen(targetBlock, p)) {
+                        if (targetBlockMenu.canOpen(targetBlock, p)) {
                             ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, blockList);
                             blockMenu.close();
                             targetBlockMenu.open(p);

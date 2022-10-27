@@ -40,27 +40,27 @@ public class RecipeUtil {
         final SlimefunItem slimefunItem = SlimefunItem.getById(slimefunId);
         try {
 
-            if(slimefunItem instanceof Composter || slimefunItem instanceof Crucible) {
+            if (slimefunItem instanceof Composter || slimefunItem instanceof Crucible) {
                 List<ItemStack> displayRecipes = ((RecipeDisplayItem) slimefunItem).getDisplayRecipes();
                 RecipeUtil.registerRecipeBySimpleDisplayRecipe(recipeItem, displayRecipes);
                 return;
             }
 
             Method method = ReflectionUtil.getMethod(slimefunItem.getClass(), "getMachineRecipes");
-            if(method != null && method.getReturnType().equals(List.class)) {
+            if (method != null && method.getReturnType().equals(List.class)) {
                 method.setAccessible(true);
                 List<MachineRecipe> recipes = (List<MachineRecipe>)method.invoke(slimefunItem);
                 if (recipes != null) {
                     for (MachineRecipe recipe : recipes) {
                         boolean disabled = false;
-                        for(ItemStack itemStack : recipe.getOutput()) {
+                        for (ItemStack itemStack : recipe.getOutput()) {
                             SlimefunItem sfItem = SlimefunItem.getByItem(itemStack);
-                            if(sfItem != null && sfItem.isDisabled()) {
+                            if (sfItem != null && sfItem.isDisabled()) {
                                 disabled = true;
                                 break;
                             }
                         }
-                        if(!disabled) {
+                        if (!disabled) {
                             recipeItem.registerRecipeInCard(0, recipe.getInput(), recipe.getOutput());
                         }
                     }
@@ -69,24 +69,24 @@ public class RecipeUtil {
             }
 
             method = ReflectionUtil.getMethod(slimefunItem.getClass(), "getRecipes");
-            if(method != null) {
+            if (method != null) {
                 method.setAccessible(true);
                 List<ItemStack[]> recipes = (List<ItemStack[]>)method.invoke(slimefunItem);
-                if(recipes != null) {
-                    for(int i = 0; i * 2 + 1 < recipes.size(); i++) {
+                if (recipes != null) {
+                    for (int i = 0; i * 2 + 1 < recipes.size(); i++) {
                         ItemStack[] inputs = recipes.get(i * 2);
                         ItemStack[] outputs = recipes.get(i * 2 + 1);
 
                         boolean disabled = false;
-                        for(ItemStack itemStack : outputs) {
+                        for (ItemStack itemStack : outputs) {
                             SlimefunItem sfItem = SlimefunItem.getByItem(itemStack);
-                            if(sfItem != null && sfItem.isDisabled()) {
+                            if (sfItem != null && sfItem.isDisabled()) {
                                 disabled = true;
                                 break;
                             }
                         }
 
-                        if(!disabled) {
+                        if (!disabled) {
                             recipeItem.registerRecipeInCard(0, inputs, outputs);
                         }
                     }
@@ -94,7 +94,7 @@ public class RecipeUtil {
                 return;
             }
 
-            if(slimefunItem instanceof RecipeDisplayItem) {
+            if (slimefunItem instanceof RecipeDisplayItem) {
                 List<ItemStack> displayRecipes = ((RecipeDisplayItem) slimefunItem).getDisplayRecipes();
                 RecipeUtil.registerRecipeBySimpleDisplayRecipe(recipeItem, displayRecipes);
             }
@@ -124,10 +124,10 @@ public class RecipeUtil {
             boolean disabled = false;
             ItemStack itemStack = displayRecipes.get(i + 1);
             SlimefunItem sfItem = SlimefunItem.getByItem(itemStack);
-            if(sfItem != null) {
+            if (sfItem != null) {
                 disabled = sfItem.isDisabled();
             }
-            if(!disabled) {
+            if (!disabled) {
                 recipeItem.registerRecipeInCard(0, new ItemStack[] {displayRecipes.get(i)}, new ItemStack[] {displayRecipes.get(i+1)});
             }
         }
@@ -138,25 +138,25 @@ public class RecipeUtil {
         int i = 1;
         while(true) {
             String index = String.valueOf(i++);
-            if(languageManager.containPath("items", id, "info", index, "name")) {
+            if (languageManager.containPath("items", id, "info", index, "name")) {
                 ItemStack output = null;
-                if(languageManager.containPath("items", id, "info", index, "output")) {
+                if (languageManager.containPath("items", id, "info", index, "output")) {
                     String outputId = languageManager.getString("items", id, "info", index, "output");
                     SlimefunItem slimefunItem = SlimefunItem.getById(outputId);
-                    if(slimefunItem != null) {
+                    if (slimefunItem != null) {
                         output = slimefunItem.getItem();
-                    } else if(Material.getMaterial(outputId) != null) {
+                    } else if (Material.getMaterial(outputId) != null) {
                         output = new ItemStack(Material.getMaterial(outputId));
                     }
                 }
                 if (output != null) {
-                    if(strings.length == 0) {
+                    if (strings.length == 0) {
                         recipeItem.registerDescriptiveRecipe(output, languageManager.getString("items", id, "info", index, "name"), languageManager.getStringArray("items", id, "info", index, "lore"));
                     } else {
                         recipeItem.registerDescriptiveRecipe(output, languageManager.getString("items", id, "info", index, "name"), languageManager.replaceStringArray(languageManager.getStringArray("items", id, "info", index, "lore"), strings));
                     }
                 } else {
-                    if(strings.length == 0) {
+                    if (strings.length == 0) {
                         recipeItem.registerDescriptiveRecipe(languageManager.getString("items", id, "info", index, "name"), languageManager.getStringArray("items", id, "info", index, "lore"));
                     } else {
                         recipeItem.registerDescriptiveRecipe(languageManager.getString("items", id, "info", index, "name"), languageManager.replaceStringArray(languageManager.getStringArray("items", id, "info", index, "lore"), strings));
@@ -175,7 +175,7 @@ public class RecipeUtil {
             field.setAccessible(true);
             Set<GoldPanDrop> goldPanDrops = (Set<GoldPanDrop>) field.get(goldPan);
             List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>(goldPanDrops.size());
-            for(GoldPanDrop goldPanDrop : goldPanDrops) {
+            for (GoldPanDrop goldPanDrop : goldPanDrops) {
                 randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {goldPanDrop.getOutput()}, goldPanDrop.getValue()));
             }
             recipeItem.registerRecipe(new RandomMachineRecipe(new ItemStack[] {new ItemStack(goldPan.getInputMaterial())}, randomOutputList));
@@ -197,7 +197,7 @@ public class RecipeUtil {
             field.setAccessible(true);
             Set<GoldPanDrop> goldPanDrops = (Set<GoldPanDrop>) field.get(netherGoldPan);
             List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>(goldPanDrops.size());
-            for(GoldPanDrop goldPanDrop : goldPanDrops) {
+            for (GoldPanDrop goldPanDrop : goldPanDrops) {
                 randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {goldPanDrop.getOutput()}, goldPanDrop.getValue()));
             }
             recipeItem.registerRecipe(new RandomMachineRecipe(new ItemStack[] {new ItemStack(netherGoldPan.getInputMaterial())}, randomOutputList));

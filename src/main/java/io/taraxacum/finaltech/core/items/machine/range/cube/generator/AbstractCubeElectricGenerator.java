@@ -70,11 +70,11 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (!ItemStackUtil.isItemNull(item)) {
                 String amount = String.valueOf(item.getAmount());
-                if(StorageCardItem.isValid(item)) {
+                if (StorageCardItem.isValid(item)) {
                     amount = StringItemUtil.parseAmountInCard(item);
                     item = StringItemUtil.parseItemInCard(item);
                 }
-                if(ItemStackUtil.isItemSimilar(item, this.getItem())) {
+                if (ItemStackUtil.isItemSimilar(item, this.getItem())) {
                     extraEnergy = StringNumberUtil.add(extraEnergy, StringNumberUtil.mul(this.getElectricity(), amount));
                 }
             }
@@ -89,7 +89,7 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
                     SlimefunItem machineItem = SlimefunItem.getById(machineId);
                     if (machineItem instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) machineItem).getEnergyComponentType())) {
                         BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineId), () -> AbstractCubeElectricGenerator.this.chargeMachine((EnergyNetComponent) machineItem, finalEnergy, energyComponentConfig, location), location);
-                        if(drawParticle) {
+                        if (drawParticle) {
                             Location cloneLocation = location.clone();
                             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, cloneLocation.getBlock()));
                         }
@@ -101,7 +101,7 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
         });
 
         blockMenu = BlockStorage.getInventory(block);
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             this.updateMenu(blockMenu, finalEnergy, count);
         }
     }

@@ -89,7 +89,7 @@ public class EquivalentExchangeTableMenu extends AbstractManualMachineMenu {
         ItemStack item = inventory.getItem(PARSE_ITEM_SLOT);
         SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
         List<String> lore = new ArrayList<>();
-        if(!ItemStackUtil.isItemNull(item)) {
+        if (!ItemStackUtil.isItemNull(item)) {
             lore.add("§f" + ItemStackUtil.getItemName(item));
         }
         if (slimefunItem == null) {

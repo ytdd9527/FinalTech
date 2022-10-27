@@ -10,7 +10,7 @@ public class IgnorePermission {
     public static final String VALUE_FALSE = "f";
     public static final String VALUE_TRUE = "t";
 
-    public static final BlockStorageHelper HELPER = BlockStorageHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new ArrayList<>(){{
+    public static final BlockStorageHelper HELPER = BlockStorageHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new ArrayList<>() {{
         this.add(VALUE_FALSE);
         this.add(VALUE_TRUE);
     }});

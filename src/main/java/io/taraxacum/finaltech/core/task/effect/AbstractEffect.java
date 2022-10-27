@@ -20,9 +20,9 @@ public abstract class AbstractEffect extends AbstractSingleTickerTask<LivingEnti
     }
 
     public void setLevel(int level) {
-        if(this.maxLevel() > 0) {
+        if (this.maxLevel() > 0) {
             this.level = Math.min(this.maxLevel(), level);
-        } else if(this.maxLevel() < 0) {
+        } else if (this.maxLevel() < 0) {
             this.level = level;
         }
     }

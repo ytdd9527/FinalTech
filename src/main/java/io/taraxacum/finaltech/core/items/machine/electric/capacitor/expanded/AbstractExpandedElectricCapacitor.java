@@ -107,7 +107,7 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
             BlockStorage.addBlockInfo(block.getLocation(), KEY, energyStack);
         }
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             this.updateMenu(blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT), energy, energyStack);
         }
     }

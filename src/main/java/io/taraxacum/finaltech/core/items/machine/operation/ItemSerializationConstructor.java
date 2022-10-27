@@ -90,7 +90,7 @@ public class ItemSerializationConstructor extends AbstractOperationMachine {
                 continue;
             }
             if (operation == null) {
-                if(SlimefunItem.getByItem(inputItem) == null) {
+                if (SlimefunItem.getByItem(inputItem) == null) {
                     break;
                 }
                 operation = ItemSerializationConstructorOperation.newInstance(inputItem);
@@ -110,12 +110,12 @@ public class ItemSerializationConstructor extends AbstractOperationMachine {
             BlockStorage.addBlockInfo(block.getLocation(), this.blockStorageAmountKey, null);
         }
 
-        if(operation != null && operation.getType() == ItemSerializationConstructorOperation.COPY_CARD) {
+        if (operation != null && operation.getType() == ItemSerializationConstructorOperation.COPY_CARD) {
             BlockStorage.addBlockInfo(block.getLocation(), this.blockStorageItemKey, ItemStackUtil.itemStackToString(((ItemCopyCardOperation)operation).getMatchItem()));
             BlockStorage.addBlockInfo(block.getLocation(), this.blockStorageAmountKey, String.valueOf((int)((ItemCopyCardOperation)operation).getCount()));
         }
 
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             ItemStack showItem;
             if (operation != null) {
                 operation.updateShowItem();

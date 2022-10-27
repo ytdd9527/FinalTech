@@ -98,13 +98,13 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        if(BlockTickerUtil.hasSleep(config)) {
+        if (BlockTickerUtil.hasSleep(config)) {
             BlockTickerUtil.subSleep(config);
             return;
         }
 
         double life = config.contains(KEY_LIFE) ? Double.parseDouble(config.getString(KEY_LIFE)) : 0;
-        if(life < 1) {
+        if (life < 1) {
             Location location = block.getLocation();
             BlockStorage.addBlockInfo(location, KEY_LIFE, null);
             BlockStorage.addBlockInfo(location, KEY_RANGE, null);
@@ -112,7 +112,7 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
             BlockStorage.clearBlockInfo(location);
             JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
             javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> {
-                if(!location.getBlock().getType().isAir() && BlockStorage.getLocationInfo(location, ConstantTableUtil.CONFIG_ID) == null) {
+                if (!location.getBlock().getType().isAir() && BlockStorage.getLocationInfo(location, ConstantTableUtil.CONFIG_ID) == null) {
                     BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, FinalTechItems.JUSTIFIABILITY.getItemId(), true);
                 }
             }, Slimefun.getTickerTask().getTickRate() + 1);
@@ -126,8 +126,8 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
             this.function(block, range, location -> {
                 FinalTech.getLocationRunnableFactory().waitThenRun(() -> {
                     Block targetBlock = location.getBlock();
-                    if(!BlockStorage.hasBlockInfo(location)) {
-                        if(targetBlock.getType().isAir()) {
+                    if (!BlockStorage.hasBlockInfo(location)) {
+                        if (targetBlock.getType().isAir()) {
                             BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, EquivalentConcept.this.getId(), true);
                             BlockStorage.addBlockInfo(location, KEY_LIFE, String.valueOf(finalLife * attenuationRate));
                             BlockStorage.addBlockInfo(location, KEY_RANGE, String.valueOf(range + 1));

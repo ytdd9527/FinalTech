@@ -167,7 +167,7 @@ public final class StringNumberUtil {
                 break;
             }
         }
-        if(stringBuilder.length() == 0) {
+        if (stringBuilder.length() == 0) {
             return StringNumberUtil.ZERO;
         }
         return stringBuilder.reverse().toString();

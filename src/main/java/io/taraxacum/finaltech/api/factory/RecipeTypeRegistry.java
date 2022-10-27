@@ -19,15 +19,15 @@ public class RecipeTypeRegistry {
     }
 
     public void init() {
-        if(this.init) {
+        if (this.init) {
             return;
         }
 
         RecipeType recipeType;
         List<SlimefunItem> slimefunItemList;
-        for(SlimefunItem slimefunItem : Slimefun.getRegistry().getEnabledSlimefunItems()) {
+        for (SlimefunItem slimefunItem : Slimefun.getRegistry().getEnabledSlimefunItems()) {
             recipeType = slimefunItem.getRecipeType();
-            if(this.recipeSlimefunItemMap.containsKey(recipeType)) {
+            if (this.recipeSlimefunItemMap.containsKey(recipeType)) {
                 slimefunItemList = this.recipeSlimefunItemMap.get(recipeType);
                 slimefunItemList.add(slimefunItem);
             } else {
@@ -47,9 +47,9 @@ public class RecipeTypeRegistry {
 
         RecipeType recipeType;
         List<SlimefunItem> slimefunItemList;
-        for(SlimefunItem slimefunItem : Slimefun.getRegistry().getEnabledSlimefunItems()) {
+        for (SlimefunItem slimefunItem : Slimefun.getRegistry().getEnabledSlimefunItems()) {
             recipeType = slimefunItem.getRecipeType();
-            if(recipeSlimefunItemMap.containsKey(recipeType)) {
+            if (recipeSlimefunItemMap.containsKey(recipeType)) {
                 slimefunItemList = recipeSlimefunItemMap.get(recipeType);
                 slimefunItemList.add(slimefunItem);
             } else {
@@ -65,7 +65,7 @@ public class RecipeTypeRegistry {
     }
 
     public void update() {
-        if(this.init) {
+        if (this.init) {
             this.reload();
         } else {
             this.init();
@@ -82,8 +82,8 @@ public class RecipeTypeRegistry {
 
     @Nullable
     public RecipeType getRecipeTypeById(String id) {
-        for(RecipeType recipeType : this.getRecipeTypeSet()) {
-            if(recipeType.getKey().getKey().equals(id)) {
+        for (RecipeType recipeType : this.getRecipeTypeSet()) {
+            if (recipeType.getKey().getKey().equals(id)) {
                 return recipeType;
             }
         }
@@ -92,7 +92,7 @@ public class RecipeTypeRegistry {
 
     @Nonnull
     public List<SlimefunItem> getWithSameRecipeType(@Nonnull SlimefunItem slimefunItem) {
-        if(this.recipeSlimefunItemMap.containsKey(slimefunItem.getRecipeType())) {
+        if (this.recipeSlimefunItemMap.containsKey(slimefunItem.getRecipeType())) {
             return this.recipeSlimefunItemMap.get(slimefunItem.getRecipeType());
         } else {
             return new ArrayList<>();
@@ -101,7 +101,7 @@ public class RecipeTypeRegistry {
 
     @Nonnull
     public List<SlimefunItem> getByRecipeType(@Nonnull RecipeType recipeType) {
-        if(this.recipeSlimefunItemMap.containsKey(recipeType)) {
+        if (this.recipeSlimefunItemMap.containsKey(recipeType)) {
             return this.recipeSlimefunItemMap.get(recipeType);
         } else {
             return new ArrayList<>();
@@ -110,9 +110,9 @@ public class RecipeTypeRegistry {
 
     @Nonnull
     public static RecipeTypeRegistry getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             synchronized (RecipeTypeRegistry.class) {
-                if(instance == null) {
+                if (instance == null) {
                     instance = new RecipeTypeRegistry();
                 }
             }

@@ -53,7 +53,7 @@ public abstract class AbstractElectricCapacitor extends AbstractElectricMachine 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
             String charge = EnergyUtil.getCharge(config);
             this.updateMenu(item, charge);

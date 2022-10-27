@@ -100,7 +100,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
         boolean primaryThread = javaPlugin.getServer().isPrimaryThread();
         boolean drawParticle = blockMenu.hasViewer();
 
-        if(primaryThread) {
+        if (primaryThread) {
             BlockData blockData = block.getState().getBlockData();
             if (!(blockData instanceof Directional)) {
                 return;
@@ -108,7 +108,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
             BlockFace blockFace = ((Directional) blockData).getFacing();
             List<Block> blockList = this.searchBlock(block, blockFace, BlockSearchMode.LINE_HELPER.getOrDefaultValue(config));
 
-            if(!PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(blockList))) {
+            if (!PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(blockList))) {
                 return;
             }
 
@@ -124,7 +124,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                 case BlockSearchOrder.VALUE_RANDOM -> finalBlockList = JavaUtil.shuffle(blockList);
                 default -> finalBlockList = null;
             }
-            if(finalBlockList == null) {
+            if (finalBlockList == null) {
                 return;
             }
 
@@ -159,7 +159,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
             simpleCargoDTO.setFilterInv(blockMenu.toInventory());
             simpleCargoDTO.setFilterSlots(LineTransferMenu.ITEM_MATCH);
 
-            for(int i = 0, size = finalBlockList.size(); i < size - 1; i++) {
+            for (int i = 0, size = finalBlockList.size(); i < size - 1; i++) {
                 switch (cargoOrder) {
                     case CargoOrder.VALUE_POSITIVE:
                         inputBlock = finalBlockList.get(i);
@@ -173,16 +173,16 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                         continue;
                 }
 
-                if(inputBlock.getLocation().equals(outputBlock.getLocation())) {
+                if (inputBlock.getLocation().equals(outputBlock.getLocation())) {
                     continue;
                 }
 
-                if(CargoMode.VALUE_INPUT_MAIN.equals(cargoMode) && BlockStorage.hasBlockInfo(outputBlock)) {
+                if (CargoMode.VALUE_INPUT_MAIN.equals(cargoMode) && BlockStorage.hasBlockInfo(outputBlock)) {
                     outputMap = null;
                 } else {
                     outputMap = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
                 }
-                if(CargoMode.VALUE_OUTPUT_MAIN.equals(cargoMode) && BlockStorage.hasBlockInfo(inputBlock)) {
+                if (CargoMode.VALUE_OUTPUT_MAIN.equals(cargoMode) && BlockStorage.hasBlockInfo(inputBlock)) {
                     inputMap = null;
                 } else {
                     inputMap = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
@@ -196,7 +196,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
 
                 number = CargoUtil.doSimpleCargo(simpleCargoDTO, cargoMode);
 
-                if(CargoNumberMode.VALUE_UNIVERSAL.equals(cargoNumberMode)) {
+                if (CargoNumberMode.VALUE_UNIVERSAL.equals(cargoNumberMode)) {
                     cargoNumber -= number;
                 }
             }
@@ -210,16 +210,16 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                 final List<Block> blockList = LineTransfer.this.searchBlock(block, blockFace, BlockSearchMode.LINE_HELPER.getOrDefaultValue(config));
 
                 List<Inventory> vanillaInventories = new ArrayList<>();
-                for(Block b : blockList) {
+                for (Block b : blockList) {
                     vanillaInventories.add(CargoUtil.getVanillaInventory(b));
                 }
 
                 ServerRunnableLockFactory.getInstance(javaPlugin, Location.class).waitThenRun(() -> {
-                    if(!BlockStorage.hasBlockInfo(location)) {
+                    if (!BlockStorage.hasBlockInfo(location)) {
                         return;
                     }
 
-                    if(!PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(blockList))) {
+                    if (!PermissionUtil.checkOfflinePermission(location, config, LocationUtil.transferToLocation(blockList))) {
                         return;
                     }
 
@@ -255,7 +255,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                             finalVanillaInventories = null;
                         }
                     }
-                    if(finalBlockList == null) {
+                    if (finalBlockList == null) {
                         return;
                     }
 
@@ -292,7 +292,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
 
                     int input;
                     int output;
-                    for(int i = 0, size = finalBlockList.size(); i < size - 1; i++) {
+                    for (int i = 0, size = finalBlockList.size(); i < size - 1; i++) {
                         switch (cargoOrder) {
                             case CargoOrder.VALUE_POSITIVE:
                                 input = i;
@@ -308,24 +308,24 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
 
                         inputBlock = finalBlockList.get(input);
                         outputBlock = finalBlockList.get(output);
-                        if(inputBlock.getLocation().equals(outputBlock.getLocation())) {
+                        if (inputBlock.getLocation().equals(outputBlock.getLocation())) {
                             continue;
                         }
 
-                        if(CargoMode.VALUE_OUTPUT_MAIN.equals(cargoMode) && BlockStorage.hasBlockInfo(inputBlock)) {
+                        if (CargoMode.VALUE_OUTPUT_MAIN.equals(cargoMode) && BlockStorage.hasBlockInfo(inputBlock)) {
                             inputMap = null;
-                        } else if(BlockStorage.hasInventory(inputBlock)) {
+                        } else if (BlockStorage.hasInventory(inputBlock)) {
                             inputMap = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
-                        } else if(finalVanillaInventories.get(input) != null) {
+                        } else if (finalVanillaInventories.get(input) != null) {
                             inputMap = CargoUtil.calInvWithSlots(finalVanillaInventories.get(input), inputOrder);
                         } else {
                             continue;
                         }
-                        if(CargoMode.VALUE_INPUT_MAIN.equals(cargoMode) && BlockStorage.hasInventory(outputBlock)) {
+                        if (CargoMode.VALUE_INPUT_MAIN.equals(cargoMode) && BlockStorage.hasInventory(outputBlock)) {
                             outputMap = null;
-                        } else if(BlockStorage.hasInventory(outputBlock)) {
+                        } else if (BlockStorage.hasInventory(outputBlock)) {
                             outputMap = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
-                        } else if(finalVanillaInventories.get(output) != null) {
+                        } else if (finalVanillaInventories.get(output) != null) {
                             outputMap = CargoUtil.calInvWithSlots(finalVanillaInventories.get(output), outputOrder);
                         } else {
                             continue;
@@ -339,7 +339,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
 
                         number = CargoUtil.doSimpleCargo(simpleCargoDTO, cargoMode);
 
-                        if(CargoNumberMode.VALUE_UNIVERSAL.equals(cargoNumberMode)) {
+                        if (CargoNumberMode.VALUE_UNIVERSAL.equals(cargoNumberMode)) {
                             cargoNumber -= number;
                         }
                     }

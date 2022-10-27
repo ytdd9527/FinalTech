@@ -44,25 +44,25 @@ public class Icon {
         List<String> lores = null;
         if (ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE)) {
             amount = item.getAmount();
-            if(updateLore) {
+            if (updateLore) {
                 lores = FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "amount-lore"),
                         String.valueOf(amount));
             }
         } else if (ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE_INFINITY)) {
             amount = Integer.MAX_VALUE / ConstantTableUtil.ITEM_MAX_STACK - 1;
-            if(updateLore) {
+            if (updateLore) {
                 lores = FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "amount-lore"),
                         FinalTech.getLanguageString("helper", "ICON", "quantity-module", "amount-infinity"));
             }
         } else {
             amount = 1;
-            if(updateLore) {
+            if (updateLore) {
                 lores = FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "amount-none-lore"),
                         "1");
             }
         }
 
-        if(!updateLore) {
+        if (!updateLore) {
             return amount;
         }
 

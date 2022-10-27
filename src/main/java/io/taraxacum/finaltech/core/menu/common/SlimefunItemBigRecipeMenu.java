@@ -67,7 +67,7 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
 
         this.addItem(BACK_SLOT, ChestMenuUtils.getBackButton(player));
         this.addMenuClickHandler(BACK_SLOT, (pl, s, is, action) -> {
-            if(action.isShiftClicked()) {
+            if (action.isShiftClicked()) {
                 SlimefunGuide.openMainMenu(playerProfile, slimefunGuideMode, guideHistory.getMainMenuPage());
             } else {
                 guideHistory.goBack(new SurvivalSlimefunGuide(false, false));
@@ -87,12 +87,12 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
             return false;
         });
 
-        for(int i = 0; i < slimefunItem.getRecipe().length; i++) {
+        for (int i = 0; i < slimefunItem.getRecipe().length; i++) {
             ItemStack itemStack = slimefunItem.getRecipe()[i];
             this.addItem(RECIPE_CONTENT[i], slimefunItem.getRecipe()[i]);
             this.addMenuClickHandler(RECIPE_CONTENT[i], (p, slot, item, action) -> {
                 RecipeItemGroup recipeItemGroup = RecipeItemGroup.getByItemStack(player, playerProfile, slimefunGuideMode, itemStack);
-                if(recipeItemGroup != null) {
+                if (recipeItemGroup != null) {
                     Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> recipeItemGroup.open(player, playerProfile, slimefunGuideMode));
                 }
                 return false;
@@ -102,16 +102,16 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
         this.addItem(INFO_SLOT, RecipeItemGroup.generateInfoIcon(slimefunItem, player));
         this.addMenuClickHandler(INFO_SLOT, ChestMenuUtils.getEmptyClickHandler());
 
-        for(int slot : BORDER) {
+        for (int slot : BORDER) {
             this.addItem(slot, ChestMenuUtils.getBackground());
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
 
-        if(slimefunItem instanceof RecipeDisplayItem && ((RecipeDisplayItem) slimefunItem).getDisplayRecipes().size() > 0) {
+        if (slimefunItem instanceof RecipeDisplayItem && ((RecipeDisplayItem) slimefunItem).getDisplayRecipes().size() > 0) {
             this.addItem(this.WORK_BUTTON, ChestMenuUtils.getWikiButton());
             this.addMenuClickHandler(this.WORK_BUTTON, (p, slot, item, action) -> {
                 ChestMenu chestMenu = SlimefunItemBigRecipeMenu.this.setupWorkContent(page);
-                if(chestMenu != null) {
+                if (chestMenu != null) {
                     chestMenu.open(player);
                 }
                 return false;
@@ -124,10 +124,10 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
 
     @Nullable
     private ChestMenu setupWorkContent(int page) {
-        if(this.slimefunItem instanceof RecipeDisplayItem) {
+        if (this.slimefunItem instanceof RecipeDisplayItem) {
             ChestMenu chestMenu = new ChestMenu(slimefunItem.getItemName());
 
-            for(int slot : WORK_BORDER) {
+            for (int slot : WORK_BORDER) {
                 chestMenu.addItem(slot, ChestMenuUtils.getBackground());
                 chestMenu.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
             }
@@ -138,7 +138,7 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
             chestMenu.addMenuClickHandler(WORK_BACK_SLOT, (p, slot, item, action) -> {
                 GuideHistory guideHistory = playerProfile.getGuideHistory();
                 GuideUtil.removeLastEntry(guideHistory);
-                if(itemGroup instanceof RecipeItemGroup) {
+                if (itemGroup instanceof RecipeItemGroup) {
                     ((RecipeItemGroup) itemGroup).open(player, playerProfile, slimefunGuideMode
                     );
                 }
@@ -148,7 +148,7 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
             chestMenu.addItem(WORK_PREVIOUS_SLOT, ChestMenuUtils.getPreviousButton(this.player, page, (displayRecipes.size() - 1) / WORK_CONTENT.length + 1));
             chestMenu.addMenuClickHandler(WORK_PREVIOUS_SLOT, (p, slot, item, action) -> {
                 ChestMenu menu = SlimefunItemBigRecipeMenu.this.setupWorkContent(Math.max(page - 1, 1));
-                if(menu != null) {
+                if (menu != null) {
                     menu.open(player);
                 }
                 return false;
@@ -157,20 +157,20 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
             chestMenu.addItem(WORK_NEXT_SLOT, ChestMenuUtils.getNextButton(this.player, page, (displayRecipes.size() - 1) / WORK_CONTENT.length + 1));
             chestMenu.addMenuClickHandler(WORK_NEXT_SLOT, (p, slot, item, action) -> {
                 ChestMenu menu = SlimefunItemBigRecipeMenu.this.setupWorkContent(Math.min(page + 1, (displayRecipes.size() - 1) / WORK_CONTENT.length + 1));
-                if(menu != null) {
+                if (menu != null) {
                     menu.open(player);
                 }
                 return false;
             });
 
             int i;
-            for(i = 0; i < WORK_CONTENT.length; i++) {
+            for (i = 0; i < WORK_CONTENT.length; i++) {
                 int index = i + page * WORK_CONTENT.length - WORK_CONTENT.length;
-                if(index < displayRecipes.size()) {
+                if (index < displayRecipes.size()) {
                     chestMenu.addItem(WORK_CONTENT[i], displayRecipes.get(index));
                     chestMenu.addMenuClickHandler(WORK_CONTENT[i], (p, slot, item, action) -> {
                         RecipeItemGroup recipeItemGroup = RecipeItemGroup.getByItemStack(SlimefunItemBigRecipeMenu.this.player, SlimefunItemBigRecipeMenu.this.playerProfile, SlimefunItemBigRecipeMenu.this.slimefunGuideMode, displayRecipes.get(index));
-                        if(recipeItemGroup != null) {
+                        if (recipeItemGroup != null) {
                             Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> recipeItemGroup.open(player, playerProfile, slimefunGuideMode));
                         }
                         return false;

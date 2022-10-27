@@ -74,7 +74,7 @@ public class ItemPhonyOperation implements ItemSerializationConstructorOperation
                     break;
                 }
             }
-            if(newType) {
+            if (newType) {
                 this.itemTypeCount++;
                 this.itemTypeList.add(itemWrapper);
             }

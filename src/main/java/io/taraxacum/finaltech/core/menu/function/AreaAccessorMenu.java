@@ -64,17 +64,17 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
         blockMenu.addMenuOpeningHandler(p -> {
             Location location = block.getLocation();
             String value = BlockStorage.getLocationInfo(location, AreaAccessor.KEY);
-            if(value == null) {
+            if (value == null) {
                 value = AreaAccessor.THRESHOLD;
             }
-            if(StringNumberUtil.compare(value, StringNumberUtil.ZERO) <= 0) {
+            if (StringNumberUtil.compare(value, StringNumberUtil.ZERO) <= 0) {
                 p.closeInventory();
                 return;
             }
             BlockStorage.addBlockInfo(block, AreaAccessor.KEY, StringNumberUtil.sub(value));
             blockMenu.close();
 
-            if(p.getPlayer() != null) {
+            if (p.getPlayer() != null) {
                 AreaAccessorMenu.this.generateMenu(p.getPlayer(), location, AreaAccessor.RANGE, 0);
             }
         });
@@ -115,11 +115,11 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
      */
     public void generateMenu(@Nonnull Player player, @Nonnull Location location, int range, int page) {
         World world = location.getWorld();
-        if(world == null) {
+        if (world == null) {
             return;
         }
         BlockStorage storage = BlockStorage.getStorage(world);
-        if(storage == null) {
+        if (storage == null) {
             return;
         }
 
@@ -138,7 +138,7 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
                 tempLocation.setY(y);
                 for (int z = minZ; z <= maxZ; z++) {
                     tempLocation.setZ(z);
-                    if(BlockStorage.hasBlockInfo(tempLocation) && storage.hasInventory(tempLocation)) {
+                    if (BlockStorage.hasBlockInfo(tempLocation) && storage.hasInventory(tempLocation)) {
                         int distance = Math.abs(tempLocation.getBlockX() - location.getBlockX()) + Math.abs(tempLocation.getBlockY() - location.getBlockY()) + Math.abs(tempLocation.getBlockZ() - location.getBlockZ());
                         List<Location> locationList = distanceLocationMap.computeIfAbsent(distance, d -> new ArrayList<>(d * d * 4 + 2));
                         locationList.add(tempLocation.clone());
@@ -148,27 +148,27 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
         }
 
         List<Location> locationList = new ArrayList<>();
-        for(int i = 0; i < range * 3; i++) {
-            if(distanceLocationMap.containsKey(i)) {
+        for (int i = 0; i < range * 3; i++) {
+            if (distanceLocationMap.containsKey(i)) {
                 locationList.addAll(distanceLocationMap.get(i));
             }
         }
 
         ChestMenu chestMenu = new ChestMenu(" ");
-        for(int i = 0; i < TEMP_CONTENT.length; i++) {
-            if(i + page * TEMP_CONTENT.length >= locationList.size()) {
+        for (int i = 0; i < TEMP_CONTENT.length; i++) {
+            if (i + page * TEMP_CONTENT.length >= locationList.size()) {
                 chestMenu.addItem(TEMP_CONTENT[i], Icon.BORDER_ICON);
                 chestMenu.addMenuClickHandler(TEMP_CONTENT[i], ChestMenuUtils.getEmptyClickHandler());
                 continue;
             }
             Location l = locationList.get((i + page * TEMP_CONTENT.length) % locationList.size());
-            if(BlockStorage.hasBlockInfo(l)) {
+            if (BlockStorage.hasBlockInfo(l)) {
                 Config config = BlockStorage.getLocationInfo(l);
-                if(config.contains(ConstantTableUtil.CONFIG_ID)) {
+                if (config.contains(ConstantTableUtil.CONFIG_ID)) {
                     SlimefunItem slimefunItem = SlimefunItem.getById(config.getString(ConstantTableUtil.CONFIG_ID));
-                    if(slimefunItem != null) {
+                    if (slimefunItem != null) {
                         BlockMenu blockMenu = BlockStorage.getInventory(l);
-                        if(blockMenu != null) {
+                        if (blockMenu != null) {
                             ItemStack icon = new CustomItemStack(slimefunItem.getItem(), slimefunItem.getItemName(), FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(AreaAccessor.class), "temp-icon", "lore"),
                                     String.valueOf(l.getBlockX() - location.getBlockX()),
                                     String.valueOf(l.getBlockY() - location.getBlockY()),
@@ -176,7 +176,7 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
                             chestMenu.addItem(TEMP_CONTENT[i], icon);
                             chestMenu.addMenuClickHandler(TEMP_CONTENT[i], (p, slot, item, action) -> {
                                 // BlockMenu may be updated after the menu generated.
-                                if(BlockStorage.hasBlockInfo(l) && BlockStorage.hasInventory(l.getBlock()) && blockMenu.canOpen(l.getBlock(), player)) {
+                                if (BlockStorage.hasBlockInfo(l) && BlockStorage.hasInventory(l.getBlock()) && blockMenu.canOpen(l.getBlock(), player)) {
                                     JavaPlugin javaPlugin = AreaAccessorMenu.this.getMachine().getAddon().getJavaPlugin();
                                     javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, blockMenu.getBlock()));
                                     blockMenu.open(player);
@@ -193,18 +193,18 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
             chestMenu.addItem(TEMP_CONTENT[i], Icon.ERROR_ICON);
             chestMenu.addMenuClickHandler(TEMP_CONTENT[i], ChestMenuUtils.getEmptyClickHandler());
         }
-        for(int slot : TEMP_BORDER) {
+        for (int slot : TEMP_BORDER) {
             chestMenu.addItem(slot, Icon.BORDER_ICON);
             chestMenu.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
-        for(int slot : TEMP_NEXT_PAGE) {
+        for (int slot : TEMP_NEXT_PAGE) {
             chestMenu.addItem(slot, Icon.NEXT_PAGE_ICON);
             chestMenu.addMenuClickHandler(slot, (p, slot1, item, action) -> {
                 AreaAccessorMenu.this.generateMenu(player, location, range, Math.min(page + 1, locationList.size() / TEMP_CONTENT.length));
                 return false;
             });
         }
-        for(int slot : TEMP_PREVIOUS_PAGE) {
+        for (int slot : TEMP_PREVIOUS_PAGE) {
             chestMenu.addItem(slot, Icon.PREVIOUS_PAGE_ICON);
             chestMenu.addMenuClickHandler(slot, (p, slot1, item, action) -> {
                 AreaAccessorMenu.this.generateMenu(player, location, range, Math.max(page - 1, 0));

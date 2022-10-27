@@ -79,12 +79,12 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem {
         }
         BlockTicker blockTicker = slimefunItem.getBlockTicker();
 
-        if(blockTicker != null && FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId())) {
+        if (blockTicker != null && FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId())) {
             return;
         }
 
         if (this.consume()) {
-            if(playerRightClickEvent.getItem().getAmount() > 0) {
+            if (playerRightClickEvent.getItem().getAmount() > 0) {
                 ItemStack item = playerRightClickEvent.getItem();
                 item.setAmount(item.getAmount() - 1);
             } else {
@@ -92,7 +92,7 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem {
             }
         }
 
-        if(blockTicker != null && slimefunItem instanceof EnergyNetComponent) {
+        if (blockTicker != null && slimefunItem instanceof EnergyNetComponent) {
             int time;
             if (this.consume()) {
                 time = this.times();
@@ -105,10 +105,10 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem {
             Runnable runnable = () -> {
                 int capacity = ((EnergyNetComponent) slimefunItem).getCapacity();
                 int chargeEnergy = (int) AbstractMachineActivateCard.this.energy();
-                if(!EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType())) {
+                if (!EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType())) {
                     chargeEnergy += (int)((this.energy() - (int) this.energy()) * capacity);
                 }
-                if(!AbstractMachineActivateCard.this.consume()) {
+                if (!AbstractMachineActivateCard.this.consume()) {
                     chargeEnergy *= playerRightClickEvent.getItem().getAmount();
                 }
                 for (int i = 0; i < time; i++) {
@@ -120,12 +120,12 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem {
             };
 
             JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
-            if(blockTicker.isSynchronized() || !FinalTech.isAsyncSlimefunItem(slimefunItem.getId())) {
+            if (blockTicker.isSynchronized() || !FinalTech.isAsyncSlimefunItem(slimefunItem.getId())) {
                 javaPlugin.getServer().getScheduler().runTask(javaPlugin, runnable);
             } else {
                 FinalTech.getLocationRunnableFactory().waitThenRun(runnable, location);
             }
-        } else if(blockTicker != null) {
+        } else if (blockTicker != null) {
             // this slimefun item have
             int time;
             if (this.consume()) {
@@ -137,18 +137,18 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem {
             ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
 
             Runnable runnable = () -> {
-                for(int i = 0; i < time; i++) {
+                for (int i = 0; i < time; i++) {
                     blockTicker.tick(block, slimefunItem, config);
                 }
             };
 
             JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
-            if(blockTicker.isSynchronized() || !FinalTech.isAsyncSlimefunItem(slimefunItem.getId())) {
+            if (blockTicker.isSynchronized() || !FinalTech.isAsyncSlimefunItem(slimefunItem.getId())) {
                 javaPlugin.getServer().getScheduler().runTask(javaPlugin, runnable);
             } else {
                 FinalTech.getLocationRunnableFactory().waitThenRun(runnable, location);
             }
-        } else if(slimefunItem instanceof EnergyNetComponent) {
+        } else if (slimefunItem instanceof EnergyNetComponent) {
             // this slimefun item is energy net component
             if (((EnergyNetComponent) slimefunItem).getCapacity() <= 0) {
                 return;

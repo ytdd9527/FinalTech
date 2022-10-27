@@ -35,7 +35,7 @@ public class UntreatableEffect extends AbstractEffect {
     @Override
     public void tick(@Nonnull LivingEntity livingEntity) {
         double nowHealth = livingEntity.getHealth();
-        if(this.health > 0 && this.health < livingEntity.getHealth()) {
+        if (this.health > 0 && this.health < livingEntity.getHealth()) {
             livingEntity.setHealth(this.health);
         }
         this.health = Math.min(this.health, Math.min(livingEntity.getHealth(), nowHealth));

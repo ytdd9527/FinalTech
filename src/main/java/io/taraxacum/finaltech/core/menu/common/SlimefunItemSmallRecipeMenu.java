@@ -67,7 +67,7 @@ public class SlimefunItemSmallRecipeMenu extends ChestMenu {
         this.addItem(BACK_SLOT, ChestMenuUtils.getBackButton(player));
         this.addMenuClickHandler(BACK_SLOT, (pl, s, is, action) -> {
             GuideHistory guideHistory = playerProfile.getGuideHistory();
-            if(action.isShiftClicked()) {
+            if (action.isShiftClicked()) {
                 SlimefunGuide.openMainMenu(playerProfile, slimefunGuideMode, guideHistory.getMainMenuPage());
             } else {
                 guideHistory.goBack(new SurvivalSlimefunGuide(false, false));
@@ -87,12 +87,12 @@ public class SlimefunItemSmallRecipeMenu extends ChestMenu {
             return false;
         });
 
-        for(int i = 0; i < slimefunItem.getRecipe().length; i++) {
+        for (int i = 0; i < slimefunItem.getRecipe().length; i++) {
             ItemStack itemStack = slimefunItem.getRecipe()[i];
             this.addItem(RECIPE_CONTENT[i], slimefunItem.getRecipe()[i]);
             this.addMenuClickHandler(RECIPE_CONTENT[i], (p, slot, item, action) -> {
                 RecipeItemGroup recipeItemGroup = RecipeItemGroup.getByItemStack(player, playerProfile, slimefunGuideMode, itemStack);
-                if(recipeItemGroup != null) {
+                if (recipeItemGroup != null) {
                     Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> recipeItemGroup.open(player, playerProfile, slimefunGuideMode));
                 }
                 return false;
@@ -102,10 +102,10 @@ public class SlimefunItemSmallRecipeMenu extends ChestMenu {
         this.addItem(INFO_SLOT, RecipeItemGroup.generateInfoIcon(slimefunItem, player));
         this.addMenuClickHandler(INFO_SLOT, ChestMenuUtils.getEmptyClickHandler());
 
-        if(slimefunItem instanceof RecipeDisplayItem) {
+        if (slimefunItem instanceof RecipeDisplayItem) {
             List<ItemStack> displayRecipeItemList = ((RecipeDisplayItem) slimefunItem).getDisplayRecipes();
-            if(!displayRecipeItemList.isEmpty()) {
-                for(int slot : BORDER) {
+            if (!displayRecipeItemList.isEmpty()) {
+                for (int slot : BORDER) {
                     this.addItem(slot, ChestMenuUtils.getBackground());
                     this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
                 }
@@ -116,14 +116,14 @@ public class SlimefunItemSmallRecipeMenu extends ChestMenu {
     }
 
     private void setupWorkContent(int page) {
-        if(this.slimefunItem instanceof RecipeDisplayItem) {
+        if (this.slimefunItem instanceof RecipeDisplayItem) {
             List<ItemStack> displayRecipes = ((RecipeDisplayItem) this.slimefunItem).getDisplayRecipes();
 
             this.addItem(PREVIOUS_SLOT, ChestMenuUtils.getPreviousButton(this.player, page, (displayRecipes.size() - 1) / WORK_CONTENT.length + 1));
             this.addMenuClickHandler(PREVIOUS_SLOT, (p, slot, item, action) -> {
                 SlimefunItemSmallRecipeMenu instance = SlimefunItemSmallRecipeMenu.this;
                 RecipeItemGroup recipeItemGroup = RecipeItemGroup.getByItemStack(instance.player, instance.playerProfile, instance.slimefunGuideMode, instance.slimefunItem.getItem(), Math.max(page - 1, 1));
-                if(recipeItemGroup != null) {
+                if (recipeItemGroup != null) {
                     GuideUtil.removeLastEntry(instance.playerProfile.getGuideHistory());
                     Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> recipeItemGroup.open(instance.player, instance.playerProfile, instance.slimefunGuideMode));
                 }
@@ -134,7 +134,7 @@ public class SlimefunItemSmallRecipeMenu extends ChestMenu {
             this.addMenuClickHandler(NEXT_SLOT, (p, slot, item, action) -> {
                 SlimefunItemSmallRecipeMenu instance = SlimefunItemSmallRecipeMenu.this;
                 RecipeItemGroup recipeItemGroup = RecipeItemGroup.getByItemStack(instance.player, instance.playerProfile, instance.slimefunGuideMode, instance.slimefunItem.getItem(), Math.min(page + 1, (displayRecipes.size() - 1) / WORK_CONTENT.length + 1));
-                if(recipeItemGroup != null) {
+                if (recipeItemGroup != null) {
                     GuideUtil.removeLastEntry(instance.playerProfile.getGuideHistory());
                     Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> recipeItemGroup.open(instance.player, instance.playerProfile, instance.slimefunGuideMode));
                 }
@@ -142,14 +142,14 @@ public class SlimefunItemSmallRecipeMenu extends ChestMenu {
             });
 
             int i;
-            for(i = 0; i < WORK_CONTENT.length; i++) {
+            for (i = 0; i < WORK_CONTENT.length; i++) {
                 int index = i + page * WORK_CONTENT.length - WORK_CONTENT.length;
-                if(index < displayRecipes.size()) {
+                if (index < displayRecipes.size()) {
                     ItemStack itemStack = displayRecipes.get(index);
                     this.addItem(WORK_CONTENT[i], itemStack);
                     this.addMenuClickHandler(WORK_CONTENT[i], (p, slot, item, action) -> {
                         RecipeItemGroup recipeItemGroup = RecipeItemGroup.getByItemStack(SlimefunItemSmallRecipeMenu.this.player, SlimefunItemSmallRecipeMenu.this.playerProfile, SlimefunItemSmallRecipeMenu.this.slimefunGuideMode, itemStack);
-                        if(recipeItemGroup != null) {
+                        if (recipeItemGroup != null) {
                             Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> recipeItemGroup.open(SlimefunItemSmallRecipeMenu.this.player, SlimefunItemSmallRecipeMenu.this.playerProfile, SlimefunItemSmallRecipeMenu.this.slimefunGuideMode));
                         }
                         return false;

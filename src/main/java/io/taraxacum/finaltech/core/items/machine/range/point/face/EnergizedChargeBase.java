@@ -56,14 +56,14 @@ public class EnergizedChargeBase extends AbstractFaceMachine implements RecipeIt
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         this.function(block, 1, location -> {
-            if(BlockStorage.hasBlockInfo(location)) {
+            if (BlockStorage.hasBlockInfo(location)) {
                 Config targetConfig = BlockStorage.getLocationInfo(location);
-                if(targetConfig.contains(ConstantTableUtil.CONFIG_ID)) {
+                if (targetConfig.contains(ConstantTableUtil.CONFIG_ID)) {
                     String targetSlimefunId = targetConfig.getString(ConstantTableUtil.CONFIG_ID);
                     BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(targetSlimefunId), () -> EnergizedChargeBase.this.doCharge(block, targetConfig), location);
                 } else {
                     BlockMenu blockMenu = BlockStorage.getInventory(block);
-                    if(blockMenu.hasViewer()) {
+                    if (blockMenu.hasViewer()) {
                         this.updateMenu(blockMenu, 0, 0);
                     }
                 }
@@ -83,18 +83,18 @@ public class EnergizedChargeBase extends AbstractFaceMachine implements RecipeIt
 
         String slimefunItemId = targetConfig.getString(ConstantTableUtil.CONFIG_ID);
         SlimefunItem slimefunItem = SlimefunItem.getById(slimefunItemId);
-        if(slimefunItem instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType()) && !EnergyNetComponentType.GENERATOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType())) {
+        if (slimefunItem instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType()) && !EnergyNetComponentType.GENERATOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType())) {
             int capacity = ((EnergyNetComponent) slimefunItem).getCapacity();
             storedEnergy = Integer.parseInt(EnergyUtil.getCharge(targetConfig));
             chargeEnergy = capacity * EnergizedChargeBase.this.effective > capacity - storedEnergy ? capacity - storedEnergy : (int)(capacity * EnergizedChargeBase.this.effective);
-            if(chargeEnergy > 0) {
+            if (chargeEnergy > 0) {
                 storedEnergy += chargeEnergy;
                 EnergyUtil.setCharge(targetConfig, storedEnergy);
             }
         }
 
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             this.updateMenu(blockMenu, storedEnergy, chargeEnergy);
         }
     }

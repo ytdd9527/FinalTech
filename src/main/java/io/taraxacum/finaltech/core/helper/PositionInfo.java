@@ -130,7 +130,7 @@ public class PositionInfo {
             String valueMap = BlockStorage.getLocationInfo(location, this.getKey());
             KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
             String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getValueKey());
-            if("".equals(value)) {
+            if ("".equals(value)) {
                 value = null;
             }
             if (!BlockStorageLoreMaterialHelper.this.validValue(value)) {
@@ -144,7 +144,7 @@ public class PositionInfo {
             String valueMap = config.getString(this.getKey());
             KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
             String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getValueKey());
-            if("".equals(value)) {
+            if ("".equals(value)) {
                 value = null;
             }
             if (!BlockStorageLoreMaterialHelper.this.validValue(value)) {
@@ -171,12 +171,12 @@ public class PositionInfo {
         @Override
         public boolean checkAndUpdateIcon(@Nonnull Inventory inventory, @Nonnull Location location, int slot) {
             String valueMap = BlockStorage.getLocationInfo(location, this.getKey());
-            if(valueMap == null) {
+            if (valueMap == null) {
                 valueMap = "";
             }
             KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
             String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getValueKey());
-            if("".equals(value)) {
+            if ("".equals(value)) {
                 value = null;
             }
             if (!BlockStorageLoreMaterialHelper.this.validValue(value)) {
@@ -197,7 +197,7 @@ public class PositionInfo {
                 String valueMap = BlockStorage.getLocationInfo(location, this.getKey());
                 KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
                 String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getValueKey());
-                if("".equals(value)) {
+                if ("".equals(value)) {
                     value = null;
                 }
                 if (!action.isRightClicked()) {
@@ -220,7 +220,7 @@ public class PositionInfo {
                 String valueMap = BlockStorage.getLocationInfo(location, this.getKey());
                 KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
                 String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getValueKey());
-                if("".equals(value)) {
+                if ("".equals(value)) {
                     value = null;
                 }
                 if (!BlockStorageLoreMaterialHelper.this.validValue(value)) {
@@ -241,7 +241,7 @@ public class PositionInfo {
                 String valueMap = BlockStorage.getLocationInfo(location, this.getKey());
                 KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
                 String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getValueKey());
-                if("".equals(value)) {
+                if ("".equals(value)) {
                     value = null;
                 }
                 value = BlockStorageLoreMaterialHelper.this.clickNextValue(value, action);
@@ -260,7 +260,7 @@ public class PositionInfo {
                 String valueMap = BlockStorage.getLocationInfo(location, this.getKey());
                 KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);
                 String value = keyValueStringHelper.getValue(BlockStorageLoreMaterialHelper.this.getValueKey());
-                if("".equals(value)) {
+                if ("".equals(value)) {
                     value = null;
                 }
                 value = BlockStorageLoreMaterialHelper.this.clickPreviousValue(value, action);
@@ -287,7 +287,7 @@ public class PositionInfo {
         List<String> keyList = keyValueStringHelper.getAllMatchKey(values);
         BlockFace[] blockFaces = new BlockFace[keyList.size()];
         int i = 0;
-        for(String key : keyList) {
+        for (String key : keyList) {
             switch (key) {
                 case VALUE_KEY_NORTH -> blockFaces[i++] = BlockFace.NORTH;
                 case VALUE_KEY_EAST -> blockFaces[i++] = BlockFace.EAST;

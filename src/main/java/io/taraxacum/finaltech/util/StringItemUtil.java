@@ -37,7 +37,7 @@ public class StringItemUtil {
         }
         ItemMeta itemMeta = cardItem.getItemMeta();
         int count = StringItemUtil.pullItemFromCard(itemMeta, inventory, slots);
-        if(count > 0) {
+        if (count > 0) {
             cardItem.setItemMeta(itemMeta);
         }
         return count;
@@ -59,7 +59,7 @@ public class StringItemUtil {
         String amount = persistentDataContainer.get(AMOUNT_KEY, PersistentDataType.STRING);
         int maxStackSize = stringItem.getItemStack().getMaxStackSize();
         int validAmount = StringNumberUtil.compare(amount, String.valueOf(maxStackSize * slots.length)) >= 1 ? maxStackSize * slots.length : Integer.parseInt(amount);
-        if(validAmount == 0) {
+        if (validAmount == 0) {
             persistentDataContainer.remove(ITEM_KEY);
             persistentDataContainer.remove(AMOUNT_KEY);
             return 0;
@@ -116,7 +116,7 @@ public class StringItemUtil {
         }
         ItemMeta itemMeta = cardItem.getItemMeta();
         int count = StringItemUtil.storageItemToCard(itemMeta, cardItem.getAmount(), inventory, slots);
-        if(count > 0) {
+        if (count > 0) {
             cardItem.setItemMeta(itemMeta);
         }
         return count;

@@ -56,9 +56,9 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        if(BlockTickerUtil.hasSleep(config)) {
+        if (BlockTickerUtil.hasSleep(config)) {
             double sleep = BlockTickerUtil.getSleep(config);
-            if(--sleep <= 0) {
+            if (--sleep <= 0) {
                 BlockTickerUtil.setSleep(config, null);
             } else {
                 BlockTickerUtil.setSleep(config, sleep);
@@ -66,7 +66,7 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
         }
 
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(MachineUtil.slotCount(blockMenu.toInventory(), this.getInputSlot()) != this.getInputSlot().length) {
+        if (MachineUtil.slotCount(blockMenu.toInventory(), this.getInputSlot()) != this.getInputSlot().length) {
             return;
         }
 
@@ -77,7 +77,7 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             amountList.add(item.getAmount());
-            if(allSameItem && !ItemStackUtil.isItemSimilar(firstItem, item)) {
+            if (allSameItem && !ItemStackUtil.isItemSimilar(firstItem, item)) {
                 allSameItem = false;
             }
         }

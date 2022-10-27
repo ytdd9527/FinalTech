@@ -57,7 +57,7 @@ public class RecipeItemGroup extends FlexItemGroup {
     public void open(@Nonnull Player player, @Nonnull PlayerProfile playerProfile, @Nonnull SlimefunGuideMode slimefunGuideMode) {
         playerProfile.getGuideHistory().add(this, this.page);
         ChestMenu chestMenu = this.generateMenu(player, playerProfile, slimefunGuideMode);
-        if(chestMenu != null) {
+        if (chestMenu != null) {
             chestMenu.open(player);
         }
     }
@@ -66,9 +66,9 @@ public class RecipeItemGroup extends FlexItemGroup {
     private ChestMenu generateMenu(@Nonnull Player player, @Nonnull PlayerProfile playerProfile, @Nonnull SlimefunGuideMode slimefunGuideMode) {
         SlimefunItem slimefunItem = SlimefunItem.getById(this.id);
         if (slimefunItem != null) {
-            if(slimefunItem.getRecipe().length <= SMALL_LIMIT) {
+            if (slimefunItem.getRecipe().length <= SMALL_LIMIT) {
                 return new SlimefunItemSmallRecipeMenu(player, playerProfile, slimefunGuideMode, slimefunItem, this, this.page);
-            } else if(slimefunItem.getRecipe().length <= BIG_LIMIT) {
+            } else if (slimefunItem.getRecipe().length <= BIG_LIMIT) {
                 return new SlimefunItemBigRecipeMenu(player, playerProfile, slimefunGuideMode, slimefunItem, this, this.page);
             } else {
                 // TODO support vary large recipe of slimefunItem
@@ -83,13 +83,13 @@ public class RecipeItemGroup extends FlexItemGroup {
     @Nullable
     public static RecipeItemGroup getByItemStack(@Nonnull Player player, @Nonnull PlayerProfile playerProfile, @Nonnull SlimefunGuideMode slimefunGuideMode, @Nullable ItemStack itemStack, int page) {
         SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
-        if(slimefunItem != null) {
-            if(page == 1) {
-                if(ID_MAP.containsKey(slimefunItem.getId())) {
+        if (slimefunItem != null) {
+            if (page == 1) {
+                if (ID_MAP.containsKey(slimefunItem.getId())) {
                     return ID_MAP.get(slimefunItem.getId());
                 } else {
                     synchronized (ID_MAP) {
-                        if(ID_MAP.containsKey(slimefunItem.getId())) {
+                        if (ID_MAP.containsKey(slimefunItem.getId())) {
                             return ID_MAP.get(slimefunItem.getId());
                         }
                         RecipeItemGroup recipeItemGroup = new RecipeItemGroup(new NamespacedKey(FinalTech.getInstance(), "SLIMEFUN_ITEM" + slimefunItem.getId() + "_" + page), slimefunItem);
@@ -100,9 +100,9 @@ public class RecipeItemGroup extends FlexItemGroup {
             } else {
                 return new RecipeItemGroup(new NamespacedKey(FinalTech.getInstance(), "SLIMEFUN_ITEM" + slimefunItem.getId()), slimefunItem, page);
             }
-        } else if(!ItemStackUtil.isItemNull(itemStack)) {
+        } else if (!ItemStackUtil.isItemNull(itemStack)) {
             Material material = itemStack.getType();
-            if(ItemStackUtil.isItemSimilar(itemStack, new ItemStack(material))) {
+            if (ItemStackUtil.isItemSimilar(itemStack, new ItemStack(material))) {
                 // TODO vanilla item recipe
             } else {
                 return null;
@@ -126,15 +126,15 @@ public class RecipeItemGroup extends FlexItemGroup {
                 String.valueOf(ItemValueTable.getInstance().getOrCalItemInputValue(slimefunItem)),
                 String.valueOf(ItemValueTable.getInstance().getOrCalItemOutputValue(slimefunItem))));
 
-        if(slimefunItem instanceof EnergyNetComponent) {
+        if (slimefunItem instanceof EnergyNetComponent) {
             String energyLore = FinalTech.getLanguageString("helper", "ICON", "wiki-icon", ((EnergyNetComponent) slimefunItem).getEnergyComponentType().name());
             ItemStackUtil.addLoresToLast(infoIcon, FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("helper", "ICON", "wiki-icon", "lore-energy"),
                     energyLore,
                     String.valueOf(((EnergyNetComponent) slimefunItem).getCapacity())));
         }
 
-        if(slimefunItem instanceof ShowInfoItem) {
-            if(((ShowInfoItem) slimefunItem).isOverride()) {
+        if (slimefunItem instanceof ShowInfoItem) {
+            if (((ShowInfoItem) slimefunItem).isOverride()) {
                 ItemStackUtil.setLore(infoIcon, ((ShowInfoItem) slimefunItem).getInfos());
             } else {
                 ItemStackUtil.addLoresToLast(infoIcon, ((ShowInfoItem) slimefunItem).getInfos());

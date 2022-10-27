@@ -85,20 +85,20 @@ public class MatrixCraftingTableMenu extends AbstractManualMachineMenu{
 
             List<MachineRecipe> machineRecipeList = MachineRecipeFactory.getInstance().getRecipe(MatrixCraftingTable.class);
             List<SlimefunItem> slimefunItemList = new ArrayList<>(machineRecipeList.size());
-            for(MachineRecipe machineRecipe : machineRecipeList) {
+            for (MachineRecipe machineRecipe : machineRecipeList) {
                 ItemStack[] output = machineRecipe.getOutput();
-                if(output.length == 1) {
+                if (output.length == 1) {
                     slimefunItem = SlimefunItem.getByItem(output[0]);
-                    if(slimefunItem != null) {
+                    if (slimefunItem != null) {
                         slimefunItemList.add(slimefunItem);
                     }
                 }
             }
 
             BasicCraft basicCraft = BasicCraft.doCraft(slimefunItemList, blockMenu.toInventory(), MatrixCraftingTableMenu.this.getInputSlot());
-            if(basicCraft != null) {
+            if (basicCraft != null) {
                 ItemStack existedItem = blockMenu.getItemInSlot(MatrixCraftingTableMenu.this.getOutputSlot()[0]);
-                if(ItemStackUtil.isItemNull(existedItem) || ItemStackUtil.isItemSimilar(existedItem, basicCraft.getMatchItem().getItem())) {
+                if (ItemStackUtil.isItemNull(existedItem) || ItemStackUtil.isItemSimilar(existedItem, basicCraft.getMatchItem().getItem())) {
                     int amount = action.isRightClicked() || action.isShiftClicked() ? basicCraft.getMatchAmount() : 1;
                     basicCraft.setMatchAmount(amount);
 
@@ -117,11 +117,11 @@ public class MatrixCraftingTableMenu extends AbstractManualMachineMenu{
 
         List<MachineRecipe> machineRecipeList = MachineRecipeFactory.getInstance().getRecipe(MatrixCraftingTable.class);
         List<SlimefunItem> slimefunItemList = new ArrayList<>(machineRecipeList.size());
-        for(MachineRecipe machineRecipe : machineRecipeList) {
+        for (MachineRecipe machineRecipe : machineRecipeList) {
             ItemStack[] output = machineRecipe.getOutput();
-            if(output.length == 1) {
+            if (output.length == 1) {
                 slimefunItem = SlimefunItem.getByItem(output[0]);
-                if(slimefunItem != null) {
+                if (slimefunItem != null) {
                     slimefunItemList.add(slimefunItem);
                 }
             }
@@ -129,7 +129,7 @@ public class MatrixCraftingTableMenu extends AbstractManualMachineMenu{
 
         BasicCraft basicCraft = BasicCraft.doCraft(slimefunItemList, inventory, this.getInputSlot());
 
-        if(basicCraft != null) {
+        if (basicCraft != null) {
             slimefunItem = basicCraft.getMatchItem();
             ItemStack matchItem = ItemStackUtil.cloneItem(slimefunItem.getItem());
             ItemStackUtil.addLoresToLast(matchItem, FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(MatrixCraftingTable.class), "show-icon", "lore"), String.valueOf(basicCraft.getMatchAmount())));

@@ -38,9 +38,9 @@ public class BasicCraft {
 
     public void consumeItem(@Nonnull Inventory inventory, int[] slots) {
         ItemStack[] itemStacks = this.matchItem.getRecipe();
-        for(int i = 0; i < itemStacks.length; i++) {
+        for (int i = 0; i < itemStacks.length; i++) {
             ItemStack existedItem = inventory.getItem(slots[i]);
-            if(!ItemStackUtil.isItemNull(existedItem)) {
+            if (!ItemStackUtil.isItemNull(existedItem)) {
                 existedItem.setAmount(existedItem.getAmount() - itemStacks[i].getAmount() * this.getMatchAmount());
             }
         }
@@ -52,31 +52,31 @@ public class BasicCraft {
 
         Map<Integer, ItemWrapper> indexItemMap = new HashMap<>();
         ItemStack itemStack;
-        for(int i = 0; i < slots.length; i++) {
+        for (int i = 0; i < slots.length; i++) {
             itemStack = inventory.getItem(slots[i]);
-            if(!ItemStackUtil.isItemNull(itemStack)) {
+            if (!ItemStackUtil.isItemNull(itemStack)) {
                 indexItemMap.put(i, new ItemWrapper(itemStack));
             }
         }
 
-        for(SlimefunItem slimefunItem : slimefunItemList) {
-            if(slimefunItem.getRecipe().length <= slots.length) {
+        for (SlimefunItem slimefunItem : slimefunItemList) {
+            if (slimefunItem.getRecipe().length <= slots.length) {
                 ItemStack[] itemStacks = slimefunItem.getRecipe();
 
                 matchAmount = ConstantTableUtil.ITEM_MAX_STACK;
-                for(int i = 0; i < itemStacks.length; i++) {
+                for (int i = 0; i < itemStacks.length; i++) {
                     itemStack = itemStacks[i];
-                    if(ItemStackUtil.isItemNull(itemStack) && indexItemMap.containsKey(i)) {
+                    if (ItemStackUtil.isItemNull(itemStack) && indexItemMap.containsKey(i)) {
                         matchAmount = 0;
                         break;
-                    } else if(!ItemStackUtil.isItemNull(itemStack) && !indexItemMap.containsKey(i)) {
+                    } else if (!ItemStackUtil.isItemNull(itemStack) && !indexItemMap.containsKey(i)) {
                         matchAmount = 0;
                         break;
-                    } else if(ItemStackUtil.isItemNull(itemStack) && !indexItemMap.containsKey(i)) {
+                    } else if (ItemStackUtil.isItemNull(itemStack) && !indexItemMap.containsKey(i)) {
 
                     } else {
                         ItemWrapper itemWrapper = indexItemMap.get(i);
-                        if(itemWrapper.getItemStack().getAmount() < itemStack.getAmount() || !ItemStackUtil.isItemSimilar(itemWrapper, itemStack)) {
+                        if (itemWrapper.getItemStack().getAmount() < itemStack.getAmount() || !ItemStackUtil.isItemSimilar(itemWrapper, itemStack)) {
                             matchAmount = 0;
                             break;
                         }
@@ -84,7 +84,7 @@ public class BasicCraft {
                     }
                 }
 
-                if(matchAmount > 0) {
+                if (matchAmount > 0) {
                     return new BasicCraft(slimefunItem, matchAmount);
                 }
             }

@@ -31,7 +31,7 @@ public class PotionEffectCompressor extends UsableSlimefunItem implements Recipe
     @Override
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
         Player player = playerRightClickEvent.getPlayer();
-        for(PotionEffect potionEffect : player.getActivePotionEffects()) {
+        for (PotionEffect potionEffect : player.getActivePotionEffects()) {
             player.removePotionEffect(potionEffect.getType());
             player.addPotionEffect(new PotionEffect(potionEffect.getType(), potionEffect.getDuration() / (potionEffect.getAmplifier() + 2), potionEffect.getAmplifier() + 1));
         }

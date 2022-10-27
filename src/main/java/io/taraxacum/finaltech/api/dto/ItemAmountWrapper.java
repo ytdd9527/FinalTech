@@ -112,8 +112,8 @@ public class ItemAmountWrapper extends ItemWrapper {
     }
 
     public static void addToList(@Nonnull List<ItemAmountWrapper> list, ItemAmountWrapper item) {
-        for(ItemAmountWrapper existedItem : list) {
-            if(ItemStackUtil.isItemSimilar(existedItem, item)) {
+        for (ItemAmountWrapper existedItem : list) {
+            if (ItemStackUtil.isItemSimilar(existedItem, item)) {
                 existedItem.addAmount(item.amount);
                 break;
             }
@@ -122,8 +122,8 @@ public class ItemAmountWrapper extends ItemWrapper {
     }
 
     public static void addToList(@Nonnull List<ItemAmountWrapper> list, ItemAmountWrapper item, int mul) {
-        for(ItemAmountWrapper existedItem : list) {
-            if(ItemStackUtil.isItemSimilar(existedItem, item)) {
+        for (ItemAmountWrapper existedItem : list) {
+            if (ItemStackUtil.isItemSimilar(existedItem, item)) {
                 existedItem.addAmount(item.amount * mul);
                 break;
             }

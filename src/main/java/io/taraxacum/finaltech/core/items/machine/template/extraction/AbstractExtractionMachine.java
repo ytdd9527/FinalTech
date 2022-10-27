@@ -58,25 +58,25 @@ public abstract class AbstractExtractionMachine extends AbstractMachine {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         int itemSlot = this.getInputSlot()[FinalTech.getRandom().nextInt(this.getInputSlot().length)];
         ItemStack item = blockMenu.getItemInSlot(itemSlot);
-        if(ItemStackUtil.isItemNull(item)) {
+        if (ItemStackUtil.isItemNull(item)) {
             return;
         }
         ItemWrapper itemWrapper = new ItemWrapper(item);
         int matchAmount = 0;
         ItemAmountWrapper[] outputItems = null;
         List<AdvancedMachineRecipe> advancedRecipeList = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getClass());
-        for(AdvancedMachineRecipe advancedMachineRecipe : advancedRecipeList) {
-            if(itemWrapper.getItemStack().getAmount() >= advancedMachineRecipe.getInput()[0].getAmount() && ItemStackUtil.isItemSimilar(advancedMachineRecipe.getInput()[0], itemWrapper)) {
+        for (AdvancedMachineRecipe advancedMachineRecipe : advancedRecipeList) {
+            if (itemWrapper.getItemStack().getAmount() >= advancedMachineRecipe.getInput()[0].getAmount() && ItemStackUtil.isItemSimilar(advancedMachineRecipe.getInput()[0], itemWrapper)) {
                 outputItems = advancedMachineRecipe.getOutput();
                 matchAmount = itemWrapper.getItemStack().getAmount() / advancedMachineRecipe.getInput()[0].getAmount();
                 break;
             }
         }
 
-        if(outputItems != null) {
+        if (outputItems != null) {
             matchAmount = Math.min(matchAmount, MachineUtil.calMaxMatch(blockMenu.toInventory(), this.getOutputSlot(), outputItems));
-            if(matchAmount > 0) {
-                for(ItemStack outputItem : ItemStackUtil.calEnlargeItemArray(outputItems, matchAmount)) {
+            if (matchAmount > 0) {
+                for (ItemStack outputItem : ItemStackUtil.calEnlargeItemArray(outputItems, matchAmount)) {
                     blockMenu.pushItem(outputItem, this.getOutputSlot());
                 }
             }

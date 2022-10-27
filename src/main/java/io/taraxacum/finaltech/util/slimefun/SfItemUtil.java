@@ -22,17 +22,17 @@ public class SfItemUtil {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("FINALTECH_");
         boolean append = false;
-        for(char c : clazz.getSimpleName().toCharArray()) {
-            if(c >= 'A' && c <= 'Z') {
-                if(append) {
+        for (char c : clazz.getSimpleName().toCharArray()) {
+            if (c >= 'A' && c <= 'Z') {
+                if (append) {
                     stringBuilder.append("_");
                 }
                 stringBuilder.append(c);
                 append = true;
-            } else if (c >= 'a' && c <= 'z'){
+            } else if (c >= 'a' && c <= 'z') {
                 stringBuilder.append((char)(c - 32));
             } else {
-                if(append) {
+                if (append) {
                     stringBuilder.append("_");
                     append = false;
                 }
@@ -46,10 +46,10 @@ public class SfItemUtil {
     }
 
     public static void removeSlimefunId(@Nonnull ItemStack itemStack) {
-        if(itemStack.hasItemMeta()) {
+        if (itemStack.hasItemMeta()) {
             ItemMeta itemMeta = itemStack.getItemMeta();
             PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-            if(persistentDataContainer.has(SLIMEFUN_ITEM_KEY, PersistentDataType.STRING)) {
+            if (persistentDataContainer.has(SLIMEFUN_ITEM_KEY, PersistentDataType.STRING)) {
                 persistentDataContainer.remove(SLIMEFUN_ITEM_KEY);
                 itemStack.setItemMeta(itemMeta);
             }

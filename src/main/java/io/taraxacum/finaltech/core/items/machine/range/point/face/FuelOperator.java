@@ -57,12 +57,12 @@ public class FuelOperator extends AbstractFaceMachine implements RecipeItem {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         this.function(block, 1, location -> {
-            if(BlockStorage.hasBlockInfo(location)) {
+            if (BlockStorage.hasBlockInfo(location)) {
                 Config targetConfig = BlockStorage.getLocationInfo(location);
-                if(targetConfig.contains(ConstantTableUtil.CONFIG_ID)) {
+                if (targetConfig.contains(ConstantTableUtil.CONFIG_ID)) {
                     String targetSlimefunId = targetConfig.getString(ConstantTableUtil.CONFIG_ID);
                     SlimefunItem targetSlimefunItem = SlimefunItem.getById(targetSlimefunId);
-                    if(targetSlimefunItem instanceof AGenerator) {
+                    if (targetSlimefunItem instanceof AGenerator) {
                         BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(targetSlimefunId), () -> FuelOperator.this.doCharge((AGenerator) targetSlimefunItem, location), location);
                     }
                 }
@@ -73,7 +73,7 @@ public class FuelOperator extends AbstractFaceMachine implements RecipeItem {
 
     private void doCharge(@Nonnull AGenerator aGenerator, @Nonnull Location location) {
         FuelOperation operation = aGenerator.getMachineProcessor().getOperation(location);
-        if(operation == null) {
+        if (operation == null) {
             operation = new FuelOperation(new MachineFuel(2, new ItemStack(Material.COBBLESTONE)));
             aGenerator.getMachineProcessor().startOperation(location, operation);
         }
@@ -92,8 +92,8 @@ public class FuelOperator extends AbstractFaceMachine implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        for(SlimefunItem slimefunItem : Slimefun.getRegistry().getAllSlimefunItems()) {
-            if(slimefunItem instanceof AGenerator) {
+        for (SlimefunItem slimefunItem : Slimefun.getRegistry().getAllSlimefunItems()) {
+            if (slimefunItem instanceof AGenerator) {
                 this.registerDescriptiveRecipe(slimefunItem.getItem());
             }
         }

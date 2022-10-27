@@ -70,7 +70,7 @@ public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
                     if (!ItemStackUtil.isItemNull(sfItem.getRecipe()[i])) {
                         ItemStack outputItem = ItemStackUtil.cloneItem(sfItem.getRecipe()[i]);
                         ItemStack liquidCard = RecipeUtil.getLiquidCard(outputItem);
-                        if(liquidCard != null) {
+                        if (liquidCard != null) {
                             outputItem = liquidCard;
                         }
                         outputItem.setAmount(outputItem.getAmount() * amount);
@@ -92,7 +92,7 @@ public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
 
         for (String id : this.allowedRecipeType) {
             RecipeType recipeType = RecipeTypeRegistry.getInstance().getRecipeTypeById(id);
-            if(recipeType != null && !ItemStackUtil.isItemNull(recipeType.toItem())) {
+            if (recipeType != null && !ItemStackUtil.isItemNull(recipeType.toItem())) {
                 this.registerDescriptiveRecipe(recipeType.toItem());
             }
         }

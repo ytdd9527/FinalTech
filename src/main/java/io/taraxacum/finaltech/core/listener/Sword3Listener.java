@@ -15,9 +15,9 @@ public class Sword3Listener implements Listener {
     public void onPlayerAttack(EntityDamageByEntityEvent entityDamageByEntityEvent) {
         if (entityDamageByEntityEvent.getDamager() instanceof Player && entityDamageByEntityEvent.getEntity() instanceof LivingEntity && EntityDamageByEntityEvent.DamageCause.ENTITY_ATTACK.equals(entityDamageByEntityEvent.getCause()) && ItemStackUtil.isItemSimilar(((Player) entityDamageByEntityEvent.getDamager()).getInventory().getItemInMainHand(), FinalTechItems.SWORD3)) {
             LivingEntity entity = (LivingEntity)entityDamageByEntityEvent.getEntity();
-            for(PotionEffect potionEffect : entity.getActivePotionEffects()) {
+            for (PotionEffect potionEffect : entity.getActivePotionEffects()) {
                 entity.removePotionEffect(potionEffect.getType());
-                if(potionEffect.getDuration() > 100) {
+                if (potionEffect.getDuration() > 100) {
                     entity.addPotionEffect(new PotionEffect(potionEffect.getType(), potionEffect.getDuration() - 100, potionEffect.getAmplifier()));
                 }
             }

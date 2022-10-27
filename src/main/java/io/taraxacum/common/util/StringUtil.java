@@ -8,9 +8,9 @@ public class StringUtil {
 
     public static String[] split(@Nonnull String source, @Nonnull String... chars) {
         List<String> result = new ArrayList<>(chars.length + 1);
-        for(String value : chars) {
+        for (String value : chars) {
             int i = source.indexOf(value);
-            if(i != -1) {
+            if (i != -1) {
                 String previous = source.substring(0, i);
                 String next = source.substring(i + value .length());
                 result.add(previous);
@@ -22,9 +22,9 @@ public class StringUtil {
     }
 
     public static boolean onlyContainsNumber(@Nonnull String source) {
-        for(int i = 0; i < source.length(); i++) {
+        for (int i = 0; i < source.length(); i++) {
             char c = source.charAt(i);
-            if(c < '0' || c > '9') {
+            if (c < '0' || c > '9') {
                 return false;
             }
         }

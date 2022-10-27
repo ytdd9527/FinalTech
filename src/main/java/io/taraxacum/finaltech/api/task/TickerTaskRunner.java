@@ -35,7 +35,7 @@ public class TickerTaskRunner<T, C extends AbstractSingleTickerTask<T>> extends 
 
     @Override
     public synchronized void run() {
-        if(this.bukkitTask == null) {
+        if (this.bukkitTask == null) {
             this.bukkitTask = this.getJavaPlugin().getServer().getScheduler().runTaskTimerAsynchronously(this.getJavaPlugin(), () -> {
                 this.tickerTaskList.sort(Comparator.comparingInt(AbstractSingleTickerTask::getPriority));
                 Iterator<C> iterator = this.tickerTaskList.iterator();
@@ -63,7 +63,7 @@ public class TickerTaskRunner<T, C extends AbstractSingleTickerTask<T>> extends 
     }
 
     private void tickTask(@Nonnull C tickerTask) {
-        if(tickerTask.isSync()) {
+        if (tickerTask.isSync()) {
             this.getJavaPlugin().getServer().getScheduler().runTask(this.getJavaPlugin(), () -> tickerTask.tick(object));
         } else {
             this.serverRunnableLockFactory.waitThenRun(() -> tickerTask.tick(object), object);
@@ -74,13 +74,13 @@ public class TickerTaskRunner<T, C extends AbstractSingleTickerTask<T>> extends 
     public static <T> TickerTaskRunner<Object, AbstractSingleTickerTask<Object>> applyOrAddTo(@Nonnull AbstractSingleTickerTask<T> tickerTask, @Nonnull T t, @Nonnull JavaPlugin javaPlugin) {
         TickerTaskRunner<Object, AbstractSingleTickerTask<Object>> tickerTaskRunner;
         List<AbstractSingleTickerTask<Object>> tickerTaskList;
-        if(OBJECT_TASK_MAP.containsKey(t)) {
+        if (OBJECT_TASK_MAP.containsKey(t)) {
             tickerTaskRunner = OBJECT_TASK_MAP.get(t);
             tickerTaskList = tickerTaskRunner.tickerTaskList;
-            for(AbstractSingleTickerTask<Object> existedTickerTask : tickerTaskList) {
-                if(existedTickerTask.getId().equals(tickerTask.getId())) {
+            for (AbstractSingleTickerTask<Object> existedTickerTask : tickerTaskList) {
+                if (existedTickerTask.getId().equals(tickerTask.getId())) {
                     existedTickerTask.setTime(existedTickerTask.getTime() + tickerTask.getTime());
-                    if(tickerTask.isSync()) {
+                    if (tickerTask.isSync()) {
                         tickerTaskRunner.getJavaPlugin().getServer().getScheduler().runTask(tickerTaskRunner.getJavaPlugin(), () -> tickerTask.addTick(t));
                     } else {
                         tickerTaskRunner.serverRunnableLockFactory.waitThenRun(() -> tickerTask.addTick(t), t);
@@ -96,7 +96,7 @@ public class TickerTaskRunner<T, C extends AbstractSingleTickerTask<T>> extends 
         }
         tickerTaskList.add((AbstractSingleTickerTask<Object>) tickerTask);
         tickerTaskRunner.tickerTaskList = tickerTaskList;
-        if(tickerTask.isSync()) {
+        if (tickerTask.isSync()) {
             tickerTaskRunner.getJavaPlugin().getServer().getScheduler().runTask(tickerTaskRunner.getJavaPlugin(), () -> tickerTask.startTick(t));
         } else {
             tickerTaskRunner.serverRunnableLockFactory.waitThenRun(() -> tickerTask.startTick(t), t);
@@ -109,13 +109,13 @@ public class TickerTaskRunner<T, C extends AbstractSingleTickerTask<T>> extends 
     public static <T> TickerTaskRunner<Object, AbstractSingleTickerTask<Object>> applyOrSetTo(@Nonnull AbstractSingleTickerTask<T> tickerTask, @Nonnull T t, @Nonnull JavaPlugin javaPlugin) {
         TickerTaskRunner<Object, AbstractSingleTickerTask<Object>> tickerTaskRunner;
         List<AbstractSingleTickerTask<Object>> tickerTaskList;
-        if(OBJECT_TASK_MAP.containsKey(t)) {
+        if (OBJECT_TASK_MAP.containsKey(t)) {
             tickerTaskRunner = OBJECT_TASK_MAP.get(t);
             tickerTaskList = tickerTaskRunner.tickerTaskList;
-            for(AbstractSingleTickerTask<Object> existedTickerTask : tickerTaskList) {
-                if(existedTickerTask.getId().equals(tickerTask.getId())) {
+            for (AbstractSingleTickerTask<Object> existedTickerTask : tickerTaskList) {
+                if (existedTickerTask.getId().equals(tickerTask.getId())) {
                     existedTickerTask.setTime(tickerTask.getTime());
-                    if(tickerTask.isSync()) {
+                    if (tickerTask.isSync()) {
                         tickerTaskRunner.getJavaPlugin().getServer().getScheduler().runTask(tickerTaskRunner.getJavaPlugin(), () -> tickerTask.addTick(t));
                     } else {
                         tickerTaskRunner.serverRunnableLockFactory.waitThenRun(() -> tickerTask.addTick(t), t);
@@ -131,7 +131,7 @@ public class TickerTaskRunner<T, C extends AbstractSingleTickerTask<T>> extends 
         }
         tickerTaskList.add((AbstractSingleTickerTask<Object>) tickerTask);
         tickerTaskRunner.tickerTaskList = tickerTaskList;
-        if(tickerTask.isSync()) {
+        if (tickerTask.isSync()) {
             tickerTaskRunner.getJavaPlugin().getServer().getScheduler().runTask(tickerTaskRunner.getJavaPlugin(), () -> tickerTask.startTick(t));
         } else {
             tickerTaskRunner.serverRunnableLockFactory.waitThenRun(() -> tickerTask.startTick(t), t);
@@ -143,8 +143,8 @@ public class TickerTaskRunner<T, C extends AbstractSingleTickerTask<T>> extends 
     public static <T> void clear(@Nonnull T t, String... ids) {
         Set<String> stringSet = JavaUtil.toSet(ids);
         TickerTaskRunner<Object, AbstractSingleTickerTask<Object>> tickerTaskRunner = OBJECT_TASK_MAP.get(t);
-        for(AbstractSingleTickerTask<Object> tickerTask : tickerTaskRunner.getTickerTaskList()) {
-            if(stringSet.contains(tickerTask.getId())) {
+        for (AbstractSingleTickerTask<Object> tickerTask : tickerTaskRunner.getTickerTaskList()) {
+            if (stringSet.contains(tickerTask.getId())) {
                 tickerTask.setTime(0);
             }
         }

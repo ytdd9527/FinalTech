@@ -42,7 +42,7 @@ public abstract class AbstractMachineChargeCard extends UsableSlimefunItem {
         }
 
         Player player = playerRightClickEvent.getPlayer();
-        if(player.isDead()) {
+        if (player.isDead()) {
             return;
         }
 
@@ -64,9 +64,9 @@ public abstract class AbstractMachineChargeCard extends UsableSlimefunItem {
         }
 
         SlimefunItem slimefunItem = SlimefunItem.getById(config.getString(ConstantTableUtil.CONFIG_ID));
-        if(slimefunItem instanceof EnergyNetComponent && ((EnergyNetComponent) slimefunItem).getCapacity() > 0) {
+        if (slimefunItem instanceof EnergyNetComponent && ((EnergyNetComponent) slimefunItem).getCapacity() > 0) {
             if (this.consume()) {
-                if(playerRightClickEvent.getItem().getAmount() > 0) {
+                if (playerRightClickEvent.getItem().getAmount() > 0) {
                     ItemStack item = playerRightClickEvent.getItem();
                     item.setAmount(item.getAmount() - 1);
                 } else {
@@ -78,7 +78,7 @@ public abstract class AbstractMachineChargeCard extends UsableSlimefunItem {
 
             int capacity = ((EnergyNetComponent) slimefunItem).getCapacity();
             int chargeEnergy = (int) this.energy();
-            if(!EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType())) {
+            if (!EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType())) {
                 chargeEnergy += (int)((this.energy() - (int) this.energy()) * capacity);
             }
             if (!this.consume()) {

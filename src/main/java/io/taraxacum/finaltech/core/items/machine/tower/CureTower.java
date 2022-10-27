@@ -65,23 +65,23 @@ public class CureTower extends AbstractTower implements RecipeItem {
         ItemStack item = blockMenu.getItemInSlot(this.getInputSlot()[0]);
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
         double range = this.baseRange;
-        if(ItemStackUtil.isItemSimilar(item, this.getItem())) {
+        if (ItemStackUtil.isItemSimilar(item, this.getItem())) {
             range += item.getAmount() * this.mulRange;
         }
         final double finalRange = range;
         javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
             int count = 0;
-            for(Entity entity : location.getWorld().getNearbyEntities(LocationUtil.getCenterLocation(block), finalRange, finalRange, finalRange, entity -> entity instanceof LivingEntity)) {
+            for (Entity entity : location.getWorld().getNearbyEntities(LocationUtil.getCenterLocation(block), finalRange, finalRange, finalRange, entity -> entity instanceof LivingEntity)) {
                 LivingEntity livingEntity = (LivingEntity) entity;
                 FinalTech.getEntityRunnableFactory().waitThenRun(() -> {
-                    if(livingEntity.getHealth() > 0) {
+                    if (livingEntity.getHealth() > 0) {
                         livingEntity.setHealth(Math.min(livingEntity.getHealth() + CureTower.this.health, livingEntity.getMaxHealth()));
                     }
                 }, livingEntity);
                 count++;
             }
 
-            if(blockMenu.hasViewer()) {
+            if (blockMenu.hasViewer()) {
                 CureTower.this.updateMenu(blockMenu, count, finalRange);
             }
         });

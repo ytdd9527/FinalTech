@@ -73,7 +73,7 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
             if (ItemStackUtil.isItemSimilar(item, this.matchItem)) {
                 double efficiency = Math.pow(RATE, 20.0 - FinalTech.getTps());
                 efficiency = Math.min(efficiency, 1);
-                if(item.getAmount() * efficiency + this.count < this.difficulty) {
+                if (item.getAmount() * efficiency + this.count < this.difficulty) {
                     int amount = item.getAmount();
                     item.setAmount(item.getAmount() - amount);
                     this.count += amount * efficiency;
@@ -84,7 +84,7 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
                     this.count = this.difficulty;
                     return amount;
                 }
-            } else if(ItemPhony.isValid(item)) {
+            } else if (ItemPhony.isValid(item)) {
                 double amount = Math.min(item.getAmount(), this.difficulty - this.count);
                 item.setAmount(item.getAmount() - (int) Math.ceil(amount));
                 this.count += amount;

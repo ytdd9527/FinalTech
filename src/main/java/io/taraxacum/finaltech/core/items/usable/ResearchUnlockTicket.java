@@ -34,11 +34,11 @@ public class ResearchUnlockTicket extends UsableSlimefunItem implements RecipeIt
         List<Research> researchList = new ArrayList<>(Slimefun.getRegistry().getResearches());
         researchList = JavaUtil.shuffle(researchList);
         Optional<PlayerProfile> playerProfile = PlayerProfile.find(player);
-        if(playerProfile.isPresent()) {
-            if(!playerProfile.get().hasUnlockedEverything()) {
+        if (playerProfile.isPresent()) {
+            if (!playerProfile.get().hasUnlockedEverything()) {
                 PlayerProfile profile = playerProfile.get();
-                for(Research research : researchList) {
-                    if(!profile.hasUnlocked(research) && research.canUnlock(player)) {
+                for (Research research : researchList) {
+                    if (!profile.hasUnlocked(research) && research.canUnlock(player)) {
                         ItemStack item = playerRightClickEvent.getItem();
                         item.setAmount(item.getAmount() - 1);
                         research.unlock(player, true);

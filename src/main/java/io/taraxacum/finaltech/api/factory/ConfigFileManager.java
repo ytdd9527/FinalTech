@@ -27,7 +27,7 @@ public class ConfigFileManager {
     protected ConfigFileManager(@Nonnull Plugin plugin, @Nonnull String configFileName) {
         this.plugin = plugin;
         this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), configFileName + ".yml");
-        if(!file.exists()) {
+        if (!file.exists()) {
             try {
                 boolean mkdirs = file.getParentFile().mkdirs();
                 Files.copy(Objects.requireNonNull(this.getClass().getResourceAsStream("/" + configFileName + ".yml")), this.file.toPath());
@@ -41,10 +41,10 @@ public class ConfigFileManager {
     protected ConfigFileManager(@Nonnull Plugin plugin, @Nonnull String path, @Nonnull String configFileName) {
         this.plugin = plugin;
         this.file = new File("plugins/" + plugin.getName().replace(" ", "_") + "/" + path, configFileName + ".yml");
-        if(!file.exists()) {
+        if (!file.exists()) {
             try {
                 boolean mkdirs = file.getParentFile().mkdirs();
-                if(mkdirs) {
+                if (mkdirs) {
                     Files.copy(Objects.requireNonNull(this.getClass().getResourceAsStream("/" + path + "/" + configFileName + ".yml")), this.file.toPath());
                 }
             } catch (Exception e) {
@@ -67,7 +67,7 @@ public class ConfigFileManager {
 
     @Nonnull
     public <T> Boolean setValue(@Nonnull T value, @Nonnull String... paths) {
-        if(this.file == null) {
+        if (this.file == null) {
             return false;
         }
         String path = ConfigFileManager.calPath(paths);
@@ -84,7 +84,7 @@ public class ConfigFileManager {
     @Nonnull
     public String getString(@Nonnull String... paths) {
         String path = ConfigFileManager.calPath(paths);
-        if(this.configFile.contains(path)) {
+        if (this.configFile.contains(path)) {
             String result = this.configFile.getString(path);
             return result == null ? path : result;
         } else {
@@ -96,8 +96,8 @@ public class ConfigFileManager {
     @Nonnull
     public List<String> getStringList(@Nonnull String... paths) {
         String path = ConfigFileManager.calPath(paths);
-        if(this.configFile.contains(path)) {
-            if(this.configFile.isList(path)) {
+        if (this.configFile.contains(path)) {
+            if (this.configFile.isList(path)) {
                 return this.configFile.getStringList(path);
             } else {
                 this.plugin.getLogger().info(this.getClass().getSimpleName() + ": " + "The paths " + Arrays.toString(paths) + " seems to need list.");
@@ -120,7 +120,7 @@ public class ConfigFileManager {
     @Nonnull
     public <T> T getOrDefault(@Nonnull T defaultValue, @Nonnull String... paths) {
         String path = ConfigFileManager.calPath(paths);
-        if(this.configFile.contains(path)) {
+        if (this.configFile.contains(path)) {
             try {
                 return (T)this.configFile.get(path, defaultValue);
             } catch (Exception e) {
@@ -135,7 +135,7 @@ public class ConfigFileManager {
 
     @Nonnull
     protected static String calPath(@Nonnull String... paths) {
-        if(paths.length == 0) {
+        if (paths.length == 0) {
             // Please make suer that this will not happen.
             return "";
         }
@@ -150,13 +150,13 @@ public class ConfigFileManager {
 
     @Nonnull
     public static ConfigFileManager getOrNewInstance(@Nonnull Plugin plugin, @Nonnull String fileName) {
-        if(INSTANCE_MAP.containsKey(plugin)) {
+        if (INSTANCE_MAP.containsKey(plugin)) {
             Map<String, ConfigFileManager> configRegistryMap = INSTANCE_MAP.get(plugin);
-            if(configRegistryMap.containsKey(fileName)) {
+            if (configRegistryMap.containsKey(fileName)) {
                 return configRegistryMap.get(fileName);
             } else {
                 synchronized (configRegistryMap) {
-                    if(configRegistryMap.containsKey(fileName)) {
+                    if (configRegistryMap.containsKey(fileName)) {
                         return configRegistryMap.get(fileName);
                     }
                     final ConfigFileManager configManager = new ConfigFileManager(plugin, fileName);
@@ -166,7 +166,7 @@ public class ConfigFileManager {
             }
         } else {
             synchronized (ConfigFileManager.class) {
-                if(INSTANCE_MAP.containsKey(plugin)) {
+                if (INSTANCE_MAP.containsKey(plugin)) {
                     return ConfigFileManager.getOrNewInstance(plugin, fileName);
                 }
                 ConfigFileManager configManager = new ConfigFileManager(plugin, fileName);

@@ -70,13 +70,13 @@ public abstract class AbstractManualCraftMachine extends AbstractManualMachine i
             this.getMachineMenu().updateInventory(blockMenu.toInventory(), block.getLocation());
         }
         int count = Integer.parseInt(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT));
-        if(count == 0) {
+        if (count == 0) {
             return;
         }
         count -= Slimefun.getTickerTask().getTickRate() / 2;
         count = Math.max(count, 0);
         config.setValue(KEY_COUNT, String.valueOf(count));
-        if(count > COUNT_THRESHOLD) {
+        if (count > COUNT_THRESHOLD) {
             Location location = block.getLocation();
             List<String> nameList = new ArrayList<>();
             for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {

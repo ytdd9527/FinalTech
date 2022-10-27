@@ -72,18 +72,18 @@ public class MainItemGroup extends FlexItemGroup {
     @Override
     public void register(@Nonnull SlimefunAddon addon) {
         super.register(addon);
-        for(int i = 0; i < this.fatherItemGroupList.size(); i++) {
+        for (int i = 0; i < this.fatherItemGroupList.size(); i++) {
             this.fatherItemGroupList.get(i).register(addon);
-            for(ItemGroup itemGroup : this.sonItemGroupList.get(i)) {
+            for (ItemGroup itemGroup : this.sonItemGroupList.get(i)) {
                 itemGroup.register(addon);
             }
         }
     }
 
     public void addTo(@Nonnull ItemGroup fatherItemGroup, @Nonnull ItemGroup... itemGroup) {
-        if(this.fatherItemGroupList.contains(fatherItemGroup) && this.sonItemGroupList.size() > this.fatherItemGroupList.indexOf(fatherItemGroup)) {
+        if (this.fatherItemGroupList.contains(fatherItemGroup) && this.sonItemGroupList.size() > this.fatherItemGroupList.indexOf(fatherItemGroup)) {
             this.sonItemGroupList.get(this.fatherItemGroupList.indexOf(fatherItemGroup)).addAll(Arrays.stream(itemGroup).toList());
-        } else if(!this.fatherItemGroupList.contains(fatherItemGroup)) {
+        } else if (!this.fatherItemGroupList.contains(fatherItemGroup)) {
             this.fatherItemGroupList.add(fatherItemGroup);
             this.sonItemGroupList.add(new ArrayList<>(Arrays.stream(itemGroup).toList()));
         }
@@ -99,7 +99,7 @@ public class MainItemGroup extends FlexItemGroup {
         chestMenu.addItem(BACK_SLOT, ChestMenuUtils.getBackButton(player));
         chestMenu.addMenuClickHandler(1, (pl, s, is, action) -> {
             GuideHistory guideHistory = playerProfile.getGuideHistory();
-            if(action.isShiftClicked()) {
+            if (action.isShiftClicked()) {
                 SlimefunGuide.openMainMenu(playerProfile, slimefunGuideMode, guideHistory.getMainMenuPage());
             } else {
                 guideHistory.goBack(new SurvivalSlimefunGuide(false, false));
@@ -123,30 +123,30 @@ public class MainItemGroup extends FlexItemGroup {
             return false;
         });
 
-        for(int slot : BORDER) {
+        for (int slot : BORDER) {
             chestMenu.addItem(slot, ChestMenuUtils.getBackground());
             chestMenu.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
 
-        for(int i = this.page * MAIN_CONTENT.length - MAIN_CONTENT.length; i < this.page * MAIN_CONTENT.length; i++) {
-            if(i < this.fatherItemGroupList.size() && i < this.sonItemGroupList.size()) {
+        for (int i = this.page * MAIN_CONTENT.length - MAIN_CONTENT.length; i < this.page * MAIN_CONTENT.length; i++) {
+            if (i < this.fatherItemGroupList.size() && i < this.sonItemGroupList.size()) {
                 chestMenu.addItem(MAIN_CONTENT[i % MAIN_CONTENT.length], this.fatherItemGroupList.get(i).getItem(player));
                 final int index = i;
                 chestMenu.addMenuClickHandler(MAIN_CONTENT[i % MAIN_CONTENT.length], (p, slot, item, action) -> {
                     ItemGroup itemGroup = MainItemGroup.this.fatherItemGroupList.get(index);
-                    if(itemGroup instanceof FlexItemGroup) {
+                    if (itemGroup instanceof FlexItemGroup) {
                         Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> ((FlexItemGroup) itemGroup).open(player, playerProfile, slimefunGuideMode));
                     }
                     return false;
                 });
 
                 List<ItemGroup> subItemGroupList = this.sonItemGroupList.get(i);
-                for(int j = 0; j < subItemGroupList.size(); j++) {
+                for (int j = 0; j < subItemGroupList.size(); j++) {
                     chestMenu.addItem(SUB_CONTENT[i % MAIN_CONTENT.length][j], subItemGroupList.get(j).getItem(player));
                     final int subIndex = j;
                     chestMenu.addMenuClickHandler(SUB_CONTENT[i % MAIN_CONTENT.length][j], (p, slot, item, action) -> {
                         ItemGroup itemGroup = subItemGroupList.get(subIndex);
-                        if(itemGroup instanceof FlexItemGroup) {
+                        if (itemGroup instanceof FlexItemGroup) {
                             Bukkit.getScheduler().runTask(FinalTech.getInstance(), () -> ((FlexItemGroup) itemGroup).open(player, playerProfile, slimefunGuideMode));
                         }
                         return false;
@@ -160,11 +160,11 @@ public class MainItemGroup extends FlexItemGroup {
 
     @Nonnull
     public MainItemGroup getByPage(int page) {
-        if(pageMap.containsKey(page)) {
+        if (pageMap.containsKey(page)) {
             return pageMap.get(page);
         } else {
             synchronized (this.pageMap.get(1)) {
-                if(pageMap.containsKey(page)) {
+                if (pageMap.containsKey(page)) {
                     return pageMap.get(page);
                 }
                 MainItemGroup mainItemGroup = pageMap.get(1);

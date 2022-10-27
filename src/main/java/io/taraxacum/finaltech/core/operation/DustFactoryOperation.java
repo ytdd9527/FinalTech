@@ -63,9 +63,9 @@ public class DustFactoryOperation implements MachineOperation {
 
     @Nullable
     public ItemStack getResult() {
-        if(this.amountCount == DustFactoryOperation.AMOUNT_DIFFICULTY && this.typeCount == DustFactoryOperation.TYPE_DIFFICULTY) {
+        if (this.amountCount == DustFactoryOperation.AMOUNT_DIFFICULTY && this.typeCount == DustFactoryOperation.TYPE_DIFFICULTY) {
             return ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST);
-        } else if(this.isFinished()) {
+        } else if (this.isFinished()) {
             return ItemStackUtil.cloneItem(FinalTechItems.UNORDERED_DUST);
         } else {
             return null;

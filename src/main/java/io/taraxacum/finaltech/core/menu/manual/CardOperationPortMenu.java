@@ -433,7 +433,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
     @Override
     public void updateInventory(@Nonnull Inventory inventory, @Nonnull Location location) {
-        if(!ItemStackUtil.isItemNull(inventory.getItem(this.getOutputSlot()[0]))) {
+        if (!ItemStackUtil.isItemNull(inventory.getItem(this.getOutputSlot()[0]))) {
             inventory.setItem(CRAFT_SLOT, CRAFT_ICON);
             return;
         }
@@ -442,7 +442,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         ItemStack iconItem = inventory.getItem(CRAFT_SLOT);
         boolean work = false;
         for (Craft craft : CRAFT_LIST) {
-            if(craft.isEnabled() && craft.canCraft(inputItem1, inputItem2)) {
+            if (craft.isEnabled() && craft.canCraft(inputItem1, inputItem2)) {
                 craft.doUpdateIcon(iconItem);
                 work = true;
                 break;
@@ -454,7 +454,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
     }
 
     private void doFunction(@Nonnull Inventory inventory) {
-        if(!ItemStackUtil.isItemNull(inventory.getItem(this.getOutputSlot()[0]))) {
+        if (!ItemStackUtil.isItemNull(inventory.getItem(this.getOutputSlot()[0]))) {
             inventory.setItem(CRAFT_SLOT, CRAFT_ICON);
             return;
         }

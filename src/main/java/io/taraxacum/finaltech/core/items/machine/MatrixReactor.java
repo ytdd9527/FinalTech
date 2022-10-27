@@ -73,14 +73,14 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem {
         if (ItemStackUtil.isItemNull(item)) {
             BlockStorage.addBlockInfo(location, KEY_ITEM, null);
             BlockStorage.addBlockInfo(location, KEY_COUNT, "0");
-            if(blockMenu.hasViewer()) {
+            if (blockMenu.hasViewer()) {
                 this.updateMenu(blockMenu, config);
             }
             return;
         } else if (!this.allowedItem(item)) {
             BlockStorage.addBlockInfo(location, KEY_ITEM, null);
             BlockStorage.addBlockInfo(location, KEY_COUNT, "0");
-            if(blockMenu.hasViewer()) {
+            if (blockMenu.hasViewer()) {
                 this.updateMenu(blockMenu, config);
             }
             JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
@@ -108,17 +108,17 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem {
             if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.ORDERED_DUST)) {
                 orderedDustItemSlots[orderedDustItemSlotsP++] = slot;
                 orderedDustItemCount += blockMenu.getItemInSlot(slot).getAmount();
-                if(orderedDustItemCount > amount) {
+                if (orderedDustItemCount > amount) {
                     break;
                 }
             }
         }
-        if(orderedDustItemCount >= amount) {
+        if (orderedDustItemCount >= amount) {
             for (int slot : MatrixReactorMenu.UNORDERED_DUST_INPUT_SLOT) {
                 if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.UNORDERED_DUST)) {
                     unorderedDustItemSlots[unorderedDustItemSlotsP++] = slot;
                     unorderedDustItemCount += blockMenu.getItemInSlot(slot).getAmount();
-                    if(unorderedDustItemCount > amount) {
+                    if (unorderedDustItemCount > amount) {
                         break;
                     }
                 }
@@ -128,29 +128,29 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem {
             match = false;
         }
 
-        if(!match) {
+        if (!match) {
             int count = config.contains(KEY_COUNT) ? Integer.parseInt(config.getString(KEY_COUNT)) : 0;
             count = count > 0 ? count - 1 : 0;
             BlockStorage.addBlockInfo(location, KEY_COUNT, String.valueOf(count));
         } else  {
             orderedDustItemCount = amount;
-            for(int slot : orderedDustItemSlots) {
+            for (int slot : orderedDustItemSlots) {
                 ItemStack itemStack = blockMenu.getItemInSlot(slot);
                 int n = Math.min(itemStack.getAmount(), orderedDustItemCount);
                 itemStack.setAmount(itemStack.getAmount() - n);
                 orderedDustItemCount -= n;
-                if(orderedDustItemCount == 0) {
+                if (orderedDustItemCount == 0) {
                     break;
                 }
             }
 
             unorderedDustItemCount = amount;
-            for(int slot : unorderedDustItemSlots) {
+            for (int slot : unorderedDustItemSlots) {
                 ItemStack itemStack = blockMenu.getItemInSlot(slot);
                 int n = Math.min(itemStack.getAmount(), unorderedDustItemCount);
                 itemStack.setAmount(itemStack.getAmount() - n);
                 unorderedDustItemCount -= n;
-                if(unorderedDustItemCount == 0) {
+                if (unorderedDustItemCount == 0) {
                     break;
                 }
             }
@@ -186,7 +186,7 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem {
                         blockMenu.replaceExistingItem(this.getOutputSlot()[0], outputItem);
                         BlockStorage.addBlockInfo(location, KEY_ITEM, null);
                         BlockStorage.addBlockInfo(location, KEY_COUNT, "0");
-                        if(blockMenu.hasViewer()) {
+                        if (blockMenu.hasViewer()) {
                             this.updateMenu(blockMenu, config);
                         }
                         return;
@@ -194,7 +194,7 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem {
                         existedItem.setAmount(existedItem.getAmount() + 1);
                         BlockStorage.addBlockInfo(location, KEY_ITEM, null);
                         BlockStorage.addBlockInfo(location, KEY_COUNT, "0");
-                        if(blockMenu.hasViewer()) {
+                        if (blockMenu.hasViewer()) {
                             this.updateMenu(blockMenu, config);
                         }
                         return;
@@ -207,7 +207,7 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem {
             }
         }
 
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             this.updateMenu(blockMenu, config);
         }
     }
@@ -233,7 +233,7 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem {
     }
 
     private boolean allowedItem(@Nonnull ItemStack item) {
-        if(Tag.SHULKER_BOXES.isTagged(item.getType()) || Material.BUNDLE.equals(item.getType())) {
+        if (Tag.SHULKER_BOXES.isTagged(item.getType()) || Material.BUNDLE.equals(item.getType())) {
             return false;
         }
         if (item.hasItemMeta()) {

@@ -1,7 +1,5 @@
 package io.taraxacum.common.util;
 
-import java.util.Random;
-
 /**
  * @author Final_ROOT
  */
@@ -20,9 +18,9 @@ public class CompareUtil {
         int r;
         while (mid != left && mid != right) {
             r = simpleComparator.compare(targetValue, sources[mid]);
-            if(r > 0) {
+            if (r > 0) {
                 left = mid;
-            } else if(r < 0) {
+            } else if (r < 0) {
                 right = mid;
             } else {
                 return mid;
@@ -44,9 +42,9 @@ public class CompareUtil {
         int r;
         while (mid != left && mid != right) {
             r = simpleComparator.compare(targetValue, sources[mid]);
-            if(r > 0) {
+            if (r > 0) {
                 left = mid;
-            } else if(r < 0) {
+            } else if (r < 0) {
                 right = mid;
             } else {
                 return mid;
@@ -68,9 +66,9 @@ public class CompareUtil {
         int r;
         while (mid != left && mid != right) {
             r = simpleComparator.compare(targetValue, sources[mid]);
-            if(r > 0) {
+            if (r > 0) {
                 left = mid;
-            } else if(r < 0) {
+            } else if (r < 0) {
                 right = mid;
             } else {
                 return mid;
@@ -91,9 +89,9 @@ public class CompareUtil {
         int r;
         while (mid != left && mid != right) {
             r = targetValue - sources[mid];
-            if(r > 0) {
+            if (r > 0) {
                 left = mid;
-            } else if(r < 0) {
+            } else if (r < 0) {
                 right = mid;
             } else {
                 return mid;
@@ -114,9 +112,9 @@ public class CompareUtil {
         int r;
         while (mid != left && mid != right) {
             r = targetValue - sources[mid];
-            if(r > 0) {
+            if (r > 0) {
                 left = mid;
-            } else if(r < 0) {
+            } else if (r < 0) {
                 right = mid;
             } else {
                 return mid;
@@ -137,9 +135,9 @@ public class CompareUtil {
         int r;
         while (mid != left && mid != right) {
             r = targetValue - sources[mid];
-            if(r > 0) {
+            if (r > 0) {
                 left = mid;
-            } else if(r < 0) {
+            } else if (r < 0) {
                 right = mid;
             } else {
                 return mid;

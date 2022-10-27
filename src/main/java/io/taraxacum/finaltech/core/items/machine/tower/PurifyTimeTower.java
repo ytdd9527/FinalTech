@@ -66,25 +66,25 @@ public class PurifyTimeTower extends AbstractTower implements RecipeItem {
         ItemStack item = blockMenu.getItemInSlot(this.getInputSlot()[0]);
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
         double range = this.baseRange;
-        if(ItemStackUtil.isItemSimilar(item, this.getItem())) {
+        if (ItemStackUtil.isItemSimilar(item, this.getItem())) {
             range += item.getAmount() * this.mulRange;
         }
 
         final double finalRange = range;
         javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
             int count = 0;
-            for(Entity entity : location.getWorld().getNearbyEntities(LocationUtil.getCenterLocation(block), finalRange, finalRange, finalRange, entity -> entity instanceof LivingEntity)) {
+            for (Entity entity : location.getWorld().getNearbyEntities(LocationUtil.getCenterLocation(block), finalRange, finalRange, finalRange, entity -> entity instanceof LivingEntity)) {
                 LivingEntity livingEntity = (LivingEntity) entity;
-                for(PotionEffect potionEffect : livingEntity.getActivePotionEffects()) {
+                for (PotionEffect potionEffect : livingEntity.getActivePotionEffects()) {
                     livingEntity.removePotionEffect(potionEffect.getType());
-                    if(potionEffect.getDuration() > 1) {
+                    if (potionEffect.getDuration() > 1) {
                         livingEntity.addPotionEffect(new PotionEffect(potionEffect.getType(), potionEffect.getDuration() / 2, potionEffect.getAmplifier()));
                     }
                 }
                 count++;
             }
 
-            if(blockMenu.hasViewer()) {
+            if (blockMenu.hasViewer()) {
                 PurifyTimeTower.this.updateMenu(blockMenu, count, finalRange);
             }
         });

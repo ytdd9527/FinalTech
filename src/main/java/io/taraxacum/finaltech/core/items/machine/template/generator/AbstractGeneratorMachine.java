@@ -74,8 +74,8 @@ public abstract class AbstractGeneratorMachine extends AbstractMachine implement
         ItemAmountWrapper[] outputs = advancedMachineRecipe.getOutput();
         int quantityModule = Icon.updateQuantityModule(blockMenu, GeneratorMachineMenu.MODULE_SLOT, GeneratorMachineMenu.STATUS_SLOT);
         int maxMatch = Math.min(quantityModule, MachineUtil.calMaxMatch(blockMenu.toInventory(), this.getOutputSlot(), outputs));
-        if(maxMatch > 0) {
-            for(ItemStack itemStack : ItemStackUtil.calEnlargeItemArray(outputs, maxMatch)) {
+        if (maxMatch > 0) {
+            for (ItemStack itemStack : ItemStackUtil.calEnlargeItemArray(outputs, maxMatch)) {
                 blockMenu.pushItem(ItemStackUtil.cloneItem(itemStack), this.getOutputSlot());
             }
         }
@@ -89,12 +89,12 @@ public abstract class AbstractGeneratorMachine extends AbstractMachine implement
 
     @Override
     public void registerRecipe(@Nonnull MachineRecipe recipe) {
-        if(recipe.getInput().length > 0) {
+        if (recipe.getInput().length > 0) {
             throw new IllegalArgumentException("Register recipe for " + this.getItemName() + " has made a error: " + " input item amount should not be more than zero");
         }
 
         RandomMachineRecipe randomMachineRecipe;
-        if(recipe instanceof RandomMachineRecipe) {
+        if (recipe instanceof RandomMachineRecipe) {
             randomMachineRecipe = (RandomMachineRecipe) recipe;
         } else {
             RandomMachineRecipe.RandomOutput[] randomOutputs = new RandomMachineRecipe.RandomOutput[1];
@@ -102,7 +102,7 @@ public abstract class AbstractGeneratorMachine extends AbstractMachine implement
             randomMachineRecipe = new RandomMachineRecipe(recipe, randomOutputs);
         }
 
-        if(this.emptyInputRecipe == null) {
+        if (this.emptyInputRecipe == null) {
             this.emptyInputRecipe = new RandomMachineRecipe(new ItemStack[0], randomMachineRecipe.getRandomOutputs());
         } else {
             this.emptyInputRecipe.addRandomOutput(randomMachineRecipe.getRandomOutputs());
@@ -132,7 +132,7 @@ public abstract class AbstractGeneratorMachine extends AbstractMachine implement
         this.registerRecipe(new RandomMachineRecipe(new ItemStack[0], randomOutputList));
     }
     public void registerRecipe(@Nonnull Tag<Material> tag) {
-        for(Material material : tag.getValues()) {
+        for (Material material : tag.getValues()) {
             this.registerRecipe(material);
         }
     }

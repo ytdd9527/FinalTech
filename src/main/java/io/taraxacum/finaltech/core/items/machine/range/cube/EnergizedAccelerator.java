@@ -68,7 +68,7 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
         boolean drawParticle = blockMenu.hasViewer();
 
         int machineEnergy = Integer.parseInt(EnergyUtil.getCharge(config));
-        if(machineEnergy == 0) {
+        if (machineEnergy == 0) {
             this.updateMenu(blockMenu, 0, 0, 0, 0);
             return;
         }
@@ -100,11 +100,11 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
         int extraEnergy;
 
         int validMachine = 0;
-        for(Map.Entry<Integer, List<LocationWithConfig>> entry : configMap.entrySet()) {
+        for (Map.Entry<Integer, List<LocationWithConfig>> entry : configMap.entrySet()) {
             Iterator<LocationWithConfig> iterator = entry.getValue().iterator();
             while (iterator.hasNext()) {
                 SlimefunItem sfItem = SlimefunItem.getById(iterator.next().getConfig().getString(ConstantTableUtil.CONFIG_ID));
-                if(sfItem == null || sfItem.getBlockTicker() == null || !(sfItem instanceof EnergyNetComponent) || EnergyNetComponentType.CONNECTOR.equals(((EnergyNetComponent) sfItem).getEnergyComponentType()) || sfItem == this) {
+                if (sfItem == null || sfItem.getBlockTicker() == null || !(sfItem instanceof EnergyNetComponent) || EnergyNetComponentType.CONNECTOR.equals(((EnergyNetComponent) sfItem).getEnergyComponentType()) || sfItem == this) {
                     iterator.remove();
                     continue;
                 }
@@ -113,12 +113,12 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
             }
         }
 
-        if(validMachine == 0) {
+        if (validMachine == 0) {
             this.updateMenu(blockMenu, machineEnergy, 0, 0, 0);
             return;
         }
 
-        if(StringNumberUtil.compare(extraEnergyString, StringNumberUtil.INTEGER_MAX_VALUE) >= 0) {
+        if (StringNumberUtil.compare(extraEnergyString, StringNumberUtil.INTEGER_MAX_VALUE) >= 0) {
             extraEnergy = Integer.MAX_VALUE / 2;
         } else {
             extraEnergy = Integer.parseInt(extraEnergyString);
@@ -138,15 +138,15 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
                     for (LocationWithConfig locationConfig : locationConfigList) {
                         machineItemId = locationConfig.getConfig().getString(ConstantTableUtil.CONFIG_ID);
                         SlimefunItem machineItem = SlimefunItem.getById(locationConfig.getConfig().getString(ConstantTableUtil.CONFIG_ID));
-                        if(machineItem instanceof EnergyNetComponent) {
+                        if (machineItem instanceof EnergyNetComponent) {
                             BlockTicker blockTicker = machineItem.getBlockTicker();
                             if (blockTicker != null) {
-                                if(blockTicker.isSynchronized()) {
+                                if (blockTicker.isSynchronized()) {
                                     javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> blockTicker.tick(locationConfig.getLocation().getBlock(), machineItem, locationConfig.getConfig()));
                                 } else {
                                     BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineItemId), () -> blockTicker.tick(locationConfig.getLocation().getBlock(), machineItem, locationConfig.getConfig()), locationConfig.getLocation());
                                 }
-                                if(drawParticle) {
+                                if (drawParticle) {
                                     javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, locationConfig.getLocation().getBlock()));
                                 }
                                 accelerateTotalTime++;
@@ -163,7 +163,7 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
             drawParticle = false;
         }
 
-        if(accelerateTotalTime > 0) {
+        if (accelerateTotalTime > 0) {
             EnergyUtil.setCharge(config, 0);
         }
         this.updateMenu(blockMenu, finalMachineEnergy, validMachine, accelerateAverageTime, accelerateTotalTime);
@@ -186,7 +186,7 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
     }
 
     private void updateMenu(@Nonnull BlockMenu blockMenu, int machineEnergy, int accelerateMachine, int accelerateEachTime, int accelerateTime) {
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
             ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
                     String.valueOf(machineEnergy),

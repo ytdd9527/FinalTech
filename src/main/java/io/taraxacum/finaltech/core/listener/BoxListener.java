@@ -20,9 +20,9 @@ public class BoxListener implements Listener {
         Player player = playerDeathEvent.getEntity();
         Location location = player.getLocation();
         World world = location.getWorld();
-        if(world != null) {
+        if (world != null) {
             int maxHeight = world.getMaxHeight();
-            if(location.getY() >= maxHeight + Box.HEIGHT) {
+            if (location.getY() >= maxHeight + Box.HEIGHT) {
                 world.dropItem(location, FinalTechItems.BOX);
             }
         }

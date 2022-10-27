@@ -67,7 +67,7 @@ public class CopyCard extends UnusableSlimefunItem implements RecipeItem {
     }
 
     public static boolean copiableItem(@Nonnull ItemStack itemStack) {
-        if(Tag.SHULKER_BOXES.isTagged(itemStack.getType()) || Material.BUNDLE.equals(itemStack.getType()) && ItemStackUtil.itemStackToString(itemStack).length() > 7000) {
+        if (Tag.SHULKER_BOXES.isTagged(itemStack.getType()) || Material.BUNDLE.equals(itemStack.getType()) && ItemStackUtil.itemStackToString(itemStack).length() > 7000) {
             return false;
         }
 

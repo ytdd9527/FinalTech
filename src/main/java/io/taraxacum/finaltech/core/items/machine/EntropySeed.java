@@ -74,14 +74,14 @@ public class EntropySeed extends AbstractMachine implements RecipeItem {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         Location location = block.getLocation();
-        if(config.contains(this.key) && this.value.equals(config.getValue(this.key))) {
+        if (config.contains(this.key) && this.value.equals(config.getValue(this.key))) {
             BlockStorage.addBlockInfo(location, this.key, null);
             SlimefunItem sfItem = SlimefunItem.getByItem(FinalTechItems.EQUIVALENT_CONCEPT);
-            if(sfItem != null) {
+            if (sfItem != null) {
                 BlockStorage.clearBlockInfo(location);
                 JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
                 javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> {
-                    if(location.getBlock().getType().equals(EntropySeed.this.getItem().getType())) {
+                    if (location.getBlock().getType().equals(EntropySeed.this.getItem().getType())) {
                         BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, FinalTechItems.EQUIVALENT_CONCEPT.getItemId(), true);
                         BlockStorage.addBlockInfo(location, EquivalentConcept.KEY_LIFE, String.valueOf(EntropySeed.this.equivalentConceptLife));
                         BlockStorage.addBlockInfo(location, EquivalentConcept.KEY_RANGE, String.valueOf(EntropySeed.this.equivalentConceptRange));
@@ -92,7 +92,7 @@ public class EntropySeed extends AbstractMachine implements RecipeItem {
             BlockStorage.clearBlockInfo(location);
             JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
             javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> {
-                if(location.getBlock().getType().equals(EntropySeed.this.getItem().getType())) {
+                if (location.getBlock().getType().equals(EntropySeed.this.getItem().getType())) {
                     BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, FinalTechItems.JUSTIFIABILITY.getItemId(), true);
                 }
             }, Slimefun.getTickerTask().getTickRate() + 1);

@@ -79,7 +79,7 @@ public abstract class AbstractElectricityShootPile extends AbstractLineMachine i
         }
 
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             this.updateMenu(blockMenu, count, summary);
         }
     }

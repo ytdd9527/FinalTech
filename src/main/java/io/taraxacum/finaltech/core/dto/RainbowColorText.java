@@ -35,7 +35,7 @@ public class RainbowColorText extends RandomColorText {
     @Override
     protected ColorString[] initColorList(@Nonnull String... text) {
         ColorString[] colorStrings = new ColorString[text.length];
-        for(int i = 0; i < text.length; i++) {
+        for (int i = 0; i < text.length; i++) {
             ColorString colorString = new ColorString(text[i], TextUtil.WHITE_COLOR);
             colorStrings[i] = colorString;
         }
@@ -46,7 +46,7 @@ public class RainbowColorText extends RandomColorText {
     public void calNextColorList() {
         this.index += this.step;
         this.index = this.index % this.circulateColor.length;
-        for(int i = 0; i < this.getSize(); i++) {
+        for (int i = 0; i < this.getSize(); i++) {
             this.setColor(this.circulateColor[(this.index + i) % this.circulateColor.length], i);
         }
     }

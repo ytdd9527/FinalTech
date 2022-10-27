@@ -25,7 +25,7 @@ public class Shine extends UnusableSlimefunItem implements RecipeItem {
     @Override
     public void register(@Nonnull SlimefunAddon addon) {
         super.register(addon);
-        if(!this.isDisabled()) {
+        if (!this.isDisabled()) {
             PluginManager pluginManager = addon.getJavaPlugin().getServer().getPluginManager();
             pluginManager.registerEvents(new ShineListener(), addon.getJavaPlugin());
         }

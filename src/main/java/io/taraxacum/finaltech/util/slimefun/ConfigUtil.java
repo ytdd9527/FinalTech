@@ -40,7 +40,7 @@ public class ConfigUtil {
     @Nonnull
     public static SlimefunItemStack getSlimefunItemStack(@Nonnull LanguageManager languageManager, @Nonnull String id, @Nonnull Material defaultMaterial, @Nonnull String defaultName) {
         Material material = defaultMaterial;
-        if(languageManager.containPath("categories", id, "material")) {
+        if (languageManager.containPath("categories", id, "material")) {
             material = Material.getMaterial(languageManager.getString("categories", id, "material"));
             material = material == null ? defaultMaterial : material;
         }
@@ -50,7 +50,7 @@ public class ConfigUtil {
 
     public static MainItemGroup getMainItemGroup(@Nonnull LanguageManager languageManager, @Nonnull String key, @Nonnull Material defaultMaterial, @Nonnull String defaultName) {
         Material material = defaultMaterial;
-        if(languageManager.containPath("categories", key, "material")) {
+        if (languageManager.containPath("categories", key, "material")) {
             material = Material.getMaterial(languageManager.getString("categories", key, "material"));
             material = material == null ? defaultMaterial : material;
         }
@@ -60,7 +60,7 @@ public class ConfigUtil {
 
     public static SubFlexItemGroup getSubFlexItemGroup(@Nonnull LanguageManager languageManager, @Nonnull String key, @Nonnull Material defaultMaterial, @Nonnull String defaultName) {
         Material material = defaultMaterial;
-        if(languageManager.containPath("categories", key, "material")) {
+        if (languageManager.containPath("categories", key, "material")) {
             material = Material.getMaterial(languageManager.getString("categories", key, "material"));
             material = material == null ? defaultMaterial : material;
         }

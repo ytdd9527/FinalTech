@@ -19,17 +19,17 @@ public class FlowerConversion extends AbstractConversionMachine {
     @Override
     public void registerDefaultRecipes() {
         List<RandomMachineRecipe.RandomOutput> randomOutputList = new ArrayList<>(Tag.SMALL_FLOWERS.getValues().size() + Tag.TALL_FLOWERS.getValues().size());
-        for(Material material : Tag.SMALL_FLOWERS.getValues()) {
+        for (Material material : Tag.SMALL_FLOWERS.getValues()) {
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(material, 1));
         }
-        for(Material material : Tag.TALL_FLOWERS.getValues()) {
+        for (Material material : Tag.TALL_FLOWERS.getValues()) {
             randomOutputList.add(new RandomMachineRecipe.RandomOutput(material, 1));
         }
 
-        for(Material material : Tag.SMALL_FLOWERS.getValues()) {
+        for (Material material : Tag.SMALL_FLOWERS.getValues()) {
             this.registerRecipe(new RandomMachineRecipe(new ItemStack(material), randomOutputList));
         }
-        for(Material material : Tag.TALL_FLOWERS.getValues()) {
+        for (Material material : Tag.TALL_FLOWERS.getValues()) {
             this.registerRecipe(new RandomMachineRecipe(new ItemStack(material), randomOutputList));
         }
     }

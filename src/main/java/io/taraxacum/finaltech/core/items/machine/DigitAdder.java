@@ -53,36 +53,36 @@ public class DigitAdder extends AbstractMachine implements RecipeItem {
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         Inventory inventory = blockMenu.toInventory();
-        if(MachineUtil.slotCount(inventory, this.getOutputSlot()) == this.getOutputSlot().length) {
+        if (MachineUtil.slotCount(inventory, this.getOutputSlot()) == this.getOutputSlot().length) {
             return;
         }
         ItemStack itemStack;
         int digit = 0;
-        for(int slot : this.getInputSlot()) {
+        for (int slot : this.getInputSlot()) {
             itemStack = inventory.getItem(slot);
-            if(ItemStackUtil.isItemNull(itemStack)) {
+            if (ItemStackUtil.isItemNull(itemStack)) {
                 return;
             }
             SlimefunItem digitalItem = SlimefunItem.getByItem(itemStack);
-            if(digitalItem instanceof DigitalItem) {
+            if (digitalItem instanceof DigitalItem) {
                 digit += ((DigitalItem) digitalItem).getDigit();
             } else {
                 return;
             }
         }
-        if(digit > 15) {
+        if (digit > 15) {
             itemStack = AbstractDigitalNumber.INTEGER_ITEM_STACK_MAP.get(digit / 16);
-            if(itemStack != null) {
+            if (itemStack != null) {
                 inventory.setItem(this.getOutputSlot()[0], itemStack);
             }
         }
         itemStack = AbstractDigitalNumber.INTEGER_ITEM_STACK_MAP.get(digit % 16);
-        if(itemStack != null) {
+        if (itemStack != null) {
             inventory.setItem(this.getOutputSlot()[1], itemStack);
         }
-        for(int slot : this.getInputSlot()) {
+        for (int slot : this.getInputSlot()) {
             itemStack = inventory.getItem(slot);
-            if(ItemStackUtil.isItemNull(itemStack)) {
+            if (ItemStackUtil.isItemNull(itemStack)) {
                 continue;
             }
             itemStack.setAmount(itemStack.getAmount() - 1);
@@ -96,7 +96,7 @@ public class DigitAdder extends AbstractMachine implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        for(ItemStack itemStack : AbstractDigitalNumber.INTEGER_ITEM_STACK_MAP.values()) {
+        for (ItemStack itemStack : AbstractDigitalNumber.INTEGER_ITEM_STACK_MAP.values()) {
             this.registerRecipe(itemStack, ItemStackUtil.AIR);
         }
     }

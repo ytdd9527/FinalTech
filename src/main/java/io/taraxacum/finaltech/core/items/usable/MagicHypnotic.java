@@ -35,15 +35,15 @@ public class MagicHypnotic extends UsableSlimefunItem implements RecipeItem {
         PotionEffectType[] allPotionEffectType = PotionEffectType.values();
         PotionEffectType randomPotionEffectType = allPotionEffectType[FinalTech.getRandom().nextInt(allPotionEffectType.length)];
         boolean hasPotionEffect = false;
-        for(PotionEffect potionEffect : player.getActivePotionEffects()) {
-            if(potionEffect.getType().equals(randomPotionEffectType)) {
+        for (PotionEffect potionEffect : player.getActivePotionEffects()) {
+            if (potionEffect.getType().equals(randomPotionEffectType)) {
                 hasPotionEffect = true;
                 player.removePotionEffect(potionEffect.getType());
                 player.addPotionEffect(new PotionEffect(potionEffect.getType(), potionEffect.getDuration() + player.getLevel() + 1, potionEffect.getAmplifier()));
                 break;
             }
         }
-        if(!hasPotionEffect) {
+        if (!hasPotionEffect) {
             player.addPotionEffect(new PotionEffect(randomPotionEffectType, player.getLevel() + 1, 0));
         }
         ItemStack item = playerRightClickEvent.getItem();

@@ -75,7 +75,7 @@ public class DustFactoryDirt extends AbstractOperationMachine {
             operation.addItem(inputItem);
 
             ItemStack operationResult = operation.getResult();
-            if(operationResult != null && InvUtils.fitAll(blockMenu.toInventory(), new ItemStack[] {operationResult}, this.getOutputSlot())) {
+            if (operationResult != null && InvUtils.fitAll(blockMenu.toInventory(), new ItemStack[] {operationResult}, this.getOutputSlot())) {
                 blockMenu.pushItem(operationResult, this.getOutputSlot());
                 this.getMachineProcessor().endOperation(block);
                 operation = null;
@@ -88,14 +88,14 @@ public class DustFactoryDirt extends AbstractOperationMachine {
             operation = new DustFactoryOperation();
             this.getMachineProcessor().startOperation(block, operation);
         }
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             ItemStack itemStack = blockMenu.getItemInSlot(DustFactoryDirtMenu.STATUS_SLOT);
             ItemStackUtil.setLore(itemStack, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
                     String.valueOf(operation.getAmountCount()),
                     String.valueOf(operation.getTypeCount())));
-            if(operation.getAmountCount() == 0 && operation.getTypeCount() == 0) {
+            if (operation.getAmountCount() == 0 && operation.getTypeCount() == 0) {
                 itemStack.setType(Material.RED_STAINED_GLASS_PANE);
-            } else if(operation.getAmountCount() > DustFactoryOperation.AMOUNT_DIFFICULTY || operation.getTypeCount() > DustFactoryOperation.TYPE_DIFFICULTY) {
+            } else if (operation.getAmountCount() > DustFactoryOperation.AMOUNT_DIFFICULTY || operation.getTypeCount() > DustFactoryOperation.TYPE_DIFFICULTY) {
                 itemStack.setType(Material.YELLOW_STAINED_GLASS_PANE);
             } else {
                 itemStack.setType(Material.GREEN_STAINED_GLASS_PANE);

@@ -60,7 +60,7 @@ public class VariableWireCapacitor extends AbstractElectricMachine implements Re
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         Location location = block.getLocation();
-        if(StringNumberUtil.ZERO.equals(EnergyUtil.getCharge(location))) {
+        if (StringNumberUtil.ZERO.equals(EnergyUtil.getCharge(location))) {
             Slimefun.getBlockDataService().setBlockData(block, FinalTechItems.VARIABLE_WIRE_RESISTANCE.getItemId());
             BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, FinalTechItems.VARIABLE_WIRE_RESISTANCE.getItemId(), true);
             JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();

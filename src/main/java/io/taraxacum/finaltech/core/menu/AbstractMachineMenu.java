@@ -66,7 +66,7 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
 
     @Override
     public int[] getSlotsAccessedByItemTransport(@Nullable ItemTransportFlow itemTransportFlow) {
-        if(itemTransportFlow == null) {
+        if (itemTransportFlow == null) {
             return new int[0];
         }
         return switch (itemTransportFlow) {

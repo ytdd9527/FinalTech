@@ -86,7 +86,7 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
         }
 
         Config locationInfo = BlockStorage.getLocationInfo(containerBlock.getLocation());
-        if(locationInfo.contains(ConstantTableUtil.CONFIG_ID)) {
+        if (locationInfo.contains(ConstantTableUtil.CONFIG_ID)) {
             String id = locationInfo.getString(ConstantTableUtil.CONFIG_ID);
             Runnable runnable = () -> {
                 InvWithSlots inputMap = CargoUtil.getInvWithSlots(containerBlock, SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config), SlotSearchOrder.VALUE_ASCENT);
@@ -112,7 +112,7 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
                     }
                 }
             };
-            if(FinalTech.isAsyncSlimefunItem(id)) {
+            if (FinalTech.isAsyncSlimefunItem(id)) {
                 FinalTech.getLocationRunnableFactory().waitThenRun(runnable, block.getLocation(), containerBlock.getLocation());
             } else {
                 runnable.run();
@@ -129,9 +129,9 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
     public void registerDefaultRecipes() {
         for (String id : AdvancedAutoCraftMenu.RECIPE_MAP.keySet()) {
             SlimefunItem slimefunItem = SlimefunItem.getById(id);
-            if(slimefunItem != null) {
+            if (slimefunItem != null) {
                 ItemStack itemStack = slimefunItem.getRecipeType().toItem();
-                if(!ItemStackUtil.isItemNull(itemStack)) {
+                if (!ItemStackUtil.isItemNull(itemStack)) {
                     this.registerDescriptiveRecipe(itemStack);
                 }
             }

@@ -127,7 +127,7 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
     }
 
     private void updateMenu(@Nonnull BlockMenu blockMenu, long count, int charge) {
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             ItemStack item = blockMenu.getItemInSlot(DustGeneratorMenu.STATUS_SLOT);
             ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
                     String.valueOf(count),

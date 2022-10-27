@@ -117,7 +117,7 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
                 return (BlockStorageIconHelper) blockStorageHelper;
             } else {
                 synchronized (stringBlockStorageHelperMap) {
-                    if(stringBlockStorageHelperMap.containsKey(key)) {
+                    if (stringBlockStorageHelperMap.containsKey(key)) {
                         return (BlockStorageIconHelper)stringBlockStorageHelperMap.get(key);
                     }
                     BlockStorageIconHelper blockStorageIconHelper = new BlockStorageIconHelper(id, valueIconMap) {
@@ -133,7 +133,7 @@ public abstract class BlockStorageIconHelper extends BlockStorageHelper {
             }
         } else {
             synchronized (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY) {
-                if(BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
+                if (BlockStorageHelper.BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
                     return BlockStorageIconHelper.newInstanceOrGet(id, key, valueIconMap);
                 }
                 Map<String, BlockStorageHelper> stringBlockStorageHelperMap = new HashMap<>();

@@ -79,7 +79,7 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
             return 0;
         });
 
-        if(count <= 1) {
+        if (count <= 1) {
             this.updateMenu(blockMenu, 0, 0);
             return;
         }
@@ -93,14 +93,14 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
                 for (LocationWithConfig locationConfig : locationConfigList) {
                     Config machineConfig = locationConfig.getConfig();
                     SlimefunItem machineItem = SlimefunItem.getById(machineConfig.getString(ConstantTableUtil.CONFIG_ID));
-                    if(machineItem instanceof EnergyNetComponent && machineItem.getBlockTicker() != null) {
+                    if (machineItem instanceof EnergyNetComponent && machineItem.getBlockTicker() != null) {
                         BlockTicker blockTicker = machineItem.getBlockTicker();
                         int componentCapacity = ((EnergyNetComponent) machineItem).getCapacity();
                         int componentEnergy = Integer.parseInt(EnergyUtil.getCharge(machineConfig));
                         if (componentCapacity > 0 && componentEnergy > componentCapacity) {
                             accelerateMachineCount++;
                             Block machineBlock = locationConfig.getLocation().getBlock();
-                            if(blockTicker.isSynchronized()) {
+                            if (blockTicker.isSynchronized()) {
                                 javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
                                     int machineEnergy = componentEnergy;
                                     while (machineEnergy > componentCapacity) {
@@ -121,7 +121,7 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
                                     }
                                 }, locationConfig.getLocation());
                             }
-                            if(drawParticle) {
+                            if (drawParticle) {
                                 javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, locationConfig.getLocation().getBlock()));
                             }
                         }
@@ -139,7 +139,7 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
     }
 
     private void updateMenu(@Nonnull BlockMenu blockMenu, int count, int accelerateMachineCount) {
-        if(blockMenu.hasViewer()) {
+        if (blockMenu.hasViewer()) {
             ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
             ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
                     String.valueOf(count),

@@ -51,12 +51,12 @@ public class LanguageManager extends ConfigFileManager implements StringReplacer
     @Nonnull
     public String replaceString(@Nonnull String source, @Nonnull String... targets) {
         String[] split = StringUtil.split(source, "{", "}");
-        if(split.length == 3) {
+        if (split.length == 3) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(split[0]);
-            if(StringUtil.onlyContainsNumber(split[1])) {
+            if (StringUtil.onlyContainsNumber(split[1])) {
                 int index = Integer.parseInt(split[1]) - 1;
-                if(targets.length > index && index >= 0) {
+                if (targets.length > index && index >= 0) {
                     stringBuilder.append(targets[index]);
                 } else {
                     stringBuilder.append("{").append(split[1]).append("}");
@@ -73,7 +73,7 @@ public class LanguageManager extends ConfigFileManager implements StringReplacer
     @Nonnull
     public List<String> replaceStringList(@Nonnull List<String> source, @Nonnull String... targets) {
         List<String> result = new ArrayList<>(source.size());
-        for(String string : source) {
+        for (String string : source) {
             result.add(this.replaceString(string, targets));
         }
         return result;
@@ -82,7 +82,7 @@ public class LanguageManager extends ConfigFileManager implements StringReplacer
     @Nonnull
     public String[] replaceStringArray(@Nonnull String[] source, @Nonnull String... targets) {
         String[] result = new String[source.length];
-        for(int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++) {
             result[i] = this.replaceString(source[i], targets);
         }
         return result;
@@ -90,13 +90,13 @@ public class LanguageManager extends ConfigFileManager implements StringReplacer
 
     @Nonnull
     public static LanguageManager getOrNewInstance(@Nonnull Plugin plugin, @Nonnull String fileName) {
-        if(INSTANCE_MAP.containsKey(plugin)) {
+        if (INSTANCE_MAP.containsKey(plugin)) {
             Map<String, ConfigFileManager> configRegistryMap = INSTANCE_MAP.get(plugin);
-            if(configRegistryMap.containsKey(fileName)) {
+            if (configRegistryMap.containsKey(fileName)) {
                 return (LanguageManager)configRegistryMap.get(fileName);
             } else {
                 synchronized (configRegistryMap) {
-                    if(configRegistryMap.containsKey(fileName)) {
+                    if (configRegistryMap.containsKey(fileName)) {
                         return (LanguageManager)configRegistryMap.get(fileName);
                     }
                     final LanguageManager configManager = new LanguageManager(plugin, fileName);
@@ -106,7 +106,7 @@ public class LanguageManager extends ConfigFileManager implements StringReplacer
             }
         } else {
             synchronized (ConfigFileManager.class) {
-                if(INSTANCE_MAP.containsKey(plugin)) {
+                if (INSTANCE_MAP.containsKey(plugin)) {
                     return LanguageManager.getOrNewInstance(plugin, fileName);
                 }
                 LanguageManager configManager = new LanguageManager(plugin, fileName);

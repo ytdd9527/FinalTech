@@ -38,11 +38,11 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
         this.scheduler.runTaskLaterAsynchronously(this.plugin, () -> {
             boolean work = false;
             while (!work) {
-                for(T object : objects) {
-                    if(ServerRunnableLockFactory.this.MAP.containsKey(object)) {
+                for (T object : objects) {
+                    if (ServerRunnableLockFactory.this.MAP.containsKey(object)) {
                         FutureTask<?> task = ServerRunnableLockFactory.this.MAP.get(object);
                         try {
-                            if(task != null) {
+                            if (task != null) {
                                 task.get();
                             }
                         } catch (InterruptedException | ExecutionException e) {
@@ -53,15 +53,15 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
                 }
                 work = true;
                 synchronized (ServerRunnableLockFactory.this.lock) {
-                    for(T object : objects) {
-                        if(ServerRunnableLockFactory.this.MAP.containsKey(object)) {
+                    for (T object : objects) {
+                        if (ServerRunnableLockFactory.this.MAP.containsKey(object)) {
                             work = false;
                             break;
                         }
                     }
-                    if(work) {
+                    if (work) {
                         scheduler.runTaskAsynchronously(this.plugin, futureTask);
-                        for(T object : objects) {
+                        for (T object : objects) {
                             ServerRunnableLockFactory.this.MAP.put(object, futureTask);
                         }
                     }
@@ -82,8 +82,8 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
         scheduler.runTaskLaterAsynchronously(this.plugin, () -> {
             boolean work = false;
             while (!work) {
-                for(T object : objects) {
-                    if(ServerRunnableLockFactory.this.MAP.containsKey(object)) {
+                for (T object : objects) {
+                    if (ServerRunnableLockFactory.this.MAP.containsKey(object)) {
                         FutureTask<?> task = ServerRunnableLockFactory.this.MAP.get(object);
                         try {
                             task.get();
@@ -95,15 +95,15 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
                 }
                 work = true;
                 synchronized (ServerRunnableLockFactory.this.lock) {
-                    for(T object : objects) {
-                        if(ServerRunnableLockFactory.this.MAP.containsKey(object)) {
+                    for (T object : objects) {
+                        if (ServerRunnableLockFactory.this.MAP.containsKey(object)) {
                             work = false;
                             break;
                         }
                     }
-                    if(work) {
+                    if (work) {
                         scheduler.runTaskAsynchronously(this.plugin, futureTask);
-                        for(T object : objects) {
+                        for (T object : objects) {
                             ServerRunnableLockFactory.this.MAP.put(object, futureTask);
                         }
                     }
@@ -119,7 +119,7 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
     }
 
     public final void waitAllTask() throws ExecutionException, InterruptedException {
-        for(Map.Entry<T, FutureTask<?>> entry : MAP.entrySet()) {
+        for (Map.Entry<T, FutureTask<?>> entry : MAP.entrySet()) {
             entry.getValue().get();
         }
     }
@@ -129,18 +129,18 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
     }
 
     public static <C> ServerRunnableLockFactory<C> getInstance(@Nonnull Plugin plugin, @Nonnull Class<C> clazz) {
-        if(!JAVA_PLUGIN_MAP.containsKey(plugin)) {
+        if (!JAVA_PLUGIN_MAP.containsKey(plugin)) {
             synchronized (JAVA_PLUGIN_MAP) {
-                if(!JAVA_PLUGIN_MAP.containsKey(plugin)) {
+                if (!JAVA_PLUGIN_MAP.containsKey(plugin)) {
                     final Map<Class<?>, ServerRunnableLockFactory<?>> classServerRunnableLockFactoryMap = new HashMap<>();
                     JAVA_PLUGIN_MAP.put(plugin, classServerRunnableLockFactoryMap);
                 }
             }
         }
         Map<Class<?>, ServerRunnableLockFactory<?>> classServerRunnableLockFactoryMap = JAVA_PLUGIN_MAP.get(plugin);
-        if(!classServerRunnableLockFactoryMap.containsKey(clazz)) {
+        if (!classServerRunnableLockFactoryMap.containsKey(clazz)) {
             synchronized (classServerRunnableLockFactoryMap) {
-                if(!classServerRunnableLockFactoryMap.containsKey(clazz)) {
+                if (!classServerRunnableLockFactoryMap.containsKey(clazz)) {
                     ServerRunnableLockFactory<C> ServerRunnableLockFactory = newInstance(plugin, clazz);
                     classServerRunnableLockFactoryMap.put(clazz, ServerRunnableLockFactory);
                 }

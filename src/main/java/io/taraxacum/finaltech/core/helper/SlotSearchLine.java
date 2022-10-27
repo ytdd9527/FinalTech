@@ -132,7 +132,7 @@ public class SlotSearchLine {
         @Override
         public boolean checkAndUpdateIcon(@Nonnull Inventory inventory, @Nonnull Location location, int slot) {
             String valueMap = BlockStorage.getLocationInfo(location, this.getKey());
-            if(valueMap == null) {
+            if (valueMap == null) {
                 valueMap = "";
             }
             KeyValueStringHelper keyValueStringHelper = MAP_EXAMPLE.parseString(valueMap);

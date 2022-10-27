@@ -31,7 +31,7 @@ public class LocationUtil {
 
     public static Location[] transferToLocation(@Nonnull Block... blocks) {
         Location[] locations = new Location[blocks.length];
-        for(int i = 0; i < locations.length; i++) {
+        for (int i = 0; i < locations.length; i++) {
             locations[i] = blocks[i].getLocation();
         }
         return locations;
@@ -39,7 +39,7 @@ public class LocationUtil {
 
     public static Location[] transferToLocation(@Nonnull List<Block> blockList) {
         Location[] locations = new Location[blockList.size()];
-        for(int i = 0; i < locations.length; i++) {
+        for (int i = 0; i < locations.length; i++) {
             locations[i] = blockList.get(i).getLocation();
         }
         return locations;
@@ -51,7 +51,7 @@ public class LocationUtil {
     @Nonnull
     public static String getNonNullStringNumber(@Nonnull Location location, @Nonnull String key) {
         String value = BlockStorage.getLocationInfo(location, key);
-        if(value == null) {
+        if (value == null) {
             value = StringNumberUtil.ZERO;
         }
         return value;
@@ -63,7 +63,7 @@ public class LocationUtil {
     @Nonnull
     public static String getNonNullStringNumber(@Nonnull Config config, @Nonnull String key) {
         String value = config.getString(key);
-        if(value == null) {
+        if (value == null) {
             value = StringNumberUtil.ZERO;
         }
         return value;
@@ -130,7 +130,7 @@ public class LocationUtil {
     @Nonnull
     public static Set<Location> parseLocation(@Nonnull Block... blocks) {
         Set<Location> locationSet = new HashSet<>(blocks.length);
-        for(Block block : blocks) {
+        for (Block block : blocks) {
             locationSet.add(block.getLocation());
         }
         return locationSet;
@@ -139,7 +139,7 @@ public class LocationUtil {
     @Nonnull
     public static Set<Location> parseLocation(@Nonnull List<Block> blocks) {
         Set<Location> locationSet = new HashSet<>(blocks.size());
-        for(Block block : blocks) {
+        for (Block block : blocks) {
             locationSet.add(block.getLocation());
         }
         return locationSet;

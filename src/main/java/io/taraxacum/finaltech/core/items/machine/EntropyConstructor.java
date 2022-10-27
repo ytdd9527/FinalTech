@@ -53,9 +53,9 @@ public class EntropyConstructor extends AbstractMachine implements RecipeItem {
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         ItemStack entropy = Entropy.newItem(null);
-        for(int slot : this.getOutputSlot()) {
+        for (int slot : this.getOutputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(!ItemStackUtil.isItemNull(item)) {
+            if (!ItemStackUtil.isItemNull(item)) {
                 entropy.setAmount(item.getAmount());
                 blockMenu.replaceExistingItem(slot, entropy);
             }

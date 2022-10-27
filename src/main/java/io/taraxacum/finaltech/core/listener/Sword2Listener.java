@@ -15,10 +15,10 @@ public class Sword2Listener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerAttack(EntityDamageByEntityEvent entityDamageByEntityEvent) {
-        if(entityDamageByEntityEvent.getDamager() instanceof Player && entityDamageByEntityEvent.getEntity() instanceof LivingEntity && EntityDamageByEntityEvent.DamageCause.ENTITY_ATTACK.equals(entityDamageByEntityEvent.getCause()) && ItemStackUtil.isItemSimilar(((Player) entityDamageByEntityEvent.getDamager()).getInventory().getItemInMainHand(), FinalTechItems.SWORD2)) {
+        if (entityDamageByEntityEvent.getDamager() instanceof Player && entityDamageByEntityEvent.getEntity() instanceof LivingEntity && EntityDamageByEntityEvent.DamageCause.ENTITY_ATTACK.equals(entityDamageByEntityEvent.getCause()) && ItemStackUtil.isItemSimilar(((Player) entityDamageByEntityEvent.getDamager()).getInventory().getItemInMainHand(), FinalTechItems.SWORD2)) {
             double damage = entityDamageByEntityEvent.getDamage();
             AttributeInstance maxHealthAttributeInstance = ((LivingEntity) entityDamageByEntityEvent.getEntity()).getAttribute(Attribute.GENERIC_MAX_HEALTH);
-            if(maxHealthAttributeInstance != null) {
+            if (maxHealthAttributeInstance != null) {
                 damage += maxHealthAttributeInstance.getValue() * 0.04;
             }
             entityDamageByEntityEvent.setDamage(damage);

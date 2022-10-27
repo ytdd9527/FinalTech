@@ -53,9 +53,9 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
         Block targetBlock = block.getRelative(BlockFace.UP);
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         if (!BlockStorage.hasInventory(targetBlock)) {
-            if(Bukkit.isPrimaryThread()) {
+            if (Bukkit.isPrimaryThread()) {
                 BlockState blockState = targetBlock.getState();
-                if(blockState instanceof InventoryHolder) {
+                if (blockState instanceof InventoryHolder) {
                     Inventory targetInventory = ((InventoryHolder) blockState).getInventory();
                     this.doFunction(targetInventory, blockMenu);
                 }
@@ -63,7 +63,7 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
                 JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
                 javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
                     BlockState blockState = targetBlock.getState();
-                    if(blockState instanceof InventoryHolder) {
+                    if (blockState instanceof InventoryHolder) {
                         Inventory targetInventory = ((InventoryHolder) blockState).getInventory();
                         FinalTech.getLocationRunnableFactory().waitThenRun(() -> StorageInteractPort.this.doFunction(targetInventory, blockMenu), targetBlock.getLocation(), block.getLocation());
                     }
@@ -97,9 +97,9 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
             return;
         }
 
-        for(int slot : this.getInputSlot()) {
+        for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(!ItemStackUtil.isItemNull(item) && !StorageCardItem.storableItem(item)) {
+            if (!ItemStackUtil.isItemNull(item) && !StorageCardItem.storableItem(item)) {
                 return;
             }
         }

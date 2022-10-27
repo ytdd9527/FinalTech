@@ -45,16 +45,16 @@ public class ItemValueTable {
 
         ConfigFileManager valueFile = FinalTech.getValueManager();
 
-        if(valueFile.containPath("input", "base")) {
+        if (valueFile.containPath("input", "base")) {
             for (String key : valueFile.getStringList("input", "base")) {
                 this.itemInputValueMap.put(key, valueFile.getString("input", "base", key));
             }
         }
-        if(valueFile.containPath("output", "base")) {
+        if (valueFile.containPath("output", "base")) {
             for (String key : valueFile.getStringList("output", "base")) {
                 String value = valueFile.getString("output", "base", key);
                 this.itemOutputValueMap.put(key, value);
-                if(!StringNumberUtil.VALUE_INFINITY.equals(value)) {
+                if (!StringNumberUtil.VALUE_INFINITY.equals(value)) {
                     this.addToOutputMap(key, value);
                 }
             }
@@ -84,16 +84,16 @@ public class ItemValueTable {
             }
         }
 
-        if(valueFile.containPath("input", "result")) {
+        if (valueFile.containPath("input", "result")) {
             for (String key : valueFile.getStringList("input", "result")) {
                 this.itemInputValueMap.put(key, valueFile.getString("input", "result", key));
             }
         }
-        if(valueFile.containPath("output", "result")) {
+        if (valueFile.containPath("output", "result")) {
             for (String key : valueFile.getStringList("output", "result")) {
                 String value = valueFile.getString("output", "result", key);
                 this.itemOutputValueMap.put(key, value);
-                if(!StringNumberUtil.VALUE_INFINITY.equals(value)) {
+                if (!StringNumberUtil.VALUE_INFINITY.equals(value)) {
                     this.addToOutputMap(key, value);
                 } else {
                     this.removeFromOutputMap(key);
@@ -101,15 +101,15 @@ public class ItemValueTable {
             }
         }
 
-        if(valueFile.containPath("output", "remove")) {
-            for(String id : valueFile.getStringList("output", "remove")) {
+        if (valueFile.containPath("output", "remove")) {
+            for (String id : valueFile.getStringList("output", "remove")) {
                 this.removeFromOutputMap(id);
             }
         }
     }
 
     public String getOrCalItemInputValue(@Nullable ItemStack item) {
-        if(ItemStackUtil.isItemNull(item)) {
+        if (ItemStackUtil.isItemNull(item)) {
             return StringNumberUtil.ZERO;
         }
         SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
@@ -119,11 +119,11 @@ public class ItemValueTable {
         return this.getOrCalItemInputValue(slimefunItem);
     }
     public String getOrCalItemInputValue(@Nonnull String id) {
-        if(this.itemInputValueMap.containsKey(id)) {
+        if (this.itemInputValueMap.containsKey(id)) {
             return this.itemInputValueMap.get(id);
         }
         SlimefunItem slimefunItem = SlimefunItem.getById(id);
-        if(slimefunItem == null) {
+        if (slimefunItem == null) {
             return this.BASE_INPUT_VALUE;
         }
         return this.getOrCalItemInputValue(slimefunItem);
@@ -153,7 +153,7 @@ public class ItemValueTable {
     }
 
     public String getOrCalItemOutputValue(@Nullable ItemStack item) {
-        if(ItemStackUtil.isItemNull(item)) {
+        if (ItemStackUtil.isItemNull(item)) {
             return StringNumberUtil.ZERO;
         }
         SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
@@ -163,11 +163,11 @@ public class ItemValueTable {
         return this.getOrCalItemOutputValue(slimefunItem);
     }
     public String getOrCalItemOutputValue(@Nonnull String id) {
-        if(this.itemOutputValueMap.containsKey(id)) {
+        if (this.itemOutputValueMap.containsKey(id)) {
             return this.itemOutputValueMap.get(id);
         }
         SlimefunItem slimefunItem = SlimefunItem.getById(id);
-        if(slimefunItem == null) {
+        if (slimefunItem == null) {
             return this.BASE_OUTPUT_VALUE;
         }
         return this.getOrCalItemOutputValue(slimefunItem);
@@ -202,18 +202,18 @@ public class ItemValueTable {
         RecipeType recipeType = slimefunItem.getRecipeType();
         if (RecipeType.NULL.equals(recipeType) || recipeList.isEmpty() || StringNumberUtil.ZERO.equals(value)) {
             value = StringNumberUtil.VALUE_INFINITY;
-        } else if(slimefunItem instanceof MultiBlockMachine || RecipeType.MULTIBLOCK.equals(recipeType)) {
+        } else if (slimefunItem instanceof MultiBlockMachine || RecipeType.MULTIBLOCK.equals(recipeType)) {
             value = StringNumberUtil.add(value, this.BASE_OUTPUT_VALUE);
         } else if (slimefunItem.equals(recipeType.getMachine())) {
             value = StringNumberUtil.add(value, value);
-        } else if(recipeType.getMachine() != null) {
+        } else if (recipeType.getMachine() != null) {
             value = StringNumberUtil.add(value, this.getOrCalItemOutputValue(recipeType.getMachine()));
         } else {
             value = StringNumberUtil.add(value, this.BASE_OUTPUT_VALUE);
         }
 
         this.itemOutputValueMap.put(id, value);
-        if(!StringNumberUtil.VALUE_INFINITY.equals(value) && !(slimefunItem instanceof MultiBlockMachine) && !RecipeType.MULTIBLOCK.equals(recipeType)) {
+        if (!StringNumberUtil.VALUE_INFINITY.equals(value) && !(slimefunItem instanceof MultiBlockMachine) && !RecipeType.MULTIBLOCK.equals(recipeType)) {
             this.addToOutputMap(id, value);
         }
         return value;
@@ -222,7 +222,7 @@ public class ItemValueTable {
     private void manualInitId(@Nonnull String id, @Nonnull String inputValue, @Nonnull String outputValue, boolean canOutput) {
         this.itemInputValueMap.put(id, inputValue);
         this.itemOutputValueMap.put(id, outputValue);
-        if(canOutput && !outputValue.contains(StringNumberUtil.VALUE_INFINITY)) {
+        if (canOutput && !outputValue.contains(StringNumberUtil.VALUE_INFINITY)) {
             this.addToOutputMap(id, outputValue);
         }
     }
@@ -237,9 +237,9 @@ public class ItemValueTable {
     }
 
     private void removeFromOutputMap(@Nullable String id) {
-        if(this.itemOutputValueMap.containsKey(id)) {
+        if (this.itemOutputValueMap.containsKey(id)) {
             String value = this.itemOutputValueMap.get(id);
-            if(this.valueItemListOutputMap.containsKey(value)) {
+            if (this.valueItemListOutputMap.containsKey(value)) {
                 List<String> idList = this.valueItemListOutputMap.get(value);
                 idList.remove(id);
             }
@@ -253,9 +253,9 @@ public class ItemValueTable {
 
     @Nonnull
     public static ItemValueTable getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             synchronized (ItemValueTable.class) {
-                if(instance == null) {
+                if (instance == null) {
                     instance = new ItemValueTable();
                 }
             }

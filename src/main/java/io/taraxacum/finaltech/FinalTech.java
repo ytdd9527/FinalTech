@@ -58,7 +58,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
     public void onEnable() {
         super.onEnable();
 
-        if(false) {
+        if (false) {
             this.onDisable();
             return;
         }
@@ -85,23 +85,23 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         this.entityRunnableFactory = ServerRunnableLockFactory.getInstance(this, Entity.class);
 
         /* TODO: should be deleted after being published */
-        if(FinalTech.getConfigManager().getOrDefault(false, "I'm_testing_it!")) {
+        if (FinalTech.getConfigManager().getOrDefault(false, "I'm_testing_it!")) {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
 
         /* Disabled if you installed this plugin just for slimefun addon quantity. Not disable it as being loaded before. */
-        if(!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 70) {
+        if (!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 70) {
             this.getLogger().warning("You have installed so many slimefun addons. Change the source code to load this plugin!");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
-        if(!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 20 && !FinalTech.getConfigManager().getOrDefault(false, "I'm_not_just_for_quantity_of_slimefun_addon_to_install_this_plugin")) {
+        if (!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 20 && !FinalTech.getConfigManager().getOrDefault(false, "I'm_not_just_for_quantity_of_slimefun_addon_to_install_this_plugin")) {
             this.getLogger().warning("It seems you are just for quantity of slimefun addon to install this plugin.");
             this.getLogger().warning("So this plugin is disabled now.(Open config file and set true of 'I'm_not_just_for_quantity_of_slimefun_addon_to_install_this_plugin', as you want to enable this plugin.)");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
-        } else if(!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 20 && !FinalTech.getConfigManager().getOrDefault(false, "I_know_there_may_be_incompatibilities_between_slimefun_addons_and_I_will_be_responsible_for_it")) {
+        } else if (!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 20 && !FinalTech.getConfigManager().getOrDefault(false, "I_know_there_may_be_incompatibilities_between_slimefun_addons_and_I_will_be_responsible_for_it")) {
             this.getLogger().warning("It seems you don't know there may be incompatibilities between slimefun addons or you don't want to be responsible for it.");
             this.getLogger().warning("So this plugin is disabled now due to possible incompatibilities.");
             Bukkit.getPluginManager().disablePlugin(this);
@@ -109,27 +109,27 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         }
 
         // TODO: version update.(Now this is the first version being recorded and will be supported to update)
-        if(!FinalTech.getConfigManager().containPath("version")) {
+        if (!FinalTech.getConfigManager().containPath("version")) {
             FinalTech.getConfigManager().setValue(version, "version");
         }
 
         /* configure multi thread level */
         this.multiThreadLevel = FinalTech.getConfigManager().getOrDefault(0, "multi-thread", "level");
-        if(this.multiThreadLevel > 2 || this.multiThreadLevel < 0) {
+        if (this.multiThreadLevel > 2 || this.multiThreadLevel < 0) {
             this.multiThreadLevel = 0;
         }
-        if(this.multiThreadLevel >= 1 && !FinalTech.getConfigManager().getOrDefault(false, "multi-thread", "warn-I_know_what_I'm_doing")) {
+        if (this.multiThreadLevel >= 1 && !FinalTech.getConfigManager().getOrDefault(false, "multi-thread", "warn-I_know_what_I'm_doing")) {
             this.getLogger().warning("It seems you don't know what you are doing. So multi thread level is set to 0");
             this.multiThreadLevel = 0;
         }
-        if(this.multiThreadLevel >= 2 && !FinalTech.getConfigManager().getOrDefault(false, "multi-thread", "warn-I_really_know_what_I'm_doing")) {
+        if (this.multiThreadLevel >= 2 && !FinalTech.getConfigManager().getOrDefault(false, "multi-thread", "warn-I_really_know_what_I'm_doing")) {
             this.getLogger().warning("It seems you don't know what you are doing. So multi thread level is set to 0");
             this.multiThreadLevel = 0;
         }
 
         /* configure whether to force slimefun items to run async */
         this.forceSlimefunMultiThread = FinalTech.getConfigManager().getOrDefault(false, "force-slimefun-multi-thread", "enable");
-        if(this.forceSlimefunMultiThread && !FinalTech.getConfigManager().getOrDefault(false, "force-slimefun-multi-thread", "warn-I_know_what_I'm_doing_and_I_will_be_responsible_for_it")) {
+        if (this.forceSlimefunMultiThread && !FinalTech.getConfigManager().getOrDefault(false, "force-slimefun-multi-thread", "warn-I_know_what_I'm_doing_and_I_will_be_responsible_for_it")) {
             this.getLogger().warning("It seems you don't know what you are doing. So force-slimefun-multi-thread.enable is set to false!");
             this.forceSlimefunMultiThread = false;
         }
@@ -138,7 +138,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         this.antiAccelerateSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "anti-accelerate"));
         this.performanceLimitSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "performance-limit"));
         this.asyncSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "force-async"));
-        if(this.asyncSlimefunIdSet.size() > 0) {
+        if (this.asyncSlimefunIdSet.size() > 0) {
             this.getLogger().warning("You set force-async for some SlimefunItems! It's ok but you should be aware that this may cause some strange error.");
         }
 
@@ -168,7 +168,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
         /* setup slimefun machine block ticker */
         int blockTickerRegisterDelay = FinalTech.getConfigManager().getOrDefault(20, "setups", "slimefun-machine", "delay");
-        if(blockTickerRegisterDelay > 0) {
+        if (blockTickerRegisterDelay > 0) {
             this.getServer().getScheduler().runTask(this, () -> SetupUtil.registerBlockTicker(0));
         } else {
             SetupUtil.registerBlockTicker(0);
@@ -183,7 +183,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onDisable() {
-        if(this.bukkitTask != null) {
+        if (this.bukkitTask != null) {
             this.bukkitTask.cancel();
         }
         try {
@@ -193,9 +193,9 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         } finally {
             BlockStorage.saveChunks();
             try {
-                for(World world : Bukkit.getWorlds()) {
+                for (World world : Bukkit.getWorlds()) {
                     BlockStorage storage = BlockStorage.getStorage(world);
-                    if(storage != null) {
+                    if (storage != null) {
                         storage.save();
                     }
                 }
@@ -211,9 +211,9 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         } finally {
             BlockStorage.saveChunks();
             try {
-                for(World world : Bukkit.getWorlds()) {
+                for (World world : Bukkit.getWorlds()) {
                     BlockStorage storage = BlockStorage.getStorage(world);
-                    if(storage != null) {
+                    if (storage != null) {
                         storage.save();
                     }
                 }

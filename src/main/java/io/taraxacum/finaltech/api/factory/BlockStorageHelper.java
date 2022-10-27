@@ -104,7 +104,7 @@ public abstract class BlockStorageHelper {
                 return stringBlockStorageHelperMap.get(key);
             } else {
                 synchronized (stringBlockStorageHelperMap) {
-                    if(stringBlockStorageHelperMap.containsKey(key)) {
+                    if (stringBlockStorageHelperMap.containsKey(key)) {
                         return stringBlockStorageHelperMap.get(key);
                     }
                     BlockStorageHelper blockStorageHelper = new BlockStorageHelper(id, valueList) {
@@ -120,7 +120,7 @@ public abstract class BlockStorageHelper {
             }
         } else {
             synchronized (BLOCK_STORAGE_HELPER_FACTORY) {
-                if(BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
+                if (BLOCK_STORAGE_HELPER_FACTORY.containsKey(id)) {
                     return BlockStorageHelper.newInstanceOrGet(id, key, valueList);
                 }
                 Map<String, BlockStorageHelper> stringBlockStorageHelperMap = new HashMap<>();

@@ -20,7 +20,7 @@ public class AdvancedMachineRecipe {
         this.inputs = inputs;
         this.randomOutputs = randomOutputs;
         this.weightBeginValues = new int[randomOutputs.length];
-        for(int i = 0; i < this.randomOutputs.length; i++) {
+        for (int i = 0; i < this.randomOutputs.length; i++) {
             this.weightBeginValues[i] = this.weightSum;
             this.weightSum += this.randomOutputs[i].getWeight();
         }

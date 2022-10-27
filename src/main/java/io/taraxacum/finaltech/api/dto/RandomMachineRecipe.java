@@ -26,7 +26,7 @@ public class RandomMachineRecipe extends MachineRecipe {
         super(machineRecipe.getTicks(), machineRecipe.getInput(), new ItemStack[0]);
         this.randomOutputs = randomOutputs;
         this.weightBeginValues = new int[randomOutputs.length];
-        for(int i = 0; i < this.randomOutputs.length; i++) {
+        for (int i = 0; i < this.randomOutputs.length; i++) {
             this.weightBeginValues[i] = this.weightSum;
             this.weightSum += this.randomOutputs[i].getWeight();
         }
@@ -36,7 +36,7 @@ public class RandomMachineRecipe extends MachineRecipe {
         super(0, input, new ItemStack[0]);
         this.randomOutputs = randomOutputs;
         this.weightBeginValues = new int[randomOutputs.length];
-        for(int i = 0; i < this.randomOutputs.length; i++) {
+        for (int i = 0; i < this.randomOutputs.length; i++) {
             this.weightBeginValues[i] = this.weightSum;
             this.weightSum += this.randomOutputs[i].getWeight();
         }
@@ -46,7 +46,7 @@ public class RandomMachineRecipe extends MachineRecipe {
         super(0, input, new ItemStack[0]);
         this.randomOutputs = randomOutputs.toArray(new RandomOutput[0]);
         this.weightBeginValues = new int[randomOutputs.size()];
-        for(int i = 0; i < this.randomOutputs.length; i++) {
+        for (int i = 0; i < this.randomOutputs.length; i++) {
             this.weightBeginValues[i] = this.weightSum;
             this.weightSum += this.randomOutputs[i].getWeight();
         }
@@ -56,7 +56,7 @@ public class RandomMachineRecipe extends MachineRecipe {
         super(0, new ItemStack[] {input}, new ItemStack[0]);
         this.randomOutputs = randomOutputs.toArray(new RandomOutput[0]);
         this.weightBeginValues = new int[randomOutputs.size()];
-        for(int i = 0; i < this.randomOutputs.length; i++) {
+        for (int i = 0; i < this.randomOutputs.length; i++) {
             this.weightBeginValues[i] = this.weightSum;
             this.weightSum += this.randomOutputs[i].getWeight();
         }
@@ -90,7 +90,7 @@ public class RandomMachineRecipe extends MachineRecipe {
         System.arraycopy(this.randomOutputs, 0, newRandomOutput, 0, this.randomOutputs.length);
         System.arraycopy(this.weightBeginValues, 0, newWeightBeginValues, 0, this.weightBeginValues.length);
         int newWeightSum = this.weightSum;
-        for(int i = 0; i < randomOutputs.length; i++) {
+        for (int i = 0; i < randomOutputs.length; i++) {
             RandomOutput randomOutput = randomOutputs[i];
             newRandomOutput[i + this.randomOutputs.length] = randomOutputs[i];
             newWeightBeginValues[i + this.weightBeginValues.length] = newWeightSum;

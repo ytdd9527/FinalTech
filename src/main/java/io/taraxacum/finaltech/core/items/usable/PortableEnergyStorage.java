@@ -51,22 +51,22 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
 
         Optional<Block> clickedBlock = playerRightClickEvent.getClickedBlock();
         System.out.println(1);
-        if(clickedBlock.isPresent()) {
+        if (clickedBlock.isPresent()) {
             System.out.println(2);
             Block block = clickedBlock.get();
             Location location = block.getLocation();
-            if(PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.PLACE_BLOCK, Interaction.BREAK_BLOCK) && BlockStorage.hasBlockInfo(location)) {
+            if (PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.PLACE_BLOCK, Interaction.BREAK_BLOCK) && BlockStorage.hasBlockInfo(location)) {
                 System.out.println(3);
                 Config config = BlockStorage.getLocationInfo(location);
-                if(config.contains(ConstantTableUtil.CONFIG_ID)) {
+                if (config.contains(ConstantTableUtil.CONFIG_ID)) {
                     System.out.println(4);
                     String itemId = config.getString(ConstantTableUtil.CONFIG_ID);
                     SlimefunItem slimefunItem = SlimefunItem.getById(itemId);
-                    if(slimefunItem instanceof EnergyNetComponent energyNetComponent) {
+                    if (slimefunItem instanceof EnergyNetComponent energyNetComponent) {
                         System.out.println(5);
                         ItemStack item = playerRightClickEvent.getItem();
 
-                        if(EnergyNetComponentType.CONSUMER.equals(energyNetComponent.getEnergyComponentType()) && energyNetComponent.getCapacity() > 0) {
+                        if (EnergyNetComponentType.CONSUMER.equals(energyNetComponent.getEnergyComponentType()) && energyNetComponent.getCapacity() > 0) {
                             System.out.println("6a");
                             // charge machine
 
@@ -81,7 +81,7 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
                             this.updateLore(item);
 
                             ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
-                        } else if((EnergyNetComponentType.GENERATOR.equals(energyNetComponent.getEnergyComponentType()) || EnergyNetComponentType.CAPACITOR.equals(energyNetComponent.getEnergyComponentType()))
+                        } else if ((EnergyNetComponentType.GENERATOR.equals(energyNetComponent.getEnergyComponentType()) || EnergyNetComponentType.CAPACITOR.equals(energyNetComponent.getEnergyComponentType()))
                                 && energyNetComponent.getCapacity() > 0) {
                             System.out.println("6b");
                             // consume energy in machine, charge item
@@ -103,10 +103,10 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
 
     @Nonnull
     public String getEnergy(@Nonnull ItemStack itemStack) {
-        if(itemStack.hasItemMeta()) {
+        if (itemStack.hasItemMeta()) {
             ItemMeta itemMeta = itemStack.getItemMeta();
             PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-            if(persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
+            if (persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
                 return persistentDataContainer.get(KEY, PersistentDataType.STRING);
             }
         }
@@ -114,11 +114,11 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
     }
 
     public void addEnergy(@Nonnull ItemStack itemStack, @Nonnull String energy) {
-        if(itemStack.hasItemMeta()) {
+        if (itemStack.hasItemMeta()) {
             ItemMeta itemMeta = itemStack.getItemMeta();
             PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
             String number = StringNumberUtil.ZERO;
-            if(persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
+            if (persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
                 number = persistentDataContainer.get(KEY, PersistentDataType.STRING);
             }
             number = StringNumberUtil.add(number, energy);
@@ -128,11 +128,11 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
     }
 
     public void subEnergy(@Nonnull ItemStack itemStack, @Nonnull String energy) {
-        if(itemStack.hasItemMeta()) {
+        if (itemStack.hasItemMeta()) {
             ItemMeta itemMeta = itemStack.getItemMeta();
             PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
             String number = StringNumberUtil.ZERO;
-            if(persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
+            if (persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
                 number = persistentDataContainer.get(KEY, PersistentDataType.STRING);
             }
             number = StringNumberUtil.sub(number, energy);

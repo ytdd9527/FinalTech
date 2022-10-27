@@ -65,7 +65,7 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
         String value = config.contains(this.key) ? config.getString(this.key) : StringNumberUtil.ZERO;
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if(ItemStackUtil.isItemNull(item)) {
+            if (ItemStackUtil.isItemNull(item)) {
                 continue;
             }
             if (ItemStackUtil.isItemSimilar(item, FinalTechItems.UNORDERED_DUST)) {
@@ -102,13 +102,13 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
         System.out.println(ItemValueTable.getInstance().getValueItemListOutputMap().keySet());
         System.out.println(valueList);
         System.out.println("======");
-        for(int i = 0, retryTimes = value.length(); i < retryTimes; i++) {
+        for (int i = 0, retryTimes = value.length(); i < retryTimes; i++) {
             String targetValue = valueList.get(new Random().nextInt(valueList.size()));
             if (StringNumberUtil.compare(value, targetValue) >= 0) {
                 List<String> idList = ItemValueTable.getInstance().getValueItemListOutputMap().get(targetValue);
                 String id = idList.get((int) (Math.random() * idList.size()));
                 SlimefunItem slimefunItem = SlimefunItem.getById(id);
-                if(slimefunItem == null || slimefunItem instanceof MultiBlockMachine) {
+                if (slimefunItem == null || slimefunItem instanceof MultiBlockMachine) {
                     continue;
                 }
                 ItemStack item = new CustomItemStack(slimefunItem.getItem(), 1);

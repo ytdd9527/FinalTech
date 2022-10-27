@@ -36,7 +36,7 @@ public class MachineRecipeFactory {
     public List<AdvancedMachineRecipe> getAdvancedRecipe(@Nonnull Class<?> clazz) {
         if (this.advancedRecipeMap.containsKey(clazz)) {
             return this.advancedRecipeMap.get(clazz);
-        } else if(this.recipeMap.containsKey(clazz)) {
+        } else if (this.recipeMap.containsKey(clazz)) {
             this.initAdvancedRecipeMap(clazz);
             return this.advancedRecipeMap.get(clazz);
         }
@@ -56,7 +56,7 @@ public class MachineRecipeFactory {
             if (machineRecipe instanceof RandomMachineRecipe) {
                 advancedRandomOutputs = new AdvancedMachineRecipe.AdvancedRandomOutput[((RandomMachineRecipe) machineRecipe).getRandomOutputs().length];
                 RandomMachineRecipe.RandomOutput[] randomOutputs = ((RandomMachineRecipe) machineRecipe).getRandomOutputs();
-                for(int i = 0; i < randomOutputs.length; i++) {
+                for (int i = 0; i < randomOutputs.length; i++) {
                     advancedRandomOutputs[i] = new AdvancedMachineRecipe.AdvancedRandomOutput(ItemStackUtil.calItemArrayWithAmount(randomOutputs[i].getOutputItem()), randomOutputs[i].getWeight());
                 }
             } else {
@@ -71,9 +71,9 @@ public class MachineRecipeFactory {
 
     @Nonnull
     public static MachineRecipeFactory getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             synchronized (MachineRecipeFactory.class) {
-                if(instance == null) {
+                if (instance == null) {
                     instance = new MachineRecipeFactory();
                 }
             }
