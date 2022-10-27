@@ -46,6 +46,10 @@ public class CargoDTO {
     /** the slots of the filterInv to be used */
     private int[] filterSlots;
 
+    public CargoDTO() {
+
+    }
+
     public CargoDTO(JavaPlugin javaPlugin, Block inputBlock, String inputSize, String inputOrder, Block outputBlock, String outputSize, String outputOrder, int cargoNumber, String cargoLimit, String cargoFilter, Inventory filterInv, int[] filterSlots) {
         this.javaPlugin = javaPlugin;
         this.inputBlock = inputBlock;

@@ -2,11 +2,9 @@ package io.taraxacum.finaltech.core.menu.function;
 
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
-import io.taraxacum.finaltech.core.items.unusable.Bug;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.helper.*;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
@@ -17,7 +15,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class LinkTransferMenu extends AbstractMachineMenu {
+public class PointTransferMenu extends AbstractMachineMenu {
     private static final int[] BORDER = new int[] {21, 22, 23, 27, 28, 29, 33, 34, 35, 36, 37, 38, 42, 43, 44, 45, 46, 47, 51, 52, 53};
     private static final int[] INPUT_BORDER = new int[] {0, 2, 9, 11, 18, 20};
     private static final int[] OUTPUT_BORDER = new int[] {6, 8, 15, 17, 24, 26};
@@ -41,7 +39,7 @@ public class LinkTransferMenu extends AbstractMachineMenu {
 
     public static final int[] ITEM_MATCH = new int[] {30, 31, 32, 39, 40, 41, 48, 49, 50};
 
-    public LinkTransferMenu(@Nonnull AbstractMachine machine) {
+    public PointTransferMenu(@Nonnull AbstractMachine machine) {
         super(machine);
     }
 
@@ -84,11 +82,11 @@ public class LinkTransferMenu extends AbstractMachineMenu {
 
         this.addItem(INPUT_SLOT_SEARCH_SIZE_SLOT, SlotSearchSize.INPUT_HELPER.defaultIcon());
         this.addItem(INPUT_SLOT_SEARCH_ORDER_SLOT, SlotSearchOrder.INPUT_HELPER.defaultIcon());
-        this.addItem(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.LINK_INPUT_HELPER.defaultIcon());
+        this.addItem(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.POINT_INPUT_HELPER.defaultIcon());
 
         this.addItem(OUTPUT_SLOT_SEARCH_SIZE_SLOT, SlotSearchSize.OUTPUT_HELPER.defaultIcon());
         this.addItem(OUTPUT_SLOT_SEARCH_ORDER_SLOT, SlotSearchOrder.OUTPUT_HELPER.defaultIcon());
-        this.addItem(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.LINK_OUTPUT_HELPER.defaultIcon());
+        this.addItem(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.POINT_OUTPUT_HELPER.defaultIcon());
     }
 
     @Override
@@ -105,11 +103,11 @@ public class LinkTransferMenu extends AbstractMachineMenu {
 
         blockMenu.addMenuClickHandler(INPUT_SLOT_SEARCH_SIZE_SLOT, SlotSearchSize.INPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), INPUT_SLOT_SEARCH_SIZE_SLOT));
         blockMenu.addMenuClickHandler(INPUT_SLOT_SEARCH_ORDER_SLOT, SlotSearchOrder.INPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), INPUT_SLOT_SEARCH_ORDER_SLOT));
-        blockMenu.addMenuClickHandler(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.LINK_INPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), INPUT_BLOCK_SEARCH_MODE_SLOT));
+        blockMenu.addMenuClickHandler(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.POINT_INPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), INPUT_BLOCK_SEARCH_MODE_SLOT));
 
         blockMenu.addMenuClickHandler(OUTPUT_SLOT_SEARCH_SIZE_SLOT, SlotSearchSize.OUTPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), OUTPUT_SLOT_SEARCH_SIZE_SLOT));
         blockMenu.addMenuClickHandler(OUTPUT_SLOT_SEARCH_ORDER_SLOT, SlotSearchOrder.OUTPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), OUTPUT_SLOT_SEARCH_ORDER_SLOT));
-        blockMenu.addMenuClickHandler(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.LINK_OUTPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), OUTPUT_BLOCK_SEARCH_MODE_SLOT));
+        blockMenu.addMenuClickHandler(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.POINT_OUTPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), OUTPUT_BLOCK_SEARCH_MODE_SLOT));
     }
 
     @Override
@@ -121,10 +119,10 @@ public class LinkTransferMenu extends AbstractMachineMenu {
 
         SlotSearchSize.INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_SLOT_SEARCH_SIZE_SLOT);
         SlotSearchOrder.INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_SLOT_SEARCH_ORDER_SLOT);
-        BlockSearchMode.LINK_INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_BLOCK_SEARCH_MODE_SLOT);
+        BlockSearchMode.POINT_INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_BLOCK_SEARCH_MODE_SLOT);
 
         SlotSearchSize.OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_SLOT_SEARCH_SIZE_SLOT);
         SlotSearchOrder.OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_SLOT_SEARCH_ORDER_SLOT);
-        BlockSearchMode.LINK_OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_BLOCK_SEARCH_MODE_SLOT);
+        BlockSearchMode.POINT_OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_BLOCK_SEARCH_MODE_SLOT);
     }
 }

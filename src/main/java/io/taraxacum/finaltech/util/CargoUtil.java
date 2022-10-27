@@ -240,7 +240,7 @@ public class CargoUtil {
         boolean nonnull = CargoLimit.VALUE_NONNULL.equals(simpleCargoDTO.getCargoLimit());
         boolean stack = !nonnull && CargoLimit.VALUE_STACK.equals(simpleCargoDTO.getCargoLimit());
         boolean first = !nonnull && !stack && CargoLimit.VALUE_FIRST.equals(simpleCargoDTO.getCargoLimit());
-        boolean typeLimit = !nonnull && !stack && !first && CargoLimit.typeLimit(simpleCargoDTO.getCargoLimit());
+        boolean typeLimit = !nonnull && !first && CargoLimit.typeLimit(simpleCargoDTO.getCargoLimit());
 
         int number = 0;
         int cargoNumber = simpleCargoDTO.getCargoNumber();
@@ -316,7 +316,7 @@ public class CargoUtil {
         boolean nonnull = CargoLimit.VALUE_NONNULL.equals(simpleCargoDTO.getCargoLimit());
         boolean stack = !nonnull && CargoLimit.VALUE_STACK.equals(simpleCargoDTO.getCargoLimit());
         boolean first = !nonnull && !stack && CargoLimit.VALUE_FIRST.equals(simpleCargoDTO.getCargoLimit());
-        boolean typeLimit = !nonnull && !stack && !first && CargoLimit.typeLimit(simpleCargoDTO.getCargoLimit());
+        boolean typeLimit = !nonnull && !first && CargoLimit.typeLimit(simpleCargoDTO.getCargoLimit());
 
         int number = 0;
         int cargoNumber = simpleCargoDTO.getCargoNumber();
@@ -395,7 +395,7 @@ public class CargoUtil {
         boolean nonnull = CargoLimit.VALUE_NONNULL.equals(simpleCargoDTO.getCargoLimit());
         boolean stack = !nonnull && CargoLimit.VALUE_STACK.equals(simpleCargoDTO.getCargoLimit());
         boolean first = !nonnull && !stack && CargoLimit.VALUE_FIRST.equals(simpleCargoDTO.getCargoLimit());
-        boolean typeLimit = !nonnull && !stack && !first && CargoLimit.typeLimit(simpleCargoDTO.getCargoLimit());
+        boolean typeLimit = !nonnull && !first && CargoLimit.typeLimit(simpleCargoDTO.getCargoLimit());
 
         int number = 0;
         int cargoNumber = simpleCargoDTO.getCargoNumber();
@@ -511,7 +511,7 @@ public class CargoUtil {
         boolean nonnull = CargoLimit.VALUE_NONNULL.equals(simpleCargoDTO.getCargoLimit());
         boolean stack = !nonnull && CargoLimit.VALUE_STACK.equals(simpleCargoDTO.getCargoLimit());
         boolean first = !nonnull && !stack && CargoLimit.VALUE_FIRST.equals(simpleCargoDTO.getCargoLimit());
-        boolean typeLimit = !nonnull && !stack && !first && CargoLimit.typeLimit(simpleCargoDTO.getCargoLimit());
+        boolean typeLimit = !nonnull && !first && CargoLimit.typeLimit(simpleCargoDTO.getCargoLimit());
 
         int number = 0;
         int cargoNumber = simpleCargoDTO.getCargoNumber();

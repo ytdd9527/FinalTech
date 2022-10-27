@@ -53,12 +53,13 @@ public abstract class AbstractMachineChargeCard extends UsableSlimefunItem {
         }
 
         if (!PermissionUtil.checkPermission(player, location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
-            player.sendRawMessage(FinalTech.getLanguageManager().getString("messages", "no-permission", "location"));
+            // TODO: message
+            player.sendRawMessage(FinalTech.getLanguageString("messages", "no-permission", "location"));
             return;
         }
 
         if (!this.conditionMatch(player)) {
-            player.sendRawMessage(FinalTech.getLanguageManager().getString("messages", "no-condition", "player"));
+            player.sendRawMessage(FinalTech.getLanguageString("messages", "no-condition", "player"));
             return;
         }
 

@@ -83,6 +83,11 @@ public class ConfigUtil {
     }
 
     @Nonnull
+    public static List<String> getItemStringList(@Nonnull String id, @Nonnull String... path) {
+        return FinalTech.getItemManager().getStringList(JavaUtil.addToFirst(id, path));
+    }
+
+    @Nonnull
     public static <T> T getOrDefaultConfigSetting(@Nonnull T defaultValue, @Nonnull String... path) {
         return FinalTech.getConfigManager().getOrDefault(defaultValue, path);
     }

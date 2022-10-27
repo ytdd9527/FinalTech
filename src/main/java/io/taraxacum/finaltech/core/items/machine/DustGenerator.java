@@ -34,7 +34,6 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 1.0
  */
-// TODO use operation
 public class DustGenerator extends AbstractMachine implements RecipeItem, EnergyNetProvider {
     private final String KEY_COUNT = "count";
     private final int CAPACITY = ConfigUtil.getOrDefaultItemSetting(Integer.MAX_VALUE / 4, this, "capacity");

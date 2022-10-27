@@ -44,7 +44,7 @@ public final class SlotSearchOrder {
         this.put(VALUE_LAST_ONLY, LAST_ONLY_ICON);
         this.put(VALUE_RANDOM, RANDOM_ICON);
     }});
-    public static final BlockStorageIconHelper OUTPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY_INPUT, new LinkedHashMap<>() {{
+    public static final BlockStorageIconHelper OUTPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY_OUTPUT, new LinkedHashMap<>() {{
         this.put(VALUE_ASCENT, ASCENT_ICON);
         this.put(VALUE_DESCEND, DESCEND_ICON);
         this.put(VALUE_FIRST_ONLY, FIRST_ONLY_ICON);

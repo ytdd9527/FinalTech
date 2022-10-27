@@ -20,12 +20,16 @@ import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.CargoUtil;
 import io.taraxacum.finaltech.core.helper.SlotSearchOrder;
 import io.taraxacum.finaltech.core.helper.SlotSearchSize;
+import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
+import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
+import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,7 +41,6 @@ import java.util.List;
  * @author Final_ROOT
  * @since 2.0
  */
-// TODO...
 public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
     public AdvancedAutoCraft(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -71,8 +74,6 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         Location location = block.getLocation();
         BlockMenu blockMenu = BlockStorage.getInventory(location);
-        JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
-        boolean primaryThread = javaPlugin.getServer().isPrimaryThread();
 
         AdvancedMachineRecipe machineRecipe = LocationRecipeRegistry.getInstance().getRecipe(location);
         if (machineRecipe == null) {
@@ -80,51 +81,60 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
         }
 
         Block containerBlock = block.getRelative(BlockFace.DOWN);
-        if (!BlockStorage.hasInventory(containerBlock)) {
+        if (!BlockStorage.hasBlockInfo(containerBlock) || !BlockStorage.hasInventory(containerBlock)) {
             return;
         }
 
-        InvWithSlots inputMap = CargoUtil.getInvWithSlots(containerBlock, SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config), SlotSearchOrder.VALUE_ASCENT);
-        InvWithSlots outputMap = CargoUtil.getInvWithSlots(containerBlock, SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config), SlotSearchOrder.VALUE_ASCENT);
-        if (inputMap == null || outputMap == null || inputMap.getSlots().length == 0 || outputMap.getSlots().length == 0) {
-            return;
-        }
+        Config locationInfo = BlockStorage.getLocationInfo(containerBlock.getLocation());
+        if(locationInfo.contains(ConstantTableUtil.CONFIG_ID)) {
+            String id = locationInfo.getString(ConstantTableUtil.CONFIG_ID);
+            Runnable runnable = () -> {
+                InvWithSlots inputMap = CargoUtil.getInvWithSlots(containerBlock, SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config), SlotSearchOrder.VALUE_ASCENT);
+                InvWithSlots outputMap = CargoUtil.getInvWithSlots(containerBlock, SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config), SlotSearchOrder.VALUE_ASCENT);
+                if (inputMap == null || outputMap == null || inputMap.getSlots().length == 0 || outputMap.getSlots().length == 0) {
+                    return;
+                }
 
-        BlockMenu containerMenu = BlockStorage.getInventory(containerBlock);
-        int[] inputSlots = inputMap.getSlots();
-        int[] outputSlots = outputMap.getSlots();
+                BlockMenu containerMenu = BlockStorage.getInventory(containerBlock);
+                int[] inputSlots = inputMap.getSlots();
+                int[] outputSlots = outputMap.getSlots();
 
-        int quantity = Icon.updateQuantityModule(blockMenu, AdvancedAutoCraftMenu.MODULE_SLOT, AdvancedAutoCraftMenu.STATUS_SLOT);
+                int quantity = Icon.updateQuantityModule(blockMenu, AdvancedAutoCraftMenu.MODULE_SLOT, AdvancedAutoCraftMenu.STATUS_SLOT);
 
-        Runnable runnable = () -> {
-            AdvancedCraft craft = AdvancedCraft.craftAsc(containerMenu.toInventory(), inputSlots, List.of(machineRecipe), quantity, 0);
-            if (craft != null) {
-                craft.setMatchCount(Math.min(craft.getMatchCount(), MachineUtil.calMaxMatch(containerMenu.toInventory(), outputSlots, craft.getOutputItemList())));
-                if (craft.getMatchCount() > 0) {
-                    craft.consumeItem(containerMenu.toInventory());
-                    for (ItemStack item : craft.calMachineRecipe(0).getOutput()) {
-                        containerMenu.pushItem(ItemStackUtil.cloneItem(item), outputSlots);
+                AdvancedCraft craft = AdvancedCraft.craftAsc(containerMenu.toInventory(), inputSlots, List.of(machineRecipe), quantity, 0);
+                if (craft != null) {
+                    craft.setMatchCount(Math.min(craft.getMatchCount(), MachineUtil.calMaxMatch(containerMenu.toInventory(), outputSlots, craft.getOutputItemList())));
+                    if (craft.getMatchCount() > 0) {
+                        craft.consumeItem(containerMenu.toInventory());
+                        for (ItemStack item : craft.calMachineRecipe(0).getOutput()) {
+                            containerMenu.pushItem(ItemStackUtil.cloneItem(item), outputSlots);
+                        }
                     }
                 }
+            };
+            if(FinalTech.isAsyncSlimefunItem(id)) {
+                FinalTech.getLocationRunnableFactory().waitThenRun(runnable, block.getLocation(), containerBlock.getLocation());
+            } else {
+                runnable.run();
             }
-        };
-
-        if(primaryThread) {
-            runnable.run();
-        } else {
-            FinalTech.getLocationRunnableFactory().waitThenRun(runnable, containerBlock.getLocation());
         }
     }
 
     @Override
     protected boolean isSynchronized() {
-        return true;
+        return false;
     }
 
     @Override
     public void registerDefaultRecipes() {
-        for (ItemStack item : AdvancedAutoCraftMenu.RECIPE_MAP.keySet()) {
-            this.registerDescriptiveRecipe(item);
+        for (String id : AdvancedAutoCraftMenu.RECIPE_MAP.keySet()) {
+            SlimefunItem slimefunItem = SlimefunItem.getById(id);
+            if(slimefunItem != null) {
+                ItemStack itemStack = slimefunItem.getRecipeType().toItem();
+                if(!ItemStackUtil.isItemNull(itemStack)) {
+                    this.registerDescriptiveRecipe(itemStack);
+                }
+            }
         }
     }
 }

@@ -5,11 +5,11 @@ import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.items.unusable.*;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
+import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.StringItemUtil;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
-import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -40,9 +40,41 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             ConfigUtil.getStatusMenuName(FinalTech.getLanguageManager(), this.getID()),
             ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this.getID()));
 
-    private static final List<Craft> CRAFT_LIST = new ArrayList<>();
+    public static final List<Craft> CRAFT_LIST = new ArrayList<>();
     {
+        // merge-storage-card
         CRAFT_LIST.add(new Craft() {
+            private final boolean enable = ConfigUtil.getOrDefaultItemSetting(true, CardOperationPortMenu.this.getID(), this.getId(), "enable");
+            private final String infoName = FinalTech.getLanguageString("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "name");
+            private final String[] infoLore = FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "lore");
+            private final String infoOutput = FinalTech.getLanguageString("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "output");
+
+            @Nonnull
+            @Override
+            public String getId() {
+                return "merge-storage-card";
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return this.enable;
+            }
+
+            @Override
+            public String getInfoName() {
+                return infoName;
+            }
+
+            @Override
+            public String[] getInfoLore() {
+                return this.infoLore;
+            }
+
+            @Override
+            public String getInfoOutput() {
+                return this.infoOutput;
+            }
+
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
                 if (!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2) && StorageCardItem.isValid(item1) && StorageCardItem.isValid(item2)) {
@@ -56,7 +88,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), "action1-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "match-icon", "lore"));
             }
 
             @Override
@@ -83,7 +115,39 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                 return false;
             }
         });
+        // copy-copy-card
         CRAFT_LIST.add(new Craft() {
+            private final boolean enable = ConfigUtil.getOrDefaultItemSetting(true, CardOperationPortMenu.this.getID(), this.getId(), "enable");
+            private final String infoName = FinalTech.getLanguageString("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "name");
+            private final String[] infoLore = FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "lore");
+            private final String infoOutput = FinalTech.getLanguageString("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "output");
+
+            @Nonnull
+            @Override
+            public String getId() {
+                return "copy-copy-card";
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return this.enable;
+            }
+
+            @Override
+            public String getInfoName() {
+                return infoName;
+            }
+
+            @Override
+            public String[] getInfoLore() {
+                return this.infoLore;
+            }
+
+            @Override
+            public String getInfoOutput() {
+                return this.infoOutput;
+            }
+
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
                 if (!ItemStackUtil.isItemNull(item1) && CopyCard.isValid(item1) && Shell.isValid(item2)) {
@@ -94,7 +158,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), "action2-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "match-icon", "lore"));
             }
 
             @Override
@@ -114,55 +178,39 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                 return false;
             }
         });
+        // craft-item-phony
         CRAFT_LIST.add(new Craft() {
+            private final boolean enable = ConfigUtil.getOrDefaultItemSetting(true, CardOperationPortMenu.this.getID(), this.getId(), "enable");
+            private final String infoName = FinalTech.getLanguageString("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "name");
+            private final String[] infoLore = FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "lore");
+            private final String infoOutput = FinalTech.getLanguageString("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "output");
+
+            @Nonnull
             @Override
-            public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if (!ItemStackUtil.isItemNull(item1) && StorageCardItem.isValid(item1) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item1), String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT)) >= 0) {
-                    return true;
-                } else if (!ItemStackUtil.isItemNull(item2) && StorageCardItem.isValid(item2) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item2), String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT)) >= 0) {
-                    return true;
-                }
-                return false;
+            public String getId() {
+                return "craft-item-phony";
             }
 
             @Override
-            public void doUpdateIcon(@Nonnull ItemStack iconItem) {
-                iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), "action3-icon", "lore"));
+            public boolean isEnabled() {
+                return this.enable;
             }
 
             @Override
-            public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull Inventory inventory, int outputSlot) {
-                ItemStack storageCardItem = null;
-                ItemMeta storageCardItemMeta = null;
-                if (!ItemStackUtil.isItemNull(item1) && StorageCardItem.isValid(item1) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item1), String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT)) >= 0) {
-                    storageCardItem = item1;
-                    storageCardItemMeta = item1.getItemMeta();
-                } else if (!ItemStackUtil.isItemNull(item2) && StorageCardItem.isValid(item2) && StringNumberUtil.compare(StringItemUtil.parseAmountInCard(item2), String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT)) >= 0) {
-                    storageCardItem = item2;
-                    storageCardItemMeta = item2.getItemMeta();
-                } else {
-                    return false;
-                }
-                if (storageCardItemMeta != null) {
-                    Player player = null;
-                    for (HumanEntity humanEntity : inventory.getViewers()) {
-                        if (humanEntity instanceof Player) {
-                            player = (Player) humanEntity;
-                            break;
-                        }
-                    }
-                    ItemStack outputItem = Annular.newItem(storageCardItem, player);
-                    outputItem.setAmount(1);
-                    StringItemUtil.setAmountInCard(storageCardItem, StringNumberUtil.sub(StringItemUtil.parseAmountInCard(storageCardItemMeta), String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT)));
-                    StorageCardItem.updateLore(storageCardItem);
-                    inventory.setItem(outputSlot, outputItem);
-                    return true;
-                }
-                return false;
+            public String getInfoName() {
+                return infoName;
             }
-        });
-        CRAFT_LIST.add(new Craft() {
+
+            @Override
+            public String[] getInfoLore() {
+                return this.infoLore;
+            }
+
+            @Override
+            public String getInfoOutput() {
+                return this.infoOutput;
+            }
+
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
                 if (Singularity.isValid(item1) && Spirochete.isValid(item2)) {
@@ -173,7 +221,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), "action4-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "match-icon", "lore"));
             }
 
             @Override
@@ -194,19 +242,48 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                 return false;
             }
         });
+        // craft-item-shell
         CRAFT_LIST.add(new Craft() {
+            private final boolean enable = ConfigUtil.getOrDefaultItemSetting(true, CardOperationPortMenu.this.getID(), this.getId(), "enable");
+            private final String infoName = FinalTech.getLanguageString("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "name");
+            private final String[] infoLore = FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "lore");
+            private final String infoOutput = FinalTech.getLanguageString("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "output");
+
+            @Nonnull
+            @Override
+            public String getId() {
+                return "craft-item-shell";
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return this.enable;
+            }
+
+            @Override
+            public String getInfoName() {
+                return infoName;
+            }
+
+            @Override
+            public String[] getInfoLore() {
+                return this.infoLore;
+            }
+
+            @Override
+            public String getInfoOutput() {
+                return this.infoOutput;
+            }
+
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if (Singularity.isValid(item1) || Singularity.isValid(item2) || Spirochete.isValid(item1) || Spirochete.isValid(item2)) {
-                    return true;
-                }
-                return false;
+                return Singularity.isValid(item1) || Singularity.isValid(item2) || Spirochete.isValid(item1) || Spirochete.isValid(item2);
             }
 
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), "action5-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "match-icon", "lore"));
             }
 
             @Override
@@ -237,7 +314,39 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                 return false;
             }
         });
+        // craft-annular
         CRAFT_LIST.add(new Craft() {
+            private final boolean enable = ConfigUtil.getOrDefaultItemSetting(true, CardOperationPortMenu.this.getID(), this.getId(), "enable");
+            private final String infoName = FinalTech.getLanguageString("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "name");
+            private final String[] infoLore = FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "lore");
+            private final String infoOutput = FinalTech.getLanguageString("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "output");
+
+            @Nonnull
+            @Override
+            public String getId() {
+                return "craft-annular";
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return this.enable;
+            }
+
+            @Override
+            public String getInfoName() {
+                return infoName;
+            }
+
+            @Override
+            public String[] getInfoLore() {
+                return this.infoLore;
+            }
+
+            @Override
+            public String getInfoOutput() {
+                return this.infoOutput;
+            }
+
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
                 return CopyCard.isValid(item1) || CopyCard.isValid(item2);
@@ -246,7 +355,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), "action6-icon", "lore"));
+                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "match-icon", "lore"));
             }
 
             @Override
@@ -333,7 +442,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         ItemStack iconItem = inventory.getItem(CRAFT_SLOT);
         boolean work = false;
         for (Craft craft : CRAFT_LIST) {
-            if (craft.canCraft(inputItem1, inputItem2)) {
+            if(craft.isEnabled() && craft.canCraft(inputItem1, inputItem2)) {
                 craft.doUpdateIcon(iconItem);
                 work = true;
                 break;
@@ -355,13 +464,24 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             return;
         }
         for (Craft craft : CRAFT_LIST) {
-            if (craft.craft(inputItem1, inputItem2, inventory, OUTPUT_SLOT[0])) {
+            if (craft.isEnabled() && craft.craft(inputItem1, inputItem2, inventory, OUTPUT_SLOT[0])) {
                 break;
             }
         }
     }
 
-    private interface Craft {
+    public interface Craft {
+        @Nonnull
+        String getId();
+
+        boolean isEnabled();
+
+        String getInfoName();
+
+        String[] getInfoLore();
+
+        String getInfoOutput();
+
         boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2);
 
         void doUpdateIcon(@Nonnull ItemStack iconItem);

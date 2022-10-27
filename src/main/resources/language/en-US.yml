@@ -37,7 +37,7 @@ helper:
       name: '{color:normal}Error'
   CARGO_ORDER:
     positive:
-      name: '{color:normal}CARGO ORDER - {color:random}POSITIVE'
+      name: '{color:normal}CARGO ORDER {color:conceal}- {color:random}POSITIVE'
       lore:
         - '{color:normal}Iterate through the location queue in positive order'
     reverse:
@@ -61,236 +61,187 @@ helper:
       lore0:
         - '{color:normal}No Limit in transferring items at one time'
     add-icon:
-      name: '{color:normal}Cargo Number - Add'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}Cargo Number {color:conceal}- {color:random}Add'
     sub-icon:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}Cargo Number {color:conceal}- {color:random}Sub'
   CARGO_FILTER:
     black-filter-mode:
-      name: '---===---'
+      name: '{color:normal}Cargo Filter {color:conceal}- {color:random}Black'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Transfer item that not matches'
     white-filter-mode:
-      name: '---===---'
+      name: '{color:normal}Cargo Filter {color:conceal}- {color:random}White'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Transfer item that matches'
   CARGO_MODE:
     input-main:
-      name: '---===---'
+      name: '{color:normal}Cargo Mode {color:conceal}- {color:random}Input Main'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Push item from input side to output side'
     output-main:
-      name: '---===---'
+      name: '{color:normal}Cargo Mode {color:conceal}- {color:random}Output Main'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Pull item from input side to output side'
     strong-symmetry:
-      name: '---===---'
+      name: '{color:normal}Cargo Mode {color:conceal}- {color:random}Strong Symmetry'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Transfer item from input side to output side'
+        - '{color:normal}Item will only be transferred to the same slot'
     weak-symmetry:
-      name: '---===---'
+      name: '{color:normal}Cargo Mode {color:conceal}- {color:random}Weak Symmetry'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Transfer item from input side to output side'
+        - '{color:normal}Item will be transferred to the same slot if possible'
   CARGO_LIMIT:
     all:
-      name: '---===---'
+      name: '{color:normal}Cargo Limit {color:conceal}- {color:random}All'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}No Limit'
     type:
-      name: '---===---'
+      name: '{color:normal}Cargo Limit {color:conceal}- {color:random}Type'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Only one type of items will be transferred in one time'
     stack:
-      name: '---===---'
+      name: '{color:normal}Cargo Limit {color:conceal}- {color:random}Stack'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Only one type of items will be transferred in one time'
+        - '{color:normal}Transfer amount will not be more than max stack amount of the item'
     nonnull:
-      name: '---===---'
+      name: '{color:normal}Cargo Limit {color:conceal}- {color:random}Nonnull'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Slots without item will be skipped'
     first:
-      name: '---===---'
+      name: '{color:normal}Cargo Limit {color:conceal}- {color:random}First'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Only one slot will be involved'
+        - '{color:normal}(mostly like slimefun cargo)'
   SLOT_SEARCH_SIZE:
     inputs-only:
-      name: '---===---'
+      name: '{color:normal}Slot Search Size {color:conceal}- {color:random}Inputs Only'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Only input slots will be involved'
+        - '{color:normal}(Only for slimefun container)'
     outputs-only:
-      name: '---===---'
+      name: '{color:normal}Slot Search Size {color:conceal}- {color:random}Outputs Only'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Only output slots will be involved'
+        - '{color:normal}(Only for slimefun container)'
     inputs-and-outputs:
-      name: '---===---'
+      name: '{color:normal}Slot Search Size {color:conceal}- {color:random}Inputs And Outputs'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Size = input slots + output slots'
+        - '{color:normal}(Only for slimefun container)'
     outputs-and-inputs:
-      name: '---===---'
+      name: '{color:normal}Slot Search Size {color:conceal}- {color:random}Outputs And Inputs'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Size = output slots + input slots'
+        - '{color:normal}(Only for slimefun container)'
   SLOT_SEARCH_ORDER:
     ascent:
-      name: '---===---'
+      name: '{color:normal}Slot Search Order {color:conceal}- {color:random}Ascent'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Ascent use the result of {color:stress}slot search size'
     descend:
-      name: '---===---'
+      name: '{color:normal}Slot Search Order {color:conceal}- {color:random}Descend'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Descend use the result of {color:stress}slot search size'
     first-only:
-      name: '---===---'
+      name: '{color:normal}Slot Search Order {color:conceal}- {color:random}First Only'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Only use the first slot of {color:stress}slot search size'
     last-only:
-      name: '---===---'
+      name: '{color:normal}Slot Search Order {color:conceal}- {color:random}Last Only'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Only use the last slot of {color:stress}slot search size'
     random:
-      name: '---===---'
+      name: '{color:normal}Slot Search Order {color:conceal}- {color:random}Random'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Randomly use the result of {color:stress}slot search size'
   BLOCK_SEARCH_MODE:
     zero:
-      name: '---===---'
+      name: '{color:normal}Block Search Mode {color:conceal}- {color:random}Zero'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}No remote search'
     inherit:
-      name: '---===---'
+      name: '{color:normal}Block Search Mode {color:conceal}- {color:random}Inherit'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Remote search'
+        - "{color:normal}Inherit same type of block and it's direction"
     penetrate:
-      name: '---===---'
+      name: '{color:normal}Block Search Mode {color:conceal}- {color:random}Penetrate'
       lore:
-        - Fill me!
-        - I'm list!
-    respect:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Remote search'
+        - "{color:normal}Penetrate same type of block and not change direction"
     interrupt:
-      name: '---===---'
+      name: '{color:normal}Block Search Mode {color:conceal}- {color:random}Interrupt'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Remote search'
+        - "{color:normal}Stopped while meeting same type of block"
   BLOCK_SEARCH_ORDER:
     positive:
-      name: '---===---'
+      name: '{color:normal}Block Search Order {color:conceal}- {color:random}Positive'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Search block from closest to farthest'
     reverse:
-      name: '---===---'
+      name: '{color:normal}Block Search Order {color:conceal}- {color:random}Reverse'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Search block from farthest to closest'
     random:
-      name: '---===---'
+      name: '{color:normal}Block Search Order {color:conceal}- {color:random}Random'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Search block randomly in all connected blocks'
   BLOCK_SEARCH_CYCLE:
     'false':
-      name: '---===---'
+      name: '{color:normal}Block Search Order {color:conceal}- {color:random}False'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Not add first block to the end of block queue'
     'true':
-      name: '---===---'
+      name: '{color:normal}Block Search Order {color:conceal}- {color:random}False'
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:normal}Add first block to the end of block queue'
   BLOCK_SEARCH_SELF:
     'false':
-      name: '---===---'
+      name: '{color:normal}Block Search Self {color:conceal}- {color:random}False'
       lore:
-        - Fill me!
-        - I'm list!
-    begin:
-      name: '---===---'
+        - "{color:normal}Not add itself to block queue"
+    start:
+      name: '{color:normal}Block Search Self {color:conceal}- {color:random}Start'
       lore:
-        - Fill me!
-        - I'm list!
-    last:
-      name: '---===---'
+        - "{color:normal}Add itself to the start of block queue"
+    end:
+      name: '{color:normal}Block Search Self {color:conceal}- {color:random}End'
       lore:
-        - Fill me!
-        - I'm list!
+        - "{color:normal}Add itself to the end block queue"
   POSITION_INFO:
     north:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}Position {color:conceal}- {color:random}North'
     east:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}Position {color:conceal}- {color:random}East'
     south:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}Position {color:conceal}- {color:random}South'
     west:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}Position {color:conceal}- {color:random}West'
     up:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}Position {color:conceal}- {color:random}Up'
     down:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+      name: '{color:normal}Position {color:conceal}- {color:random}Down'
     'null':
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:stress}Null'
+        - '{color:normal}Do nothing for this side'
     input:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:stress}Input'
+        - '{color:normal}Do input for this side'
     output:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:stress}Output'
+        - '{color:normal}Do output for this side'
     input-and-output:
       lore:
-        - Fill me!
-        - I'm list!
+        - '{color:stress}Input And Output'
+        - '{color:normal}Do input for this side'
+        - '{color:normal}Do output for this side'
   MACHINE_RECIPE_LOCK:
     icon:
       name: '{color:random}Recipe Lock'
@@ -318,9 +269,9 @@ helper:
         - '{color:normal}Make the machine work to lock one recipe'
   CARGO_NUMBER_MODE:
     universal:
-      lore1: '---===---'
+      lore1: '{color:normal}Universally calculate the cargo number'
     standalone:
-      lore1: '---===---'
+      lore1: '{color:normal}Individually calculate the cargo number'
 categories:
   FINALTECH_ITEM_GROUP:
     name: '{color:random}FINAL TECH'
@@ -565,7 +516,7 @@ items:
           - '{color:normal}Can be obtained by using {id:FINALTECH_ENTROPY_SEED}'
         output: 'FINALTECH_ENTROPY_SEED'
   FINALTECH_LOGIC_FALSE:
-    name: '{color:prandom}Logic {color:number}FALSE'
+    name: '{color:prandom}Logic {color:conceal}- {color:number}FALSE'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -573,7 +524,7 @@ items:
           - '{color:normal}Can be obtained in {id:FINALTECH_LOGIC_GENERATOR}'
         output: 'FINALTECH_LOGIC_GENERATOR'
   FINALTECH_LOGIC_TRUE:
-    name: '{color:prandom}Logic {color:number}TRUE'
+    name: '{color:prandom}Logic {color:conceal}- {color:number}TRUE'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -581,7 +532,7 @@ items:
           - '{color:normal}Can be obtained in {id:FINALTECH_LOGIC_GENERATOR}'
         output: 'FINALTECH_LOGIC_GENERATOR'
   FINALTECH_DIGITAL_ZERO:
-    name: '{color:prandom}Digital {color:number}0'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}0'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -592,7 +543,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_LOGIC_TO_DIGITAL_CONVERSION'
   FINALTECH_DIGITAL_ONE:
-    name: '{color:prandom}Digital {color:number}1'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}1'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -603,7 +554,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_FINALTECH_LOGIC_TO_DIGITAL_CONVERSION'
   FINALTECH_DIGITAL_TWO:
-    name: '{color:prandom}Digital {color:number}2'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}2'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -613,7 +564,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGITAL_GENERATOR'
   FINALTECH_DIGITAL_THREE:
-    name: '{color:prandom}Digital {color:number}3'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}3'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -623,7 +574,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGITAL_GENERATOR'
   FINALTECH_DIGITAL_FOUR:
-    name: '{color:prandom}Digital {color:number}4'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}4'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -632,7 +583,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_LOGIC_CRAFTER'
   FINALTECH_DIGITAL_FIVE:
-    name: '{color:prandom}Digital {color:number}5'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}5'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -641,7 +592,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_LOGIC_CRAFTER'
   FINALTECH_DIGITAL_SIX:
-    name: '{color:prandom}Digital {color:number}6'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}6'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -650,7 +601,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_LOGIC_CRAFTER'
   FINALTECH_DIGITAL_SEVEN:
-    name: '{color:prandom}Digital {color:number}7'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}7'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -659,7 +610,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_LOGIC_CRAFTER'
   FINALTECH_DIGITAL_EIGHT:
-    name: '{color:prandom}Digital {color:number}8'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}8'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -668,7 +619,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_LOGIC_CRAFTER'
   FINALTECH_DIGITAL_NINE:
-    name: '{color:prandom}Digital {color:number}9'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}9'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -677,7 +628,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_LOGIC_CRAFTER'
   FINALTECH_DIGITAL_TEN:
-    name: '{color:prandom}Digital {color:number}10'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}10'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -686,7 +637,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_LOGIC_CRAFTER'
   FINALTECH_DIGITAL_ELEVEN:
-    name: '{color:prandom}Digital {color:number}11'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}11'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -695,7 +646,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_LOGIC_CRAFTER'
   FINALTECH_DIGITAL_TWELVE:
-    name: '{color:prandom}Digital {color:number}12'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}12'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -704,7 +655,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_LOGIC_CRAFTER'
   FINALTECH_DIGITAL_THIRTEEN:
-    name: '{color:prandom}Digital {color:number}13'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}13'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -713,7 +664,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_LOGIC_CRAFTER'
   FINALTECH_DIGITAL_FOURTEEN:
-    name: '{color:prandom}Digital {color:number}14'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}14'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -722,7 +673,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_LOGIC_CRAFTER'
   FINALTECH_DIGITAL_FIFTEEN:
-    name: '{color:prandom}Digital {color:number}15'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}15'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -731,7 +682,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_LOGIC_CRAFTER'
   FINALTECH_MACHINE_CHARGE_CARD_L1:
-    name: '{color:prandom}Machine Charge Card {color:number}L1'
+    name: '{color:prandom}Machine Charge Card {color:conceal}- {color:number}L1'
     info:
       1:
         name: '{color:positive}Usage'
@@ -739,7 +690,7 @@ items:
           - '{color:normal}Charge machine for {color:number}{1} J + {2}% of machine capacity'
           - '{color:normal}Percentage energy charge is not useful to capacitor'
   FINALTECH_MACHINE_CHARGE_CARD_L2:
-    name: '{color:prandom}Machine Charge Card {color:number}L2'
+    name: '{color:prandom}Machine Charge Card {color:conceal}- {color:number}L2'
     info:
       1:
         name: '{color:positive}Usage'
@@ -751,7 +702,7 @@ items:
         lore:
           - '{color:normal}Cost {color:number}1 exp {color:normal}every use'
   FINALTECH_MACHINE_CHARGE_CARD_L3:
-    name: '{color:prandom}Machine Charge Card {color:number}L3'
+    name: '{color:prandom}Machine Charge Card {color:conceal}- {color:number}L3'
     info:
       1:
         name: '{color:positive}Usage'
@@ -763,14 +714,14 @@ items:
         lore:
           - '{color:normal}Cost {color:number}1 exp level {color:normal}every use'
   FINALTECH_MACHINE_ACCELERATE_CARD_L1:
-    name: '{color:prandom}Machine Accelerate Card {color:number}L1'
+    name: '{color:prandom}Machine Accelerate Card {color:conceal}- {color:number}L1'
     info:
       1:
         name: '{color:positive}Usage'
         lore:
           - '{color:normal}Make machine work immediately for {color:number}{1} times'
   FINALTECH_MACHINE_ACCELERATE_CARD_L2:
-    name: '{color:prandom}Machine Accelerate Card {color:number}L2'
+    name: '{color:prandom}Machine Accelerate Card {color:conceal}- {color:number}L2'
     info:
       1:
         name: '{color:positive}Usage'
@@ -781,7 +732,7 @@ items:
         lore:
           - '{color:normal}Cost {color:number}1 hp {color:normal}every use'
   FINALTECH_MACHINE_ACCELERATE_CARD_L3:
-    name: '{color:prandom}Machine Accelerate Card {color:number}L3'
+    name: '{color:prandom}Machine Accelerate Card {color:conceal}- {color:number}L3'
     info:
       1:
         name: '{color:positive}Usage'
@@ -792,7 +743,7 @@ items:
         lore:
           - '{color:normal}Cost {color:number}10% hp {color:normal}every use'
   FINALTECH_MACHINE_ACTIVATE_CARD_L1:
-    name: '{color:prandom}Machine Activate Card {color:number}L1'
+    name: '{color:prandom}Machine Activate Card {color:conceal}- {color:number}L1'
     info:
       1:
         name: '{color:positive}Usage'
@@ -801,7 +752,7 @@ items:
           - '{color:normal}Before every work, it will be charged for {color:number}{2} J + {3}% of machine capacity'
           - '{color:normal}Percentage energy charge is not useful to capacitor'
   FINALTECH_MACHINE_ACTIVATE_CARD_L2:
-    name: '{color:prandom}Machine Activate Card {color:number}L2'
+    name: '{color:prandom}Machine Activate Card {color:conceal}- {color:number}L2'
     info:
       1:
         name: '{color:positive}Usage'
@@ -814,7 +765,7 @@ items:
         lore:
           - '{color:normal}Cost {color:number}1 exp {color:normal}and {color:number}1 hp {color:normal}every use'
   FINALTECH_MACHINE_ACTIVATE_CARD_L3:
-    name: '{color:prandom}Machine Activate Card {color:number}L3'
+    name: '{color:prandom}Machine Activate Card {color:conceal}- {color:number}L3'
     info:
       1:
         name: '{color:positive}Usage'
@@ -1413,7 +1364,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} slots {color:normal}of items'
   FINALTECH_DIVIDED_STORAGE_UNIT:
-    name: '{color:prandom}Storage Unit - {color:positive}DIVIDED'
+    name: '{color:prandom}Storage Unit {color:conceal}- {color:positive}DIVIDED'
     info:
       1:
         name: '{color:passive}Mechanism'
@@ -1425,7 +1376,7 @@ items:
           - '{color:normal}The first {color:number}{2} slots {color:normal}will be identified as input slot'
           - '{color:normal}The last {color:number}{3} slots {color:normal}will be identified as output slot'
   FINALTECH_LIMITED_STORAGE_UNIT:
-    name: '{color:prandom}Storage Unit - {color:positive}LIMITED'
+    name: '{color:prandom}Storage Unit {color:conceal}- {color:positive}LIMITED'
     info:
       1:
         name: '{color:passive}Mechanism'
@@ -1436,7 +1387,7 @@ items:
         lore:
           - '{color:normal}Can only input one slot items while being interact by other machine every times'
   FINALTECH_STACK_STORAGE_UNIT:
-    name: '{color:prandom}Storage Unit - {color:positive}STACK'
+    name: '{color:prandom}Storage Unit {color:conceal}- {color:positive}STACK'
     info:
       1:
         name: '{color:passive}Mechanism'
@@ -1447,7 +1398,7 @@ items:
         lore:
           - '{color:normal}It will sort items every {color:number}{2} s'
   FINALTECH_DIVIDED_LIMITED_STORAGE_UNIT:
-    name: '{color:prandom}Storage Unit - {color:positive}DIVIDED | LIMITED'
+    name: '{color:prandom}Storage Unit {color:conceal}- {color:positive}DIVIDED | LIMITED'
     info:
       1:
         name: '{color:passive}Mechanism'
@@ -1463,7 +1414,7 @@ items:
         lore:
           - '{color:normal}Can only input one slot items while being interact by other machine every times'
   FINALTECH_DIVIDED_STACK_STORAGE_UNIT:
-    name: '{color:prandom}Storage Unit - {color:positive}DIVIDED | STACK'
+    name: '{color:prandom}Storage Unit {color:conceal}- {color:positive}DIVIDED | STACK'
     info:
       1:
         name: '{color:passive}Mechanism'
@@ -1479,7 +1430,7 @@ items:
         lore:
           - '{color:normal}It will sort items every {color:number}{4} s'
   FINALTECH_LIMITED_STACK_STORAGE_UNIT:
-    name: '{color:prandom}Storage Unit - {color:positive}LIMITED | STACK'
+    name: '{color:prandom}Storage Unit {color:conceal}- {color:positive}LIMITED | STACK'
     info:
       1:
         name: '{color:passive}Mechanism'
@@ -1494,7 +1445,7 @@ items:
         lore:
           - '{color:normal}It will sort items every {color:number}{2} s'
   FINALTECH_RANDOM_INPUT_STORAGE_UNIT:
-    name: '{color:prandom}Storage Unit - {color:positive}RANDOM INPUT'
+    name: '{color:prandom}Storage Unit {color:conceal}- {color:positive}RANDOM INPUT'
     info:
       1:
         name: '{color:passive}Mechanism'
@@ -1505,7 +1456,7 @@ items:
         lore:
           - '{color:normal}Will be randomly interacted while input item to it by other machines'
   FINALTECH_RANDOM_OUTPUT_STORAGE_UNIT:
-    name: '{color:prandom}Storage Unit - {color:positive}RANDOM OUTPUT'
+    name: '{color:prandom}Storage Unit {color:conceal}- {color:positive}RANDOM OUTPUT'
     info:
       1:
         name: '{color:passive}Mechanism'
@@ -1516,7 +1467,7 @@ items:
         lore:
           - '{color:normal}Will be randomly interacted while output item from it by other machines'
   FINALTECH_RANDOM_ACCESS_STORAGE_UNIT:
-    name: '{color:prandom}Storage Unit - {color:positive}RANDOM ACCESS'
+    name: '{color:prandom}Storage Unit {color:conceal}- {color:positive}RANDOM ACCESS'
     info:
       1:
         name: '{color:passive}Mechanism'
@@ -1527,7 +1478,7 @@ items:
         lore:
           - '{color:normal}Will be randomly interacted by other machines'
   FINALTECH_DISTRIBUTE_LEFT_STORAGE_UNIT:
-    name: '{color:prandom}Storage Unit - {color:positive}DISTRIBUTE LEFT'
+    name: '{color:prandom}Storage Unit {color:conceal}- {color:positive}DISTRIBUTE LEFT'
     info:
       1:
         name: '{color:passive}Mechanism'
@@ -1538,7 +1489,7 @@ items:
         lore:
           - '{color:normal}Will distribute items to left slots'
   FINALTECH_DISTRIBUTE_RIGHT_STORAGE_UNIT:
-    name: '{color:prandom}Storage Unit - {color:positive}DISTRIBUTE RIGHT'
+    name: '{color:prandom}Storage Unit {color:conceal}- {color:positive}DISTRIBUTE RIGHT'
     info:
       1:
         name: '{color:passive}Mechanism'
@@ -1632,8 +1583,8 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Transfer items from one place to another place'
-  FINALTECH_STATION_TRANSFER:
-    name: '{color:prandom}Station Transfer'
+  FINALTECH_MESH_TRANSFER:
+    name: '{color:prandom}Mesh Transfer'
     info:
       1:
         name: '{color:passive}Mechanism'
@@ -1807,17 +1758,36 @@ items:
           - '{color:normal}Then it will slowly generate the specified item'
   FINALTECH_CARD_OPERATION_TABLE:
     name: '{color:prandom}Card Operation Table'
-    lore:
-      - Fill me!
-      - I'm list!
-    info:
-      - Fill me!
-      - I'm list!
-    status:
-      name: '---===---'
-      lore:
-        - Fill me!
-        - I'm list!
+    merge-storage-card:
+      info-icon:
+        name: '{color:passive}Merge Storage Card'
+        lore:
+          - '{color:normal}Merge two {id:FINALTECH_STORAGE_CARD} into one'
+        output: 'FINALTECH_STORAGE_CARD'
+    copy-copy-card:
+      info-icon:
+        name: '{color:passive}Copy Copy Card'
+        lore:
+          - '{color:normal}Cost {id:FINALTECH_SHELL} {color:normal} to copy one {id:FINALTECH_COPY_CARD}'
+        output: 'FINALTECH_STORAGE_CARD'
+    craft-item-phony:
+      info-icon:
+        name: '{color:passive}Craft Item Phony'
+        lore:
+          - '{color:normal}Use {id:FINALTECH_SINGULARITY} {color:normal}and {id:FINALTECH_SPIROCHETE} {color:normal}to get one {id:FINALTECH_PHONY}'
+        output: 'FINALTECH_PHONY'
+    craft-item-shell:
+      info-icon:
+        name: '{color:passive}Craft Item Shell'
+        lore:
+          - '{color:normal}Use {id:FINALTECH_SINGULARITY} {color:normal}or {id:FINALTECH_SPIROCHETE} {color:normal}to get one {id:FINALTECH_SHELL}'
+        output: 'FINALTECH_SHELL'
+    craft-annular:
+      info-icon:
+        name: '{color:passive}Craft Annular'
+        lore:
+          - '{color:normal}Use {id:FINALTECH_COPY_CARD} {color:normal}to get one {id:FINALTECH_ANNULAR}'
+        output: 'FINALTECH_ANNULAR'
   FINALTECH_LOGIC_CRAFTER:
     name: '{color:prandom}Logic Crafter'
   FINALTECH_DIGIT_ADDER:
@@ -2026,7 +1996,7 @@ items:
         lore:
           - '{color:normal}Make machine work immediately for {color:number}{1} times'
   FINALTECH_MACHINE_ACTIVATE_CARD_L4:
-    name: '{color:prandom}Machine Activate Card {color:number}L4'
+    name: '{color:prandom}Machine Activate Card {color:conceal}- {color:number}L4'
     info:
       1:
         name: '{color:positive}Usage'
@@ -2040,6 +2010,25 @@ items:
           - '{color:normal}Cost {color:number}1 life {color:normal}every use'
   FINALTECH_ADVANCED_AUTO_CRAFT:
     name: '{color:prandom}Advanced Auto Craft'
+    wiki-icon:
+      name: '{color:stress}Wiki'
+      lore:
+        - '{color:normal}↑ Put item here'
+        - '{color:normal}↖ Click and parse it'
+        - '{color:normal}↑↑ Put machine item in top two lines to parse item more steps'
+        - '    {color:normal}Available machine item can be found in slimefun guide.'
+        - '{color:normal}↓ Put quantity module to speed up'
+    parse-failed-icon:
+      name: '{color:negative}Parse Failed'
+      lore:
+        - '{color:normal}Please try to parse different item'
+    parse-extend-icon:
+      name: '{color:positive}Parse Success'
+    parse-success-icon:
+      name: '{color:positive}Parse Success'
+      lore:
+        - '{color:action}[click] {color:normal}to get more information'
+    parse-amount: '{color:conceal}Amount = {1}'
   FINALTECH_MATRIX_ITEM_DISMANTLE_TABLE:
     name: '{color:prandom}Matrix Item Dismantle Table'
   FINALTECH_MATRIX_EXPANDED_CAPACITOR:
@@ -2222,3 +2211,6 @@ research:
   PHONY: 'Good thing'
   LOGIC: 'Logic And Digital'
   MACHINE_CARD: 'Lovely Machine'
+message:
+  no-permission:
+    location: '{color:negative}No permission here!'

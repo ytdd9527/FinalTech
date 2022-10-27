@@ -6,12 +6,10 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
-import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.manual.CardOperationPortMenu;
 import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -57,6 +55,16 @@ public class CardOperationTable extends AbstractManualMachine implements RecipeI
 
     @Override
     public void registerDefaultRecipes() {
-        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
+        for(CardOperationPortMenu.Craft craft : CardOperationPortMenu.CRAFT_LIST) {
+            if(craft.isEnabled()) {
+                String outputItemId = craft.getInfoOutput();
+                SlimefunItem slimefunItem = SlimefunItem.getById(outputItemId);
+                if(slimefunItem != null) {
+                    this.registerDescriptiveRecipe(slimefunItem.getItem(), craft.getInfoName(), craft.getInfoLore());
+                } else {
+                    this.registerDescriptiveRecipe(craft.getInfoName(), craft.getInfoLore());
+                }
+            }
+        }
     }
 }

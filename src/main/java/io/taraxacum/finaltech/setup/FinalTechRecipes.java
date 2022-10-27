@@ -575,7 +575,7 @@ public final class FinalTechRecipes {
             new ItemStack(Material.STRING), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.STRING),
             new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN), new ItemStack(Material.TRIPWIRE_HOOK)
     };
-    public static final ItemStack[] STATION_TRANSFER = new ItemStack[] {
+    public static final ItemStack[] MESH_TRANSFER = new ItemStack[] {
             new ItemStack(Material.HOPPER), new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN),
             new ItemStack(Material.HOPPER), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.STRING),
             new ItemStack(Material.HOPPER), new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.CHAIN)

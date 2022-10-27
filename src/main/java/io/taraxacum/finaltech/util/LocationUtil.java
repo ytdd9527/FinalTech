@@ -109,7 +109,6 @@ public class LocationUtil {
             String locationString = persistentDataContainer.get(KEY, PersistentDataType.STRING);
             Location location = LocationUtil.stringToLocation(locationString);
             List<String> loreList = new ArrayList<>();
-            loreList.add(TextUtil.colorRandomString("记录的坐标"));
             loreList.add(TextUtil.colorRandomString("world= " + location.getWorld().getName()));
             itemMeta.setLore(loreList);
             item.setItemMeta(itemMeta);

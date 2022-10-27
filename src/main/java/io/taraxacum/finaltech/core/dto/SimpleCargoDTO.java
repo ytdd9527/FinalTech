@@ -49,6 +49,10 @@ public class SimpleCargoDTO {
     /** the slots of the filterInv to be used */
     private int[] filterSlots;
 
+    public SimpleCargoDTO() {
+
+    }
+
     public SimpleCargoDTO(InvWithSlots inputMap, Block inputBlock, String inputSize, String inputOrder, InvWithSlots outputMap, Block outputBlock, String outputSize, String outputOrder, int cargoNumber, String cargoLimit, String cargoFilter, Inventory filterInv, int[] filterSlots) {
         this.inputMap = inputMap;
         this.inputBlock = inputBlock;

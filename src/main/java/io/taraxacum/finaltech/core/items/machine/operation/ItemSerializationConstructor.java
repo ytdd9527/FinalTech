@@ -36,7 +36,7 @@ import java.util.List;
  * @since 1.0
  */
 public class ItemSerializationConstructor extends AbstractOperationMachine {
-    private final CustomItemStack nullInfoIcon = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, FinalTech.getLanguageManager().getString("items", this.getId(), "null-icon", "name"), FinalTech.getLanguageManager().getStringArray("items", this.getId(), "null-icon", "lore"));
+    private final CustomItemStack nullInfoIcon = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", this.getId(), "null-icon", "name"), FinalTech.getLanguageStringArray("items", this.getId(), "null-icon", "lore"));
     private final String blockStorageItemKey = "item";
     private final String blockStorageAmountKey = "amount";
 

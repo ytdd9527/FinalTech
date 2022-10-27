@@ -53,13 +53,6 @@ public class PermissionUtil {
     public static boolean checkOfflinePermission(@Nonnull Location sourceLocation, @Nonnull Config config, @Nonnull Location... targetLocations) {
         String uuid = config.getString(ConstantTableUtil.CONFIG_UUID);
         Player player = Bukkit.getPlayer(UUID.fromString(uuid));
-        if(player == null) {
-            System.out.println("player is null");
-        } else if(!player.isOnline()) {
-            System.out.println("player is offline");
-        } else {
-            System.out.println("player is online");
-        }
         if(player != null && player.isOnline()) {
             for(Location targetLocation : targetLocations) {
                 if(!PermissionUtil.checkPermission(player, targetLocation, Interaction.INTERACT_BLOCK)) {

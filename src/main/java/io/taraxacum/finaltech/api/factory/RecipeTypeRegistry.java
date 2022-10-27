@@ -15,7 +15,7 @@ public class RecipeTypeRegistry {
     private static volatile RecipeTypeRegistry instance;
 
     private RecipeTypeRegistry() {
-
+        this.init();
     }
 
     public void init() {

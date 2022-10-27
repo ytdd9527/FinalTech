@@ -63,7 +63,7 @@ public class LocationRecorder extends UsableSlimefunItem implements RecipeItem {
                     ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
                 } else {
                     // TODO
-                    player.sendRawMessage(TextUtil.COLOR_NEGATIVE + "您似乎没有在此处使用该物品的权限");
+                    player.sendRawMessage(FinalTech.getLanguageString("messages", "no-permission", "location"));
                 }
             }
         }

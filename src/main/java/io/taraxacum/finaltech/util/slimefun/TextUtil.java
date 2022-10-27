@@ -21,6 +21,7 @@ public class TextUtil {
     public static final String COLOR_NUMBER = "§x§f§f§8§8§f§f"; // 数字
     public static final String COLOR_POSITIVE = "§x§8§8§f§f§8§8"; // 正面（用途）positive
     public static final String COLOR_NEGATIVE = "§x§f§f§8§8§8§8"; // 负面（限制、无效）negative
+    public static final String COLOR_CONCEAL = "§x§8§8§8§8§8§8"; // 隐蔽 conceal
     public static final String COLOR_INPUT = "§9";
     public static final String COLOR_OUTPUT = "§6";
     public static final Color WHITE_COLOR = Color.fromRGB(255, 255, 255);

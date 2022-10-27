@@ -118,6 +118,7 @@ public class ItemAmountWrapper extends ItemWrapper {
                 break;
             }
         }
+        list.add(item);
     }
 
     public static void addToList(@Nonnull List<ItemAmountWrapper> list, ItemAmountWrapper item, int mul) {
@@ -127,5 +128,6 @@ public class ItemAmountWrapper extends ItemWrapper {
                 break;
             }
         }
+        list.add(new ItemAmountWrapper(item.getItemStack(), item.getItemMeta(), item.amount * mul));
     }
 }

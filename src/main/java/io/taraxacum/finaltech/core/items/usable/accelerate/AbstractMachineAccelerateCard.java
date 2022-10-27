@@ -55,20 +55,20 @@ public abstract class AbstractMachineAccelerateCard extends UsableSlimefunItem {
         }
 
         if (!PermissionUtil.checkPermission(player, location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
-            player.sendRawMessage(FinalTech.getLanguageManager().getString("messages", "no-permission", "location"));
+            player.sendRawMessage(FinalTech.getLanguageString("messages", "no-permission", "location"));
             return;
         }
 
         if(BlockStorage.hasInventory(block)) {
             BlockMenu blockMenu = BlockStorage.getInventory(location);
             if(!blockMenu.canOpen(block, player)) {
-                player.sendRawMessage(FinalTech.getLanguageManager().getString("messages", "no-permission", "location"));
+                player.sendRawMessage(FinalTech.getLanguageString("messages", "no-permission", "location"));
                 return;
             }
         }
 
         if (!this.conditionMatch(player)) {
-            player.sendRawMessage(FinalTech.getLanguageManager().getString("messages", "no-condition", "player"));
+            player.sendRawMessage(FinalTech.getLanguageString("messages", "no-condition", "player"));
             return;
         }
 

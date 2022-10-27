@@ -1,6 +1,12 @@
 package io.taraxacum.finaltech.util.slimefun;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
 
@@ -9,6 +15,7 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class SfItemUtil {
+    private static final NamespacedKey SLIMEFUN_ITEM_KEY = new NamespacedKey(Slimefun.instance(), "slimefun_item");
 
     @Nonnull
     public static String getIdFormatName(@Nonnull Class<? extends SlimefunItem> clazz) {
@@ -36,5 +43,16 @@ public class SfItemUtil {
             stringBuilder.delete(0, 1);
         }
         return stringBuilder.toString();
+    }
+
+    public static void removeSlimefunId(@Nonnull ItemStack itemStack) {
+        if(itemStack.hasItemMeta()) {
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+            if(persistentDataContainer.has(SLIMEFUN_ITEM_KEY, PersistentDataType.STRING)) {
+                persistentDataContainer.remove(SLIMEFUN_ITEM_KEY);
+                itemStack.setItemMeta(itemMeta);
+            }
+        }
     }
 }

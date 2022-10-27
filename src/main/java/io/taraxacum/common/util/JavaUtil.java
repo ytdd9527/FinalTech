@@ -84,7 +84,23 @@ public class JavaUtil {
         return result;
     }
 
-        public static String[] addToFirst(String value, String... values) {
+    public static int[] generateRandomInts(int length) {
+        int[] result = new int[length];
+        for(int i = 0; i < result.length; i++) {
+            result[i] = i;
+        }
+        return JavaUtil.shuffle(result);
+    }
+
+    public static <T> List<T> shuffleByInts(List<T> list, int[] ints) {
+        List<T> result = new ArrayList<>(list.size());
+        for(int i = 0; i < ints.length; i++) {
+            result.add(list.get(ints[i]));
+        }
+        return result;
+    }
+
+    public static String[] addToFirst(String value, String... values) {
         String[] result = new String[values.length + 1];
         result[0] = value;
         System.arraycopy(values, 0, result, 1, values.length);

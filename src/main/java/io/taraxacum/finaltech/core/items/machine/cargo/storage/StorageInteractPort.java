@@ -90,6 +90,13 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
             MachineUtil.stockSlots(blockMenu.toInventory(), this.getOutputSlot());
         }
 
+        canInput = !MachineUtil.isEmpty(blockMenu.toInventory(), this.getInputSlot()) && MachineUtil.slotCount(blockMenu.toInventory(), this.getInputSlot()) >= this.getInputSlot().length / 2;
+        canOutput = !MachineUtil.isFull(blockMenu.toInventory(), this.getOutputSlot()) && MachineUtil.slotCount(blockMenu.toInventory(), this.getOutputSlot()) < this.getOutputSlot().length / 2;
+
+        if (!canInput && !canOutput) {
+            return;
+        }
+
         for(int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if(!ItemStackUtil.isItemNull(item) && !StorageCardItem.storableItem(item)) {

@@ -10,11 +10,11 @@ import java.util.*;
  */
 public class KeyValueStringHelper {
     @Nonnull
-    private final Collection<String> keySet;
+    protected final Collection<String> keySet;
     @Nonnull
-    private final Collection<String> valueSet;
+    protected final Collection<String> valueSet;
     @Nonnull
-    private final Map<String, String> map;
+    private final LinkedHashMap<String, String> map;
 
     public KeyValueStringHelper(@Nonnull Collection<String> keySet, @Nonnull Collection<String> valueSet) {
         this.keySet = new HashSet<>(keySet.size());
@@ -41,15 +41,15 @@ public class KeyValueStringHelper {
 
     public void putEntry(@Nullable String key, @Nullable String value) {
         if (this.validKey(key)) {
-            if (value == null && this.map.containsKey(key)) {
-                this.map.remove(key);
+            if (value == null) {
+                this.deleteEntry(key);
             } else if (this.validValue(value)) {
                 this.map.put(key, value);
             }
         }
     }
     public void deleteEntry(@Nullable String key) {
-        this.putEntry(key, null);
+        this.map.remove(key);
     }
 
     @Nonnull
@@ -64,7 +64,7 @@ public class KeyValueStringHelper {
     }
 
     @Nonnull
-    public List<String> getAllMatchKey(@Nullable String... values) {
+    public List<String> getAllMatchKey(@Nonnull String... values) {
         List<String> list = new ArrayList<>();
         for (Map.Entry<String, String> entry : this.map.entrySet()) {
             if (entry.getValue() != null) {
@@ -82,6 +82,16 @@ public class KeyValueStringHelper {
     @Nullable
     public String getValue(@Nonnull String key) {
         return this.map.get(key);
+    }
+
+    public int getKeyIndex(@Nonnull String key) {
+        Object[] keys = this.map.keySet().toArray();
+        for(int i = 0; i < keys.length; i++) {
+            if(keys[i].equals(key)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Nonnull

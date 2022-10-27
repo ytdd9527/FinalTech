@@ -32,25 +32,25 @@ public final class CargoLimit {
     public static final ItemStack FIRST_ICON = new CustomItemStack(Material.PAPER, FinalTech.getLanguageString("helper", "CARGO_LIMIT", "first", "name"), FinalTech.getLanguageStringArray("helper", "CARGO_LIMIT", "first", "lore"));
 
     public static final BlockStorageIconHelper HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
+        this.put(VALUE_FIRST, FIRST_ICON);
         this.put(VALUE_ALL, ALL_ICON);
         this.put(VALUE_TYPE, TYPE_ICON);
         this.put(VALUE_STACK, STACK_ICON);
         this.put(VALUE_NONNULL, NONNULL_ICON);
-        this.put(VALUE_FIRST, FIRST_ICON);
     }});
     public static final BlockStorageIconHelper INPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
+        this.put(VALUE_FIRST, FIRST_ICON);
         this.put(VALUE_ALL, ALL_ICON);
         this.put(VALUE_TYPE, TYPE_ICON);
         this.put(VALUE_STACK, STACK_ICON);
         this.put(VALUE_NONNULL, NONNULL_ICON);
-        this.put(VALUE_FIRST, FIRST_ICON);
     }});
     public static final BlockStorageIconHelper OUTPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
+        this.put(VALUE_FIRST, FIRST_ICON);
         this.put(VALUE_ALL, ALL_ICON);
         this.put(VALUE_TYPE, TYPE_ICON);
         this.put(VALUE_STACK, STACK_ICON);
         this.put(VALUE_NONNULL, NONNULL_ICON);
-        this.put(VALUE_FIRST, FIRST_ICON);
     }});
 
     public static boolean typeLimit(@Nonnull String value) {

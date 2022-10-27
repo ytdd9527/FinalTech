@@ -26,9 +26,9 @@ public final class CargoNumber {
     public static final ItemStack CARGO_NUMBER_SUB_ICON = new CustomItemStack(Material.RED_CONCRETE, FinalTech.getLanguageString("helper", "CARGO_NUMBER", "sub-icon", "name"), FinalTech.getLanguageStringArray("helper", "CARGO_NUMBER", "sub-icon", "lore"));
 
     public static final BlockStorageLoreHelper HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, 0, new LinkedHashMap<>() {{
-//        this.put("0", List.of("number no limit"));
+//        this.put("0", FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "CARGO_NUMBER", "icon", "lore0")));
         for (int i = 1; i <= ConstantTableUtil.ITEM_MAX_STACK * 9; i++) {
-            this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "CARGO_NUMBER", "icon", "lore0"), String.valueOf(i)));
+            this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "CARGO_NUMBER", "icon", "lore"), String.valueOf(i)));
         }
     }}) {
         @Nonnull
@@ -68,9 +68,9 @@ public final class CargoNumber {
         }
     };
     public static final BlockStorageLoreHelper INPUT_HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, 0, new LinkedHashMap<>() {{
-//        this.put("0", List.of("number no limit"));
+//        this.put("0", FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "CARGO_NUMBER", "icon", "lore0")));
         for (int i = 1; i <= ConstantTableUtil.ITEM_MAX_STACK * 9; i++) {
-            this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "CARGO_NUMBER", "icon", "lore0"), String.valueOf(i)));
+            this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "CARGO_NUMBER", "icon", "lore"), String.valueOf(i)));
         }
     }}) {
         @Nonnull
@@ -110,9 +110,9 @@ public final class CargoNumber {
         }
     };
     public static final BlockStorageLoreHelper OUTPUT_HELPER = new BlockStorageLoreHelper(BlockStorageHelper.ID_CARGO, 0, new LinkedHashMap<>() {{
-//        this.put("0", List.of("number no limit"));
+//        this.put("0", FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "CARGO_NUMBER", "icon", "lore0")));
         for (int i = 1; i <= ConstantTableUtil.ITEM_MAX_STACK * 9; i++) {
-            this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "CARGO_NUMBER", "icon", "lore0"), String.valueOf(i)));
+            this.put(String.valueOf(i), FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "CARGO_NUMBER", "icon", "lore"), String.valueOf(i)));
         }
     }}) {
         @Nonnull
