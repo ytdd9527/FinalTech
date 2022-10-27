@@ -7,32 +7,28 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.dto.AdvancedCraft;
-import io.taraxacum.finaltech.api.dto.AdvancedMachineRecipe;
-import io.taraxacum.finaltech.api.factory.LocationRecipeRegistry;
+import io.taraxacum.libs.slimefun.dto.AdvancedCraft;
+import io.taraxacum.libs.plugin.dto.AdvancedMachineRecipe;
+import io.taraxacum.libs.plugin.dto.LocationRecipeRegistry;
 import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.function.AdvancedAutoCraftMenu;
-import io.taraxacum.finaltech.api.dto.InvWithSlots;
-import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.CargoUtil;
+import io.taraxacum.libs.plugin.dto.InvWithSlots;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
+import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.libs.slimefun.util.CargoUtil;
 import io.taraxacum.finaltech.core.helper.SlotSearchOrder;
 import io.taraxacum.finaltech.core.helper.SlotSearchSize;
-import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
-import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
+import io.taraxacum.finaltech.util.ConstantTableUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
-import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -127,10 +123,11 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
+        AdvancedAutoCraftMenu.registerRecipe();
         for (String id : AdvancedAutoCraftMenu.RECIPE_MAP.keySet()) {
             SlimefunItem slimefunItem = SlimefunItem.getById(id);
             if (slimefunItem != null) {
-                ItemStack itemStack = slimefunItem.getRecipeType().toItem();
+                ItemStack itemStack = slimefunItem.getItem();
                 if (!ItemStackUtil.isItemNull(itemStack)) {
                     this.registerDescriptiveRecipe(itemStack);
                 }

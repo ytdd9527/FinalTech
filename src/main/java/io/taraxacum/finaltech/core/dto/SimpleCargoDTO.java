@@ -1,6 +1,6 @@
 package io.taraxacum.finaltech.core.dto;
 
-import io.taraxacum.finaltech.api.dto.InvWithSlots;
+import io.taraxacum.libs.plugin.dto.InvWithSlots;
 import io.taraxacum.finaltech.core.helper.CargoFilter;
 import io.taraxacum.finaltech.core.helper.CargoLimit;
 import io.taraxacum.finaltech.core.helper.SlotSearchOrder;

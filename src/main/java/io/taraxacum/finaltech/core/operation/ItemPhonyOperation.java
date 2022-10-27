@@ -8,9 +8,8 @@ import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.items.unusable.Singularity;
 import io.taraxacum.finaltech.core.items.unusable.Spirochete;
 import io.taraxacum.finaltech.setup.FinalTechItems;
-import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
-import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.ConstantTableUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;

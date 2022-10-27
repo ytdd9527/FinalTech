@@ -1,6 +1,6 @@
 package io.taraxacum.finaltech.core.helper;
 
-import io.taraxacum.finaltech.api.factory.BlockStorageHelper;
+import io.taraxacum.libs.slimefun.dto.BlockStorageHelper;
 
 import java.util.ArrayList;
 

@@ -7,10 +7,9 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.listener.BoxListener;
-import io.taraxacum.finaltech.core.listener.ShineListener;
-import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
-import io.taraxacum.finaltech.util.slimefun.RecipeUtil;
-import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
+import io.taraxacum.finaltech.util.ConfigUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
+import io.taraxacum.finaltech.util.SfItemUtil;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 

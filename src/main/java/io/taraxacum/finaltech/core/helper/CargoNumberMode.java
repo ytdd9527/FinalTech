@@ -1,8 +1,8 @@
 package io.taraxacum.finaltech.core.helper;
 
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.factory.BlockStorageHelper;
-import io.taraxacum.finaltech.api.factory.BlockStorageLoreHelper;
+import io.taraxacum.libs.slimefun.dto.BlockStorageHelper;
+import io.taraxacum.libs.slimefun.dto.BlockStorageLoreHelper;
 
 import java.util.LinkedHashMap;
 import java.util.List;

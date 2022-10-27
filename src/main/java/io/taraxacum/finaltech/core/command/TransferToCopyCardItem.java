@@ -1,7 +1,7 @@
 package io.taraxacum.finaltech.core.command;
 
 import io.taraxacum.finaltech.core.items.unusable.CopyCard;
-import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

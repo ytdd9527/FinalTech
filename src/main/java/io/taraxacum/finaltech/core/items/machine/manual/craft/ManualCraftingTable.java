@@ -3,9 +3,7 @@ package io.taraxacum.finaltech.core.items.machine.manual.craft;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.util.ItemStackUtil;
-import org.bukkit.Bukkit;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import org.bukkit.inventory.*;
 
 import java.util.*;

@@ -4,30 +4,25 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.dto.BasicCraft;
-import io.taraxacum.finaltech.api.dto.ItemWrapper;
-import io.taraxacum.finaltech.api.factory.MachineRecipeFactory;
+import io.taraxacum.libs.slimefun.dto.BasicCraft;
+import io.taraxacum.libs.slimefun.dto.MachineRecipeFactory;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.items.machine.manual.MatrixCraftingTable;
-import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.ParticleUtil;
-import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
-import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
+import io.taraxacum.libs.plugin.util.ParticleUtil;
+import io.taraxacum.finaltech.util.SfItemUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MatrixCraftingTableMenu extends AbstractManualMachineMenu{
     private static final int[] BORDER = new int[] {6, 7, 8, 15, 17, 24, 25, 26};

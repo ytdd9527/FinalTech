@@ -3,7 +3,7 @@ package io.taraxacum.finaltech.core.command;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
-import io.taraxacum.finaltech.api.factory.ItemValueTable;
+import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 import io.taraxacum.finaltech.core.group.RecipeItemGroup;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

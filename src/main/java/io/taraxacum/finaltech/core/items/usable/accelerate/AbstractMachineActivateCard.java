@@ -10,9 +10,9 @@ import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponen
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.items.usable.UsableSlimefunItem;
-import io.taraxacum.finaltech.util.ParticleUtil;
-import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
-import io.taraxacum.finaltech.util.slimefun.PermissionUtil;
+import io.taraxacum.libs.plugin.util.ParticleUtil;
+import io.taraxacum.finaltech.util.ConstantTableUtil;
+import io.taraxacum.finaltech.util.PermissionUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;

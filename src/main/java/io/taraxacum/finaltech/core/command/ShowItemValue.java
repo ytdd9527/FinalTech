@@ -1,7 +1,7 @@
 package io.taraxacum.finaltech.core.command;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.taraxacum.finaltech.api.factory.ItemValueTable;
+import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

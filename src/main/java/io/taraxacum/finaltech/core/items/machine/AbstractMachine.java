@@ -24,7 +24,6 @@ import javax.annotation.Nonnull;
 public abstract class AbstractMachine extends AbstractMySlimefunItem {
     private final AbstractMachineMenu menu;
 
-
     public AbstractMachine(@Nonnull ItemGroup itemGroup, @Nonnull SlimefunItemStack item, @Nonnull RecipeType recipeType, @Nonnull ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.menu = this.setMachineMenu();

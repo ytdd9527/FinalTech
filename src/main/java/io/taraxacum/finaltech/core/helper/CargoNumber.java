@@ -2,9 +2,9 @@ package io.taraxacum.finaltech.core.helper;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.factory.BlockStorageHelper;
-import io.taraxacum.finaltech.api.factory.BlockStorageLoreHelper;
-import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
+import io.taraxacum.libs.slimefun.dto.BlockStorageHelper;
+import io.taraxacum.libs.slimefun.dto.BlockStorageLoreHelper;
+import io.taraxacum.finaltech.util.ConstantTableUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

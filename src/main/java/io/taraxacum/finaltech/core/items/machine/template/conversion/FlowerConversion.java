@@ -3,7 +3,7 @@ package io.taraxacum.finaltech.core.items.machine.template.conversion;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
+import io.taraxacum.libs.slimefun.dto.RandomMachineRecipe;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.inventory.ItemStack;

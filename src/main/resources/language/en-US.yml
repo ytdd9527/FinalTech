@@ -192,11 +192,11 @@ helper:
         - '{color:normal}Search block randomly in all connected blocks'
   BLOCK_SEARCH_CYCLE:
     'false':
-      name: '{color:normal}Block Search Order {color:conceal}- {color:random}False'
+      name: '{color:normal}Block Search Cycle {color:conceal}- {color:random}False'
       lore:
         - '{color:normal}Not add first block to the end of block queue'
     'true':
-      name: '{color:normal}Block Search Order {color:conceal}- {color:random}False'
+      name: '{color:normal}Block Search Cycle {color:conceal}- {color:random}True'
       lore:
         - '{color:normal}Add first block to the end of block queue'
   BLOCK_SEARCH_SELF:
@@ -269,9 +269,9 @@ helper:
         - '{color:normal}Make the machine work to lock one recipe'
   CARGO_NUMBER_MODE:
     universal:
-      lore1: '{color:normal}Universally calculate the cargo number'
+      lore1: '{color:stress}Universally {color:normal}calculate the cargo number'
     standalone:
-      lore1: '{color:normal}Individually calculate the cargo number'
+      lore1: '{color:stress}Individually {color:normal}calculate the cargo number'
 categories:
   FINALTECH_ITEM_GROUP:
     name: '{color:random}FINAL TECH'
@@ -1768,8 +1768,8 @@ items:
       info-icon:
         name: '{color:passive}Copy Copy Card'
         lore:
-          - '{color:normal}Cost {id:FINALTECH_SHELL} {color:normal} to copy one {id:FINALTECH_COPY_CARD}'
-        output: 'FINALTECH_STORAGE_CARD'
+          - '{color:normal}Cost {id:FINALTECH_SHELL} {color:normal}to copy one {id:FINALTECH_COPY_CARD}'
+        output: 'FINALTECH_COPY_CARD'
     craft-item-phony:
       info-icon:
         name: '{color:passive}Craft Item Phony'
@@ -2010,24 +2010,28 @@ items:
           - '{color:normal}Cost {color:number}1 life {color:normal}every use'
   FINALTECH_ADVANCED_AUTO_CRAFT:
     name: '{color:prandom}Advanced Auto Craft'
+    parse-icon:
+      name: '{color:stress}Parse'
+      lore:
+        - '{color:action}[click] {color:normal}to parse item'
     wiki-icon:
       name: '{color:stress}Wiki'
       lore:
-        - '{color:normal}↑ Put item here'
-        - '{color:normal}↖ Click and parse it'
+        - '{color:normal}↓ Put item here'
+        - '{color:normal}↙ Click and parse it'
         - '{color:normal}↑↑ Put machine item in top two lines to parse item more steps'
         - '    {color:normal}Available machine item can be found in slimefun guide.'
-        - '{color:normal}↓ Put quantity module to speed up'
+        - '{color:normal}↑ Put quantity module to speed up'
     parse-failed-icon:
       name: '{color:negative}Parse Failed'
       lore:
         - '{color:normal}Please try to parse different item'
     parse-extend-icon:
       name: '{color:positive}Parse Success'
-    parse-success-icon:
-      name: '{color:positive}Parse Success'
       lore:
         - '{color:action}[click] {color:normal}to get more information'
+    parse-success-icon:
+      name: '{color:positive}Parse Success'
     parse-amount: '{color:conceal}Amount = {1}'
   FINALTECH_MATRIX_ITEM_DISMANTLE_TABLE:
     name: '{color:prandom}Matrix Item Dismantle Table'
@@ -2198,7 +2202,7 @@ items:
     next-icon:
       name: '{color:normal}Next'
     match-item:
-      lore: '{color:normal}Can be craft {color:number}{1} {color:normal}times'
+      lore: '{color:conceal}Can be crafted {color:number}{1} {color:conceal}times'
     warn:
       - 'Player [{5}] in {1} [{2},{3},{4}] is clicking manual craft machine very quickly.'
       - 'This may be due to server network, else it may cause server lag.'

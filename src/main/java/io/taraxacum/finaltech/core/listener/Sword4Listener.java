@@ -1,10 +1,10 @@
 package io.taraxacum.finaltech.core.listener;
 
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.task.TickerTaskRunner;
+import io.taraxacum.libs.plugin.task.TickerTaskRunner;
 import io.taraxacum.finaltech.core.task.effect.UntreatableEffect;
 import io.taraxacum.finaltech.setup.FinalTechItems;
-import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

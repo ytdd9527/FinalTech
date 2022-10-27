@@ -1,11 +1,12 @@
 package io.taraxacum.finaltech;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.taraxacum.finaltech.api.factory.*;
 import io.taraxacum.finaltech.setup.SetupUtil;
-import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import io.taraxacum.libs.plugin.dto.ConfigFileManager;
+import io.taraxacum.libs.plugin.dto.LanguageManager;
+import io.taraxacum.libs.plugin.dto.ServerRunnableLockFactory;
+import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -30,8 +31,8 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
     private boolean forceSlimefunMultiThread = false;
     /**
      * 0: nothing change, all task will run at slimefun #{@link io.github.thebusybiscuit.slimefun4.implementation.tasks.TickerTask}
-     * 1: async task will be put in #{@link io.taraxacum.finaltech.api.factory.ServerRunnableLockFactory}, so they will be really async
-     * 2: sync task will be run as async, so all (FinalTech's machines') task will be put in #{@link io.taraxacum.finaltech.api.factory.ServerRunnableLockFactory}
+     * 1: async task will be put in #{@link ServerRunnableLockFactory}, so they will be really async
+     * 2: sync task will be run as async, so all (FinalTech's machines') task will be put in #{@link ServerRunnableLockFactory}
      */
     private int multiThreadLevel = 0;
     /**

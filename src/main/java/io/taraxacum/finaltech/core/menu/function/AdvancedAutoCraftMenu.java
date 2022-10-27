@@ -7,24 +7,23 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.dto.AdvancedMachineRecipe;
-import io.taraxacum.finaltech.api.dto.ItemAmountWrapper;
-import io.taraxacum.finaltech.api.factory.LocationRecipeRegistry;
-import io.taraxacum.finaltech.api.factory.MachineRecipeFactory;
-import io.taraxacum.finaltech.api.factory.RecipeTypeRegistry;
+import io.taraxacum.libs.plugin.dto.AdvancedMachineRecipe;
+import io.taraxacum.libs.plugin.dto.ItemAmountWrapper;
+import io.taraxacum.libs.plugin.dto.LocationRecipeRegistry;
+import io.taraxacum.libs.slimefun.dto.MachineRecipeFactory;
+import io.taraxacum.libs.slimefun.dto.RecipeTypeRegistry;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.items.machine.cargo.AdvancedAutoCraft;
 import io.taraxacum.finaltech.core.items.unusable.CopyCard;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
-import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.helper.SlotSearchSize;
-import io.taraxacum.finaltech.util.StringItemUtil;
-import io.taraxacum.finaltech.util.slimefun.ConfigUtil;
-import io.taraxacum.finaltech.util.slimefun.ConstantTableUtil;
-import io.taraxacum.finaltech.util.slimefun.SfItemUtil;
-import io.taraxacum.finaltech.util.slimefun.TextUtil;
+import io.taraxacum.libs.plugin.util.StringItemUtil;
+import io.taraxacum.finaltech.util.ConfigUtil;
+import io.taraxacum.finaltech.util.ConstantTableUtil;
+import io.taraxacum.finaltech.util.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -72,58 +71,6 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     public static final Map<String, List<AdvancedMachineRecipe>> RECIPE_MAP = new HashMap<>();
     // RecipeType.getKey().getKey()
     public static final Set<String> RECIPE_TYPE_ID_LIST = new HashSet<>(ConfigUtil.getItemStringList(SfItemUtil.getIdFormatName(AdvancedAutoCraft.class), "recipe-type-id"));
-    static {
-        // TODO: interface support
-
-        for (String string : RECIPE_TYPE_ID_LIST) {
-            RecipeType recipeType = RecipeTypeRegistry.getInstance().getRecipeTypeById(string);
-            SlimefunItem slimefunItem = null;
-            if (recipeType != null) {
-                slimefunItem = recipeType.getMachine();
-                if (slimefunItem == null) {
-                    slimefunItem = SlimefunItem.getByItem(recipeType.toItem());
-                    if (slimefunItem == null) {
-                        slimefunItem = SlimefunItem.getById(recipeType.getKey().getKey());
-                    }
-                }
-            }
-            if (slimefunItem != null) {
-                List<SlimefunItem> slimefunItemList = RecipeTypeRegistry.getInstance().getByRecipeType(recipeType);
-                List<AdvancedMachineRecipe> advancedMachineRecipeList = new ArrayList<>(slimefunItemList.size());
-                for (SlimefunItem sfItem : slimefunItemList) {
-                    advancedMachineRecipeList.add(new AdvancedMachineRecipe(ItemStackUtil.calItemArrayWithAmount(sfItem.getRecipe()), new AdvancedMachineRecipe.AdvancedRandomOutput[] {new AdvancedMachineRecipe.AdvancedRandomOutput(new ItemAmountWrapper[] {new ItemAmountWrapper(sfItem.getRecipeOutput())}, 1)}));
-                }
-                RECIPE_MAP.put(slimefunItem.getId(), advancedMachineRecipeList);
-            }
-        }
-
-        RECIPE_MAP.put(FinalTechItems.MANUAL_ANCIENT_ALTAR.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_ANCIENT_ALTAR));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_ARMOR_FORGE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_ARMOR_FORGE));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_COMPRESSOR.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_COMPRESSOR));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_ENHANCED_CRAFTING_TABLE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_ENHANCED_CRAFTING_TABLE));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_GRIND_STONE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_GRIND_STONE));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_JUICER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_JUICER));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_MAGIC_WORKBENCH.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_MAGIC_WORKBENCH));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_ORE_CRUSHER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_ORE_CRUSHER));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_PRESSURE_CHAMBER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_PRESSURE_CHAMBER));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_SMELTERY.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_SMELTERY));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_ORE_WASHER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.ADVANCED_ELECTRIC_DUST_WASHER));
-
-        RECIPE_TYPE_ID_LIST.add(RecipeType.ANCIENT_ALTAR.getKey().getKey());
-        RECIPE_TYPE_ID_LIST.add(RecipeType.ARMOR_FORGE.getKey().getKey());
-        RECIPE_TYPE_ID_LIST.add(RecipeType.COMPRESSOR.getKey().getKey());
-        RECIPE_TYPE_ID_LIST.add(RecipeType.ENHANCED_CRAFTING_TABLE.getKey().getKey());
-        RECIPE_TYPE_ID_LIST.add(RecipeType.GRIND_STONE.getKey().getKey());
-        RECIPE_TYPE_ID_LIST.add(RecipeType.HEATED_PRESSURE_CHAMBER.getKey().getKey());
-        RECIPE_TYPE_ID_LIST.add(RecipeType.JUICER.getKey().getKey());
-        RECIPE_TYPE_ID_LIST.add(RecipeType.MAGIC_WORKBENCH.getKey().getKey());
-        RECIPE_TYPE_ID_LIST.add(RecipeType.ORE_CRUSHER.getKey().getKey());
-        RECIPE_TYPE_ID_LIST.add(RecipeType.PRESSURE_CHAMBER.getKey().getKey());
-        RECIPE_TYPE_ID_LIST.add(RecipeType.SMELTERY.getKey().getKey());
-        RECIPE_TYPE_ID_LIST.add(RecipeType.ORE_WASHER.getKey().getKey());
-    }
-
     public AdvancedAutoCraftMenu(@Nonnull AbstractMachine abstractMachine) {
         super(abstractMachine);
     }
@@ -366,5 +313,61 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
             return MachineRecipeFactory.getInstance().getAdvancedRecipe(slimefunItem.getClass());
         }
         return new ArrayList<>();
+    }
+
+    public static void registerRecipe() {
+        // TODO: interface support
+
+        for (String string : RECIPE_TYPE_ID_LIST) {
+            RecipeType recipeType = RecipeTypeRegistry.getInstance().getRecipeTypeById(string);
+            SlimefunItem slimefunItem = null;
+            if (recipeType != null) {
+                slimefunItem = recipeType.getMachine();
+                if (slimefunItem == null) {
+                    slimefunItem = SlimefunItem.getByItem(recipeType.toItem());
+                    if (slimefunItem == null) {
+                        slimefunItem = SlimefunItem.getById(recipeType.getKey().getKey());
+                    }
+                }
+            }
+            if (slimefunItem != null) {
+                List<SlimefunItem> slimefunItemList = RecipeTypeRegistry.getInstance().getByRecipeType(recipeType);
+                List<AdvancedMachineRecipe> advancedMachineRecipeList = new ArrayList<>(slimefunItemList.size());
+                for (SlimefunItem sfItem : slimefunItemList) {
+                    advancedMachineRecipeList.add(new AdvancedMachineRecipe(ItemStackUtil.calItemArrayWithAmount(sfItem.getRecipe()), new AdvancedMachineRecipe.AdvancedRandomOutput[] {new AdvancedMachineRecipe.AdvancedRandomOutput(new ItemAmountWrapper[] {new ItemAmountWrapper(sfItem.getRecipeOutput())}, 1)}));
+                }
+                RECIPE_MAP.put(slimefunItem.getId(), advancedMachineRecipeList);
+            }
+        }
+
+        RECIPE_MAP.put(FinalTechItems.MANUAL_ENHANCED_CRAFTING_TABLE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_ENHANCED_CRAFTING_TABLE));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_GRIND_STONE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_GRIND_STONE));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_ARMOR_FORGE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_ARMOR_FORGE));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_ORE_CRUSHER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_ORE_CRUSHER));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_COMPRESSOR.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_COMPRESSOR));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_SMELTERY.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_SMELTERY));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_PRESSURE_CHAMBER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_PRESSURE_CHAMBER));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_MAGIC_WORKBENCH.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_MAGIC_WORKBENCH));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_ORE_WASHER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.ADVANCED_ELECTRIC_DUST_WASHER));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_COMPOSTER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_COMPOSTER));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_GOLD_PAN.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_GOLD_PAN));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_CRUCIBLE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_CRUCIBLE));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_JUICER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_JUICER));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_ANCIENT_ALTAR.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_ANCIENT_ALTAR));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER));
+
+        RECIPE_TYPE_ID_LIST.add(RecipeType.ENHANCED_CRAFTING_TABLE.getKey().getKey());
+        RECIPE_TYPE_ID_LIST.add(RecipeType.GRIND_STONE.getKey().getKey());
+        RECIPE_TYPE_ID_LIST.add(RecipeType.ARMOR_FORGE.getKey().getKey());
+        RECIPE_TYPE_ID_LIST.add(RecipeType.ORE_CRUSHER.getKey().getKey());
+        RECIPE_TYPE_ID_LIST.add(RecipeType.COMPRESSOR.getKey().getKey());
+        RECIPE_TYPE_ID_LIST.add(RecipeType.SMELTERY.getKey().getKey());
+        RECIPE_TYPE_ID_LIST.add(RecipeType.PRESSURE_CHAMBER.getKey().getKey());
+        RECIPE_TYPE_ID_LIST.add(RecipeType.MAGIC_WORKBENCH.getKey().getKey());
+        RECIPE_TYPE_ID_LIST.add(RecipeType.ORE_WASHER.getKey().getKey());
+        RECIPE_TYPE_ID_LIST.add(RecipeType.GOLD_PAN.getKey().getKey());
+        RECIPE_TYPE_ID_LIST.add(RecipeType.JUICER.getKey().getKey());
+        RECIPE_TYPE_ID_LIST.add(RecipeType.ANCIENT_ALTAR.getKey().getKey());
+        RECIPE_TYPE_ID_LIST.add(RecipeType.HEATED_PRESSURE_CHAMBER.getKey().getKey());
     }
 }
