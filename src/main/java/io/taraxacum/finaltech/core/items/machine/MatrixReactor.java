@@ -40,7 +40,7 @@ import javax.annotation.Nonnull;
 public class MatrixReactor extends AbstractMachine implements RecipeItem {
     private final String KEY_ITEM = "item";
     private final String KEY_COUNT = "count";
-    private final int difficulty = ConfigUtil.getOrDefaultItemSetting(72, this, "difficulty");
+    private final int difficulty = ConfigUtil.getOrDefaultItemSetting(80, this, "difficulty");
 
     public MatrixReactor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
