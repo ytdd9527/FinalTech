@@ -14,7 +14,7 @@ import io.taraxacum.finaltech.util.TextUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
-import io.taraxacum.finaltech.util.SfItemUtil;
+import io.taraxacum.libs.slimefun.util.SfItemUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Tag;

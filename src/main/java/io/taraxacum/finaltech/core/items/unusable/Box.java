@@ -9,7 +9,7 @@ import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.listener.BoxListener;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
-import io.taraxacum.finaltech.util.SfItemUtil;
+import io.taraxacum.libs.slimefun.util.SfItemUtil;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 

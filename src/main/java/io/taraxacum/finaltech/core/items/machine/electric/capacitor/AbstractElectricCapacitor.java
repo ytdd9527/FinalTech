@@ -12,7 +12,7 @@ import io.taraxacum.finaltech.core.items.machine.electric.AbstractElectricMachin
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
-import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.libs.slimefun.util.EnergyUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;

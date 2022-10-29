@@ -17,7 +17,7 @@ import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
 import io.taraxacum.finaltech.core.menu.manual.EquivalentExchangeTableMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
-import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;

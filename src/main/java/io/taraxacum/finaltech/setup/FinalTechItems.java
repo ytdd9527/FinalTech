@@ -14,7 +14,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack WATER_CARD = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_WATER_CARD", Material.PAPER, "Water Card");
     public static final SlimefunItemStack LAVA_CARD = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(),"FINALTECH_LAVA_CARD", Material.PAPER, "Lava Card");
     public static final SlimefunItemStack MILK_CARD = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(),"FINALTECH_MILK_CARD", Material.PAPER, "Milk Card");
-    public static final SlimefunItemStack GEARWHEEL = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_GEARWHEEL", Material.REDSTONE, "Gear Wheel");
+    public static final SlimefunItemStack GEARWHEEL = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_GEARWHEEL", Material.REDSTONE_TORCH, "Gear Wheel");
     public static final SlimefunItemStack UNORDERED_DUST = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_UNORDERED_DUST", Material.WHEAT_SEEDS, "Unordered Dust");
     public static final SlimefunItemStack ORDERED_DUST = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ORDERED_DUST", Material.SLIME_BALL, "Ordered Dust");
     public static final SlimefunItemStack BUG = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_BUG", Material.BONE_MEAL, "Bug");
@@ -216,7 +216,7 @@ public final class FinalTechItems {
     // extraction
     public static final SlimefunItemStack ORE_EXTRACTION = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ORE_EXTRACTION", Material.CRYING_OBSIDIAN, "Ore Extraction");
     // generator
-    public static final SlimefunItemStack STONE_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_STONE_GENERATOR", Material.COBBLESTONE, "Stone Generator");
+    public static final SlimefunItemStack STONE_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_STONE_GENERATOR", Material.STONE_BRICKS, "Stone Generator");
     public static final SlimefunItemStack RAW_STONE_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_RAW_STONE_GENERATOR", Material.POLISHED_BLACKSTONE, "Raw Stone Generator");
     public static final SlimefunItemStack NETHER_STONE_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_NETHER_STONE_GENERATOR", Material.SMOOTH_BASALT, "Nether Stone Generator");
     public static final SlimefunItemStack PLANK_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_PLANK_GENERATOR", Material.OAK_WOOD, "Plank Generator");
@@ -241,13 +241,13 @@ public final class FinalTechItems {
     // 12
     public static final SlimefunItemStack MATRIX_EXPANDED_CAPACITOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, "Matrix Expanded Capacitor");
     // 12
-    public static final SlimefunItemStack MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR", Material.AMETHYST_BLOCK, "Matrix Item Serialization Constructor");
+    public static final SlimefunItemStack MATRIX_ITEM_DESERIALIZE_PARSER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_ITEM_DESERIALIZE_PARSER", Material.BUDDING_AMETHYST, "Item Deserialize Parser");
     // 20
     public static final SlimefunItemStack MATRIX_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_GENERATOR", Material.SEA_LANTERN, "Matrix Generator");
     // 20
     public static final SlimefunItemStack MATRIX_ACCELERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_ACCELERATOR", Material.TARGET, "Matrix Accelerator");
     // 48
-    public static final SlimefunItemStack MATRIX_ITEM_DESERIALIZE_PARSER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_ITEM_DESERIALIZE_PARSER", Material.BUDDING_AMETHYST, "Item Deserialize Parser");
+    public static final SlimefunItemStack MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR", Material.AMETHYST_BLOCK, "Matrix Item Serialization Constructor");
     // 64
     public static final SlimefunItemStack MATRIX_REACTOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_REACTOR", Material.COAL_BLOCK, "Matrix Reactor");
 }

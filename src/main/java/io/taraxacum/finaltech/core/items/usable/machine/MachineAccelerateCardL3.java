@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.items.usable.accelerate;
+package io.taraxacum.finaltech.core.items.usable.machine;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -16,16 +16,16 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class MachineAccelerateCardL1 extends AbstractMachineAccelerateCard implements RecipeItem {
-    private final int times = ConfigUtil.getOrDefaultItemSetting(2, this, "times");
+public class MachineAccelerateCardL3 extends AbstractMachineAccelerateCard implements RecipeItem {
+    private final int times = ConfigUtil.getOrDefaultItemSetting(7200, this, "times");
 
-    public MachineAccelerateCardL1(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public MachineAccelerateCardL3(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
     protected int times() {
-        return this.times;
+        return times;
     }
 
     @Override
@@ -35,7 +35,11 @@ public class MachineAccelerateCardL1 extends AbstractMachineAccelerateCard imple
 
     @Override
     protected boolean conditionMatch(@Nonnull Player player) {
-        return true;
+        if (player.getHealth() > player.getMaxHealth() * 0.1) {
+            player.setHealth(player.getHealth() - player.getMaxHealth() * 0.1);
+            return true;
+        }
+        return false;
     }
 
     @Override

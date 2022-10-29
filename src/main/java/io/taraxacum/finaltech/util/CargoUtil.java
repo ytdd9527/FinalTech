@@ -1,4 +1,4 @@
-package io.taraxacum.libs.slimefun.util;
+package io.taraxacum.finaltech.util;
 
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.dto.InvWithSlots;
@@ -28,16 +28,15 @@ import java.util.concurrent.FutureTask;
  * @author Final_ROOT
  * @since 1.0
  */
+// TODO: abstract as lib
 public class CargoUtil {
-    public static final int SEARCH_MAP_LIMIT = 3;
-
+    private static final int SEARCH_MAP_LIMIT = 3;
     private static final Future<Integer> ZERO_FUTURE = new FutureTask<>(() -> 0);
 
     /**
      * Do cargo action.
      * inputBlock should not be same with outputBlock
      * @param cargoMode #{@link CargoMode}
-     * @return
      */
     public static Future<Integer> doCargo(@Nonnull CargoDTO cargoDTO, @Nonnull String cargoMode) {
         return switch (cargoMode) {

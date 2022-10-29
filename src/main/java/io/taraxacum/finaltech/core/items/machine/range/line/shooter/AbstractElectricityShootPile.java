@@ -15,7 +15,7 @@ import io.taraxacum.finaltech.core.items.machine.range.line.AbstractLineMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
-import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;

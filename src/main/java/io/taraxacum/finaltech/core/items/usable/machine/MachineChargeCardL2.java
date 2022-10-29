@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.items.usable.accelerate;
+package io.taraxacum.finaltech.core.items.usable.machine;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -16,16 +16,16 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class MachineAccelerateCardL3 extends AbstractMachineAccelerateCard implements RecipeItem {
-    private final int times = ConfigUtil.getOrDefaultItemSetting(1, this, "times");
+public class MachineChargeCardL2 extends AbstractMachineChargeCard implements RecipeItem {
+    private final double energy = ConfigUtil.getOrDefaultItemSetting(16384.16, this, "energy");
 
-    public MachineAccelerateCardL3(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public MachineChargeCardL2(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
-    protected int times() {
-        return times;
+    protected double energy() {
+        return energy;
     }
 
     @Override
@@ -35,8 +35,8 @@ public class MachineAccelerateCardL3 extends AbstractMachineAccelerateCard imple
 
     @Override
     protected boolean conditionMatch(@Nonnull Player player) {
-        if (player.getHealth() > player.getMaxHealth() * 0.1) {
-            player.setHealth(player.getHealth() - player.getMaxHealth() * 0.1);
+        if (player.getTotalExperience() > 1) {
+            player.setTotalExperience(player.getTotalExperience() - 1);
             return true;
         }
         return false;
@@ -45,6 +45,7 @@ public class MachineAccelerateCardL3 extends AbstractMachineAccelerateCard imple
     @Override
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
-                String.valueOf(this.times()));
+                String.valueOf((int)(Math.floor(energy))),
+                String.format("%.2f", (energy - Math.floor(energy)) * 100));
     }
 }

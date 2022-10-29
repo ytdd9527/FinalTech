@@ -11,6 +11,7 @@ import java.util.List;
  * @author Final_ROOT
  * @since 2.0
  */
+// TODO: abstract as lib
 public class RainbowColorText extends RandomColorText {
     private int step;
     private int index = 0;

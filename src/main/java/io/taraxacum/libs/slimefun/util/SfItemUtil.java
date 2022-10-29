@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.util;
+package io.taraxacum.libs.slimefun.util;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;

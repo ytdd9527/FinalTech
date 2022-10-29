@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 1.0
  */
+// TODO: Optimization
 public abstract class AbstractMachine extends AbstractMySlimefunItem {
     private final AbstractMachineMenu menu;
 

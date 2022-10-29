@@ -1,7 +1,7 @@
 package io.taraxacum.libs.slimefun.dto;
 
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
-import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.libs.plugin.dto.AdvancedMachineRecipe;
 import io.taraxacum.libs.plugin.dto.ItemAmountWrapper;
 import io.taraxacum.libs.plugin.dto.ItemWrapper;

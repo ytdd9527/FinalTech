@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.items.usable.accelerate;
+package io.taraxacum.finaltech.core.items.usable.machine;
 
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -92,7 +92,7 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem {
             }
         }
 
-        if (blockTicker != null && slimefunItem instanceof EnergyNetComponent) {
+        if (blockTicker != null && slimefunItem instanceof EnergyNetComponent energyNetComponent) {
             int time;
             if (this.consume()) {
                 time = this.times();
@@ -103,18 +103,18 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem {
             ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
 
             Runnable runnable = () -> {
-                int capacity = ((EnergyNetComponent) slimefunItem).getCapacity();
+                int capacity = energyNetComponent.getCapacity();
                 int chargeEnergy = (int) AbstractMachineActivateCard.this.energy();
-                if (!EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType())) {
+                if (!EnergyNetComponentType.CAPACITOR.equals(energyNetComponent.getEnergyComponentType()) && !EnergyNetComponentType.GENERATOR.equals(energyNetComponent.getEnergyComponentType())) {
                     chargeEnergy += (int)((this.energy() - (int) this.energy()) * capacity);
                 }
                 if (!AbstractMachineActivateCard.this.consume()) {
                     chargeEnergy *= playerRightClickEvent.getItem().getAmount();
                 }
                 for (int i = 0; i < time; i++) {
-                    int storedEnergy = ((EnergyNetComponent) slimefunItem).getCharge(location);
+                    int storedEnergy = energyNetComponent.getCharge(location);
                     chargeEnergy = chargeEnergy / 2 + storedEnergy / 2 > Integer.MAX_VALUE / 2 ? Integer.MAX_VALUE : chargeEnergy + storedEnergy;
-                    ((EnergyNetComponent) slimefunItem).setCharge(location, Math.min(capacity, chargeEnergy));
+                    energyNetComponent.setCharge(location, Math.min(capacity, chargeEnergy));
                     blockTicker.tick(block, slimefunItem, config);
                 }
             };
@@ -148,22 +148,25 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem {
             } else {
                 FinalTech.getLocationRunnableFactory().waitThenRun(runnable, location);
             }
-        } else if (slimefunItem instanceof EnergyNetComponent) {
+        } else if (slimefunItem instanceof EnergyNetComponent energyNetComponent) {
             // this slimefun item is energy net component
-            if (((EnergyNetComponent) slimefunItem).getCapacity() <= 0) {
+            if (energyNetComponent.getCapacity() <= 0) {
                 return;
             }
 
             ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
 
-            int capacity = ((EnergyNetComponent) slimefunItem).getCapacity();
-            int chargeEnergy = (int) this.energy() + (int)((this.energy() - (int) this.energy()) * capacity);
+            int capacity = energyNetComponent.getCapacity();
+            int chargeEnergy = (int) AbstractMachineActivateCard.this.energy();
+            if (!EnergyNetComponentType.CAPACITOR.equals(energyNetComponent.getEnergyComponentType()) && !EnergyNetComponentType.GENERATOR.equals(energyNetComponent.getEnergyComponentType())) {
+                chargeEnergy += (int)((this.energy() - (int) this.energy()) * capacity);
+            }
             if (!this.consume()) {
                 chargeEnergy *= playerRightClickEvent.getItem().getAmount();
             }
-            int storedEnergy = ((EnergyNetComponent) slimefunItem).getCharge(location);
+            int storedEnergy = energyNetComponent.getCharge(location);
             chargeEnergy = chargeEnergy / 2 + storedEnergy / 2 > Integer.MAX_VALUE / 2 ? Integer.MAX_VALUE : chargeEnergy + storedEnergy;
-            ((EnergyNetComponent) slimefunItem).setCharge(location, Math.min(capacity, chargeEnergy));
+            energyNetComponent.setCharge(location, Math.min(capacity, chargeEnergy));
         }
     }
 

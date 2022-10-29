@@ -1,12 +1,10 @@
-package io.taraxacum.finaltech.core.items.usable.accelerate;
+package io.taraxacum.finaltech.core.items.usable.machine;
 
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
-import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.items.usable.UsableSlimefunItem;
@@ -14,12 +12,15 @@ import io.taraxacum.libs.plugin.util.ParticleUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.PermissionUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
+import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 
@@ -27,8 +28,8 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public abstract class AbstractMachineChargeCard extends UsableSlimefunItem {
-    public AbstractMachineChargeCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public abstract class AbstractMachineAccelerateCard extends UsableSlimefunItem {
+    public AbstractMachineAccelerateCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -53,9 +54,16 @@ public abstract class AbstractMachineChargeCard extends UsableSlimefunItem {
         }
 
         if (!PermissionUtil.checkPermission(player, location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
-            // TODO: message
             player.sendRawMessage(FinalTech.getLanguageString("messages", "no-permission", "location"));
             return;
+        }
+
+        if (BlockStorage.hasInventory(block)) {
+            BlockMenu blockMenu = BlockStorage.getInventory(location);
+            if (!blockMenu.canOpen(block, player)) {
+                player.sendRawMessage(FinalTech.getLanguageString("messages", "no-permission", "location"));
+                return;
+            }
         }
 
         if (!this.conditionMatch(player)) {
@@ -64,33 +72,45 @@ public abstract class AbstractMachineChargeCard extends UsableSlimefunItem {
         }
 
         SlimefunItem slimefunItem = SlimefunItem.getById(config.getString(ConstantTableUtil.CONFIG_ID));
-        if (slimefunItem instanceof EnergyNetComponent && ((EnergyNetComponent) slimefunItem).getCapacity() > 0) {
-            if (this.consume()) {
-                if (playerRightClickEvent.getItem().getAmount() > 0) {
-                    ItemStack item = playerRightClickEvent.getItem();
-                    item.setAmount(item.getAmount() - 1);
-                } else {
-                    return;
-                }
-            }
+        if (slimefunItem == null || FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId())) {
+            return;
+        }
 
-            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+        BlockTicker blockTicker = slimefunItem.getBlockTicker();
+        if (blockTicker == null) {
+            return;
+        }
 
-            int capacity = ((EnergyNetComponent) slimefunItem).getCapacity();
-            int chargeEnergy = (int) this.energy();
-            if (!EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType())) {
-                chargeEnergy += (int)((this.energy() - (int) this.energy()) * capacity);
+        int time;
+        if (this.consume()) {
+            if (playerRightClickEvent.getItem().getAmount() > 0) {
+                ItemStack item = playerRightClickEvent.getItem();
+                item.setAmount(item.getAmount() - 1);
+                time = this.times();
+            } else {
+                return;
             }
-            if (!this.consume()) {
-                chargeEnergy *= playerRightClickEvent.getItem().getAmount();
+        } else {
+            time = this.times() * playerRightClickEvent.getItem().getAmount();
+        }
+
+        ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+
+        Runnable runnable = () -> {
+            for (int i = 0; i < time; i++) {
+                blockTicker.tick(block, slimefunItem, config);
             }
-            int storedEnergy = ((EnergyNetComponent) slimefunItem).getCharge(location);
-            chargeEnergy = chargeEnergy / 2 + storedEnergy / 2 > Integer.MAX_VALUE / 2 ? Integer.MAX_VALUE : chargeEnergy + storedEnergy;
-            ((EnergyNetComponent) slimefunItem).setCharge(location, Math.min(capacity, chargeEnergy));
+        };
+
+        JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
+        if (blockTicker.isSynchronized() || !FinalTech.isAsyncSlimefunItem(slimefunItem.getId())) {
+            javaPlugin.getServer().getScheduler().runTask(javaPlugin, runnable);
+        } else {
+            FinalTech.getLocationRunnableFactory().waitThenRun(runnable, location);
         }
     }
 
-    protected abstract double energy();
+    protected abstract int times();
 
     /**
      * @return If using it will consume itself
@@ -99,7 +119,9 @@ public abstract class AbstractMachineChargeCard extends UsableSlimefunItem {
 
     /**
      * If it can work.
-     * May be designed to cost player's health or exp.
+     * May cost player's health or exp;
+     * @param player
+     * @return
      */
     protected abstract boolean conditionMatch(@Nonnull Player player);
 }

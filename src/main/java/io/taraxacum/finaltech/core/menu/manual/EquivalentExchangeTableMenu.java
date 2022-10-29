@@ -8,7 +8,7 @@ import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.items.machine.manual.EquivalentExchangeTable;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.SfItemUtil;
+import io.taraxacum.libs.slimefun.util.SfItemUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;

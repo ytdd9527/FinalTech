@@ -21,8 +21,9 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.common.util.StringNumberUtil;
+import io.taraxacum.libs.slimefun.util.BlockTickerUtil;
 import io.taraxacum.libs.slimefun.util.EnergyUtil;
-import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -90,7 +91,7 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
                 if (energyComponentConfig.contains(ConstantTableUtil.CONFIG_ID)) {
                     String machineId = energyComponentConfig.getString(ConstantTableUtil.CONFIG_ID);
                     SlimefunItem machineItem = SlimefunItem.getById(machineId);
-                    if (machineItem instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) machineItem).getEnergyComponentType())) {
+                    if (machineItem instanceof EnergyNetComponent energyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(energyNetComponent.getEnergyComponentType()) && !EnergyNetComponentType.GENERATOR.equals(energyNetComponent.getEnergyComponentType())) {
                         BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineId), () -> AbstractCubeElectricGenerator.this.chargeMachine((EnergyNetComponent) machineItem, finalEnergy, energyComponentConfig, location), location);
                         if (drawParticle) {
                             Location cloneLocation = location.clone();

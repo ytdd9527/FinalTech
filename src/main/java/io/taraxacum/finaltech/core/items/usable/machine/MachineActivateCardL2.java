@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.items.usable.accelerate;
+package io.taraxacum.finaltech.core.items.usable.machine;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -16,11 +16,17 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class MachineChargeCardL1 extends AbstractMachineChargeCard implements RecipeItem {
+public class MachineActivateCardL2 extends AbstractMachineActivateCard implements RecipeItem {
+    private final int times = ConfigUtil.getOrDefaultItemSetting(32, this, "times");
     private final double energy = ConfigUtil.getOrDefaultItemSetting(16.04, this, "energy");
 
-    public MachineChargeCardL1(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public MachineActivateCardL2(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+    }
+
+    @Override
+    protected int times() {
+        return times;
     }
 
     @Override
@@ -35,12 +41,18 @@ public class MachineChargeCardL1 extends AbstractMachineChargeCard implements Re
 
     @Override
     protected boolean conditionMatch(@Nonnull Player player) {
-        return true;
+        if (player.getHealth() > 1 && player.getTotalExperience() > 1) {
+            player.setHealth(player.getHealth() - 1);
+            player.setTotalExperience(player.getTotalExperience() - 1);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.times()),
                 String.valueOf((int)(Math.floor(energy))),
                 String.format("%.2f", (energy - Math.floor(energy)) * 100));
     }

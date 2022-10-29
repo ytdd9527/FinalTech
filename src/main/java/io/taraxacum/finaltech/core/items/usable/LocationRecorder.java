@@ -12,7 +12,7 @@ import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.util.PermissionUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
 import io.taraxacum.finaltech.util.TextUtil;
-import io.taraxacum.libs.slimefun.util.LocationUtil;
+import io.taraxacum.finaltech.util.LocationUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;

@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
 public class FinalTech extends JavaPlugin implements SlimefunAddon {
     /**
-     * Force other slimefun item machine to run async.
+     * Force other slimefun machine to run async.
      */
     private boolean forceSlimefunMultiThread = false;
     /**

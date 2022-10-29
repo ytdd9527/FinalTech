@@ -1,8 +1,7 @@
-package io.taraxacum.libs.slimefun.util;
+package io.taraxacum.finaltech.util;
 
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.util.TextUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -27,6 +26,7 @@ import java.util.Set;
  * @author Final_ROOT
  * @since 2.0
  */
+// TODO: abstract as lib
 public class LocationUtil {
     private static final NamespacedKey KEY = new NamespacedKey(FinalTech.getInstance(), "location");
 

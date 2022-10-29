@@ -12,16 +12,17 @@ import java.util.Random;
  * @author Final_ROOT
  * @since 2.0
  */
+// TODO: abstract as lib
 public class TextUtil {
-    public static final String COLOR_NORMAL = "§x§8§8§f§f§f§f"; // 通常
-    public static final String COLOR_STRESS = "§x§f§f§f§f§8§8"; // 强调（介绍）stress
-    public static final String COLOR_ACTION = "§x§f§f§8§8§0§0"; // 操作(操作)action
-    public static final String COLOR_INITIATIVE = "§x§0§0§8§8§f§f"; // 主动（获取）initiative
-    public static final String COLOR_PASSIVE = "§x§0§0§f§f§8§8"; // 被动（机制、状态）passive
-    public static final String COLOR_NUMBER = "§x§f§f§8§8§f§f"; // 数字
-    public static final String COLOR_POSITIVE = "§x§8§8§f§f§8§8"; // 正面（用途）positive
-    public static final String COLOR_NEGATIVE = "§x§f§f§8§8§8§8"; // 负面（限制、无效）negative
-    public static final String COLOR_CONCEAL = "§x§8§8§8§8§8§8"; // 隐蔽 conceal
+    public static final String COLOR_NORMAL = "§x§8§8§f§f§f§f";
+    public static final String COLOR_STRESS = "§x§f§f§f§f§8§8";
+    public static final String COLOR_ACTION = "§x§f§f§8§8§0§0";
+    public static final String COLOR_INITIATIVE = "§x§0§0§8§8§f§f";
+    public static final String COLOR_PASSIVE = "§x§0§0§f§f§8§8";
+    public static final String COLOR_NUMBER = "§x§f§f§8§8§f§f";
+    public static final String COLOR_POSITIVE = "§x§8§8§f§f§8§8";
+    public static final String COLOR_NEGATIVE = "§x§f§f§8§8§8§8";
+    public static final String COLOR_CONCEAL = "§x§8§8§8§8§8§8";
     public static final String COLOR_INPUT = "§9";
     public static final String COLOR_OUTPUT = "§6";
     public static final Color WHITE_COLOR = Color.fromRGB(255, 255, 255);

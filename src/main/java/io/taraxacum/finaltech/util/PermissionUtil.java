@@ -22,7 +22,6 @@ import java.util.UUID;
  * @since 2.0
  */
 public class PermissionUtil {
-
     public static boolean checkOfflinePermission(@Nonnull ItemStack itemStack, @Nonnull Location... targetLocations) {
         if (!itemStack.hasItemMeta()) {
             return false;

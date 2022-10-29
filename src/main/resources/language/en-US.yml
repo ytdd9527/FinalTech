@@ -427,8 +427,8 @@ items:
       1:
         name: '{color:initiative}Production method'
         lore:
-          - '{color:normal}Can be crafted in {id:FINALTECH_ITEM_SERIALIZATION_CONSTRUCTOR} (Only for Slimefun items)'
-          - '{color:normal}Can be crafted in {id:FINALTECH_MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR} (Support all items)'
+          - '{color:normal}Can be crafted in {id:FINALTECH_ITEM_SERIALIZATION_CONSTRUCTOR} {color:normal}(Only for Slimefun items)'
+          - '{color:normal}Can be crafted in {id:FINALTECH_MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR} {color:normal}(Support all items)'
         output: 'FINALTECH_ITEM_SERIALIZATION_CONSTRUCTOR'
       2:
         name: '{color:passive}Mechanism'
@@ -552,7 +552,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_TO_DIGITAL_CONVERSION}'
           - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
-        output: 'FINALTECH_FINALTECH_LOGIC_TO_DIGITAL_CONVERSION'
+        output: 'FINALTECH_LOGIC_TO_DIGITAL_CONVERSION'
   FINALTECH_DIGITAL_TWO:
     name: '{color:prandom}Digital {color:conceal}- {color:number}2'
     info:
@@ -688,7 +688,7 @@ items:
         name: '{color:positive}Usage'
         lore:
           - '{color:normal}Charge machine for {color:number}{1} J + {2}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor'
+          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
   FINALTECH_MACHINE_CHARGE_CARD_L2:
     name: '{color:prandom}Machine Charge Card {color:conceal}- {color:number}L2'
     info:
@@ -696,7 +696,7 @@ items:
         name: '{color:positive}Usage'
         lore:
           - '{color:normal}Charge machine for {color:number}{1} J + {2}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor'
+          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
       2:
         name: '{color:negative}Limit'
         lore:
@@ -708,7 +708,7 @@ items:
         name: '{color:positive}Usage'
         lore:
           - '{color:normal}Charge machine for {color:number}{1} J + {2}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor'
+          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
       2:
         name: '{color:negative}Limit'
         lore:
@@ -750,7 +750,7 @@ items:
         lore:
           - '{color:normal}Make machine work immediately for {color:number}{1} times'
           - '{color:normal}Before every work, it will be charged for {color:number}{2} J + {3}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor'
+          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
   FINALTECH_MACHINE_ACTIVATE_CARD_L2:
     name: '{color:prandom}Machine Activate Card {color:conceal}- {color:number}L2'
     info:
@@ -759,7 +759,7 @@ items:
         lore:
           - '{color:normal}Make machine work immediately for {color:number}{1} times'
           - '{color:normal}Before every work, it will be charged for {color:number}{2} J + {3}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor'
+          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
       2:
         name: '{color:negative}Limit'
         lore:
@@ -772,7 +772,7 @@ items:
         lore:
           - '{color:normal}Make machine work immediately for {color:number}{1} times'
           - '{color:normal}Before every work, it will be charged for {color:number}{2} J + {3}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor'
+          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
       2:
         name: '{color:negative}Limit'
         lore:
@@ -884,9 +884,9 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Charge around machine'
-          - '{color:normal}Energy= {color:number}{1} J'
-          - '{color:normal}Range= {color:number}{2} Block'
-          - '{color:normal}Rate= {color:number}{3} s/times'
+          - '{color:normal}Energy: {color:number}{1} J'
+          - '{color:normal}Range: {color:number}{2} Block'
+          - '{color:normal}Rate: {color:number}{3} s/times'
       2:
         name: '{color:passive}Mechanism'
         lore:
@@ -896,11 +896,11 @@ items:
       3:
         name: '{color:negative}Limit'
         lore:
-          - '{color:normal}Can not charge capacitor'
+          - '{color:normal}Can not charge capacitor and generator'
     status:
       lore:
-        - '{color:normal}Total Energy= {color:number}{1} J'
-        - '{color:normal}Affected Machine= {color:number}{2}'
+        - '{color:normal}Total Energy: {color:number}{1} J'
+        - '{color:normal}Affected Machine: {color:number}{2}'
   FINALTECH_ADVANCED_GENERATOR:
     name: '{color:prandom}Advanced Generator'
     info:
@@ -908,9 +908,9 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Charge around machine'
-          - '{color:normal}Energy= {color:number}{1} J'
-          - '{color:normal}Range= {color:number}{2} Block'
-          - '{color:normal}Rate= {color:number}{3} s/times'
+          - '{color:normal}Energy: {color:number}{1} J'
+          - '{color:normal}Range: {color:number}{2} Block'
+          - '{color:normal}Rate: {color:number}{3} s/times'
       2:
         name: '{color:passive}Mechanism'
         lore:
@@ -920,11 +920,11 @@ items:
       3:
         name: '{color:negative}Limit'
         lore:
-          - '{color:normal}Can not charge capacitor'
+          - '{color:normal}Can not charge capacitor and generator'
     status:
       lore:
-        - '{color:normal}Total Energy= {color:number}{1} J'
-        - '{color:normal}Affected Machine= {color:number}{2}'
+        - '{color:normal}Total Energy: {color:number}{1} J'
+        - '{color:normal}Affected Machine: {color:number}{2}'
   FINALTECH_CARBONADO_GENERATOR:
     name: '{color:prandom}Carbonado Generator'
     info:
@@ -932,9 +932,9 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Charge around machine'
-          - '{color:normal}Energy= {color:number}{1} J'
-          - '{color:normal}Range= {color:number}{2} Block'
-          - '{color:normal}Rate= {color:number}{3} s/times'
+          - '{color:normal}Energy: {color:number}{1} J'
+          - '{color:normal}Range: {color:number}{2} Block'
+          - '{color:normal}Rate: {color:number}{3} s/times'
       2:
         name: '{color:passive}Mechanism'
         lore:
@@ -944,11 +944,11 @@ items:
       3:
         name: '{color:negative}Limit'
         lore:
-          - '{color:normal}Can not charge capacitor'
+          - '{color:normal}Can not charge capacitor and generator'
     status:
       lore:
-        - '{color:normal}Total Energy= {color:number}{1} J'
-        - '{color:normal}Affected Machine= {color:number}{2}'
+        - '{color:normal}Total Energy: {color:number}{1} J'
+        - '{color:normal}Affected Machine: {color:number}{2}'
   FINALTECH_ENERGIZED_GENERATOR:
     name: '{color:prandom}Energized Generator'
     info:
@@ -956,9 +956,9 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Charge around machine'
-          - '{color:normal}Energy= {color:number}{1} J'
-          - '{color:normal}Range= {color:number}{2} Block'
-          - '{color:normal}Rate= {color:number}{3} s/times'
+          - '{color:normal}Energy: {color:number}{1} J'
+          - '{color:normal}Range: {color:number}{2} Block'
+          - '{color:normal}Rate: {color:number}{3} s/times'
       2:
         name: '{color:passive}Mechanism'
         lore:
@@ -968,11 +968,11 @@ items:
       3:
         name: '{color:negative}Limit'
         lore:
-          - '{color:normal}Can not charge capacitor'
+          - '{color:normal}Can not charge capacitor and generator'
     status:
       lore:
-        - '{color:normal}Total Energy= {color:number}{1} J'
-        - '{color:normal}Affected Machine= {color:number}{2}'
+        - '{color:normal}Total Energy: {color:number}{1} J'
+        - '{color:normal}Affected Machine: {color:number}{2}'
   FINALTECH_ENERGIZED_STACK_GENERATOR:
     name: '{color:prandom}Energized Stack Generator'
     info:
@@ -980,9 +980,9 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Charge around machine'
-          - '{color:normal}Energy= {color:number}{1} J'
-          - '{color:normal}Range= {color:number}{2} Block'
-          - '{color:normal}Rate= {color:number}{3} s/times'
+          - '{color:normal}Energy: {color:number}{1} J'
+          - '{color:normal}Range: {color:number}{2} Block'
+          - '{color:normal}Rate: {color:number}{3} s/times'
       2:
         name: '{color:passive}Mechanism'
         lore:
@@ -992,11 +992,11 @@ items:
       3:
         name: '{color:negative}Limit'
         lore:
-          - '{color:normal}Can not charge capacitor'
+          - '{color:normal}Can not charge capacitor and generator'
     status:
       lore:
-        - '{color:normal}Total Energy= {color:number}{1} J'
-        - '{color:normal}Affected Machine= {color:number}{2}'
+        - '{color:normal}Total Energy: {color:number}{1} J'
+        - '{color:normal}Affected Machine: {color:number}{2}'
   FINALTECH_OVERLOADED_GENERATOR:
     name: '{color:prandom}Overloaded Generator'
     info:
@@ -1004,9 +1004,9 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Charge around machine'
-          - '{color:normal}Energy= {color:number}{1} J'
-          - '{color:normal}Range= {color:number}{2} Block'
-          - '{color:normal}Rate= {color:number}{3} s/times'
+          - '{color:normal}Energy: {color:number}{1} J'
+          - '{color:normal}Range: {color:number}{2} Block'
+          - '{color:normal}Rate: {color:number}{3} s/times'
       2:
         name: '{color:passive}Mechanism'
         lore:
@@ -1016,11 +1016,11 @@ items:
       3:
         name: '{color:negative}Limit'
         lore:
-          - '{color:normal}Can not charge capacitor'
+          - '{color:normal}Can not charge capacitor and generator'
     status:
       lore:
-        - '{color:normal}Total Energy= {color:number}{1} J'
-        - '{color:normal}Affected Machine= {color:number}{2}'
+        - '{color:normal}Total Energy: {color:number}{1} J'
+        - '{color:normal}Affected Machine: {color:number}{2}'
   FINALTECH_ORDERED_DUST_GENERATOR:
     name: '{color:prandom}Ordered Dust Generator'
     info:
@@ -1037,8 +1037,8 @@ items:
           - '{color:negative}If no valid item being consumed: {color:number}power / 2'
     status:
       lore:
-        - '{color:normal}Power= {color:number}{1}'
-        - '{color:normal}Generate Energy= {color:number}{2} J/times'
+        - '{color:normal}Power: {color:number}{1}'
+        - '{color:normal}Generate Energy: {color:number}{2} J/times'
   FINALTECH_ENERGIZED_CHARGE_BASE:
     name: '{color:prandom}Energized Charge Base'
     info:
@@ -1046,15 +1046,15 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - "{color:normal}Charge machine on it's top"
-          - "{color:normal}Charge energy= {color:number}{1} * machine's capacity"
+          - "{color:normal}Charge energy: {color:number}{1} * machine's capacity"
       2:
         name: '{color:negative}Limit'
         lore:
           - '{color:normal}Not charge capacitor and energy generator'
     status:
       lore:
-        - '{color:normal}Stored Energy= {color:number}{1} J'
-        - '{color:normal}Charged Energy= {color:number}{2} J'
+        - '{color:normal}Stored Energy: {color:number}{1} J'
+        - '{color:normal}Charged Energy: {color:number}{2} J'
   FINALTECH_OVERLOAD_CHARGE_BASE:
     name: '{color:prandom}Overload Charge Base'
     info:
@@ -1062,7 +1062,7 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - "{color:normal}Charge machine on it's top"
-          - "{color:normal}Charge energy= {color:number}{1} * machine's capacity"
+          - "{color:normal}Charge energy: {color:number}{1} * machine's capacity"
           - "{color:normal}Can charge energy to {color:number}{2}% of machine's capacity"
       2:
         name: '{color:negative}Limit'
@@ -1070,8 +1070,8 @@ items:
           - '{color:normal}Not charge capacitor and energy generator'
     status:
       lore:
-        - '{color:normal}Stored Energy= {color:number}{1} J'
-        - '{color:normal}Charged Energy= {color:number}{2} J'
+        - '{color:normal}Stored Energy: {color:number}{1} J'
+        - '{color:normal}Charged Energy: {color:number}{2} J'
   FINALTECH_BASIC_CHARGE_INCREASE_CAPACITOR:
     name: '{color:prandom}Basic Charge Increase Capacitor'
     info:
@@ -1082,7 +1082,7 @@ items:
           - '{color:normal}Get {color:number}{2}%J {color:normal}of energy while being charged'
     status:
       lore:
-        - '{color:normal}Stored Energy= {color:number}{1} J'
+        - '{color:normal}Stored Energy: {color:number}{1} J'
   FINALTECH_BASIC_CONSUME_REDUCE_CAPACITOR:
     name: '{color:prandom}Basic Consume Reduce Capacitor'
     info:
@@ -1093,7 +1093,7 @@ items:
           - '{color:normal}consume {color:number}{2}%J {color:normal}of energy while discharging'
     status:
       lore:
-        - '{color:normal}Stored Energy= {color:number}{1} J'
+        - '{color:normal}Stored Energy: {color:number}{1} J'
   FINALTECH_SMALL_EXPANDED_CAPACITOR:
     name: '{color:prandom}Small Expanded Capacitor'
     info:
@@ -1107,8 +1107,8 @@ items:
           - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
     status:
       lore:
-        - '{color:normal}Transferable Energy= {color:number}{1} J'
-        - '{color:normal}Stored Energy Stack= {color:number}{2}'
+        - '{color:normal}Transferable Energy: {color:number}{1} J'
+        - '{color:normal}Stored Energy Stack: {color:number}{2}'
   FINALTECH_MEDIUM_EXPANDED_CAPACITOR:
     name: '{color:prandom}Medium Expanded Capacitor'
     info:
@@ -1122,8 +1122,8 @@ items:
           - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
     status:
       lore:
-        - '{color:normal}Transferable Energy= {color:number}{1} J'
-        - '{color:normal}Stored Energy Stack= {color:number}{2}'
+        - '{color:normal}Transferable Energy: {color:number}{1} J'
+        - '{color:normal}Stored Energy Stack: {color:number}{2}'
   FINALTECH_BIG_EXPANDED_CAPACITOR:
     name: '{color:prandom}Big Expanded Capacitor'
     info:
@@ -1137,8 +1137,8 @@ items:
           - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
     status:
       lore:
-        - '{color:normal}Transferable Energy= {color:number}{1} J'
-        - '{color:normal}Stored Energy Stack= {color:number}{2}'
+        - '{color:normal}Transferable Energy: {color:number}{1} J'
+        - '{color:normal}Stored Energy Stack: {color:number}{2}'
   FINALTECH_LARGE_EXPANDED_CAPACITOR:
     name: '{color:prandom}Large Expanded Capacitor'
     info:
@@ -1152,8 +1152,8 @@ items:
           - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
     status:
       lore:
-        - '{color:normal}Transferable Energy= {color:number}{1} J'
-        - '{color:normal}Stored Energy Stack= {color:number}{2}'
+        - '{color:normal}Transferable Energy: {color:number}{1} J'
+        - '{color:normal}Stored Energy Stack: {color:number}{2}'
   FINALTECH_CARBONADO_EXPANDED_CAPACITOR:
     name: '{color:prandom}Carbonado Expanded Capacitor'
     info:
@@ -1167,8 +1167,8 @@ items:
           - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
     status:
       lore:
-        - '{color:normal}Transferable Energy= {color:number}{1} J'
-        - '{color:normal}Stored Energy Stack= {color:number}{2}'
+        - '{color:normal}Transferable Energy: {color:number}{1} J'
+        - '{color:normal}Stored Energy Stack: {color:number}{2}'
   FINALTECH_ENERGIZED_EXPANDED_CAPACITOR:
     name: '{color:prandom}Energized Expanded Capacitor'
     info:
@@ -1182,8 +1182,8 @@ items:
           - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
     status:
       lore:
-        - '{color:normal}Transferable Energy= {color:number}{1} J'
-        - '{color:normal}Stored Energy Stack= {color:number}{2}'
+        - '{color:normal}Transferable Energy: {color:number}{1} J'
+        - '{color:normal}Stored Energy Stack: {color:number}{2}'
   FINALTECH_ENERGIZED_STACK_EXPANDED_CAPACITOR:
     name: '{color:prandom}Energized Stack Expanded Capacitor'
     info:
@@ -1197,8 +1197,8 @@ items:
           - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
     status:
       lore:
-        - '{color:normal}Transferable Energy= {color:number}{1} J'
-        - '{color:normal}Stored Energy Stack= {color:number}{2}'
+        - '{color:normal}Transferable Energy: {color:number}{1} J'
+        - '{color:normal}Stored Energy Stack: {color:number}{2}'
   FINALTECH_OVERLOADED_EXPANDED_CAPACITOR:
     name: '{color:prandom}Overloaded Expanded Capacitor'
     info:
@@ -1212,8 +1212,8 @@ items:
           - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
     status:
       lore:
-        - '{color:normal}Transferable Energy= {color:number}{1} J'
-        - '{color:normal}Stored Energy Stack= {color:number}{2}'
+        - '{color:normal}Transferable Energy: {color:number}{1} J'
+        - '{color:normal}Stored Energy Stack: {color:number}{2}'
   FINALTECH_ADVANCED_CHARGE_INCREASE_CAPACITOR:
     name: '{color:prandom}Advanced Charge Increase Capacitor'
     info:
@@ -1224,7 +1224,7 @@ items:
           - '{color:normal}Get {color:number}{2}%J {color:normal}of energy while being charged'
     status:
       lore:
-        - '{color:normal}Stored Energy= {color:number}{1} J'
+        - '{color:normal}Stored Energy: {color:number}{1} J'
   FINALTECH_ADVANCED_CONSUME_REDUCE_CAPACITOR:
     name: '{color:prandom}Advanced Consume Reduce Capacitor'
     info:
@@ -1235,7 +1235,7 @@ items:
           - '{color:normal}consume {color:number}{2}%J {color:normal}of energy while discharging'
     status:
       lore:
-        - '{color:normal}Stored Energy= {color:number}{1} J'
+        - '{color:normal}Stored Energy: {color:number}{1} J'
   FINALTECH_NORMAL_ELECTRICITY_SHOOT_PILE:
     name: '{color:prandom}Normal Electricity Shoot Pile'
     info:
@@ -1247,15 +1247,15 @@ items:
           - ''
           - '{color:normal}It will charge only one machine at same time'
           - ''
-          - '{color:normal}Range= {color:number}{1}'
+          - '{color:normal}Range: {color:number}{1}'
       2:
         name: '{color:negative}Limit'
         lore:
           - '{color:normal}Can not transfer energy to another capacitor'
     status:
       lore:
-        - '{color:normal}Affected Machine= {color:number}{1}'
-        - '{color:normal}Transfer Energy= {color:number}{2} J'
+        - '{color:normal}Affected Machine: {color:number}{1}'
+        - '{color:normal}Transfer Energy: {color:number}{2} J'
   FINALTECH_ENERGIZED_ELECTRICITY_SHOOT_PILE:
     name: '{color:prandom}Energized Electricity Shoot Pile'
     info:
@@ -1268,15 +1268,15 @@ items:
           - '{color:normal}It will try to charge all machine at same time'
           - '{color:normal}It will skip a machine with full energy'
           - ''
-          - '{color:normal}Range= {color:number}{1}'
+          - '{color:normal}Range: {color:number}{1}'
       2:
         name: '{color:negative}Limit'
         lore:
           - '{color:normal}Can not transfer energy to another capacitor'
     status:
       lore:
-        - '{color:normal}Affected Machine= {color:number}{1}'
-        - '{color:normal}Transfer Energy= {color:number}{2} J'
+        - '{color:normal}Affected Machine: {color:number}{1}'
+        - '{color:normal}Transfer Energy: {color:number}{2} J'
   FINALTECH_OVERLOADED_ELECTRICITY_SHOOT_PILE:
     name: '{color:prandom}Overloaded Electricity Shoot Pile'
     info:
@@ -1289,15 +1289,15 @@ items:
           - '{color:normal}It will try to charge all machine at same time'
           - '{color:normal}It will charge a machine with full energy'
           - ''
-          - '{color:normal}Range= {color:number}{1}'
+          - '{color:normal}Range: {color:number}{1}'
       2:
         name: '{color:negative}Limit'
         lore:
           - '{color:normal}Can not transfer energy to another capacitor'
     status:
       lore:
-        - '{color:normal}Affected Machine= {color:number}{1}'
-        - '{color:normal}Transfer Energy= {color:number}{2} J'
+        - '{color:normal}Affected Machine: {color:number}{1}'
+        - '{color:normal}Transfer Energy: {color:number}{2} J'
   FINALTECH_DISPERSAL_CAPACITOR:
     name: '{color:prandom}Dispersal Capacitor'
     info:
@@ -1328,18 +1328,18 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Consume energy to make around machine work several times'
-          - '{color:normal}Range= {color:number}{1}'
-          - '{color:normal}Capacity= {color:number}{2} J'
+          - '{color:normal}Range: {color:number}{1}'
+          - '{color:normal}Capacity: {color:number}{2} J'
       2:
         name: '{color:negative}Limit'
         lore:
           - '{color:normal}Only support machine that can store energy'
     status:
       lore:
-        - '{color:normal}Stored Energy= {color:number}{1} J'
-        - '{color:normal}Accelerate Machine= {color:number}{2}'
-        - '{color:normal}Accelerate Average Times= {color:number}{3}'
-        - '{color:normal}Accelerate Total Times= {color:number}{4}'
+        - '{color:normal}Stored Energy: {color:number}{1} J'
+        - '{color:normal}Accelerate Machine: {color:number}{2}'
+        - '{color:normal}Accelerate Average Times: {color:number}{3}'
+        - '{color:normal}Accelerate Total Times: {color:number}{4}'
   FINALTECH_OVERLOADED_ACCELERATOR:
     name: '{color:prandom}Overloaded Accelerator'
     info:
@@ -1347,15 +1347,15 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Make around machine work several times which stored energy is beyond capacity'
-          - '{color:normal}Range= {color:number}{1}'
+          - '{color:normal}Range: {color:number}{1}'
       2:
         name: '{color:negative}Limit'
         lore:
           - '{color:normal}Only support machine that can store energy'
     status:
       lore:
-        - '{color:normal}Accelerate Machine= {color:number}{1}'
-        - '{color:normal}Accelerate Total Times= {color:number}{2}'
+        - '{color:normal}Accelerate Machine: {color:number}{1}'
+        - '{color:normal}Accelerate Total Times: {color:number}{2}'
   FINALTECH_NORMAL_STORAGE_UNIT:
     name: '{color:prandom}Storage Unit'
     info:
@@ -1555,7 +1555,7 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Right click it to open slimefun machine it look at'
-          - '{color:normal}Range= {color:number}{1}'
+          - '{color:normal}Range: {color:number}{1}'
   FINALTECH_AREA_ACCESSOR:
     name: '{color:prandom}Area Accessor'
     info:
@@ -1563,7 +1563,7 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Right click it to open menu and then you can directly open slimefun machine around it'
-          - '{color:normal}Range= {color:number}{1}'
+          - '{color:normal}Range: {color:number}{1}'
     temp-icon:
       lore:
         - '{color:normal}X: {color:number}{1}'
@@ -1611,7 +1611,7 @@ items:
       1:
         name: '{color:stress}Introduction'
         lore:
-          - '{color:normal}Input items to get {id:FINALTECH_UNORDERED_DUST} or {id:FINALTECH_ORDERED_DUST}'
+          - '{color:normal}Input items to get {id:FINALTECH_UNORDERED_DUST} {color:normal}or {id:FINALTECH_ORDERED_DUST}'
       2:
         name: '{color:passive}Mechanism'
         lore:
@@ -1636,7 +1636,7 @@ items:
       1:
         name: '{color:stress}Introduction'
         lore:
-          - '{color:normal}Input items to get {id:FINALTECH_UNORDERED_DUST} or {id:FINALTECH_ORDERED_DUST}'
+          - '{color:normal}Input items to get {id:FINALTECH_UNORDERED_DUST} {color:normal}or {id:FINALTECH_ORDERED_DUST}'
       2:
         name: '{color:passive}Mechanism'
         lore:
@@ -2032,7 +2032,7 @@ items:
         - '{color:action}[click] {color:normal}to get more information'
     parse-success-icon:
       name: '{color:positive}Parse Success'
-    parse-amount: '{color:conceal}Amount = {1}'
+    parse-amount: '{color:conceal}Amount : {1}'
   FINALTECH_MATRIX_ITEM_DISMANTLE_TABLE:
     name: '{color:prandom}Matrix Item Dismantle Table'
   FINALTECH_MATRIX_EXPANDED_CAPACITOR:
@@ -2048,8 +2048,8 @@ items:
           - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
     status:
       lore:
-        - '{color:normal}Transferable Energy= {color:number}{1} J'
-        - '{color:normal}Stored Energy Stack= {color:number}{2}'
+        - '{color:normal}Transferable Energy: {color:number}{1} J'
+        - '{color:normal}Stored Energy Stack: {color:number}{2}'
   FINALTECH_MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR:
     name: '{color:prandom}Matrix Item Serialization Constructor'
     info:
@@ -2104,9 +2104,9 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Charge around machine'
-          - '{color:normal}Energy= {color:number}100%'
-          - '{color:normal}Range= {color:number}{1} Block'
-          - '{color:normal}Rate= {color:number}{2} s/times'
+          - '{color:normal}Energy: {color:number}100%'
+          - '{color:normal}Range: {color:number}{1} Block'
+          - '{color:normal}Rate: {color:number}{2} s/times'
       2:
         name: '{color:passive}Mechanism'
         lore:
@@ -2114,11 +2114,11 @@ items:
       3:
         name: '{color:negative}Limit'
         lore:
-          - '{color:normal}Can not charge capacitor'
+          - '{color:normal}Can not charge capacitor and generator'
     status:
       lore:
-        - '{color:normal}Affected Machine= {color:number}{1}'
-        - '{color:normal}Range= {color:number}{2}'
+        - '{color:normal}Affected Machine: {color:number}{1}'
+        - '{color:normal}Range: {color:number}{2}'
   FINALTECH_MATRIX_ACCELERATOR:
     name: '{color:prandom}Matrix Accelerator'
     info:

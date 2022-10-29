@@ -10,6 +10,10 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class SimpleCargoDTO {
 
     private InvWithSlots inputMap;

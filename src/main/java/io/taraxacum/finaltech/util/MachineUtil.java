@@ -1,4 +1,4 @@
-package io.taraxacum.libs.slimefun.util;
+package io.taraxacum.finaltech.util;
 
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
@@ -21,6 +21,7 @@ import java.util.*;
  * @author Final_ROOT
  * @since 1.0
  */
+// TODO: abstract as lib
 public final class MachineUtil {
     public static final BlockPlaceHandler BLOCK_PLACE_HANDLER_PLACER_ALLOW = new BlockPlaceHandler(true) {
         @Override
