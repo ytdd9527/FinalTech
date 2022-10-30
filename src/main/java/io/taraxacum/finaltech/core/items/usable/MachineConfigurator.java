@@ -5,7 +5,15 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
+import io.github.thebusybiscuit.slimefun4.implementation.items.cargo.CargoInputNode;
+import io.github.thebusybiscuit.slimefun4.implementation.items.cargo.CargoOutputNode;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import io.taraxacum.common.util.JavaUtil;
+import io.taraxacum.common.util.ReflectionUtil;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.items.machine.template.advanced.AbstractAdvanceMachine;
+import io.taraxacum.finaltech.core.menu.limit.lock.AdvancedMachineMenu;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.PermissionUtil;
@@ -14,6 +22,7 @@ import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
@@ -24,6 +33,8 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -119,5 +130,37 @@ public class MachineConfigurator extends UsableSlimefunItem implements RecipeIte
                 this.registerDescriptiveRecipe(slimefunItem.getItem());
             }
         }
+    }
+
+    private void extraSaveFunction(@Nonnull BlockMenu blockMenu, @Nonnull String id) {
+        SlimefunItem slimefunItem = SlimefunItem.getById(id);
+
+        // Slimefun cargo node
+        if(JavaUtil.matchOnce(id, SlimefunItems.CARGO_INPUT_NODE.getItemId(), SlimefunItems.CARGO_OUTPUT_NODE.getItemId(), SlimefunItems.CARGO_OUTPUT_NODE_2.getItemId())) {
+            Method method = ReflectionUtil.getMethod(slimefunItem.getClass(), "updateMenu");
+            if(method != null) {
+                try {
+                    method.invoke(blockMenu, blockMenu.getBlock());
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // FinalTECH machines
+        if(slimefunItem.getAddon().getJavaPlugin().equals(FinalTech.getInstance())) {
+            if(slimefunItem instanceof AbstractAdvanceMachine) {
+                Method method = ReflectionUtil.getMethod(AdvancedMachineMenu.class, "updateInventory");
+                if(method != null) {
+                    try {
+                        method.invoke(blockMenu.toInventory(), blockMenu.getLocation());
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        // TODO: other slimefun addons ?
     }
 }

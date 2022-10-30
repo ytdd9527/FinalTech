@@ -166,16 +166,16 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
                             if (blockTicker.isSynchronized()) {
                                 javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
                                     long testTime = JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig));
-                                    System.out.println(finalMachineId + " : " + testTime);
                                     if (testTime > MatrixAccelerator.this.syncThreshold) {
+                                        FinalTech.logger().warning(this.getId() + " cost " + testTime + " ns to function : " + finalMachineId);
                                         MatrixAccelerator.this.invalidIdSet.add(finalMachineId);
                                     }
                                 });
                             } else {
                                 BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(finalMachineId), () -> {
                                     long testTime = JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig));
-                                    System.out.println(finalMachineId + " : " + testTime);
                                     if (testTime > MatrixAccelerator.this.asyncThreshold) {
+                                        FinalTech.logger().warning(this.getId() + " cost " + testTime + " ns to function : " + finalMachineId);
                                         MatrixAccelerator.this.invalidIdSet.add(finalMachineId);
                                     }
                                 }, machineLocation);
@@ -207,13 +207,17 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
                         for (int i = 0; i < accelerate; i++) {
                             if (blockTicker.isSynchronized()) {
                                 javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
-                                    if (JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig)) > MatrixAccelerator.this.syncThreshold) {
+                                    long testTime = JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig));
+                                    if (testTime > MatrixAccelerator.this.syncThreshold) {
+                                        FinalTech.logger().warning(this.getId() + " cost " + testTime + " ns to function : " + finalMachineId);
                                         MatrixAccelerator.this.invalidIdSet.add(finalMachineId);
                                     }
                                 });
                             } else {
                                 BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(finalMachineId), () -> {
-                                    if (JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig)) > MatrixAccelerator.this.asyncThreshold) {
+                                    long testTime = JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig));
+                                    if (testTime > MatrixAccelerator.this.asyncThreshold) {
+                                        FinalTech.logger().warning(this.getId() + " cost " + testTime + " ns to function : " + finalMachineId);
                                         MatrixAccelerator.this.invalidIdSet.add(finalMachineId);
                                     }
                                 }, machineLocation);

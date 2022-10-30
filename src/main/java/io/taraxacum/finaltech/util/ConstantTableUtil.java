@@ -13,7 +13,7 @@ public class ConstantTableUtil {
 
     public static final String CONFIG_SLEEP = "sleep";
 
-    public static final String CONFIG_UUID = "uuid";
+    public static final String CONFIG_UUID = "owner";
 
     public static final int ITEM_COPY_CARD_AMOUNT = ConfigUtil.getOrDefaultItemSetting(16777216, "COPY_CARD", "amount");
 

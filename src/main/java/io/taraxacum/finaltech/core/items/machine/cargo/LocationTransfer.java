@@ -101,6 +101,7 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
         String slotSearchOrder = SlotSearchOrder.HELPER.getOrDefaultValue(config);
 
         CargoDTO cargoDTO = new CargoDTO();
+        cargoDTO.setJavaPlugin(this.addon.getJavaPlugin());
 
         switch (CargoOrder.HELPER.getOrDefaultValue(config)) {
             case CargoOrder.VALUE_POSITIVE -> {

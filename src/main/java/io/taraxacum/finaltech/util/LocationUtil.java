@@ -3,6 +3,7 @@ package io.taraxacum.finaltech.util;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
+import io.taraxacum.libs.plugin.util.TextUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Bukkit;
@@ -109,14 +110,15 @@ public class LocationUtil {
         if (persistentDataContainer.has(KEY, PersistentDataType.STRING)) {
             String locationString = persistentDataContainer.get(KEY, PersistentDataType.STRING);
             Location location = LocationUtil.stringToLocation(locationString);
-            List<String> loreList = new ArrayList<>();
-            loreList.add(TextUtil.colorRandomString("world= " + location.getWorld().getName()));
-            itemMeta.setLore(loreList);
-            item.setItemMeta(itemMeta);
-            return true;
-        } else {
-            return false;
+            if (location != null) {
+                List<String> loreList = new ArrayList<>();
+                loreList.add(TextUtil.colorRandomString(location.getWorld().getName()));
+                itemMeta.setLore(loreList);
+                item.setItemMeta(itemMeta);
+                return true;
+            }
         }
+        return false;
     }
 
     @Nonnull
@@ -153,21 +155,13 @@ public class LocationUtil {
         Double y = null;
         Double z = null;
         for (String value : locationString.split(";")) {
-            if (value.startsWith("w")) {
-                world = Bukkit.getServer().getWorld(value.substring("world".length() + 1));
-                continue;
-            }
-            if (value.startsWith("x")) {
-                x = Double.parseDouble(value.substring("x".length() + 1));
-                continue;
-            }
-            if (value.startsWith("y")) {
-                y = Double.parseDouble(value.substring("y".length() + 1));
-                continue;
-            }
-            if (value.startsWith("z")) {
-                z = Double.parseDouble(value.substring("z".length() + 1));
-                continue;
+            if(value.length() > 2) {
+                switch (value.charAt(0)) {
+                    case 'w' -> world = Bukkit.getServer().getWorld(value.substring(2));
+                    case 'x' -> x = Double.parseDouble(value.substring(2));
+                    case 'y' -> y = Double.parseDouble(value.substring(2));
+                    case 'z' -> z = Double.parseDouble(value.substring(2));
+                }
             }
         }
         if (world != null && x != null && y != null && z != null) {

@@ -51,24 +51,18 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
         playerRightClickEvent.cancel();
 
         Optional<Block> clickedBlock = playerRightClickEvent.getClickedBlock();
-        System.out.println(1);
         if (clickedBlock.isPresent()) {
-            System.out.println(2);
             Block block = clickedBlock.get();
             Location location = block.getLocation();
             if (PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.PLACE_BLOCK, Interaction.BREAK_BLOCK) && BlockStorage.hasBlockInfo(location)) {
-                System.out.println(3);
                 Config config = BlockStorage.getLocationInfo(location);
                 if (config.contains(ConstantTableUtil.CONFIG_ID)) {
-                    System.out.println(4);
                     String itemId = config.getString(ConstantTableUtil.CONFIG_ID);
                     SlimefunItem slimefunItem = SlimefunItem.getById(itemId);
                     if (slimefunItem instanceof EnergyNetComponent energyNetComponent) {
-                        System.out.println(5);
                         ItemStack item = playerRightClickEvent.getItem();
 
                         if (EnergyNetComponentType.CONSUMER.equals(energyNetComponent.getEnergyComponentType()) && energyNetComponent.getCapacity() > 0) {
-                            System.out.println("6a");
                             // charge machine
 
                             int capacity = energyNetComponent.getCapacity();
@@ -84,7 +78,6 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
                             ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
                         } else if ((EnergyNetComponentType.GENERATOR.equals(energyNetComponent.getEnergyComponentType()) || EnergyNetComponentType.CAPACITOR.equals(energyNetComponent.getEnergyComponentType()))
                                 && energyNetComponent.getCapacity() > 0) {
-                            System.out.println("6b");
                             // consume energy in machine, charge item
 
                             String energyInMachine = EnergyUtil.getCharge(config);

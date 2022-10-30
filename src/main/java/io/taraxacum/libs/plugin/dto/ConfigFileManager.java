@@ -88,7 +88,7 @@ public class ConfigFileManager {
             String result = this.configFile.getString(path);
             return result == null ? path : result;
         } else {
-            this.setValue("---===---", paths);
+            this.setValue(path, paths);
             return path;
         }
     }
@@ -109,10 +109,7 @@ public class ConfigFileManager {
                 }
             }
         } else {
-            ArrayList<String> objects = new ArrayList<>();
-            objects.add("Fill me!");
-            objects.add("I'm list!");
-            this.setValue(objects, paths);
+            this.setValue(new ArrayList<>(), paths);
             return new ArrayList<>();
         }
     }

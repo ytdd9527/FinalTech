@@ -3,6 +3,7 @@ package io.taraxacum.finaltech.core.command;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 import io.taraxacum.finaltech.core.group.RecipeItemGroup;
 import org.bukkit.command.Command;
@@ -27,6 +28,7 @@ public class ShowItemInfo implements CommandExecutor {
             ItemStack item = player.getItemInHand();
             SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
             if (slimefunItem == null || slimefunItem.isDisabled() || !slimefunItem.canUse(player, false) || slimefunItem.isHidden()) {
+                player.sendRawMessage(FinalTech.getLanguageString("message", "no-permission", "item"));
                 return true;
             }
             Optional<PlayerProfile> playerProfile = PlayerProfile.find(player);

@@ -1583,6 +1583,10 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Transfer items from one place to another place'
+      2:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Remote Range: {color:number}{1} Blocks'
   FINALTECH_MESH_TRANSFER:
     name: '{color:prandom}Mesh Transfer'
     info:
@@ -1590,6 +1594,10 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Input items to storage and output them'
+      2:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Can use chain to extend range in remote search mode.'
   FINALTECH_LINE_TRANSFER:
     name: '{color:prandom}Line Transfer'
     info:
@@ -1788,12 +1796,16 @@ items:
         lore:
           - '{color:normal}Use {id:FINALTECH_COPY_CARD} {color:normal}to get one {id:FINALTECH_ANNULAR}'
         output: 'FINALTECH_ANNULAR'
+    status:
+      name: '{color:negative}No Matched'
+      lore:
+        - '{color:normal}Please input correct thing.'
   FINALTECH_LOGIC_CRAFTER:
     name: '{color:prandom}Logic Crafter'
   FINALTECH_DIGIT_ADDER:
     name: '{color:prandom}Digit Adder'
   FINALTECH_COBBLESTONE_FACTORY:
-    name: '{color:prandom}Cobblestone Erupter'
+    name: '{color:prandom}Cobblestone Factory'
   FINALTECH_FUEL_CHARGER:
     name: '{color:prandom}Fuel Charger'
     info:
@@ -2208,13 +2220,21 @@ items:
       - 'This may be due to server network, else it may cause server lag.'
 research:
   LIQUID_CARD: 'Liquid Card'
-  ORDER_DUST: 'FinalTECH Basic Material'
+  ORDER_DUST: 'Basic Material'
   BUG: 'Try and Catch it!'
   ENTROPY: 'Bad thing'
-  ANNULAR: 'FinalTECH Advanced Material'
+  ANNULAR: 'Advanced Material'
   PHONY: 'Good thing'
   LOGIC: 'Logic And Digital'
   MACHINE_CARD: 'Lovely Machine'
+  BOX: 'Light And Dark'
+  CONSUMABLE_ITEM: 'Consumables'
+  SIMPLE_TOOL: 'Simple Tool'
+  MACHINE_TOOL: 'Machine Tool'
 message:
   no-permission:
     location: '{color:negative}No permission here!'
+    item: '{color:negative}No permission for this item!'
+  no-condition:
+    player: '{color:negative}Not meet condition!'
+

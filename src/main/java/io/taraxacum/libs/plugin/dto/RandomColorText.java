@@ -1,6 +1,6 @@
 package io.taraxacum.libs.plugin.dto;
 
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.libs.plugin.util.TextUtil;
 import org.bukkit.Color;
 
 import javax.annotation.Nonnull;

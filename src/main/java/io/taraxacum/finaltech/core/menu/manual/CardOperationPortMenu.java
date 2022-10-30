@@ -87,7 +87,8 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "match-icon", "lore"));
+                ItemStackUtil.setItemName(iconItem, this.infoName);
+                ItemStackUtil.setLore(iconItem, infoLore);
             }
 
             @Override
@@ -157,7 +158,8 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "match-icon", "lore"));
+                ItemStackUtil.setItemName(iconItem, this.infoName);
+                ItemStackUtil.setLore(iconItem, infoLore);
             }
 
             @Override
@@ -220,7 +222,8 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "match-icon", "lore"));
+                ItemStackUtil.setItemName(iconItem, this.infoName);
+                ItemStackUtil.setLore(iconItem, infoLore);
             }
 
             @Override
@@ -282,7 +285,8 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "match-icon", "lore"));
+                ItemStackUtil.setItemName(iconItem, this.infoName);
+                ItemStackUtil.setLore(iconItem, infoLore);
             }
 
             @Override
@@ -354,7 +358,8 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Override
             public void doUpdateIcon(@Nonnull ItemStack iconItem) {
                 iconItem.setType(Material.GREEN_STAINED_GLASS_PANE);
-                ItemStackUtil.setLore(iconItem, FinalTech.getLanguageStringArray("items", CardOperationPortMenu.this.getID(), this.getId(), "match-icon", "lore"));
+                ItemStackUtil.setItemName(iconItem, this.infoName);
+                ItemStackUtil.setLore(iconItem, infoLore);
             }
 
             @Override
@@ -442,6 +447,9 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
         boolean work = false;
         for (Craft craft : CRAFT_LIST) {
             if (craft.isEnabled() && craft.canCraft(inputItem1, inputItem2)) {
+                if(ItemStackUtil.isItemNull(iconItem)) {
+                    iconItem = new ItemStack(CRAFT_ICON);
+                }
                 craft.doUpdateIcon(iconItem);
                 work = true;
                 break;

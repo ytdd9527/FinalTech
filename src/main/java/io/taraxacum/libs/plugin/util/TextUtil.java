@@ -1,6 +1,5 @@
-package io.taraxacum.finaltech.util;
+package io.taraxacum.libs.plugin.util;
 
-import io.taraxacum.finaltech.FinalTech;
 import org.bukkit.Color;
 
 import javax.annotation.Nonnull;
@@ -12,7 +11,6 @@ import java.util.Random;
  * @author Final_ROOT
  * @since 2.0
  */
-// TODO: abstract as lib
 public class TextUtil {
     public static final String COLOR_NORMAL = "§x§8§8§f§f§f§f";
     public static final String COLOR_STRESS = "§x§f§f§f§f§8§8";
@@ -26,6 +24,8 @@ public class TextUtil {
     public static final String COLOR_INPUT = "§9";
     public static final String COLOR_OUTPUT = "§6";
     public static final Color WHITE_COLOR = Color.fromRGB(255, 255, 255);
+
+    private static int COUNT = 0;
 
     @Nonnull
     public static String colorString(@Nonnull String string, @Nonnull List<Color> colorList) {
@@ -70,10 +70,10 @@ public class TextUtil {
     }
 
     @Nonnull
-    public static String colorPseudorandomString(@Nonnull String string) {
+    public static String colorPseudorandomString(@Nonnull String string, long seed) {
         List<Color> colorList = new ArrayList<>();
         double r = 1;
-        Random random = FinalTech.getRandom();
+        Random random = new Random(string.hashCode() / 2 + seed / 2);
         while (1 / r >= random.nextDouble() && r * r <= string.length()) {
             int red = (int) ((random.nextDouble() * 8 + 8) * 15 + random.nextDouble() * 12 + 4);
             int green = (int) ((random.nextDouble() * 8 + 8) * 15 + random.nextDouble() * 12 + 4);
@@ -94,8 +94,9 @@ public class TextUtil {
                 "§" + (TextUtil.codeColor((int) (Math.random() * 8) + 8));
     }
 
-    public static String getPseudorandomColor() {
-        Random random = FinalTech.getRandom();
+    public static String getPseudorandomColor(long seed) {
+        COUNT *= seed;
+        Random random = new Random(COUNT++ + seed);
         return "§x" +
                 "§" + (TextUtil.codeColor(random.nextInt(8) + 8)) +
                 "§" + (TextUtil.codeColor(random.nextInt(8) + 8)) +

@@ -1,7 +1,6 @@
 package io.taraxacum.finaltech.setup;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
@@ -63,7 +62,7 @@ import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.PerformanceLimitUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.slimefun.util.ResearchUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.libs.plugin.util.TextUtil;
 import io.taraxacum.libs.plugin.dto.ConfigFileManager;
 import io.taraxacum.libs.plugin.dto.LanguageManager;
 import io.taraxacum.libs.slimefun.dto.ItemValueTable;
@@ -477,6 +476,9 @@ public final class SetupUtil {
                 FinalTechItems.ENTROPY,
                 FinalTechItems.ENTROPY_CONSTRUCTOR,
                 FinalTechItems.ENTROPY_SEED);
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "BOX", ((int)FinalTech.getSeed()) % 20, false,
+                FinalTechItems.BOX,
+                FinalTechItems.SHINE);
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "ANNULAR", (int)Math.pow(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT, 0.25), true,
                 FinalTechItems.COPY_CARD,
                 FinalTechItems.ANNULAR,
@@ -484,7 +486,7 @@ public final class SetupUtil {
                 FinalTechItems.QUANTITY_MODULE_INFINITY,
                 FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR,
                 FinalTechItems.ITEM_DESERIALIZE_PARSER);
-        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "PHONY", (int)Math.pow(ConstantTableUtil.ITEM_SINGULARITY_AMOUNT * ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT, 0.5), true,
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "PHONY", (int)Math.pow(ConstantTableUtil.ITEM_SINGULARITY_AMOUNT * ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT, 0.6), true,
                 FinalTechItems.SINGULARITY,
                 FinalTechItems.SPIROCHETE,
                 FinalTechItems.SHELL,
@@ -527,7 +529,7 @@ public final class SetupUtil {
                 FinalTechItems.LOGIC_GENERATOR,
                 FinalTechItems.DIGITAL_GENERATOR,
                 FinalTechItems.LOGIC_TO_DIGITAL_CONVERSION);
-        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "MACHINE_CARD", 20, false,
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "MACHINE_CARD", 10, false,
                 FinalTechItems.MACHINE_CHARGE_CARD_L1,
                 FinalTechItems.MACHINE_CHARGE_CARD_L2,
                 FinalTechItems.MACHINE_CHARGE_CARD_L3,
@@ -537,18 +539,96 @@ public final class SetupUtil {
                 FinalTechItems.MACHINE_ACTIVATE_CARD_L1,
                 FinalTechItems.MACHINE_ACTIVATE_CARD_L2,
                 FinalTechItems.MACHINE_ACTIVATE_CARD_L3);
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "CONSUMABLE_ITEM", 10, false,
+                FinalTechItems.MAGIC_HYPNOTIC,
+                FinalTechItems.RESEARCH_UNLOCK_TICKET);
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "SIMPLE_TOOL", 10, false,
+                FinalTechItems.STAFF_ELEMENTAL_LINE,
+                FinalTechItems.POTION_EFFECT_COMPRESSOR,
+                FinalTechItems.POTION_EFFECT_DILATOR,
+                FinalTechItems.POTION_EFFECT_PURIFIER);
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "MACHINE_TOOL", 10, false,
+                FinalTechItems.MENU_VIEWER,
+                FinalTechItems.LOCATION_RECORDER,
+                FinalTechItems.MACHINE_CONFIGURATOR,
+                FinalTechItems.PORTABLE_ENERGY_STORAGE);
+        ResearchUtil.setSingleResearch(FinalTechItems.SUPER_PICKAXE, 10, false);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_GENERATOR, SlimefunItems.SOLAR_GENERATOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_GENERATOR, SlimefunItems.SOLAR_GENERATOR_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CARBONADO_GENERATOR, SlimefunItems.SOLAR_GENERATOR_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_GENERATOR, SlimefunItems.SOLAR_GENERATOR_4);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_STACK_GENERATOR, SlimefunItems.SOLAR_GENERATOR_4);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OVERLOADED_GENERATOR, SlimefunItems.SOLAR_GENERATOR_4);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_CHARGE_BASE, SlimefunItems.SOLAR_GENERATOR_4);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OVERLOAD_CHARGE_BASE, SlimefunItems.SOLAR_GENERATOR_4);
 
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, SlimefunItems.SMALL_CAPACITOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR, SlimefunItems.SMALL_CAPACITOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SMALL_EXPANDED_CAPACITOR, SlimefunItems.SMALL_CAPACITOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MEDIUM_EXPANDED_CAPACITOR, SlimefunItems.MEDIUM_CAPACITOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BIG_EXPANDED_CAPACITOR, SlimefunItems.BIG_CAPACITOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LARGE_EXPANDED_CAPACITOR, SlimefunItems.LARGE_CAPACITOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, SlimefunItems.CARBONADO_EDGED_CAPACITOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, SlimefunItems.ENERGIZED_CAPACITOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_STACK_EXPANDED_CAPACITOR, SlimefunItems.ENERGIZED_CAPACITOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, SlimefunItems.ENERGIZED_CAPACITOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_CHARGE_INCREASE_CAPACITOR, SlimefunItems.ENERGIZED_CAPACITOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_CONSUME_REDUCE_CAPACITOR, SlimefunItems.ENERGIZED_CAPACITOR);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.NORMAL_ELECTRICITY_SHOOT_PILE, SlimefunItems.ENERGY_REGULATOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_ELECTRICITY_SHOOT_PILE, SlimefunItems.ENERGY_REGULATOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OVERLOADED_ELECTRICITY_SHOOT_PILE, SlimefunItems.ENERGY_REGULATOR);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.VARIABLE_WIRE_RESISTANCE, SlimefunItems.ENERGY_CONNECTOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.VARIABLE_WIRE_CAPACITOR, SlimefunItems.ENERGY_CONNECTOR);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_ACCELERATOR, SlimefunItems.NETHER_STAR_REACTOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OVERLOADED_ACCELERATOR, SlimefunItems.NETHER_STAR_REACTOR);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.NORMAL_STORAGE_UNIT, SlimefunItems.BACKPACK_SMALL);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.DIVIDED_STORAGE_UNIT, SlimefunItems.WOVEN_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LIMITED_STORAGE_UNIT, SlimefunItems.WOVEN_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.STACK_STORAGE_UNIT, SlimefunItems.WOVEN_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.DIVIDED_LIMITED_STORAGE_UNIT, SlimefunItems.GILDED_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.DIVIDED_STACK_STORAGE_UNIT, SlimefunItems.GILDED_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LIMITED_STACK_STORAGE_UNIT, SlimefunItems.GILDED_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.RANDOM_INPUT_STORAGE_UNIT, SlimefunItems.RADIANT_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.RANDOM_OUTPUT_STORAGE_UNIT, SlimefunItems.RADIANT_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.RANDOM_ACCESS_STORAGE_UNIT, SlimefunItems.RADIANT_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.DISTRIBUTE_LEFT_STORAGE_UNIT, SlimefunItems.ANDROID_INTERFACE_FUEL);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.DISTRIBUTE_RIGHT_STORAGE_UNIT, SlimefunItems.ANDROID_INTERFACE_ITEMS);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.STORAGE_INTERACT_PORT, SlimefunItems.TRASH_CAN);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.STORAGE_INSERT_PORT, SlimefunItems.TRASH_CAN);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.STORAGE_WITHDRAW_PORT, SlimefunItems.TRASH_CAN);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.STORAGE_CARD, SlimefunItems.TRASH_CAN);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.REMOTE_ACCESSOR, SlimefunItems.REACTOR_ACCESS_PORT);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.AREA_ACCESSOR, SlimefunItems.REACTOR_ACCESS_PORT);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_FRAME_MACHINE, SlimefunItems.CARGO_CONNECTOR_NODE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.POINT_TRANSFER, SlimefunItems.CARGO_CONNECTOR_NODE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MESH_TRANSFER, SlimefunItems.CARGO_CONNECTOR_NODE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LINE_TRANSFER, SlimefunItems.CARGO_CONNECTOR_NODE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LOCATION_TRANSFER, SlimefunItems.CARGO_CONNECTOR_NODE);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MATRIX_CRAFTING_TABLE, SlimefunItems.PROGRAMMABLE_ANDROID_2);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ITEM_DISMANTLE_TABLE, SlimefunItems.NUCLEAR_REACTOR);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CARD_OPERATION_TABLE, SlimefunItems.IRON_GOLEM_ASSEMBLER);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.COBBLESTONE_FACTORY, SlimefunItems.PROGRAMMABLE_ANDROID);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.FUEL_CHARGER, SlimefunItems.PROGRAMMABLE_ANDROID_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.FUEL_OPERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.FUEL_ACCELERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OPERATION_ACCELERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CURE_TOWER, SlimefunItems.GPS_TRANSMITTER_4);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.PURIFY_LEVEL_TOWER, SlimefunItems.GPS_TRANSMITTER_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.PURIFY_TIME_TOWER, SlimefunItems.GPS_TRANSMITTER_3);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MANUAL_GRIND_STONE, SlimefunItems.GRIND_STONE);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MANUAL_ARMOR_FORGE, SlimefunItems.ARMOR_FORGE);
@@ -564,6 +644,9 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MANUAL_JUICER, SlimefunItems.JUICER);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MANUAL_ANCIENT_ALTAR, SlimefunItems.ANCIENT_ALTAR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER, SlimefunItems.HEATED_PRESSURE_CHAMBER);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_COBBLE_FACTORY, SlimefunItems.PRODUCE_COLLECTOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_DUST_FACTORY, SlimefunItems.PRODUCE_COLLECTOR);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_COMPOSTER, SlimefunItems.FOOD_COMPOSTER_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_JUICER, SlimefunItems.JUICER);
@@ -582,6 +665,23 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_CARBON_PRESS, SlimefunItems.CARBON_PRESS_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_SMELTERY, SlimefunItems.ELECTRIC_SMELTERY_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_COMPOSTER, SlimefunItems.FOOD_COMPOSTER_2);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_DUST_FACTORY, SlimefunItems.PRODUCE_COLLECTOR);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.DUST_CONVERSION, SlimefunItems.COBALT_PICKAXE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.GRAVEL_CONVERSION, SlimefunItems.GOLD_PAN);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SOUL_SAND_CONVERSION, SlimefunItems.NETHER_GOLD_PAN);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CONCRETE_CONVERSION, SlimefunItems.BLANK_RUNE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.WOOL_CONVERSION, SlimefunItems.BLANK_RUNE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.WATER_CONVERSION, SlimefunItems.BLANK_RUNE);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ORE_EXTRACTION, SlimefunItems.PICKAXE_OF_THE_SEEKER);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.STONE_GENERATOR, SlimefunItems.CLIMBING_PICK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.RAW_STONE_GENERATOR, SlimefunItems.CLIMBING_PICK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.NETHER_STONE_GENERATOR, SlimefunItems.CLIMBING_PICK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.PLANK_GENERATOR, SlimefunItems.LUMBER_AXE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SAND_GENERATOR, SlimefunItems.SMELTERS_PICKAXE);
+
 
         /* command */
         finalTech.getCommand("finaltech-copy-card").setExecutor(new TransferToCopyCardItem());
@@ -611,7 +711,7 @@ public final class SetupUtil {
                         case "input" -> stringBuilder.append(TextUtil.COLOR_INPUT);
                         case "output" -> stringBuilder.append(TextUtil.COLOR_OUTPUT);
                         case "random" -> stringBuilder.append(TextUtil.getRandomColor());
-                        case "prandom" -> stringBuilder.append(TextUtil.getPseudorandomColor());
+                        case "prandom" -> stringBuilder.append(TextUtil.getPseudorandomColor(FinalTech.getSeed()));
                         default -> stringBuilder.append(split[1]);
                     }
                     return stringBuilder.append(this.apply(split[2])).toString();
@@ -806,18 +906,6 @@ public final class SetupUtil {
             };
         } else {
             return blockTicker;
-        }
-    }
-
-    public static void test(int delay, boolean async, Runnable runnable) {
-        if (delay == 0) {
-            runnable.run();
-        } else {
-            if (async) {
-                FinalTech.getInstance().getServer().getScheduler().runTaskLaterAsynchronously(FinalTech.getInstance(), runnable, delay);
-            } else {
-                FinalTech.getInstance().getServer().getScheduler().runTaskLater(FinalTech.getInstance(), runnable, delay);
-            }
         }
     }
 }

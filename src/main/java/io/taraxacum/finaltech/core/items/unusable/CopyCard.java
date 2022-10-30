@@ -10,7 +10,7 @@ import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.StringItemUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.libs.plugin.util.TextUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class CopyCard extends UnusableSlimefunItem implements RecipeItem {
     public static final String ITEM_LORE_WITHOUT_COLOR = "⌫⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌦";
-    public static final String ITEM_LORE = TextUtil.colorPseudorandomString(ITEM_LORE_WITHOUT_COLOR);
+    public static final String ITEM_LORE = TextUtil.colorPseudorandomString(ITEM_LORE_WITHOUT_COLOR, FinalTech.getSeed());
 
     public CopyCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -53,11 +53,18 @@ public class CopyCard extends UnusableSlimefunItem implements RecipeItem {
         if (ItemStackUtil.isItemNull(itemStack) || !itemStack.hasItemMeta()) {
             return false;
         }
+
         ItemMeta itemMeta = itemStack.getItemMeta();
         List<String> lore = itemMeta.getLore();
         if (lore == null) {
             return false;
         }
+
+        ItemStack stringItem = StringItemUtil.parseItemInCard(itemMeta);
+        if(ItemStackUtil.isItemNull(stringItem)) {
+            return false;
+        }
+
         for (String l : lore) {
             if (CopyCard.ITEM_LORE_WITHOUT_COLOR.equals(ChatColor.stripColor(l))) {
                 return true;

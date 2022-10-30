@@ -565,6 +565,9 @@ public final class ItemStackUtil {
             if (itemMeta.hasDisplayName()) {
                 return itemMeta.getDisplayName();
             }
+            if(itemMeta.hasLocalizedName()) {
+                return itemMeta.getLocalizedName();
+            }
         } else {
             try {
                 return itemNameAdapter.getName(item);
@@ -574,6 +577,15 @@ public final class ItemStackUtil {
             }
         }
         return "unknown";
+    }
+
+    public static void setItemName(@Nonnull ItemStack item, @Nonnull String itemName) {
+        if(!item.hasItemMeta()) {
+            return;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        itemMeta.setDisplayName(itemName);
+        item.setItemMeta(itemMeta);
     }
 
     public static void addLoreToFirst(@Nullable ItemStack item, @Nonnull String s) {

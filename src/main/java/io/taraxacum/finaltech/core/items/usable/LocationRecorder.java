@@ -11,7 +11,6 @@ import io.taraxacum.libs.plugin.util.PlayerUtil;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.util.PermissionUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
-import io.taraxacum.finaltech.util.TextUtil;
 import io.taraxacum.finaltech.util.LocationUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -38,12 +37,16 @@ public class LocationRecorder extends UsableSlimefunItem implements RecipeItem {
         PlayerInteractEvent interactEvent = playerRightClickEvent.getInteractEvent();
         if (playerRightClickEvent.getPlayer().isSneaking()) {
             Block block = interactEvent.getClickedBlock();
-            if (block != null && PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
-                ItemStack item = playerRightClickEvent.getItem();
-                LocationUtil.saveLocationToItem(item, block.getLocation());
-                LocationUtil.updateLocationItem(item);
-                PlayerUtil.updateIdInItem(item, playerRightClickEvent.getPlayer(), true);
+            if (block != null) {
                 ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+                if(PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
+                    ItemStack item = playerRightClickEvent.getItem();
+                    LocationUtil.saveLocationToItem(item, block.getLocation());
+                    LocationUtil.updateLocationItem(item);
+                    PlayerUtil.updateIdInItem(item, playerRightClickEvent.getPlayer(), true);
+                } else {
+                    PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK);
+                }
             }
         } else {
             Location location = LocationUtil.parseLocationInItem(playerRightClickEvent.getItem());
@@ -51,21 +54,20 @@ public class LocationRecorder extends UsableSlimefunItem implements RecipeItem {
                 return;
             }
 
+            Block block = location.getBlock();
+            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+
             Player player = playerRightClickEvent.getPlayer();
             if (!PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
-                // TODO
-                player.sendRawMessage(TextUtil.COLOR_NEGATIVE + "您似乎没有在此处使用该物品的权限");
+                player.sendRawMessage(FinalTech.getLanguageString("message", "no-permission", "location"));
             }
 
-            Block block = location.getBlock();
             if (BlockStorage.hasInventory(block)) {
                 BlockMenu blockMenu = BlockStorage.getInventory(block);
                 if (blockMenu.canOpen(block, player)) {
                     blockMenu.open(player);
-                    ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
                 } else {
-                    // TODO
-                    player.sendRawMessage(FinalTech.getLanguageString("messages", "no-permission", "location"));
+                    player.sendRawMessage(FinalTech.getLanguageString("message", "no-permission", "location"));
                 }
             }
         }

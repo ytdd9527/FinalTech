@@ -17,6 +17,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
+@Deprecated
 public class ShowItemValue implements CommandExecutor {
     @Override
     public boolean onCommand(@Nonnull CommandSender commandSender, @Nonnull Command command, @Nonnull String s, @Nonnull String[] strings) {

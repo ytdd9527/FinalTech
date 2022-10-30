@@ -7,9 +7,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.*;
 
 /**
  * @author Final_ROOT
@@ -20,7 +18,7 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
     private final Object lock = new Object();
     private final Plugin plugin;
     private final BukkitScheduler scheduler;
-    private final Map<T, FutureTask<?>> MAP = new HashMap<>();
+    private final Map<T, FutureTask<?>> map = new HashMap<>();
     private static final Map<Plugin, Map<Class<?>, ServerRunnableLockFactory<?>>> JAVA_PLUGIN_MAP = new HashMap<>();
 
     private ServerRunnableLockFactory(@Nonnull Plugin plugin) {
@@ -39,30 +37,30 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
             boolean work = false;
             while (!work) {
                 for (T object : objects) {
-                    if (ServerRunnableLockFactory.this.MAP.containsKey(object)) {
-                        FutureTask<?> task = ServerRunnableLockFactory.this.MAP.get(object);
-                        try {
-                            if (task != null) {
+                    if (ServerRunnableLockFactory.this.map.containsKey(object)) {
+                        FutureTask<?> task = ServerRunnableLockFactory.this.map.get(object);
+                        if (task != null) {
+                            try {
                                 task.get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                e.printStackTrace();
                             }
-                        } catch (InterruptedException | ExecutionException e) {
-                            e.printStackTrace();
                         }
-                        ServerRunnableLockFactory.this.MAP.remove(object);
+                        ServerRunnableLockFactory.this.map.remove(object);
                     }
                 }
                 work = true;
                 synchronized (ServerRunnableLockFactory.this.lock) {
                     for (T object : objects) {
-                        if (ServerRunnableLockFactory.this.MAP.containsKey(object)) {
+                        if (ServerRunnableLockFactory.this.map.containsKey(object)) {
                             work = false;
                             break;
                         }
                     }
                     if (work) {
-                        scheduler.runTaskAsynchronously(this.plugin, futureTask);
+                        ServerRunnableLockFactory.this.scheduler.runTaskAsynchronously(this.plugin, futureTask);
                         for (T object : objects) {
-                            ServerRunnableLockFactory.this.MAP.put(object, futureTask);
+                            ServerRunnableLockFactory.this.map.put(object, futureTask);
                         }
                     }
                 }
@@ -83,20 +81,20 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
             boolean work = false;
             while (!work) {
                 for (T object : objects) {
-                    if (ServerRunnableLockFactory.this.MAP.containsKey(object)) {
-                        FutureTask<?> task = ServerRunnableLockFactory.this.MAP.get(object);
+                    if (ServerRunnableLockFactory.this.map.containsKey(object)) {
+                        FutureTask<?> task = ServerRunnableLockFactory.this.map.get(object);
                         try {
                             task.get();
                         } catch (InterruptedException | ExecutionException e) {
                             e.printStackTrace();
                         }
-                        ServerRunnableLockFactory.this.MAP.remove(object);
+                        ServerRunnableLockFactory.this.map.remove(object);
                     }
                 }
                 work = true;
                 synchronized (ServerRunnableLockFactory.this.lock) {
                     for (T object : objects) {
-                        if (ServerRunnableLockFactory.this.MAP.containsKey(object)) {
+                        if (ServerRunnableLockFactory.this.map.containsKey(object)) {
                             work = false;
                             break;
                         }
@@ -104,7 +102,7 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
                     if (work) {
                         scheduler.runTaskAsynchronously(this.plugin, futureTask);
                         for (T object : objects) {
-                            ServerRunnableLockFactory.this.MAP.put(object, futureTask);
+                            ServerRunnableLockFactory.this.map.put(object, futureTask);
                         }
                     }
                 }
@@ -118,9 +116,17 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
         return this.waitThenRun(0, callable, objects);
     }
 
+    public final int taskSize() {
+        return this.map.size();
+    }
+
     public final void waitAllTask() throws ExecutionException, InterruptedException {
-        for (Map.Entry<T, FutureTask<?>> entry : MAP.entrySet()) {
-            entry.getValue().get();
+        for (Map.Entry<T, FutureTask<?>> entry : map.entrySet()) {
+            try {
+                entry.getValue().get(5, TimeUnit.SECONDS);
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            }
         }
     }
 

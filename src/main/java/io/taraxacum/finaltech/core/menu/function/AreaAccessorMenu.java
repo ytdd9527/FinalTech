@@ -180,7 +180,7 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
                                     javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, blockMenu.getBlock()));
                                     blockMenu.open(player);
                                 } else {
-                                    player.sendMessage(FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(AreaAccessor.class), "message", "no-permission"));
+                                    player.sendMessage(FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(AreaAccessor.class), "message", "no-permission", "location"));
                                 }
                                 return false;
                             });
