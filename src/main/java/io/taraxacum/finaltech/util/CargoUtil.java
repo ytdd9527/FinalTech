@@ -341,8 +341,8 @@ public class CargoUtil {
                     count = Math.min(inputItem.getAmount(), cargoNumber);
                     outputItem = inputItem.clone();
                     outputItem.setAmount(count);
-                    outputInv.setItem(outputSlots[i], outputItem);
-                    outputItem = outputInv.getItem(outputSlots[i]);
+                    outputInv.setItem(outputSlots[i % outputSlots.length], outputItem);
+                    outputItem = outputInv.getItem(outputSlots[i % outputSlots.length]);
                     inputItem.setAmount(inputItem.getAmount() - count);
                 } else {
                     continue;
