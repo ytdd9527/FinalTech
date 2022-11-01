@@ -2,6 +2,7 @@ package io.taraxacum.finaltech;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.setup.SetupUtil;
 import io.taraxacum.libs.plugin.dto.ConfigFileManager;
 import io.taraxacum.libs.plugin.dto.LanguageManager;
@@ -59,11 +60,6 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
     @Override
     public void onEnable() {
         super.onEnable();
-
-        if (false) {
-            this.onDisable();
-            return;
-        }
 
         instance = this;
         this.logger = this.getJavaPlugin().getServer().getLogger();
@@ -160,6 +156,18 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
         SetupUtil.initLanguageManager(instance.languageManager);
 
+        /* mark for some machines */
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.VARIABLE_WIRE_RESISTANCE.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.VARIABLE_WIRE_CAPACITOR.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ENERGIZED_ACCELERATOR.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.OVERLOADED_ACCELERATOR.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ITEM_DESERIALIZE_PARSER.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ENTROPY_SEED.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.EQUIVALENT_CONCEPT.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.MATRIX_GENERATOR.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.MATRIX_ACCELERATOR.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.MATRIX_REACTOR.getItemId());
+
         /* set up my items and menus and... */
         SetupUtil.init();
 
@@ -186,52 +194,40 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         if (this.bukkitTask != null) {
             this.bukkitTask.cancel();
         }
-        System.out.println("1");
+        BlockStorage.saveChunks();
         try {
             FinalTech.logger().info("Waiting all task to end.(" + FinalTech.getLocationRunnableFactory().taskSize() + ")");
             FinalTech.getLocationRunnableFactory().waitAllTask();
-            System.out.println("2");
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("3");
             BlockStorage.saveChunks();
             try {
-                System.out.println("4");
                 for (World world : Bukkit.getWorlds()) {
                     BlockStorage storage = BlockStorage.getStorage(world);
                     if (storage != null) {
                         storage.save();
                     }
                 }
-                System.out.println("5");
                 BlockStorage.saveChunks();
-                System.out.println("6");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         try {
-            System.out.println("7");
             FinalTech.getEntityRunnableFactory().waitAllTask();
-            System.out.println("8");
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("9");
             BlockStorage.saveChunks();
-            System.out.println("10");
             try {
-                System.out.println("11");
                 for (World world : Bukkit.getWorlds()) {
                     BlockStorage storage = BlockStorage.getStorage(world);
                     if (storage != null) {
                         storage.save();
                     }
                 }
-                System.out.println("12");
                 BlockStorage.saveChunks();
-                System.out.println("13");
             } catch (Exception e) {
                 e.printStackTrace();
             }
