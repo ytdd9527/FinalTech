@@ -99,7 +99,7 @@ public class PointTransfer extends AbstractCargo implements RecipeItem {
     @Override
     public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config)  {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        Location location = blockMenu.getLocation();
+        Location location = block.getLocation();
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
         boolean primaryThread = javaPlugin.getServer().isPrimaryThread();
         boolean drawParticle = blockMenu.hasViewer();
@@ -152,7 +152,7 @@ public class PointTransfer extends AbstractCargo implements RecipeItem {
                 }
 
                 Inventory inputInventory = CargoUtil.getVanillaInventory(inputBlock);
-                Inventory outputInventory = CargoUtil.getVanillaInventory(inputBlock);
+                Inventory outputInventory = CargoUtil.getVanillaInventory(outputBlock);
 
                 ServerRunnableLockFactory.getInstance(javaPlugin, Location.class).waitThenRun(() -> {
                     if (!BlockStorage.hasBlockInfo(location)) {
@@ -189,10 +189,10 @@ public class PointTransfer extends AbstractCargo implements RecipeItem {
                         if (CargoMode.VALUE_INPUT_MAIN.equals(cargoMode)) {
                             outputMap = null;
                         } else {
-                            outputMap = CargoUtil.getInvWithSlots(outputBlock, inputSize, inputOrder);
+                            outputMap = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
                         }
                     } else if (outputInventory != null) {
-                        outputMap = CargoUtil.calInvWithSlots(outputInventory, inputOrder);
+                        outputMap = CargoUtil.calInvWithSlots(outputInventory, outputOrder);
                     } else {
                         return;
                     }
