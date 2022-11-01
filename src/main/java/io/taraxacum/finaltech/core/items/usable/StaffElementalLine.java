@@ -91,7 +91,7 @@ public class StaffElementalLine extends UsableSlimefunItem implements RecipeItem
             if (!targetLocation.getWorld().getBlockAt(new Location(targetLocation.getWorld(), targetLocation.getBlockX() + 0.5, targetLocation.getBlockY() + 0.5, targetLocation.getBlockZ() + 0.5)).getType().isAir()) {
                 targetLocation.setY(Math.ceil(targetLocation.getY() + 0.1));
             }
-            Vector velocity = player.getVelocity();
+            Vector velocity = player.getVelocity().clone();
             player.teleport(targetLocation, PlayerTeleportEvent.TeleportCause.PLUGIN);
             player.setVelocity(velocity);
         }
