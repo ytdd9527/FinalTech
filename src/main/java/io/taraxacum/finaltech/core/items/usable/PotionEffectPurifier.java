@@ -50,12 +50,12 @@ public class PotionEffectPurifier extends UsableSlimefunItem implements RecipeIt
                     }
                 }
             }
+            ItemStack item = playerRightClickEvent.getItem();
+            item.setAmount(item.getAmount() - 1);
         } else {
             for (PotionEffect potionEffect : player.getActivePotionEffects()) {
                 player.removePotionEffect(potionEffect.getType());
             }
-            ItemStack item = playerRightClickEvent.getItem();
-            item.setAmount(item.getAmount() - 1);
         }
     }
 
