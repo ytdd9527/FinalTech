@@ -802,7 +802,7 @@ public final class SetupUtil {
     public static BlockTicker generateBlockTicker(@Nonnull BlockTicker blockTicker, boolean forceAsync, boolean antiAcceleration, boolean performanceLimit) {
         if (forceAsync && antiAcceleration && performanceLimit) {
             return new BlockTicker() {
-                private static final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
+                private final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
 
                 @Override
                 public boolean isSynchronized() {
@@ -811,14 +811,14 @@ public final class SetupUtil {
 
                 @Override
                 public void tick(Block b, SlimefunItem item, Config data) {
-                    if (AntiAccelerationUtil.isAccelerated(data) && PerformanceLimitUtil.charge(data)) {
-                        runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
+                    if (!AntiAccelerationUtil.isAccelerated(data) && PerformanceLimitUtil.charge(data)) {
+                        this.runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
                     }
                 }
             };
         } else if (forceAsync && antiAcceleration && !performanceLimit) {
             return new BlockTicker() {
-                private static final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
+                private final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
 
                 @Override
                 public boolean isSynchronized() {
@@ -827,14 +827,14 @@ public final class SetupUtil {
 
                 @Override
                 public void tick(Block b, SlimefunItem item, Config data) {
-                    if (AntiAccelerationUtil.isAccelerated(data)) {
-                        runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
+                    if (!AntiAccelerationUtil.isAccelerated(data)) {
+                        this.runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
                     }
                 }
             };
         } else if (forceAsync && !antiAcceleration && performanceLimit) {
             return new BlockTicker() {
-                private static final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
+                private final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
 
                 @Override
                 public boolean isSynchronized() {
@@ -844,13 +844,13 @@ public final class SetupUtil {
                 @Override
                 public void tick(Block b, SlimefunItem item, Config data) {
                     if (PerformanceLimitUtil.charge(data)) {
-                        runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
+                        this.runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
                     }
                 }
             };
         } else if (forceAsync && !antiAcceleration && !performanceLimit) {
             return new BlockTicker() {
-                private static final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
+                private final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
 
                 @Override
                 public boolean isSynchronized() {
@@ -859,7 +859,7 @@ public final class SetupUtil {
 
                 @Override
                 public void tick(Block b, SlimefunItem item, Config data) {
-                    runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
+                    this.runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
                 }
             };
         } else if (!forceAsync && antiAcceleration && performanceLimit) {
@@ -871,7 +871,7 @@ public final class SetupUtil {
 
                 @Override
                 public void tick(Block b, SlimefunItem item, Config data) {
-                    if (AntiAccelerationUtil.isAccelerated(data) && PerformanceLimitUtil.charge(data)) {
+                    if (!AntiAccelerationUtil.isAccelerated(data) && PerformanceLimitUtil.charge(data)) {
                         blockTicker.tick(b, item, data);
                     }
                 }
@@ -885,7 +885,7 @@ public final class SetupUtil {
 
                 @Override
                 public void tick(Block b, SlimefunItem item, Config data) {
-                    if (AntiAccelerationUtil.isAccelerated(data)) {
+                    if (!AntiAccelerationUtil.isAccelerated(data)) {
                         blockTicker.tick(b, item, data);
                     }
                 }
