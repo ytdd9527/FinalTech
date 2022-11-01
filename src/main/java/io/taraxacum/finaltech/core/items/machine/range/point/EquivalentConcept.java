@@ -85,7 +85,7 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.simpleBlockBreakerHandler(this);
+        return MachineUtil.simpleBlockBreakerHandler();
     }
 
     @Nonnull
