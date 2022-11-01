@@ -266,7 +266,7 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
                 }
                 locations[locations.length - 1] = block.getLocation();
                 ServerRunnableLockFactory.getInstance(javaPlugin, Location.class).waitThenRun(() -> {
-                    if (BlockStorage.hasBlockInfo(location)) {
+                    if (!BlockStorage.hasBlockInfo(location)) {
                         return;
                     }
 
