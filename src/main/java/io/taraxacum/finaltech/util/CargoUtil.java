@@ -62,17 +62,18 @@ public class CargoUtil {
             futureTask.run();
             return futureTask;
         } else {
-            return cargoDTO.getJavaPlugin().getServer().getScheduler().callSyncMethod(cargoDTO.getJavaPlugin(), () -> {
+            cargoDTO.getJavaPlugin().getServer().getScheduler().runTask(cargoDTO.getJavaPlugin(), () -> {
                 InvWithSlots inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
                 if (inputMap == null) {
-                    return 0;
+                    return;
                 }
                 InvWithSlots outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
                 if (outputMap == null) {
-                    return 0;
+                    return;
                 }
-                return ServerRunnableLockFactory.getInstance(cargoDTO.getJavaPlugin(), Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoStrongSymmetry(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)), cargoDTO.getInputBlock().getLocation(), cargoDTO.getOutputBlock().getLocation()).get();
+                ServerRunnableLockFactory.getInstance(cargoDTO.getJavaPlugin(), Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoStrongSymmetry(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)), cargoDTO.getInputBlock().getLocation(), cargoDTO.getOutputBlock().getLocation());
             });
+            return ZERO_FUTURE;
         }
     }
     public static Future<Integer> doCargoWeakSymmetry(@Nonnull CargoDTO cargoDTO) {
@@ -90,17 +91,18 @@ public class CargoUtil {
             futureTask.run();
             return futureTask;
         } else {
-            return cargoDTO.getJavaPlugin().getServer().getScheduler().callSyncMethod(cargoDTO.getJavaPlugin(), () -> {
+            cargoDTO.getJavaPlugin().getServer().getScheduler().runTask(cargoDTO.getJavaPlugin(), () -> {
                 InvWithSlots inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
                 if (inputMap == null) {
-                    return 0;
+                    return;
                 }
                 InvWithSlots outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
                 if (outputMap == null) {
-                    return 0;
+                    return;
                 }
-                return ServerRunnableLockFactory.getInstance(cargoDTO.getJavaPlugin(), Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoWeakSymmetry(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)), cargoDTO.getInputBlock().getLocation(), cargoDTO.getOutputBlock().getLocation()).get();
+                ServerRunnableLockFactory.getInstance(cargoDTO.getJavaPlugin(), Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoWeakSymmetry(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)), cargoDTO.getInputBlock().getLocation(), cargoDTO.getOutputBlock().getLocation());
             });
+            return ZERO_FUTURE;
         }
     }
     public static Future<Integer> doCargoInputMain(@Nonnull CargoDTO cargoDTO) {
@@ -133,7 +135,7 @@ public class CargoUtil {
             futureTask.run();
             return futureTask;
         } else {
-            return cargoDTO.getJavaPlugin().getServer().getScheduler().callSyncMethod(cargoDTO.getJavaPlugin(), () -> {
+            cargoDTO.getJavaPlugin().getServer().getScheduler().runTask(cargoDTO.getJavaPlugin(), () -> {
                 InvWithSlots inputMap;
                 InvWithSlots outputMap;
                 // Just get inputMap.
@@ -145,15 +147,16 @@ public class CargoUtil {
                         // Output Inventory is vanilla container.
                         outputMap = CargoUtil.getInvWithSlots(cargoDTO.getOutputBlock(), cargoDTO.getOutputSize(), cargoDTO.getOutputOrder());
                         if (outputMap == null) {
-                            return 0;
+                            return;
                         }
                     } else {
                         // Output Inventory not existed.
-                        return 0;
+                        return;
                     }
                 }
-                return ServerRunnableLockFactory.getInstance(cargoDTO.getJavaPlugin(), Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoInputMain(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)), cargoDTO.getInputBlock().getLocation(), cargoDTO.getOutputBlock().getLocation()).get();
+                ServerRunnableLockFactory.getInstance(cargoDTO.getJavaPlugin(), Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoInputMain(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)), cargoDTO.getInputBlock().getLocation(), cargoDTO.getOutputBlock().getLocation());
             });
+            return ZERO_FUTURE;
         }
     }
     public static Future<Integer> doCargoOutputMain(@Nonnull CargoDTO cargoDTO) {
@@ -186,7 +189,7 @@ public class CargoUtil {
             futureTask.run();
             return futureTask;
         } else {
-            return cargoDTO.getJavaPlugin().getServer().getScheduler().callSyncMethod(cargoDTO.getJavaPlugin(), () -> {
+            cargoDTO.getJavaPlugin().getServer().getScheduler().runTask(cargoDTO.getJavaPlugin(), () -> {
                 InvWithSlots inputMap;
                 InvWithSlots outputMap;
                 // Just get outputMap.
@@ -198,15 +201,16 @@ public class CargoUtil {
                         // Input Inventory is vanilla container.
                         inputMap = CargoUtil.getInvWithSlots(cargoDTO.getInputBlock(), cargoDTO.getInputSize(), cargoDTO.getInputOrder());
                         if (inputMap == null) {
-                            return 0;
+                            return;
                         }
                     } else {
                         // Input Inventory not existed.
-                        return 0;
+                        return;
                     }
                 }
-                return ServerRunnableLockFactory.getInstance(cargoDTO.getJavaPlugin(), Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoInputMain(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)), cargoDTO.getInputBlock().getLocation(), cargoDTO.getOutputBlock().getLocation()).get();
+                ServerRunnableLockFactory.getInstance(cargoDTO.getJavaPlugin(), Location.class).waitThenRun(() -> CargoUtil.doSimpleCargoInputMain(new SimpleCargoDTO(cargoDTO, inputMap, outputMap)), cargoDTO.getInputBlock().getLocation(), cargoDTO.getOutputBlock().getLocation());
             });
+            return ZERO_FUTURE;
         }
     }
 
