@@ -329,7 +329,7 @@ public final class FinalTechRecipes {
             null, FinalTechItems.GEARWHEEL, FinalTechItems.ENERGIZED_GENERATOR, FinalTechItems.GEARWHEEL, null, null,
             null, null, FinalTechItems.GEARWHEEL, null, null, null
     };
-    public static final ItemStack[] OVERLOAD_CHARGE_BASE = new ItemStack[] {
+    public static final ItemStack[] OVERLOADED_CHARGE_BASE = new ItemStack[] {
             null, null, FinalTechItems.GEARWHEEL, null, null, null,
             null, FinalTechItems.GEARWHEEL, FinalTechItems.ENERGIZED_GENERATOR, FinalTechItems.GEARWHEEL, null, null,
             FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.BUG, null,

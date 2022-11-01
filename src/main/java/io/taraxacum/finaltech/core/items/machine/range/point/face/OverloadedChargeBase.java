@@ -30,11 +30,11 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class OverloadChargeBase extends AbstractFaceMachine implements RecipeItem {
+public class OverloadedChargeBase extends AbstractFaceMachine implements RecipeItem {
     private final double effective = ConfigUtil.getOrDefaultItemSetting(0.1, this, "effective");
     private final double maxLimit = ConfigUtil.getOrDefaultItemSetting(2, this, "max-limit");
 
-    public OverloadChargeBase(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public OverloadedChargeBase(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -63,7 +63,7 @@ public class OverloadChargeBase extends AbstractFaceMachine implements RecipeIte
                 Config targetConfig = BlockStorage.getLocationInfo(location);
                 if (targetConfig.contains(ConstantTableUtil.CONFIG_ID)) {
                     String targetSlimefunId = targetConfig.getString(ConstantTableUtil.CONFIG_ID);
-                    BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(targetSlimefunId), () -> OverloadChargeBase.this.doCharge(block, targetConfig), location);
+                    BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(targetSlimefunId), () -> OverloadedChargeBase.this.doCharge(block, targetConfig), location);
                 } else {
                     BlockMenu blockMenu = BlockStorage.getInventory(block);
                     if (blockMenu.hasViewer()) {
@@ -88,9 +88,9 @@ public class OverloadChargeBase extends AbstractFaceMachine implements RecipeIte
         SlimefunItem slimefunItem = SlimefunItem.getById(slimefunItemId);
         if (slimefunItem instanceof EnergyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType()) && !EnergyNetComponentType.GENERATOR.equals(((EnergyNetComponent) slimefunItem).getEnergyComponentType())) {
             int capacity = ((EnergyNetComponent) slimefunItem).getCapacity();
-            int maxValue = capacity < Integer.MAX_VALUE / OverloadChargeBase.this.maxLimit ? (int)(capacity * OverloadChargeBase.this.maxLimit) : Integer.MAX_VALUE;
+            int maxValue = capacity < Integer.MAX_VALUE / OverloadedChargeBase.this.maxLimit ? (int)(capacity * OverloadedChargeBase.this.maxLimit) : Integer.MAX_VALUE;
             storedEnergy = Integer.parseInt(EnergyUtil.getCharge(config));
-            chargeEnergy = storedEnergy < maxValue - capacity * OverloadChargeBase.this.effective ? (int)(capacity * OverloadChargeBase.this.effective) : (maxValue - storedEnergy);
+            chargeEnergy = storedEnergy < maxValue - capacity * OverloadedChargeBase.this.effective ? (int)(capacity * OverloadedChargeBase.this.effective) : (maxValue - storedEnergy);
             if (chargeEnergy > 0) {
                 storedEnergy += chargeEnergy;
                 EnergyUtil.setCharge(config, storedEnergy);

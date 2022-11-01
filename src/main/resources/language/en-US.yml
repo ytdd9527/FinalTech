@@ -1055,8 +1055,8 @@ items:
       lore:
         - '{color:normal}Stored Energy: {color:number}{1} J'
         - '{color:normal}Charged Energy: {color:number}{2} J'
-  FINALTECH_OVERLOAD_CHARGE_BASE:
-    name: '{color:prandom}Overload Charge Base'
+  FINALTECH_OVERLOADED_CHARGE_BASE:
+    name: '{color:prandom}Overloaded Charge Base'
     info:
       1:
         name: '{color:passive}Mechanism'

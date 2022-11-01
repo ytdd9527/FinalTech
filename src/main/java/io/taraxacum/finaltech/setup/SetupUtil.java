@@ -216,7 +216,7 @@ public final class SetupUtil {
         FinalTechMenus.SUB_MENU_ELECTRIC_GENERATOR.addTo(
                 new DustGenerator(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.ORDERED_DUST_GENERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ORDERED_DUST_GENERATOR).register(),
                 new EnergizedChargeBase(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.ENERGIZED_CHARGE_BASE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ENERGIZED_CHARGE_BASE).register(),
-                new OverloadChargeBase(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.OVERLOAD_CHARGE_BASE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.OVERLOAD_CHARGE_BASE).register());
+                new OverloadedChargeBase(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.OVERLOADED_CHARGE_BASE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.OVERLOADED_CHARGE_BASE).register());
         // electric storage
         FinalTechMenus.SUB_MENU_ELECTRIC_STORAGE.addTo(
                 new BasicChargeIncreaseCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_CHARGE_INCREASE_CAPACITOR).register(),
@@ -561,7 +561,7 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_STACK_GENERATOR, SlimefunItems.SOLAR_GENERATOR_4);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OVERLOADED_GENERATOR, SlimefunItems.SOLAR_GENERATOR_4);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_CHARGE_BASE, SlimefunItems.SOLAR_GENERATOR_4);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OVERLOAD_CHARGE_BASE, SlimefunItems.SOLAR_GENERATOR_4);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OVERLOADED_CHARGE_BASE, SlimefunItems.SOLAR_GENERATOR_4);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, SlimefunItems.SMALL_CAPACITOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR, SlimefunItems.SMALL_CAPACITOR);
