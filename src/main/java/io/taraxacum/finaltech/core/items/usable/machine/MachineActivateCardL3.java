@@ -17,8 +17,8 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class MachineActivateCardL3 extends AbstractMachineActivateCard implements RecipeItem {
-    private final int times = ConfigUtil.getOrDefaultItemSetting(3600, this, "times");
-    private final double energy = ConfigUtil.getOrDefaultItemSetting(16.04, this, "energy");
+    private final int times = ConfigUtil.getOrDefaultItemSetting(256, this, "times");
+    private final double energy = ConfigUtil.getOrDefaultItemSetting(65536.64, this, "energy");
 
     public MachineActivateCardL3(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

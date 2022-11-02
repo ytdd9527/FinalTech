@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class MatrixMachineActivateCard extends AbstractMachineActivateCard implements RecipeItem {
-    private final int times = ConfigUtil.getOrDefaultItemSetting(43200, this, "times");
+    private final int times = ConfigUtil.getOrDefaultItemSetting(10800, this, "times");
     private final double energy = ConfigUtil.getOrDefaultItemSetting(Integer.MAX_VALUE / 2 + 0.5, this, "energy");
 
     public MatrixMachineActivateCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
