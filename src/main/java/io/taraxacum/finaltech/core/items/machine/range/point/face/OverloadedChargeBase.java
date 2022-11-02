@@ -64,12 +64,12 @@ public class OverloadedChargeBase extends AbstractFaceMachine implements RecipeI
                 if (targetConfig.contains(ConstantTableUtil.CONFIG_ID)) {
                     String targetSlimefunId = targetConfig.getString(ConstantTableUtil.CONFIG_ID);
                     BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(targetSlimefunId), () -> OverloadedChargeBase.this.doCharge(block, targetConfig), location);
-                } else {
-                    BlockMenu blockMenu = BlockStorage.getInventory(block);
-                    if (blockMenu.hasViewer()) {
-                        this.updateMenu(blockMenu, 0, 0);
-                    }
+                    return 0;
                 }
+            }
+            BlockMenu blockMenu = BlockStorage.getInventory(block);
+            if (blockMenu.hasViewer()) {
+                this.updateMenu(blockMenu, 0, 0);
             }
             return 0;
         });
