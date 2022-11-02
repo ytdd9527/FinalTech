@@ -13,7 +13,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
+import io.taraxacum.finaltech.core.menu.unit.VoidMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -47,7 +47,7 @@ public class OperationAccelerator extends AbstractFaceMachine implements RecipeI
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new StatusMenu(this);
+        return new VoidMenu(this);
     }
 
     @Override
