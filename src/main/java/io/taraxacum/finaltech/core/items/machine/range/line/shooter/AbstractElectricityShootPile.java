@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
+import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.machine.range.AbstractRangeMachine;
@@ -69,7 +70,7 @@ public abstract class AbstractElectricityShootPile extends AbstractLineMachine i
                 Config capacitorConfig = BlockStorage.getLocationInfo(capacitorLocation);
                 if (capacitorConfig.contains(ConstantTableUtil.CONFIG_ID)) {
                     SlimefunItem capacitorItem = SlimefunItem.getById(capacitorConfig.getString(ConstantTableUtil.CONFIG_ID));
-                    if (capacitorItem instanceof EnergyNetComponent && EnergyNetComponentType.CAPACITOR.equals(((EnergyNetComponent) capacitorItem).getEnergyComponentType())) {
+                    if (capacitorItem instanceof EnergyNetComponent energyNetComponent && JavaUtil.matchOnce(energyNetComponent.getEnergyComponentType(), EnergyNetComponentType.CAPACITOR, EnergyNetComponentType.GENERATOR)) {
                         summary.setCapacitorEnergy(Integer.parseInt(EnergyUtil.getCharge(capacitorConfig)));
                         count = this.function(block, this.getRange(), this.doFunction(summary));
                         EnergyUtil.setCharge(capacitorLocation, String.valueOf(summary.getCapacitorEnergy()));
