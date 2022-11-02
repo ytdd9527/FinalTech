@@ -1507,6 +1507,9 @@ items:
       1:
         name: '{color:passive}Mechanism'
         lore:
+          - '{color:normal}Put vanilla container upside it'
+          - '{color:normal}Insert the {id:FINALTECH_STORAGE_CARD} {color:normal}to the first {color:number}{1} slots'
+          - ''
           - '{color:normal}Can input item to {id:FINALTECH_STORAGE_CARD}'
           - '{color:normal}Can output item from {id:FINALTECH_STORAGE_CARD}'
         output: 'FINALTECH_STORAGE_CARD'
@@ -1524,6 +1527,9 @@ items:
       1:
         name: '{color:passive}Mechanism'
         lore:
+          - '{color:normal}Put vanilla container upside it'
+          - '{color:normal}Insert the {id:FINALTECH_STORAGE_CARD} {color:normal}to the first {color:number}{1} slots'
+          - ''
           - '{color:normal}Can input item to {id:FINALTECH_STORAGE_CARD}'
         output: 'FINALTECH_STORAGE_CARD'
       2:
@@ -1536,6 +1542,9 @@ items:
       1:
         name: '{color:passive}Mechanism'
         lore:
+          - '{color:normal}Put vanilla container upside it'
+          - '{color:normal}Insert the {id:FINALTECH_STORAGE_CARD} {color:normal}to the first {color:number}{1} slots'
+          - ''
           - '{color:normal}Can output item from {id:FINALTECH_STORAGE_CARD}'
         output: 'FINALTECH_STORAGE_CARD'
       2:
