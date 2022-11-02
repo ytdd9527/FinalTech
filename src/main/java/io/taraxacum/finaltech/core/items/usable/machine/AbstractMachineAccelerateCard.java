@@ -48,6 +48,10 @@ public abstract class AbstractMachineAccelerateCard extends UsableSlimefunItem {
         }
 
         Location location = block.getLocation();
+        if(!BlockStorage.hasBlockInfo(location)) {
+            return;
+        }
+
         Config config = BlockStorage.getLocationInfo(location);
         if (!config.contains(ConstantTableUtil.CONFIG_ID)) {
             return;

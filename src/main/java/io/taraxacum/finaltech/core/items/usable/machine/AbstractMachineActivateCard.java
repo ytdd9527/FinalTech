@@ -13,6 +13,7 @@ import io.taraxacum.finaltech.core.items.usable.UsableSlimefunItem;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.PermissionUtil;
+import io.taraxacum.libs.slimefun.util.EnergyUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -50,6 +51,10 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem {
         }
 
         Location location = block.getLocation();
+        if(!BlockStorage.hasBlockInfo(location)) {
+            return;
+        }
+
         Config config = BlockStorage.getLocationInfo(location);
         if (!config.contains(ConstantTableUtil.CONFIG_ID)) {
             return;
@@ -113,8 +118,8 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem {
                 }
                 for (int i = 0; i < time; i++) {
                     int storedEnergy = energyNetComponent.getCharge(location);
-                    chargeEnergy = chargeEnergy / 2 + storedEnergy / 2 > Integer.MAX_VALUE / 2 ? Integer.MAX_VALUE : chargeEnergy + storedEnergy;
-                    energyNetComponent.setCharge(location, Math.min(capacity, chargeEnergy));
+                    storedEnergy = chargeEnergy / 2 + storedEnergy / 2 > Integer.MAX_VALUE / 2 ? Integer.MAX_VALUE : chargeEnergy + storedEnergy;
+                    energyNetComponent.setCharge(location, Math.min(capacity, storedEnergy));
                     blockTicker.tick(block, slimefunItem, config);
                 }
             };
@@ -126,7 +131,7 @@ public abstract class AbstractMachineActivateCard extends UsableSlimefunItem {
                 FinalTech.getLocationRunnableFactory().waitThenRun(runnable, location);
             }
         } else if (blockTicker != null) {
-            // this slimefun item have
+            // this slimefun item have blockTicker
             int time;
             if (this.consume()) {
                 time = this.times();
