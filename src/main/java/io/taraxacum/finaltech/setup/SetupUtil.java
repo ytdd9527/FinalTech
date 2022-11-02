@@ -382,7 +382,7 @@ public final class SetupUtil {
                 new InfinityMachineAccelerateCard(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MACHINE_ACCELERATE_CARD_INFINITY, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACCELERATE_CARD_INFINITY).register(),
                 new MatrixMachineActivateCard(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MACHINE_ACTIVATE_CARD_L4, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACTIVATE_CARD_L4).register());
         FinalTechMenus.MAIN_MENU_FINAL_ITEM.addTo(
-                new AdvancedAutoCraft(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.ADVANCED_AUTO_CRAFT, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_AUTO_CRAFT).register(),
+                new AdvancedAutoCraft(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.ADVANCED_AUTO_CRAFT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_AUTO_CRAFT).register(),
                 new MatrixItemDismantleTable(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_ITEM_DISMANTLE_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ITEM_DISMANTLE_TABLE).register(),
                 new MatrixExpandedCapacitor(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_EXPANDED_CAPACITOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_EXPANDED_CAPACITOR).register(),
                 new MatrixItemDeserializeParser(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_ITEM_DESERIALIZE_PARSER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ITEM_DESERIALIZE_PARSER).register(),
