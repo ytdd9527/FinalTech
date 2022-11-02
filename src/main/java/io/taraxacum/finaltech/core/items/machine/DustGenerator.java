@@ -100,7 +100,9 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
             this.addCharge(location, charge);
         }
 
-        this.updateMenu(blockMenu, count, charge);
+        if(blockMenu.hasViewer()) {
+            this.updateMenu(blockMenu, count, charge, this.getCharge(location));
+        }
     }
 
     @Override
@@ -126,13 +128,12 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
         return CAPACITY;
     }
 
-    private void updateMenu(@Nonnull BlockMenu blockMenu, long count, int charge) {
-        if (blockMenu.hasViewer()) {
-            ItemStack item = blockMenu.getItemInSlot(DustGeneratorMenu.STATUS_SLOT);
-            ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
-                    String.valueOf(count),
-                    String.valueOf(charge)));
-        }
+    private void updateMenu(@Nonnull BlockMenu blockMenu, long count, int charge, int energy) {
+        ItemStack item = blockMenu.getItemInSlot(DustGeneratorMenu.STATUS_SLOT);
+        ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
+                String.valueOf(count),
+                String.valueOf(charge),
+                String.valueOf(energy)));
     }
 
     @Override

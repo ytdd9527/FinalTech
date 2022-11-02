@@ -1037,6 +1037,8 @@ items:
           - '{color:negative}If no valid item being consumed: {color:number}power / 2'
     status:
       lore:
+        - '{color:normal}Stored Energy: {color:number}{3} J'
+        - ''
         - '{color:normal}Power: {color:number}{1}'
         - '{color:normal}Generate Energy: {color:number}{2} J/times'
   FINALTECH_ENERGIZED_CHARGE_BASE:
