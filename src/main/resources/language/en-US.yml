@@ -2133,7 +2133,7 @@ items:
       2:
         name: '{color:passive}Mechanism'
         lore:
-          - '{color:normal}Put in same item will enlarge the range'
+          - '{color:normal}Put in {id:FINALTECH_PHONY} {color:normal}will enlarge the range'
       3:
         name: '{color:negative}Limit'
         lore:
