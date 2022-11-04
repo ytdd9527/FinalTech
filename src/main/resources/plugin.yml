@@ -10,7 +10,7 @@ website: https://github.com/zomx127/FinalTECH
 
 version: ${project.version}
 
-api-version: 1.17
+api-version: 1.19
 
 depend:
 - Slimefun
@@ -20,19 +20,12 @@ commands:
     description: Transfer a valid item to a copy card
     usage: /<command>
     permission: finaltech.item.copy-card
-  finaltech-item-value:
-    description: Show the value of the item
-    usage: /<command> <id>
-    permission: finaltech.item.value
   finaltech-item-info:
     description: Show info about the item if it's from slimefun
     usage: /<command>
     permission: finaltech.item.info
 
 permissions:
-  finaltech.item.value:
-    description: Show the value of the item
-    default: op
   finaltech.item.copy-card:
     description: Transfer a valid item to a copy card
     default: op

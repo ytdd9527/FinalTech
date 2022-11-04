@@ -9,7 +9,6 @@ import io.taraxacum.common.util.ReflectionUtil;
 import io.taraxacum.common.util.StringUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.command.ShowItemInfo;
-import io.taraxacum.finaltech.core.command.ShowItemValue;
 import io.taraxacum.finaltech.core.command.TransferToCopyCardItem;
 import io.taraxacum.finaltech.core.enchantment.NullEnchantment;
 import io.taraxacum.finaltech.core.items.machine.range.point.face.*;
@@ -684,9 +683,8 @@ public final class SetupUtil {
 
 
         /* command */
-        finalTech.getCommand("finaltech-copy-card").setExecutor(new TransferToCopyCardItem());
-        finalTech.getCommand("finaltech-item-value").setExecutor(new ShowItemValue());
-        finalTech.getCommand("finaltech-item-info").setExecutor(new ShowItemInfo());
+        finalTech.getCommand("finaltech copy-card").setExecutor(new TransferToCopyCardItem());
+        finalTech.getCommand("finaltech info").setExecutor(new ShowItemInfo());
     }
 
     public static void initLanguageManager(@Nonnull LanguageManager languageManager) {
