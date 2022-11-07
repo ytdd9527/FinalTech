@@ -27,6 +27,7 @@ import java.util.Map;
  * @author Final_ROOT
  * @since 2.0
  */
+// TODO: abstract as lib
 public class RecipeItemGroup extends FlexItemGroup {
     private final String id;
     private final int page;

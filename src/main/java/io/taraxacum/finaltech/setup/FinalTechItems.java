@@ -14,7 +14,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack WATER_CARD = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_WATER_CARD", Material.PAPER, "Water Card");
     public static final SlimefunItemStack LAVA_CARD = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(),"FINALTECH_LAVA_CARD", Material.PAPER, "Lava Card");
     public static final SlimefunItemStack MILK_CARD = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(),"FINALTECH_MILK_CARD", Material.PAPER, "Milk Card");
-    public static final SlimefunItemStack GEARWHEEL = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_GEARWHEEL", Material.REDSTONE, "Gear Wheel");
+    public static final SlimefunItemStack GEARWHEEL = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_GEARWHEEL", Material.REDSTONE_TORCH, "Gear Wheel");
     public static final SlimefunItemStack UNORDERED_DUST = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_UNORDERED_DUST", Material.WHEAT_SEEDS, "Unordered Dust");
     public static final SlimefunItemStack ORDERED_DUST = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ORDERED_DUST", Material.SLIME_BALL, "Ordered Dust");
     public static final SlimefunItemStack BUG = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_BUG", Material.BONE_MEAL, "Bug");
@@ -88,7 +88,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack OVERLOADED_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_OVERLOADED_GENERATOR", Material.GLOWSTONE, "Overloaded Generator");
     public static final SlimefunItemStack ORDERED_DUST_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ORDERED_DUST_GENERATOR", Material.BROWN_MUSHROOM_BLOCK, "Ordered Dust Generator");
     public static final SlimefunItemStack ENERGIZED_CHARGE_BASE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ENERGIZED_CHARGE_BASE", Material.CRIMSON_FENCE, "Energized Charge Base");
-    public static final SlimefunItemStack OVERLOAD_CHARGE_BASE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_OVERLOAD_CHARGE_BASE", Material.WARPED_FENCE, "Overloaded Charge Base");
+    public static final SlimefunItemStack OVERLOADED_CHARGE_BASE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_OVERLOADED_CHARGE_BASE", Material.WARPED_FENCE, "Overloaded Charge Base");
     // electric storage
     public static final SlimefunItemStack BASIC_CHARGE_INCREASE_CAPACITOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_BASIC_CHARGE_INCREASE_CAPACITOR", Material.RED_STAINED_GLASS, "Basic Charge Increase Capacitor");
     public static final SlimefunItemStack BASIC_CONSUME_REDUCE_CAPACITOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_BASIC_CONSUME_REDUCE_CAPACITOR", Material.RED_STAINED_GLASS, "Basic Consume Reduce Capacitor");
@@ -190,20 +190,20 @@ public final class FinalTechItems {
     // advanced machine
     public static final SlimefunItemStack ADVANCED_COMPOSTER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_COMPOSTER", Material.CAULDRON, "Advanced Composter");
     public static final SlimefunItemStack ADVANCED_JUICER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_JUICER", Material.GLASS, "Advanced Juicer");
-    public static final SlimefunItemStack ADVANCED_ELECTRIC_FURNACE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_ELECTRIC_FURNACE", Material.FURNACE, "Advanced Electric Furnace");
+    public static final SlimefunItemStack ADVANCED_FURNACE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_FURNACE", Material.FURNACE, "Advanced Furnace");
     public static final SlimefunItemStack ADVANCED_GOLD_PAN = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_GOLD_PAN", Material.BROWN_TERRACOTTA, "Advanced Gold Pan");
-    public static final SlimefunItemStack ADVANCED_ELECTRIC_DUST_WASHER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_DUST_WASHER", Material.BLUE_STAINED_GLASS, "Advanced Electric Dust Washer");
-    public static final SlimefunItemStack ADVANCED_ELECTRIC_INGOT_FACTORY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_ELECTRIC_INGOT_FACTORY", Material.RED_TERRACOTTA, "Advanced Electric Ingot Factory");
-    public static final SlimefunItemStack ADVANCED_ELECTRIC_CRUCIBLE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_ELECTRIC_CRUCIBLE", Material.RED_TERRACOTTA, "Advanced Electric Crucible");
-    public static final SlimefunItemStack ADVANCED_ELECTRIC_ORE_GRINDER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_ELECTRIC_ORE_GRINDER", Material.FURNACE, "Advanced Electric Ore Grinder");
+    public static final SlimefunItemStack ADVANCED_DUST_WASHER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_DUST_WASHER", Material.BLUE_STAINED_GLASS, "Advanced Dust Washer");
+    public static final SlimefunItemStack ADVANCED_INGOT_FACTORY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_INGOT_FACTORY", Material.RED_TERRACOTTA, "Advanced Ingot Factory");
+    public static final SlimefunItemStack ADVANCED_CRUCIBLE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_CRUCIBLE", Material.RED_TERRACOTTA, "Advanced Crucible");
+    public static final SlimefunItemStack ADVANCED_ORE_GRINDER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_ORE_GRINDER", Material.FURNACE, "Advanced Ore Grinder");
     public static final SlimefunItemStack ADVANCED_HEATED_PRESSURE_CHAMBER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_HEATED_PRESSURE_CHAMBER", Material.LIGHT_GRAY_STAINED_GLASS, "Advanced Heated Pressure Chamber");
-    public static final SlimefunItemStack ADVANCED_ELECTRIC_INGOT_PULVERIZER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_ELECTRIC_INGOT_PULVERIZER", Material.FURNACE, "Advanced Electric Ingot Pulverizer");
+    public static final SlimefunItemStack ADVANCED_INGOT_PULVERIZER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_INGOT_PULVERIZER", Material.FURNACE, "Advanced Ingot Pulverizer");
     public static final SlimefunItemStack ADVANCED_AUTO_DRIER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_AUTO_DRIER", Material.SMOKER, "Advanced Auto Drier");
-    public static final SlimefunItemStack ADVANCED_ELECTRIC_PRESS = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_ELECTRIC_PRESS", Material.STONE, "Advanced Electric Press");
+    public static final SlimefunItemStack ADVANCED_PRESS = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_PRESS", Material.STONE, "Advanced Press");
     public static final SlimefunItemStack ADVANCED_FOOD_FACTORY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_FOOD_FACTORY", Material.GREEN_TERRACOTTA, "Advanced Food Factory");
     public static final SlimefunItemStack ADVANCED_FREEZER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_FREEZER", Material.LIGHT_BLUE_STAINED_GLASS, "Advanced Freezer");
     public static final SlimefunItemStack ADVANCED_CARBON_PRESS = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_CARBON_PRESS", Material.BLACK_STAINED_GLASS, "Advanced Carbon Press");
-    public static final SlimefunItemStack ADVANCED_ELECTRIC_SMELTERY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_ELECTRIC_SMELTERY", Material.FURNACE, "Advanced Electric Smeltery");
+    public static final SlimefunItemStack ADVANCED_SMELTERY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_SMELTERY", Material.FURNACE, "Advanced Smeltery");
     public static final SlimefunItemStack ADVANCED_DUST_FACTORY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_DUST_FACTORY", Material.RED_NETHER_BRICKS, "Advanced Dust Factory");
     // conversion
     public static final SlimefunItemStack DUST_CONVERSION = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_DUST_CONVERSION", Material.DEEPSLATE_BRICKS, "Dust Conversion");
@@ -216,7 +216,7 @@ public final class FinalTechItems {
     // extraction
     public static final SlimefunItemStack ORE_EXTRACTION = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ORE_EXTRACTION", Material.CRYING_OBSIDIAN, "Ore Extraction");
     // generator
-    public static final SlimefunItemStack STONE_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_STONE_GENERATOR", Material.COBBLESTONE, "Stone Generator");
+    public static final SlimefunItemStack STONE_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_STONE_GENERATOR", Material.STONE_BRICKS, "Stone Generator");
     public static final SlimefunItemStack RAW_STONE_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_RAW_STONE_GENERATOR", Material.POLISHED_BLACKSTONE, "Raw Stone Generator");
     public static final SlimefunItemStack NETHER_STONE_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_NETHER_STONE_GENERATOR", Material.SMOOTH_BASALT, "Nether Stone Generator");
     public static final SlimefunItemStack PLANK_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_PLANK_GENERATOR", Material.OAK_WOOD, "Plank Generator");
@@ -241,13 +241,13 @@ public final class FinalTechItems {
     // 12
     public static final SlimefunItemStack MATRIX_EXPANDED_CAPACITOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, "Matrix Expanded Capacitor");
     // 12
-    public static final SlimefunItemStack MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR", Material.AMETHYST_BLOCK, "Matrix Item Serialization Constructor");
+    public static final SlimefunItemStack MATRIX_ITEM_DESERIALIZE_PARSER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_ITEM_DESERIALIZE_PARSER", Material.BUDDING_AMETHYST, "Item Deserialize Parser");
     // 20
     public static final SlimefunItemStack MATRIX_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_GENERATOR", Material.SEA_LANTERN, "Matrix Generator");
     // 20
     public static final SlimefunItemStack MATRIX_ACCELERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_ACCELERATOR", Material.TARGET, "Matrix Accelerator");
     // 48
-    public static final SlimefunItemStack MATRIX_ITEM_DESERIALIZE_PARSER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_ITEM_DESERIALIZE_PARSER", Material.BUDDING_AMETHYST, "Item Deserialize Parser");
+    public static final SlimefunItemStack MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR", Material.AMETHYST_BLOCK, "Matrix Item Serialization Constructor");
     // 64
     public static final SlimefunItemStack MATRIX_REACTOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_REACTOR", Material.COAL_BLOCK, "Matrix Reactor");
 }

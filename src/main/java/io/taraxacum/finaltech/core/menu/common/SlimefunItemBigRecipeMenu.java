@@ -11,6 +11,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.guide.SurvivalSlimefunG
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.group.RecipeItemGroup;
+import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.libs.slimefun.util.GuideUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import org.bukkit.Bukkit;
@@ -108,7 +109,7 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
         }
 
         if (slimefunItem instanceof RecipeDisplayItem && ((RecipeDisplayItem) slimefunItem).getDisplayRecipes().size() > 0) {
-            this.addItem(this.WORK_BUTTON, ChestMenuUtils.getWikiButton());
+            this.addItem(this.WORK_BUTTON, Icon.WIKI_ICON);
             this.addMenuClickHandler(this.WORK_BUTTON, (p, slot, item, action) -> {
                 ChestMenu chestMenu = SlimefunItemBigRecipeMenu.this.setupWorkContent(page);
                 if (chestMenu != null) {

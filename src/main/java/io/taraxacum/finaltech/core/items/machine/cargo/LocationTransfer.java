@@ -16,9 +16,9 @@ import io.taraxacum.finaltech.core.menu.function.LocationTransferMenu;
 import io.taraxacum.finaltech.core.helper.*;
 import io.taraxacum.finaltech.util.PermissionUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
-import io.taraxacum.libs.slimefun.util.CargoUtil;
-import io.taraxacum.libs.slimefun.util.LocationUtil;
-import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.finaltech.util.CargoUtil;
+import io.taraxacum.finaltech.util.LocationUtil;
+import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -75,7 +75,7 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        Location location = blockMenu.getLocation();
+        Location location = block.getLocation();
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
         boolean drawParticle = blockMenu.hasViewer();
 
@@ -101,6 +101,7 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
         String slotSearchOrder = SlotSearchOrder.HELPER.getOrDefaultValue(config);
 
         CargoDTO cargoDTO = new CargoDTO();
+        cargoDTO.setJavaPlugin(this.addon.getJavaPlugin());
 
         switch (CargoOrder.HELPER.getOrDefaultValue(config)) {
             case CargoOrder.VALUE_POSITIVE -> {

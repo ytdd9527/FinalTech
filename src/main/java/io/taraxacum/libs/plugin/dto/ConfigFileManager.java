@@ -1,5 +1,6 @@
 package io.taraxacum.libs.plugin.dto;
 
+import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -88,7 +89,7 @@ public class ConfigFileManager {
             String result = this.configFile.getString(path);
             return result == null ? path : result;
         } else {
-            this.setValue("---===---", paths);
+            this.setValue(path, paths);
             return path;
         }
     }
@@ -102,17 +103,21 @@ public class ConfigFileManager {
             } else {
                 this.plugin.getLogger().info(this.getClass().getSimpleName() + ": " + "The paths " + Arrays.toString(paths) + " seems to need list.");
                 try {
-                    return this.configFile.getStringList(path);
+                    List<String> result = this.configFile.getStringList(path);
+                    if(result.isEmpty()) {
+                        Object object = this.configFile.get(path);
+                        if(object instanceof MemorySection memorySection) {
+                            result = new ArrayList<>(memorySection.getKeys(false));
+                        }
+                    }
+                    return result;
                 } catch (Exception e) {
                     this.plugin.getLogger().info(e.getMessage());
                     return new ArrayList<>();
                 }
             }
         } else {
-            ArrayList<String> objects = new ArrayList<>();
-            objects.add("Fill me!");
-            objects.add("I'm list!");
-            this.setValue(objects, paths);
+            this.setValue(new ArrayList<>(), paths);
             return new ArrayList<>();
         }
     }

@@ -22,13 +22,15 @@ import java.util.UUID;
  * @since 2.0
  */
 public class PermissionUtil {
-
     public static boolean checkOfflinePermission(@Nonnull ItemStack itemStack, @Nonnull Location... targetLocations) {
         if (!itemStack.hasItemMeta()) {
             return false;
         }
         ItemMeta itemMeta = itemStack.getItemMeta();
         String uuid = PlayerUtil.parseIdInItem(itemMeta);
+        if (uuid == null) {
+            return false;
+        }
         Boolean ignorePermission = PlayerUtil.parseIgnorePermissionInItem(itemMeta);
         Player player = Bukkit.getPlayer(UUID.fromString(uuid));
         if (player != null && player.isOnline()) {
@@ -52,6 +54,9 @@ public class PermissionUtil {
     }
     public static boolean checkOfflinePermission(@Nonnull Location sourceLocation, @Nonnull Config config, @Nonnull Location... targetLocations) {
         String uuid = config.getString(ConstantTableUtil.CONFIG_UUID);
+        if (uuid == null) {
+            return false;
+        }
         Player player = Bukkit.getPlayer(UUID.fromString(uuid));
         if (player != null && player.isOnline()) {
             for (Location targetLocation : targetLocations) {

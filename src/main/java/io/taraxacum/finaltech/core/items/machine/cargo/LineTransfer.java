@@ -21,9 +21,9 @@ import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.PermissionUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
-import io.taraxacum.libs.slimefun.util.CargoUtil;
-import io.taraxacum.libs.slimefun.util.LocationUtil;
-import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.finaltech.util.CargoUtil;
+import io.taraxacum.finaltech.util.LocationUtil;
+import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -98,7 +98,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        Location location = blockMenu.getLocation();
+        Location location = block.getLocation();
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
         boolean primaryThread = javaPlugin.getServer().isPrimaryThread();
         boolean drawParticle = blockMenu.hasViewer();

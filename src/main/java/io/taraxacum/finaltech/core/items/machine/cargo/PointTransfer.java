@@ -23,9 +23,9 @@ import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.PermissionUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
-import io.taraxacum.libs.slimefun.util.CargoUtil;
-import io.taraxacum.libs.slimefun.util.LocationUtil;
-import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.finaltech.util.CargoUtil;
+import io.taraxacum.finaltech.util.LocationUtil;
+import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -99,7 +99,7 @@ public class PointTransfer extends AbstractCargo implements RecipeItem {
     @Override
     public void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config)  {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        Location location = blockMenu.getLocation();
+        Location location = block.getLocation();
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
         boolean primaryThread = javaPlugin.getServer().isPrimaryThread();
         boolean drawParticle = blockMenu.hasViewer();
@@ -152,7 +152,7 @@ public class PointTransfer extends AbstractCargo implements RecipeItem {
                 }
 
                 Inventory inputInventory = CargoUtil.getVanillaInventory(inputBlock);
-                Inventory outputInventory = CargoUtil.getVanillaInventory(inputBlock);
+                Inventory outputInventory = CargoUtil.getVanillaInventory(outputBlock);
 
                 ServerRunnableLockFactory.getInstance(javaPlugin, Location.class).waitThenRun(() -> {
                     if (!BlockStorage.hasBlockInfo(location)) {
@@ -189,10 +189,10 @@ public class PointTransfer extends AbstractCargo implements RecipeItem {
                         if (CargoMode.VALUE_INPUT_MAIN.equals(cargoMode)) {
                             outputMap = null;
                         } else {
-                            outputMap = CargoUtil.getInvWithSlots(outputBlock, inputSize, inputOrder);
+                            outputMap = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
                         }
                     } else if (outputInventory != null) {
-                        outputMap = CargoUtil.calInvWithSlots(outputInventory, inputOrder);
+                        outputMap = CargoUtil.calInvWithSlots(outputInventory, outputOrder);
                     } else {
                         return;
                     }

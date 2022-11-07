@@ -2,42 +2,44 @@
 FinalTECH
 =
 
-A Slimefun addon about making the world so damn better
-
-
-It includes many items with unique function, which will make a hole change to Slimefun gameplay.
-
-It's not completed now, and more object will be added.
-
-⚠⚠⚠ This project is still in progress.
+About
 -
-⚠⚠⚠ This branch is just for save my work, not to be used in real server.
+
+A Slimefun addon about making the world a little better
+
+It includes new electric system, new cargo system, and some special machines and items now.
+
+This Slimefun addon is not means to destroy the existing balance of Slimefun, and the difficulty will be added while more items is being added by other Slimefun addons.(But
+There is a lot of items here that could link with other Slimefun addons, so it will be a great experience if you add many Slimefun addons with it)
+
+It should be friendly to server TPS. And some optimization strategies is provided also.
+
+Notice
 -
-⚠⚠⚠ It's not finished yet.
+
+This project is still in progress and not fully finished yet. More items will be added in the future.
+
+If there is anything you think is a bug, or you can't understand, just create an issue in the GitHub please.
+
+The progress of this project?
 -
-⚠⚠⚠ While being finished, it will be merged to master.
--
+
+There is many thing to do, but now I will try to make this version to work firstly.
 
 Version history
-=
-
-1.0(old)
 -
-> A simple try
 
-2.0-preview1(now)
+2.0-preview2(now)
 -
-> May have some bugs.
-
-2.0-preview2(not finished yet)
--
-> ~~Double more~~ Up to 200 items and machines
+> ~~Double more items and machines~~
+> 
+> ~~Up to 200 items and machines~~
+> 
+> Close to 200 items and machines
 
 > Balance adjusted
 
 > Multi-language support
-
-> Possible optimization for Slimefun(need to be enabled in the configuration and may be unstable)
 
 > More config support
 
@@ -50,3 +52,5 @@ Version history
 > Optimization for language support 
 
 > Template machine support
+
+> lib

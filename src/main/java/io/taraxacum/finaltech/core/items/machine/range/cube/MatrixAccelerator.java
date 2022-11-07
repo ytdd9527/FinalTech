@@ -8,7 +8,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.util.BlockTickerUtil;
+import io.taraxacum.libs.slimefun.util.BlockTickerUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
@@ -19,7 +19,7 @@ import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
-import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -40,9 +40,9 @@ import java.util.*;
 public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem {
     private final int range = ConfigUtil.getOrDefaultItemSetting(1, this, "range");
     // System.nanoTime
-    // 1000000 = 1ms
-    private final int syncThreshold = ConfigUtil.getOrDefaultItemSetting(150000, this, "threshold-sync");
-    private final int asyncThreshold = ConfigUtil.getOrDefaultItemSetting(400000, this, "threshold-async");
+    // 1,000,000ns = 1ms
+    private final int syncThreshold = ConfigUtil.getOrDefaultItemSetting(300000, this, "threshold-sync");
+    private final int asyncThreshold = ConfigUtil.getOrDefaultItemSetting(1600000, this, "threshold-async");
     private final Set<String> invalidIdSet = new HashSet<>(ConfigUtil.getItemStringList(this, "invalid-ids"));
 
     public MatrixAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -162,29 +162,34 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
                             continue;
                         }
                         BlockTicker blockTicker = finalMachineItem.getBlockTicker();
-                        for (int i = 0; i < accelerate; i++) {
-                            if (blockTicker.isSynchronized()) {
-                                javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
+                        final int finalAccelerate = accelerate;
+                        if (blockTicker.isSynchronized()) {
+                            javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
+                                for (int i = 0; i < finalAccelerate; i++) {
                                     long testTime = JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig));
-                                    System.out.println(finalMachineId + " : " + testTime);
                                     if (testTime > MatrixAccelerator.this.syncThreshold) {
+                                        FinalTech.logger().warning(this.getId() + " cost " + testTime + "ns to run blockTicker for " + finalMachineId);
                                         MatrixAccelerator.this.invalidIdSet.add(finalMachineId);
+                                        break;
                                     }
-                                });
-                            } else {
-                                BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(finalMachineId), () -> {
+                                }
+                            });
+                        } else {
+                            BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(finalMachineId), () -> {
+                                for (int i = 0; i < finalAccelerate; i++) {
                                     long testTime = JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig));
-                                    System.out.println(finalMachineId + " : " + testTime);
                                     if (testTime > MatrixAccelerator.this.asyncThreshold) {
+                                        FinalTech.logger().warning(this.getId() + " cost " + testTime + "ns to run blockTicker for " + finalMachineId);
                                         MatrixAccelerator.this.invalidIdSet.add(finalMachineId);
+                                        break;
                                     }
-                                }, machineLocation);
-                                accelerateTimeCount++;
-                            }
+                                }
+                            }, machineLocation);
                         }
                         if (drawParticle) {
                             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, locationConfig.getLocation().getBlock()));
                         }
+                        accelerateTimeCount += accelerate;
                         accelerateMachineCount++;
                     }
                 }
@@ -204,25 +209,34 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
                         if (!machineId.equals(machineConfig.getString(ConstantTableUtil.CONFIG_ID))) {
                             continue;
                         }
-                        for (int i = 0; i < accelerate; i++) {
-                            if (blockTicker.isSynchronized()) {
-                                javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
-                                    if (JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig)) > MatrixAccelerator.this.syncThreshold) {
+                        final int finalAccelerate = accelerate;
+                        if (blockTicker.isSynchronized()) {
+                            javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
+                                for (int i = 0; i < finalAccelerate; i++) {
+                                    long testTime = JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig));
+                                    if (testTime > MatrixAccelerator.this.syncThreshold) {
+                                        FinalTech.logger().warning(this.getId() + " cost " + testTime + "ns to run blockTicker for " + finalMachineId);
                                         MatrixAccelerator.this.invalidIdSet.add(finalMachineId);
+                                        break;
                                     }
-                                });
-                            } else {
-                                BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(finalMachineId), () -> {
-                                    if (JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig)) > MatrixAccelerator.this.asyncThreshold) {
+                                }
+                            });
+                        } else {
+                            BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(finalMachineId), () -> {
+                                for (int i = 0; i < finalAccelerate; i++) {
+                                    long testTime = JavaUtil.testTime(() -> blockTicker.tick(machineLocation.getBlock(), finalMachineItem, machineConfig));
+                                    if (testTime > MatrixAccelerator.this.asyncThreshold) {
+                                        FinalTech.logger().warning(this.getId() + " cost " + testTime + "ns to run blockTicker for " + finalMachineId);
                                         MatrixAccelerator.this.invalidIdSet.add(finalMachineId);
+                                        break;
                                     }
-                                }, machineLocation);
-                                accelerateTimeCount++;
-                            }
+                                }
+                            }, machineLocation);
                         }
                         if (drawParticle) {
                             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, locationConfig.getLocation().getBlock()));
                         }
+                        accelerateTimeCount += accelerate;
                         accelerateMachineCount++;
                     }
                 }

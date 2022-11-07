@@ -23,7 +23,7 @@ import io.taraxacum.finaltech.core.helper.SlotSearchSize;
 import io.taraxacum.libs.plugin.util.StringItemUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
-import io.taraxacum.finaltech.util.SfItemUtil;
+import io.taraxacum.libs.slimefun.util.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -348,7 +348,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
         RECIPE_MAP.put(FinalTechItems.MANUAL_SMELTERY.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_SMELTERY));
         RECIPE_MAP.put(FinalTechItems.MANUAL_PRESSURE_CHAMBER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_PRESSURE_CHAMBER));
         RECIPE_MAP.put(FinalTechItems.MANUAL_MAGIC_WORKBENCH.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_MAGIC_WORKBENCH));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_ORE_WASHER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.ADVANCED_ELECTRIC_DUST_WASHER));
+        RECIPE_MAP.put(FinalTechItems.MANUAL_ORE_WASHER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.ADVANCED_DUST_WASHER));
         RECIPE_MAP.put(FinalTechItems.MANUAL_COMPOSTER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_COMPOSTER));
         RECIPE_MAP.put(FinalTechItems.MANUAL_GOLD_PAN.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_GOLD_PAN));
         RECIPE_MAP.put(FinalTechItems.MANUAL_CRUCIBLE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_CRUCIBLE));

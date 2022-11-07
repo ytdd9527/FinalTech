@@ -1,7 +1,7 @@
 package io.taraxacum.finaltech.core.dto;
 
 import io.taraxacum.libs.plugin.dto.RandomColorText;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.libs.plugin.util.TextUtil;
 import org.bukkit.Color;
 
 import javax.annotation.Nonnull;
@@ -11,6 +11,7 @@ import java.util.List;
  * @author Final_ROOT
  * @since 2.0
  */
+// TODO: abstract as lib
 public class RainbowColorText extends RandomColorText {
     private int step;
     private int index = 0;

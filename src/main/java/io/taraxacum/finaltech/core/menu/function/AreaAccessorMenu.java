@@ -11,7 +11,7 @@ import io.taraxacum.finaltech.core.items.machine.cargo.AreaAccessor;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
-import io.taraxacum.finaltech.util.SfItemUtil;
+import io.taraxacum.libs.slimefun.util.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -180,7 +180,7 @@ public class AreaAccessorMenu extends AbstractMachineMenu {
                                     javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, blockMenu.getBlock()));
                                     blockMenu.open(player);
                                 } else {
-                                    player.sendMessage(FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(AreaAccessor.class), "message", "no-permission"));
+                                    player.sendMessage(FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(AreaAccessor.class), "message", "no-permission", "location"));
                                 }
                                 return false;
                             });

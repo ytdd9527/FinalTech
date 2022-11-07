@@ -2,6 +2,7 @@ package io.taraxacum.finaltech;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.setup.SetupUtil;
 import io.taraxacum.libs.plugin.dto.ConfigFileManager;
 import io.taraxacum.libs.plugin.dto.LanguageManager;
@@ -26,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class FinalTech extends JavaPlugin implements SlimefunAddon {
     /**
-     * Force other slimefun item machine to run async.
+     * Force other slimefun machine to run async.
      */
     private boolean forceSlimefunMultiThread = false;
     /**
@@ -50,7 +51,8 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
     private Set<String> asyncSlimefunIdSet = new HashSet<>();
     private Set<String> antiAccelerateSlimefunIdSet = new HashSet<>();
     private Set<String> performanceLimitSlimefunIdSet = new HashSet<>();
-    private Random random = new Random();
+    private Random random;
+    private long seed;
     private BukkitTask bukkitTask;
     private final int version = 20220811;
     private static FinalTech instance;
@@ -58,11 +60,6 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
     @Override
     public void onEnable() {
         super.onEnable();
-
-        if (false) {
-            this.onDisable();
-            return;
-        }
 
         instance = this;
         this.logger = this.getJavaPlugin().getServer().getLogger();
@@ -81,28 +78,26 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             return;
         }
 
+        /* set random seed */
+        this.seed = this.config.getOrDefault(new Random().nextLong(Long.MAX_VALUE), "seed");
+        this.random = new Random(this.seed);
+
         /* set runnable factory */
         this.locationRunnableFactory = ServerRunnableLockFactory.getInstance(this, Location.class);
         this.entityRunnableFactory = ServerRunnableLockFactory.getInstance(this, Entity.class);
 
-        /* TODO: should be deleted after being published */
-        if (FinalTech.getConfigManager().getOrDefault(false, "I'm_testing_it!")) {
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
-        }
-
         /* Disabled if you installed this plugin just for slimefun addon quantity. Not disable it as being loaded before. */
-        if (!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 70) {
+        if (!this.config.containPath("version") && Slimefun.getInstalledAddons().size() >= 70) {
             this.getLogger().warning("You have installed so many slimefun addons. Change the source code to load this plugin!");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
-        if (!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 20 && !FinalTech.getConfigManager().getOrDefault(false, "I'm_not_just_for_quantity_of_slimefun_addon_to_install_this_plugin")) {
+        if (!this.config.containPath("version") && Slimefun.getInstalledAddons().size() >= 20 && !this.config.getOrDefault(false, "I'm_not_just_for_quantity_of_slimefun_addon_to_install_this_plugin")) {
             this.getLogger().warning("It seems you are just for quantity of slimefun addon to install this plugin.");
             this.getLogger().warning("So this plugin is disabled now.(Open config file and set true of 'I'm_not_just_for_quantity_of_slimefun_addon_to_install_this_plugin', as you want to enable this plugin.)");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
-        } else if (!FinalTech.getConfigManager().containPath("version") && Slimefun.getInstalledAddons().size() >= 20 && !FinalTech.getConfigManager().getOrDefault(false, "I_know_there_may_be_incompatibilities_between_slimefun_addons_and_I_will_be_responsible_for_it")) {
+        } else if (!this.config.containPath("version") && Slimefun.getInstalledAddons().size() >= 20 && !this.config.getOrDefault(false, "I_know_there_may_be_incompatibilities_between_slimefun_addons_and_I_will_be_responsible_for_it")) {
             this.getLogger().warning("It seems you don't know there may be incompatibilities between slimefun addons or you don't want to be responsible for it.");
             this.getLogger().warning("So this plugin is disabled now due to possible incompatibilities.");
             Bukkit.getPluginManager().disablePlugin(this);
@@ -110,27 +105,27 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         }
 
         // TODO: version update.(Now this is the first version being recorded and will be supported to update)
-        if (!FinalTech.getConfigManager().containPath("version")) {
-            FinalTech.getConfigManager().setValue(version, "version");
+        if (!this.config.containPath("version")) {
+            this.config.setValue(version, "version");
         }
 
         /* configure multi thread level */
-        this.multiThreadLevel = FinalTech.getConfigManager().getOrDefault(0, "multi-thread", "level");
+        this.multiThreadLevel = this.config.getOrDefault(0, "multi-thread", "level");
         if (this.multiThreadLevel > 2 || this.multiThreadLevel < 0) {
             this.multiThreadLevel = 0;
         }
-        if (this.multiThreadLevel >= 1 && !FinalTech.getConfigManager().getOrDefault(false, "multi-thread", "warn-I_know_what_I'm_doing")) {
+        if (this.multiThreadLevel >= 1 && !this.config.getOrDefault(false, "multi-thread", "warn-I_know_what_I'm_doing")) {
             this.getLogger().warning("It seems you don't know what you are doing. So multi thread level is set to 0");
             this.multiThreadLevel = 0;
         }
-        if (this.multiThreadLevel >= 2 && !FinalTech.getConfigManager().getOrDefault(false, "multi-thread", "warn-I_really_know_what_I'm_doing")) {
+        if (this.multiThreadLevel >= 2 && !this.config.getOrDefault(false, "multi-thread", "warn-I_really_know_what_I'm_doing")) {
             this.getLogger().warning("It seems you don't know what you are doing. So multi thread level is set to 0");
             this.multiThreadLevel = 0;
         }
 
         /* configure whether to force slimefun items to run async */
-        this.forceSlimefunMultiThread = FinalTech.getConfigManager().getOrDefault(false, "force-slimefun-multi-thread", "enable");
-        if (this.forceSlimefunMultiThread && !FinalTech.getConfigManager().getOrDefault(false, "force-slimefun-multi-thread", "warn-I_know_what_I'm_doing_and_I_will_be_responsible_for_it")) {
+        this.forceSlimefunMultiThread = this.config.getOrDefault(false, "force-slimefun-multi-thread", "enable");
+        if (this.forceSlimefunMultiThread && !this.config.getOrDefault(false, "force-slimefun-multi-thread", "warn-I_know_what_I'm_doing_and_I_will_be_responsible_for_it")) {
             this.getLogger().warning("It seems you don't know what you are doing. So force-slimefun-multi-thread.enable is set to false!");
             this.forceSlimefunMultiThread = false;
         }
@@ -161,14 +156,26 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
         SetupUtil.initLanguageManager(instance.languageManager);
 
+        /* mark for some machines */
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.VARIABLE_WIRE_RESISTANCE.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.VARIABLE_WIRE_CAPACITOR.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ENERGIZED_ACCELERATOR.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.OVERLOADED_ACCELERATOR.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ITEM_DESERIALIZE_PARSER.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ENTROPY_SEED.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.EQUIVALENT_CONCEPT.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.MATRIX_GENERATOR.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.MATRIX_ACCELERATOR.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.MATRIX_REACTOR.getItemId());
+
         /* set up my items and menus and... */
         SetupUtil.init();
 
         /* setup item value table */
-        this.getServer().getScheduler().runTaskLater(this, () -> ItemValueTable.getInstance().init(), FinalTech.getConfigManager().getOrDefault(10, "setups", "item-value-table", "delay"));
+        this.getServer().getScheduler().runTaskLater(this, () -> ItemValueTable.getInstance().init(), this.config.getOrDefault(10, "setups", "item-value-table", "delay"));
 
         /* setup slimefun machine block ticker */
-        int blockTickerRegisterDelay = FinalTech.getConfigManager().getOrDefault(20, "setups", "slimefun-machine", "delay");
+        int blockTickerRegisterDelay = this.config.getOrDefault(20, "setups", "slimefun-machine", "delay");
         if (blockTickerRegisterDelay > 0) {
             this.getServer().getScheduler().runTask(this, () -> SetupUtil.registerBlockTicker(0));
         } else {
@@ -187,7 +194,9 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         if (this.bukkitTask != null) {
             this.bukkitTask.cancel();
         }
+        BlockStorage.saveChunks();
         try {
+            FinalTech.logger().info("Waiting all task to end.(" + FinalTech.getLocationRunnableFactory().taskSize() + ")");
             FinalTech.getLocationRunnableFactory().waitAllTask();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
@@ -258,6 +267,10 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
     public static long getTps() {
         return instance.tps;
+    }
+
+    public static long getSeed() {
+        return instance.seed;
     }
 
     public static Random getRandom() {

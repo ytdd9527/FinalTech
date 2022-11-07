@@ -5,6 +5,10 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 
 import javax.annotation.Nonnull;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class PerformanceLimitUtil {
     public static String KEY = "tps-charge";
 

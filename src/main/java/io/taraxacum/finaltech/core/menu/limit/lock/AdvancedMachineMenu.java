@@ -3,7 +3,6 @@ package io.taraxacum.finaltech.core.menu.limit.lock;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.helper.Icon;
-import io.taraxacum.finaltech.core.menu.limit.AbstractLimitMachineMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.block.Block;
 

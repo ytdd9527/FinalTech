@@ -33,6 +33,7 @@ import java.util.Map;
  * @author Final_ROOT
  * @since 2.0
  */
+// TODO: abstract as lib
 public class SubFlexItemGroup extends FlexItemGroup {
     private static final int BACK_SLOT = 1;
     private static final int PREVIOUS_SLOT = 3;

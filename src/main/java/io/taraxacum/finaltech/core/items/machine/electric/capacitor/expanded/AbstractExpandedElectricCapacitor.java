@@ -97,7 +97,6 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
         if (generateEnergy > 0) {
             generateEnergy = Math.min(capacity - energy, generateEnergy);
             energy += generateEnergy;
-            updateEnergy = true;
         }
 
         if (updateEnergy) {

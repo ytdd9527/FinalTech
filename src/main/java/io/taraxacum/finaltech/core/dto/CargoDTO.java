@@ -10,6 +10,10 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class CargoDTO {
     private JavaPlugin javaPlugin;
 

@@ -6,7 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.libs.slimefun.util.LocationUtil;
+import io.taraxacum.finaltech.util.LocationUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import io.taraxacum.libs.plugin.util.VectorUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
@@ -17,6 +17,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
@@ -90,7 +91,9 @@ public class StaffElementalLine extends UsableSlimefunItem implements RecipeItem
             if (!targetLocation.getWorld().getBlockAt(new Location(targetLocation.getWorld(), targetLocation.getBlockX() + 0.5, targetLocation.getBlockY() + 0.5, targetLocation.getBlockZ() + 0.5)).getType().isAir()) {
                 targetLocation.setY(Math.ceil(targetLocation.getY() + 0.1));
             }
-            player.teleport(targetLocation);
+            Vector velocity = player.getVelocity().clone();
+            player.teleport(targetLocation, PlayerTeleportEvent.TeleportCause.PLUGIN);
+            player.setVelocity(velocity);
         }
         targetLocation.setY(targetLocation.getY() + player.getEyeHeight());
         ParticleUtil.drawLineByDistance(Particle.GLOW, 0, 0.1, playerLocation, targetLocation);

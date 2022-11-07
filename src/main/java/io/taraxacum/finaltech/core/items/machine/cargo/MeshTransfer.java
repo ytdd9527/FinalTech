@@ -20,9 +20,9 @@ import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.PermissionUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
-import io.taraxacum.libs.slimefun.util.CargoUtil;
-import io.taraxacum.libs.slimefun.util.LocationUtil;
-import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.finaltech.util.CargoUtil;
+import io.taraxacum.finaltech.util.LocationUtil;
+import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -266,7 +266,7 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
                 }
                 locations[locations.length - 1] = block.getLocation();
                 ServerRunnableLockFactory.getInstance(javaPlugin, Location.class).waitThenRun(() -> {
-                    if (BlockStorage.hasBlockInfo(location)) {
+                    if (!BlockStorage.hasBlockInfo(location)) {
                         return;
                     }
 

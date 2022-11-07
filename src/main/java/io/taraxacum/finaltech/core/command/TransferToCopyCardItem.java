@@ -1,8 +1,8 @@
 package io.taraxacum.finaltech.core.command;
 
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.items.unusable.CopyCard;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -28,7 +28,7 @@ public class TransferToCopyCardItem implements CommandExecutor {
             player.setItemInHand(copyCardItem);
             return true;
         } else {
-            Bukkit.getLogger().info("Not support for console");
+            FinalTech.logger().info("Not support for console");
         }
         return false;
     }

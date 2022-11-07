@@ -14,7 +14,7 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.MatrixReactorMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
-import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
@@ -40,7 +40,7 @@ import javax.annotation.Nonnull;
 public class MatrixReactor extends AbstractMachine implements RecipeItem {
     private final String KEY_ITEM = "item";
     private final String KEY_COUNT = "count";
-    private final int difficulty = ConfigUtil.getOrDefaultItemSetting(72, this, "difficulty");
+    private final int difficulty = ConfigUtil.getOrDefaultItemSetting(80, this, "difficulty");
 
     public MatrixReactor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

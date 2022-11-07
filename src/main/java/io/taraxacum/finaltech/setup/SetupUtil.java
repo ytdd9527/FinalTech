@@ -1,7 +1,6 @@
 package io.taraxacum.finaltech.setup;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
@@ -10,7 +9,6 @@ import io.taraxacum.common.util.ReflectionUtil;
 import io.taraxacum.common.util.StringUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.command.ShowItemInfo;
-import io.taraxacum.finaltech.core.command.ShowItemValue;
 import io.taraxacum.finaltech.core.command.TransferToCopyCardItem;
 import io.taraxacum.finaltech.core.enchantment.NullEnchantment;
 import io.taraxacum.finaltech.core.items.machine.range.point.face.*;
@@ -38,7 +36,7 @@ import io.taraxacum.finaltech.core.items.unusable.liquid.WaterCard;
 import io.taraxacum.finaltech.core.items.unusable.logic.LogicFalse;
 import io.taraxacum.finaltech.core.items.unusable.logic.LogicTrue;
 import io.taraxacum.finaltech.core.items.usable.*;
-import io.taraxacum.finaltech.core.items.usable.accelerate.*;
+import io.taraxacum.finaltech.core.items.usable.machine.*;
 import io.taraxacum.finaltech.core.items.machine.electric.capacitor.AdvancedChargeIncreaseCapacitor;
 import io.taraxacum.finaltech.core.items.machine.electric.capacitor.AdvancedConsumeReduceCapacitor;
 import io.taraxacum.finaltech.core.items.machine.range.cube.EnergizedAccelerator;
@@ -63,7 +61,7 @@ import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.PerformanceLimitUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.slimefun.util.ResearchUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.libs.plugin.util.TextUtil;
 import io.taraxacum.libs.plugin.dto.ConfigFileManager;
 import io.taraxacum.libs.plugin.dto.LanguageManager;
 import io.taraxacum.libs.slimefun.dto.ItemValueTable;
@@ -132,22 +130,22 @@ public final class SetupUtil {
                 new LavaCard(FinalTechMenus.MENU_ITEMS, FinalTechItems.LAVA_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LAVA_CARD).register(),
                 new MilkCard(FinalTechMenus.MENU_ITEMS, FinalTechItems.MILK_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MILK_CARD).register());
         FinalTechMenus.SUB_MENU_MATERIAL.addTo(
-                new Gearwheel(FinalTechMenus.MENU_ITEMS, FinalTechItems.GEARWHEEL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.GEARWHEEL, new SlimefunItemStack(FinalTechItems.GEARWHEEL, 4)).register(),
+                new Gearwheel(FinalTechMenus.MENU_ITEMS, FinalTechItems.GEARWHEEL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.GEARWHEEL, ItemStackUtil.cloneItem(FinalTechItems.GEARWHEEL, 4)).register(),
                 new UnorderedDust(FinalTechMenus.MENU_ITEMS, FinalTechItems.UNORDERED_DUST,  FinalTechRecipes.RECIPE_TYPE_ORDERED_DUST_FACTORY, FinalTechRecipes.UNORDERED_DUST).register(),
                 new OrderedDust(FinalTechMenus.MENU_ITEMS, FinalTechItems.ORDERED_DUST, FinalTechRecipes.RECIPE_TYPE_ORDERED_DUST_FACTORY, FinalTechRecipes.ORDERED_DUST).register(),
-                new Bug(FinalTechMenus.MENU_ITEMS, FinalTechItems.BUG, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.BUG).register(),
-                new Entropy(FinalTechMenus.MENU_ITEMS, FinalTechItems.ENTROPY, FinalTechRecipes.RECIPE_TYPE_ENTROPY, FinalTechRecipes.ENTROPY).register(),
-                new Box(FinalTechMenus.MENU_ITEMS, FinalTechItems.BOX, FinalTechRecipes.RECIPE_TYPE_EQUIVALENT_EXCHANGE_TABLE, FinalTechRecipes.BOX).register(),
+                new Bug(FinalTechMenus.MENU_ITEMS, FinalTechItems.BUG, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.BUG, ItemStackUtil.cloneItem(FinalTechItems.GEARWHEEL, 7)).register(),
+                new Entropy(FinalTechMenus.MENU_ITEMS, FinalTechItems.ENTROPY, FinalTechRecipes.RECIPE_TYPE_ENTROPY_CONSTRUCTOR, FinalTechRecipes.ENTROPY).register(),
+                new Box(FinalTechMenus.MENU_ITEMS, FinalTechItems.BOX, RecipeType.NULL, FinalTechRecipes.BOX).register(),
                 new Shine(FinalTechMenus.MENU_ITEMS, FinalTechItems.SHINE, FinalTechRecipes.RECIPE_TYPE_BOX, FinalTechRecipes.SHINE).register(),
                 new CopyCard(FinalTechMenus.MENU_ITEMS, FinalTechItems.COPY_CARD, FinalTechRecipes.RECIPE_TYPE_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.COPY_CARD).register());
         FinalTechMenus.SUB_MENU_MATERIAL.addTo(
-                new Annular(FinalTechMenus.MENU_ITEMS, FinalTechItems.ANNULAR, FinalTechRecipes.RECIPE_TYPE_CARD_OPERATION_PORT, FinalTechRecipes.ANNULAR).register(),
-                new QuantityModule(FinalTechMenus.MENU_ITEMS, FinalTechItems.QUANTITY_MODULE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.QUANTITY_MODULE).register(),
+                new Annular(FinalTechMenus.MENU_ITEMS, FinalTechItems.ANNULAR, FinalTechRecipes.RECIPE_TYPE_CARD_OPERATION_TABLE, FinalTechRecipes.ANNULAR).register(),
+                new QuantityModule(FinalTechMenus.MENU_ITEMS, FinalTechItems.QUANTITY_MODULE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.QUANTITY_MODULE).register(),
                 new QuantityModuleInfinity(FinalTechMenus.MENU_ITEMS, FinalTechItems.QUANTITY_MODULE_INFINITY, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.QUANTITY_MODULE_INFINITY).register(),
                 new Singularity(FinalTechMenus.MENU_ITEMS, FinalTechItems.SINGULARITY, FinalTechRecipes.RECIPE_TYPE_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.SINGULARITY).register(),
                 new Spirochete(FinalTechMenus.MENU_ITEMS, FinalTechItems.SPIROCHETE, FinalTechRecipes.RECIPE_TYPE_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.SPIROCHETE).register(),
-                new Shell(FinalTechMenus.MENU_ITEMS, FinalTechItems.SHELL, FinalTechRecipes.RECIPE_TYPE_CARD_OPERATION_PORT, FinalTechRecipes.SHELL).register(),
-                new ItemPhony(FinalTechMenus.MENU_ITEMS, FinalTechItems.PHONY, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.PHONY).register(),
+                new Shell(FinalTechMenus.MENU_ITEMS, FinalTechItems.SHELL, FinalTechRecipes.RECIPE_TYPE_CARD_OPERATION_TABLE, FinalTechRecipes.SHELL).register(),
+                new ItemPhony(FinalTechMenus.MENU_ITEMS, FinalTechItems.PHONY, FinalTechRecipes.RECIPE_TYPE_CARD_OPERATION_TABLE, FinalTechRecipes.PHONY).register(),
                 new Justifiability(FinalTechMenus.MENU_ITEMS, FinalTechItems.JUSTIFIABILITY, FinalTechRecipes.RECIPE_TYPE_ENTROPY_SEED, FinalTechRecipes.JUSTIFIABILITY).register(),
                 new EquivalentConcept(FinalTechMenus.MENU_ITEMS, FinalTechItems.EQUIVALENT_CONCEPT, FinalTechRecipes.RECIPE_TYPE_ENTROPY_SEED, FinalTechRecipes.EQUIVALENT_CONCEPT).register());
         // logic item
@@ -217,12 +215,11 @@ public final class SetupUtil {
         FinalTechMenus.SUB_MENU_ELECTRIC_GENERATOR.addTo(
                 new DustGenerator(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.ORDERED_DUST_GENERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ORDERED_DUST_GENERATOR).register(),
                 new EnergizedChargeBase(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.ENERGIZED_CHARGE_BASE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ENERGIZED_CHARGE_BASE).register(),
-                new OverloadChargeBase(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.OVERLOAD_CHARGE_BASE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.OVERLOAD_CHARGE_BASE).register());
+                new OverloadedChargeBase(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.OVERLOADED_CHARGE_BASE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.OVERLOADED_CHARGE_BASE).register());
         // electric storage
         FinalTechMenus.SUB_MENU_ELECTRIC_STORAGE.addTo(
                 new BasicChargeIncreaseCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_CHARGE_INCREASE_CAPACITOR).register(),
-                new BasicConsumeReduceCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_CONSUME_REDUCE_CAPACITOR).register());
-        FinalTechMenus.SUB_MENU_ELECTRIC_STORAGE.addTo(
+                new BasicConsumeReduceCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_CONSUME_REDUCE_CAPACITOR).register(),
                 new SmallExpandedCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.SMALL_EXPANDED_CAPACITOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SMALL_EXPANDED_CAPACITOR).register(),
                 new MediumExpandedCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.MEDIUM_EXPANDED_CAPACITOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MEDIUM_EXPANDED_CAPACITOR).register(),
                 new BigExpandedCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.BIG_EXPANDED_CAPACITOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BIG_EXPANDED_CAPACITOR).register(),
@@ -300,10 +297,10 @@ public final class SetupUtil {
         // special machines
         FinalTechMenus.SUB_MENU_SPECIAL_MACHINE.addTo(
                 new CobbleStoneFactory(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.COBBLESTONE_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.COBBLESTONE_FACTORY).register(),
-                new FuelCharger(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.FUEL_CHARGER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.FUEL_CHARGER).register(),
-                new FuelAccelerator(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.FUEL_ACCELERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.FUEL_ACCELERATOR).register(),
-                new FuelOperator(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.FUEL_OPERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.FUEL_OPERATOR).register(),
-                new OperationAccelerator(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.OPERATION_ACCELERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.OPERATION_ACCELERATOR).register());
+                new FuelCharger(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.FUEL_CHARGER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.FUEL_CHARGER).register(),
+                new FuelAccelerator(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.FUEL_ACCELERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.FUEL_ACCELERATOR).register(),
+                new FuelOperator(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.FUEL_OPERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.FUEL_OPERATOR).register(),
+                new OperationAccelerator(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.OPERATION_ACCELERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.OPERATION_ACCELERATOR).register());
         // tower
         FinalTechMenus.SUB_MENU_TOWER.addTo(
                 new CureTower(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.CURE_TOWER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.CURE_TOWER).register(),
@@ -337,20 +334,20 @@ public final class SetupUtil {
         FinalTechMenus.SUB_MENU_ADVANCED_MACHINE.addTo(
                 new AdvancedComposter(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_COMPOSTER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_COMPOSTER).register(),
                 new AdvancedJuicer(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_JUICER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_JUICER).register(),
-                new AdvancedElectricFurnace(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_FURNACE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_FURNACE).register(),
+                new AdvancedFurnace(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_FURNACE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_FURNACE).register(),
                 new AdvancedGoldPan(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_GOLD_PAN, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_GOLD_PAN).register(),
-                new AdvancedElectricDustWasher(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_DUST_WASHER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_DUST_WASHER).register(),
-                new AdvancedElectricIngotFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_INGOT_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_INGOT_FACTORY).register(),
-                new AdvancedElectricCrucible(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_CRUCIBLE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_CRUCIBLE).register(),
-                new AdvancedElectricOreGrinder(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_ORE_GRINDER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_ORE_GRINDER).register(),
+                new AdvancedDustWasher(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_DUST_WASHER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_DUST_WASHER).register(),
+                new AdvancedIngotFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_INGOT_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_INGOT_FACTORY).register(),
+                new AdvancedCrucible(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_CRUCIBLE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_CRUCIBLE).register(),
+                new AdvancedOreGrinder(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ORE_GRINDER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ORE_GRINDER).register(),
                 new AdvancedHeatedPressureChamber(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_HEATED_PRESSURE_CHAMBER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_HEATED_PRESSURE_CHAMBER).register(),
-                new AdvancedElectricIngotPulverizer(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_INGOT_PULVERIZER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_INGOT_PULVERIZER).register(),
+                new AdvancedIngotPulverizer(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_INGOT_PULVERIZER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_INGOT_PULVERIZER).register(),
                 new AdvancedAutoDrier(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_AUTO_DRIER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_AUTO_DRIER).register(),
-                new AdvancedElectricPress(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_PRESS, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_PRESS).register(),
+                new AdvancedPress(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_PRESS, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_PRESS).register(),
                 new AdvancedFoodFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_FOOD_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_FOOD_FACTORY).register(),
                 new AdvancedFreezer(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_FREEZER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_FREEZER).register(),
                 new AdvancedCarbonPress(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_CARBON_PRESS, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_CARBON_PRESS).register(),
-                new AdvancedElectricSmeltery(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_SMELTERY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_SMELTERY).register(),
+                new AdvancedSmeltery(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_SMELTERY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_SMELTERY).register(),
                 new AdvancedDustFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_DUST_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_DUST_FACTORY).register());
         // conversion
         FinalTechMenus.SUB_MENU_CONVERSION.addTo(
@@ -384,13 +381,13 @@ public final class SetupUtil {
                 new InfinityMachineAccelerateCard(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MACHINE_ACCELERATE_CARD_INFINITY, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACCELERATE_CARD_INFINITY).register(),
                 new MatrixMachineActivateCard(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MACHINE_ACTIVATE_CARD_L4, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MACHINE_ACTIVATE_CARD_L4).register());
         FinalTechMenus.MAIN_MENU_FINAL_ITEM.addTo(
-                new AdvancedAutoCraft(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.ADVANCED_AUTO_CRAFT, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_AUTO_CRAFT).register(),
+                new AdvancedAutoCraft(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.ADVANCED_AUTO_CRAFT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_AUTO_CRAFT).register(),
                 new MatrixItemDismantleTable(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_ITEM_DISMANTLE_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ITEM_DISMANTLE_TABLE).register(),
                 new MatrixExpandedCapacitor(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_EXPANDED_CAPACITOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_EXPANDED_CAPACITOR).register(),
-                new MatrixItemSerializationConstructor(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR).register(),
+                new MatrixItemDeserializeParser(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_ITEM_DESERIALIZE_PARSER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ITEM_DESERIALIZE_PARSER).register(),
                 new MatrixGenerator(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_GENERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_GENERATOR).register(),
                 new MatrixAccelerator(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_ACCELERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ACCELERATOR).register(),
-                new MatrixItemDeserializeParser(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_ITEM_DESERIALIZE_PARSER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ITEM_DESERIALIZE_PARSER).register(),
+                new MatrixItemSerializationConstructor(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR).register(),
                 new MatrixReactor(FinalTechMenus.MENU_FINAL_ITEM, FinalTechItems.MATRIX_REACTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_REACTOR).register());
 
         /* Menus */
@@ -478,6 +475,9 @@ public final class SetupUtil {
                 FinalTechItems.ENTROPY,
                 FinalTechItems.ENTROPY_CONSTRUCTOR,
                 FinalTechItems.ENTROPY_SEED);
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "BOX", ((int)FinalTech.getSeed()) % 20, false,
+                FinalTechItems.BOX,
+                FinalTechItems.SHINE);
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "ANNULAR", (int)Math.pow(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT, 0.25), true,
                 FinalTechItems.COPY_CARD,
                 FinalTechItems.ANNULAR,
@@ -485,7 +485,7 @@ public final class SetupUtil {
                 FinalTechItems.QUANTITY_MODULE_INFINITY,
                 FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR,
                 FinalTechItems.ITEM_DESERIALIZE_PARSER);
-        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "PHONY", (int)Math.pow(ConstantTableUtil.ITEM_SINGULARITY_AMOUNT * ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT, 0.5), true,
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "PHONY", (int)Math.pow(ConstantTableUtil.ITEM_SINGULARITY_AMOUNT * ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT, 0.6), true,
                 FinalTechItems.SINGULARITY,
                 FinalTechItems.SPIROCHETE,
                 FinalTechItems.SHELL,
@@ -528,7 +528,7 @@ public final class SetupUtil {
                 FinalTechItems.LOGIC_GENERATOR,
                 FinalTechItems.DIGITAL_GENERATOR,
                 FinalTechItems.LOGIC_TO_DIGITAL_CONVERSION);
-        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "MACHINE_CARD", 20, false,
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "MACHINE_CARD", 10, false,
                 FinalTechItems.MACHINE_CHARGE_CARD_L1,
                 FinalTechItems.MACHINE_CHARGE_CARD_L2,
                 FinalTechItems.MACHINE_CHARGE_CARD_L3,
@@ -538,18 +538,96 @@ public final class SetupUtil {
                 FinalTechItems.MACHINE_ACTIVATE_CARD_L1,
                 FinalTechItems.MACHINE_ACTIVATE_CARD_L2,
                 FinalTechItems.MACHINE_ACTIVATE_CARD_L3);
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "CONSUMABLE_ITEM", 10, false,
+                FinalTechItems.MAGIC_HYPNOTIC,
+                FinalTechItems.RESEARCH_UNLOCK_TICKET);
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "SIMPLE_TOOL", 10, false,
+                FinalTechItems.STAFF_ELEMENTAL_LINE,
+                FinalTechItems.POTION_EFFECT_COMPRESSOR,
+                FinalTechItems.POTION_EFFECT_DILATOR,
+                FinalTechItems.POTION_EFFECT_PURIFIER);
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "MACHINE_TOOL", 10, false,
+                FinalTechItems.MENU_VIEWER,
+                FinalTechItems.LOCATION_RECORDER,
+                FinalTechItems.MACHINE_CONFIGURATOR,
+                FinalTechItems.PORTABLE_ENERGY_STORAGE);
+        ResearchUtil.setSingleResearch(FinalTechItems.SUPER_PICKAXE, 10, false);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_GENERATOR, SlimefunItems.SOLAR_GENERATOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_GENERATOR, SlimefunItems.SOLAR_GENERATOR_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CARBONADO_GENERATOR, SlimefunItems.SOLAR_GENERATOR_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_GENERATOR, SlimefunItems.SOLAR_GENERATOR_4);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_STACK_GENERATOR, SlimefunItems.SOLAR_GENERATOR_4);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OVERLOADED_GENERATOR, SlimefunItems.SOLAR_GENERATOR_4);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_CHARGE_BASE, SlimefunItems.SOLAR_GENERATOR_4);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OVERLOADED_CHARGE_BASE, SlimefunItems.SOLAR_GENERATOR_4);
 
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, SlimefunItems.SMALL_CAPACITOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR, SlimefunItems.SMALL_CAPACITOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SMALL_EXPANDED_CAPACITOR, SlimefunItems.SMALL_CAPACITOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MEDIUM_EXPANDED_CAPACITOR, SlimefunItems.MEDIUM_CAPACITOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BIG_EXPANDED_CAPACITOR, SlimefunItems.BIG_CAPACITOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LARGE_EXPANDED_CAPACITOR, SlimefunItems.LARGE_CAPACITOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, SlimefunItems.CARBONADO_EDGED_CAPACITOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR, SlimefunItems.ENERGIZED_CAPACITOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_STACK_EXPANDED_CAPACITOR, SlimefunItems.ENERGIZED_CAPACITOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, SlimefunItems.ENERGIZED_CAPACITOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_CHARGE_INCREASE_CAPACITOR, SlimefunItems.ENERGIZED_CAPACITOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_CONSUME_REDUCE_CAPACITOR, SlimefunItems.ENERGIZED_CAPACITOR);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.NORMAL_ELECTRICITY_SHOOT_PILE, SlimefunItems.ENERGY_REGULATOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_ELECTRICITY_SHOOT_PILE, SlimefunItems.ENERGY_REGULATOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OVERLOADED_ELECTRICITY_SHOOT_PILE, SlimefunItems.ENERGY_REGULATOR);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.VARIABLE_WIRE_RESISTANCE, SlimefunItems.ENERGY_CONNECTOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.VARIABLE_WIRE_CAPACITOR, SlimefunItems.ENERGY_CONNECTOR);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ENERGIZED_ACCELERATOR, SlimefunItems.NETHER_STAR_REACTOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OVERLOADED_ACCELERATOR, SlimefunItems.NETHER_STAR_REACTOR);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.NORMAL_STORAGE_UNIT, SlimefunItems.BACKPACK_SMALL);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.DIVIDED_STORAGE_UNIT, SlimefunItems.WOVEN_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LIMITED_STORAGE_UNIT, SlimefunItems.WOVEN_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.STACK_STORAGE_UNIT, SlimefunItems.WOVEN_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.DIVIDED_LIMITED_STORAGE_UNIT, SlimefunItems.GILDED_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.DIVIDED_STACK_STORAGE_UNIT, SlimefunItems.GILDED_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LIMITED_STACK_STORAGE_UNIT, SlimefunItems.GILDED_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.RANDOM_INPUT_STORAGE_UNIT, SlimefunItems.RADIANT_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.RANDOM_OUTPUT_STORAGE_UNIT, SlimefunItems.RADIANT_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.RANDOM_ACCESS_STORAGE_UNIT, SlimefunItems.RADIANT_BACKPACK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.DISTRIBUTE_LEFT_STORAGE_UNIT, SlimefunItems.ANDROID_INTERFACE_FUEL);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.DISTRIBUTE_RIGHT_STORAGE_UNIT, SlimefunItems.ANDROID_INTERFACE_ITEMS);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.STORAGE_INTERACT_PORT, SlimefunItems.TRASH_CAN);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.STORAGE_INSERT_PORT, SlimefunItems.TRASH_CAN);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.STORAGE_WITHDRAW_PORT, SlimefunItems.TRASH_CAN);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.STORAGE_CARD, SlimefunItems.TRASH_CAN);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.REMOTE_ACCESSOR, SlimefunItems.REACTOR_ACCESS_PORT);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.AREA_ACCESSOR, SlimefunItems.REACTOR_ACCESS_PORT);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_FRAME_MACHINE, SlimefunItems.CARGO_CONNECTOR_NODE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.POINT_TRANSFER, SlimefunItems.CARGO_CONNECTOR_NODE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MESH_TRANSFER, SlimefunItems.CARGO_CONNECTOR_NODE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LINE_TRANSFER, SlimefunItems.CARGO_CONNECTOR_NODE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LOCATION_TRANSFER, SlimefunItems.CARGO_CONNECTOR_NODE);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MATRIX_CRAFTING_TABLE, SlimefunItems.PROGRAMMABLE_ANDROID_2);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ITEM_DISMANTLE_TABLE, SlimefunItems.NUCLEAR_REACTOR);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CARD_OPERATION_TABLE, SlimefunItems.IRON_GOLEM_ASSEMBLER);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.COBBLESTONE_FACTORY, SlimefunItems.PROGRAMMABLE_ANDROID);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.FUEL_CHARGER, SlimefunItems.PROGRAMMABLE_ANDROID_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.FUEL_OPERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.FUEL_ACCELERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OPERATION_ACCELERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CURE_TOWER, SlimefunItems.GPS_TRANSMITTER_4);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.PURIFY_LEVEL_TOWER, SlimefunItems.GPS_TRANSMITTER_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.PURIFY_TIME_TOWER, SlimefunItems.GPS_TRANSMITTER_3);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MANUAL_GRIND_STONE, SlimefunItems.GRIND_STONE);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MANUAL_ARMOR_FORGE, SlimefunItems.ARMOR_FORGE);
@@ -566,28 +644,47 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MANUAL_ANCIENT_ALTAR, SlimefunItems.ANCIENT_ALTAR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER, SlimefunItems.HEATED_PRESSURE_CHAMBER);
 
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_COBBLE_FACTORY, SlimefunItems.PRODUCE_COLLECTOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_DUST_FACTORY, SlimefunItems.PRODUCE_COLLECTOR);
+
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_COMPOSTER, SlimefunItems.FOOD_COMPOSTER_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_JUICER, SlimefunItems.JUICER);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_FURNACE, SlimefunItems.ELECTRIC_FURNACE_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_FURNACE, SlimefunItems.ELECTRIC_FURNACE_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_GOLD_PAN, SlimefunItems.ELECTRIC_GOLD_PAN_3);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_DUST_WASHER, SlimefunItems.ELECTRIC_DUST_WASHER_3);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_INGOT_FACTORY, SlimefunItems.ELECTRIC_INGOT_FACTORY_3);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_CRUCIBLE, SlimefunItems.ELECTRIFIED_CRUCIBLE_3);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_ORE_GRINDER, SlimefunItems.ELECTRIC_ORE_GRINDER_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_DUST_WASHER, SlimefunItems.ELECTRIC_DUST_WASHER_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_INGOT_FACTORY, SlimefunItems.ELECTRIC_INGOT_FACTORY_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_CRUCIBLE, SlimefunItems.ELECTRIFIED_CRUCIBLE_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ORE_GRINDER, SlimefunItems.ELECTRIC_ORE_GRINDER_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_HEATED_PRESSURE_CHAMBER, SlimefunItems.HEATED_PRESSURE_CHAMBER_2);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_INGOT_PULVERIZER, SlimefunItems.ELECTRIC_INGOT_PULVERIZER);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_INGOT_PULVERIZER, SlimefunItems.ELECTRIC_INGOT_PULVERIZER);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_AUTO_DRIER, SlimefunItems.AUTO_DRIER);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_PRESS, SlimefunItems.ELECTRIC_PRESS_2);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_PRESS, SlimefunItems.ELECTRIC_PRESS_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_FOOD_FACTORY, SlimefunItems.FOOD_FABRICATOR_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_FREEZER, SlimefunItems.FREEZER_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_CARBON_PRESS, SlimefunItems.CARBON_PRESS_3);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_SMELTERY, SlimefunItems.ELECTRIC_SMELTERY_2);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_SMELTERY, SlimefunItems.ELECTRIC_SMELTERY_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_COMPOSTER, SlimefunItems.FOOD_COMPOSTER_2);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_DUST_FACTORY, SlimefunItems.PRODUCE_COLLECTOR);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.DUST_CONVERSION, SlimefunItems.COBALT_PICKAXE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.GRAVEL_CONVERSION, SlimefunItems.GOLD_PAN);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SOUL_SAND_CONVERSION, SlimefunItems.NETHER_GOLD_PAN);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CONCRETE_CONVERSION, SlimefunItems.BLANK_RUNE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.WOOL_CONVERSION, SlimefunItems.BLANK_RUNE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.WATER_CONVERSION, SlimefunItems.BLANK_RUNE);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ORE_EXTRACTION, SlimefunItems.PICKAXE_OF_THE_SEEKER);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.STONE_GENERATOR, SlimefunItems.CLIMBING_PICK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.RAW_STONE_GENERATOR, SlimefunItems.CLIMBING_PICK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.NETHER_STONE_GENERATOR, SlimefunItems.CLIMBING_PICK);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.PLANK_GENERATOR, SlimefunItems.LUMBER_AXE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SAND_GENERATOR, SlimefunItems.SMELTERS_PICKAXE);
+
 
         /* command */
-        finalTech.getCommand("finaltech-copy-card").setExecutor(new TransferToCopyCardItem());
-        finalTech.getCommand("finaltech-item-value").setExecutor(new ShowItemValue());
-        finalTech.getCommand("finaltech-item-info").setExecutor(new ShowItemInfo());
+        finalTech.getCommand("finaltech copy-card").setExecutor(new TransferToCopyCardItem());
+        finalTech.getCommand("finaltech info").setExecutor(new ShowItemInfo());
     }
 
     public static void initLanguageManager(@Nonnull LanguageManager languageManager) {
@@ -612,7 +709,7 @@ public final class SetupUtil {
                         case "input" -> stringBuilder.append(TextUtil.COLOR_INPUT);
                         case "output" -> stringBuilder.append(TextUtil.COLOR_OUTPUT);
                         case "random" -> stringBuilder.append(TextUtil.getRandomColor());
-                        case "prandom" -> stringBuilder.append(TextUtil.getPseudorandomColor());
+                        case "prandom" -> stringBuilder.append(TextUtil.getPseudorandomColor(FinalTech.getSeed()));
                         default -> stringBuilder.append(split[1]);
                     }
                     return stringBuilder.append(this.apply(split[2])).toString();
@@ -703,7 +800,7 @@ public final class SetupUtil {
     public static BlockTicker generateBlockTicker(@Nonnull BlockTicker blockTicker, boolean forceAsync, boolean antiAcceleration, boolean performanceLimit) {
         if (forceAsync && antiAcceleration && performanceLimit) {
             return new BlockTicker() {
-                private static final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
+                private final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
 
                 @Override
                 public boolean isSynchronized() {
@@ -712,14 +809,14 @@ public final class SetupUtil {
 
                 @Override
                 public void tick(Block b, SlimefunItem item, Config data) {
-                    if (AntiAccelerationUtil.isAccelerated(data) && PerformanceLimitUtil.charge(data)) {
-                        runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
+                    if (!AntiAccelerationUtil.isAccelerated(data) && PerformanceLimitUtil.charge(data)) {
+                        this.runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
                     }
                 }
             };
         } else if (forceAsync && antiAcceleration && !performanceLimit) {
             return new BlockTicker() {
-                private static final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
+                private final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
 
                 @Override
                 public boolean isSynchronized() {
@@ -728,14 +825,14 @@ public final class SetupUtil {
 
                 @Override
                 public void tick(Block b, SlimefunItem item, Config data) {
-                    if (AntiAccelerationUtil.isAccelerated(data)) {
-                        runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
+                    if (!AntiAccelerationUtil.isAccelerated(data)) {
+                        this.runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
                     }
                 }
             };
         } else if (forceAsync && !antiAcceleration && performanceLimit) {
             return new BlockTicker() {
-                private static final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
+                private final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
 
                 @Override
                 public boolean isSynchronized() {
@@ -745,13 +842,13 @@ public final class SetupUtil {
                 @Override
                 public void tick(Block b, SlimefunItem item, Config data) {
                     if (PerformanceLimitUtil.charge(data)) {
-                        runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
+                        this.runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
                     }
                 }
             };
         } else if (forceAsync && !antiAcceleration && !performanceLimit) {
             return new BlockTicker() {
-                private static final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
+                private final RunnableLockFactory<Location> runnableLockFactory = FinalTech.getLocationRunnableFactory();
 
                 @Override
                 public boolean isSynchronized() {
@@ -760,7 +857,7 @@ public final class SetupUtil {
 
                 @Override
                 public void tick(Block b, SlimefunItem item, Config data) {
-                    runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
+                    this.runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
                 }
             };
         } else if (!forceAsync && antiAcceleration && performanceLimit) {
@@ -772,7 +869,7 @@ public final class SetupUtil {
 
                 @Override
                 public void tick(Block b, SlimefunItem item, Config data) {
-                    if (AntiAccelerationUtil.isAccelerated(data) && PerformanceLimitUtil.charge(data)) {
+                    if (!AntiAccelerationUtil.isAccelerated(data) && PerformanceLimitUtil.charge(data)) {
                         blockTicker.tick(b, item, data);
                     }
                 }
@@ -786,7 +883,7 @@ public final class SetupUtil {
 
                 @Override
                 public void tick(Block b, SlimefunItem item, Config data) {
-                    if (AntiAccelerationUtil.isAccelerated(data)) {
+                    if (!AntiAccelerationUtil.isAccelerated(data)) {
                         blockTicker.tick(b, item, data);
                     }
                 }
@@ -807,18 +904,6 @@ public final class SetupUtil {
             };
         } else {
             return blockTicker;
-        }
-    }
-
-    public static void test(int delay, boolean async, Runnable runnable) {
-        if (delay == 0) {
-            runnable.run();
-        } else {
-            if (async) {
-                FinalTech.getInstance().getServer().getScheduler().runTaskLaterAsynchronously(FinalTech.getInstance(), runnable, delay);
-            } else {
-                FinalTech.getInstance().getServer().getScheduler().runTaskLater(FinalTech.getInstance(), runnable, delay);
-            }
         }
     }
 }

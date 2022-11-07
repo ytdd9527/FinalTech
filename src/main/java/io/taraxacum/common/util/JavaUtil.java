@@ -127,6 +127,15 @@ public class JavaUtil {
         return result;
     }
 
+    public static <T> boolean matchOnce(T source, T... targets) {
+        for (T object : targets) {
+            if(object.equals(source)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static long testTime(@Nonnull Runnable runnable) {
         long beginTime = System.nanoTime();
         runnable.run();
