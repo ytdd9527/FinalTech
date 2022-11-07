@@ -334,20 +334,20 @@ public final class SetupUtil {
         FinalTechMenus.SUB_MENU_ADVANCED_MACHINE.addTo(
                 new AdvancedComposter(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_COMPOSTER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_COMPOSTER).register(),
                 new AdvancedJuicer(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_JUICER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_JUICER).register(),
-                new AdvancedElectricFurnace(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_FURNACE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_FURNACE).register(),
+                new AdvancedFurnace(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_FURNACE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_FURNACE).register(),
                 new AdvancedGoldPan(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_GOLD_PAN, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_GOLD_PAN).register(),
-                new AdvancedElectricDustWasher(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_DUST_WASHER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_DUST_WASHER).register(),
-                new AdvancedElectricIngotFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_INGOT_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_INGOT_FACTORY).register(),
-                new AdvancedElectricCrucible(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_CRUCIBLE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_CRUCIBLE).register(),
-                new AdvancedElectricOreGrinder(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_ORE_GRINDER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_ORE_GRINDER).register(),
+                new AdvancedDustWasher(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_DUST_WASHER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_DUST_WASHER).register(),
+                new AdvancedIngotFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_INGOT_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_INGOT_FACTORY).register(),
+                new AdvancedCrucible(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_CRUCIBLE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_CRUCIBLE).register(),
+                new AdvancedOreGrinder(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ORE_GRINDER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ORE_GRINDER).register(),
                 new AdvancedHeatedPressureChamber(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_HEATED_PRESSURE_CHAMBER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_HEATED_PRESSURE_CHAMBER).register(),
-                new AdvancedElectricIngotPulverizer(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_INGOT_PULVERIZER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_INGOT_PULVERIZER).register(),
+                new AdvancedIngotPulverizer(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_INGOT_PULVERIZER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_INGOT_PULVERIZER).register(),
                 new AdvancedAutoDrier(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_AUTO_DRIER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_AUTO_DRIER).register(),
-                new AdvancedElectricPress(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_PRESS, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_PRESS).register(),
+                new AdvancedPress(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_PRESS, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_PRESS).register(),
                 new AdvancedFoodFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_FOOD_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_FOOD_FACTORY).register(),
                 new AdvancedFreezer(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_FREEZER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_FREEZER).register(),
                 new AdvancedCarbonPress(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_CARBON_PRESS, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_CARBON_PRESS).register(),
-                new AdvancedElectricSmeltery(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_ELECTRIC_SMELTERY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_ELECTRIC_SMELTERY).register(),
+                new AdvancedSmeltery(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_SMELTERY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_SMELTERY).register(),
                 new AdvancedDustFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ADVANCED_DUST_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_DUST_FACTORY).register());
         // conversion
         FinalTechMenus.SUB_MENU_CONVERSION.addTo(
@@ -649,20 +649,20 @@ public final class SetupUtil {
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_COMPOSTER, SlimefunItems.FOOD_COMPOSTER_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_JUICER, SlimefunItems.JUICER);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_FURNACE, SlimefunItems.ELECTRIC_FURNACE_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_FURNACE, SlimefunItems.ELECTRIC_FURNACE_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_GOLD_PAN, SlimefunItems.ELECTRIC_GOLD_PAN_3);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_DUST_WASHER, SlimefunItems.ELECTRIC_DUST_WASHER_3);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_INGOT_FACTORY, SlimefunItems.ELECTRIC_INGOT_FACTORY_3);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_CRUCIBLE, SlimefunItems.ELECTRIFIED_CRUCIBLE_3);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_ORE_GRINDER, SlimefunItems.ELECTRIC_ORE_GRINDER_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_DUST_WASHER, SlimefunItems.ELECTRIC_DUST_WASHER_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_INGOT_FACTORY, SlimefunItems.ELECTRIC_INGOT_FACTORY_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_CRUCIBLE, SlimefunItems.ELECTRIFIED_CRUCIBLE_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ORE_GRINDER, SlimefunItems.ELECTRIC_ORE_GRINDER_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_HEATED_PRESSURE_CHAMBER, SlimefunItems.HEATED_PRESSURE_CHAMBER_2);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_INGOT_PULVERIZER, SlimefunItems.ELECTRIC_INGOT_PULVERIZER);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_INGOT_PULVERIZER, SlimefunItems.ELECTRIC_INGOT_PULVERIZER);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_AUTO_DRIER, SlimefunItems.AUTO_DRIER);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_PRESS, SlimefunItems.ELECTRIC_PRESS_2);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_PRESS, SlimefunItems.ELECTRIC_PRESS_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_FOOD_FACTORY, SlimefunItems.FOOD_FABRICATOR_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_FREEZER, SlimefunItems.FREEZER_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_CARBON_PRESS, SlimefunItems.CARBON_PRESS_3);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_ELECTRIC_SMELTERY, SlimefunItems.ELECTRIC_SMELTERY_2);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_SMELTERY, SlimefunItems.ELECTRIC_SMELTERY_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_COMPOSTER, SlimefunItems.FOOD_COMPOSTER_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_DUST_FACTORY, SlimefunItems.PRODUCE_COLLECTOR);
 

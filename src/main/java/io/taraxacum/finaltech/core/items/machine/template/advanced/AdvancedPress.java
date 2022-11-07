@@ -11,13 +11,13 @@ import org.bukkit.inventory.ItemStack;
  * @author Final_ROOT
  * @since 1.0
  */
-public class AdvancedElectricCrucible extends AbstractAdvanceMachine {
-    public AdvancedElectricCrucible(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class AdvancedPress extends AbstractAdvanceMachine {
+    public AdvancedPress(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
     public void registerDefaultRecipes() {
-        RecipeUtil.registerRecipeBySlimefunId(this, SlimefunItems.ELECTRIFIED_CRUCIBLE.getItemId());
+        RecipeUtil.registerRecipeBySlimefunId(this, SlimefunItems.ELECTRIC_PRESS.getItemId());
     }
 }

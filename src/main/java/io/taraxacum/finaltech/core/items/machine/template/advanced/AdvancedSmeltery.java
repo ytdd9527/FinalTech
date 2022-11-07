@@ -11,13 +11,13 @@ import org.bukkit.inventory.ItemStack;
  * @author Final_ROOT
  * @since 1.0
  */
-public class AdvancedElectricOreGrinder extends AbstractAdvanceMachine {
-    public AdvancedElectricOreGrinder(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class AdvancedSmeltery extends AbstractAdvanceMachine {
+    public AdvancedSmeltery(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
     public void registerDefaultRecipes() {
-        RecipeUtil.registerRecipeBySlimefunId(this, SlimefunItems.ELECTRIC_ORE_GRINDER.getItemId());
+        RecipeUtil.registerRecipeBySlimefunId(this, SlimefunItems.ELECTRIC_SMELTERY.getItemId());
     }
 }

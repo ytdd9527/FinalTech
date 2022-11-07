@@ -11,13 +11,13 @@ import org.bukkit.inventory.ItemStack;
  * @author Final_ROOT
  * @since 1.0
  */
-public class AdvancedElectricPress extends AbstractAdvanceMachine {
-    public AdvancedElectricPress(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class AdvancedFurnace extends AbstractAdvanceMachine {
+    public AdvancedFurnace(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
     public void registerDefaultRecipes() {
-        RecipeUtil.registerRecipeBySlimefunId(this, SlimefunItems.ELECTRIC_PRESS.getItemId());
+        RecipeUtil.registerRecipeBySlimefunId(this, SlimefunItems.ELECTRIC_FURNACE.getItemId());
     }
 }

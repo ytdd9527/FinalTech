@@ -817,7 +817,7 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.GEARWHEEL,
             FinalTechItems.MANUAL_JUICER, FinalTechItems.ANNULAR, FinalTechItems.MANUAL_JUICER
     };
-    public static final ItemStack[] ADVANCED_ELECTRIC_FURNACE = new ItemStack[] {
+    public static final ItemStack[] ADVANCED_FURNACE = new ItemStack[] {
             SlimefunItems.ELECTRIC_FURNACE, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_FURNACE,
             FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.GEARWHEEL,
             SlimefunItems.ELECTRIC_FURNACE, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_FURNACE
@@ -827,22 +827,22 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.GEARWHEEL,
             SlimefunItems.ELECTRIC_GOLD_PAN, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_GOLD_PAN
     };
-    public static final ItemStack[] ADVANCED_ELECTRIC_DUST_WASHER = new ItemStack[] {
+    public static final ItemStack[] ADVANCED_DUST_WASHER = new ItemStack[] {
             SlimefunItems.ELECTRIC_DUST_WASHER, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_DUST_WASHER,
             FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.GEARWHEEL,
             SlimefunItems.ELECTRIC_DUST_WASHER, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_DUST_WASHER
     };
-    public static final ItemStack[] ADVANCED_ELECTRIC_INGOT_FACTORY = new ItemStack[] {
+    public static final ItemStack[] ADVANCED_INGOT_FACTORY = new ItemStack[] {
             SlimefunItems.ELECTRIC_INGOT_FACTORY, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_INGOT_FACTORY,
             FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.GEARWHEEL,
             SlimefunItems.ELECTRIC_INGOT_FACTORY, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_INGOT_FACTORY
     };
-    public static final ItemStack[] ADVANCED_ELECTRIC_CRUCIBLE = new ItemStack[] {
+    public static final ItemStack[] ADVANCED_CRUCIBLE = new ItemStack[] {
             SlimefunItems.ELECTRIFIED_CRUCIBLE, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIFIED_CRUCIBLE,
             FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.GEARWHEEL,
             SlimefunItems.ELECTRIFIED_CRUCIBLE, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIFIED_CRUCIBLE
     };
-    public static final ItemStack[] ADVANCED_ELECTRIC_ORE_GRINDER = new ItemStack[] {
+    public static final ItemStack[] ADVANCED_ORE_GRINDER = new ItemStack[] {
             SlimefunItems.ELECTRIC_ORE_GRINDER, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_ORE_GRINDER,
             FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.GEARWHEEL,
             SlimefunItems.ELECTRIC_ORE_GRINDER, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_ORE_GRINDER
@@ -852,7 +852,7 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.GEARWHEEL,
             SlimefunItems.HEATED_PRESSURE_CHAMBER, FinalTechItems.ANNULAR, SlimefunItems.HEATED_PRESSURE_CHAMBER
     };
-    public static final ItemStack[] ADVANCED_ELECTRIC_INGOT_PULVERIZER = new ItemStack[] {
+    public static final ItemStack[] ADVANCED_INGOT_PULVERIZER = new ItemStack[] {
             SlimefunItems.ELECTRIC_INGOT_PULVERIZER, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_INGOT_PULVERIZER,
             FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.GEARWHEEL,
             SlimefunItems.ELECTRIC_INGOT_PULVERIZER, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_INGOT_PULVERIZER
@@ -862,7 +862,7 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.GEARWHEEL,
             SlimefunItems.AUTO_DRIER, FinalTechItems.ANNULAR, SlimefunItems.AUTO_DRIER
     };
-    public static final ItemStack[] ADVANCED_ELECTRIC_PRESS = new ItemStack[] {
+    public static final ItemStack[] ADVANCED_PRESS = new ItemStack[] {
             SlimefunItems.ELECTRIC_PRESS, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_PRESS,
             FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.GEARWHEEL,
             SlimefunItems.ELECTRIC_PRESS, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_PRESS
@@ -882,7 +882,7 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.GEARWHEEL,
             SlimefunItems.CARBON_PRESS, FinalTechItems.ANNULAR, SlimefunItems.CARBON_PRESS
     };
-    public static final ItemStack[] ADVANCED_ELECTRIC_SMELTERY = new ItemStack[] {
+    public static final ItemStack[] ADVANCED_SMELTERY = new ItemStack[] {
             SlimefunItems.ELECTRIC_SMELTERY, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_SMELTERY,
             FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.GEARWHEEL,
             SlimefunItems.ELECTRIC_SMELTERY, FinalTechItems.ANNULAR, SlimefunItems.ELECTRIC_SMELTERY

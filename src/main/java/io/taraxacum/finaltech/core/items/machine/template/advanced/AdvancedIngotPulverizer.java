@@ -11,13 +11,13 @@ import org.bukkit.inventory.ItemStack;
  * @author Final_ROOT
  * @since 1.0
  */
-public class AdvancedElectricIngotFactory extends AbstractAdvanceMachine {
-    public AdvancedElectricIngotFactory(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class AdvancedIngotPulverizer extends AbstractAdvanceMachine {
+    public AdvancedIngotPulverizer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
     public void registerDefaultRecipes() {
-        RecipeUtil.registerRecipeBySlimefunId(this, SlimefunItems.ELECTRIC_INGOT_FACTORY.getItemId());
+        RecipeUtil.registerRecipeBySlimefunId(this, SlimefunItems.ELECTRIC_INGOT_PULVERIZER.getItemId());
     }
 }

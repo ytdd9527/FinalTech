@@ -1934,34 +1934,34 @@ items:
     name: '{color:prandom}Advanced Composter'
   FINALTECH_ADVANCED_JUICER:
     name: '{color:prandom}Advanced Juicer'
-  FINALTECH_ADVANCED_ELECTRIC_FURNACE:
-    name: '{color:prandom}Advanced Electric Furance'
+  FINALTECH_ADVANCED_FURNACE:
+    name: '{color:prandom}Advanced Furance'
   FINALTECH_ADVANCED_GOLD_PAN:
     name: '{color:prandom}Advanced Gold Pan'
   FINALTECH_ADVANCED_DUST_WASHER:
     name: '{color:prandom}Advanced Dust Washer'
-  FINALTECH_ADVANCED_ELECTRIC_INGOT_FACTORY:
-    name: '{color:prandom}Advanced Electric Ingot Factory'
-  FINALTECH_ADVANCED_ELECTRIC_CRUCIBLE:
-    name: '{color:prandom}Advanced Electric Crucible'
-  FINALTECH_ADVANCED_ELECTRIC_ORE_GRINDER:
-    name: '{color:prandom}Advanced Electric Ore Grinder'
+  FINALTECH_ADVANCED_INGOT_FACTORY:
+    name: '{color:prandom}Advanced Ingot Factory'
+  FINALTECH_ADVANCED_CRUCIBLE:
+    name: '{color:prandom}Advanced Crucible'
+  FINALTECH_ADVANCED_ORE_GRINDER:
+    name: '{color:prandom}Advanced Ore Grinder'
   FINALTECH_ADVANCED_HEATED_PRESSURE_CHAMBER:
     name: '{color:prandom}Advanced Heated Pressure'
-  FINALTECH_ADVANCED_ELECTRIC_INGOT_PULVERIZER:
-    name: '{color:prandom}Advanced Electric Ingot Pulverizer'
+  FINALTECH_ADVANCED_INGOT_PULVERIZER:
+    name: '{color:prandom}Advanced Ingot Pulverizer'
   FINALTECH_ADVANCED_AUTO_DRIER:
     name: '{color:prandom}Advanced Auto Drier'
-  FINALTECH_ADVANCED_ELECTRIC_PRESS:
-    name: '{color:prandom}Advanced Electric Press'
+  FINALTECH_ADVANCED_PRESS:
+    name: '{color:prandom}Advanced Press'
   FINALTECH_ADVANCED_FOOD_FACTORY:
     name: '{color:prandom}Advanced Food Factory'
   FINALTECH_ADVANCED_FREEZER:
     name: '{color:prandom}Advanced Freezer'
   FINALTECH_ADVANCED_CARBON_PRESS:
     name: '{color:prandom}Advanced Carbon Press'
-  FINALTECH_ADVANCED_ELECTRIC_SMELTERY:
-    name: '{color:prandom}Advanced Electric Smeltery'
+  FINALTECH_ADVANCED_SMELTERY:
+    name: '{color:prandom}Advanced Smeltery'
   FINALTECH_ADVANCED_DUST_FACTORY:
     name: '{color:prandom}Advanced Dust Factory'
   FINALTECH_DUST_CONVERSION:
