@@ -148,7 +148,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             @Override
             public void run() {
                 this.currentTimeMillis.set(System.currentTimeMillis());
-                FinalTech.instance.tps = Math.max(FULL_SLIMEFUN_TICK / (currentTimeMillis.get() - lastTimeMillis.get()), 20);
+                FinalTech.instance.tps = Math.max(FULL_SLIMEFUN_TICK / Math.max(1, currentTimeMillis.get() - lastTimeMillis.get()), 20);
                 this.lastTimeMillis.set(currentTimeMillis.get());
                 FinalTech.instance.slimefunTickCount++;
             }
