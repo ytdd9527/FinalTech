@@ -2,27 +2,34 @@
 FinalTECH
 =
 
+About
+-
+
 A Slimefun addon about making the world a little better
 
+It includes new electric system, new cargo system, and some special machines and items now.
 
-It includes many items with unique function, which will make a hole change to Slimefun gameplay.
+This Slimefun addon is not means to destroy the existing balance of Slimefun, and the difficulty will be added while more items is being added by other Slimefun addons.(But
+There is a lot of items here that could link with other Slimefun addons, so it will be a great experience if you add many Slimefun addons with it)
 
-It's not completed now, and more object will be added.
+It should be friendly to server TPS. And some optimization strategies is provided also.
 
-⚠⚠⚠ This project is still in progress.
--
-⚠⚠⚠ This branch is just for save my work, not to be used in real server.
--
-⚠⚠⚠ It's not finished yet.
--
-⚠⚠⚠ While being finished, it will be merged to master.
+Notice
 -
 
+This project is still in progress and not fully finished yet. More items will be added in the future.
+
+If there is anything you think is a bug, or you can't understand, just create an issue in the GitHub please.
+
+The progress of this project?
+-
+
+There is many thing to do, but now I will try to make this version to work firstly.
 
 Version history
-=
+-
 
-2.0-preview2(not finished yet)
+2.0-preview2(now)
 -
 > ~~Double more items and machines~~
 > 
@@ -33,8 +40,6 @@ Version history
 > Balance adjusted
 
 > Multi-language support
-
-> Possible optimization for Slimefun(need to be enabled in the configuration and may be unstable)
 
 > More config support
 
