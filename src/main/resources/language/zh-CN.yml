@@ -2097,7 +2097,7 @@ items:
         - '{color:normal}复制卡数量: {color:number}{1}{color:normal}/{color:number}{2}'
         - '{color:normal}复制卡种类: {color:number}{3}{color:normal}/{color:number}{4}'
   FINALTECH_MATRIX_GENERATOR:
-    name: '{color:prandom}Matrix Generator'
+    name: '{color:prandom}矩阵供电机'
     info:
       1:
         name: '{color:passive}机制'
