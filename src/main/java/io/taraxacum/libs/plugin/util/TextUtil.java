@@ -25,7 +25,7 @@ public class TextUtil {
     public static final String COLOR_OUTPUT = "§6";
     public static final Color WHITE_COLOR = Color.fromRGB(255, 255, 255);
 
-    private static int COUNT = 0;
+    private static long COUNT = 0;
 
     @Nonnull
     public static String colorString(@Nonnull String string, @Nonnull List<Color> colorList) {
@@ -95,8 +95,8 @@ public class TextUtil {
     }
 
     public static String getPseudorandomColor(long seed) {
-        COUNT *= seed;
-        Random random = new Random(COUNT++ + seed);
+        COUNT += seed;
+        Random random = new Random(COUNT);
         return "§x" +
                 "§" + (TextUtil.codeColor(random.nextInt(8) + 8)) +
                 "§" + (TextUtil.codeColor(random.nextInt(8) + 8)) +
