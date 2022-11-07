@@ -16,11 +16,11 @@ depend:
 - Slimefun
 
 commands:
-  finaltech copy-card:
+  finaltech-copy-card:
     description: Transfer a valid item to a copy card
     usage: /<command>
     permission: finaltech.item.copy-card
-  finaltech info:
+  finaltech-info:
     description: Show info about the item if it's from slimefun
     usage: /<command>
     permission: finaltech.item.info

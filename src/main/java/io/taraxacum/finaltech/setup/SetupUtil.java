@@ -683,8 +683,8 @@ public final class SetupUtil {
 
 
         /* command */
-        finalTech.getCommand("finaltech copy-card").setExecutor(new TransferToCopyCardItem());
-        finalTech.getCommand("finaltech info").setExecutor(new ShowItemInfo());
+        finalTech.getCommand("finaltech-copy-card").setExecutor(new TransferToCopyCardItem());
+        finalTech.getCommand("finaltech-info").setExecutor(new ShowItemInfo());
     }
 
     public static void initLanguageManager(@Nonnull LanguageManager languageManager) {
