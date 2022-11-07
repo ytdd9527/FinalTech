@@ -3,10 +3,11 @@ package io.taraxacum.finaltech.core.items.unusable;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.setup.FinalTechItems;
-import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
@@ -16,7 +17,6 @@ import javax.annotation.Nullable;
  * @since 2.0
  */
 public class QuantityModule extends UnusableSlimefunItem implements RecipeItem {
-    public static final int VALUE = 1;
     public QuantityModule(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -27,9 +27,6 @@ public class QuantityModule extends UnusableSlimefunItem implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_POSITIVE + "说明",
-                "",
-                TextUtil.COLOR_NORMAL + "放置在高级机器中",
-                TextUtil.COLOR_NORMAL + "使其单次最大工作效率提高");
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

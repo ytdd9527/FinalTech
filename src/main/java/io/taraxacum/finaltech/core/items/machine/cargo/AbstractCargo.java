@@ -6,7 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
-import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.libs.slimefun.util.MachineUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;

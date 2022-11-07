@@ -7,14 +7,16 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.common.util.JavaUtil;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.libs.plugin.dto.ItemWrapper;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.api.dto.ItemStackWithWrapper;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.OrderedDustFactoryStoneMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
-import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
+import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.finaltech.util.BlockTickerUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -22,9 +24,7 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -56,17 +56,28 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+        if (BlockTickerUtil.hasSleep(config)) {
+            double sleep = BlockTickerUtil.getSleep(config);
+            if (--sleep <= 0) {
+                BlockTickerUtil.setSleep(config, null);
+            } else {
+                BlockTickerUtil.setSleep(config, sleep);
+            }
+        }
+
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if(MachineUtil.itemCount(blockMenu, this.getInputSlot()) != this.getInputSlot().length) {
+        if (MachineUtil.slotCount(blockMenu.toInventory(), this.getInputSlot()) != this.getInputSlot().length) {
             return;
         }
+
         Set<Integer> amountList = new HashSet<>(this.getInputSlot().length);
-        ItemStackWithWrapper firstItem = new ItemStackWithWrapper(blockMenu.getItemInSlot(this.getInputSlot()[0]));
+        ItemWrapper firstItem = new ItemWrapper(blockMenu.getItemInSlot(this.getInputSlot()[0]));
         boolean allSameItem = true;
+
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             amountList.add(item.getAmount());
-            if(allSameItem && !ItemStackUtil.isItemSimilar(firstItem, item)) {
+            if (allSameItem && !ItemStackUtil.isItemSimilar(firstItem, item)) {
                 allSameItem = false;
             }
         }
@@ -75,8 +86,10 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
         }
         if (amountList.size() == this.getInputSlot().length && allSameItem) {
             blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
+            BlockTickerUtil.setSleep(config, 1.0);
         } else if (Math.random() < (double)(amountList.size()) / this.getInputSlot().length) {
             blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
+            BlockTickerUtil.setSleep(config, 1.0);
         }
     }
 
@@ -87,16 +100,7 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "制造 " + FinalTechItems.UNORDERED_DUST.getDisplayName(),
-                "",
-                TextUtil.COLOR_NORMAL + "在机器界面左侧所有的 " + TextUtil.COLOR_NUMBER + this.getInputSlot().length + "格"  + TextUtil.COLOR_NORMAL + " 上都放有物品后",
-                TextUtil.COLOR_NORMAL + "消耗所有物品",
-                TextUtil.COLOR_NORMAL + "每个个数不同的物品 使该次有 " + TextUtil.COLOR_NUMBER + String.format("%.2f", 100.0 / this.getInputSlot().length) + "%" + TextUtil.COLOR_NORMAL + " 的概率生成 " + FinalTechItems.UNORDERED_DUST.getDisplayName());
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "&f制造 " + FinalTechItems.ORDERED_DUST.getDisplayName(),
-                "",
-                TextUtil.COLOR_NORMAL + "在机器界面左侧所有的 " + TextUtil.COLOR_NUMBER + this.getInputSlot().length + "格"  + TextUtil.COLOR_NORMAL + " 上都放有物品后",
-                TextUtil.COLOR_NORMAL + "消耗所有物品",
-                TextUtil.COLOR_NORMAL + "当每个格子上的物品个数均不相同 且只使用到了一种物品时",
-                TextUtil.COLOR_NORMAL + "生成 " + FinalTechItems.ORDERED_DUST.getDisplayName());
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.format("%.2f", 100.0 / this.getInputSlot().length));
     }
 }

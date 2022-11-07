@@ -3,11 +3,13 @@ package io.taraxacum.finaltech.core.items.unusable;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.setup.FinalTechItems;
-import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.StringItemUtil;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
+import io.taraxacum.libs.plugin.util.StringItemUtil;
 import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -33,6 +35,7 @@ public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem 
         super(itemGroup, item, recipeType, recipe);
     }
 
+    @Nonnull
     public static ItemStack newItem() {
         return new ItemStack(FinalTechItems.STORAGE_CARD);
     }
@@ -53,10 +56,7 @@ public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem 
 
     public static boolean storableItem(@Nonnull ItemStack item) {
         Material material = item.getType();
-        if(Tag.SHULKER_BOXES.isTagged(material) || Material.BUNDLE.equals(material)) {
-            return false;
-        }
-        return true;
+        return !Tag.SHULKER_BOXES.isTagged(material) && !Material.BUNDLE.equals(material) && ItemStackUtil.itemStackToString(item).length() < 6000;
     }
 
     public static void updateLore(@Nonnull ItemStack cardItem) {
@@ -94,31 +94,19 @@ public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem 
             }
             String name = ItemStackUtil.getItemName(stringItem);
             if (lore.size() == 1) {
-                lore.add(TextUtil.COLOR_NORMAL + "存储的物品= §f" + name);
+                lore.add(TextUtil.getRandomColor() + name + "  " + TextUtil.colorRandomString(String.valueOf(amount)));
             } else {
-                lore.set(1, TextUtil.COLOR_NORMAL +  "存储的物品= §f" + name);
-            }
-            if (lore.size() == 2) {
-                lore.add(TextUtil.COLOR_NORMAL + "存储的数量= " + TextUtil.COLOR_NUMBER + amount);
-            } else {
-                lore.set(2, TextUtil.COLOR_NORMAL + "存储的数量= " + TextUtil.COLOR_NUMBER + amount);
+                lore.set(1, TextUtil.getRandomColor() + name + "  " + TextUtil.colorRandomString(String.valueOf(amount)));
             }
         } else {
-            lore = new ArrayList<>(2);
+            lore = new ArrayList<>(1);
             lore.add(StorageCardItem.ITEM_LORE);
-            lore.add(TextUtil.COLOR_NORMAL + "未存储物品");
         }
         cardItemMeta.setLore(lore);
     }
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_POSITIVE + "说明",
-                "",
-                TextUtil.COLOR_NORMAL + "可以通过 " + FinalTechItems.STORAGE_INSERT_PORT.getDisplayName() + TextUtil.COLOR_NORMAL + " 存取物品",
-                "",
-                TextUtil.COLOR_NORMAL + "每张存储卡",
-                TextUtil.COLOR_NORMAL + "可以存入一种物品",
-                TextUtil.COLOR_NORMAL + "可以存入无限个物品");
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

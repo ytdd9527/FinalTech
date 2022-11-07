@@ -1,9 +1,9 @@
 package io.taraxacum.finaltech.core.helper;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.taraxacum.finaltech.api.factory.BlockStorageHelper;
-import io.taraxacum.finaltech.api.factory.BlockStorageIconHelper;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.libs.slimefun.dto.BlockStorageHelper;
+import io.taraxacum.libs.slimefun.dto.BlockStorageIconHelper;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,8 +19,8 @@ public final class CargoFilter {
     public static final String VALUE_BLACK = "b";
     public static final String VALUE_WHITE = "w";
 
-    public static final ItemStack FILTER_MODE_BLACK_ICON = new CustomItemStack(Material.BLACK_WOOL, TextUtil.colorPseudorandomString("过滤模式") + " " + TextUtil.colorRandomString("黑名单"));
-    public static final ItemStack FILTER_MODE_WHITE_ICON = new CustomItemStack(Material.WHITE_WOOL, TextUtil.colorPseudorandomString("过滤模式") + " " + TextUtil.colorRandomString("白名单"));
+    public static final ItemStack FILTER_MODE_BLACK_ICON = new CustomItemStack(Material.BLACK_WOOL, FinalTech.getLanguageString("helper", "CARGO_FILTER", "black-filter-mode", "name"), FinalTech.getLanguageStringArray("helper", "CARGO_FILTER", "black-filter-mode", "lore"));
+    public static final ItemStack FILTER_MODE_WHITE_ICON = new CustomItemStack(Material.WHITE_WOOL, FinalTech.getLanguageString("helper", "CARGO_FILTER", "white-filter-mode", "name"), FinalTech.getLanguageStringArray("helper", "CARGO_FILTER", "white-filter-mode", "lore"));
 
     public static final BlockStorageIconHelper HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
         this.put(VALUE_BLACK, FILTER_MODE_BLACK_ICON);

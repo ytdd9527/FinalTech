@@ -9,8 +9,10 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -22,6 +24,7 @@ import javax.annotation.Nullable;
  * @since 1.0
  */
 public abstract class AbstractMachineMenu extends BlockMenuPreset {
+    @Nonnull
     private final AbstractMachine machine;
 
     public AbstractMachineMenu(@Nonnull String id, @Nonnull String title, @Nonnull AbstractMachine machine) {
@@ -35,25 +38,25 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
     }
 
     @Override
-    public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-        super.newInstance(blockMenu, block);
-        this.updateMenu(blockMenu, block);
-    }
-
-    @Override
     public void init() {
-        for (int slot : getBorder()) {
+        for (int slot : this.getBorder()) {
             this.addItem(slot, Icon.BORDER_ICON);
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
-        for (int slot : getInputBorder()) {
+        for (int slot : this.getInputBorder()) {
             this.addItem(slot, Icon.INPUT_BORDER_ICON);
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
-        for (int slot : getOutputBorder()) {
+        for (int slot : this.getOutputBorder()) {
             this.addItem(slot, Icon.OUTPUT_BORDER_ICON);
             this.addMenuClickHandler(slot, ChestMenuUtils.getEmptyClickHandler());
         }
+    }
+
+    @Override
+    public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
+        super.newInstance(blockMenu, block);
+        this.updateInventory(blockMenu.toInventory(), block.getLocation());
     }
 
     @Override
@@ -63,7 +66,7 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
 
     @Override
     public int[] getSlotsAccessedByItemTransport(@Nullable ItemTransportFlow itemTransportFlow) {
-        if(itemTransportFlow == null) {
+        if (itemTransportFlow == null) {
             return new int[0];
         }
         return switch (itemTransportFlow) {
@@ -77,6 +80,11 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
         return this.getSlotsAccessedByItemTransport(flow);
     }
 
+    @Nonnull
+    protected AbstractMachine getMachine() {
+        return this.machine;
+    }
+
     protected abstract int[] getBorder();
 
     protected abstract int[] getInputBorder();
@@ -87,9 +95,5 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
 
     public abstract int[] getOutputSlot();
 
-    protected AbstractMachine getMachine() {
-        return this.machine;
-    }
-
-    protected abstract void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block);
+    protected abstract void updateInventory(@Nonnull Inventory inventory, @Nonnull Location location);
 }

@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
-import io.taraxacum.finaltech.api.dto.RandomMachineRecipe;
+import io.taraxacum.libs.slimefun.dto.RandomMachineRecipe;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -32,9 +32,9 @@ public class ManualOreWasher extends AbstractManualCraftMachine{
         randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {SlimefunItems.MAGNESIUM_DUST, SlimefunItems.STONE_CHUNK}, 1));
         randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {SlimefunItems.LEAD_DUST, SlimefunItems.STONE_CHUNK}, 1));
         randomOutputList.add(new RandomMachineRecipe.RandomOutput(new ItemStack[] {SlimefunItems.SILVER_DUST, SlimefunItems.STONE_CHUNK}, 1));
-        this.registerRecipe(new RandomMachineRecipe(0, new ItemStack[] {SlimefunItems.SIFTED_ORE}, randomOutputList));
+        this.registerRecipe(new RandomMachineRecipe(new ItemStack[] {SlimefunItems.SIFTED_ORE}, randomOutputList));
 
-        this.registerRecipe(0, new ItemStack(Material.SAND, 2), SlimefunItems.SALT);
-        this.registerRecipe(0, SlimefunItems.PULVERIZED_ORE, SlimefunItems.PURE_ORE_CLUSTER);
+        this.registerRecipe(new ItemStack(Material.SAND, 2), SlimefunItems.SALT);
+        this.registerRecipe(SlimefunItems.PULVERIZED_ORE, SlimefunItems.PURE_ORE_CLUSTER);
     }
 }

@@ -7,24 +7,29 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.MatrixReactorMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
-import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.MachineUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
+import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.finaltech.util.ConfigUtil;
+import io.taraxacum.finaltech.util.ConstantTableUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 
@@ -32,10 +37,10 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class MatrixReactor extends AbstractMachine implements RecipeItem, AntiAccelerationMachine {
-    private static final String KEY_ITEM = "item";
-    private static final String KEY_COUNT = "count";
-    public static int DIFFICULTY = 72;
+public class MatrixReactor extends AbstractMachine implements RecipeItem {
+    private final String KEY_ITEM = "item";
+    private final String KEY_COUNT = "count";
+    private final int difficulty = ConfigUtil.getOrDefaultItemSetting(72, this, "difficulty");
 
     public MatrixReactor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -63,88 +68,117 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem, AntiAc
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         Location location = block.getLocation();
-        ItemStack item = blockMenu.getItemInSlot(MatrixReactorMenu.OTHER_ITEM_INPUT_SLOT[0]);
+        ItemStack item = blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_INPUT_SLOT[0]);
+
         if (ItemStackUtil.isItemNull(item)) {
             BlockStorage.addBlockInfo(location, KEY_ITEM, null);
             BlockStorage.addBlockInfo(location, KEY_COUNT, "0");
-            this.updateMenu(blockMenu, config);
+            if (blockMenu.hasViewer()) {
+                this.updateMenu(blockMenu, config);
+            }
             return;
-        } else if (!MatrixReactor.allowedItem(item)) {
+        } else if (!this.allowedItem(item)) {
             BlockStorage.addBlockInfo(location, KEY_ITEM, null);
             BlockStorage.addBlockInfo(location, KEY_COUNT, "0");
-            this.updateMenu(blockMenu, config);
-            Slimefun.runSync(() -> blockMenu.dropItems(location, MatrixReactorMenu.OTHER_ITEM_INPUT_SLOT));
+            if (blockMenu.hasViewer()) {
+                this.updateMenu(blockMenu, config);
+            }
+            JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
+            javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> blockMenu.dropItems(location, MatrixReactorMenu.ITEM_INPUT_SLOT));
             return;
         }
+
         ItemStack stringItem = null;
         if (config.contains(KEY_ITEM)) {
             String itemString = config.getString(KEY_ITEM);
             stringItem = ItemStackUtil.stringToItemStack(itemString);
         }
-        if (ItemStackUtil.isItemNull(stringItem) || !ItemStackUtil.isItemSimilar(item, stringItem)) {
-            ItemStack orderedDustItem = null;
-            ItemStack unorderedDustItem = null;
-            for (int slot : MatrixReactorMenu.ORDERED_DUST_INPUT_SLOT) {
-                if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.ORDERED_DUST)) {
-                    orderedDustItem = blockMenu.getItemInSlot(slot);
+
+        boolean match = true;
+
+        int[] orderedDustItemSlots = new int[MatrixReactorMenu.ORDERED_DUST_INPUT_SLOT.length];
+        int[] unorderedDustItemSlots = new int[MatrixReactorMenu.UNORDERED_DUST_INPUT_SLOT.length];
+
+        int amount = item.getAmount();
+        int orderedDustItemSlotsP = 0;
+        int orderedDustItemCount = 0;
+        int unorderedDustItemSlotsP = 0;
+        int unorderedDustItemCount = 0;
+        for (int slot : MatrixReactorMenu.ORDERED_DUST_INPUT_SLOT) {
+            if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.ORDERED_DUST)) {
+                orderedDustItemSlots[orderedDustItemSlotsP++] = slot;
+                orderedDustItemCount += blockMenu.getItemInSlot(slot).getAmount();
+                if (orderedDustItemCount > amount) {
                     break;
                 }
             }
+        }
+        if (orderedDustItemCount >= amount) {
             for (int slot : MatrixReactorMenu.UNORDERED_DUST_INPUT_SLOT) {
                 if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.UNORDERED_DUST)) {
-                    unorderedDustItem = blockMenu.getItemInSlot(slot);
+                    unorderedDustItemSlots[unorderedDustItemSlotsP++] = slot;
+                    unorderedDustItemCount += blockMenu.getItemInSlot(slot).getAmount();
+                    if (unorderedDustItemCount > amount) {
+                        break;
+                    }
+                }
+            }
+        }
+        if (orderedDustItemCount < amount || unorderedDustItemCount < amount) {
+            match = false;
+        }
+
+        if (!match) {
+            int count = config.contains(KEY_COUNT) ? Integer.parseInt(config.getString(KEY_COUNT)) : 0;
+            count = count > 0 ? count - 1 : 0;
+            BlockStorage.addBlockInfo(location, KEY_COUNT, String.valueOf(count));
+        } else  {
+            orderedDustItemCount = amount;
+            for (int slot : orderedDustItemSlots) {
+                ItemStack itemStack = blockMenu.getItemInSlot(slot);
+                int n = Math.min(itemStack.getAmount(), orderedDustItemCount);
+                itemStack.setAmount(itemStack.getAmount() - n);
+                orderedDustItemCount -= n;
+                if (orderedDustItemCount == 0) {
                     break;
                 }
             }
-            if (ItemStackUtil.isItemNull(orderedDustItem) || ItemStackUtil.isItemNull(unorderedDustItem)) {
-                BlockStorage.addBlockInfo(location, KEY_ITEM, null);
-                BlockStorage.addBlockInfo(location, KEY_COUNT, "0");
-            } else {
-                orderedDustItem.setAmount(orderedDustItem.getAmount() - 1);
-                unorderedDustItem.setAmount(unorderedDustItem.getAmount() - 1);
+
+            unorderedDustItemCount = amount;
+            for (int slot : unorderedDustItemSlots) {
+                ItemStack itemStack = blockMenu.getItemInSlot(slot);
+                int n = Math.min(itemStack.getAmount(), unorderedDustItemCount);
+                itemStack.setAmount(itemStack.getAmount() - n);
+                unorderedDustItemCount -= n;
+                if (unorderedDustItemCount == 0) {
+                    break;
+                }
+            }
+
+            if (ItemStackUtil.isItemNull(stringItem) || !ItemStackUtil.isItemSimilar(item, stringItem) || item.getAmount() != stringItem.getAmount()) {
                 BlockStorage.addBlockInfo(location, KEY_ITEM, ItemStackUtil.itemStackToString(item));
-                int[] result = new int[] {0, 1};
+
                 int count;
                 if (ItemPhony.isValid(blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0]))) {
                     ItemStack itemPhony = blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0]);
                     itemPhony.setAmount(itemPhony.getAmount() - 1);
-                    count = 0;
+                    count = 1;
                 } else {
-                    count = result[(int)(Math.random() * result.length)];
+                    count = FinalTech.getRandom().nextBoolean() ? 1 : 0;
                 }
-                BlockStorage.addBlockInfo(location, KEY_COUNT, String.valueOf(count));
-            }
-            this.updateMenu(blockMenu, config);
-        } else {
-            ItemStack orderedDustItem = null;
-            ItemStack unorderedDustItem = null;
-            for (int slot : MatrixReactorMenu.ORDERED_DUST_INPUT_SLOT) {
-                if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.ORDERED_DUST)) {
-                    orderedDustItem = blockMenu.getItemInSlot(slot);
-                    break;
-                }
-            }
-            for (int slot : MatrixReactorMenu.UNORDERED_DUST_INPUT_SLOT) {
-                if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.UNORDERED_DUST)) {
-                    unorderedDustItem = blockMenu.getItemInSlot(slot);
-                    break;
-                }
-            }
-            int count = config.contains(KEY_COUNT) ? Integer.parseInt(config.getString(KEY_COUNT)) : 0;
-            if (ItemStackUtil.isItemNull(orderedDustItem) || ItemStackUtil.isItemNull(unorderedDustItem)) {
-                count = count > 0 ? count - 1 : 0;
+
                 BlockStorage.addBlockInfo(location, KEY_COUNT, String.valueOf(count));
             } else {
-                orderedDustItem.setAmount(orderedDustItem.getAmount() - 1);
-                unorderedDustItem.setAmount(unorderedDustItem.getAmount() - 1);
-                if (ItemPhony.isValid(blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0]))) {
+                int count = config.contains(KEY_COUNT) ? Integer.parseInt(config.getString(KEY_COUNT)) : 0;
+                if (ItemPhony.isValid(blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0])) && blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0]).getAmount() >= amount + count && amount + count <= ConstantTableUtil.ITEM_MAX_STACK) {
                     ItemStack itemPhony = blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_PHONY_INPUT_SLOT[0]);
-                    itemPhony.setAmount(itemPhony.getAmount() - 1);
+                    itemPhony.setAmount(itemPhony.getAmount() - count - amount);
                     count++;
                 } else {
-                    count = Math.random() >= 0.5 ? count - 1 : count + 1;
+                    count = FinalTech.getRandom().nextBoolean() ? count - 1 : count + 1;
                 }
-                if (count + item.getAmount() >= DIFFICULTY) {
+
+                if (count + item.getAmount() >= this.difficulty) {
                     ItemStack existedItem = blockMenu.getItemInSlot(this.getOutputSlot()[0]);
                     if (ItemStackUtil.isItemNull(existedItem)) {
                         ItemStack outputItem = ItemStackUtil.cloneItem(item);
@@ -152,21 +186,29 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem, AntiAc
                         blockMenu.replaceExistingItem(this.getOutputSlot()[0], outputItem);
                         BlockStorage.addBlockInfo(location, KEY_ITEM, null);
                         BlockStorage.addBlockInfo(location, KEY_COUNT, "0");
-                        this.updateMenu(blockMenu, config);
+                        if (blockMenu.hasViewer()) {
+                            this.updateMenu(blockMenu, config);
+                        }
                         return;
                     } else if (existedItem.getAmount() < existedItem.getMaxStackSize() && ItemStackUtil.isItemSimilar(existedItem, item)) {
                         existedItem.setAmount(existedItem.getAmount() + 1);
                         BlockStorage.addBlockInfo(location, KEY_ITEM, null);
                         BlockStorage.addBlockInfo(location, KEY_COUNT, "0");
-                        this.updateMenu(blockMenu, config);
+                        if (blockMenu.hasViewer()) {
+                            this.updateMenu(blockMenu, config);
+                        }
                         return;
                     }
-                    count = count < DIFFICULTY ? count + 1 : DIFFICULTY;
+                    count = count < this.difficulty ? count + 1 : this.difficulty;
                 }
+
                 count = Math.max(count, 0);
                 BlockStorage.addBlockInfo(location, KEY_COUNT, String.valueOf(count));
-                this.updateMenu(blockMenu, config);
             }
+        }
+
+        if (blockMenu.hasViewer()) {
+            this.updateMenu(blockMenu, config);
         }
     }
 
@@ -176,21 +218,23 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem, AntiAc
     }
 
     private void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Config config) {
-        ItemStack item = blockMenu.getItemInSlot(MatrixReactorMenu.OTHER_ITEM_INPUT_SLOT[0]);
+        ItemStack item = blockMenu.getItemInSlot(MatrixReactorMenu.ITEM_INPUT_SLOT[0]);
         ItemStack iconItem = blockMenu.getItemInSlot(MatrixReactorMenu.STATUS_SLOT);
         if (ItemStackUtil.isItemNull(item)) {
-            ItemStackUtil.setLore(iconItem, TextUtil.COLOR_NORMAL + "未工作");
+            ItemStackUtil.setLore(iconItem, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
+                    "0",
+                    String.valueOf(this.difficulty)));
         } else {
-            String count = config.contains(MatrixReactor.KEY_COUNT) ? config.getString(MatrixReactor.KEY_COUNT) : "0";
-            ItemStackUtil.setLore(iconItem, TextUtil.COLOR_NORMAL + "当前进度 " + TextUtil.COLOR_NUMBER + count + " / " + (DIFFICULTY - item.getAmount()) );
+            String count = config.contains(this.KEY_COUNT) ? config.getString(this.KEY_COUNT) : "0";
+            ItemStackUtil.setLore(iconItem, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
+                    count,
+                    String.valueOf(this.difficulty - item.getAmount())));
         }
     }
 
-    private static boolean allowedItem(@Nonnull ItemStack item) {
-        switch (item.getType()) {
-            case SHULKER_BOX, WHITE_SHULKER_BOX, ORANGE_SHULKER_BOX, MAGENTA_SHULKER_BOX, LIGHT_BLUE_SHULKER_BOX, YELLOW_SHULKER_BOX, LIME_SHULKER_BOX, PINK_SHULKER_BOX, GRAY_SHULKER_BOX, LIGHT_GRAY_SHULKER_BOX, CYAN_SHULKER_BOX, PURPLE_SHULKER_BOX, BLUE_SHULKER_BOX, BROWN_SHULKER_BOX, GREEN_SHULKER_BOX, RED_SHULKER_BOX, BLACK_SHULKER_BOX, BUNDLE -> {
-                return false;
-            }
+    private boolean allowedItem(@Nonnull ItemStack item) {
+        if (Tag.SHULKER_BOXES.isTagged(item.getType()) || Material.BUNDLE.equals(item.getType())) {
+            return false;
         }
         if (item.hasItemMeta()) {
             ItemMeta itemMeta = item.getItemMeta();
@@ -208,21 +252,8 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem, AntiAc
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "机制",
-                "",
-                TextUtil.COLOR_NORMAL + "中间放入物品",
-                TextUtil.COLOR_NORMAL + "左右两侧分别输入 " + FinalTechItems.ORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 与 " + FinalTechItems.UNORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL,
-                TextUtil.COLOR_NORMAL + "每 " + TextUtil.COLOR_NUMBER + String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0) + "秒" + TextUtil.COLOR_NORMAL + " 各消耗一个 " + FinalTechItems.ORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 与 " + FinalTechItems.UNORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 使进度随机 " + TextUtil.COLOR_STRESS + "+1" + TextUtil.COLOR_NORMAL + " 或 " + TextUtil.COLOR_STRESS + "-1" + TextUtil.COLOR_NORMAL,
-                TextUtil.COLOR_NORMAL + "当进度与物品堆叠数之和达到 " + TextUtil.COLOR_NUMBER + DIFFICULTY + TextUtil.COLOR_NORMAL + " 时 复制一个输入的物品");
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "限制",
-                "",
-                TextUtil.COLOR_NORMAL + "若未输入并消耗 " + FinalTechItems.ORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL + " 与 " + FinalTechItems.UNORDERED_DUST.getDisplayName() + TextUtil.COLOR_NORMAL,
-                TextUtil.COLOR_NORMAL + "则进度强制 " + TextUtil.COLOR_STRESS + "-1",
-                "",
-                TextUtil.COLOR_NORMAL + "若中途切换物品",
-                TextUtil.COLOR_NORMAL + "则进度清零");
-        this.registerDescriptiveRecipe(TextUtil.COLOR_PASSIVE + "矩阵加速",
-                "",
-                TextUtil.COLOR_NORMAL + "在最上方放入并消耗 " + FinalTechItems.PHONY.getDisplayName() + TextUtil.COLOR_NORMAL + " 使进度强制 " + TextUtil.COLOR_STRESS + "+1");
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.difficulty),
+                String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0));
     }
 }

@@ -6,7 +6,9 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -52,6 +54,11 @@ public class RandomInputStorageUnitMenu extends AbstractMachineMenu {
     }
 
     @Override
+    protected void updateInventory(@Nonnull Inventory inventory, @Nonnull Location location) {
+
+    }
+
+    @Override
     public void init() {
         super.init();
         setSize(54);
@@ -71,10 +78,5 @@ public class RandomInputStorageUnitMenu extends AbstractMachineMenu {
             return JavaUtil.shuffle(super.getSlotsAccessedByItemTransport(flow));
         }
         return super.getSlotsAccessedByItemTransport(flow);
-    }
-
-    @Override
-    protected void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-
     }
 }

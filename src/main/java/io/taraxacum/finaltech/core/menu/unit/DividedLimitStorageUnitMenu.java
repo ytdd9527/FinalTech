@@ -3,11 +3,11 @@ package io.taraxacum.finaltech.core.menu.unit;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.util.ItemStackUtil;
-import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
-import org.bukkit.block.Block;
+import org.bukkit.Location;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -54,6 +54,11 @@ public class DividedLimitStorageUnitMenu extends AbstractMachineMenu {
     }
 
     @Override
+    protected void updateInventory(@Nonnull Inventory inventory, @Nonnull Location location) {
+
+    }
+
+    @Override
     public void init() {
         super.init();
         setSize(54);
@@ -96,10 +101,5 @@ public class DividedLimitStorageUnitMenu extends AbstractMachineMenu {
             slots[i + j] = nullList.get(j);
         }
         return slots;
-    }
-
-    @Override
-    protected void updateMenu(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
-
     }
 }

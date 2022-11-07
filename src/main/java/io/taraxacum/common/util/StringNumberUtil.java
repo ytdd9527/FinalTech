@@ -11,37 +11,11 @@ public final class StringNumberUtil {
     private static final int DOUBLE_OF_ZERO_CHAR_VALUE = '0' + '0';
 
     public static final String VALUE_INFINITY = "INFINITY";
-    public static final String VALUE_MIN = "MIN";
     public static final String ZERO = "0";
     public static final String ONE = "1";
     public static final String INTEGER_MAX_VALUE = String.valueOf(Integer.MAX_VALUE);
 
-    /**
-     * 比较两个非负整数大小
-     * 第一个数较大时，返回 1
-     * 第二个数较大时，返回 -1
-     * 否则返回 0
-     * 临时使用，后续请替换为 compare(String, String)方法
-     * @param stringNumber1 非负整数
-     * @param stringNumber2 非负整数
-     * @return 比较结果
-     */
-    @Deprecated
-    public static int easilyCompare(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
-        if (VALUE_INFINITY.equals(stringNumber1) && VALUE_INFINITY.equals(stringNumber2)) {
-            return 0;
-        } else if (VALUE_INFINITY.equals(stringNumber1)) {
-            return 1;
-        } else if (VALUE_INFINITY.equals(stringNumber2)) {
-            return -1;
-        }
-        if (VALUE_MIN.equals(stringNumber1) && VALUE_MIN.equals(stringNumber2)) {
-            return 0;
-        } else if (VALUE_MIN.equals(stringNumber1)) {
-            return -1;
-        } else if (VALUE_MIN.equals(stringNumber2)) {
-            return 1;
-        }
+    private static int easilyCompare(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
         if (stringNumber1.length() < stringNumber2.length()) {
             return -1;
         } else if (stringNumber1.length() > stringNumber2.length()) {
@@ -60,10 +34,7 @@ public final class StringNumberUtil {
     }
 
     /**
-     * 简易的加法，令两个非负整数相加
-     * @param stringNumber1 非负整数
-     * @param stringNumber2 非负整数
-     * @return 相加和
+     * Make sure that both num is greater than 0.
      */
     @Nonnull
     private static String easilyAdd(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
@@ -96,9 +67,7 @@ public final class StringNumberUtil {
     }
 
     /**
-     * 简易的加法，令数字加一
-     * @param stringNumber 非负整数
-     * @return 加一后的值
+     * Add num by 1.
      */
     @Nonnull
     private static String easilyAdd(@Nonnull String stringNumber) {
@@ -108,7 +77,7 @@ public final class StringNumberUtil {
         int add = 0;
         s[s.length - 1] ++;
         int i;
-        for (i = s.length - 1; i >= 0; i --) {
+        for (i = s.length - 1; i >= 0; i--) {
             r = s[i] + add - ZERO_CHAR_VALUE;
             add = r / 10;
             r %= 10;
@@ -128,10 +97,8 @@ public final class StringNumberUtil {
     }
 
     /**
-     * 简易的减法，被减数需要比减数大
-     * @param stringNumber1
-     * @param stringNumber2
-     * @return
+     * Make sure that num1 should be bigger than num2.
+     * Both num should be greater than 0.
      */
     @Nonnull
     private static String easilySub(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
@@ -169,6 +136,9 @@ public final class StringNumberUtil {
         return stringBuilder.reverse().toString();
     }
 
+    /**
+     * Sub num by 1.
+     */
     @Nonnull
     private static String easilySub(@Nonnull String stringNumber) {
         char[] s = stringNumber.toCharArray();
@@ -197,12 +167,16 @@ public final class StringNumberUtil {
                 break;
             }
         }
-        if(stringBuilder.length() == 0) {
+        if (stringBuilder.length() == 0) {
             return StringNumberUtil.ZERO;
         }
         return stringBuilder.reverse().toString();
     }
 
+    /**
+     * Multiply two num.
+     * Both num should be greater than 0.
+     */
     @Nonnull
     public static String easilyMul(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
         char[] s1 = stringNumber1.toCharArray();
@@ -240,7 +214,13 @@ public final class StringNumberUtil {
         return stringBuilder.toString();
     }
 
-    public static int compare(String stringNumber1, String stringNumber2) {
+    /**
+     * @return
+     *      1: num1 > num2
+     *      0: num1 = num2
+     *      -1: num1 < num2
+     */
+    public static int compare(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
         if (stringNumber1.equals(stringNumber2)) {
             return 0;
         }
@@ -254,17 +234,18 @@ public final class StringNumberUtil {
         boolean r2 = stringNumber2.startsWith(RELATIVE);
         if (!r1 && !r2) {
             return StringNumberUtil.easilyCompare(stringNumber1, stringNumber2);
-        } else if (r1) {
-            return -1;
-        } else if (r2) {
-            return 1;
+        } else if (r1 && !r2) {
+            return "-0".equals(stringNumber1) && "0".equals(stringNumber2) ? 0 : -1;
+        } else if (!r1) {
+            return "0".equals(stringNumber1) && "-0".equals(stringNumber2) ? 0 : 1;
         }
-        String s1 = r1 ? stringNumber1.substring(1) : stringNumber1;
-        String s2 = r2 ? stringNumber2.substring(1) : stringNumber2;
+        String s1 = stringNumber1.substring(1);
+        String s2 = stringNumber2.substring(1);
         return easilyCompare(s1, s2);
     }
 
-    public static String min(String stringNumber1, String stringNumber2) {
+    @Nonnull
+    public static String min(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
         if (stringNumber1.equals(stringNumber2)) {
             return stringNumber1;
         }
@@ -288,7 +269,8 @@ public final class StringNumberUtil {
         return easilyCompare(stringNumber1, stringNumber2) > 0 ? stringNumber2 : stringNumber1;
     }
 
-    public static String max(String stringNumber1, String stringNumber2) {
+    @Nonnull
+    public static String max(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
         if (stringNumber1.equals(stringNumber2)) {
             return stringNumber1;
         }
@@ -312,6 +294,7 @@ public final class StringNumberUtil {
         return easilyCompare(stringNumber1, stringNumber2) > 0 ? stringNumber1 : stringNumber2;
     }
 
+    @Nonnull
     public static String add(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
         if (stringNumber1.contains(VALUE_INFINITY) || stringNumber2.contains(VALUE_INFINITY)) {
             return VALUE_INFINITY;
@@ -342,7 +325,8 @@ public final class StringNumberUtil {
         return "0";
     }
 
-    public static String add(String stringNumber) {
+    @Nonnull
+    public static String add(@Nonnull String stringNumber) {
         if (stringNumber.contains(VALUE_INFINITY)) {
             return VALUE_INFINITY;
         }
@@ -353,7 +337,8 @@ public final class StringNumberUtil {
         }
     }
 
-    public static String sub(String stringNumber1, String stringNumber2) {
+    @Nonnull
+    public static String sub(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
         if (stringNumber1.contains(VALUE_INFINITY)) {
             return stringNumber1;
         }
@@ -386,7 +371,8 @@ public final class StringNumberUtil {
         return "0";
     }
 
-    public static String sub(String stringNumber) {
+    @Nonnull
+    public static String sub(@Nonnull String stringNumber) {
         if (stringNumber.contains(VALUE_INFINITY)) {
             return stringNumber;
         }
@@ -400,7 +386,8 @@ public final class StringNumberUtil {
         }
     }
 
-    public static String mul(String stringNumber1, String stringNumber2) {
+    @Nonnull
+    public static String mul(@Nonnull String stringNumber1, @Nonnull String stringNumber2) {
         boolean r1 = stringNumber1.startsWith(RELATIVE);
         boolean r2 = stringNumber2.startsWith(RELATIVE);
         String s1 = r1 ? stringNumber1.substring(1) : stringNumber1;

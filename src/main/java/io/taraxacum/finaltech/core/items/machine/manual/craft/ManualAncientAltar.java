@@ -3,7 +3,7 @@ package io.taraxacum.finaltech.core.items.machine.manual.craft;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.taraxacum.finaltech.util.SlimefunUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -17,6 +17,6 @@ public class ManualAncientAltar extends AbstractManualCraftMachine {
 
     @Override
     public void registerDefaultRecipes() {
-        SlimefunUtil.registerRecipeByRecipeType(this, RecipeType.ANCIENT_ALTAR);
+        RecipeUtil.registerRecipeByRecipeType(this, RecipeType.ANCIENT_ALTAR);
     }
 }

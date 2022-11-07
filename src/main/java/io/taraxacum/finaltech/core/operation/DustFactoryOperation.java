@@ -1,9 +1,11 @@
 package io.taraxacum.finaltech.core.operation;
 
 import io.github.thebusybiscuit.slimefun4.core.machines.MachineOperation;
-import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
-import io.taraxacum.finaltech.core.items.machine.standard.DustFactoryDirt;
-import io.taraxacum.finaltech.util.ItemStackUtil;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.libs.plugin.dto.ItemWrapper;
+import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.ConfigUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
@@ -15,7 +17,9 @@ import javax.annotation.Nullable;
 public class DustFactoryOperation implements MachineOperation {
     private int typeCount = 0;
     private int amountCount = 0;
-    private final ItemStackWrapper[] matchItemList = new ItemStackWrapper[DustFactoryDirt.TYPE_DIFFICULTY + 1];
+    private final ItemWrapper[] matchItemList = new ItemWrapper[DustFactoryOperation.TYPE_DIFFICULTY + 1];
+    public static final int TYPE_DIFFICULTY = ConfigUtil.getOrDefaultItemSetting(16 + FinalTech.getRandom().nextInt(5), FinalTechItems.ORDERED_DUST_FACTORY_DIRT.getItemId(), "type");
+    public static final int AMOUNT_DIFFICULTY = ConfigUtil.getOrDefaultItemSetting(1024 + DustFactoryOperation.calAmountRandomNumber(), FinalTechItems.ORDERED_DUST_FACTORY_DIRT.getItemId(), "amount");
 
     public DustFactoryOperation() {
 
@@ -25,22 +29,22 @@ public class DustFactoryOperation implements MachineOperation {
         if (ItemStackUtil.isItemNull(item)) {
             return;
         }
-        if (this.typeCount <= DustFactoryDirt.TYPE_DIFFICULTY) {
+        if (this.typeCount <= DustFactoryOperation.TYPE_DIFFICULTY) {
             boolean newItem = true;
             for (int i = 0; i < this.typeCount; i++) {
-                ItemStack existedItem = this.matchItemList[i];
+                ItemWrapper existedItem = this.matchItemList[i];
                 if (ItemStackUtil.isItemSimilar(item, existedItem)) {
                     newItem = false;
                     break;
                 }
             }
-            if (newItem == true) {
-                this.matchItemList[this.typeCount++] = ItemStackWrapper.wrap(item);
+            if (newItem) {
+                this.matchItemList[this.typeCount++] = new ItemWrapper(item);
             }
         }
         this.amountCount += item.getAmount();
-        if (this.amountCount > DustFactoryDirt.AMOUNT_DIFFICULTY + 1) {
-            this.amountCount = DustFactoryDirt.AMOUNT_DIFFICULTY + 1;
+        if (this.amountCount > DustFactoryOperation.AMOUNT_DIFFICULTY + 1) {
+            this.amountCount = DustFactoryOperation.AMOUNT_DIFFICULTY + 1;
         }
     }
 
@@ -54,11 +58,26 @@ public class DustFactoryOperation implements MachineOperation {
 
     @Override
     public boolean isFinished() {
-        return (this.amountCount >= DustFactoryDirt.AMOUNT_DIFFICULTY && this.typeCount >= DustFactoryDirt.TYPE_DIFFICULTY);
+        return (this.amountCount >= DustFactoryOperation.AMOUNT_DIFFICULTY && this.typeCount >= DustFactoryOperation.TYPE_DIFFICULTY);
     }
 
-    public boolean isOrderedDust() {
-        return this.amountCount == DustFactoryDirt.AMOUNT_DIFFICULTY && this.typeCount == DustFactoryDirt.TYPE_DIFFICULTY;
+    @Nullable
+    public ItemStack getResult() {
+        if (this.amountCount == DustFactoryOperation.AMOUNT_DIFFICULTY && this.typeCount == DustFactoryOperation.TYPE_DIFFICULTY) {
+            return ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST);
+        } else if (this.isFinished()) {
+            return ItemStackUtil.cloneItem(FinalTechItems.UNORDERED_DUST);
+        } else {
+            return null;
+        }
+    }
+
+    private static int calAmountRandomNumber() {
+        int result = FinalTech.getRandom().nextInt(257);
+        while (result % 16 == 0 || (1024 + result) % DustFactoryOperation.TYPE_DIFFICULTY == 0) {
+            result = FinalTech.getRandom().nextInt(257);
+        }
+        return result;
     }
 
     @Deprecated

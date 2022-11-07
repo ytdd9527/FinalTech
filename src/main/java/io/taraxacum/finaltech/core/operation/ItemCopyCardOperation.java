@@ -2,10 +2,12 @@ package io.taraxacum.finaltech.core.operation;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.core.items.unusable.CopyCardItem;
+import io.taraxacum.finaltech.core.items.unusable.CopyCard;
 import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
-import io.taraxacum.finaltech.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
+import io.taraxacum.finaltech.util.ConfigUtil;
+import io.taraxacum.finaltech.util.ConstantTableUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -21,14 +23,16 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
     private final ItemStack matchItem;
     private final ItemStack copyCardItem;
     private final ItemStack showItem;
+    public static final double RATE = ConfigUtil.getOrDefaultItemSetting(0.1, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "rate");
 
     protected ItemCopyCardOperation(@Nonnull ItemStack item) {
         this.count = item.getAmount();
-        this.difficulty = CopyCardItem.DIFFICULTY;
+        this.difficulty = ConstantTableUtil.ITEM_COPY_CARD_AMOUNT;
         this.matchItem = item.clone();
         this.matchItem.setAmount(1);
-        this.copyCardItem = CopyCardItem.newItem(this.matchItem, "1");
-        this.showItem = new CustomItemStack(item.getType(), TextUtil.COLOR_NORMAL + "完成进度", TextUtil.COLOR_NORMAL + "物品名称= &f" + ItemStackUtil.getItemName(item), TextUtil.COLOR_NORMAL + "压缩数量= " + TextUtil.COLOR_NUMBER + String.format("%.8f", this.count) + "/" + this.difficulty);
+        this.copyCardItem = CopyCard.newItem(this.matchItem, "1");
+        this.showItem = new CustomItemStack(item.getType(), FinalTech.getLanguageString("items", FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "copy-card", "name"));
+        this.updateShowItem();
     }
 
     public double getCount() {
@@ -57,16 +61,19 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
 
     @Override
     public void updateShowItem() {
-        ItemStackUtil.setLastLore(this.showItem, TextUtil.COLOR_NORMAL + "压缩数量= " + TextUtil.COLOR_NUMBER + TextUtil.COLOR_NUMBER + String.format("%.8f", this.count) + "/" + this.difficulty);
+        ItemStackUtil.setLore(this.showItem, FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "copy-card", "lore"),
+                ItemStackUtil.getItemName(this.matchItem),
+                String.format("%.8f", this.count),
+                String.valueOf(this.difficulty)));
     }
 
     @Override
     public int addItem(@Nullable ItemStack item) {
         if (!this.isFinished()) {
             if (ItemStackUtil.isItemSimilar(item, this.matchItem)) {
-                double efficiency = Math.pow(0.1, 20.0 - 20.0 * 1000 / (FinalTech.getMSPS() - 50));
+                double efficiency = Math.pow(RATE, 20.0 - FinalTech.getTps());
                 efficiency = Math.min(efficiency, 1);
-                if(item.getAmount() * efficiency + this.count < this.difficulty) {
+                if (item.getAmount() * efficiency + this.count < this.difficulty) {
                     int amount = item.getAmount();
                     item.setAmount(item.getAmount() - amount);
                     this.count += amount * efficiency;
@@ -77,7 +84,7 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
                     this.count = this.difficulty;
                     return amount;
                 }
-            } else if(ItemPhony.isValid(item)) {
+            } else if (ItemPhony.isValid(item)) {
                 double amount = Math.min(item.getAmount(), this.difficulty - this.count);
                 item.setAmount(item.getAmount() - (int) Math.ceil(amount));
                 this.count += amount;

@@ -18,26 +18,5 @@ public class UnOrderedSword extends SlimefunItem {
     @Override
     public void preRegister() {
         super.preRegister();
-//        this.addItemHandler(new WeaponUseHandler() {
-//            @Override
-//            @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-//            public void onHit(@Nonnull EntityDamageByEntityEvent entityDamageByEntityEvent, @Nonnull Player player, @Nonnull ItemStack itemStack) {
-//                entityDamageByEntityEvent.setCancelled(true);
-//                if (!SlimefunUtil.hasPermission(entityDamageByEntityEvent.getEntity(), player)) {
-//                    return;
-//                }
-//                if (!Material.WOODEN_SWORD.equals(itemStack.getType())) {
-//                    return;
-//                }
-//                double damage = entityDamageByEntityEvent.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE);
-//                damage = Math.max(damage, entityDamageByEntityEvent.getDamage());
-//                damage = Math.max(damage, entityDamageByEntityEvent.getFinalDamage());
-//                damage += itemStack.getDurability();
-//                Entity entity = entityDamageByEntityEvent.getEntity();
-//                if (entity instanceof LivingEntity) {
-//                    ((LivingEntity) entity).setHealth(Math.max(((LivingEntity) entity).getHealth() - damage, 0.01));
-//                }
-//            }
-//        });
     }
 }

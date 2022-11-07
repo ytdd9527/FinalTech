@@ -3,7 +3,10 @@ package io.taraxacum.finaltech.core.items.usable.accelerate;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.taraxacum.finaltech.util.TextUtil;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.util.ConfigUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,9 +20,9 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class MatrixMachineActivateCard extends AbstractMachineActivateCard {
-    private static final int TIMES = 21600;
-    private static final double ENERGY = Integer.MAX_VALUE / 2 + 0.5;
+public class MatrixMachineActivateCard extends AbstractMachineActivateCard implements RecipeItem {
+    private final int times = ConfigUtil.getOrDefaultItemSetting(21600, this, "times");
+    private final double energy = ConfigUtil.getOrDefaultItemSetting(Integer.MAX_VALUE / 2 + 0.5, this, "energy");
 
     public MatrixMachineActivateCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -27,12 +30,12 @@ public class MatrixMachineActivateCard extends AbstractMachineActivateCard {
 
     @Override
     protected int times() {
-        return TIMES;
+        return times;
     }
 
     @Override
     protected double energy() {
-        return ENERGY;
+        return energy;
     }
 
     @Override
@@ -76,13 +79,9 @@ public class MatrixMachineActivateCard extends AbstractMachineActivateCard {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(TextUtil.COLOR_INITIATIVE + "使用方式",
-                "",
-                TextUtil.COLOR_ACTION + "[右键] " + TextUtil.COLOR_NORMAL + "机器使其",
-                TextUtil.COLOR_NORMAL + "立即工作 " + TextUtil.COLOR_NUMBER + TIMES + "次",
-                TextUtil.COLOR_NORMAL + "并在每次工作前 充电 " + TextUtil.COLOR_NUMBER + (int)(Math.floor(ENERGY)) + "J + " + String.format("%.2f", (ENERGY - Math.floor(ENERGY)) * 100) + "%J" + TextUtil.COLOR_NORMAL + " 的电量",
-                TextUtil.COLOR_NEGATIVE + "百分比充电量不作用于电容",
-                TextUtil.COLOR_NEGATIVE + "每次使用损失 所有 生命值 和 所有 经验值",
-                TextUtil.COLOR_NEGATIVE + "消耗品");
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.times()),
+                String.valueOf((int)(Math.floor(energy))),
+                String.format("%.2f", (energy - Math.floor(energy)) * 100));
     }
 }

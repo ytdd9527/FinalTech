@@ -7,13 +7,14 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.taraxacum.finaltech.api.interfaces.AntiAccelerationMachine;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.items.machine.manual.AbstractManualMachine;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
 import io.taraxacum.finaltech.core.menu.manual.ManualCraftMachineMenu;
-import io.taraxacum.finaltech.util.LocationUtil;
-import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.libs.slimefun.util.LocationUtil;
+import io.taraxacum.libs.slimefun.util.MachineUtil;
+import io.taraxacum.finaltech.util.ConfigUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -24,14 +25,16 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Final_ROOT
  * @since 1.0
  */
-public abstract class AbstractManualCraftMachine extends AbstractManualMachine implements AntiAccelerationMachine, RecipeItem {
+public abstract class AbstractManualCraftMachine extends AbstractManualMachine implements RecipeItem {
     public static final String KEY_COUNT = "count";
-    public static int COUNT_THRESHOLD = 40;
+    public static int COUNT_THRESHOLD = ConfigUtil.getOrDefaultItemSetting(Slimefun.getTickerTask().getTickRate(), "ManualCraftMachine", "threshold");
 
     public AbstractManualCraftMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -64,24 +67,28 @@ public abstract class AbstractManualCraftMachine extends AbstractManualMachine i
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         if (blockMenu.hasViewer()) {
-            this.getMachineMenu().updateMenu(blockMenu, block);
+            this.getMachineMenu().updateInventory(blockMenu.toInventory(), block.getLocation());
         }
         int count = Integer.parseInt(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT));
-        if(count == 0) {
+        if (count == 0) {
             return;
         }
         count -= Slimefun.getTickerTask().getTickRate() / 2;
         count = Math.max(count, 0);
         config.setValue(KEY_COUNT, String.valueOf(count));
-        if(count > COUNT_THRESHOLD) {
+        if (count > COUNT_THRESHOLD) {
             Location location = block.getLocation();
-            this.getAddon().getJavaPlugin().getServer().getLogger().warning("[" + this.getAddon().getJavaPlugin().getName() + "]§c位于 " + location.getWorld().getName() + "(" + location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ() + ")处的粘液科技机器 " + this.getItemName() + " §c正在被玩家高速点击，相关的玩家包括：");
+            List<String> nameList = new ArrayList<>();
             for (HumanEntity humanEntity : blockMenu.toInventory().getViewers()) {
-                this.getAddon().getJavaPlugin().getServer().getLogger().warning("    " + humanEntity.getName());
+                nameList.add(humanEntity.getName());
             }
-            if(!blockMenu.hasViewer()) {
-            }
-            this.getAddon().getJavaPlugin().getServer().getLogger().warning("§c请确定这是否是由玩家网络卡顿造成，如果不是，可能是其正尝试恶意卡服");
+            String warn = FinalTech.getLanguageManager().replaceString(FinalTech.getLanguageString("items", "ManualCraftMachine", "warn"),
+                    location.getWorld().getName(),
+                    String.valueOf(location.getBlockX()),
+                    String.valueOf(location.getBlockY()),
+                    String.valueOf(location.getBlockZ()),
+                    nameList.toString());
+            this.getAddon().getJavaPlugin().getLogger().warning(warn);
         }
     }
 }

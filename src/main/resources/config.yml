@@ -1,4 +1,0 @@
-machine:
-  multi-thread-level: 0
-manual:
-  count-threshold: 40

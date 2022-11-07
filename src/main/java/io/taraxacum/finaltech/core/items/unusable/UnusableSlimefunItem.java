@@ -6,7 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.*;
 import io.taraxacum.finaltech.core.items.AbstractMySlimefunItem;
-import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.libs.slimefun.util.MachineUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
