@@ -133,7 +133,7 @@ public final class SetupUtil {
                 new Gearwheel(FinalTechMenus.MENU_ITEMS, FinalTechItems.GEARWHEEL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.GEARWHEEL, ItemStackUtil.cloneItem(FinalTechItems.GEARWHEEL, 4)).register(),
                 new UnorderedDust(FinalTechMenus.MENU_ITEMS, FinalTechItems.UNORDERED_DUST,  FinalTechRecipes.RECIPE_TYPE_ORDERED_DUST_FACTORY, FinalTechRecipes.UNORDERED_DUST).register(),
                 new OrderedDust(FinalTechMenus.MENU_ITEMS, FinalTechItems.ORDERED_DUST, FinalTechRecipes.RECIPE_TYPE_ORDERED_DUST_FACTORY, FinalTechRecipes.ORDERED_DUST).register(),
-                new Bug(FinalTechMenus.MENU_ITEMS, FinalTechItems.BUG, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.BUG, ItemStackUtil.cloneItem(FinalTechItems.GEARWHEEL, 7)).register(),
+                new Bug(FinalTechMenus.MENU_ITEMS, FinalTechItems.BUG, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.BUG, ItemStackUtil.cloneItem(FinalTechItems.BUG, 7)).register(),
                 new Entropy(FinalTechMenus.MENU_ITEMS, FinalTechItems.ENTROPY, FinalTechRecipes.RECIPE_TYPE_ENTROPY_CONSTRUCTOR, FinalTechRecipes.ENTROPY).register(),
                 new Box(FinalTechMenus.MENU_ITEMS, FinalTechItems.BOX, RecipeType.NULL, FinalTechRecipes.BOX).register(),
                 new Shine(FinalTechMenus.MENU_ITEMS, FinalTechItems.SHINE, FinalTechRecipes.RECIPE_TYPE_BOX, FinalTechRecipes.SHINE).register(),
