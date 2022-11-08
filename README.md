@@ -14,6 +14,14 @@ There is a lot of items here that could link with other Slimefun addons, so it w
 
 It should be friendly to server TPS. And some optimization strategies is provided also.
 
+Permission
+-
+
+| permission | command | default | description |
+| ---------- | ------- | ------- | ----------- |
+| finaltech.item.copy-card | /finaltech-copy-card | op | transfer item to a copy card in hand |
+| finaltech.item.info | /finaltech-info | true | show slimefun item info in hand |
+
 Notice
 -
 
