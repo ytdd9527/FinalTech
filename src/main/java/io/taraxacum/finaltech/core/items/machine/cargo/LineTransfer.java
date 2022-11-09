@@ -180,12 +180,12 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                     continue;
                 }
 
-                if (CargoMode.VALUE_INPUT_MAIN.equals(cargoMode) && BlockStorage.hasBlockInfo(outputBlock)) {
+                if (CargoMode.VALUE_INPUT_MAIN.equals(cargoMode) && BlockStorage.hasInventory(outputBlock)) {
                     outputMap = null;
                 } else {
                     outputMap = CargoUtil.getInvWithSlots(outputBlock, outputSize, outputOrder);
                 }
-                if (CargoMode.VALUE_OUTPUT_MAIN.equals(cargoMode) && BlockStorage.hasBlockInfo(inputBlock)) {
+                if (CargoMode.VALUE_OUTPUT_MAIN.equals(cargoMode) && BlockStorage.hasInventory(inputBlock)) {
                     inputMap = null;
                 } else {
                     inputMap = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
@@ -315,7 +315,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                             continue;
                         }
 
-                        if (CargoMode.VALUE_OUTPUT_MAIN.equals(cargoMode) && BlockStorage.hasBlockInfo(inputBlock)) {
+                        if (CargoMode.VALUE_OUTPUT_MAIN.equals(cargoMode) && BlockStorage.hasInventory(inputBlock)) {
                             inputMap = null;
                         } else if (BlockStorage.hasInventory(inputBlock)) {
                             inputMap = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
