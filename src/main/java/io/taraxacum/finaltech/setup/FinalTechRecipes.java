@@ -57,7 +57,7 @@ public final class FinalTechRecipes {
             null, FinalTechItems.SHINE, null, null, null, null,
             null, null, SlimefunItems.FILLED_FLASK_OF_KNOWLEDGE, null, null, null,
             null, null, null, SlimefunItems.FILLED_FLASK_OF_KNOWLEDGE, null, null,
-            null, null, null, null, FinalTechItems.SHINE, null,
+            null, FinalTechItems.SHINE, null, null, FinalTechItems.SHINE, null,
             null, null, null, null, null, null
     };
     public static final ItemStack[] ENTROPY = new ItemStack[] {};
