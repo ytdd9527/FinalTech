@@ -1930,6 +1930,8 @@ items:
     name: '{color:prandom}Basic Cobble Factory'
   FINALTECH_BASIC_DUST_FACTORY:
     name: '{color:prandom}Basic Dust Factory'
+  FINALTECH_BASIC_LOGIC_FACTORY:
+    name: '{color:prandom}Basic Logic Factory'
   FINALTECH_ADVANCED_COMPOSTER:
     name: '{color:prandom}Advanced Composter'
   FINALTECH_ADVANCED_JUICER:
@@ -1974,8 +1976,6 @@ items:
     name: '{color:prandom}Concrete Conversion'
   FINALTECH_WOOL_CONVERSION:
     name: '{color:prandom}Wool Conversion'
-  FINALTECH_WATER_CONVERSION:
-    name: '{color:prandom}Water Conversion'
   FINALTECH_LOGIC_TO_DIGITAL_CONVERSION:
     name: '{color:prandom}Logic To Digital Conversion'
   FINALTECH_ORE_EXTRACTION:

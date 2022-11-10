@@ -13,8 +13,8 @@ import org.bukkit.inventory.ItemStack;
  * @since 2.0
  */
 public class Bug extends UnusableSlimefunItem implements RecipeItem {
-    public Bug(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput) {
-        super(itemGroup, item, recipeType, recipe, recipeOutput);
+    public Bug(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+        super(itemGroup, item, recipeType, recipe);
     }
 
     @Override

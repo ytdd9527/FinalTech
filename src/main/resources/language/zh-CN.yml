@@ -1910,6 +1910,8 @@ items:
     name: '{color:prandom}基础刷石工厂'
   FINALTECH_BASIC_DUST_FACTORY:
     name: '{color:prandom}基础矿粉工厂'
+  FINALTECH_BASIC_LOGIC_FACTORY:
+    name: '{color:prandom}基础逻辑工厂'
   FINALTECH_ADVANCED_COMPOSTER:
     name: '{color:prandom}高级搅拌机'
   FINALTECH_ADVANCED_JUICER:
@@ -1954,8 +1956,6 @@ items:
     name: '{color:prandom}混凝土转化器'
   FINALTECH_WOOL_CONVERSION:
     name: '{color:prandom}羊毛转化器'
-  FINALTECH_WATER_CONVERSION:
-    name: '{color:prandom}水转化器'
   FINALTECH_LOGIC_TO_DIGITAL_CONVERSION:
     name: '{color:prandom}逻辑数字转化器'
   FINALTECH_ORE_EXTRACTION:

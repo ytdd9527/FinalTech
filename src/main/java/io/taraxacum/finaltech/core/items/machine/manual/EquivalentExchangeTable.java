@@ -110,7 +110,11 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
                 ItemStack item = new CustomItemStack(slimefunItem.getItem(), 1);
                 if (MachineUtil.calMaxMatch(blockMenu.toInventory(), this.getOutputSlot(), List.of(new ItemAmountWrapper(item))) >= 1) {
                     blockMenu.pushItem(item, this.getOutputSlot());
-                    value = StringNumberUtil.sub(value, targetValue);
+                    if(StringNumberUtil.ZERO.equals(targetValue)) {
+                        value = StringNumberUtil.ZERO;
+                    } else {
+                        value = StringNumberUtil.sub(value, targetValue);
+                    }
                     break;
                 }
             }
