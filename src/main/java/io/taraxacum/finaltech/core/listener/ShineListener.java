@@ -102,7 +102,7 @@ public class ShineListener implements Listener {
                             }
                         }
                     }
-                    player.setHealth(Math.max(player.getHealth() * 0.9 - player.getMaxHealth() * 0.1 * equipmentCount - player.getMaxHealth() * 0.05 * effectCount - shineCount * 0.15, 0));
+                    player.setHealth(Math.max(player.getHealth() * 0.9 - player.getMaxHealth() * 0.1 * equipmentCount - player.getMaxHealth() * 0.05 * effectCount - shineCount * 1.5, 0));
 
                     TickerTaskRunner.applyOrAddTo(new UntreatableEffect(shineCount * 20 + 20, 1), player, FinalTech.getInstance());
                 }
@@ -112,7 +112,6 @@ public class ShineListener implements Listener {
 
     @EventHandler
     public void onEntityTeleport(EntityTeleportEvent entityTeleportEvent) {
-        System.out.println("teleport");
         Location sourceLocation = entityTeleportEvent.getFrom();
         if (sourceLocation.getWorld() != null) {
             World world = sourceLocation.getWorld();
