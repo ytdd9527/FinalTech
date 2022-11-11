@@ -29,6 +29,7 @@ import java.util.*;
  */
 public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
     private final Set<String> allowedRecipeType = new HashSet<>(ConfigUtil.getItemStringList(this, "allowed-recipe-type"));
+    private final Set<String> notAllowedId = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
 
     public ItemDismantleTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -58,7 +59,7 @@ public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
         if (MachineUtil.isEmpty(blockMenu.toInventory(), this.getOutputSlot())) {
             ItemStack item = blockMenu.getItemInSlot(this.getInputSlot()[0]);
             SlimefunItem sfItem = SlimefunItem.getByItem(item);
-            if (sfItem != null && sfItem.getRecipeType().getMachine() != null && item.getAmount() >= sfItem.getRecipeOutput().getAmount() && sfItem.getRecipe().length <= this.getOutputSlot().length && this.allowedRecipeType.contains(sfItem.getRecipeType().getKey().getKey()) && ItemStackUtil.isEnchantmentSame(item, sfItem.getRecipeOutput()) && ItemStackUtil.isItemSimilar(item, sfItem.getRecipeOutput())) {
+            if (sfItem != null && !this.notAllowedId.contains(sfItem.getId()) && sfItem.getRecipeType().getMachine() != null && item.getAmount() >= sfItem.getRecipeOutput().getAmount() && sfItem.getRecipe().length <= this.getOutputSlot().length && this.allowedRecipeType.contains(sfItem.getRecipeType().getKey().getKey()) && ItemStackUtil.isEnchantmentSame(item, sfItem.getRecipeOutput()) && ItemStackUtil.isItemSimilar(item, sfItem.getRecipeOutput())) {
                 int amount = item.getAmount() / sfItem.getRecipeOutput().getAmount();
                 for (ItemStack outputItem : sfItem.getRecipe()) {
                     if (!ItemStackUtil.isItemNull(outputItem)) {
