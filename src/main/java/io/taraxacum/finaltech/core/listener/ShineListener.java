@@ -74,7 +74,7 @@ public class ShineListener implements Listener {
                     if (ItemStackUtil.isItemSimilar(FinalTechItems.BOX, itemStack)) {
                         haveBox = true;
                     } else if(ItemStackUtil.isItemSimilar(FinalTechItems.SHINE, itemStack)) {
-                        shineCount++;
+                        shineCount += itemStack.getAmount();
                     }
                 }
                 if (haveBox || shineCount > 0) {
