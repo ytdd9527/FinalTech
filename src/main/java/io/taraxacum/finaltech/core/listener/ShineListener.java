@@ -1,6 +1,10 @@
 package io.taraxacum.finaltech.core.listener;
 
+import io.taraxacum.common.api.RunnableLockFactory;
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.task.effect.UntreatableEffect;
 import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.libs.plugin.task.TickerTaskRunner;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -63,38 +67,45 @@ public class ShineListener implements Listener {
     public void onEntityDamage(EntityDamageEvent entityDamageEvent) {
         if (EntityDamageEvent.DamageCause.VOID.equals(entityDamageEvent.getCause()) && EntityType.PLAYER.equals(entityDamageEvent.getEntityType())) {
             Entity entity = entityDamageEvent.getEntity();
-            if (entity instanceof Player) {
+            if (entity instanceof Player player) {
                 boolean haveBox = false;
-                for (ItemStack itemStack : ((Player) entity).getInventory().getContents()) {
-                    if (ItemStackUtil.isItemSimilar(FinalTechItems.BOX, itemStack) || ItemStackUtil.isItemSimilar(FinalTechItems.SHINE, itemStack)) {
+                int shineCount = 0;
+                for (ItemStack itemStack : player.getInventory().getContents()) {
+                    if (ItemStackUtil.isItemSimilar(FinalTechItems.BOX, itemStack)) {
                         haveBox = true;
-                        break;
+                    } else if(ItemStackUtil.isItemSimilar(FinalTechItems.SHINE, itemStack)) {
+                        shineCount++;
                     }
                 }
-                if (haveBox) {
-                    if (!((Player) entity).isFlying()) {
-                        ((Player) entity).getInventory().addItem(ItemStackUtil.cloneItem(FinalTechItems.SHINE));
+                if (haveBox || shineCount > 0) {
+                    if (!player.isFlying() && haveBox) {
+                        player.getInventory().addItem(ItemStackUtil.cloneItem(FinalTechItems.SHINE));
                     }
-                    EntityEquipment equipment = ((Player) entity).getEquipment();
-                    int count = 1;
+
+                    player.closeInventory();
+
+                    int effectCount = 0;
+                    for (PotionEffect potionEffect : player.getActivePotionEffects()) {
+                        player.removePotionEffect(potionEffect.getType());
+                        if (potionEffect.getDuration() > 1 && potionEffect.getAmplifier() >= 1) {
+                            player.addPotionEffect(new PotionEffect(potionEffect.getType(), potionEffect.getDuration() / 2, potionEffect.getAmplifier() - 1));
+                        }
+                        effectCount++;
+                    }
+
+                    EntityEquipment equipment = player.getEquipment();
+                    int equipmentCount = 1;
                     if (equipment != null) {
                         for (ItemStack item : equipment.getArmorContents()) {
                             if (!ItemStackUtil.isItemNull(item)) {
-                                count++;
+                                equipmentCount++;
                             }
                         }
                     }
-                    ((Player) entity).setHealth(Math.max(((Player) entity).getHealth() * 0.9 - ((Player) entity).getMaxHealth() * 0.1 * count, 0));
-                    for (PotionEffect potionEffect : ((Player) entity).getActivePotionEffects()) {
-                        ((Player) entity).removePotionEffect(potionEffect.getType());
-                        if (potionEffect.getDuration() > 1 && potionEffect.getAmplifier() >= 1) {
-                            ((Player) entity).addPotionEffect(new PotionEffect(potionEffect.getType(), potionEffect.getDuration() / 2, potionEffect.getAmplifier() - 1));
-                            ((Player) entity).setHealth(Math.max(((Player) entity).getHealth() - ((Player) entity).getMaxHealth() * 0.05, 0));
-                            if (entity.isDead()) {
-                                break;
-                            }
-                        }
-                    }
+                    player.setHealth(Math.max(player.getHealth() * 0.9 - player.getMaxHealth() * 0.1 * equipmentCount - player.getMaxHealth() * 0.05 * effectCount - shineCount * 0.15, 0));
+
+                    // TODO: test it.
+//                    TickerTaskRunner.applyOrAddTo(new UntreatableEffect(40, 1), player, FinalTech.getInstance());
                 }
             }
         }
