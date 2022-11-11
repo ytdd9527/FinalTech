@@ -53,6 +53,12 @@ FINALTECH_MACHINE_CONFIGURATOR:
     - 'FINALTECH_MESH_TRANSFER'
     - 'FINALTECH_LINE_TRANSFER'
     - 'FINALTECH_LOCATION_TRANSFER'
+FINALTECH_ADVANCED_AUTO_CRAFT:
+  recipe-type-id:
+    - 'finaltech_matrix-crafting_table'
+FINALTECH_MATRIX_ITEM_DISMANTLE_TABLE:
+  not-allowed-recipe-type:
+    - 'singularity_constructor'
   not-allowed-id:
     - 'GOLD_DUST'
     - 'IRON_DUST'
@@ -61,9 +67,3 @@ FINALTECH_MACHINE_CONFIGURATOR:
     - 'COMPRESSED_COBBLESTONE_3'
     - 'COMPRESSED_COBBLESTONE_4'
     - 'COMPRESSED_COBBLESTONE_5'
-FINALTECH_ADVANCED_AUTO_CRAFT:
-  recipe-type-id:
-    - 'finaltech_matrix-crafting_table'
-FINALTECH_MATRIX_ITEM_DISMANTLE_TABLE:
-  not-allowed-recipe-type:
-    - 'singularity_constructor'
