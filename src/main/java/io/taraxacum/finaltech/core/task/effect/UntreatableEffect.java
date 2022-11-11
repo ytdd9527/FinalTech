@@ -1,5 +1,8 @@
 package io.taraxacum.finaltech.core.task.effect;
 
+import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.util.LocationUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;
@@ -35,12 +38,14 @@ public class UntreatableEffect extends AbstractEffect {
     @Override
     public void tick(@Nonnull LivingEntity livingEntity) {
         double nowHealth = livingEntity.getHealth();
-        if (this.health > 0 && this.health < livingEntity.getHealth()) {
+        if (this.health <= 0) {
+            this.health = livingEntity.getMaxHealth();
+        } else if (this.health < livingEntity.getHealth()) {
+            Location location = livingEntity.getLocation();
+            location.getWorld().spawnParticle(Particle.FALLING_LAVA, LocationUtil.fromRandom(location, FinalTech.getRandom(), 0.4), 1);
             livingEntity.setHealth(this.health);
         }
         this.health = Math.min(this.health, Math.min(livingEntity.getHealth(), nowHealth));
-        Location location = livingEntity.getLocation();
-        location.getWorld().spawnParticle(Particle.FALLING_LAVA, location, 1);
     }
 
     @Override

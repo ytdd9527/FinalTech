@@ -18,10 +18,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Final_ROOT
@@ -30,6 +27,15 @@ import java.util.Set;
 // TODO: abstract as lib
 public class LocationUtil {
     private static final NamespacedKey KEY = new NamespacedKey(FinalTech.getInstance(), "location");
+
+    @Nonnull
+    public static Location fromRandom(@Nonnull Location location, @Nonnull Random random, double x, double y, double z) {
+        return new Location(location.getWorld(), location.getX() + random.nextDouble() * x * 2 - x, location.getY() + random.nextDouble() * y * 2 - y, location.getZ() + random.nextDouble() * z * 2 - z, location.getYaw(), location.getPitch());
+    }
+    @Nonnull
+    public static Location fromRandom(@Nonnull Location location, @Nonnull Random random, double r) {
+        return LocationUtil.fromRandom(location, random, r, r, r);
+    }
 
     public static Location[] transferToLocation(@Nonnull Block... blocks) {
         Location[] locations = new Location[blocks.length];
