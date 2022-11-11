@@ -39,7 +39,7 @@ public class DustFactoryOperation implements MachineOperation {
                 }
             }
             if (newItem) {
-                this.matchItemList[this.typeCount++] = new ItemWrapper(item);
+                this.matchItemList[this.typeCount++] = new ItemWrapper(ItemStackUtil.cloneItem(item));
             }
         }
         this.amountCount += item.getAmount();

@@ -91,7 +91,9 @@ public class DustFactoryDirt extends AbstractOperationMachine {
             ItemStack itemStack = blockMenu.getItemInSlot(DustFactoryDirtMenu.STATUS_SLOT);
             ItemStackUtil.setLore(itemStack, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
                     String.valueOf(operation.getAmountCount()),
-                    String.valueOf(operation.getTypeCount())));
+                    String.valueOf(operation.getTypeCount()),
+                    String.valueOf(DustFactoryOperation.AMOUNT_DIFFICULTY),
+                    String.valueOf(DustFactoryOperation.TYPE_DIFFICULTY)));
             if (operation.getAmountCount() == 0 && operation.getTypeCount() == 0) {
                 itemStack.setType(Material.RED_STAINED_GLASS_PANE);
             } else if (operation.getAmountCount() > DustFactoryOperation.AMOUNT_DIFFICULTY || operation.getTypeCount() > DustFactoryOperation.TYPE_DIFFICULTY) {

@@ -1647,8 +1647,8 @@ items:
         output: 'FINALTECH_ORDERED_DUST'
     status:
       lore:
-        - '{color:normal}Amount: {color:number}{1}'
-        - '{color:normal}Type: {color:number}{2}'
+        - '{color:normal}Amount: {color:number}{1} {color:conceal}/ {color:number}{3}'
+        - '{color:normal}Type: {color:number}{2} {color:conceal}/ {color:number}{4}'
   FINALTECH_ORDERED_DUST_FACTORY_STONE:
     name: '{color:prandom}Ordered Dust Factory'
     info:

@@ -1630,8 +1630,8 @@ items:
         output: 'FINALTECH_ORDERED_DUST'
     status:
       lore:
-        - '{color:normal}数量: {color:number}{1}'
-        - '{color:normal}种类: {color:number}{2}'
+        - '{color:normal}数量: {color:number}{1} {color:conceal}/ {color:number}{3}'
+        - '{color:normal}种类: {color:number}{2} {color:conceal}/ {color:number}{4}'
   FINALTECH_ORDERED_DUST_FACTORY_STONE:
     name: '{color:prandom}尘埃制造机'
     info:
