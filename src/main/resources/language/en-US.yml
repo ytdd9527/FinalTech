@@ -1815,6 +1815,8 @@ items:
     name: '{color:prandom}Logic Crafter'
   FINALTECH_DIGIT_ADDER:
     name: '{color:prandom}Digit Adder'
+  FINALTECH_ITEM_FIXER:
+    name: '{color:prandom}Item Fixer'
   FINALTECH_COBBLESTONE_FACTORY:
     name: '{color:prandom}Cobblestone Factory'
   FINALTECH_FUEL_CHARGER:

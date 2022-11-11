@@ -155,6 +155,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack LOGIC_CRAFTER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_LOGIC_CRAFTER", Material.LOOM, "Logic Crafter");
     public static final SlimefunItemStack DIGIT_ADDER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_DIGIT_ADDER", Material.SMITHING_TABLE, "Digit Adder");
     // special machine
+    public static final SlimefunItemStack ITEM_FIXER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ITEM_FIXER", Material.SLIME_BLOCK, "Item Fixer");
     public static final SlimefunItemStack COBBLESTONE_FACTORY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_COBBLESTONE_FACTORY", Material.CHISELED_POLISHED_BLACKSTONE, "Cobblestone Erupter");
     public static final SlimefunItemStack FUEL_CHARGER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_FUEL_CHARGER", Material.BRICK_WALL, "Fuel Charger");
     public static final SlimefunItemStack FUEL_ACCELERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_FUEL_ACCELERATOR", Material.RED_NETHER_BRICK_WALL, "Fuel Accelerator");

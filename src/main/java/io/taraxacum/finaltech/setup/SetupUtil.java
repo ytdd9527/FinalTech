@@ -134,7 +134,7 @@ public final class SetupUtil {
                 new Gearwheel(FinalTechMenus.MENU_ITEMS, FinalTechItems.GEARWHEEL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.GEARWHEEL, ItemStackUtil.cloneItem(FinalTechItems.GEARWHEEL, 4)).register(),
                 new UnorderedDust(FinalTechMenus.MENU_ITEMS, FinalTechItems.UNORDERED_DUST,  FinalTechRecipes.RECIPE_TYPE_ORDERED_DUST_FACTORY, FinalTechRecipes.UNORDERED_DUST).register(),
                 new OrderedDust(FinalTechMenus.MENU_ITEMS, FinalTechItems.ORDERED_DUST, FinalTechRecipes.RECIPE_TYPE_ORDERED_DUST_FACTORY, FinalTechRecipes.ORDERED_DUST).register(),
-                new Bug(FinalTechMenus.MENU_ITEMS, FinalTechItems.BUG, RecipeType.NULL, FinalTechRecipes.BUG).register(),
+                new Bug(FinalTechMenus.MENU_ITEMS, FinalTechItems.BUG, FinalTechRecipes.RECIPE_TYPE_EQUIVALENT_EXCHANGE_TABLE, FinalTechRecipes.BUG).register(),
                 new Entropy(FinalTechMenus.MENU_ITEMS, FinalTechItems.ENTROPY, FinalTechRecipes.RECIPE_TYPE_ENTROPY_CONSTRUCTOR, FinalTechRecipes.ENTROPY).register(),
                 new Box(FinalTechMenus.MENU_ITEMS, FinalTechItems.BOX, RecipeType.NULL, FinalTechRecipes.BOX).register(),
                 new Shine(FinalTechMenus.MENU_ITEMS, FinalTechItems.SHINE, FinalTechRecipes.RECIPE_TYPE_BOX, FinalTechRecipes.SHINE).register(),
@@ -196,7 +196,7 @@ public final class SetupUtil {
                 new PortableEnergyStorage(FinalTechMenus.MENU_ITEMS, FinalTechItems.PORTABLE_ENERGY_STORAGE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.PORTABLE_ENERGY_STORAGE).register());
         // weapon
         FinalTechMenus.SUB_MENU_WEAPON.addTo(
-                new SuperPickaxe(FinalTechMenus.MENU_ITEMS, FinalTechItems.SUPER_PICKAXE, RecipeType.NULL, FinalTechRecipes.SUPER_PICKAXE).register()
+                new SuperPickaxe(FinalTechMenus.MENU_ITEMS, FinalTechItems.SUPER_PICKAXE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SUPER_PICKAXE).register()
 //                new SlimefunItem(FinalTechMenus.MENU_ITEMS, FinalTechItems.SWORD1, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SWORD1).register(FinalTech.getInstance()),
 //                new SlimefunItem(FinalTechMenus.MENU_ITEMS, FinalTechItems.SWORD2, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SWORD2).register(FinalTech.getInstance()),
 //                new SlimefunItem(FinalTechMenus.MENU_ITEMS, FinalTechItems.SWORD3, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SWORD3).register(FinalTech.getInstance()),
@@ -295,6 +295,7 @@ public final class SetupUtil {
                 new DigitAdder(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.DIGIT_ADDER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.DIGIT_ADDER).register());
         // special machines
         FinalTechMenus.SUB_MENU_SPECIAL_MACHINE.addTo(
+                new ItemFixer(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_FIXER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ITEM_FIXER).register(),
                 new CobbleStoneFactory(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.COBBLESTONE_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.COBBLESTONE_FACTORY).register(),
                 new FuelCharger(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.FUEL_CHARGER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.FUEL_CHARGER).register(),
                 new FuelAccelerator(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.FUEL_ACCELERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.FUEL_ACCELERATOR).register(),

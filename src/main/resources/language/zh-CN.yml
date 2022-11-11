@@ -1795,6 +1795,8 @@ items:
     name: '{color:prandom}逻辑合成器'
   FINALTECH_DIGIT_ADDER:
     name: '{color:prandom}数字加法器'
+  FINALTECH_ITEM_FIXER:
+    name: '{color:prandom}物品修复器'
   FINALTECH_COBBLESTONE_FACTORY:
     name: '{color:prandom}圆石工厂'
   FINALTECH_FUEL_CHARGER:

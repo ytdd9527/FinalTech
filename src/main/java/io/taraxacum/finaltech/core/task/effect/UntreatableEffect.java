@@ -2,7 +2,6 @@ package io.taraxacum.finaltech.core.task.effect;
 
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.util.LocationUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;

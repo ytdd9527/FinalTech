@@ -645,6 +645,11 @@ public final class FinalTechRecipes {
             null, ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_TWELVE, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_THIRTEEN, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_FOURTEEN, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_FIFTEEN, 16), null,
     };
     // special machine
+    public static final ItemStack[] ITEM_FIXER = new ItemStack[] {
+            null, SlimefunItems.AUTO_ANVIL_2, null,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.ORDERED_DUST,
+            SlimefunItems.DUCT_TAPE, SlimefunItems.DUCT_TAPE, SlimefunItems.DUCT_TAPE
+    };
     public static final ItemStack[] COBBLESTONE_FACTORY = new ItemStack[] {
             FinalTechItems.ANNULAR, FinalTechItems.ANNULAR, FinalTechItems.ANNULAR,
             FinalTechItems.BASIC_COBBLE_FACTORY, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.BASIC_COBBLE_FACTORY,
