@@ -302,7 +302,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             return;
         }
         if (advancedRecipe.get(craft.getOffset()).isRandomOutput()) {
-            craft.setMatchCount(Math.min(craft.getMatchCount(), (OUTPUT_SLOT.length - MachineUtil.slotCount(inventory, OUTPUT_SLOT))) * ConstantTableUtil.ITEM_MAX_STACK);
+            craft.setMatchCount(Math.min(craft.getMatchCount(), (OUTPUT_SLOT.length - MachineUtil.slotCount(inventory, OUTPUT_SLOT)) * ConstantTableUtil.ITEM_MAX_STACK));
         }
 
         AdvancedMachineRecipe advancedMachineRecipe = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getSlimefunItem().getClass()).get(craft.getOffset());
