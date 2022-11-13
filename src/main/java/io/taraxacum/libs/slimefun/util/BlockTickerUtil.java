@@ -24,7 +24,7 @@ public class BlockTickerUtil {
     }
 
     public static void setSleep(@Nonnull Config config, Double sleep) {
-        config.setValue(ConstantTableUtil.CONFIG_SLEEP, sleep);
+        config.setValue(ConstantTableUtil.CONFIG_SLEEP, String.valueOf(sleep));
     }
 
     public static void setSleep(@Nonnull Location location, @Nullable String sleep) {

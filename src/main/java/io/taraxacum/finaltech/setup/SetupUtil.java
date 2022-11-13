@@ -474,7 +474,7 @@ public final class SetupUtil {
                 FinalTechItems.ENTROPY,
                 FinalTechItems.ENTROPY_CONSTRUCTOR,
                 FinalTechItems.ENTROPY_SEED);
-        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "BOX", (((int)FinalTech.getSeed()) % 20) &0x7fffffff, false,
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "BOX", Math.abs((int)FinalTech.getSeed()) % 20, true,
                 FinalTechItems.BOX,
                 FinalTechItems.SHINE);
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "ANNULAR", (int)Math.pow(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT, 0.25), true,
