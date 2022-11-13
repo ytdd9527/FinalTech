@@ -38,14 +38,14 @@ public final class CargoLimit {
         this.put(VALUE_STACK, STACK_ICON);
         this.put(VALUE_NONNULL, NONNULL_ICON);
     }});
-    public static final BlockStorageIconHelper INPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
+    public static final BlockStorageIconHelper INPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY_INPUT, new LinkedHashMap<>() {{
         this.put(VALUE_FIRST, FIRST_ICON);
         this.put(VALUE_ALL, ALL_ICON);
         this.put(VALUE_TYPE, TYPE_ICON);
         this.put(VALUE_STACK, STACK_ICON);
         this.put(VALUE_NONNULL, NONNULL_ICON);
     }});
-    public static final BlockStorageIconHelper OUTPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY, new LinkedHashMap<>() {{
+    public static final BlockStorageIconHelper OUTPUT_HELPER = BlockStorageIconHelper.newInstanceOrGet(BlockStorageHelper.ID_CARGO, KEY_OUTPUT, new LinkedHashMap<>() {{
         this.put(VALUE_FIRST, FIRST_ICON);
         this.put(VALUE_ALL, ALL_ICON);
         this.put(VALUE_TYPE, TYPE_ICON);
