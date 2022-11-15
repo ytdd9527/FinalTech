@@ -28,6 +28,25 @@ import java.util.*;
 public class LocationUtil {
     private static final NamespacedKey KEY = new NamespacedKey(FinalTech.getInstance(), "location");
 
+    public static boolean isSameLocation(@Nullable Location location1, @Nullable Location location2) {
+        if(location1 == null || location2 == null) {
+            return false;
+        }
+        if(location1 == location2) {
+            return true;
+        }
+        if(location1.getWorld() != location2.getWorld()) {
+            return false;
+        } else if(location1.getX() != location2.getX()) {
+            return false;
+        } else if(location1.getY() != location2.getY()) {
+            return false;
+        } else if(location1.getZ() != location2.getZ()) {
+            return false;
+        }
+        return true;
+    }
+
     @Nonnull
     public static Location fromRandom(@Nonnull Location location, @Nonnull Random random, double x, double y, double z) {
         return new Location(location.getWorld(), location.getX() + random.nextDouble() * x * 2 - x, location.getY() + random.nextDouble() * y * 2 - y, location.getZ() + random.nextDouble() * z * 2 - z, location.getYaw(), location.getPitch());

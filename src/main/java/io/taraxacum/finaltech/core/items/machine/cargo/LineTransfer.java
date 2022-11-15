@@ -191,6 +191,10 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                     inputMap = CargoUtil.getInvWithSlots(inputBlock, inputSize, inputOrder);
                 }
 
+                if(inputMap != null && outputMap != null && LocationUtil.isSameLocation(inputMap.getInventory().getLocation(), outputMap.getInventory().getLocation())) {
+                    continue;
+                }
+
                 simpleCargoDTO.setInputBlock(inputBlock);
                 simpleCargoDTO.setInputMap(inputMap);
                 simpleCargoDTO.setOutputBlock(outputBlock);
@@ -331,6 +335,10 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                         } else if (finalVanillaInventories.get(output) != null) {
                             outputMap = CargoUtil.calInvWithSlots(finalVanillaInventories.get(output), outputOrder);
                         } else {
+                            continue;
+                        }
+
+                        if(inputMap != null && outputMap != null && LocationUtil.isSameLocation(inputMap.getInventory().getLocation(), outputMap.getInventory().getLocation())) {
                             continue;
                         }
 
