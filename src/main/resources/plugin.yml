@@ -10,7 +10,7 @@ website: https://github.com/zomx127/FinalTECH
 
 version: ${project.version}
 
-api-version: 1.19
+api-version: 1.17
 
 depend:
 - Slimefun
