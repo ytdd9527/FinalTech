@@ -217,19 +217,21 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
                 }
             } else if (CopyCard.isValid(machineItem)) {
                 ItemStack stringItem = StringItemUtil.parseItemInCard(machineItem);
-                String amount = StringItemUtil.parseAmountInCard(machineItem);
-                amount = StringNumberUtil.mul(amount, String.valueOf(machineItem.getAmount()));
-                if (stringItem != null && !StringNumberUtil.ZERO.equals(amount)) {
-                    Iterator<ItemAmountWrapper> iterator = inputList.iterator();
-                    while (iterator.hasNext()) {
-                        ItemAmountWrapper inputItem = iterator.next();
-                        if (ItemStackUtil.isItemSimilar(inputItem, stringItem)) {
-                            if (StringNumberUtil.compare(amount, String.valueOf(inputItem.getAmount())) >= 0) {
-                                iterator.remove();
-                            } else {
-                                inputItem.setAmount(inputItem.getAmount() - Integer.parseInt(amount));
+                if(!ItemStackUtil.isItemNull(stringItem)) {
+                    String amount = StringItemUtil.parseAmountInCard(machineItem);
+                    amount = StringNumberUtil.mul(amount, String.valueOf(machineItem.getAmount()));
+                    if (!StringNumberUtil.ZERO.equals(amount)) {
+                        Iterator<ItemAmountWrapper> iterator = inputList.iterator();
+                        while (iterator.hasNext()) {
+                            ItemAmountWrapper inputItem = iterator.next();
+                            if (ItemStackUtil.isItemSimilar(inputItem, stringItem)) {
+                                if (StringNumberUtil.compare(amount, String.valueOf(inputItem.getAmount())) >= 0) {
+                                    iterator.remove();
+                                } else {
+                                    inputItem.setAmount(inputItem.getAmount() - Integer.parseInt(amount));
+                                }
+                                break;
                             }
-                            break;
                         }
                     }
                 }

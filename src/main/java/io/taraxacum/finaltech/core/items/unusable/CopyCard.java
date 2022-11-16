@@ -60,11 +60,6 @@ public class CopyCard extends UnusableSlimefunItem implements RecipeItem {
             return false;
         }
 
-        ItemStack stringItem = StringItemUtil.parseItemInCard(itemMeta);
-        if(ItemStackUtil.isItemNull(stringItem)) {
-            return false;
-        }
-
         for (String l : lore) {
             if (CopyCard.ITEM_LORE_WITHOUT_COLOR.equals(ChatColor.stripColor(l))) {
                 return true;

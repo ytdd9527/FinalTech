@@ -150,9 +150,9 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if (!ItemStackUtil.isItemNull(item1) && CopyCard.isValid(item1) && Shell.isValid(item2)) {
+                if (!ItemStackUtil.isItemNull(item1) && CopyCard.isValid(item1) && Shell.isValid(item2) && !ItemStackUtil.isItemNull(StringItemUtil.parseItemInCard(item1))) {
                     return true;
-                } else return !ItemStackUtil.isItemNull(item2) && CopyCard.isValid(item2) && Shell.isValid(item1);
+                } else return !ItemStackUtil.isItemNull(item2) && CopyCard.isValid(item2) && Shell.isValid(item1) && !ItemStackUtil.isItemNull(StringItemUtil.parseItemInCard(item2));
             }
 
             @Override
@@ -164,12 +164,12 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull Inventory inventory, int outputSlot) {
-                if (!ItemStackUtil.isItemNull(item1) && CopyCard.isValid(item1) && Shell.isValid(item2)) {
+                if (!ItemStackUtil.isItemNull(item1) && CopyCard.isValid(item1) && Shell.isValid(item2) && !ItemStackUtil.isItemNull(StringItemUtil.parseItemInCard(item1))) {
                     item2.setAmount(item2.getAmount() - 1);
                     ItemStack outputItem = ItemStackUtil.cloneItem(item1);
                     outputItem.setAmount(1);
                     inventory.setItem(outputSlot, outputItem);
-                } else if (!ItemStackUtil.isItemNull(item2) && CopyCard.isValid(item2) && Shell.isValid(item1)) {
+                } else if (!ItemStackUtil.isItemNull(item2) && CopyCard.isValid(item2) && Shell.isValid(item1) && !ItemStackUtil.isItemNull(StringItemUtil.parseItemInCard(item2))) {
                     item1.setAmount(item1.getAmount() - 1);
                     ItemStack outputItem = ItemStackUtil.cloneItem(item2);
                     outputItem.setAmount(1);
@@ -352,7 +352,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                return CopyCard.isValid(item1) || CopyCard.isValid(item2);
+                return (CopyCard.isValid(item1) && !ItemStackUtil.isItemNull(StringItemUtil.parseItemInCard(item1))) || (CopyCard.isValid(item2) && !ItemStackUtil.isItemNull(StringItemUtil.parseItemInCard(item2)));
             }
 
             @Override
@@ -364,7 +364,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean craft(@Nullable ItemStack item1, @Nullable ItemStack item2, @Nonnull Inventory inventory, int outputSlot) {
-                if (CopyCard.isValid(item1)) {
+                if (CopyCard.isValid(item1) && !ItemStackUtil.isItemNull(StringItemUtil.parseItemInCard(item1))) {
                     item1.setAmount(item1.getAmount() - 1);
                     Player player = null;
                     for (HumanEntity humanEntity : inventory.getViewers()) {
@@ -374,7 +374,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                         }
                     }
                     inventory.setItem(outputSlot, Annular.newItem(item1, player));
-                } else if (CopyCard.isValid(item2)) {
+                } else if (CopyCard.isValid(item2) && !ItemStackUtil.isItemNull(StringItemUtil.parseItemInCard(item2))) {
                     item2.setAmount(item2.getAmount() - 1);
                     Player player = null;
                     for (HumanEntity humanEntity : inventory.getViewers()) {
