@@ -32,7 +32,18 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
 
     @SafeVarargs
     public final FutureTask<Void> waitThenRun(long delay, @Nonnull Runnable runnable, @Nonnull T... objects) {
-        FutureTask<Void> futureTask = new FutureTask<>(runnable, null);
+        FutureTask<Void> futureTask = new FutureTask<>(() -> {
+            try {
+                runnable.run();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                for (T object : objects) {
+                    ServerRunnableLockFactory.this.map.remove(object);
+                }
+            }
+            return null;
+        });
         this.scheduler.runTaskLaterAsynchronously(this.plugin, () -> {
             boolean work = false;
             while (!work) {
@@ -46,7 +57,6 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
                                 e.printStackTrace();
                             }
                         }
-                        ServerRunnableLockFactory.this.map.remove(object);
                     }
                 }
                 work = true;
@@ -76,19 +86,31 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
 
     @SafeVarargs
     public final <C> FutureTask<C> waitThenRun(long delay, @Nonnull Callable<C> callable, @Nonnull T... objects) {
-        FutureTask<C> futureTask = new FutureTask<>(callable);
+        FutureTask<C> futureTask = new FutureTask<>(() -> {
+            try {
+                return callable.call();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                for (T object : objects) {
+                    ServerRunnableLockFactory.this.map.remove(object);
+                }
+            }
+            return null;
+        });
         scheduler.runTaskLaterAsynchronously(this.plugin, () -> {
             boolean work = false;
             while (!work) {
                 for (T object : objects) {
                     if (ServerRunnableLockFactory.this.map.containsKey(object)) {
                         FutureTask<?> task = ServerRunnableLockFactory.this.map.get(object);
-                        try {
-                            task.get();
-                        } catch (InterruptedException | ExecutionException e) {
-                            e.printStackTrace();
+                        if(task != null) {
+                            try {
+                                task.get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                e.printStackTrace();
+                            }
                         }
-                        ServerRunnableLockFactory.this.map.remove(object);
                     }
                 }
                 work = true;
@@ -126,11 +148,13 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
                 entry.getValue().get(5, TimeUnit.SECONDS);
             } catch (TimeoutException e) {
                 e.printStackTrace();
+                System.out.println("错误发生于： ");
+                System.out.println(entry.getKey());
             }
         }
     }
 
-    public static <C> ServerRunnableLockFactory<C> newInstance(@Nonnull Plugin plugin, @Nonnull Class<C> clazz) {
+    public static <C> ServerRunnableLockFactory<C> newInstance(@Nonnull Plugin plugin) {
         return new ServerRunnableLockFactory<>(plugin);
     }
 
@@ -147,7 +171,7 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
         if (!classServerRunnableLockFactoryMap.containsKey(clazz)) {
             synchronized (classServerRunnableLockFactoryMap) {
                 if (!classServerRunnableLockFactoryMap.containsKey(clazz)) {
-                    ServerRunnableLockFactory<C> ServerRunnableLockFactory = newInstance(plugin, clazz);
+                    ServerRunnableLockFactory<C> ServerRunnableLockFactory = newInstance(plugin);
                     classServerRunnableLockFactoryMap.put(clazz, ServerRunnableLockFactory);
                 }
             }
