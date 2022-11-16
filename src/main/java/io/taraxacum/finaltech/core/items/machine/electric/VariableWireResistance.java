@@ -10,6 +10,7 @@ import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponen
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.core.interfaces.MenuUpdater;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
@@ -20,6 +21,7 @@ import io.taraxacum.libs.slimefun.util.EnergyUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -31,7 +33,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class VariableWireResistance extends AbstractElectricMachine implements RecipeItem {
+public class VariableWireResistance extends AbstractElectricMachine implements RecipeItem, MenuUpdater {
     private final int capacity = ConfigUtil.getOrDefaultItemSetting(65536, this, "capacity");
     private final String capacityString = String.valueOf(this.capacity);
 
@@ -60,13 +62,18 @@ public class VariableWireResistance extends AbstractElectricMachine implements R
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         Location location = block.getLocation();
-        if (this.capacityString.equals(EnergyUtil.getCharge(location))) {
+        String charge = EnergyUtil.getCharge(location);
+        if (this.capacityString.equals(charge)) {
             Slimefun.getBlockDataService().setBlockData(block, FinalTechItems.VARIABLE_WIRE_CAPACITOR.getItemId());
             BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, FinalTechItems.VARIABLE_WIRE_CAPACITOR.getItemId(), true);
             JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
             javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> block.setType(FinalTechItems.VARIABLE_WIRE_CAPACITOR.getType()));
+        } else {
+            BlockMenu blockMenu = BlockStorage.getInventory(location);
+            if (blockMenu.hasViewer()) {
+                this.updateMenu(blockMenu, StatusMenu.STATUS_SLOT, this, charge);
+            }
         }
-        // TODO: show electricity
     }
 
     @Nonnull

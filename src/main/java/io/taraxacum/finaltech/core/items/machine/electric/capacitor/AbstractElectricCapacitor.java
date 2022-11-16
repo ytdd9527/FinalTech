@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.interfaces.MenuUpdater;
 import io.taraxacum.finaltech.core.items.machine.electric.AbstractElectricMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
@@ -27,7 +28,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public abstract class AbstractElectricCapacitor extends AbstractElectricMachine {
+public abstract class AbstractElectricCapacitor extends AbstractElectricMachine implements MenuUpdater {
     public AbstractElectricCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -54,9 +55,7 @@ public abstract class AbstractElectricCapacitor extends AbstractElectricMachine 
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         if (blockMenu.hasViewer()) {
-            ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
-            String charge = EnergyUtil.getCharge(config);
-            this.updateMenu(item, charge);
+            this.updateMenu(blockMenu, StatusMenu.STATUS_SLOT, this, EnergyUtil.getCharge(config));
         }
     }
 
@@ -69,10 +68,5 @@ public abstract class AbstractElectricCapacitor extends AbstractElectricMachine 
     @Override
     public final EnergyNetComponentType getEnergyComponentType() {
         return EnergyNetComponentType.CAPACITOR;
-    }
-
-    protected void updateMenu(@Nonnull ItemStack item, @Nonnull String charge) {
-        ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
-                charge));
     }
 }

@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.core.interfaces.MenuUpdater;
 import io.taraxacum.finaltech.core.items.machine.electric.capacitor.AbstractElectricCapacitor;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
@@ -29,7 +30,7 @@ import javax.annotation.Nonnull;
 /**
  * @author Final_ROOT
  */
-public abstract class AbstractExpandedElectricCapacitor extends AbstractElectricCapacitor implements RecipeItem {
+public abstract class AbstractExpandedElectricCapacitor extends AbstractElectricCapacitor implements RecipeItem, MenuUpdater {
     protected static final String KEY = "s";
 
     public AbstractExpandedElectricCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -107,7 +108,7 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
         }
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         if (blockMenu.hasViewer()) {
-            this.updateMenu(blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT), energy, energyStack);
+            this.updateMenu(blockMenu, StatusMenu.STATUS_SLOT, this, String.valueOf(energy), energyStack);
         }
     }
 
@@ -150,12 +151,6 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
     public abstract double chargeIncrease();
 
     public abstract double consumeReduce();
-
-    protected void updateMenu(@Nonnull ItemStack item, int energy, @Nonnull String energyStack) {
-        ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
-                String.valueOf(energy),
-                energyStack));
-    }
 
     @Override
     public void registerDefaultRecipes() {

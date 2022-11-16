@@ -1315,6 +1315,9 @@ items:
         lore:
           - '{color:normal}Can stored energy {color:number}{1} J'
           - '{color:normal}Convert to {id:FINALTECH_VARIABLE_WIRE_CAPACITOR} {color:normal}while being fully charged'
+    status:
+      lore:
+        - '{color:normal}Stored Energy: {color:number}{1} J'
   FINALTECH_VARIABLE_WIRE_CAPACITOR:
     name: '{color:prandom}Variable Wire Capacitor'
     info:
@@ -1323,6 +1326,9 @@ items:
         lore:
           - '{color:normal}Can stored energy {color:number}{1} J'
           - '{color:normal}Convert to {id:FINALTECH_VARIABLE_WIRE_RESISTANCE} {color:normal}while being empty'
+    status:
+      lore:
+        - '{color:normal}Stored Energy: {color:number}{1} J'
   FINALTECH_ENERGY_ACCELERATOR:
     name: '{color:prandom}Energy Accelerator'
     info:

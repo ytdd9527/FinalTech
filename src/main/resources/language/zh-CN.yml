@@ -1298,6 +1298,9 @@ items:
         lore:
           - '{color:normal}可以存储 {color:number}{1} J {color:normal}电量'
           - '{color:normal}被充满电量时将转化为 {id:FINALTECH_VARIABLE_WIRE_CAPACITOR}'
+    status:
+      lore:
+        - '{color:normal}储电量: {color:number}{1} J'
   FINALTECH_VARIABLE_WIRE_CAPACITOR:
     name: '{color:prandom}可变式电线 - 电容'
     info:
@@ -1306,6 +1309,9 @@ items:
         lore:
           - '{color:normal}可以存储 {color:number}{1} J {color:normal}电量'
           - '{color:normal}被耗光电量时将转化为 {id:FINALTECH_VARIABLE_WIRE_RESISTANCE}'
+    status:
+      lore:
+        - '{color:normal}储电量: {color:number}{1} J'
   FINALTECH_ENERGY_ACCELERATOR:
     name: '{color:prandom}充能加速器'
     info:
