@@ -148,8 +148,6 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
                 entry.getValue().get(5, TimeUnit.SECONDS);
             } catch (TimeoutException e) {
                 e.printStackTrace();
-                System.out.println("错误发生于： ");
-                System.out.println(entry.getKey());
             }
         }
     }
