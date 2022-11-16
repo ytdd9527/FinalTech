@@ -64,10 +64,16 @@ public class VariableWireResistance extends AbstractElectricMachine implements R
         Location location = block.getLocation();
         String charge = EnergyUtil.getCharge(location);
         if (this.capacityString.equals(charge)) {
-            Slimefun.getBlockDataService().setBlockData(block, FinalTechItems.VARIABLE_WIRE_CAPACITOR.getItemId());
-            BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, FinalTechItems.VARIABLE_WIRE_CAPACITOR.getItemId(), true);
+            BlockStorage.clearBlockInfo(location);
             JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
-            javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> block.setType(FinalTechItems.VARIABLE_WIRE_CAPACITOR.getType()));
+            javaPlugin.getServer().getScheduler().runTaskLater(javaPlugin, () -> {
+                if(location.getBlock().getType().equals(VariableWireResistance.this.getItem().getType()) && BlockStorage.getLocationInfo(location, ConstantTableUtil.CONFIG_ID) == null) {
+                    block.setType(FinalTechItems.VARIABLE_WIRE_CAPACITOR.getType());
+                    BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, FinalTechItems.VARIABLE_WIRE_CAPACITOR.getItemId(), true);
+                    BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_CHARGE, String.valueOf(this.getCapacity()));
+//                    Slimefun.getBlockDataService().setBlockData(block, FinalTechItems.VARIABLE_WIRE_CAPACITOR.getItemId());
+                }
+            }, Slimefun.getTickerTask().getTickRate() + 1);
         } else {
             BlockMenu blockMenu = BlockStorage.getInventory(location);
             if (blockMenu.hasViewer()) {
