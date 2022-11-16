@@ -81,14 +81,14 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
             return 0;
         });
 
-        if (count <= 1) {
+        if (count < 1) {
             this.updateMenu(blockMenu, 0, 0);
             return;
         }
         int accelerateMachineCount = 0;
 
         List<LocationWithConfig> locationConfigList;
-        for (int distance = 1; distance <= range * 3; distance++) {
+        for (int distance = 1; distance <= this.range * 3; distance++) {
             locationConfigList = componentConfigMap.get(distance);
             if (locationConfigList != null) {
                 Collections.shuffle(locationConfigList);
@@ -132,7 +132,7 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
             }
         }
 
-        this.updateMenu(blockMenu, --count, accelerateMachineCount);
+        this.updateMenu(blockMenu, count, accelerateMachineCount);
     }
 
     @Override
