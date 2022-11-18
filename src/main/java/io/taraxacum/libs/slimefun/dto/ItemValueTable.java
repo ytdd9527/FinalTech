@@ -4,6 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.libs.plugin.dto.ConfigFileManager;
@@ -29,8 +30,8 @@ public class ItemValueTable {
     private final Map<String, String> itemInputValueMap = new HashMap<>(Slimefun.getRegistry().getAllSlimefunItems().size());
     // key: output value, value: all slimefun item id with same output value
     private final Map<String, List<String>> valueItemListOutputMap = new HashMap<>();
-    public final String BASE_OUTPUT_VALUE = FinalTech.getValueManager().getOrDefault("64","itemValueTable","baseOutputValue");
-    public final String BASE_INPUT_VALUE = FinalTech.getValueManager().getOrDefault("1","itemValueTable","baseInputValue");
+    public final String baseOutputValue = FinalTech.getValueManager().getOrDefault("64","itemValueTable","baseOutputValue");
+    public final String baseInputValue = FinalTech.getValueManager().getOrDefault("1","itemValueTable","baseInputValue");
     private static volatile ItemValueTable instance;
 
     private ItemValueTable() {
@@ -45,6 +46,26 @@ public class ItemValueTable {
         this.init = true;
 
         ConfigFileManager valueFile = FinalTech.getValueManager();
+
+        this.itemInputValueMap.put(SlimefunItems.IRON_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
+        this.itemInputValueMap.put(SlimefunItems.GOLD_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
+        this.itemInputValueMap.put(SlimefunItems.COPPER_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
+        this.itemInputValueMap.put(SlimefunItems.TIN_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
+        this.itemInputValueMap.put(SlimefunItems.LEAD_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
+        this.itemInputValueMap.put(SlimefunItems.SILVER_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
+        this.itemInputValueMap.put(SlimefunItems.ALUMINUM_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
+        this.itemInputValueMap.put(SlimefunItems.ZINC_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
+        this.itemInputValueMap.put(SlimefunItems.MAGNESIUM_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
+
+        this.itemOutputValueMap.put(SlimefunItems.IRON_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "16"));
+        this.itemOutputValueMap.put(SlimefunItems.GOLD_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "16"));
+        this.itemOutputValueMap.put(SlimefunItems.COPPER_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "16"));
+        this.itemOutputValueMap.put(SlimefunItems.TIN_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "16"));
+        this.itemOutputValueMap.put(SlimefunItems.LEAD_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "16"));
+        this.itemOutputValueMap.put(SlimefunItems.SILVER_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "16"));
+        this.itemOutputValueMap.put(SlimefunItems.ALUMINUM_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "16"));
+        this.itemOutputValueMap.put(SlimefunItems.ZINC_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "16"));
+        this.itemOutputValueMap.put(SlimefunItems.MAGNESIUM_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "16"));
 
         if (valueFile.containPath("input", "base")) {
             for (String key : valueFile.getStringList("input", "base")) {
@@ -85,6 +106,26 @@ public class ItemValueTable {
             }
         }
 
+        this.itemInputValueMap.put(SlimefunItems.IRON_DUST.getItemId(), this.baseInputValue);
+        this.itemInputValueMap.put(SlimefunItems.GOLD_DUST.getItemId(), this.baseInputValue);
+        this.itemInputValueMap.put(SlimefunItems.COPPER_DUST.getItemId(), this.baseInputValue);
+        this.itemInputValueMap.put(SlimefunItems.TIN_DUST.getItemId(), this.baseInputValue);
+        this.itemInputValueMap.put(SlimefunItems.LEAD_DUST.getItemId(), this.baseInputValue);
+        this.itemInputValueMap.put(SlimefunItems.SILVER_DUST.getItemId(), this.baseInputValue);
+        this.itemInputValueMap.put(SlimefunItems.ALUMINUM_DUST.getItemId(), this.baseInputValue);
+        this.itemInputValueMap.put(SlimefunItems.ZINC_DUST.getItemId(), this.baseInputValue);
+        this.itemInputValueMap.put(SlimefunItems.MAGNESIUM_DUST.getItemId(), this.baseInputValue);
+
+        this.itemOutputValueMap.put(SlimefunItems.IRON_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "8"));
+        this.itemOutputValueMap.put(SlimefunItems.GOLD_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "8"));
+        this.itemOutputValueMap.put(SlimefunItems.COPPER_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "8"));
+        this.itemOutputValueMap.put(SlimefunItems.TIN_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "8"));
+        this.itemOutputValueMap.put(SlimefunItems.LEAD_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "8"));
+        this.itemOutputValueMap.put(SlimefunItems.SILVER_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "8"));
+        this.itemOutputValueMap.put(SlimefunItems.ALUMINUM_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "8"));
+        this.itemOutputValueMap.put(SlimefunItems.ZINC_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "8"));
+        this.itemOutputValueMap.put(SlimefunItems.MAGNESIUM_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "8"));
+
         if (valueFile.containPath("input", "result")) {
             for (String key : valueFile.getStringList("input", "result")) {
                 this.itemInputValueMap.put(key, valueFile.getString("input", "result", key));
@@ -115,7 +156,7 @@ public class ItemValueTable {
         }
         SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
         if (slimefunItem == null) {
-            return StringNumberUtil.mul(this.BASE_INPUT_VALUE, String.valueOf(item.getAmount()));
+            return StringNumberUtil.mul(this.baseInputValue, String.valueOf(item.getAmount()));
         }
         return this.getOrCalItemInputValue(slimefunItem);
     }
@@ -125,7 +166,7 @@ public class ItemValueTable {
         }
         SlimefunItem slimefunItem = SlimefunItem.getById(id);
         if (slimefunItem == null) {
-            return this.BASE_INPUT_VALUE;
+            return this.baseInputValue;
         }
         return this.getOrCalItemInputValue(slimefunItem);
     }
@@ -148,7 +189,7 @@ public class ItemValueTable {
         }
 
         value = StringNumberUtil.add(value, String.valueOf(recipeList.size()));
-        value = StringNumberUtil.add(value, this.BASE_INPUT_VALUE);
+        value = StringNumberUtil.add(value, this.baseInputValue);
         this.itemInputValueMap.put(id, value);
         return value;
     }
@@ -159,7 +200,7 @@ public class ItemValueTable {
         }
         SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
         if (slimefunItem == null) {
-            return StringNumberUtil.mul(this.BASE_OUTPUT_VALUE, String.valueOf(item.getAmount()));
+            return StringNumberUtil.mul(this.baseOutputValue, String.valueOf(item.getAmount()));
         }
         return this.getOrCalItemOutputValue(slimefunItem);
     }
@@ -169,7 +210,7 @@ public class ItemValueTable {
         }
         SlimefunItem slimefunItem = SlimefunItem.getById(id);
         if (slimefunItem == null) {
-            return this.BASE_OUTPUT_VALUE;
+            return this.baseOutputValue;
         }
         return this.getOrCalItemOutputValue(slimefunItem);
     }
@@ -204,13 +245,13 @@ public class ItemValueTable {
         if (RecipeType.NULL.equals(recipeType) || recipeList.isEmpty() || StringNumberUtil.ZERO.equals(value)) {
             value = StringNumberUtil.VALUE_INFINITY;
         } else if (slimefunItem instanceof MultiBlockMachine || RecipeType.MULTIBLOCK.equals(recipeType)) {
-            value = StringNumberUtil.add(value, this.BASE_OUTPUT_VALUE);
+            value = StringNumberUtil.add(value, this.baseOutputValue);
         } else if (slimefunItem.equals(recipeType.getMachine())) {
             value = StringNumberUtil.add(value, value);
         } else if (recipeType.getMachine() != null) {
             value = StringNumberUtil.add(value, this.getOrCalItemOutputValue(recipeType.getMachine()));
         } else {
-            value = StringNumberUtil.add(value, this.BASE_OUTPUT_VALUE);
+            value = StringNumberUtil.add(value, this.baseOutputValue);
         }
 
         this.itemOutputValueMap.put(id, value);
