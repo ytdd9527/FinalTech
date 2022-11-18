@@ -4,6 +4,8 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.groups.FlexItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
+import io.github.thebusybiscuit.slimefun4.core.guide.GuideHistory;
+import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.libs.slimefun.dto.ItemValueTable;
@@ -60,6 +62,9 @@ public class RecipeItemGroup extends FlexItemGroup {
         ChestMenu chestMenu = this.generateMenu(player, playerProfile, slimefunGuideMode);
         if (chestMenu != null) {
             chestMenu.open(player);
+        } else {
+            GuideHistory guideHistory = playerProfile.getGuideHistory();
+            SlimefunGuide.openMainMenu(playerProfile, slimefunGuideMode, guideHistory.getMainMenuPage());
         }
     }
 
