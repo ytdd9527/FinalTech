@@ -460,7 +460,7 @@ public final class SetupUtil {
                 FinalTechItems.LAVA_CARD,
                 FinalTechItems.MILK_CARD,
                 FinalTechItems.LIQUID_CARD_GENERATOR);
-        ResearchUtil.setSingleResearch(FinalTechItems.GEARWHEEL, Integer.parseInt(ItemValueTable.getInstance().BASE_INPUT_VALUE), false);
+        ResearchUtil.setSingleResearch(FinalTechItems.GEARWHEEL, Integer.parseInt(ItemValueTable.getInstance().baseInputValue), false);
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "ORDER_DUST", Slimefun.getInstalledAddons().size(), true,
                 FinalTechItems.ORDERED_DUST,
                 FinalTechItems.UNORDERED_DUST,
