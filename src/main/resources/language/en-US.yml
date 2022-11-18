@@ -1244,7 +1244,7 @@ items:
       1:
         name: '{color:passive}Mechanism'
         lore:
-          - '{color:normal}Transfer energy stored in the capacitor behind it'
+          - '{color:normal}Transfer energy stored in the capacitor or generator behind it'
           - '{color:normal}To the machine it is pointing at firstly'
           - ''
           - '{color:normal}It will charge only one machine at same time'
@@ -1264,7 +1264,7 @@ items:
       1:
         name: '{color:passive}Mechanism'
         lore:
-          - '{color:normal}Transfer energy stored in a capacitor behind it'
+          - '{color:normal}Transfer energy stored in a capacitor or generator behind it'
           - '{color:normal}To the machine it is pointing at at one by one'
           - ''
           - '{color:normal}It will try to charge all machine at same time'
@@ -1285,7 +1285,7 @@ items:
       1:
         name: '{color:passive}Mechanism'
         lore:
-          - '{color:normal}Transfer energy stored in a capacitor behind it'
+          - '{color:normal}Transfer energy stored in a capacitor or generator behind it'
           - '{color:normal}To the machine it is pointing at one by one'
           - ''
           - '{color:normal}It will try to charge all machine at same time'

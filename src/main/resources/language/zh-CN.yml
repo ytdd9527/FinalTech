@@ -1227,7 +1227,7 @@ items:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}将其背向方向的储电机的电量'
+          - '{color:normal}将其背向方向的储电机或发电机的电量'
           - '{color:normal}传输给面向方向的首个机器'
           - ''
           - '{color:normal}一次只会为一个机器充电'
@@ -1247,7 +1247,7 @@ items:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}将其背向方向的储电机的电量'
+          - '{color:normal}将其背向方向的储电机或发电机的电量'
           - '{color:normal}传输给面向方向的首个机器'
           - ''
           - '{color:normal}将尝试为范围内所有机器充电'
@@ -1268,7 +1268,7 @@ items:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}将其背向方向的储电机的电量'
+          - '{color:normal}将其背向方向的储电机或发电机的电量'
           - '{color:normal}传输给面向方向的首个机器'
           - ''
           - '{color:normal}将尝试为范围内所有机器充电'
