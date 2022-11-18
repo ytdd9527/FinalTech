@@ -62,6 +62,7 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
                 BlockTickerUtil.setSleep(config, null);
             } else {
                 BlockTickerUtil.setSleep(config, sleep);
+                return;
             }
         }
 
