@@ -157,6 +157,8 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
             SimpleCargoDTO simpleCargoDTO = new SimpleCargoDTO();
             simpleCargoDTO.setInputSize(inputSize);
             simpleCargoDTO.setInputOrder(inputOrder);
+            simpleCargoDTO.setOutputSize(outputSize);
+            simpleCargoDTO.setOutputOrder(outputOrder);
             simpleCargoDTO.setCargoLimit(CargoLimit.HELPER.getOrDefaultValue(config));
             simpleCargoDTO.setCargoFilter(CargoFilter.HELPER.getOrDefaultValue(config));
             simpleCargoDTO.setFilterInv(blockMenu.toInventory());
@@ -292,6 +294,8 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                     SimpleCargoDTO simpleCargoDTO = new SimpleCargoDTO();
                     simpleCargoDTO.setInputSize(inputSize);
                     simpleCargoDTO.setInputOrder(inputOrder);
+                    simpleCargoDTO.setOutputSize(outputSize);
+                    simpleCargoDTO.setOutputOrder(outputOrder);
                     simpleCargoDTO.setCargoLimit(CargoLimit.HELPER.getOrDefaultValue(config));
                     simpleCargoDTO.setCargoFilter(CargoFilter.HELPER.getOrDefaultValue(config));
                     simpleCargoDTO.setFilterInv(blockMenu.toInventory());
