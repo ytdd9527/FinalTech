@@ -16,6 +16,7 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.VoidMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
+import io.taraxacum.libs.slimefun.util.BlockTickerUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.block.Block;
@@ -66,11 +67,7 @@ public class OperationAccelerator extends AbstractFaceMachine implements RecipeI
                                 operation.addProgress(1);
                             }
                         };
-                        if (FinalTech.isAsyncSlimefunItem(machineId)) {
-                            FinalTech.getLocationRunnableFactory().waitThenRun(runnable, location);
-                        } else {
-                            runnable.run();
-                        }
+                        BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineId), runnable, location);
                         return 1;
                     }
                 }
