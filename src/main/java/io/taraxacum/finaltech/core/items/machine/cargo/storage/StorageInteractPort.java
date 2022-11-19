@@ -194,7 +194,7 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
 
     @Override
     protected boolean isSynchronized() {
-        return false;
+        return true;
     }
 
     @Override
