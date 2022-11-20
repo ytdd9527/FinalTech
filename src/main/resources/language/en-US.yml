@@ -1612,7 +1612,7 @@ items:
           - '{color:normal}Not input two items'
         output: 'FINALTECH_LOGIC_FALSE'
   FINALTECH_LOGIC_COMPARATOR_AMOUNT:
-    name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}非空'
+    name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}Amount'
     info:
       1:
         name: '{color:passive}Mechanism'
@@ -1635,7 +1635,7 @@ items:
           - '{color:normal}Items are not with same amount'
         output: 'FINALTECH_LOGIC_FALSE'
   FINALTECH_LOGIC_COMPARATOR_SIMILAR:
-    name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}非空'
+    name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}Similar'
     info:
       1:
         name: '{color:passive}Mechanism'
@@ -1658,7 +1658,7 @@ items:
           - '{color:normal}Items are not same'
         output: 'FINALTECH_LOGIC_FALSE'
   FINALTECH_LOGIC_COMPARATOR_EQUAL:
-    name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}非空'
+    name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}Equal'
     info:
       1:
         name: '{color:passive}Mechanism'

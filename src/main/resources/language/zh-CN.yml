@@ -1595,7 +1595,7 @@ items:
           - '{color:normal}未输入两个物品'
         output: 'FINALTECH_LOGIC_FALSE'
   FINALTECH_LOGIC_COMPARATOR_AMOUNT:
-    name: '{color:prandom}逻辑比较器 {color:conceal}- {color:positive}非空'
+    name: '{color:prandom}逻辑比较器 {color:conceal}- {color:positive}数量'
     info:
       1:
         name: '{color:passive}机制'
@@ -1618,7 +1618,7 @@ items:
           - '{color:normal}物品数量不同'
         output: 'FINALTECH_LOGIC_FALSE'
   FINALTECH_LOGIC_COMPARATOR_SIMILAR:
-    name: '{color:prandom}逻辑比较器 {color:conceal}- {color:positive}非空'
+    name: '{color:prandom}逻辑比较器 {color:conceal}- {color:positive}相似'
     info:
       1:
         name: '{color:passive}机制'
@@ -1641,7 +1641,7 @@ items:
           - '{color:normal}输入了不同的物品'
         output: 'FINALTECH_LOGIC_FALSE'
   FINALTECH_LOGIC_COMPARATOR_EQUAL:
-    name: '{color:prandom}逻辑比较器 {color:conceal}- {color:positive}非空'
+    name: '{color:prandom}逻辑比较器 {color:conceal}- {color:positive}相同'
     info:
       1:
         name: '{color:passive}机制'
