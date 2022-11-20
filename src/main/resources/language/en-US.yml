@@ -1845,6 +1845,8 @@ items:
       - '{color:normal}Place it below the machine to work'
   FINALTECH_OPERATION_ACCELERATOR:
     name: '{color:prandom}Operation Accelerator'
+  FINALTECH_OPERATION_ACCELERATOR_INFINITY:
+    name: '{color:prandom}Infinity Operation Accelerator'
   FINALTECH_CURE_TOWER:
     name: '{color:prandom}Cure Tower'
     info:

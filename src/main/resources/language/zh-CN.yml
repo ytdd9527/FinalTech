@@ -1825,6 +1825,8 @@ items:
       - '{color:normal}放置在指定机器下方以工作'
   FINALTECH_OPERATION_ACCELERATOR:
     name: '{color:prandom}工程加速器'
+  FINALTECH_OPERATION_ACCELERATOR_INFINITY:
+    name: '{color:prandom}无限工程加速器'
   FINALTECH_CURE_TOWER:
     name: '{color:prandom}治疗塔'
     info:

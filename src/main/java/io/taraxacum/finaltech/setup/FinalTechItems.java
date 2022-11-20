@@ -161,6 +161,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack FUEL_ACCELERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_FUEL_ACCELERATOR", Material.RED_NETHER_BRICK_WALL, "Fuel Accelerator");
     public static final SlimefunItemStack FUEL_OPERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_FUEL_OPERATOR", Material.PRISMARINE_WALL, "Fuel Operator");
     public static final SlimefunItemStack OPERATION_ACCELERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_OPERATION_ACCELERATOR", Material.DEEPSLATE_TILE_WALL, "Operation Accelerator");
+    public static final SlimefunItemStack OPERATION_ACCELERATOR_INFINITY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_OPERATION_ACCELERATOR_INFINITY", Material.DEEPSLATE_TILE_WALL, "Infinity Operation Accelerator");
     // tower
     public static final SlimefunItemStack CURE_TOWER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_CURE_TOWER", Material.RED_GLAZED_TERRACOTTA, "Cure Tower");
     public static final SlimefunItemStack PURIFY_LEVEL_TOWER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_PURIFY_LEVEL_TOWER", Material.WHITE_GLAZED_TERRACOTTA, "Purify Level Tower");

@@ -672,10 +672,20 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
     public static final ItemStack[] OPERATION_ACCELERATOR = new ItemStack[] {
-            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.ANNULAR, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, null,
-            FinalTechItems.GEARWHEEL, FinalTechItems.ANNULAR, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.ANNULAR, FinalTechItems.GEARWHEEL, null,
-            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.ANNULAR, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
+            null, ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 24), null, ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 24), null, null,
+            ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 24), null, ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 32), null, ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 24), null,
+            null, ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 32), FinalTechItems.ANNULAR, ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 32), null, null,
+            ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 24), null, ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 32), null, ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 24), null,
+            null, ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 24), null, ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 24), null, null,
     };
+    public static final ItemStack[] OPERATION_ACCELERATOR_INFINITY = new ItemStack[] {
+            ItemStackUtil.cloneItem(FinalTechItems.OPERATION_ACCELERATOR, 12), null, ItemStackUtil.cloneItem(FinalTechItems.OPERATION_ACCELERATOR, 20), null, ItemStackUtil.cloneItem(FinalTechItems.OPERATION_ACCELERATOR, 12), null,
+            null, ItemStackUtil.cloneItem(FinalTechItems.OPERATION_ACCELERATOR, 32), null, ItemStackUtil.cloneItem(FinalTechItems.OPERATION_ACCELERATOR, 32), null, null,
+            ItemStackUtil.cloneItem(FinalTechItems.OPERATION_ACCELERATOR, 20), null, ItemStackUtil.cloneItem(FinalTechItems.OPERATION_ACCELERATOR, 64), null, ItemStackUtil.cloneItem(FinalTechItems.OPERATION_ACCELERATOR, 20), null,
+            null, ItemStackUtil.cloneItem(FinalTechItems.OPERATION_ACCELERATOR, 32), null, ItemStackUtil.cloneItem(FinalTechItems.OPERATION_ACCELERATOR, 32), null, null,
+            ItemStackUtil.cloneItem(FinalTechItems.OPERATION_ACCELERATOR, 12), null, ItemStackUtil.cloneItem(FinalTechItems.OPERATION_ACCELERATOR, 20), null, ItemStackUtil.cloneItem(FinalTechItems.OPERATION_ACCELERATOR, 12), null,
+    };
+
     // tower
     public static final ItemStack[] CURE_TOWER = new ItemStack[] {
             FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.BASIC_FRAME_MACHINE,

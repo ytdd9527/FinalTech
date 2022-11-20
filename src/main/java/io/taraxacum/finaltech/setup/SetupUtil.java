@@ -300,7 +300,8 @@ public final class SetupUtil {
                 new FuelCharger(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.FUEL_CHARGER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.FUEL_CHARGER).register(),
                 new FuelAccelerator(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.FUEL_ACCELERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.FUEL_ACCELERATOR).register(),
                 new FuelOperator(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.FUEL_OPERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.FUEL_OPERATOR).register(),
-                new OperationAccelerator(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.OPERATION_ACCELERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.OPERATION_ACCELERATOR).register());
+                new OperationAccelerator(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.OPERATION_ACCELERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.OPERATION_ACCELERATOR).register(),
+                new OperationAcceleratorInfinity(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.OPERATION_ACCELERATOR_INFINITY, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.OPERATION_ACCELERATOR_INFINITY).register());
         // tower
         FinalTechMenus.SUB_MENU_TOWER.addTo(
                 new CureTower(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.CURE_TOWER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.CURE_TOWER).register(),
@@ -623,6 +624,7 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.FUEL_OPERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.FUEL_ACCELERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OPERATION_ACCELERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.OPERATION_ACCELERATOR_INFINITY, SlimefunItems.PROGRAMMABLE_ANDROID_3);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CURE_TOWER, SlimefunItems.GPS_TRANSMITTER_4);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.PURIFY_LEVEL_TOWER, SlimefunItems.GPS_TRANSMITTER_3);
