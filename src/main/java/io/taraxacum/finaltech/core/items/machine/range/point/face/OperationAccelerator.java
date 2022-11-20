@@ -13,12 +13,16 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.core.menu.unit.VoidMenu;
+import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.slimefun.util.BlockTickerUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
@@ -48,11 +52,21 @@ public class OperationAccelerator extends AbstractFaceMachine implements RecipeI
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new VoidMenu(this);
+        return new StatusL2Menu(this);
     }
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+        BlockMenu blockMenu = BlockStorage.getInventory(block);
+        ItemStack item = blockMenu.getItemInSlot(this.getInputSlot()[0]);
+
+        int amount;
+        if(ItemStackUtil.isItemSimilar(item, this.getItem())) {
+            amount = item.getAmount();
+        } else {
+            amount = 1;
+        }
+
         this.function(block, 1, location -> {
             if (BlockStorage.hasBlockInfo(location)) {
                 Config machineConfig = BlockStorage.getLocationInfo(location);
@@ -64,7 +78,7 @@ public class OperationAccelerator extends AbstractFaceMachine implements RecipeI
                         Runnable runnable = () -> {
                             MachineOperation operation = machineProcessor.getOperation(location);
                             if (operation != null) {
-                                operation.addProgress(1);
+                                operation.addProgress(amount);
                             }
                         };
                         BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineId), runnable, location);
