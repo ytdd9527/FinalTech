@@ -305,6 +305,8 @@ categories:
     name: '{color:random}Advanced Storage'
   FINALTECH_SUB_MENU_ACCESSOR:
     name: '{color:random}Accessor'
+  FINALTECH_SUB_MENU_LOGIC:
+    name: '{color:random}Logic'
   FINALTECH_SUB_MENU_CARGO:
     name: '{color:random}Cargo'
   FINALTECH_MAIN_MENU_FUNCTIONAL_MACHINE:
@@ -1586,6 +1588,104 @@ items:
         - '{color:normal}X: {color:number}{1}'
         - '{color:normal}Z: {color:number}{3}'
         - '{color:normal}Y: {color:number}{2}'
+  FINALTECH_LOGIC_COMPARATOR_NOTNULL:
+    name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}Not Null'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}While matching precondition'
+          - '{color:normal}It will perform conditional judgment'
+          - '{color:normal}And then output specified items'
+      2:
+        name: '{color:passive}Precondition'
+        lore:
+          - '{color:normal}Input at least one item'
+      3:
+        name: '{color:passive}Result {color:conceal}- {color:positive}True'
+        lore:
+          - '{color:normal}Input two items'
+        output: 'FINALTECH_LOGIC_TRUE'
+      4:
+        name: '{color:passive}Result {color:conceal}- {color:positive}False'
+        lore:
+          - '{color:normal}Not input two items'
+        output: 'FINALTECH_LOGIC_FALSE'
+  FINALTECH_LOGIC_COMPARATOR_AMOUNT:
+    name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}非空'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}While matching precondition'
+          - '{color:normal}It will perform conditional judgment'
+          - '{color:normal}And then output specified items'
+      2:
+        name: '{color:passive}Precondition'
+        lore:
+          - '{color:normal}Input tow items'
+      3:
+        name: '{color:passive}Result {color:conceal}- {color:positive}True'
+        lore:
+          - '{color:normal}Items are with same amount'
+        output: 'FINALTECH_LOGIC_TRUE'
+      4:
+        name: '{color:passive}Result {color:conceal}- {color:positive}False'
+        lore:
+          - '{color:normal}Items are not with same amount'
+        output: 'FINALTECH_LOGIC_FALSE'
+  FINALTECH_LOGIC_COMPARATOR_SIMILAR:
+    name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}非空'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}While matching precondition'
+          - '{color:normal}It will perform conditional judgment'
+          - '{color:normal}And then output specified items'
+      2:
+        name: '{color:passive}Precondition'
+        lore:
+          - '{color:normal}Input tow items'
+      3:
+        name: '{color:passive}Result {color:conceal}- {color:positive}True'
+        lore:
+          - '{color:normal}Items are same'
+        output: 'FINALTECH_LOGIC_TRUE'
+      4:
+        name: '{color:passive}Result {color:conceal}- {color:positive}False'
+        lore:
+          - '{color:normal}Items are not same'
+        output: 'FINALTECH_LOGIC_FALSE'
+  FINALTECH_LOGIC_COMPARATOR_EQUAL:
+    name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}非空'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}While matching precondition'
+          - '{color:normal}It will perform conditional judgment'
+          - '{color:normal}And then output specified items'
+      2:
+        name: '{color:passive}Precondition'
+        lore:
+          - '{color:normal}Input tow items'
+      3:
+        name: '{color:passive}Result {color:conceal}- {color:positive}True'
+        lore:
+          - '{color:normal}Items are with same amount'
+          - '{color:normal}And items are same'
+        output: 'FINALTECH_LOGIC_TRUE'
+      4:
+        name: '{color:passive}Result {color:conceal}- {color:positive}False'
+        lore:
+          - '{color:normal}Items are not with same amount'
+          - '{color:normal}Or items are not same'
+        output: 'FINALTECH_LOGIC_FALSE'
+  FINALTECH_LOGIC_CRAFTER:
+    name: '{color:prandom}Logic Crafter'
+  FINALTECH_DIGIT_ADDER:
+    name: '{color:prandom}Digit Adder'
   FINALTECH_BASIC_FRAME_MACHINE:
     name: '{color:prandom}Basic Frame Machine'
     info:
@@ -1817,10 +1917,6 @@ items:
       name: '{color:negative}No Matched'
       lore:
         - '{color:normal}Please input correct thing.'
-  FINALTECH_LOGIC_CRAFTER:
-    name: '{color:prandom}Logic Crafter'
-  FINALTECH_DIGIT_ADDER:
-    name: '{color:prandom}Digit Adder'
   FINALTECH_ITEM_FIXER:
     name: '{color:prandom}Item Fixer'
   FINALTECH_COBBLESTONE_FACTORY:

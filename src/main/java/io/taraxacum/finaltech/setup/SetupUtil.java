@@ -11,6 +11,10 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.command.ShowItemInfo;
 import io.taraxacum.finaltech.core.command.TransferToCopyCardItem;
 import io.taraxacum.finaltech.core.enchantment.NullEnchantment;
+import io.taraxacum.finaltech.core.items.machine.logic.LogicAmountComparator;
+import io.taraxacum.finaltech.core.items.machine.logic.LogicEqualComparator;
+import io.taraxacum.finaltech.core.items.machine.logic.LogicNotNullComparator;
+import io.taraxacum.finaltech.core.items.machine.logic.LogicSimilarComparator;
 import io.taraxacum.finaltech.core.items.machine.range.point.face.*;
 import io.taraxacum.finaltech.core.items.SuperPickaxe;
 import io.taraxacum.finaltech.core.items.machine.*;
@@ -270,6 +274,14 @@ public final class SetupUtil {
         FinalTechMenus.SUB_MENU_ACCESSOR.addTo(
                 new RemoteAccessor(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.REMOTE_ACCESSOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.REMOTE_ACCESSOR).register(),
                 new AreaAccessor(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.AREA_ACCESSOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.AREA_ACCESSOR).register());
+        // logic
+        FinalTechMenus.SUB_MENU_LOGIC.addTo(
+                new LogicNotNullComparator(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LOGIC_COMPARATOR_NOTNULL, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.LOGIC_COMPARATOR_NOTNULL).register(),
+                new LogicAmountComparator(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LOGIC_COMPARATOR_AMOUNT, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.LOGIC_COMPARATOR_AMOUNT).register(),
+                new LogicSimilarComparator(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LOGIC_COMPARATOR_SIMILAR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.LOGIC_COMPARATOR_SIMILAR).register(),
+                new LogicEqualComparator(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LOGIC_COMPARATOR_EQUAL, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.LOGIC_COMPARATOR_EQUAL).register(),
+                new LogicCrafter(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LOGIC_CRAFTER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.LOGIC_CRAFTER).register(),
+                new DigitAdder(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.DIGIT_ADDER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.DIGIT_ADDER).register());
         // cargo
         FinalTechMenus.SUB_MENU_CARGO.addTo(
                 new BasicFrameMachine(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.BASIC_FRAME_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_FRAME_MACHINE).register(),
@@ -290,9 +302,6 @@ public final class SetupUtil {
                 new ItemSerializationConstructor(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ITEM_SERIALIZATION_CONSTRUCTOR).register(),
                 new ItemDeserializeParser(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_DESERIALIZE_PARSER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ITEM_DESERIALIZE_PARSER).register(),
                 new CardOperationTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.CARD_OPERATION_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.CARD_OPERATION_TABLE).register());
-        FinalTechMenus.SUB_MENU_CORE_MACHINE.addTo(
-                new LogicCrafter(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.LOGIC_CRAFTER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.LOGIC_CRAFTER).register(),
-                new DigitAdder(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.DIGIT_ADDER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.DIGIT_ADDER).register());
         // special machines
         FinalTechMenus.SUB_MENU_SPECIAL_MACHINE.addTo(
                 new ItemFixer(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_FIXER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ITEM_FIXER).register(),
@@ -420,11 +429,13 @@ public final class SetupUtil {
                 FinalTechMenus.SUB_MENU_STORAGE_UNIT,
                 FinalTechMenus.SUB_MENU_ADVANCED_STORAGE,
                 FinalTechMenus.SUB_MENU_ACCESSOR,
+                FinalTechMenus.SUB_MENU_LOGIC,
                 FinalTechMenus.SUB_MENU_CARGO);
         FinalTechMenus.MAIN_MENU_CARGO_SYSTEM.addFrom(
                 FinalTechMenus.SUB_MENU_STORAGE_UNIT,
                 FinalTechMenus.SUB_MENU_ADVANCED_STORAGE,
                 FinalTechMenus.SUB_MENU_ACCESSOR,
+                FinalTechMenus.SUB_MENU_LOGIC,
                 FinalTechMenus.SUB_MENU_CARGO);
         // functional machine
         FinalTechMenus.MAIN_ITEM_GROUP.addTo(FinalTechMenus.MAIN_MENU_FUNCTIONAL_MACHINE,
@@ -523,6 +534,10 @@ public final class SetupUtil {
                 FinalTechItems.DIGITAL_THIRTEEN,
                 FinalTechItems.DIGITAL_FOURTEEN,
                 FinalTechItems.DIGITAL_FIFTEEN,
+                FinalTechItems.LOGIC_COMPARATOR_NOTNULL,
+                FinalTechItems.LOGIC_COMPARATOR_AMOUNT,
+                FinalTechItems.LOGIC_COMPARATOR_SIMILAR,
+                FinalTechItems.LOGIC_COMPARATOR_EQUAL,
                 FinalTechItems.LOGIC_CRAFTER,
                 FinalTechItems.DIGIT_ADDER,
                 FinalTechItems.LOGIC_GENERATOR,

@@ -546,6 +546,53 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, new ItemStack(Material.TARGET), FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
+    // logic
+    public static final ItemStack[] LOGIC_COMPARATOR_NOTNULL = new ItemStack[] {
+            FinalTechItems.BASIC_FRAME_MACHINE, null, null, null, null, null,
+            null, FinalTechItems.GEARWHEEL, null, null, null, FinalTechItems.GEARWHEEL,
+            null, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, null, null, FinalTechItems.GEARWHEEL,
+            null, FinalTechItems.GEARWHEEL, null, FinalTechItems.GEARWHEEL, null, FinalTechItems.GEARWHEEL,
+            null, FinalTechItems.GEARWHEEL, null, null, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+            null, FinalTechItems.GEARWHEEL, null, null, null, FinalTechItems.GEARWHEEL,
+    };
+    public static final ItemStack[] LOGIC_COMPARATOR_AMOUNT = new ItemStack[] {
+            FinalTechItems.BASIC_FRAME_MACHINE, null, null, null, null, null,
+            null, null, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, null,
+            null, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, null, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+            null, FinalTechItems.GEARWHEEL, null, null, null, FinalTechItems.GEARWHEEL,
+            null, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+            null, FinalTechItems.GEARWHEEL, null, null, null, FinalTechItems.GEARWHEEL,
+    };
+    public static final ItemStack[] LOGIC_COMPARATOR_SIMILAR = new ItemStack[] {
+            FinalTechItems.BASIC_FRAME_MACHINE, null, null, null, null, null,
+            null, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+            null, FinalTechItems.GEARWHEEL, null, null, null, null,
+            null, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+            null, null, null, null, null, FinalTechItems.GEARWHEEL,
+            null, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+    };
+    public static final ItemStack[] LOGIC_COMPARATOR_EQUAL = new ItemStack[] {
+            FinalTechItems.BASIC_FRAME_MACHINE, null, null, null, null, null,
+            null, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+            null, FinalTechItems.GEARWHEEL, null, null, null, null,
+            null, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, null,
+            null, FinalTechItems.GEARWHEEL, null, null, null, null,
+            null, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+    };
+    public static final ItemStack[] LOGIC_CRAFTER = new ItemStack[] {
+            null, null, null, null, null, null,
+            null, ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), null,
+            null, ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), null,
+            null, ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), null,
+            null, ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), null,
+    };
+    public static final ItemStack[] DIGIT_ADDER = new ItemStack[] {
+            null, null, null, null, null, null,
+            null, ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_ZERO, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_ONE, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_TWO, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_THREE, 16), null,
+            null, ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_FOUR, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_FIVE, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_SIX, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_SEVEN, 16), null,
+            null, ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_EIGHT, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_NINE, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_TEN, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_ELEVEN, 16), null,
+            null, ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_TWELVE, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_THIRTEEN, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_FOURTEEN, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_FIFTEEN, 16), null,
+    };
     // cargo
     public static final ItemStack[] BASIC_FRAME_MACHINE = new ItemStack[] {
             new ItemStack(Material.STONE), new ItemStack(Material.CHAIN), new ItemStack(Material.STONE),
@@ -629,20 +676,6 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, null, new ItemStack(Material.CRAFTING_TABLE), new ItemStack(Material.CRAFTING_TABLE), null, FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, null, null, null, null, FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
-    };
-    public static final ItemStack[] LOGIC_CRAFTER = new ItemStack[] {
-            null, null, null, null, null, null,
-            null, ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), null,
-            null, ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), null,
-            null, ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), null,
-            null, ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_FALSE, 16), ItemStackUtil.cloneItem(FinalTechItems.LOGIC_TRUE, 16), null,
-    };
-    public static final ItemStack[] DIGIT_ADDER = new ItemStack[] {
-            null, null, null, null, null, null,
-            null, ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_ZERO, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_ONE, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_TWO, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_THREE, 16), null,
-            null, ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_FOUR, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_FIVE, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_SIX, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_SEVEN, 16), null,
-            null, ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_EIGHT, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_NINE, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_TEN, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_ELEVEN, 16), null,
-            null, ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_TWELVE, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_THIRTEEN, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_FOURTEEN, 16), ItemStackUtil.cloneItem(FinalTechItems.DIGITAL_FIFTEEN, 16), null,
     };
     // special machine
     public static final ItemStack[] ITEM_FIXER = new ItemStack[] {

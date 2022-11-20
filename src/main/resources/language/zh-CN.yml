@@ -304,6 +304,8 @@ categories:
     name: '{color:random}高级存储'
   FINALTECH_SUB_MENU_ACCESSOR:
     name: '{color:random}访问器'
+  FINALTECH_SUB_MENU_LOGIC:
+    name: '{color:random}逻辑操作器'
   FINALTECH_SUB_MENU_CARGO:
     name: '{color:random}传输器'
   FINALTECH_MAIN_MENU_FUNCTIONAL_MACHINE:
@@ -1569,6 +1571,104 @@ items:
         - '{color:normal}X: {color:number}{1}'
         - '{color:normal}Z: {color:number}{3}'
         - '{color:normal}Y: {color:number}{2}'
+  FINALTECH_LOGIC_COMPARATOR_NOTNULL:
+    name: '{color:prandom}逻辑比较器 {color:conceal}- {color:positive}非空'
+    info:
+      1:
+        name: '{color:passive}机制'
+        lore:
+          - '{color:normal}满足前置条件时'
+          - '{color:normal}进行条件判断'
+          - '{color:normal}并输出对应物品'
+      2:
+        name: '{color:passive}前置条件'
+        lore:
+          - '{color:normal}输入了至少一个物品'
+      3:
+        name: '{color:passive}条件判断结果 {color:conceal}- {color:positive}是'
+        lore:
+          - '{color:normal}输入了两个物品'
+        output: 'FINALTECH_LOGIC_TRUE'
+      4:
+        name: '{color:passive}条件判断结果 {color:conceal}- {color:positive}否'
+        lore:
+          - '{color:normal}未输入两个物品'
+        output: 'FINALTECH_LOGIC_FALSE'
+  FINALTECH_LOGIC_COMPARATOR_AMOUNT:
+    name: '{color:prandom}逻辑比较器 {color:conceal}- {color:positive}非空'
+    info:
+      1:
+        name: '{color:passive}机制'
+        lore:
+          - '{color:normal}满足前置条件时'
+          - '{color:normal}进行条件判断'
+          - '{color:normal}并输出对应物品'
+      2:
+        name: '{color:passive}前置条件'
+        lore:
+          - '{color:normal}输入了两个物品'
+      3:
+        name: '{color:passive}条件判断结果 {color:conceal}- {color:positive}是'
+        lore:
+          - '{color:normal}物品数量相同'
+        output: 'FINALTECH_LOGIC_TRUE'
+      4:
+        name: '{color:passive}条件判断结果 {color:conceal}- {color:positive}否'
+        lore:
+          - '{color:normal}物品数量不同'
+        output: 'FINALTECH_LOGIC_FALSE'
+  FINALTECH_LOGIC_COMPARATOR_SIMILAR:
+    name: '{color:prandom}逻辑比较器 {color:conceal}- {color:positive}非空'
+    info:
+      1:
+        name: '{color:passive}机制'
+        lore:
+          - '{color:normal}满足前置条件时'
+          - '{color:normal}进行条件判断'
+          - '{color:normal}并输出对应物品'
+      2:
+        name: '{color:passive}前置条件'
+        lore:
+          - '{color:normal}输入了两个物品'
+      3:
+        name: '{color:passive}条件判断结果 {color:conceal}- {color:positive}是'
+        lore:
+          - '{color:normal}输入了相同的物品'
+        output: 'FINALTECH_LOGIC_TRUE'
+      4:
+        name: '{color:passive}条件判断结果 {color:conceal}- {color:positive}否'
+        lore:
+          - '{color:normal}输入了不同的物品'
+        output: 'FINALTECH_LOGIC_FALSE'
+  FINALTECH_LOGIC_COMPARATOR_EQUAL:
+    name: '{color:prandom}逻辑比较器 {color:conceal}- {color:positive}非空'
+    info:
+      1:
+        name: '{color:passive}机制'
+        lore:
+          - '{color:normal}满足前置条件时'
+          - '{color:normal}进行条件判断'
+          - '{color:normal}并输出对应物品'
+      2:
+        name: '{color:passive}前置条件'
+        lore:
+          - '{color:normal}输入了两个物品'
+      3:
+        name: '{color:passive}条件判断结果 {color:conceal}- {color:positive}是'
+        lore:
+          - '{color:normal}输入了相同的物品'
+          - '{color:normal}且物品数量相同'
+        output: 'FINALTECH_LOGIC_TRUE'
+      4:
+        name: '{color:passive}条件判断结果 {color:conceal}- {color:positive}否'
+        lore:
+          - '{color:normal}输入了不同的物品'
+          - '{color:normal}或物品数量不同'
+        output: 'FINALTECH_LOGIC_FALSE'
+  FINALTECH_LOGIC_CRAFTER:
+    name: '{color:prandom}逻辑合成器'
+  FINALTECH_DIGIT_ADDER:
+    name: '{color:prandom}数字加法器'
   FINALTECH_BASIC_FRAME_MACHINE:
     name: '{color:prandom}基础机器框架'
     info:
@@ -1797,10 +1897,6 @@ items:
       name: '{color:negative}不匹配'
       lore:
         - '{color:normal}请输入正确的物品'
-  FINALTECH_LOGIC_CRAFTER:
-    name: '{color:prandom}逻辑合成器'
-  FINALTECH_DIGIT_ADDER:
-    name: '{color:prandom}数字加法器'
   FINALTECH_ITEM_FIXER:
     name: '{color:prandom}物品修复器'
   FINALTECH_COBBLESTONE_FACTORY:
