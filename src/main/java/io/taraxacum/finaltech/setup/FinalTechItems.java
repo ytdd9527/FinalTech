@@ -198,7 +198,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MANUAL_ANCIENT_ALTAR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MANUAL_ANCIENT_ALTAR", Material.ENCHANTING_TABLE, "Manual Ancient Altar");
     public static final SlimefunItemStack MANUAL_HEATED_PRESSURE_CHAMBER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MANUAL_HEATED_PRESSURE_CHAMBER", Material.LIGHT_GRAY_STAINED_GLASS, "Manual Heated Pressure Chamber");
     // basic machine
-    public static final SlimefunItemStack BASIC_COBBLE_FACTORY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_BASIC_COBBLE_FACTORY", Material.CHISELED_STONE_BRICKS, "Basic Cobble Factory");
+    public static final SlimefunItemStack BASIC_STONE_FACTORY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_BASIC_STONE_FACTORY", Material.CHISELED_STONE_BRICKS, "Basic Cobble Factory");
     public static final SlimefunItemStack BASIC_DUST_FACTORY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_BASIC_DUST_FACTORY", Material.POLISHED_DEEPSLATE, "Basic Dust Factory");
     public static final SlimefunItemStack BASIC_LOGIC_FACTORY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_BASIC_LOGIC_FACTORY", Material.OBSIDIAN, "Basic Logic Factory");
     // advanced machine

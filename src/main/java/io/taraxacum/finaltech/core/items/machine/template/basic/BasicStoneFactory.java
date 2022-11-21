@@ -10,8 +10,8 @@ import org.bukkit.inventory.ItemStack;
  * @author Final_ROOT
  * @since 1.0
  */
-public class BasicCobbleFactory extends AbstractBasicMachine {
-    public BasicCobbleFactory(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class BasicStoneFactory extends AbstractBasicMachine {
+    public BasicStoneFactory(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 

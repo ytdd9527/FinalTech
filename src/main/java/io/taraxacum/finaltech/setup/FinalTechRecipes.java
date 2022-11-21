@@ -720,7 +720,7 @@ public final class FinalTechRecipes {
     };
     public static final ItemStack[] COBBLESTONE_FACTORY = new ItemStack[] {
             FinalTechItems.ANNULAR, FinalTechItems.ANNULAR, FinalTechItems.ANNULAR,
-            FinalTechItems.BASIC_COBBLE_FACTORY, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.BASIC_COBBLE_FACTORY,
+            FinalTechItems.BASIC_STONE_FACTORY, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.BASIC_STONE_FACTORY,
             FinalTechItems.ANNULAR, FinalTechItems.ANNULAR, FinalTechItems.ANNULAR
     };
     public static final ItemStack[] FUEL_CHARGER = new ItemStack[] {
@@ -863,7 +863,7 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
     // basic machine
-    public static final ItemStack[] BASIC_COBBLE_FACTORY = new ItemStack[] {
+    public static final ItemStack[] BASIC_STONE_FACTORY = new ItemStack[] {
             new ItemStack(Material.LAVA_BUCKET), FinalTechItems.BUG, new ItemStack(Material.LAVA_BUCKET),
             new ItemStack(Material.WATER_BUCKET), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.WATER_BUCKET),
             SlimefunItems.COBALT_PICKAXE, FinalTechItems.ANNULAR, SlimefunItems.COBALT_PICKAXE
