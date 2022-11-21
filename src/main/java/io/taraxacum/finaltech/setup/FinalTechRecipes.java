@@ -966,19 +966,19 @@ public final class FinalTechRecipes {
     };
     // conversion
     public static final ItemStack[] DUST_CONVERSION = new ItemStack[] {
-            FinalTechItems.BASIC_DUST_FACTORY, FinalTechItems.GEARWHEEL, FinalTechItems.BASIC_DUST_FACTORY,
+            FinalTechItems.ADVANCED_DUST_FACTORY, FinalTechItems.GEARWHEEL, FinalTechItems.ADVANCED_DUST_FACTORY,
             FinalTechItems.ANNULAR, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.ANNULAR,
-            FinalTechItems.BASIC_DUST_FACTORY, FinalTechItems.ANNULAR, FinalTechItems.BASIC_DUST_FACTORY
+            FinalTechItems.ADVANCED_DUST_FACTORY, FinalTechItems.ANNULAR, FinalTechItems.ADVANCED_DUST_FACTORY
     };
     public static final ItemStack[] GRAVEL_CONVERSION = new ItemStack[] {
-            FinalTechItems.MANUAL_GOLD_PAN, FinalTechItems.WATER_CARD, FinalTechItems.MANUAL_GOLD_PAN,
+            FinalTechItems.ADVANCED_GOLD_PAN, FinalTechItems.WATER_CARD, FinalTechItems.ADVANCED_GOLD_PAN,
             FinalTechItems.ANNULAR, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.ANNULAR,
-            FinalTechItems.MANUAL_GOLD_PAN, FinalTechItems.ANNULAR, FinalTechItems.MANUAL_GOLD_PAN
+            FinalTechItems.ADVANCED_GOLD_PAN, FinalTechItems.ANNULAR, FinalTechItems.ADVANCED_GOLD_PAN
     };
     public static final ItemStack[] SOUL_SAND_CONVERSION = new ItemStack[] {
-            FinalTechItems.MANUAL_GOLD_PAN, FinalTechItems.LAVA_CARD, FinalTechItems.MANUAL_GOLD_PAN,
+            FinalTechItems.ADVANCED_GOLD_PAN, FinalTechItems.LAVA_CARD, FinalTechItems.ADVANCED_GOLD_PAN,
             FinalTechItems.ANNULAR, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.ANNULAR,
-            FinalTechItems.MANUAL_GOLD_PAN, FinalTechItems.ANNULAR, FinalTechItems.MANUAL_GOLD_PAN
+            FinalTechItems.ADVANCED_GOLD_PAN, FinalTechItems.ANNULAR, FinalTechItems.ADVANCED_GOLD_PAN
     };
     public static final ItemStack[] CONCRETE_CONVERSION = new ItemStack[] {
             FinalTechItems.WATER_CARD, FinalTechItems.GEARWHEEL, FinalTechItems.WATER_CARD,
