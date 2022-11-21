@@ -108,7 +108,6 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
     @Deprecated
     @Override
     public void addProgress(int i) {
-        this.count += i;
     }
 
     @Deprecated
