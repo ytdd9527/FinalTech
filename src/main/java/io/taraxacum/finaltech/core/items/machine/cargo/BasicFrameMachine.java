@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.libs.plugin.dto.InvWithSlots;
 import io.taraxacum.finaltech.core.dto.SimpleCargoDTO;
 import io.taraxacum.finaltech.core.helper.CargoFilter;
@@ -30,7 +31,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 1.0
  */
-public class BasicFrameMachine extends AbstractOperationMachine {
+public class BasicFrameMachine extends AbstractCargo implements RecipeItem {
     public BasicFrameMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -46,7 +47,7 @@ public class BasicFrameMachine extends AbstractOperationMachine {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         Inventory inventory = blockMenu.toInventory();
         MachineUtil.stockSlots(blockMenu.toInventory(), this.getInputSlot());
-        CargoUtil.doSimpleCargoStrongSymmetry(new SimpleCargoDTO(new InvWithSlots(inventory, this.getInputSlot()), block, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, new InvWithSlots(inventory, this.getOutputSlot()), block, SlotSearchSize.VALUE_OUTPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, this.getInputSlot().length, CargoLimit.VALUE_ALL, CargoFilter.VALUE_BLACK, inventory, new int[0]));
+        CargoUtil.doSimpleCargoStrongSymmetry(new SimpleCargoDTO(new InvWithSlots(inventory, this.getInputSlot()), block, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, new InvWithSlots(inventory, this.getOutputSlot()), block, SlotSearchSize.VALUE_OUTPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, this.getInputSlot().length * 64, CargoLimit.VALUE_ALL, CargoFilter.VALUE_BLACK, inventory, new int[0]));
         MachineUtil.stockSlots(blockMenu.toInventory(), this.getOutputSlot());
     }
 
