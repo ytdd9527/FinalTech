@@ -2061,7 +2061,7 @@ items:
     name: '{color:prandom}手动古代祭坛'
   FINALTECH_MANUAL_HEATED_PRESSURE_CHAMBER:
     name: '{color:prandom}手动加热压力舱'
-  FINALTECH_BASIC_COBBLE_FACTORY:
+  FINALTECH_BASIC_STONE_FACTORY:
     name: '{color:prandom}基础刷石工厂'
   FINALTECH_BASIC_DUST_FACTORY:
     name: '{color:prandom}基础矿粉工厂'
