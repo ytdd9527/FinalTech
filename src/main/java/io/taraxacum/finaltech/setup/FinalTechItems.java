@@ -72,7 +72,14 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MACHINE_CONFIGURATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MACHINE_CONFIGURATOR", Material.CLOCK, "Machine Configurator");
     public static final SlimefunItemStack PORTABLE_ENERGY_STORAGE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_PORTABLE_ENERGY_STORAGE", Material.CLOCK, "Portable Energy Storage");
     // weapon
+    public static final SlimefunItemStack SUPER_SHOVEL = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_SUPER_SHOVEL", Material.IRON_SHOVEL, "Super Shovel");
+    public static final SlimefunItemStack ULTIMATE_SHOVEL = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ULTIMATE_SHOVEL", Material.DIAMOND_SHOVEL, "Ultimate Shovel");
     public static final SlimefunItemStack SUPER_PICKAXE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_SUPER_PICKAXE", Material.IRON_PICKAXE, "Super Pickaxe");
+    public static final SlimefunItemStack ULTIMATE_PICKAXE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ULTIMATE_PICKAXE", Material.DIAMOND_PICKAXE, "Ultimate Pickaxe");
+    public static final SlimefunItemStack SUPER_AXE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_SUPER_AXE", Material.IRON_AXE, "Super Axe");
+    public static final SlimefunItemStack ULTIMATE_AXE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ULTIMATE_AXE", Material.DIAMOND_AXE, "Ultimate Axe");
+    public static final SlimefunItemStack SUPER_HOE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_SUPER_HOE", Material.IRON_HOE, "Super Hoe");
+    public static final SlimefunItemStack ULTIMATE_HOE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ULTIMATE_HOE", Material.DIAMOND_HOE, "Ultimate Hoe");
     public static final SlimefunItemStack SWORD1 = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_SWORD1", Material.WOODEN_SWORD, "sword1");
     public static final SlimefunItemStack SWORD2 = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_SWORD1", Material.WOODEN_SWORD, "sword2");
     public static final SlimefunItemStack SWORD3 = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_SWORD1", Material.WOODEN_SWORD, "sword3");

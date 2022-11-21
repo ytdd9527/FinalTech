@@ -246,10 +246,45 @@ public final class FinalTechRecipes {
             null, null, null
     };
     // weapon
+    public static final ItemStack[] SUPER_SHOVEL = new ItemStack[] {
+            null, new ItemStack(Material.IRON_INGOT), null,
+            null, FinalTechItems.GEARWHEEL, null,
+            null, FinalTechItems.GEARWHEEL, null
+    };
+    public static final ItemStack[] ULTIMATE_SHOVEL = new ItemStack[] {
+            null, FinalTechItems.SHINE, null,
+            null, new ItemStack(Material.DIAMOND_BLOCK), null,
+            null, new ItemStack(Material.DIAMOND_BLOCK), null
+    };
     public static final ItemStack[] SUPER_PICKAXE = new ItemStack[] {
+            new ItemStack(Material.IRON_INGOT), new ItemStack(Material.IRON_INGOT), new ItemStack(Material.IRON_INGOT),
+            null, FinalTechItems.GEARWHEEL, null,
+            null, FinalTechItems.GEARWHEEL, null
+    };
+    public static final ItemStack[] ULTIMATE_PICKAXE = new ItemStack[] {
             FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE,
-            null, new ItemStack(Material.STICK), null,
-            null, new ItemStack(Material.STICK), null
+            null, new ItemStack(Material.DIAMOND_BLOCK), null,
+            null, new ItemStack(Material.DIAMOND_BLOCK), null
+    };
+    public static final ItemStack[] SUPER_AXE = new ItemStack[] {
+            new ItemStack(Material.IRON_INGOT), new ItemStack(Material.IRON_INGOT), null,
+            new ItemStack(Material.IRON_INGOT), FinalTechItems.GEARWHEEL, null,
+            null, FinalTechItems.GEARWHEEL, null
+    };
+    public static final ItemStack[] ULTIMATE_AXE = new ItemStack[] {
+            FinalTechItems.SHINE, FinalTechItems.SHINE, null,
+            FinalTechItems.SHINE, new ItemStack(Material.DIAMOND_BLOCK), null,
+            null, new ItemStack(Material.DIAMOND_BLOCK), null
+    };
+    public static final ItemStack[] SUPER_HOE = new ItemStack[] {
+            new ItemStack(Material.IRON_INGOT), new ItemStack(Material.IRON_INGOT), null,
+            null, FinalTechItems.GEARWHEEL, null,
+            null, FinalTechItems.GEARWHEEL, null
+    };
+    public static final ItemStack[] ULTIMATE_HOE = new ItemStack[] {
+            FinalTechItems.SHINE, FinalTechItems.SHINE, null,
+            null, new ItemStack(Material.DIAMOND_BLOCK), null,
+            null, new ItemStack(Material.DIAMOND_BLOCK), null
     };
     public static final ItemStack[] SWORD1 = new ItemStack[] {
             null, new ItemStack(Material.IRON_INGOT), null,

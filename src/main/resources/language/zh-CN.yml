@@ -853,6 +853,20 @@ items:
     status:
       lore:
         - '{color:normal}储电量: {color:number}{1} J'
+  FINALTECH_SUPER_SHOVEL:
+    name: '{color:prandom}超级铲'
+    info:
+      1:
+        name: '{color:passive}机制'
+        lore:
+          - '{color:normal}破坏方块时额外掉落 1 经验'
+  FINALTECH_ULTIMATE_SHOVEL:
+    name: '{color:prandom}终极铲'
+    info:
+      1:
+        name: '{color:passive}机制'
+        lore:
+          - '{color:normal}破坏方块时额外掉落经验'
   FINALTECH_SUPER_PICKAXE:
     name: '{color:prandom}超级镐'
     info:
@@ -860,6 +874,41 @@ items:
         name: '{color:passive}机制'
         lore:
           - '{color:normal}破坏方块时额外掉落 1 经验'
+  FINALTECH_ULTIMATE_PICKAXE:
+    name: '{color:prandom}终极镐'
+    info:
+      1:
+        name: '{color:passive}机制'
+        lore:
+          - '{color:normal}破坏方块时额外掉落经验'
+  FINALTECH_SUPER_AXE:
+    name: '{color:prandom}超级斧'
+    info:
+      1:
+        name: '{color:passive}机制'
+        lore:
+          - '{color:normal}破坏方块时额外掉落 1 经验'
+  FINALTECH_ULTIMATE_AXE:
+    name: '{color:prandom}超级斧'
+    info:
+      1:
+        name: '{color:passive}机制'
+        lore:
+          - '{color:normal}破坏方块时额外掉落经验'
+  FINALTECH_SUPER_HOE:
+    name: '{color:prandom}超级锄'
+    info:
+      1:
+        name: '{color:passive}机制'
+        lore:
+          - '{color:normal}破坏方块时额外掉落 1 经验'
+  FINALTECH_ULTIMATE_HOE:
+    name: '{color:prandom}超级锄'
+    info:
+      1:
+        name: '{color:passive}机制'
+        lore:
+          - '{color:normal}破坏方块时额外掉落经验'
   FINALTECH_SWORD1:
     name: '{color:prandom}剑1'
   FINALTECH_BASIC_GENERATOR:

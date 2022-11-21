@@ -16,7 +16,7 @@ import io.taraxacum.finaltech.core.items.machine.logic.LogicEqualComparator;
 import io.taraxacum.finaltech.core.items.machine.logic.LogicNotNullComparator;
 import io.taraxacum.finaltech.core.items.machine.logic.LogicSimilarComparator;
 import io.taraxacum.finaltech.core.items.machine.range.point.face.*;
-import io.taraxacum.finaltech.core.items.SuperPickaxe;
+import io.taraxacum.finaltech.core.items.tool.*;
 import io.taraxacum.finaltech.core.items.machine.*;
 import io.taraxacum.finaltech.core.items.machine.cargo.unit.*;
 import io.taraxacum.finaltech.core.items.machine.electric.VariableWireCapacitor;
@@ -200,7 +200,14 @@ public final class SetupUtil {
                 new PortableEnergyStorage(FinalTechMenus.MENU_ITEMS, FinalTechItems.PORTABLE_ENERGY_STORAGE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.PORTABLE_ENERGY_STORAGE).register());
         // weapon
         FinalTechMenus.SUB_MENU_WEAPON.addTo(
-                new SuperPickaxe(FinalTechMenus.MENU_ITEMS, FinalTechItems.SUPER_PICKAXE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SUPER_PICKAXE).register()
+                new SuperShovel(FinalTechMenus.MENU_ITEMS, FinalTechItems.SUPER_SHOVEL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SUPER_SHOVEL).register(),
+                new UltimateShovel(FinalTechMenus.MENU_ITEMS, FinalTechItems.ULTIMATE_SHOVEL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ULTIMATE_SHOVEL).register(),
+                new SuperPickaxe(FinalTechMenus.MENU_ITEMS, FinalTechItems.SUPER_PICKAXE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SUPER_PICKAXE).register(),
+                new UltimatePickaxe(FinalTechMenus.MENU_ITEMS, FinalTechItems.ULTIMATE_PICKAXE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ULTIMATE_PICKAXE).register(),
+                new SuperAxe(FinalTechMenus.MENU_ITEMS, FinalTechItems.SUPER_AXE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SUPER_AXE).register(),
+                new UltimateAxe(FinalTechMenus.MENU_ITEMS, FinalTechItems.ULTIMATE_AXE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ULTIMATE_AXE).register(),
+                new SuperHoe(FinalTechMenus.MENU_ITEMS, FinalTechItems.SUPER_HOE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SUPER_HOE).register(),
+                new UltimateHoe(FinalTechMenus.MENU_ITEMS, FinalTechItems.ULTIMATE_HOE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ULTIMATE_HOE).register()
 //                new SlimefunItem(FinalTechMenus.MENU_ITEMS, FinalTechItems.SWORD1, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SWORD1).register(FinalTech.getInstance()),
 //                new SlimefunItem(FinalTechMenus.MENU_ITEMS, FinalTechItems.SWORD2, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SWORD2).register(FinalTech.getInstance()),
 //                new SlimefunItem(FinalTechMenus.MENU_ITEMS, FinalTechItems.SWORD3, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SWORD3).register(FinalTech.getInstance()),
@@ -566,7 +573,15 @@ public final class SetupUtil {
                 FinalTechItems.LOCATION_RECORDER,
                 FinalTechItems.MACHINE_CONFIGURATOR,
                 FinalTechItems.PORTABLE_ENERGY_STORAGE);
-        ResearchUtil.setSingleResearch(FinalTechItems.SUPER_PICKAXE, 10, false);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SUPER_SHOVEL, SlimefunItems.SOULBOUND_SHOVEL);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ULTIMATE_SHOVEL, SlimefunItems.SOULBOUND_SHOVEL);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SUPER_PICKAXE, SlimefunItems.SOULBOUND_PICKAXE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ULTIMATE_PICKAXE, SlimefunItems.SOULBOUND_PICKAXE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SUPER_AXE, SlimefunItems.SOULBOUND_AXE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ULTIMATE_AXE, SlimefunItems.SOULBOUND_AXE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SUPER_HOE, SlimefunItems.SOULBOUND_HOE);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ULTIMATE_HOE, SlimefunItems.SOULBOUND_HOE);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_GENERATOR, SlimefunItems.SOLAR_GENERATOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_GENERATOR, SlimefunItems.SOLAR_GENERATOR_2);

@@ -870,6 +870,20 @@ items:
     status:
       lore:
         - '{color:normal}Stored Energy: {color:number}{1} J'
+  FINALTECH_SUPER_SHOVEL:
+    name: '{color:prandom}Super Shovel'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Drop 1 extra exp instead while breaking block'
+  FINALTECH_ULTIMATE_SHOVEL:
+    name: '{color:prandom}Ultimate Shovel'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Drop extra exp instead while breaking block'
   FINALTECH_SUPER_PICKAXE:
     name: '{color:prandom}Super Pickaxe'
     info:
@@ -877,6 +891,41 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Drop 1 extra exp instead while breaking block'
+  FINALTECH_ULTIMATE_PICKAXE:
+    name: '{color:prandom}Ultimate Pickaxe'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Drop extra exp instead while breaking block'
+  FINALTECH_SUPER_AXE:
+    name: '{color:prandom}Super Axe'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Drop 1 extra exp instead while breaking block'
+  FINALTECH_ULTIMATE_AXE:
+    name: '{color:prandom}Ultimate Axe'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Drop extra exp instead while breaking block'
+  FINALTECH_SUPER_HOE:
+    name: '{color:prandom}Super Hoe'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Drop 1 extra exp instead while breaking block'
+  FINALTECH_ULTIMATE_HOE:
+    name: '{color:prandom}Ultimate Hoe'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Drop extra exp instead while breaking block'
   FINALTECH_SWORD1:
     name: '{color:prandom}Sword1'
   FINALTECH_BASIC_GENERATOR:
