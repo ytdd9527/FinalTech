@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.libs.plugin.dto.ItemWrapper;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
@@ -32,6 +33,7 @@ import java.util.Set;
  * @since 2.0
  */
 public class DustFactoryStone extends AbstractMachine implements RecipeItem {
+    private final double sleep = ConfigUtil.getOrDefaultItemSetting(4, this, "sleep");
     public DustFactoryStone(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -74,6 +76,8 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
         Set<Integer> amountList = new HashSet<>(this.getInputSlot().length);
         ItemWrapper firstItem = new ItemWrapper(blockMenu.getItemInSlot(this.getInputSlot()[0]));
         boolean allSameItem = true;
+        int maxAmount = firstItem.getItemStack().getAmount();
+        int minAmount = firstItem.getItemStack().getAmount();
 
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
@@ -81,16 +85,24 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
             if (allSameItem && !ItemStackUtil.isItemSimilar(firstItem, item)) {
                 allSameItem = false;
             }
+            if(maxAmount < item.getAmount()) {
+                maxAmount = item.getAmount();
+            } else if(minAmount > item.getAmount()) {
+                minAmount = item.getAmount();
+            }
         }
+
+        int sleep = 64 - maxAmount + minAmount;
+
         for (int slot : this.getInputSlot()) {
             blockMenu.replaceExistingItem(slot, ItemStackUtil.AIR);
         }
         if (amountList.size() == this.getInputSlot().length && allSameItem) {
             blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
-            BlockTickerUtil.setSleep(config, 1.0);
+            BlockTickerUtil.setSleep(config, FinalTech.getRandom().nextDouble(this.sleep + sleep));
         } else if (Math.random() < (double)(amountList.size()) / this.getInputSlot().length) {
             blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
-            BlockTickerUtil.setSleep(config, 1.0);
+            BlockTickerUtil.setSleep(config, FinalTech.getRandom().nextDouble(this.sleep + sleep));
         }
     }
 
