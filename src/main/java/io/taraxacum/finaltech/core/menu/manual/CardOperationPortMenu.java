@@ -169,6 +169,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                     ItemStack outputItem = ItemStackUtil.cloneItem(item1);
                     outputItem.setAmount(1);
                     inventory.setItem(outputSlot, outputItem);
+                    return true;
                 } else if (!ItemStackUtil.isItemNull(item2) && CopyCard.isValid(item2) && Shell.isValid(item1) && !ItemStackUtil.isItemNull(StringItemUtil.parseItemInCard(item2))) {
                     item1.setAmount(item1.getAmount() - 1);
                     ItemStack outputItem = ItemStackUtil.cloneItem(item2);
@@ -302,6 +303,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                     }
                     ItemStack outputItem = Shell.newItem(item1, player);
                     inventory.setItem(outputSlot, outputItem);
+                    return true;
                 } else if (Singularity.isValid(item2) || Spirochete.isValid(item2)) {
                     item2.setAmount(item2.getAmount() - 1);
                     Player player = null;
@@ -313,6 +315,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                     }
                     ItemStack outputItem = Shell.newItem(item2, player);
                     inventory.setItem(outputSlot, outputItem);
+                    return true;
                 }
                 return false;
             }
@@ -374,6 +377,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                         }
                     }
                     inventory.setItem(outputSlot, Annular.newItem(item1, player));
+                    return true;
                 } else if (CopyCard.isValid(item2) && !ItemStackUtil.isItemNull(StringItemUtil.parseItemInCard(item2))) {
                     item2.setAmount(item2.getAmount() - 1);
                     Player player = null;
@@ -384,6 +388,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                         }
                     }
                     inventory.setItem(outputSlot, Annular.newItem(item2, player));
+                    return true;
                 }
                 return false;
             }
