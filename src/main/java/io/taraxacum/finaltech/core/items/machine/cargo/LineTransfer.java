@@ -207,6 +207,9 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
 
                 if (CargoNumberMode.VALUE_UNIVERSAL.equals(cargoNumberMode)) {
                     cargoNumber -= number;
+                    if(cargoNumber <= 0) {
+                        break;
+                    }
                 }
             }
         } else {
@@ -356,6 +359,9 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
 
                         if (CargoNumberMode.VALUE_UNIVERSAL.equals(cargoNumberMode)) {
                             cargoNumber -= number;
+                            if(cargoNumber <= 0) {
+                                break;
+                            }
                         }
                     }
                 }, LocationUtil.transferToLocation(blockList));
