@@ -16,6 +16,7 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.core.menu.unit.VoidMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
@@ -28,11 +29,15 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Final_ROOT
  */
 public class OperationAccelerator extends AbstractFaceMachine implements RecipeItem {
+    private final Set<String> notAllowedId = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
+
     public OperationAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -72,17 +77,19 @@ public class OperationAccelerator extends AbstractFaceMachine implements RecipeI
                 Config machineConfig = BlockStorage.getLocationInfo(location);
                 if (machineConfig.contains(ConstantTableUtil.CONFIG_ID)) {
                     String machineId = machineConfig.getString(ConstantTableUtil.CONFIG_ID);
-                    SlimefunItem machineItem = SlimefunItem.getById(machineId);
-                    if (machineItem instanceof MachineProcessHolder) {
-                        MachineProcessor<?> machineProcessor = ((MachineProcessHolder<?>) machineItem).getMachineProcessor();
-                        Runnable runnable = () -> {
-                            MachineOperation operation = machineProcessor.getOperation(location);
-                            if (operation != null) {
-                                operation.addProgress(amount);
-                            }
-                        };
-                        BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineId), runnable, location);
-                        return 1;
+                    if(!this.notAllowedId.contains(machineId)) {
+                        SlimefunItem machineItem = SlimefunItem.getById(machineId);
+                        if (machineItem instanceof MachineProcessHolder) {
+                            MachineProcessor<?> machineProcessor = ((MachineProcessHolder<?>) machineItem).getMachineProcessor();
+                            Runnable runnable = () -> {
+                                MachineOperation operation = machineProcessor.getOperation(location);
+                                if (operation != null) {
+                                    operation.addProgress(amount);
+                                }
+                            };
+                            BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineId), runnable, location);
+                            return 1;
+                        }
                     }
                 }
             }
