@@ -21,7 +21,9 @@ import io.taraxacum.finaltech.util.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -41,7 +43,14 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
     @Nonnull
     @Override
     protected BlockPlaceHandler onBlockPlace() {
-        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_DENY;
+        return new BlockPlaceHandler(false) {
+            @Override
+            public void onPlayerPlace(@Nonnull BlockPlaceEvent e) {
+                Block block = e.getBlock();
+                Location location = block.getLocation();
+                BlockTickerUtil.setSleep(location, String.valueOf(DustFactoryStone.this.sleep * DustFactoryStone.this.sleep));
+            }
+        };
     }
 
     @Nonnull
@@ -59,12 +68,7 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         if (BlockTickerUtil.hasSleep(config)) {
-            double sleep = BlockTickerUtil.getSleep(config);
-            if (--sleep <= 0) {
-                BlockTickerUtil.setSleep(config, null);
-            } else {
-                BlockTickerUtil.setSleep(config, sleep);
-            }
+            BlockTickerUtil.subSleep(config);
             return;
         }
 
