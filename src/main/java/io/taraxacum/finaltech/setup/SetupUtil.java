@@ -113,6 +113,9 @@ public final class SetupUtil {
         ReflectionUtil.setStaticValue(Enchantment.class, "acceptingNew", true);
         Enchantment.registerEnchantment(NullEnchantment.ENCHANTMENT);
         FinalTechItems.ENTROPY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.QUANTITY_MODULE_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.OPERATION_ACCELERATOR_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.COPY_CARD.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.SHINE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.PHONY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.MACHINE_CHARGE_CARD_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
@@ -126,6 +129,7 @@ public final class SetupUtil {
         FinalTechItems.MATRIX_GENERATOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.MATRIX_ACCELERATOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.MATRIX_REACTOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         ItemStackUtil.addLoreToFirst(FinalTechItems.STORAGE_CARD, StorageCardItem.ITEM_LORE);
 
         /* items */
