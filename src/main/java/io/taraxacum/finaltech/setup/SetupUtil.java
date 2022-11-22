@@ -345,7 +345,7 @@ public final class SetupUtil {
                 new ManualHeatedPressureChamber(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MANUAL_HEATED_PRESSURE_CHAMBER).register());
         // basic machines
         FinalTechMenus.SUB_MENU_BASIC_MACHINE.addTo(
-                new BasicCobbleFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.BASIC_COBBLE_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_COBBLE_FACTORY).register(),
+                new BasicStoneFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.BASIC_STONE_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_STONE_FACTORY).register(),
                 new BasicDustFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.BASIC_DUST_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_DUST_FACTORY).register(),
                 new BasicLogicFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.BASIC_LOGIC_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_LOGIC_FACTORY).register());
         // advanced machine
@@ -675,7 +675,7 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MANUAL_ANCIENT_ALTAR, SlimefunItems.ANCIENT_ALTAR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER, SlimefunItems.HEATED_PRESSURE_CHAMBER);
 
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_COBBLE_FACTORY, SlimefunItems.PRODUCE_COLLECTOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_STONE_FACTORY, SlimefunItems.PRODUCE_COLLECTOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.BASIC_DUST_FACTORY, SlimefunItems.PRODUCE_COLLECTOR);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_COMPOSTER, SlimefunItems.FOOD_COMPOSTER_2);
