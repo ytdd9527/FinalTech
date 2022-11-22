@@ -55,7 +55,7 @@ FINALTECH_MACHINE_CONFIGURATOR:
     - 'FINALTECH_LOCATION_TRANSFER'
 FINALTECH_ADVANCED_AUTO_CRAFT:
   recipe-type-id:
-    - 'finaltech_matrix-crafting_table'
+    - 'finaltech_matrix_crafting_table'
 FINALTECH_MATRIX_ITEM_DISMANTLE_TABLE:
   not-allowed-recipe-type:
     - 'singularity_constructor'
