@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.setup.FinalTechRecipes;
 import io.taraxacum.libs.plugin.dto.AdvancedMachineRecipe;
 import io.taraxacum.libs.plugin.dto.ItemAmountWrapper;
 import io.taraxacum.libs.plugin.dto.LocationRecipeRegistry;
@@ -357,6 +358,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
         RECIPE_MAP.put(FinalTechItems.MANUAL_JUICER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_JUICER));
         RECIPE_MAP.put(FinalTechItems.MANUAL_ANCIENT_ALTAR.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_ANCIENT_ALTAR));
         RECIPE_MAP.put(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER));
+        RECIPE_MAP.put(FinalTechItems.BASIC_COBBLE_FACTORY.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.BASIC_COBBLE_FACTORY));
 
         RECIPE_TYPE_ID_LIST.add(RecipeType.ENHANCED_CRAFTING_TABLE.getKey().getKey());
         RECIPE_TYPE_ID_LIST.add(RecipeType.GRIND_STONE.getKey().getKey());
@@ -371,5 +373,6 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
         RECIPE_TYPE_ID_LIST.add(RecipeType.JUICER.getKey().getKey());
         RECIPE_TYPE_ID_LIST.add(RecipeType.ANCIENT_ALTAR.getKey().getKey());
         RECIPE_TYPE_ID_LIST.add(RecipeType.HEATED_PRESSURE_CHAMBER.getKey().getKey());
+        RECIPE_TYPE_ID_LIST.add(FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE.getKey().getKey());
     }
 }

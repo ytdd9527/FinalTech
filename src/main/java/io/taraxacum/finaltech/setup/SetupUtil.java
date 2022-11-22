@@ -349,6 +349,7 @@ public final class SetupUtil {
                 new ManualHeatedPressureChamber(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MANUAL_HEATED_PRESSURE_CHAMBER).register());
         // basic machines
         FinalTechMenus.SUB_MENU_BASIC_MACHINE.addTo(
+                new BasicCobbleFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.BASIC_COBBLE_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_COBBLE_FACTORY).register(),
                 new BasicStoneFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.BASIC_STONE_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_STONE_FACTORY).register(),
                 new BasicDustFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.BASIC_DUST_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_DUST_FACTORY).register(),
                 new BasicLogicFactory(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.BASIC_LOGIC_FACTORY, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.BASIC_LOGIC_FACTORY).register());

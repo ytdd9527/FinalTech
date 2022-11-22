@@ -863,6 +863,11 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
     // basic machine
+    public static final ItemStack[] BASIC_COBBLE_FACTORY = new ItemStack[] {
+            new ItemStack(Material.WATER_BUCKET), FinalTechItems.BUG, new ItemStack(Material.WATER_BUCKET),
+            new ItemStack(Material.LAVA_BUCKET), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.LAVA_BUCKET),
+            SlimefunItems.COBALT_PICKAXE, FinalTechItems.ANNULAR, SlimefunItems.COBALT_PICKAXE
+    };
     public static final ItemStack[] BASIC_STONE_FACTORY = new ItemStack[] {
             new ItemStack(Material.LAVA_BUCKET), FinalTechItems.BUG, new ItemStack(Material.LAVA_BUCKET),
             new ItemStack(Material.WATER_BUCKET), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.WATER_BUCKET),
