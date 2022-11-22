@@ -20,5 +20,6 @@ public class BasicStoneFactory extends AbstractBasicMachine {
         this.registerRecipe(new ItemStack(Material.GRANITE, 24), new ItemStack(Material.GRANITE, 32));
         this.registerRecipe(new ItemStack(Material.DIORITE, 24), new ItemStack(Material.DIORITE, 32));
         this.registerRecipe(new ItemStack(Material.ANDESITE, 24), new ItemStack(Material.ANDESITE, 32));
+        this.registerRecipe(new ItemStack(Material.STONE, 24), new ItemStack(Material.STONE, 32));
     }
 }
