@@ -1,6 +1,5 @@
 package io.taraxacum.finaltech.core.listener;
 
-import io.taraxacum.common.api.RunnableLockFactory;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.task.effect.UntreatableEffect;
 import io.taraxacum.finaltech.setup.FinalTechItems;
@@ -14,8 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -111,18 +110,16 @@ public class ShineListener implements Listener {
     }
 
     @EventHandler
-    public void onEntityTeleport(EntityTeleportEvent entityTeleportEvent) {
-        Location sourceLocation = entityTeleportEvent.getFrom();
+    public void onPlayerTeleport(PlayerTeleportEvent playerTeleportEvent) {
+        Location sourceLocation = playerTeleportEvent.getFrom();
         if (sourceLocation.getWorld() != null) {
             World world = sourceLocation.getWorld();
-            if (sourceLocation.getY() < world.getMinHeight() - 64) {
-                if (EntityType.PLAYER.equals(entityTeleportEvent.getEntityType())) {
-                    Entity entity = entityTeleportEvent.getEntity();
-                    if (entity instanceof Player) {
-                        for (ItemStack itemStack : ((Player) entity).getInventory().getContents()) {
-                            if (ItemStackUtil.isItemSimilar(itemStack, FinalTechItems.SHINE)) {
-                                itemStack.setAmount(0);
-                            }
+            if (sourceLocation.getY() < world.getMinHeight() - 32) {
+                if (EntityType.PLAYER.equals(playerTeleportEvent.getPlayer().getType())) {
+                    Player player = playerTeleportEvent.getPlayer();
+                    for (ItemStack itemStack : player.getInventory().getContents()) {
+                        if (ItemStackUtil.isItemSimilar(itemStack, FinalTechItems.SHINE)) {
+                            itemStack.setAmount(0);
                         }
                     }
                 }
