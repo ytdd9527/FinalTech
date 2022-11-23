@@ -9,6 +9,10 @@ import io.taraxacum.libs.plugin.dto.LanguageManager;
 import io.taraxacum.libs.plugin.dto.ServerRunnableLockFactory;
 import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import org.bstats.bukkit.Metrics;
+import org.bstats.charts.AdvancedBarChart;
+import org.bstats.charts.MultiLineChart;
+import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -181,6 +185,28 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         } else {
             SetupUtil.registerBlockTicker(0);
         }
+
+        /* setup bstats */
+        Metrics metrics = new Metrics(this, 16920);
+        metrics.addCustomChart(new AdvancedBarChart("multi_thread_level", () -> {
+            Map<String, int[]> result = new LinkedHashMap<>();
+            int[] info = FinalTech.getForceSlimefunMultiThread() ? new int[] {0, 1} : new int[] {1, 0};
+            if(FinalTech.getMultiThreadLevel() == 0) {
+                result.put("Multi-Thread-Level 0", info);
+            }
+            return result;
+        }));
+        metrics.addCustomChart(new SingleLineChart("players", () -> Bukkit.getOnlinePlayers().size()));
+        metrics.addCustomChart(new MultiLineChart("servers", () -> {
+            Map<String, Integer> result = new HashMap<>();
+            result.put(Bukkit.getServer().getVersion(), 1);
+            return result;
+        }));
+        metrics.addCustomChart(new MultiLineChart("languages", () -> {
+            Map<String, Integer> result = new HashMap<>();
+            result.put(FinalTech.getConfigManager().getString("language"), 1);
+            return result;
+        }));
     }
 
     @Override
