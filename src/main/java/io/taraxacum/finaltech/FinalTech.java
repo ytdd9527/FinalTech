@@ -90,19 +90,6 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         this.locationRunnableFactory = ServerRunnableLockFactory.getInstance(this, Location.class);
         this.entityRunnableFactory = ServerRunnableLockFactory.getInstance(this, Entity.class);
 
-        /* Disabled if you installed this plugin just for slimefun addon quantity. Not disable it as being loaded before. */
-        if (!this.config.containPath("version") && Slimefun.getInstalledAddons().size() >= 35 && !this.config.getOrDefault(false, "I'm_not_just_for_quantity_of_slimefun_addon_to_install_this_plugin")) {
-            this.getLogger().warning("It seems you are just for quantity of slimefun addon to install this plugin.");
-            this.getLogger().warning("So this plugin is disabled now.(Open config file and set true of 'I'm_not_just_for_quantity_of_slimefun_addon_to_install_this_plugin', as you want to enable this plugin.)");
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
-        } else if (!this.config.containPath("version") && Slimefun.getInstalledAddons().size() >= 20 && !this.config.getOrDefault(false, "I_know_there_may_be_incompatibilities_between_slimefun_addons_and_I_will_be_responsible_for_it")) {
-            this.getLogger().warning("It seems you don't know there may be incompatibilities between slimefun addons or you don't want to be responsible for it.");
-            this.getLogger().warning("So this plugin is disabled now due to possible incompatibilities.");
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
-        }
-
         // TODO: version update.(Now this is the first version being recorded and will be supported to update)
         if (!this.config.containPath("version")) {
             this.config.setValue(version, "version");
