@@ -91,11 +91,6 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         this.entityRunnableFactory = ServerRunnableLockFactory.getInstance(this, Entity.class);
 
         /* Disabled if you installed this plugin just for slimefun addon quantity. Not disable it as being loaded before. */
-        if (!this.config.containPath("version") && Slimefun.getInstalledAddons().size() >= 70) {
-            this.getLogger().warning("You have installed so many slimefun addons. Change the source code to load this plugin!");
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
-        }
         if (!this.config.containPath("version") && Slimefun.getInstalledAddons().size() >= 35 && !this.config.getOrDefault(false, "I'm_not_just_for_quantity_of_slimefun_addon_to_install_this_plugin")) {
             this.getLogger().warning("It seems you are just for quantity of slimefun addon to install this plugin.");
             this.getLogger().warning("So this plugin is disabled now.(Open config file and set true of 'I'm_not_just_for_quantity_of_slimefun_addon_to_install_this_plugin', as you want to enable this plugin.)");
