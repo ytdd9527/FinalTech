@@ -44,7 +44,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
      * Add by 1 every slimefun tick.
      */
     private int slimefunTickCount = 0;
-    private long tps = 20;
+    private double tps = 20;
     private Logger logger;
     private ServerRunnableLockFactory<Location> locationRunnableFactory;
     private ServerRunnableLockFactory<Entity> entityRunnableFactory;
@@ -129,12 +129,12 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         this.bukkitTask = this.getServer().getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
             private final AtomicLong currentTimeMillis = new AtomicLong();
             private final AtomicLong lastTimeMillis = new AtomicLong(System.currentTimeMillis());
-            private final int FULL_SLIMEFUN_TICK = 20 * 50 * tickRate;
+            private final double FULL_SLIMEFUN_TICK = 20 * 50 * tickRate;
 
             @Override
             public void run() {
                 this.currentTimeMillis.set(System.currentTimeMillis());
-                FinalTech.instance.tps = Math.max(FULL_SLIMEFUN_TICK / Math.max(1, currentTimeMillis.get() - lastTimeMillis.get()), 20);
+                FinalTech.instance.tps = Math.min(FULL_SLIMEFUN_TICK / Math.max(1, currentTimeMillis.get() - lastTimeMillis.get()), 20);
                 this.lastTimeMillis.set(currentTimeMillis.get());
                 FinalTech.instance.slimefunTickCount++;
             }
@@ -275,7 +275,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         return instance.slimefunTickCount;
     }
 
-    public static long getTps() {
+    public static double getTps() {
         return instance.tps;
     }
 
