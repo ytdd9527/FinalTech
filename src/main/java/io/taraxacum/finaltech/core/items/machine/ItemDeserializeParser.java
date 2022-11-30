@@ -20,6 +20,7 @@ import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -57,13 +58,27 @@ public class ItemDeserializeParser extends AbstractMachine implements RecipeItem
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
+        Inventory inventory = blockMenu.toInventory();
+        if(!ItemStackUtil.isItemNull(inventory.getItem(this.getOutputSlot()[this.getOutputSlot().length - 1])) && MachineUtil.slotCount(inventory, this.getOutputSlot()) == this.getOutputSlot().length) {
+            return;
+        }
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (CopyCard.isValid(item)) {
                 ItemStack stringItem = StringItemUtil.parseItemInCard(item);
                 if (!ItemStackUtil.isItemNull(stringItem)) {
-                    stringItem.setAmount(item.getAmount());
-                    blockMenu.pushItem(stringItem, this.getOutputSlot());
+                    int amount = item.getAmount();
+                    int count;
+                    while (true) {
+                        count = Math.min(amount, stringItem.getMaxStackSize());
+                        stringItem.setAmount(count);
+                        blockMenu.pushItem(stringItem, this.getOutputSlot());
+                        amount -= count;
+                        if(amount == 0 || MachineUtil.slotCount(inventory, this.getOutputSlot()) == this.getOutputSlot().length) {
+                            break;
+                        }
+                        stringItem = ItemStackUtil.cloneItem(stringItem);
+                    }
                 }
             }
         }
