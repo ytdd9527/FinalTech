@@ -40,6 +40,14 @@ public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem 
         return new ItemStack(FinalTechItems.STORAGE_CARD);
     }
 
+    public static ItemStack newItem(@Nonnull ItemStack stringItem, @Nonnull String amount) {
+        ItemStack result = ItemStackUtil.cloneItem(FinalTechItems.STORAGE_CARD);
+        result.setAmount(1);
+        StringItemUtil.setItemInCard(result, stringItem, amount);
+        StorageCardItem.updateLore(result);
+        return result;
+    }
+
     public static boolean isValid(@Nonnull ItemStack item) {
         if (item.hasItemMeta()) {
             return StorageCardItem.isValid(item.getItemMeta());

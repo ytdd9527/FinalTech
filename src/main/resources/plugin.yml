@@ -20,6 +20,10 @@ commands:
     description: Transfer a valid item to a copy card
     usage: /<command>
     permission: finaltech.item.copy-card
+  finaltech-storage-card:
+    description: Transfer a valid item to a storage card with given amount
+    usage: /<command> <amount>
+    permission: finaltech.item.storage-card
   finaltech-info:
     description: Show info about the item if it's from slimefun
     usage: /<command>
@@ -28,6 +32,9 @@ commands:
 permissions:
   finaltech.item.copy-card:
     description: Transfer a valid item to a copy card
+    default: op
+  finaltech.item.storage-card:
+    description: Transfer a valid item to a storage card with given amount
     default: op
   finaltech.item.info:
     description: Show info about the item if it's from slimefun

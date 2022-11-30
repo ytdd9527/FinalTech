@@ -10,6 +10,7 @@ import io.taraxacum.common.util.StringUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.command.ShowItemInfo;
 import io.taraxacum.finaltech.core.command.TransferToCopyCardItem;
+import io.taraxacum.finaltech.core.command.TransferToStorageItem;
 import io.taraxacum.finaltech.core.enchantment.NullEnchantment;
 import io.taraxacum.finaltech.core.items.machine.logic.LogicAmountComparator;
 import io.taraxacum.finaltech.core.items.machine.logic.LogicEqualComparator;
@@ -719,6 +720,7 @@ public final class SetupUtil {
 
         /* command */
         finalTech.getCommand("finaltech-copy-card").setExecutor(new TransferToCopyCardItem());
+        finalTech.getCommand("finaltech-storage-card").setExecutor(new TransferToStorageItem());
         finalTech.getCommand("finaltech-info").setExecutor(new ShowItemInfo());
     }
 

@@ -400,4 +400,24 @@ public final class StringNumberUtil {
         }
         return (r1 == r2 ? "" : RELATIVE) + easilyMul(s1, s2);
     }
+
+    public static boolean isNumber(@Nonnull String stringNumber) {
+        if(stringNumber.length() == 0) {
+            return false;
+        }
+        if(VALUE_INFINITY.equals(stringNumber)) {
+            return true;
+        }
+        char c = stringNumber.charAt(0);
+        if(c == '-' || (c >= '0' && c <= '9')) {
+            for(int i = 1; i < stringNumber.length(); i++) {
+                c = stringNumber.charAt(i);
+                if(!(c >= '0' && c <= '9')) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 }
