@@ -165,7 +165,7 @@ public class StringItemUtil {
         }
 
         totalAmount = totalAmount - totalAmount % size;
-        int count = totalAmount;
+        int count = totalAmount / size;
         for (ItemStack item : sourceItemList) {
             if (item.getAmount() > totalAmount) {
                 item.setAmount(item.getAmount() - totalAmount);
