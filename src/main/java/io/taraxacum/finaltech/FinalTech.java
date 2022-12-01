@@ -163,9 +163,9 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         /* setup slimefun machine block ticker */
         int blockTickerRegisterDelay = this.config.getOrDefault(20, "setups", "slimefun-machine", "delay");
         if (blockTickerRegisterDelay > 0) {
-            this.getServer().getScheduler().runTask(this, () -> SetupUtil.registerBlockTicker(0));
+            this.getServer().getScheduler().runTask(this, SetupUtil::registerBlockTicker);
         } else {
-            SetupUtil.registerBlockTicker(0);
+            SetupUtil.registerBlockTicker();
         }
 
         /* setup bstats */

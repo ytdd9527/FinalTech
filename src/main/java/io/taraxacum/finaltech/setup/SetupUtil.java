@@ -801,7 +801,11 @@ public final class SetupUtil {
         });
     }
 
-    public static void registerBlockTicker(int begin) {
+    public static void registerBlockTicker() {
+        SetupUtil.registerBlockTicker(0);
+    }
+
+    private static void registerBlockTicker(int begin) {
         try {
             List<SlimefunItem> slimefunItemList = Slimefun.getRegistry().getAllSlimefunItems();
             for(int size = slimefunItemList.size(); begin < size; begin++) {
@@ -813,16 +817,25 @@ public final class SetupUtil {
                         blockTicker = null;
                     } else {
                         forceAsync = !blockTicker.isSynchronized() && (FinalTech.getForceSlimefunMultiThread() || FinalTech.isAsyncSlimefunItem(slimefunItem.getId()));
-                        blockTicker = SetupUtil.generateBlockTicker(blockTicker, forceAsync, FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId()), FinalTech.isPerformanceLimitSlimefunItem(slimefunItem.getId()));
+                        boolean antiAccelerate = FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId());
+                        boolean performanceLimit = FinalTech.isPerformanceLimitSlimefunItem(slimefunItem.getId());
+                        if(forceAsync || antiAccelerate || performanceLimit) {
+                            blockTicker = SetupUtil.generateBlockTicker(blockTicker, forceAsync, antiAccelerate, performanceLimit);
+                        }
                     }
-                    Class<SlimefunItem> clazz = SlimefunItem.class;
-                    Field declaredField = clazz.getDeclaredField("blockTicker");
-                    declaredField.setAccessible(true);
-                    declaredField.set(slimefunItem, blockTicker);
-                    declaredField.setAccessible(false);
-                    if (forceAsync) {
-                        FinalTech.logger().info(slimefunItem.getItemName() + "§f is optimized for multithreading！！！");
-                        FinalTech.addAsyncSlimefunItem(slimefunItem.getId());
+                    if(FinalTech.getConfigManager().getOrDefault(false, "debug-mode")) {
+                        blockTicker = getDebugModeBlockTicker(blockTicker, slimefunItem);
+                    }
+                    if(slimefunItem.getBlockTicker() != blockTicker) {
+                        Class<SlimefunItem> clazz = SlimefunItem.class;
+                        Field declaredField = clazz.getDeclaredField("blockTicker");
+                        declaredField.setAccessible(true);
+                        declaredField.set(slimefunItem, blockTicker);
+                        declaredField.setAccessible(false);
+                        if (forceAsync) {
+                            FinalTech.logger().info(slimefunItem.getId() + "(" + slimefunItem.getItemName() + ")" + " is optimized for multi-thread！！！");
+                            FinalTech.addAsyncSlimefunItem(slimefunItem.getId());
+                        }
                     }
                 }
             }
@@ -830,7 +843,22 @@ public final class SetupUtil {
             e.printStackTrace();
             SetupUtil.registerBlockTicker(++begin);
         }
+    }
 
+    @Nonnull
+    public static BlockTicker getDebugModeBlockTicker(@Nonnull BlockTicker blockTicker, @Nonnull SlimefunItem slimefunItem) {
+        return new BlockTicker() {
+            @Override
+            public boolean isSynchronized() {
+                return blockTicker.isSynchronized();
+            }
+
+            @Override
+            public void tick(Block b, SlimefunItem item, Config data) {
+                System.out.println("DEBUG MODE: " + slimefunItem.getId() + " | Location: " + b.getLocation());
+                blockTicker.tick(b, item, data);
+            }
+        };
     }
 
     @Nonnull

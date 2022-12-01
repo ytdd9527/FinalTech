@@ -36,15 +36,15 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
         this.addItemHandler(this.onBlockBreak());
         this.addItemHandler(this.onBlockPlace());
 
-        // TODO
         if (FinalTech.getMultiThreadLevel() == 2) {
-            this.getAddon().getJavaPlugin().getLogger().info(this.getItemName() + "§f is optimized for multithreading！！！");
+            this.getAddon().getJavaPlugin().getLogger().info(this.getId() + "(" + this.getItemName() + ")" + " is optimized for multi-thread！！！");
         } else if (!this.isSynchronized() && (FinalTech.getMultiThreadLevel() == 1 || FinalTech.isAsyncSlimefunItem(this.getId()))) {
-            this.getAddon().getJavaPlugin().getLogger().info(this.getItemName() + "§f is optimized for multithreading！！！");
+            this.getAddon().getJavaPlugin().getLogger().info(this.getId() + "(" + this.getItemName() + ")" + " is optimized for multi-thread！！！");
         }
 
+        BlockTicker blockTicker;
         if (FinalTech.getMultiThreadLevel() == 2) {
-            this.addItemHandler(SetupUtil.generateBlockTicker(new BlockTicker() {
+            blockTicker = new BlockTicker() {
                 @Override
                 public boolean isSynchronized() {
                     return false;
@@ -54,9 +54,13 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
                 public void tick(Block b, SlimefunItem item, Config data) {
                     AbstractMachine.this.tick(b, item, data);
                 }
-            }, true, FinalTech.isAntiAccelerateSlimefunItem(this.getId()), FinalTech.isPerformanceLimitSlimefunItem(this.getId())));
+            };
+            if(FinalTech.getConfigManager().getOrDefault(false, "debug-mode")) {
+                blockTicker = SetupUtil.getDebugModeBlockTicker(blockTicker, this);
+            }
+            this.addItemHandler(SetupUtil.generateBlockTicker(blockTicker, true, FinalTech.isAntiAccelerateSlimefunItem(this.getId()), FinalTech.isPerformanceLimitSlimefunItem(this.getId())));
         } else {
-            this.addItemHandler(SetupUtil.generateBlockTicker(new BlockTicker() {
+            blockTicker = new BlockTicker() {
                 @Override
                 public boolean isSynchronized() {
                     return AbstractMachine.this.isSynchronized();
@@ -66,7 +70,11 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
                 public void tick(Block b, SlimefunItem item, Config data) {
                     AbstractMachine.this.tick(b, item, data);
                 }
-            }, !this.isSynchronized() && (FinalTech.getMultiThreadLevel() == 1 || FinalTech.isAsyncSlimefunItem(this.getId())), FinalTech.isAntiAccelerateSlimefunItem(this.getId()), FinalTech.isPerformanceLimitSlimefunItem(this.getId())));
+            };
+            if(FinalTech.getConfigManager().getOrDefault(false, "debug-mode")) {
+                blockTicker = SetupUtil.getDebugModeBlockTicker(blockTicker, this);
+            }
+            this.addItemHandler(SetupUtil.generateBlockTicker(blockTicker, !this.isSynchronized() && (FinalTech.getMultiThreadLevel() == 1 || FinalTech.isAsyncSlimefunItem(this.getId())), FinalTech.isAntiAccelerateSlimefunItem(this.getId()), FinalTech.isPerformanceLimitSlimefunItem(this.getId())));
         }
     }
 
