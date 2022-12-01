@@ -131,7 +131,7 @@ public final class SetupUtil {
         FinalTechItems.MATRIX_ACCELERATOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.MATRIX_REACTOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        ItemStackUtil.addLoreToFirst(FinalTechItems.STORAGE_CARD, StorageCardItem.ITEM_LORE);
+        ItemStackUtil.addLoreToFirst(FinalTechItems.STORAGE_CARD, StorageCard.ITEM_LORE);
 
         /* items */
         // material
@@ -281,7 +281,7 @@ public final class SetupUtil {
                 new StorageInteractPort(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.STORAGE_INTERACT_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_INTERACT_PORT).register(),
                 new StorageInsertPort(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.STORAGE_INSERT_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_INSERT_PORT).register(),
                 new StorageWithdrawPort(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.STORAGE_WITHDRAW_PORT, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_WITHDRAW_PORT).register(),
-                new StorageCardItem(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.STORAGE_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_CARD).register());
+                new StorageCard(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.STORAGE_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STORAGE_CARD).register());
         // accessor
         FinalTechMenus.SUB_MENU_ACCESSOR.addTo(
                 new RemoteAccessor(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.REMOTE_ACCESSOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.REMOTE_ACCESSOR).register(),

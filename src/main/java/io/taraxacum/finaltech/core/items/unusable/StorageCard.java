@@ -27,11 +27,11 @@ import java.util.List;
  * @author Final_ROOT
  * @since 2.0
  */
-public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem {
+public class StorageCard extends UnusableSlimefunItem implements RecipeItem {
     public static final String ITEM_LORE_WITHOUT_COLOR = "⌫⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌧⌦";
     public static final String ITEM_LORE = TextUtil.colorRandomString(ITEM_LORE_WITHOUT_COLOR);
 
-    public StorageCardItem(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public StorageCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -44,13 +44,13 @@ public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem 
         ItemStack result = ItemStackUtil.cloneItem(FinalTechItems.STORAGE_CARD);
         result.setAmount(1);
         StringItemUtil.setItemInCard(result, stringItem, amount);
-        StorageCardItem.updateLore(result);
+        StorageCard.updateLore(result);
         return result;
     }
 
     public static boolean isValid(@Nonnull ItemStack item) {
         if (item.hasItemMeta()) {
-            return StorageCardItem.isValid(item.getItemMeta());
+            return StorageCard.isValid(item.getItemMeta());
         }
         return false;
     }
@@ -59,7 +59,7 @@ public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem 
             return false;
         }
         List<String> lore = itemMeta.getLore();
-        return !lore.isEmpty() && StorageCardItem.ITEM_LORE_WITHOUT_COLOR.equals(ChatColor.stripColor(lore.get(0)));
+        return !lore.isEmpty() && StorageCard.ITEM_LORE_WITHOUT_COLOR.equals(ChatColor.stripColor(lore.get(0)));
     }
 
     public static boolean storableItem(@Nonnull ItemStack item) {
@@ -72,7 +72,7 @@ public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem 
             return;
         }
         ItemMeta itemMeta = cardItem.getItemMeta();
-        StorageCardItem.updateLore(itemMeta);
+        StorageCard.updateLore(itemMeta);
         cardItem.setItemMeta(itemMeta);
     }
     /**
@@ -86,7 +86,7 @@ public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem 
             String itemString = persistentDataContainer.get(StringItemUtil.ITEM_KEY, PersistentDataType.STRING);
             stringItem = ItemStackUtil.stringToItemStack(itemString);
         }
-        StorageCardItem.updateLore(cardItemMeta, stringItem);
+        StorageCard.updateLore(cardItemMeta, stringItem);
     }
     public static void updateLore(@Nonnull ItemMeta cardItemMeta, @Nullable ItemStack stringItem) {
         PersistentDataContainer persistentDataContainer = cardItemMeta.getPersistentDataContainer();
@@ -96,9 +96,9 @@ public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem 
             lore = cardItemMeta.getLore();
             if (lore == null || lore.isEmpty()) {
                 lore = new ArrayList<>(4);
-                lore.add(StorageCardItem.ITEM_LORE);
+                lore.add(StorageCard.ITEM_LORE);
             } else {
-                lore.set(0, StorageCardItem.ITEM_LORE);
+                lore.set(0, StorageCard.ITEM_LORE);
             }
             String name = ItemStackUtil.getItemName(stringItem);
             if (lore.size() == 1) {
@@ -108,7 +108,7 @@ public class StorageCardItem extends UnusableSlimefunItem implements RecipeItem 
             }
         } else {
             lore = new ArrayList<>(1);
-            lore.add(StorageCardItem.ITEM_LORE);
+            lore.add(StorageCard.ITEM_LORE);
         }
         cardItemMeta.setLore(lore);
     }

@@ -11,7 +11,7 @@ import io.taraxacum.libs.plugin.dto.ItemWrapper;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.StringItemUtil;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
-import io.taraxacum.finaltech.core.items.unusable.StorageCardItem;
+import io.taraxacum.finaltech.core.items.unusable.StorageCard;
 import io.taraxacum.finaltech.core.items.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.StorageInteractPortMenu;
@@ -103,7 +103,7 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
 
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if (!ItemStackUtil.isItemNull(item) && !StorageCardItem.storableItem(item)) {
+            if (!ItemStackUtil.isItemNull(item) && !StorageCard.storableItem(item)) {
                 JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
                 javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> blockMenu.dropItems(location, MatrixReactorMenu.ITEM_INPUT_SLOT));
                 return;
@@ -118,7 +118,7 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
                 continue;
             }
             ItemMeta itemMeta = item.getItemMeta();
-            if (StorageCardItem.isValid(itemMeta)) {
+            if (StorageCard.isValid(itemMeta)) {
                 storageCardItemList.add(new ItemWrapper(item));
                 if (item.getAmount() == 1) {
                     pushItemAmount++;
@@ -186,7 +186,7 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
                 }
             }
             if (pushCount != 0 || stackCount != 0) {
-                StorageCardItem.updateLore(itemMeta, stringItem.getItemStack());
+                StorageCard.updateLore(itemMeta, stringItem.getItemStack());
                 storageCardItem.getItemStack().setItemMeta(itemMeta);
             }
         }

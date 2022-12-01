@@ -76,7 +76,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
 
             @Override
             public boolean canCraft(@Nullable ItemStack item1, @Nullable ItemStack item2) {
-                if (!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2) && StorageCardItem.isValid(item1) && StorageCardItem.isValid(item2)) {
+                if (!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2) && StorageCard.isValid(item1) && StorageCard.isValid(item2)) {
                     ItemStack stringItem1 = StringItemUtil.parseItemInCard(item1);
                     ItemStack stringItem2 = StringItemUtil.parseItemInCard(item2);
                     return ItemStackUtil.isItemSimilar(stringItem1, stringItem2);
@@ -96,15 +96,15 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                 if (!ItemStackUtil.isItemNull(item1) && !ItemStackUtil.isItemNull(item2) && item1.hasItemMeta() && item2.hasItemMeta()) {
                     ItemMeta itemMeta1 = item1.getItemMeta();
                     ItemMeta itemMeta2 = item2.getItemMeta();
-                    if (StorageCardItem.isValid(itemMeta1) && StorageCardItem.isValid(itemMeta2)) {
+                    if (StorageCard.isValid(itemMeta1) && StorageCard.isValid(itemMeta2)) {
                         ItemStack stringItem1 = StringItemUtil.parseItemInCard(itemMeta1);
                         ItemStack stringItem2 = StringItemUtil.parseItemInCard(itemMeta2);
                         if (ItemStackUtil.isItemSimilar(stringItem1, stringItem2)) {
                             String amount1 = StringItemUtil.parseAmountInCard(itemMeta1);
                             String amount2 = StringItemUtil.parseAmountInCard(itemMeta2);
-                            ItemStack outputItem = StorageCardItem.newItem();
+                            ItemStack outputItem = StorageCard.newItem();
                             StringItemUtil.setItemInCard(outputItem, stringItem1, StringNumberUtil.add(amount1, amount2));
-                            StorageCardItem.updateLore(outputItem);
+                            StorageCard.updateLore(outputItem);
                             item1.setAmount(item1.getAmount() - 1);
                             item2.setAmount(item2.getAmount() - 1);
                             inventory.setItem(outputSlot, outputItem);

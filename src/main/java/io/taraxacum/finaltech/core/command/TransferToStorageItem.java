@@ -2,8 +2,7 @@ package io.taraxacum.finaltech.core.command;
 
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.core.items.unusable.CopyCard;
-import io.taraxacum.finaltech.core.items.unusable.StorageCardItem;
+import io.taraxacum.finaltech.core.items.unusable.StorageCard;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 /**
- * A {@link Command} that will transfer item in player's hand to a {@link CopyCard}.
+ * A {@link Command} that will transfer item in player's hand to a {@link StorageCard}.
  * @author Final_ROOT
  * @since 2.0
  */
@@ -29,14 +28,14 @@ public class TransferToStorageItem implements CommandExecutor {
             return false;
         }
         ItemStack item = player.getItemInHand();
-        if (ItemStackUtil.isItemNull(item) || !StorageCardItem.storableItem(item)) {
+        if (ItemStackUtil.isItemNull(item) || !StorageCard.storableItem(item)) {
             return false;
         }
         String amount = strings[0];
         if(!StringNumberUtil.isNumber(amount)) {
             return false;
         }
-        ItemStack storageCardItem = StorageCardItem.newItem(item, amount);
+        ItemStack storageCardItem = StorageCard.newItem(item, amount);
         player.setItemInHand(storageCardItem);
         return true;
     }

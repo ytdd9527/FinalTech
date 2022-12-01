@@ -16,7 +16,7 @@ import io.taraxacum.libs.plugin.util.ParticleUtil;
 import io.taraxacum.libs.plugin.util.StringItemUtil;
 import io.taraxacum.finaltech.api.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.items.machine.range.cube.AbstractCubeMachine;
-import io.taraxacum.finaltech.core.items.unusable.StorageCardItem;
+import io.taraxacum.finaltech.core.items.unusable.StorageCard;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
@@ -74,7 +74,7 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (!ItemStackUtil.isItemNull(item)) {
                 String amount = String.valueOf(item.getAmount());
-                if (StorageCardItem.isValid(item)) {
+                if (StorageCard.isValid(item)) {
                     amount = StringItemUtil.parseAmountInCard(item);
                     item = StringItemUtil.parseItemInCard(item);
                 }
