@@ -62,7 +62,7 @@ import io.taraxacum.finaltech.core.item.machine.range.line.shooter.OverloadedEle
 import io.taraxacum.finaltech.core.item.machine.template.advanced.*;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
-import io.taraxacum.libs.plugin.util.BlockTickerUtil;
+import io.taraxacum.finaltech.util.BlockTickerUtil;
 import io.taraxacum.libs.slimefun.util.ResearchUtil;
 import io.taraxacum.libs.plugin.util.TextUtil;
 import io.taraxacum.libs.plugin.dto.ConfigFileManager;

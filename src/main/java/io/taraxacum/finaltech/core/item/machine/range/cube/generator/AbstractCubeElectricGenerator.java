@@ -21,7 +21,7 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.common.util.StringNumberUtil;
-import io.taraxacum.libs.plugin.util.BlockTickerUtil;
+import io.taraxacum.finaltech.util.BlockTickerUtil;
 import io.taraxacum.libs.slimefun.util.EnergyUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
