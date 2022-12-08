@@ -78,7 +78,7 @@ public class BlockTickerUtil {
     }
 
     public static BlockTicker getIndependentIntervalBlockTicker(@Nonnull BlockTicker blockTicker, int interval) {
-        String i = String.valueOf(interval);
+        String i = String.valueOf(--interval);
         return new BlockTicker() {
             @Override
             public boolean isSynchronized() {

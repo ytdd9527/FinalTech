@@ -813,11 +813,19 @@ public final class SetupUtil {
                     } else {
                         if(FinalTech.getConfigManager().containPath("interval", "general", slimefunItem.getId())) {
                             int interval = Integer.parseInt(FinalTech.getConfigManager().getString("interval", "general", slimefunItem.getId()));
-                            blockTicker = BlockTickerUtil.getGeneralIntervalBlockTicker(blockTicker, interval);
+                            if(interval > 0) {
+                                blockTicker = BlockTickerUtil.getGeneralIntervalBlockTicker(blockTicker, interval);
+                            } else {
+                                FinalTech.logger().warning("wrong value of interval.general." + slimefunItem.getId() + " in config file");
+                            }
                         }
                         if(FinalTech.getConfigManager().containPath("interval", "independent", slimefunItem.getId())) {
                             int interval = Integer.parseInt(FinalTech.getConfigManager().getString("interval", "independent", slimefunItem.getId()));
-                            blockTicker = BlockTickerUtil.getIndependentIntervalBlockTicker(blockTicker, interval);
+                            if(interval > 1) {
+                                blockTicker = BlockTickerUtil.getIndependentIntervalBlockTicker(blockTicker, interval);
+                            } else {
+                                FinalTech.logger().warning("wrong value of interval.independent." + slimefunItem.getId() + " in config file");
+                            }
                         }
                         forceAsync = !blockTicker.isSynchronized() && (FinalTech.getForceSlimefunMultiThread() || FinalTech.isAsyncSlimefunItem(slimefunItem.getId()));
                         boolean antiAccelerate = FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId());
