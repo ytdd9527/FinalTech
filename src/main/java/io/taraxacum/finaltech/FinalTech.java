@@ -43,7 +43,8 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
      */
     private int slimefunTickCount = 0;
     private double tps = 20;
-    private Logger logger;
+    private boolean debugMode = false;
+    private CustomLogger logger;
     private ServerRunnableLockFactory<Location> locationRunnableFactory;
     private ServerRunnableLockFactory<Entity> entityRunnableFactory;
     private ConfigFileManager config;
@@ -64,7 +65,8 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         super.onEnable();
 
         instance = this;
-        this.logger = this.getJavaPlugin().getServer().getLogger();
+        this.logger = CustomLogger.newInstance(this.getJavaPlugin().getServer().getLogger());
+        this.logger.setBanner("[FinalTECH] ");
 
         /* read config file */
         try {
@@ -105,18 +107,18 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             this.multiThreadLevel = 0;
         }
         if (this.multiThreadLevel >= 1 && !this.config.getOrDefault(false, "multi-thread", "warn-I_know_what_I'm_doing")) {
-            this.getLogger().warning("It seems you don't know what you are doing. So multi thread level is set to 0");
+            this.logger.warning("It seems you don't know what you are doing. So multi thread level is set to 0");
             this.multiThreadLevel = 0;
         }
         if (this.multiThreadLevel >= 2 && !this.config.getOrDefault(false, "multi-thread", "warn-I_really_know_what_I'm_doing")) {
-            this.getLogger().warning("It seems you don't know what you are doing. So multi thread level is set to 0");
+            this.logger.warning("It seems you don't know what you are doing. So multi thread level is set to 0");
             this.multiThreadLevel = 0;
         }
 
         /* configure whether to force slimefun items to run async */
         this.forceSlimefunMultiThread = this.config.getOrDefault(false, "force-slimefun-multi-thread", "enable");
         if (this.forceSlimefunMultiThread && !this.config.getOrDefault(false, "force-slimefun-multi-thread", "warn-I_know_what_I'm_doing_and_I_will_be_responsible_for_it")) {
-            this.getLogger().warning("It seems you don't know what you are doing. So force-slimefun-multi-thread.enable is set to false!");
+            this.logger.warning("It seems you don't know what you are doing. So force-slimefun-multi-thread.enable is set to false!");
             this.forceSlimefunMultiThread = false;
         }
 
@@ -125,7 +127,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         this.performanceLimitSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "performance-limit"));
         this.asyncSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "force-async"));
         if (this.asyncSlimefunIdSet.size() > 0) {
-            this.getLogger().warning("You set force-async for some SlimefunItems! It's ok but you should be aware that this may cause some strange error.");
+            this.logger.warning("You set force-async for some SlimefunItems! It's ok but you should be aware that this may cause some strange error.");
         }
 
         /* run task timer to do some function */
