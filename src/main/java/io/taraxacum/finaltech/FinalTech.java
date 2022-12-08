@@ -184,12 +184,6 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             }
             return result;
         }));
-        metrics.addCustomChart(new SingleLineChart("players", () -> Bukkit.getOnlinePlayers().size()));
-        metrics.addCustomChart(new MultiLineChart("servers", () -> {
-            Map<String, Integer> result = new HashMap<>();
-            result.put(Bukkit.getServer().getVersion(), 1);
-            return result;
-        }));
         metrics.addCustomChart(new MultiLineChart("languages", () -> {
             Map<String, Integer> result = new HashMap<>();
             result.put(FinalTech.getConfigManager().getString("language"), 1);
