@@ -1,7 +1,7 @@
 package io.taraxacum.finaltech.core.operation;
 
 import io.github.thebusybiscuit.slimefun4.core.machines.MachineOperation;
-import io.taraxacum.finaltech.core.items.unusable.CopyCard;
+import io.taraxacum.finaltech.core.item.unusable.CopyCard;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;

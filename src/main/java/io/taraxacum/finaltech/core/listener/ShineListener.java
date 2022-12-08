@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @see io.taraxacum.finaltech.core.items.unusable.Shine
+ * @see io.taraxacum.finaltech.core.item.unusable.Shine
  * @author Final_ROOT
  * @since 2.0
  */

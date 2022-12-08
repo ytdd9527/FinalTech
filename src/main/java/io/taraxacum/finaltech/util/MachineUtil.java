@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.libs.plugin.dto.ItemAmountWrapper;
 import io.taraxacum.libs.plugin.dto.ItemWrapper;
-import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
+import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;

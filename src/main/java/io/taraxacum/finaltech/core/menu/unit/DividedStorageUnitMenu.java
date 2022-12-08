@@ -1,11 +1,9 @@
 package io.taraxacum.finaltech.core.menu.unit;
 
-import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
+import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
 
 import javax.annotation.Nonnull;

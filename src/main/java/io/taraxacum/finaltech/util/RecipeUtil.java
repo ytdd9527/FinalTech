@@ -13,7 +13,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.settings.GoldPanDrop;
 import io.taraxacum.common.util.ReflectionUtil;
 import io.taraxacum.libs.slimefun.dto.RandomMachineRecipe;
 import io.taraxacum.libs.plugin.dto.LanguageManager;
-import io.taraxacum.finaltech.api.interfaces.RecipeItem;
+import io.taraxacum.finaltech.api.interfaces.item.RecipeItem;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
@@ -211,7 +211,7 @@ public class RecipeUtil {
     }
 
     /**
-     * @return The #{@link io.taraxacum.finaltech.core.items.unusable.liquid.LiquidCard} in #{@link ItemStack}
+     * @return The #{@link io.taraxacum.finaltech.core.item.unusable.liquid.LiquidCard} in #{@link ItemStack}
      */
     @Nullable
     public static ItemStack getLiquidCard(@Nullable ItemStack item) {

@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.libs.slimefun.dto.BlockStorageHelper;
 import io.taraxacum.libs.slimefun.dto.BlockStorageLoreHelper;
-import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
+import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;

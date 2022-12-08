@@ -1,6 +1,6 @@
 package io.taraxacum.finaltech.core.menu.limit.lock;
 
-import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
+import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.block.Block;
 

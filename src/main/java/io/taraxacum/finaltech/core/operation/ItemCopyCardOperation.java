@@ -2,8 +2,8 @@ package io.taraxacum.finaltech.core.operation;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.core.items.unusable.CopyCard;
-import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
+import io.taraxacum.finaltech.core.item.unusable.CopyCard;
+import io.taraxacum.finaltech.core.item.unusable.ItemPhony;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;

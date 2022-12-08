@@ -2,7 +2,7 @@ package io.taraxacum.finaltech.core.command;
 
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.core.items.unusable.StorageCard;
+import io.taraxacum.finaltech.core.item.unusable.StorageCard;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

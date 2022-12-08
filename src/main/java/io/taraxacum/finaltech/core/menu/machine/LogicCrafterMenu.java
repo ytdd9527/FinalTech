@@ -1,6 +1,6 @@
 package io.taraxacum.finaltech.core.menu.machine;
 
-import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
+import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import org.bukkit.Location;
 import org.bukkit.inventory.Inventory;

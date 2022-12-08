@@ -1,8 +1,8 @@
 package io.taraxacum.finaltech.core.menu.machine;
 
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.taraxacum.finaltech.core.items.unusable.ItemPhony;
-import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
+import io.taraxacum.finaltech.core.item.unusable.ItemPhony;
+import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;

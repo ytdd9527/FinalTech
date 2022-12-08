@@ -1,7 +1,6 @@
 package io.taraxacum.finaltech.core.menu.limit;
 
-import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
-import org.bukkit.inventory.Inventory;
+import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 
 import javax.annotation.Nonnull;
 

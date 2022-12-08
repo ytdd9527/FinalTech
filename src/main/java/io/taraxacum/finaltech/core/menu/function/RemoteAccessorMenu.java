@@ -1,8 +1,8 @@
 package io.taraxacum.finaltech.core.menu.function;
 
 import io.taraxacum.common.util.StringNumberUtil;
-import io.taraxacum.finaltech.core.items.machine.AbstractMachine;
-import io.taraxacum.finaltech.core.items.machine.cargo.RemoteAccessor;
+import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
+import io.taraxacum.finaltech.core.item.machine.cargo.RemoteAccessor;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
