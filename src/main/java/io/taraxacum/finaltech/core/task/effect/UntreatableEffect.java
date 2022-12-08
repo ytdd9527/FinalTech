@@ -2,9 +2,12 @@ package io.taraxacum.finaltech.core.task.effect;
 
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.util.LocationUtil;
+import io.taraxacum.libs.plugin.task.StartTask;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
 
@@ -12,7 +15,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class UntreatableEffect extends AbstractEffect {
+public class UntreatableEffect extends AbstractEffect implements StartTask<LivingEntity> {
     private double health;
 
     public UntreatableEffect(int time, int level) {
@@ -27,6 +30,11 @@ public class UntreatableEffect extends AbstractEffect {
     @Override
     public int maxLevel() {
         return 0;
+    }
+
+    @Override
+    public Plugin getPlugin() {
+        return null;
     }
 
     @Override
@@ -50,14 +58,6 @@ public class UntreatableEffect extends AbstractEffect {
     @Override
     public void startTick(@Nonnull LivingEntity livingEntity) {
         this.health = livingEntity.getHealth();
-    }
-
-    @Override
-    public void endTick(@Nonnull LivingEntity livingEntity) {
-    }
-
-    @Override
-    public void addTick(@Nonnull LivingEntity livingEntity) {
     }
 
     @Override

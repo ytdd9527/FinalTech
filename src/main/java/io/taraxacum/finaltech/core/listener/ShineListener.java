@@ -1,14 +1,14 @@
 package io.taraxacum.finaltech.core.listener;
 
-import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.task.effect.UntreatableEffect;
 import io.taraxacum.finaltech.setup.FinalTechItems;
-import io.taraxacum.libs.plugin.task.TickerTaskRunner;
+import io.taraxacum.libs.plugin.task.TaskTicker;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -103,7 +103,7 @@ public class ShineListener implements Listener {
                     }
                     player.setHealth(Math.max(player.getHealth() * 0.9 - player.getMaxHealth() * 0.1 * equipmentCount - player.getMaxHealth() * 0.05 * effectCount - shineCount * 1.5, 0));
 
-                    TickerTaskRunner.applyOrAddTo(new UntreatableEffect(shineCount * 20 + 200, 1), player, FinalTech.getInstance());
+                    TaskTicker.applyOrAddTo(new UntreatableEffect(shineCount * 20 + 200, 1), player, LivingEntity.class);
                 }
             }
         }

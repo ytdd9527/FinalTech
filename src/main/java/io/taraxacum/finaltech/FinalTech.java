@@ -267,6 +267,10 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         return instance.logger;
     }
 
+    public static boolean debugMode() {
+        return instance.debugMode;
+    }
+
     public static int getMultiThreadLevel() {
         return instance.multiThreadLevel;
     }

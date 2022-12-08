@@ -1,26 +1,19 @@
 package io.taraxacum.libs.plugin.task;
 
-import org.bukkit.plugin.java.JavaPlugin;
-
-import javax.annotation.Nonnull;
+import org.bukkit.plugin.Plugin;
 
 /**
- * @see AbstractSingleTickerTask
- * @see TickerTaskRunner
+ * @see TaskTicker
  * @author Final_ROOT
- * @since 2.0
+ * @since 2.2
+ * @version 2
+ * @param <T> Target object type
  */
-public abstract class AbstractTask implements Runnable {
-    private final JavaPlugin javaPlugin;
+public interface AbstractTask<T> {
 
-    protected AbstractTask(@Nonnull JavaPlugin javaPlugin) {
-        this.javaPlugin = javaPlugin;
-    }
+    Plugin getPlugin();
 
-    @Override
-    public abstract void run();
+    int getPriority();
 
-    public JavaPlugin getJavaPlugin() {
-        return javaPlugin;
-    }
+    boolean isSync();
 }

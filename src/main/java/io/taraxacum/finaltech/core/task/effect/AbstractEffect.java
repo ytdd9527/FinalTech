@@ -1,13 +1,13 @@
 package io.taraxacum.finaltech.core.task.effect;
 
-import io.taraxacum.libs.plugin.task.AbstractSingleTickerTask;
+import io.taraxacum.libs.plugin.task.TickerTask;
 import org.bukkit.entity.LivingEntity;
 
 /**
  * @author Final_ROOT
  * @since 2.0
  */
-public abstract class AbstractEffect extends AbstractSingleTickerTask<LivingEntity> {
+public abstract class AbstractEffect extends TickerTask<LivingEntity> {
     private int level;
 
     public AbstractEffect(int time, int level) {

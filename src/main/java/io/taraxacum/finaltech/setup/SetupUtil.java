@@ -823,7 +823,7 @@ public final class SetupUtil {
                             blockTicker = SetupUtil.generateBlockTicker(blockTicker, forceAsync, antiAccelerate, performanceLimit);
                         }
                     }
-                    if(FinalTech.getConfigManager().getOrDefault(false, "debug-mode")) {
+                    if(FinalTech.debugMode()) {
                         blockTicker = getDebugModeBlockTicker(blockTicker, slimefunItem);
                     }
                     if(slimefunItem.getBlockTicker() != blockTicker) {
