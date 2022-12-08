@@ -55,7 +55,7 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
                     AbstractMachine.this.tick(b, item, data);
                 }
             };
-            if(FinalTech.getConfigManager().getOrDefault(false, "debug-mode")) {
+            if(FinalTech.debugMode()) {
                 blockTicker = SetupUtil.getDebugModeBlockTicker(blockTicker, this);
             }
             this.addItemHandler(SetupUtil.generateBlockTicker(blockTicker, true, FinalTech.isAntiAccelerateSlimefunItem(this.getId()), FinalTech.isPerformanceLimitSlimefunItem(this.getId())));
@@ -71,7 +71,7 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
                     AbstractMachine.this.tick(b, item, data);
                 }
             };
-            if(FinalTech.getConfigManager().getOrDefault(false, "debug-mode")) {
+            if(FinalTech.debugMode()) {
                 blockTicker = SetupUtil.getDebugModeBlockTicker(blockTicker, this);
             }
             this.addItemHandler(SetupUtil.generateBlockTicker(blockTicker, !this.isSynchronized() && (FinalTech.getMultiThreadLevel() == 1 || FinalTech.isAsyncSlimefunItem(this.getId())), FinalTech.isAntiAccelerateSlimefunItem(this.getId()), FinalTech.isPerformanceLimitSlimefunItem(this.getId())));

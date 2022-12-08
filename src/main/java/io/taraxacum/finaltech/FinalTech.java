@@ -2,17 +2,15 @@ package io.taraxacum.finaltech;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.libs.plugin.dto.ConfigFileManager;
+import io.taraxacum.libs.plugin.dto.*;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.setup.SetupUtil;
-import io.taraxacum.libs.plugin.dto.ConfigFileManager;
-import io.taraxacum.libs.plugin.dto.LanguageManager;
-import io.taraxacum.libs.plugin.dto.ServerRunnableLockFactory;
 import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedBarChart;
 import org.bstats.charts.MultiLineChart;
-import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -85,6 +83,12 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         /* set random seed */
         this.seed = this.config.getOrDefault(new Random().nextLong(Long.MAX_VALUE), "seed");
         this.random = new Random(this.seed);
+
+        /* set debug mode */
+        this.debugMode = this.config.getOrDefault(false, "debug-mode");
+        if(this.debugMode) {
+            this.logger.warning("You have debug mode on!");
+        }
 
         /* set runnable factory */
         this.locationRunnableFactory = ServerRunnableLockFactory.getInstance(this, Location.class);
