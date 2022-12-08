@@ -22,6 +22,7 @@ import java.util.*;
  * @author Final_ROOT
  * @since 2.0
  */
+// TODO: remove FinalTech
 public class ItemValueTable {
     private boolean init = false;
     // key: slimefun item id, value: input value

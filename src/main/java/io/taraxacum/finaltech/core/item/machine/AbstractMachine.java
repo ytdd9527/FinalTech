@@ -10,6 +10,7 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.item.AbstractMySlimefunItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.SetupUtil;
+import io.taraxacum.libs.slimefun.util.BlockTickerUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import org.bukkit.block.Block;
@@ -56,9 +57,9 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
                 }
             };
             if(FinalTech.debugMode()) {
-                blockTicker = SetupUtil.getDebugModeBlockTicker(blockTicker, this);
+                blockTicker = BlockTickerUtil.getDebugModeBlockTicker(blockTicker, this);
             }
-            this.addItemHandler(SetupUtil.generateBlockTicker(blockTicker, true, FinalTech.isAntiAccelerateSlimefunItem(this.getId()), FinalTech.isPerformanceLimitSlimefunItem(this.getId())));
+            this.addItemHandler(BlockTickerUtil.generateBlockTicker(blockTicker, true, FinalTech.isAntiAccelerateSlimefunItem(this.getId()), FinalTech.isPerformanceLimitSlimefunItem(this.getId())));
         } else {
             blockTicker = new BlockTicker() {
                 @Override
@@ -72,9 +73,9 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
                 }
             };
             if(FinalTech.debugMode()) {
-                blockTicker = SetupUtil.getDebugModeBlockTicker(blockTicker, this);
+                blockTicker = BlockTickerUtil.getDebugModeBlockTicker(blockTicker, this);
             }
-            this.addItemHandler(SetupUtil.generateBlockTicker(blockTicker, !this.isSynchronized() && (FinalTech.getMultiThreadLevel() == 1 || FinalTech.isAsyncSlimefunItem(this.getId())), FinalTech.isAntiAccelerateSlimefunItem(this.getId()), FinalTech.isPerformanceLimitSlimefunItem(this.getId())));
+            this.addItemHandler(BlockTickerUtil.generateBlockTicker(blockTicker, !this.isSynchronized() && (FinalTech.getMultiThreadLevel() == 1 || FinalTech.isAsyncSlimefunItem(this.getId())), FinalTech.isAntiAccelerateSlimefunItem(this.getId()), FinalTech.isPerformanceLimitSlimefunItem(this.getId())));
         }
     }
 

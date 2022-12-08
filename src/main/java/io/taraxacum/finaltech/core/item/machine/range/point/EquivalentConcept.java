@@ -107,7 +107,7 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
             Location location = block.getLocation();
             BlockStorage.addBlockInfo(location, KEY_LIFE, null);
             BlockStorage.addBlockInfo(location, KEY_RANGE, null);
-            BlockTickerUtil.setSleep(config, null);
+            BlockTickerUtil.setSleep(config, (Double) null);
             BlockStorage.clearBlockInfo(location);
             JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
             javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> {
