@@ -10,6 +10,8 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.operation.DustFactoryOperation;
 import io.taraxacum.finaltech.core.menu.limit.DustFactoryDirtMenu;
+import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
@@ -30,6 +32,12 @@ import java.util.List;
  * @since 1.0
  */
 public class DustFactoryDirt extends AbstractOperationMachine {
+    public final int baseAmountDifficulty = ConfigUtil.getOrDefaultItemSetting(1024, this, "difficulty", "base", "amount");
+    public final int baseTypeDifficulty = ConfigUtil.getOrDefaultItemSetting(16, this, "difficulty", "base", "type");
+    public final int multiAmountDifficulty = ConfigUtil.getOrDefaultItemSetting(64, this, "difficulty", "multi", "amount");
+    public final int multiTypeDifficulty = ConfigUtil.getOrDefaultItemSetting(1, this, "difficulty", "multi", "type");
+    public final int deviationDifficulty = ConfigUtil.getOrDefaultItemSetting(4, this, "difficulty", "deviation");
+
     public DustFactoryDirt(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -59,7 +67,7 @@ public class DustFactoryDirt extends AbstractOperationMachine {
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        DustFactoryOperation operation = (DustFactoryOperation)this.getMachineProcessor().getOperation(block);
+        DustFactoryOperation operation = (DustFactoryOperation) this.getMachineProcessor().getOperation(block);
 
         for (int slot : this.getInputSlot()) {
             ItemStack inputItem = blockMenu.getItemInSlot(slot);
@@ -68,13 +76,21 @@ public class DustFactoryDirt extends AbstractOperationMachine {
             }
 
             if (operation == null) {
-                operation = new DustFactoryOperation();
+                int amount = this.baseAmountDifficulty;
+                int type = this.baseTypeDifficulty;
+                if(this.deviationDifficulty != 0) {
+                    int deviation = this.deviationDifficulty / Math.abs(this.deviationDifficulty) * FinalTech.getRandom().nextInt(Math.abs(this.deviationDifficulty));
+                    amount += this.multiAmountDifficulty * (this.deviationDifficulty - deviation);
+                    type += this.multiTypeDifficulty * deviation;
+                }
+
+                operation = new DustFactoryOperation(amount, type);
                 this.getMachineProcessor().startOperation(block, operation);
             }
             operation.addItem(inputItem);
 
             ItemStack operationResult = operation.getResult();
-            if (operationResult != null && InvUtils.fitAll(blockMenu.toInventory(), new ItemStack[] {operationResult}, this.getOutputSlot())) {
+            if (operationResult != null && MachineUtil.calMaxMatch(blockMenu.toInventory(), this.getOutputSlot(), operationResult) > 0) {
                 blockMenu.pushItem(operationResult, this.getOutputSlot());
                 this.getMachineProcessor().endOperation(block);
                 operation = null;
@@ -84,19 +100,28 @@ public class DustFactoryDirt extends AbstractOperationMachine {
         }
 
         if (operation == null) {
-            operation = new DustFactoryOperation();
+            int amount = this.baseAmountDifficulty;
+            int type = this.baseTypeDifficulty;
+            if(this.deviationDifficulty != 0) {
+                int deviation = this.deviationDifficulty / Math.abs(this.deviationDifficulty) * FinalTech.getRandom().nextInt(Math.abs(this.deviationDifficulty));
+                amount += this.multiAmountDifficulty * (this.deviationDifficulty - deviation);
+                type += this.multiTypeDifficulty * deviation;
+            }
+
+            operation = new DustFactoryOperation(amount, type);
             this.getMachineProcessor().startOperation(block, operation);
         }
+
         if (blockMenu.hasViewer()) {
             ItemStack itemStack = blockMenu.getItemInSlot(DustFactoryDirtMenu.STATUS_SLOT);
             ItemStackUtil.setLore(itemStack, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
                     String.valueOf(operation.getAmountCount()),
                     String.valueOf(operation.getTypeCount()),
-                    String.valueOf(DustFactoryOperation.AMOUNT_DIFFICULTY),
-                    String.valueOf(DustFactoryOperation.TYPE_DIFFICULTY)));
+                    String.valueOf(operation.getAmountDifficulty()),
+                    String.valueOf(operation.getTypeDifficulty())));
             if (operation.getAmountCount() == 0 && operation.getTypeCount() == 0) {
                 itemStack.setType(Material.RED_STAINED_GLASS_PANE);
-            } else if (operation.getAmountCount() > DustFactoryOperation.AMOUNT_DIFFICULTY || operation.getTypeCount() > DustFactoryOperation.TYPE_DIFFICULTY) {
+            } else if (operation.getAmountCount() > operation.getAmountDifficulty() || operation.getTypeCount() > operation.getTypeDifficulty()) {
                 itemStack.setType(Material.YELLOW_STAINED_GLASS_PANE);
             } else {
                 itemStack.setType(Material.GREEN_STAINED_GLASS_PANE);
@@ -107,7 +132,7 @@ public class DustFactoryDirt extends AbstractOperationMachine {
     @Override
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
-                String.valueOf(DustFactoryOperation.AMOUNT_DIFFICULTY),
-                String.valueOf(DustFactoryOperation.TYPE_DIFFICULTY));
+                String.valueOf(this.baseAmountDifficulty),
+                String.valueOf(this.baseTypeDifficulty));
     }
 }

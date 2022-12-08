@@ -15,21 +15,29 @@ import javax.annotation.Nullable;
  * @since 1.0
  */
 public class DustFactoryOperation implements MachineOperation {
-    private int typeCount = 0;
     private int amountCount = 0;
-    private final ItemWrapper[] matchItemList = new ItemWrapper[DustFactoryOperation.TYPE_DIFFICULTY + 1];
-    public static final int TYPE_DIFFICULTY = ConfigUtil.getOrDefaultItemSetting(16 + FinalTech.getRandom().nextInt(5), FinalTechItems.ORDERED_DUST_FACTORY_DIRT.getItemId(), "type");
-    public static final int AMOUNT_DIFFICULTY = ConfigUtil.getOrDefaultItemSetting(1024 + DustFactoryOperation.calAmountRandomNumber(), FinalTechItems.ORDERED_DUST_FACTORY_DIRT.getItemId(), "amount");
+    private int typeCount = 0;
+    private int amountDifficulty;
+    private int typeDifficulty;
+    private final ItemWrapper[] matchItemList;
 
-    public DustFactoryOperation() {
-
+    public DustFactoryOperation(int amountDifficulty, int typeDifficulty) {
+        this.amountDifficulty = amountDifficulty;
+        this.typeDifficulty = typeDifficulty;
+        this.matchItemList = new ItemWrapper[typeDifficulty + 1];
     }
 
     public void addItem(@Nullable ItemStack item) {
         if (ItemStackUtil.isItemNull(item)) {
             return;
         }
-        if (this.typeCount <= DustFactoryOperation.TYPE_DIFFICULTY) {
+
+        this.amountCount += item.getAmount();
+        if (this.amountCount > this.amountDifficulty + 1) {
+            this.amountCount = this.amountDifficulty + 1;
+        }
+
+        if (this.typeCount <= this.typeDifficulty) {
             boolean newItem = true;
             for (int i = 0; i < this.typeCount; i++) {
                 ItemWrapper existedItem = this.matchItemList[i];
@@ -42,42 +50,38 @@ public class DustFactoryOperation implements MachineOperation {
                 this.matchItemList[this.typeCount++] = new ItemWrapper(ItemStackUtil.cloneItem(item));
             }
         }
-        this.amountCount += item.getAmount();
-        if (this.amountCount > DustFactoryOperation.AMOUNT_DIFFICULTY + 1) {
-            this.amountCount = DustFactoryOperation.AMOUNT_DIFFICULTY + 1;
-        }
-    }
-
-    public int getTypeCount() {
-        return this.typeCount;
     }
 
     public int getAmountCount() {
         return this.amountCount;
     }
 
+    public int getTypeCount() {
+        return this.typeCount;
+    }
+
+    public int getAmountDifficulty() {
+        return this.amountDifficulty;
+    }
+
+    public int getTypeDifficulty() {
+        return this.typeDifficulty;
+    }
+
     @Override
     public boolean isFinished() {
-        return (this.amountCount >= DustFactoryOperation.AMOUNT_DIFFICULTY && this.typeCount >= DustFactoryOperation.TYPE_DIFFICULTY);
+        return this.amountCount >= this.amountDifficulty && this.typeCount >= this.typeDifficulty;
     }
 
     @Nullable
     public ItemStack getResult() {
-        if (this.amountCount == DustFactoryOperation.AMOUNT_DIFFICULTY && this.typeCount == DustFactoryOperation.TYPE_DIFFICULTY) {
+        if (this.amountCount == this.amountDifficulty && this.typeCount == this.typeDifficulty) {
             return ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST);
         } else if (this.isFinished()) {
             return ItemStackUtil.cloneItem(FinalTechItems.UNORDERED_DUST);
         } else {
             return null;
         }
-    }
-
-    private static int calAmountRandomNumber() {
-        int result = FinalTech.getRandom().nextInt(257);
-        while (result % 16 == 0 || (1024 + result) % DustFactoryOperation.TYPE_DIFFICULTY == 0) {
-            result = FinalTech.getRandom().nextInt(257);
-        }
-        return result;
     }
 
     @Deprecated

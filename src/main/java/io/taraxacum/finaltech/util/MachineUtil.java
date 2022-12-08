@@ -317,4 +317,23 @@ public final class MachineUtil {
         }
         return min;
     }
+
+    public static int calMaxMatch(@Nonnull Inventory inventory, int[] slots, @Nonnull ItemAmountWrapper itemAmountWrapper) {
+        int count = 0;
+        int maxStack = itemAmountWrapper.getItemStack().getMaxStackSize();
+        for(int slot : slots) {
+            ItemStack item = inventory.getItem(slot);
+            if (ItemStackUtil.isItemNull(item)) {
+                count += maxStack;
+            } else if(item.getAmount() < maxStack && ItemStackUtil.isItemSimilar(itemAmountWrapper, item)) {
+                count += maxStack - item.getAmount();
+            }
+        }
+
+        return count / itemAmountWrapper.getAmount();
+    }
+
+    public static int calMaxMatch(@Nonnull Inventory inventory, int[] slots, @Nonnull ItemStack item) {
+        return MachineUtil.calMaxMatch(inventory, slots, new ItemAmountWrapper(item));
+    }
 }
