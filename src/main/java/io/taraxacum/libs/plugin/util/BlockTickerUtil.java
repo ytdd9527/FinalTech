@@ -1,4 +1,4 @@
-package io.taraxacum.libs.slimefun.util;
+package io.taraxacum.libs.plugin.util;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.taraxacum.common.api.RunnableLockFactory;

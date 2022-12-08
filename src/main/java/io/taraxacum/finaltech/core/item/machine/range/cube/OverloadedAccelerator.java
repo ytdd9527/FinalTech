@@ -14,7 +14,7 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.slimefun.dto.LocationWithConfig;
-import io.taraxacum.libs.slimefun.util.BlockTickerUtil;
+import io.taraxacum.libs.plugin.util.BlockTickerUtil;
 import io.taraxacum.libs.slimefun.util.EnergyUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
