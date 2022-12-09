@@ -220,6 +220,9 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                 }
                 BlockFace blockFace = ((Directional) blockData).getFacing();
                 final List<Block> blockList = LineTransfer.this.searchBlock(block, blockFace, BlockSearchMode.LINE_HELPER.getOrDefaultValue(config));
+                if(blockList.isEmpty()) {
+                    return;
+                }
 
                 List<Inventory> vanillaInventories = new ArrayList<>();
                 for (Block b : blockList) {
