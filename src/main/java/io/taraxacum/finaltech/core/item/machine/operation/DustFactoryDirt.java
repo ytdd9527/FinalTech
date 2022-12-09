@@ -36,7 +36,7 @@ public class DustFactoryDirt extends AbstractOperationMachine {
     public final int baseTypeDifficulty = ConfigUtil.getOrDefaultItemSetting(16, this, "difficulty", "base", "type");
     public final int multiAmountDifficulty = ConfigUtil.getOrDefaultItemSetting(64, this, "difficulty", "multi", "amount");
     public final int multiTypeDifficulty = ConfigUtil.getOrDefaultItemSetting(1, this, "difficulty", "multi", "type");
-    public final int deviationDifficulty = ConfigUtil.getOrDefaultItemSetting(4, this, "difficulty", "deviation");
+    public final int deviationDifficulty = ConfigUtil.getOrDefaultItemSetting(-4, this, "difficulty", "deviation");
 
     public DustFactoryDirt(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -79,7 +79,7 @@ public class DustFactoryDirt extends AbstractOperationMachine {
                 int amount = this.baseAmountDifficulty;
                 int type = this.baseTypeDifficulty;
                 if(this.deviationDifficulty != 0) {
-                    int deviation = this.deviationDifficulty / Math.abs(this.deviationDifficulty) * FinalTech.getRandom().nextInt(Math.abs(this.deviationDifficulty));
+                    int deviation = this.deviationDifficulty / Math.abs(this.deviationDifficulty) * FinalTech.getRandom().nextInt(Math.abs(this.deviationDifficulty) + 1);
                     amount += this.multiAmountDifficulty * (this.deviationDifficulty - deviation);
                     type += this.multiTypeDifficulty * deviation;
                 }
@@ -103,7 +103,7 @@ public class DustFactoryDirt extends AbstractOperationMachine {
             int amount = this.baseAmountDifficulty;
             int type = this.baseTypeDifficulty;
             if(this.deviationDifficulty != 0) {
-                int deviation = this.deviationDifficulty / Math.abs(this.deviationDifficulty) * FinalTech.getRandom().nextInt(Math.abs(this.deviationDifficulty));
+                int deviation = this.deviationDifficulty / Math.abs(this.deviationDifficulty) * FinalTech.getRandom().nextInt(Math.abs(this.deviationDifficulty) + 1);
                 amount += this.multiAmountDifficulty * (this.deviationDifficulty - deviation);
                 type += this.multiTypeDifficulty * deviation;
             }
