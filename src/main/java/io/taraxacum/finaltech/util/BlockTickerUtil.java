@@ -117,7 +117,7 @@ public class BlockTickerUtil {
 
                 @Override
                 public boolean isSynchronized() {
-                    return blockTicker.isSynchronized();
+                    return false;
                 }
 
                 @Override
@@ -133,7 +133,7 @@ public class BlockTickerUtil {
 
                 @Override
                 public boolean isSynchronized() {
-                    return blockTicker.isSynchronized();
+                    return false;
                 }
 
                 @Override
@@ -149,7 +149,7 @@ public class BlockTickerUtil {
 
                 @Override
                 public boolean isSynchronized() {
-                    return blockTicker.isSynchronized();
+                    return false;
                 }
 
                 @Override
@@ -165,7 +165,7 @@ public class BlockTickerUtil {
 
                 @Override
                 public boolean isSynchronized() {
-                    return blockTicker.isSynchronized();
+                    return false;
                 }
 
                 @Override
