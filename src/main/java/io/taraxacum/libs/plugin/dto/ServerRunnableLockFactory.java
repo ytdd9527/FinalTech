@@ -61,13 +61,17 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
             boolean work = false;
             while (!work) {
                 ServerRunnableLockFactory.this.waitFor(objects);
-                work = true;
-                synchronized (ServerRunnableLockFactory.this.objectMap) {
-                    if (ServerRunnableLockFactory.this.test(objects) && !ServerRunnableLockFactory.serverStop) {
-                        ServerRunnableLockFactory.this.scheduler.runTaskAsynchronously(this.plugin, futureTask);
-                        for (T object : objects) {
-                            ServerRunnableLockFactory.this.objectMap.put(object, futureTask, ServerRunnableLockFactory.this);
+                synchronized (futureTask) {
+                    synchronized (ServerRunnableLockFactory.this.objectMap) {
+                        if (ServerRunnableLockFactory.this.test(objects) && !ServerRunnableLockFactory.serverStop) {
+                            for (T object : objects) {
+                                ServerRunnableLockFactory.this.objectMap.put(object, futureTask, ServerRunnableLockFactory.this);
+                            }
+                            work = true;
                         }
+                    }
+                    if(work) {
+                        futureTask.run();
                     }
                 }
             }
@@ -103,13 +107,17 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
             boolean work = false;
             while (!work) {
                 ServerRunnableLockFactory.this.waitFor(objects);
-                work = true;
-                synchronized (ServerRunnableLockFactory.this.objectMap) {
-                    if (ServerRunnableLockFactory.this.test(objects) && !ServerRunnableLockFactory.serverStop) {
-                        ServerRunnableLockFactory.this.scheduler.runTaskAsynchronously(this.plugin, futureTask);
-                        for (T object : objects) {
-                            ServerRunnableLockFactory.this.objectMap.put(object, futureTask, ServerRunnableLockFactory.this);
+                synchronized (futureTask) {
+                    synchronized (ServerRunnableLockFactory.this.objectMap) {
+                        if (ServerRunnableLockFactory.this.test(objects) && !ServerRunnableLockFactory.serverStop) {
+                            for (T object : objects) {
+                                ServerRunnableLockFactory.this.objectMap.put(object, futureTask, ServerRunnableLockFactory.this);
+                            }
+                            work = true;
                         }
+                    }
+                    if(work) {
+                        futureTask.run();
                     }
                 }
             }
@@ -139,7 +147,11 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
 
     @SafeVarargs
     public final void waitFor(@Nonnull T... objects) {
-        this.waitFor(0, objects);
+        if(objects.length > 0) {
+            this.waitFor(0, objects);
+        } else {
+            this.plugin.getLogger().severe("wrong use of ServerRunnableLockFactory");
+        }
     }
 
     @SafeVarargs
@@ -148,8 +160,10 @@ public class ServerRunnableLockFactory<T> implements RunnableLockFactory<T> {
         try {
             do {
                 FutureTask<?> task = this.objectMap.getTask(objects[i]);
-                if(task != null) {
-                    task.get();
+                if(task != null && !task.isDone()) {
+                    synchronized (task) {
+                        task.get();
+                    }
                 }
             } while (++i < objects.length);
         } catch (Exception e) {

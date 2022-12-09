@@ -199,8 +199,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onDisable() {
-        FinalTech.getLocationRunnableFactory().stop();
-        FinalTech.getEntityRunnableFactory().stop();
+        ServerRunnableLockFactory.stop();
         if (this.bukkitTask != null) {
             this.bukkitTask.cancel();
         }
