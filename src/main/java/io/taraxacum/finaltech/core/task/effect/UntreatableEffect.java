@@ -33,11 +33,6 @@ public class UntreatableEffect extends AbstractEffect implements StartTask<Livin
     }
 
     @Override
-    public Plugin getPlugin() {
-        return null;
-    }
-
-    @Override
     public int getPriority() {
         return 1;
     }

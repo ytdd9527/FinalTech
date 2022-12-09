@@ -1,7 +1,9 @@
 package io.taraxacum.finaltech.core.task.effect;
 
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.libs.plugin.task.TickerTask;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.plugin.Plugin;
 
 /**
  * @author Final_ROOT
@@ -25,6 +27,11 @@ public abstract class AbstractEffect extends TickerTask<LivingEntity> {
         } else if (this.maxLevel() < 0) {
             this.level = level;
         }
+    }
+
+    @Override
+    public Plugin getPlugin() {
+        return FinalTech.getInstance();
     }
 
     abstract int maxLevel();
