@@ -98,7 +98,8 @@ public abstract class AbstractMachineAccelerateCard extends UsableSlimefunItem {
             time = this.times() * playerRightClickEvent.getItem().getAmount();
         }
 
-        ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+        JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
+        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
         Runnable runnable = () -> {
             for (int i = 0; i < time; i++) {
@@ -106,7 +107,6 @@ public abstract class AbstractMachineAccelerateCard extends UsableSlimefunItem {
             }
         };
 
-        JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
         if (blockTicker.isSynchronized() || !FinalTech.isAsyncSlimefunItem(slimefunItem.getId())) {
             javaPlugin.getServer().getScheduler().runTask(javaPlugin, runnable);
         } else {

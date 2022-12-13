@@ -14,6 +14,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -60,7 +61,8 @@ public class RemoteAccessorMenu extends AbstractMachineMenu {
                     if (BlockStorage.hasInventory(targetBlock)) {
                         BlockMenu targetBlockMenu = BlockStorage.getInventory(targetBlock);
                         if (targetBlockMenu.canOpen(targetBlock, p)) {
-                            ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, blockList);
+                            JavaPlugin javaPlugin = this.getSlimefunItem().getAddon().getJavaPlugin();
+                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, blockList));
                             blockMenu.close();
                             targetBlockMenu.open(p);
                             return;

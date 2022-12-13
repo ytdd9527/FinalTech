@@ -94,7 +94,7 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
         }
 
         if (drawParticle) {
-            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, targetBlock));
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, targetBlock));
         }
 
         String slotSearchSize = SlotSearchSize.HELPER.getOrDefaultValue(config);

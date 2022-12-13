@@ -20,6 +20,7 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 
@@ -78,7 +79,8 @@ public abstract class AbstractMachineChargeCard extends UsableSlimefunItem {
                 }
             }
 
-            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+            JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(this.getAddon().getJavaPlugin(), Particle.GLOW, 0, block));
 
             int capacity = energyNetComponent.getCapacity();
             int chargeEnergy = (int) this.energy();

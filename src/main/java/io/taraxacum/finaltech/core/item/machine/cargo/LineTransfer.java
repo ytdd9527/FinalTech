@@ -136,7 +136,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
             }
 
             if (drawParticle && finalBlockList.size() > 0) {
-                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / finalBlockList.size(), finalBlockList));
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / finalBlockList.size(), finalBlockList));
             }
 
             int cargoNumber = Integer.parseInt(CargoNumber.HELPER.getOrDefaultValue(config));
@@ -279,7 +279,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                     }
 
                     if (drawParticle && finalBlockList.size() > 0) {
-                        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / finalBlockList.size(), finalBlockList));
+                        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / finalBlockList.size(), finalBlockList));
                     }
 
                     int cargoNumber = Integer.parseInt(CargoNumber.HELPER.getOrDefaultValue(config));

@@ -125,8 +125,8 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
 
             if (drawParticle) {
                 javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> {
-                    ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, inputBlocks);
-                    ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, outputBlocks);
+                    ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, inputBlocks);
+                    ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, outputBlocks);
                 }, Slimefun.getTickerTask().getTickRate());
             }
 
@@ -276,8 +276,8 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
 
                     if (drawParticle) {
                         javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> {
-                            ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, inputBlocks);
-                            ParticleUtil.drawCubeByBlock(Particle.COMPOSTER, 0, outputBlocks);
+                            ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, inputBlocks);
+                            ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, outputBlocks);
                         }, Slimefun.getTickerTask().getTickRate());
                     }
 
@@ -402,7 +402,7 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
             particleLocationList.add(LocationUtil.getCenterLocation(result));
             if (drawParticle) {
                 JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
-                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawLineByDistance(Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / particleLocationList.size(), particleDistance, particleLocationList));
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawLineByDistance(javaPlugin, Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / particleLocationList.size(), particleDistance, particleLocationList));
             }
             return result;
         }
@@ -420,7 +420,7 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
         }
         if (drawParticle) {
             JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
-            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawLineByDistance(Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / particleLocationList.size(), particleDistance, particleLocationList));
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawLineByDistance(javaPlugin, Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / particleLocationList.size(), particleDistance, particleLocationList));
         }
         return result;
     }

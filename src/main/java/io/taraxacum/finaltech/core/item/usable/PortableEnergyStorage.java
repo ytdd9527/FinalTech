@@ -25,6 +25,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
@@ -49,6 +50,7 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
     @Override
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
         playerRightClickEvent.cancel();
+        JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
 
         Optional<Block> clickedBlock = playerRightClickEvent.getClickedBlock();
         if (clickedBlock.isPresent()) {
@@ -75,7 +77,7 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
 
                             this.updateLore(item);
 
-                            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
                         } else if ((EnergyNetComponentType.GENERATOR.equals(energyNetComponent.getEnergyComponentType()) || EnergyNetComponentType.CAPACITOR.equals(energyNetComponent.getEnergyComponentType()))
                                 && energyNetComponent.getCapacity() > 0) {
                             // consume energy in machine, charge item
@@ -87,7 +89,7 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
 
                             this.updateLore(item);
 
-                            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
                         }
                     }
                 }

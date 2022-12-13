@@ -20,6 +20,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 
@@ -35,10 +36,12 @@ public class LocationRecorder extends UsableSlimefunItem implements RecipeItem {
     @Override
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
         PlayerInteractEvent interactEvent = playerRightClickEvent.getInteractEvent();
+        JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
+
         if (playerRightClickEvent.getPlayer().isSneaking()) {
             Block block = interactEvent.getClickedBlock();
             if (block != null) {
-                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
                 if(PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
                     ItemStack item = playerRightClickEvent.getItem();
                     LocationUtil.saveLocationToItem(item, block.getLocation());
@@ -55,7 +58,7 @@ public class LocationRecorder extends UsableSlimefunItem implements RecipeItem {
             }
 
             Block block = location.getBlock();
-            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
             Player player = playerRightClickEvent.getPlayer();
             if (!PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {

@@ -19,6 +19,7 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -73,8 +74,9 @@ public class MatrixCraftingTableMenu extends AbstractManualMachineMenu{
     @Override
     public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
+        JavaPlugin javaPlugin = this.getMachine().getAddon().getJavaPlugin();
         blockMenu.addMenuClickHandler(PARSE_SLOT, (player, slot, item, action) -> {
-            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
             SlimefunItem slimefunItem;
 

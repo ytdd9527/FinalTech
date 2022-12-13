@@ -187,7 +187,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
                             }, machineLocation);
                         }
                         if (drawParticle) {
-                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, locationConfig.getLocation().getBlock()));
+                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, locationConfig.getLocation().getBlock()));
                         }
                         accelerateTimeCount += accelerate;
                         accelerateMachineCount++;
@@ -234,7 +234,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
                             }, machineLocation);
                         }
                         if (drawParticle) {
-                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, locationConfig.getLocation().getBlock()));
+                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, locationConfig.getLocation().getBlock()));
                         }
                         accelerateTimeCount += accelerate;
                         accelerateMachineCount++;

@@ -27,6 +27,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -93,13 +94,14 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         Inventory inventory = blockMenu.toInventory();
         Location location = blockMenu.getLocation();
         Config config = BlockStorage.getLocationInfo(location);
+        JavaPlugin javaPlugin = this.getMachine().getAddon().getJavaPlugin();
         blockMenu.addMenuOpeningHandler((player -> {
             config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
             ManualCraftMachineMenu.this.updateInventory(inventory, location);
         }));
         blockMenu.addMenuClickHandler(STATUS_SLOT, (((player, i, itemStack, clickAction) -> {
             config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
             MachineUtil.stockSlots(inventory, INPUT_SLOT);
             return false;
         })));
@@ -107,7 +109,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             final int finalSlotP = slotP;
             blockMenu.addMenuClickHandler(STATUS_L_SLOT[slotP], (player, i, itemStack, clickAction) -> {
                 config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
                 config.setValue(KEY, config.getString(KEY_L[finalSlotP]));
                 ManualCraftMachineMenu.this.updateInventory(inventory, location);
@@ -118,7 +120,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             final int finalSlotP = slotP;
             blockMenu.addMenuClickHandler(STATUS_R_SLOT[slotP], (player, i, itemStack, clickAction) -> {
                 config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
                 config.setValue(KEY, config.getString(KEY_R[finalSlotP]));
                 ManualCraftMachineMenu.this.updateInventory(inventory, location);
@@ -127,7 +129,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         }
         blockMenu.addMenuClickHandler(PREVIOUS_SLOT, ((player, i, itemStack, clickAction) -> {
             config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
             int offset = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY));
             int length = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getMachine().getClass()).size();
@@ -139,7 +141,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         }));
         blockMenu.addMenuClickHandler(NEXT_SLOT, ((player, i, itemStack, clickAction) -> {
             config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
             int offset = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY));
             int length = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getMachine().getClass()).size();
@@ -151,7 +153,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         }));
         blockMenu.addMenuClickHandler(CRAFT_SLOT, ((player, i, itemStack, clickAction) -> {
             config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-            ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
             int offset = config.contains(KEY) ? Integer.parseInt(config.getValue(KEY).toString()) : 0;
             ManualCraftMachineMenu.this.doFunction(blockMenu, clickAction, player, offset);
@@ -161,7 +163,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             final int fSlotP = slotP;
             blockMenu.addMenuClickHandler(CRAFT_L_SLOT[slotP], (player, i, itemStack, clickAction) -> {
                 config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
                 int offset = config.contains(KEY_L[fSlotP]) ? Integer.parseInt(config.getValue(KEY_L[fSlotP]).toString()) : 0;
                 ManualCraftMachineMenu.this.doFunction(blockMenu, clickAction, player, offset);
                 return false;
@@ -171,7 +173,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             final int fSlotP = slotP;
             blockMenu.addMenuClickHandler(CRAFT_R_SLOT[slotP], (player, i, itemStack, clickAction) -> {
                 config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
                 int offset = config.contains(KEY_R[fSlotP]) ? Integer.parseInt(config.getValue(KEY_R[fSlotP]).toString()) : 0;
                 ManualCraftMachineMenu.this.doFunction(blockMenu, clickAction, player, offset);

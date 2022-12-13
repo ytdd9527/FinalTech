@@ -28,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
@@ -63,6 +64,7 @@ public class MachineConfigurator extends UsableSlimefunItem implements RecipeIte
     @Override
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
         playerRightClickEvent.cancel();
+        JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
 
         Optional<Block> clickedBlock = playerRightClickEvent.getClickedBlock();
         if (clickedBlock.isPresent()) {
@@ -91,7 +93,7 @@ public class MachineConfigurator extends UsableSlimefunItem implements RecipeIte
                                 item.setItemMeta(itemMeta);
                                 ItemStackUtil.setLore(item, slimefunItem.getItemName());
 
-                                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+                                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
                             } else {
                                 // load data
 
@@ -113,7 +115,7 @@ public class MachineConfigurator extends UsableSlimefunItem implements RecipeIte
 
                                 this.extraSaveFunction(BlockStorage.getInventory(block), itemId);
 
-                                ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, block);
+                                ParticleUtil.drawCubeByBlock(this.getAddon().getJavaPlugin(), Particle.GLOW, 0, block);
                             }
                         }
                     }

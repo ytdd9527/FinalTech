@@ -95,7 +95,7 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
                         BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineId), () -> AbstractCubeElectricGenerator.this.chargeMachine((EnergyNetComponent) machineItem, finalEnergy, energyComponentConfig, location), location);
                         if (drawParticle) {
                             Location cloneLocation = location.clone();
-                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(Particle.GLOW, 0, cloneLocation.getBlock()));
+                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, cloneLocation.getBlock()));
                         }
                         return 1;
                     }
