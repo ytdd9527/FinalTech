@@ -782,18 +782,6 @@ public final class SetupUtil {
                 }
             }
         });
-        // Color pseudorandom
-        languageManager.addFunction(new Function<>() {
-            @Override
-            public String apply(String s) {
-                String[] split = StringUtil.split(s, "{prandom-color:start}", "{prandom-color:end}");
-                if (split.length == 3) {
-                    return split[0] + TextUtil.colorRandomString(split[1]) + this.apply(split[2]);
-                } else {
-                    return s;
-                }
-            }
-        });
     }
 
     public static void registerBlockTicker() {

@@ -2,6 +2,7 @@ package io.taraxacum.finaltech;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.finaltech.setup.Updater;
 import io.taraxacum.libs.plugin.dto.ConfigFileManager;
 import io.taraxacum.libs.plugin.dto.*;
 import io.taraxacum.finaltech.setup.FinalTechItems;
@@ -82,6 +83,14 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             return;
         }
 
+        if(this.config.getOrDefault(true, "updater", "enable")) {
+            this.logger.info("You have enabled the config updater.");
+            Updater updater = Updater.getInstance();
+            updater.update(this);
+        } else {
+            this.logger.info("You have disabled the config updater.");
+        }
+
         /* set random seed */
         this.seed = this.config.getOrDefault(new Random().nextLong(Long.MAX_VALUE), "seed");
         this.random = new Random(this.seed);
@@ -146,7 +155,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             }
         }, 0, tickRate);
 
-        SetupUtil.initLanguageManager(instance.languageManager);
+        SetupUtil.initLanguageManager(FinalTech.instance.languageManager);
 
         /* mark for some machines */
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.VARIABLE_WIRE_RESISTANCE.getItemId());

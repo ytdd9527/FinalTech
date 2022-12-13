@@ -1914,18 +1914,21 @@ items:
         name: '{color:stress}Introduction'
         lore:
           - '{color:normal}Input items to get {id:FINALTECH_UNORDERED_DUST} {color:normal}or {id:FINALTECH_ORDERED_DUST}'
+          - ''
+          - '{color:normal}A pair of random number will be generated.'
+          - '{color:normal}They will be used to determine how to craft item.'
       2:
         name: '{color:passive}Mechanism'
         lore:
-          - '{color:normal}Input at least {color:number}{1} amount of items'
-          - '{color:normal}Input at least {color:number}{2} different type of items'
+          - '{color:normal}Input at least the specified amount of items'
+          - '{color:normal}Input at least the specified quantity of different type of items'
           - '{color:normal}Then it will generate one {id:FINALTECH_UNORDERED_DUST}'
         output: 'FINALTECH_UNORDERED_DUST'
       3:
         name: '{color:passive}Mechanism'
         lore:
-          - '{color:normal}Input just {color:number}{1} amount of items'
-          - '{color:normal}Input just {color:number}{2} different type of items'
+          - '{color:normal}Input just the specified amount of items'
+          - '{color:normal}Input just the specified quantity of different type of items'
           - '{color:normal}Then it will generate one {id:FINALTECH_ORDERED_DUST}'
         output: 'FINALTECH_ORDERED_DUST'
     status:

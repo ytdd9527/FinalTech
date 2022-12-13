@@ -1,12 +1,14 @@
 package io.taraxacum.finaltech.setup;
 
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.libs.plugin.dto.ConfigFileManager;
+import io.taraxacum.libs.plugin.dto.LanguageManager;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.logging.Logger;
 
 public class Updater implements Consumer<FinalTech>{
     private final Map<String, UpdateFunction> versionMap = new HashMap<>();
@@ -15,6 +17,15 @@ public class Updater implements Consumer<FinalTech>{
     private static volatile Updater instance;
 
     public void init() {
+        LanguageManager languageManager = FinalTech.getLanguageManager();
+        ConfigFileManager configManager = FinalTech.getConfigManager();
+        Logger logger = FinalTech.logger();
+        Boolean updateLanguage = configManager.getOrDefault(true, "update", "language");
+        if(updateLanguage) {
+            logger.info("You have enabled the config updater for language file");
+        }
+
+
         versionMap.put("20220811", new UpdateFunction() {
             @Override
             protected String targetVersion() {
@@ -23,7 +34,27 @@ public class Updater implements Consumer<FinalTech>{
 
             @Override
             protected void update(FinalTech finalTech) {
-                // TODO: what to update?
+                if(updateLanguage) {
+                    List<String> lore1 = new ArrayList<>();
+                    lore1.add("'{color:normal}Input items to get {id:FINALTECH_UNORDERED_DUST} {color:normal}or {id:FINALTECH_ORDERED_DUST}'");
+                    lore1.add("''");
+                    lore1.add("'{color:normal}A pair of random number will be generated.'");
+                    lore1.add("'{color:normal}They will be used to determine how to craft item.'");
+
+                    List<String> lore2 = new ArrayList<>();
+                    lore2.add("'{color:normal}Input at least the specified amount of items'");
+                    lore2.add("'{color:normal}Input at least the specified quantity of different type of items'");
+                    lore2.add("'{color:normal}Then it will generate one {id:FINALTECH_UNORDERED_DUST}'");
+
+                    List<String> lore3 = new ArrayList<>();
+                    lore3.add("'{color:normal}Input just the specified amount of items'");
+                    lore3.add("'{color:normal}Input just the specified quantity of different type of items'");
+                    lore3.add("'{color:normal}Then it will generate one {id:FINALTECH_UNORDERED_DUST}'");
+
+                    languageManager.setValue(lore1, "items", "FINALTECH_ORDERED_DUST_FACTORY_DIRT", "info", "1", "lore");
+                    languageManager.setValue(lore2, "items", "FINALTECH_ORDERED_DUST_FACTORY_DIRT", "info", "2", "lore");
+                    languageManager.setValue(lore3, "items", "FINALTECH_ORDERED_DUST_FACTORY_DIRT", "info", "3", "lore");
+                }
             }
         });
     }
