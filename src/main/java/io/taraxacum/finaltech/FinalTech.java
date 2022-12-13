@@ -11,6 +11,8 @@ import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedBarChart;
+import org.bstats.charts.AdvancedPie;
+import org.bstats.charts.DrilldownPie;
 import org.bstats.charts.MultiLineChart;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -185,15 +187,12 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
         /* setup bstats */
         Metrics metrics = new Metrics(this, 16920);
-        metrics.addCustomChart(new AdvancedBarChart("multi_thread_level", () -> {
-            Map<String, int[]> result = new LinkedHashMap<>();
-            int[] info = FinalTech.getForceSlimefunMultiThread() ? new int[] {0, 1} : new int[] {1, 0};
-            if(FinalTech.getMultiThreadLevel() == 0) {
-                result.put("Multi-Thread-Level 0", info);
-            }
+        metrics.addCustomChart(new AdvancedPie("multi_thread_level", () -> {
+            Map<String, Integer> result = new LinkedHashMap<>();
+            result.put(String.valueOf(FinalTech.getMultiThreadLevel()), 1);
             return result;
         }));
-        metrics.addCustomChart(new MultiLineChart("languages", () -> {
+        metrics.addCustomChart(new AdvancedPie("languages", () -> {
             Map<String, Integer> result = new HashMap<>();
             result.put(FinalTech.getConfigManager().getString("language"), 1);
             return result;
