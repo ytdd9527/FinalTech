@@ -36,20 +36,20 @@ public class Updater implements Consumer<FinalTech>{
             protected void update(FinalTech finalTech) {
                 if(updateLanguage) {
                     List<String> lore1 = new ArrayList<>();
-                    lore1.add("'{color:normal}Input items to get {id:FINALTECH_UNORDERED_DUST} {color:normal}or {id:FINALTECH_ORDERED_DUST}'");
-                    lore1.add("''");
-                    lore1.add("'{color:normal}A pair of random number will be generated.'");
-                    lore1.add("'{color:normal}They will be used to determine how to craft item.'");
+                    lore1.add("{color:normal}Input items to get {id:FINALTECH_UNORDERED_DUST} {color:normal}or {id:FINALTECH_ORDERED_DUST}");
+                    lore1.add("");
+                    lore1.add("{color:normal}A pair of random number will be generated.");
+                    lore1.add("{color:normal}They will be used to determine how to craft item.");
 
                     List<String> lore2 = new ArrayList<>();
-                    lore2.add("'{color:normal}Input at least the specified amount of items'");
-                    lore2.add("'{color:normal}Input at least the specified quantity of different type of items'");
-                    lore2.add("'{color:normal}Then it will generate one {id:FINALTECH_UNORDERED_DUST}'");
+                    lore2.add("{color:normal}Input at least the specified amount of items");
+                    lore2.add("{color:normal}Input at least the specified quantity of different type of items");
+                    lore2.add("{color:normal}Then it will generate one {id:FINALTECH_UNORDERED_DUST}");
 
                     List<String> lore3 = new ArrayList<>();
-                    lore3.add("'{color:normal}Input just the specified amount of items'");
-                    lore3.add("'{color:normal}Input just the specified quantity of different type of items'");
-                    lore3.add("'{color:normal}Then it will generate one {id:FINALTECH_UNORDERED_DUST}'");
+                    lore3.add("{color:normal}Input just the specified amount of items");
+                    lore3.add("{color:normal}Input just the specified quantity of different type of items");
+                    lore3.add("{color:normal}Then it will generate one {id:FINALTECH_UNORDERED_DUST}");
 
                     languageManager.setValue(lore1, "items", "FINALTECH_ORDERED_DUST_FACTORY_DIRT", "info", "1", "lore");
                     languageManager.setValue(lore2, "items", "FINALTECH_ORDERED_DUST_FACTORY_DIRT", "info", "2", "lore");
@@ -64,7 +64,7 @@ public class Updater implements Consumer<FinalTech>{
             this.init();
         }
 
-        String currentVersion = FinalTech.getConfigManager().getString("version");
+        String currentVersion = FinalTech.getConfigManager().getOrDefault(latestVersion, "version");
         if(latestVersion.equals(currentVersion)) {
             FinalTech.logger().info("You are using the latest version. Good luck!");
             return;
