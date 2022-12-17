@@ -49,7 +49,7 @@ public class Updater implements Consumer<FinalTech>{
                     List<String> lore3 = new ArrayList<>();
                     lore3.add("{color:normal}Input just the specified amount of items");
                     lore3.add("{color:normal}Input just the specified quantity of different type of items");
-                    lore3.add("{color:normal}Then it will generate one {id:FINALTECH_UNORDERED_DUST}");
+                    lore3.add("{color:normal}Then it will generate one {id:FINALTECH_ORDERED_DUST}");
 
                     languageManager.setValue(lore1, "items", "FINALTECH_ORDERED_DUST_FACTORY_DIRT", "info", "1", "lore");
                     languageManager.setValue(lore2, "items", "FINALTECH_ORDERED_DUST_FACTORY_DIRT", "info", "2", "lore");
