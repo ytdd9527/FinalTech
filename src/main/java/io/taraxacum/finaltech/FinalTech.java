@@ -88,7 +88,12 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         if(this.config.getOrDefault(true, "update", "enable")) {
             this.logger.info("You have enabled the config updater.");
             Updater updater = Updater.getInstance();
-            updater.update(this);
+            try {
+                updater.update(this);
+            } catch (Exception e) {
+                e.printStackTrace();
+                this.logger.info("Some error occurred while doing update..");
+            }
         } else {
             this.logger.info("You have disabled the config updater.");
         }
