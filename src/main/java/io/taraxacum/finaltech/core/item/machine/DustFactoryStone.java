@@ -97,16 +97,17 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
         }
 
         int sleep = 64 - maxAmount + minAmount;
+        sleep *= sleep;
 
         for (int slot : this.getInputSlot()) {
             blockMenu.replaceExistingItem(slot, ItemStackUtil.AIR);
         }
         if (amountList.size() == this.getInputSlot().length && allSameItem) {
             blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
-            BlockTickerUtil.setSleep(config, FinalTech.getRandom().nextDouble(this.sleep + sleep));
+            BlockTickerUtil.setSleep(config, String.valueOf(this.sleep + FinalTech.getRandom().nextDouble(sleep)));
         } else if (Math.random() < (double)(amountList.size()) / this.getInputSlot().length) {
             blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
-            BlockTickerUtil.setSleep(config, FinalTech.getRandom().nextDouble(this.sleep + sleep));
+            BlockTickerUtil.setSleep(config, String.valueOf(this.sleep + FinalTech.getRandom().nextDouble(sleep)));
         }
     }
 
