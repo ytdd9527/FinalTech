@@ -60,7 +60,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
     private Random random;
     private long seed;
     private BukkitTask bukkitTask;
-    private final int version = 20220811;
+    private final String version = Updater.LATEST_VERSION;
     private static FinalTech instance;
 
     @Override

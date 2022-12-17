@@ -12,9 +12,9 @@ import java.util.logging.Logger;
 
 public class Updater implements Consumer<FinalTech>{
     private final Map<String, UpdateFunction> versionMap = new HashMap<>();
-    private final String latestVersion = "20221204";
     private boolean init = false;
     private static volatile Updater instance;
+    public static final String LATEST_VERSION = "20221204";
 
     public void init() {
         LanguageManager languageManager = FinalTech.getLanguageManager();
@@ -64,8 +64,8 @@ public class Updater implements Consumer<FinalTech>{
             this.init();
         }
 
-        String currentVersion = FinalTech.getConfigManager().getOrDefault(latestVersion, "version");
-        if(latestVersion.equals(currentVersion)) {
+        String currentVersion = FinalTech.getConfigManager().getOrDefault(LATEST_VERSION, "version");
+        if(LATEST_VERSION.equals(currentVersion)) {
             FinalTech.logger().info("You are using the latest version. Good luck!");
             return;
         }
@@ -74,9 +74,9 @@ public class Updater implements Consumer<FinalTech>{
         if(updateFunction == null) {
             FinalTech.logger().info("You are using the unknown version. Version updater is disabled.");
         } else {
-            String targetVersion = this.latestVersion;
+            String targetVersion = this.LATEST_VERSION;
             FinalTech.logger().info("Version " + currentVersion + " is detected! Version updater start to work...");
-            while (updateFunction != null && !latestVersion.equals(currentVersion)) {
+            while (updateFunction != null && !LATEST_VERSION.equals(currentVersion)) {
                 targetVersion = updateFunction.apply(finalTech);
                 FinalTech.logger().info("FinalTECH Updated: " + currentVersion + " -> " + targetVersion);
                 currentVersion = targetVersion;
