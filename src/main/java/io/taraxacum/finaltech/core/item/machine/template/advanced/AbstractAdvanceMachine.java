@@ -33,7 +33,7 @@ import java.util.List;
  * @since 1.0
  */
 public abstract class AbstractAdvanceMachine extends AbstractMachine implements RecipeItem {
-    private static final String OFFSET_KEY = "offset";
+    private final String OFFSET_KEY = "offset";
 
     protected AbstractAdvanceMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
