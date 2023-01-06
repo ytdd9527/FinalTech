@@ -141,6 +141,10 @@ public final class FinalTechItems {
     public static final SlimefunItemStack STORAGE_CARD = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_STORAGE_CARD", Material.MUSIC_DISC_BLOCKS, "Storage Card");
     // accessor
     public static final SlimefunItemStack REMOTE_ACCESSOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_REMOTE_ACCESSOR", Material.OBSERVER, "Remote Accessor");
+    public static final SlimefunItemStack CONSUMABLE_REMOTE_ACCESSOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_CONSUMABLE_REMOTE_ACCESSOR", Material.OBSERVER, "Remote Accessor - Consumable");
+    public static final SlimefunItemStack CONFIGURABLE_REMOTE_ACCESSOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_CONFIGURABLE_REMOTE_ACCESSOR", Material.OBSERVER, "Remote Accessor - Configurable");
+    public static final SlimefunItemStack EXPANDED_CONSUMABLE_REMOTE_ACCESSOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_EXPANDED_CONSUMABLE_REMOTE_ACCESSOR", Material.OBSERVER, "Expanded Remote Accessor - Consumable");
+    public static final SlimefunItemStack EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR", Material.OBSERVER, "Expanded Remote Accessor - Configurable");
     public static final SlimefunItemStack AREA_ACCESSOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_AREA_ACCESSOR", Material.REDSTONE_LAMP, "Area Accessor");
     // logic
     public static final SlimefunItemStack LOGIC_COMPARATOR_NOTNULL = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_LOGIC_COMPARATOR_NOTNULL", Material.IRON_BLOCK, "Logic Comparator - Not Null");

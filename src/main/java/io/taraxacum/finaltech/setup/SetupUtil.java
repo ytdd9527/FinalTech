@@ -11,6 +11,7 @@ import io.taraxacum.finaltech.core.command.ShowItemInfo;
 import io.taraxacum.finaltech.core.command.TransferToCopyCardItem;
 import io.taraxacum.finaltech.core.command.TransferToStorageItem;
 import io.taraxacum.finaltech.core.enchantment.NullEnchantment;
+import io.taraxacum.finaltech.core.item.machine.function.*;
 import io.taraxacum.finaltech.core.item.machine.logic.LogicAmountComparator;
 import io.taraxacum.finaltech.core.item.machine.logic.LogicEqualComparator;
 import io.taraxacum.finaltech.core.item.machine.logic.LogicNotNullComparator;
@@ -280,6 +281,10 @@ public final class SetupUtil {
         // accessor
         FinalTechMenus.SUB_MENU_ACCESSOR.addTo(
                 new RemoteAccessor(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.REMOTE_ACCESSOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.REMOTE_ACCESSOR).register(),
+                new ConsumableRemoteAccessor(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.CONSUMABLE_REMOTE_ACCESSOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CONSUMABLE_REMOTE_ACCESSOR).register(),
+                new ConfigurableRemoteAccessor(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.CONFIGURABLE_REMOTE_ACCESSOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CONFIGURABLE_REMOTE_ACCESSOR).register(),
+                new ExpandedConsumableRemoteAccessor(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.EXPANDED_CONSUMABLE_REMOTE_ACCESSOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.EXPANDED_CONSUMABLE_REMOTE_ACCESSOR).register(),
+                new ExpandedConfigurableRemoteAccessor(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR).register(),
                 new AreaAccessor(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.AREA_ACCESSOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.AREA_ACCESSOR).register());
         // logic
         FinalTechMenus.SUB_MENU_LOGIC.addTo(

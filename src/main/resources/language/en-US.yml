@@ -1752,6 +1752,42 @@ items:
         lore:
           - '{color:normal}Right click it to open slimefun machine it looking at'
           - '{color:normal}Range: {color:number}{1}'
+  FINALTECH_CONSUMABLE_REMOTE_ACCESSOR:
+    name: '{color:prandom}Remote Accessor {color:conceal}- {color:positive}Consumable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to open slimefun machine it looking at'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_CONFIGURABLE_REMOTE_ACCESSOR:
+    name: '{color:prandom}Remote Accessor {color:conceal}- {color:positive}Configurable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to open slimefun machine it looking at'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_EXPANDED_CONSUMABLE_REMOTE_ACCESSOR:
+    name: '{color:prandom}Expanded Remote Accessor {color:conceal}- {color:positive}Consumable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to open slimefun machine it looking at'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR:
+    name: '{color:prandom}Expanded Remote Accessor {color:conceal}- {color:positive}Configurable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to open slimefun machine it looking at'
+        output: 'FINALTECH_DIGITAL_ZERO'
   FINALTECH_AREA_ACCESSOR:
     name: '{color:prandom}Area Accessor'
     info:

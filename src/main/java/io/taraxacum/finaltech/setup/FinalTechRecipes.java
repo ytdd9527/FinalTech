@@ -576,6 +576,26 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, new ItemStack(Material.OBSERVER), FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
+    public static final ItemStack[] CONSUMABLE_REMOTE_ACCESSOR = new ItemStack[] {
+            null, null, null,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.REMOTE_ACCESSOR, FinalTechItems.ORDERED_DUST,
+            null, null, null
+    };
+    public static final ItemStack[] CONFIGURABLE_REMOTE_ACCESSOR = new ItemStack[] {
+            FinalTechItems.ORDERED_DUST, null, FinalTechItems.ORDERED_DUST,
+            null, FinalTechItems.REMOTE_ACCESSOR, null,
+            FinalTechItems.ORDERED_DUST, null, FinalTechItems.ORDERED_DUST
+    };
+    public static final ItemStack[] EXPANDED_CONSUMABLE_REMOTE_ACCESSOR = new ItemStack[] {
+            null, FinalTechItems.ORDERED_DUST, null,
+            FinalTechItems.CONSUMABLE_REMOTE_ACCESSOR, FinalTechItems.ORDERED_DUST, FinalTechItems.CONSUMABLE_REMOTE_ACCESSOR,
+            null, FinalTechItems.ORDERED_DUST, null
+    };
+    public static final ItemStack[] EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR = new ItemStack[] {
+            null, FinalTechItems.ORDERED_DUST, null,
+            FinalTechItems.CONFIGURABLE_REMOTE_ACCESSOR, FinalTechItems.ORDERED_DUST, FinalTechItems.CONFIGURABLE_REMOTE_ACCESSOR,
+            null, FinalTechItems.ORDERED_DUST, null
+    };
     public static final ItemStack[] AREA_ACCESSOR = new ItemStack[] {
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, new ItemStack(Material.TARGET), FinalTechItems.GEARWHEEL,
