@@ -37,11 +37,11 @@ helper:
       name: '{color:normal}Error'
   CARGO_ORDER:
     positive:
-      name: '{color:normal}CARGO ORDER {color:conceal}- {color:random}POSITIVE'
+      name: '{color:normal}Cargo Order {color:conceal}- {color:random}POSITIVE'
       lore:
         - '{color:normal}Iterate through the location queue in positive order'
     reverse:
-      name: '{color:normal}CARGO ORDER {color:conceal}- {color:random}REVERSE'
+      name: '{color:normal}Cargo Order {color:conceal}- {color:random}REVERSE'
       lore:
         - '{color:normal}Iterate through the location queue in reverse order'
   MACHINE_MAX_STACK:
