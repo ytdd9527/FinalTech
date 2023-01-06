@@ -381,34 +381,34 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, FinalTechItems.BUG, FinalTechItems.GEARWHEEL
     };
     public static final ItemStack[] SMALL_EXPANDED_CAPACITOR = new ItemStack[] {
-            SlimefunItems.DURALUMIN_INGOT, FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, SlimefunItems.DURALUMIN_INGOT,
-            FinalTechItems.GEARWHEEL, SlimefunItems.ENERGIZED_CAPACITOR, FinalTechItems.GEARWHEEL,
-            SlimefunItems.DURALUMIN_INGOT, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR, SlimefunItems.DURALUMIN_INGOT
+            SlimefunItems.DURALUMIN_INGOT, FinalTechItems.SHINE, SlimefunItems.DURALUMIN_INGOT,
+            FinalTechItems.ORDERED_DUST, SlimefunItems.ENERGIZED_CAPACITOR, FinalTechItems.ORDERED_DUST,
+            SlimefunItems.DURALUMIN_INGOT, FinalTechItems.GEARWHEEL, SlimefunItems.DURALUMIN_INGOT
     };
     public static final ItemStack[] MEDIUM_EXPANDED_CAPACITOR = new ItemStack[] {
-            SlimefunItems.BILLON_INGOT, FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, SlimefunItems.BILLON_INGOT,
+            SlimefunItems.BILLON_INGOT, FinalTechItems.ORDERED_DUST, SlimefunItems.BILLON_INGOT,
             FinalTechItems.GEARWHEEL, FinalTechItems.SMALL_EXPANDED_CAPACITOR, FinalTechItems.GEARWHEEL,
-            SlimefunItems.BILLON_INGOT, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR, SlimefunItems.BILLON_INGOT
+            SlimefunItems.BILLON_INGOT, FinalTechItems.ORDERED_DUST, SlimefunItems.BILLON_INGOT
     };
     public static final ItemStack[] BIG_EXPANDED_CAPACITOR = new ItemStack[] {
-            SlimefunItems.STEEL_INGOT, FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, SlimefunItems.STEEL_INGOT,
+            SlimefunItems.STEEL_INGOT, FinalTechItems.ORDERED_DUST, SlimefunItems.STEEL_INGOT,
             FinalTechItems.GEARWHEEL, FinalTechItems.MEDIUM_EXPANDED_CAPACITOR, FinalTechItems.GEARWHEEL,
-            SlimefunItems.STEEL_INGOT, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR, SlimefunItems.STEEL_INGOT
+            SlimefunItems.STEEL_INGOT, FinalTechItems.ORDERED_DUST, SlimefunItems.STEEL_INGOT
     };
     public static final ItemStack[] LARGE_EXPANDED_CAPACITOR = new ItemStack[] {
-            SlimefunItems.REINFORCED_ALLOY_INGOT, FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, SlimefunItems.REINFORCED_ALLOY_INGOT,
+            SlimefunItems.REINFORCED_ALLOY_INGOT, FinalTechItems.ORDERED_DUST, SlimefunItems.REINFORCED_ALLOY_INGOT,
             FinalTechItems.GEARWHEEL, FinalTechItems.BIG_EXPANDED_CAPACITOR, FinalTechItems.GEARWHEEL,
-            SlimefunItems.REINFORCED_ALLOY_INGOT, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR, SlimefunItems.REINFORCED_ALLOY_INGOT
+            SlimefunItems.REINFORCED_ALLOY_INGOT, FinalTechItems.ORDERED_DUST, SlimefunItems.REINFORCED_ALLOY_INGOT
     };
     public static final ItemStack[] CARBONADO_EXPANDED_CAPACITOR = new ItemStack[] {
-            SlimefunItems.CARBONADO, FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, SlimefunItems.CARBONADO,
+            SlimefunItems.CARBONADO, FinalTechItems.ORDERED_DUST, SlimefunItems.CARBONADO,
             FinalTechItems.GEARWHEEL, FinalTechItems.LARGE_EXPANDED_CAPACITOR, FinalTechItems.GEARWHEEL,
-            SlimefunItems.CARBONADO, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR, SlimefunItems.CARBONADO
+            SlimefunItems.CARBONADO, FinalTechItems.ORDERED_DUST, SlimefunItems.CARBONADO
     };
     public static final ItemStack[] ENERGIZED_EXPANDED_CAPACITOR = new ItemStack[] {
-            SlimefunItems.CARBONADO, FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, SlimefunItems.CARBONADO,
+            SlimefunItems.CARBONADO, FinalTechItems.ORDERED_DUST, SlimefunItems.CARBONADO,
             FinalTechItems.BUG, FinalTechItems.CARBONADO_EXPANDED_CAPACITOR, FinalTechItems.BUG,
-            SlimefunItems.CARBONADO, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR, SlimefunItems.CARBONADO
+            SlimefunItems.CARBONADO, FinalTechItems.ORDERED_DUST, SlimefunItems.CARBONADO
     };
     public static final ItemStack[] ENERGIZED_STACK_EXPANDED_CAPACITOR = new ItemStack[] {
             ItemStackUtil.cloneItem(FinalTechItems.GEARWHEEL, 12), null, null, null, null, ItemStackUtil.cloneItem(FinalTechItems.GEARWHEEL, 12),
