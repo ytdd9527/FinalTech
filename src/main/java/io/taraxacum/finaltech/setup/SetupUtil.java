@@ -873,6 +873,12 @@ public final class SetupUtil {
                         declaredField.setAccessible(true);
                         declaredField.set(slimefunItem, blockTicker);
                         declaredField.setAccessible(false);
+                        if(blockTicker == null) {
+                            Field ticking = clazz.getDeclaredField("ticking");
+                            ticking.setAccessible(true);
+                            ticking.set(slimefunItem, false);
+                            ticking.setAccessible(false);
+                        }
                         if (forceAsync) {
                             FinalTech.logger().info(slimefunItem.getId() + "(" + slimefunItem.getItemName() + ")" + " is optimized for multi-thread！！！");
                             FinalTech.addAsyncSlimefunItem(slimefunItem.getId());
