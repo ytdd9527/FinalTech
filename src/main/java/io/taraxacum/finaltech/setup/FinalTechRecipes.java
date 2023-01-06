@@ -1060,6 +1060,11 @@ public final class FinalTechRecipes {
             FinalTechItems.BUG, FinalTechItems.ANNULAR, FinalTechItems.BUG
     };
     // extraction
+    public static final ItemStack[] DIGITAL_EXTRACTION = new ItemStack[] {
+            FinalTechItems.LOGIC_FALSE, FinalTechItems.ANNULAR, FinalTechItems.LOGIC_FALSE,
+            FinalTechItems.ANNULAR, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.ANNULAR,
+            FinalTechItems.LOGIC_TRUE, FinalTechItems.ANNULAR, FinalTechItems.LOGIC_TRUE
+    };
     public static final ItemStack[] ORE_EXTRACTION = new ItemStack[] {
             new ItemStack(Material.NETHERITE_BLOCK), FinalTechItems.ANNULAR, new ItemStack(Material.NETHERITE_BLOCK),
             FinalTechItems.ANNULAR, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.ANNULAR,

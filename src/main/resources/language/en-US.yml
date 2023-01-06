@@ -2347,6 +2347,8 @@ items:
     name: '{color:prandom}Wool Conversion'
   FINALTECH_LOGIC_TO_DIGITAL_CONVERSION:
     name: '{color:prandom}Logic To Digital Conversion'
+  FINALTECH_DIGITAL_EXTRACTION:
+    name: '{color:prandom}Digital Extraction'
   FINALTECH_ORE_EXTRACTION:
     name: '{color:prandom}Ore Extraction'
   FINALTECH_STONE_GENERATOR:

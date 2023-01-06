@@ -240,6 +240,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack WOOL_CONVERSION = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_WOOL_CONVERSION", Material.MUSHROOM_STEM, "Wool Conversion");
     public static final SlimefunItemStack LOGIC_TO_DIGITAL_CONVERSION = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_LOGIC_TO_DIGITAL_CONVERSION", Material.BONE_BLOCK, "Logic To Digital Conversion");
     // extraction
+    public static final SlimefunItemStack DIGITAL_EXTRACTION = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_DIGITAL_EXTRACTION", Material.CRYING_OBSIDIAN, "Digital Extraction");
     public static final SlimefunItemStack ORE_EXTRACTION = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ORE_EXTRACTION", Material.CRYING_OBSIDIAN, "Ore Extraction");
     // generator
     public static final SlimefunItemStack STONE_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_STONE_GENERATOR", Material.STONE_BRICKS, "Stone Generator");

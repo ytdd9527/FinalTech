@@ -390,7 +390,7 @@ public final class SetupUtil {
                 new LogicToDigitalConversion(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.LOGIC_TO_DIGITAL_CONVERSION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LOGIC_TO_DIGITAL_CONVERSION).register());
         // extraction
         FinalTechMenus.SUB_MENU_EXTRACTION.addTo(
-                new OreExtraction(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.ORE_EXTRACTION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ORE_EXTRACTION).register());
+                new DigitalExtraction(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.DIGITAL_EXTRACTION, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.DIGITAL_EXTRACTION).register());
         // generator
         FinalTechMenus.SUB_MENU_GENERATOR.addTo(
                 new StoneGenerator(FinalTechMenus.MENU_PRODUCTIVE_MACHINE, FinalTechItems.STONE_GENERATOR, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.STONE_GENERATOR).register(),
