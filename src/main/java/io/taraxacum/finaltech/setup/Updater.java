@@ -64,7 +64,17 @@ public class Updater implements Consumer<FinalTech>{
             this.init();
         }
 
-        String currentVersion = FinalTech.getConfigManager().getOrDefault(LATEST_VERSION, "version");
+        String currentVersion = "";
+
+        try {
+            currentVersion = FinalTech.getConfigManager().getOrDefault(LATEST_VERSION, "version");
+        } catch (Exception e) {
+            e.printStackTrace();
+            finalTech.getLogger().warning("It seems you have set the wrong value type of version");
+            Integer version = FinalTech.getConfigManager().getOrDefault(Integer.parseInt(LATEST_VERSION), "version");
+            currentVersion = String.valueOf(version);
+        }
+
         if(LATEST_VERSION.equals(currentVersion)) {
             FinalTech.logger().info("You are using the latest version. Good luck!");
             return;
