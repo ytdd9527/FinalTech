@@ -514,7 +514,6 @@ public final class SetupUtil {
                 FinalTechMenus.SUB_MENU_TROPHY,
                 FinalTechMenus.SUB_MENU_DEPRECATED);
 
-        FinalTechMenus.MAIN_ITEM_GROUP.addTo(FinalTechMenus.MAIN_MENU_FINAL_ITEM);
         FinalTechMenus.MAIN_ITEM_GROUP.setTier(0);
         FinalTechMenus.MAIN_ITEM_GROUP.register(finalTech);
 
@@ -524,7 +523,6 @@ public final class SetupUtil {
                 FinalTechItems.LAVA_CARD,
                 FinalTechItems.MILK_CARD,
                 FinalTechItems.LIQUID_CARD_GENERATOR);
-        ResearchUtil.setSingleResearch(FinalTechItems.GEARWHEEL, Integer.parseInt(ItemValueTable.getInstance().baseInputValue), false);
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "ORDER_DUST", Slimefun.getInstalledAddons().size(), true,
                 FinalTechItems.ORDERED_DUST,
                 FinalTechItems.UNORDERED_DUST,
