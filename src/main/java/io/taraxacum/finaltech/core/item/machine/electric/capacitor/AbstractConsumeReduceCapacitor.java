@@ -22,19 +22,19 @@ public abstract class AbstractConsumeReduceCapacitor extends AbstractElectricCap
 
     @Override
     public void removeCharge(@Nonnull Location l, int charge) {
-        charge *= 1.0 / this.getEfficient();
+//        charge *= 1.0 / this.getEfficient();
         super.removeCharge(l, charge);
     }
 
     @Override
     public void setCharge(@Nonnull Location l, int charge) {
-        int difference = charge - this.getCharge(l);
-        if (difference < 0) {
-            charge -= difference;
-            difference *= 1.0 / this.getEfficient();
-            charge += difference;
-        }
-        super.setCharge(l, charge);
+//        int difference = charge - this.getCharge(l);
+//        if (difference < 0) {
+//            charge -= difference;
+//            difference *= 1.0 / this.getEfficient();
+//            charge += difference;
+//        }
+//        super.setCharge(l, charge);
     }
 
     protected abstract int getEfficient();

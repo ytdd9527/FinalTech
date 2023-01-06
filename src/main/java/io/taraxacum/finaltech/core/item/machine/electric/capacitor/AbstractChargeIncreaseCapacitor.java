@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
+@Deprecated
 public abstract class AbstractChargeIncreaseCapacitor extends AbstractElectricCapacitor {
     public AbstractChargeIncreaseCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -22,19 +23,19 @@ public abstract class AbstractChargeIncreaseCapacitor extends AbstractElectricCa
 
     @Override
     public void addCharge(@Nonnull Location l, int charge) {
-        charge *= this.getEfficient();
+//        charge *= this.getEfficient();
         super.addCharge(l, charge);
     }
 
     @Override
     public void setCharge(@Nonnull Location l, int charge) {
-        int difference = charge - this.getCharge(l);
-        if (difference > 0) {
-            charge -= difference;
-            difference *= this.getEfficient();
-            charge += difference;
-        }
-        charge = Math.min(charge, this.getCapacity());
+//        int difference = charge - this.getCharge(l);
+//        if (difference > 0) {
+//            charge -= difference;
+//            difference *= this.getEfficient();
+//            charge += difference;
+//        }
+//        charge = Math.min(charge, this.getCapacity());
         super.setCharge(l, charge);
     }
 
