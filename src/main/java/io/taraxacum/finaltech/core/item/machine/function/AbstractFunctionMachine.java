@@ -17,15 +17,15 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 /**
+ * This machine will do function while being clicked by player.
  * @author Final_ROOT
- * @since 2.0
+ * @since 2.2
  */
-public class AreaAccessor extends AbstractCargo implements RecipeItem {
+public abstract class AbstractFunctionMachine extends AbstractMachine {
     public static final String KEY = "times";
-    public static final int RANGE = ConfigUtil.getOrDefaultItemSetting(8, SfItemUtil.getIdFormatName(AreaAccessor.class), "range");
-    public static final String THRESHOLD = ConfigUtil.getOrDefaultItemSetting(String.valueOf(Slimefun.getTickerTask().getTickRate() / 2), SfItemUtil.getIdFormatName(AreaAccessor.class), "threshold");
+    public static final String THRESHOLD = ConfigUtil.getOrDefaultItemSetting(String.valueOf(Slimefun.getTickerTask().getTickRate() / 2), "ACCESSOR", "threshold");
 
-    public AreaAccessor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public AbstractFunctionMachine(@Nonnull ItemGroup itemGroup, @Nonnull SlimefunItemStack item, @Nonnull RecipeType recipeType, @Nonnull ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -41,20 +41,13 @@ public class AreaAccessor extends AbstractCargo implements RecipeItem {
         };
     }
 
-    @Nonnull
-    @Override
-    protected AbstractMachineMenu setMachineMenu() {
-        return new AreaAccessorMenu(this);
-    }
-
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         config.setValue(KEY, THRESHOLD);
     }
 
     @Override
-    public void registerDefaultRecipes() {
-        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
-                String.valueOf(RANGE));
+    protected boolean isSynchronized() {
+        return false;
     }
 }
