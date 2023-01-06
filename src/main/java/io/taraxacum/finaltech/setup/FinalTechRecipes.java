@@ -461,6 +461,16 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, SlimefunItems.ENERGY_CONNECTOR, FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
+    public static final ItemStack[] NORMAL_CONSUMABLE_ELECTRICITY_SHOOT_PILE = new ItemStack[] {
+            null, null, null,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.NORMAL_ELECTRICITY_SHOOT_PILE, FinalTechItems.ORDERED_DUST,
+            null, null, null
+    };
+    public static final ItemStack[] NORMAL_CONFIGURABLE_ELECTRICITY_SHOOT_PILE = new ItemStack[] {
+            FinalTechItems.ORDERED_DUST, null, FinalTechItems.ORDERED_DUST,
+            null, FinalTechItems.NORMAL_ELECTRICITY_SHOOT_PILE, null,
+            FinalTechItems.ORDERED_DUST, null, FinalTechItems.ORDERED_DUST
+    };
     public static final ItemStack[] ENERGIZED_ELECTRICITY_SHOOT_PILE = new ItemStack[] {
             FinalTechItems.ORDERED_DUST, FinalTechItems.GEARWHEEL, FinalTechItems.ORDERED_DUST,
             FinalTechItems.GEARWHEEL, FinalTechItems.NORMAL_ELECTRICITY_SHOOT_PILE, FinalTechItems.GEARWHEEL,

@@ -1449,13 +1449,39 @@ items:
           - '{color:normal}It will charge only one machine at same time'
           - ''
           - '{color:normal}Range: {color:number}{1}'
-      2:
-        name: '{color:negative}Limit'
-        lore:
-          - '{color:normal}Can not transfer energy to another capacitor or generator'
     status:
       lore:
         - '{color:normal}Affected Machine: {color:number}{1}'
+        - '{color:normal}Transfer Energy: {color:number}{2} J'
+  FINALTECH_NORMAL_CONSUMABLE_ELECTRICITY_SHOOT_PILE:
+    name: '{color:prandom}Normal Electricity Shoot Pile {color:conceal}- {color:positive}Consumable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Transfer energy stored in the capacitor or generator behind it'
+          - '{color:normal}To the machine it is pointing at'
+          - ''
+          - '{color:normal}It will charge only one machine at same time'
+        output: 'FINALTECH_DIGITAL_ZERO'
+    status:
+      lore:
+        - '{color:normal}Stored Energy: {color:number}{1} J'
+        - '{color:normal}Transfer Energy: {color:number}{2} J'
+  FINALTECH_NORMAL_CONFIGURABLE_ELECTRICITY_SHOOT_PILE:
+    name: '{color:prandom}Normal Electricity Shoot Pile {color:conceal}- {color:positive}Configurable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Transfer energy stored in the capacitor or generator behind it'
+          - '{color:normal}To the machine it is pointing at'
+          - ''
+          - '{color:normal}It will charge only one machine at same time'
+        output: 'FINALTECH_DIGITAL_ZERO'
+    status:
+      lore:
+        - '{color:normal}Stored Energy: {color:number}{1} J'
         - '{color:normal}Transfer Energy: {color:number}{2} J'
   FINALTECH_ENERGIZED_ELECTRICITY_SHOOT_PILE:
     name: '{color:prandom}Energized Electricity Shoot Pile'
