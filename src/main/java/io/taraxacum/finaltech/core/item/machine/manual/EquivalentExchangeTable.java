@@ -11,7 +11,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.libs.plugin.dto.ItemAmountWrapper;
-import io.taraxacum.finaltech.api.interfaces.item.RecipeItem;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
 import io.taraxacum.finaltech.core.menu.manual.EquivalentExchangeTableMenu;

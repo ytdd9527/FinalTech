@@ -1,14 +1,14 @@
-package io.taraxacum.finaltech.core.item.machine.cargo.unit;
+package io.taraxacum.finaltech.core.item.machine.unit;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.interfaces.item.RecipeItem;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.item.machine.cargo.AbstractCargo;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.unit.RandomOutputStorageUnitMenu;
+import io.taraxacum.finaltech.core.menu.unit.DividedLimitStorageUnitMenu;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -21,15 +21,15 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class RandomOutputStorageUnit extends AbstractCargo implements RecipeItem {
-    public RandomOutputStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class DividedLimitedStorageUnit extends AbstractCargo implements RecipeItem {
+    public DividedLimitedStorageUnit(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new RandomOutputStorageUnitMenu(this);
+        return new DividedLimitStorageUnitMenu(this);
     }
 
     @Override
@@ -39,7 +39,8 @@ public class RandomOutputStorageUnit extends AbstractCargo implements RecipeItem
 
     @Override
     public void registerDefaultRecipes() {
-        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
-                String.valueOf(MachineUtil.calMachineSlotSize(this)));
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this, String.valueOf(MachineUtil.calMachineSlotSize(this)),
+                String.valueOf(this.getInputSlot().length),
+                String.valueOf(this.getOutputSlot().length));
     }
 }

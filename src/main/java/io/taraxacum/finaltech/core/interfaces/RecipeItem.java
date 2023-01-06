@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.api.interfaces.item;
+package io.taraxacum.finaltech.core.interfaces;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;

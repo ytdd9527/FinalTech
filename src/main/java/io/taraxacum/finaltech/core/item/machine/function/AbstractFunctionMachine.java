@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.item.machine.cargo;
+package io.taraxacum.finaltech.core.item.machine.function;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -6,13 +6,8 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.interfaces.item.RecipeItem;
-import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.function.AreaAccessorMenu;
+import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.ConfigUtil;
-import io.taraxacum.finaltech.util.RecipeUtil;
-import io.taraxacum.libs.slimefun.util.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.block.Block;

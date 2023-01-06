@@ -12,7 +12,7 @@ import io.taraxacum.libs.plugin.dto.AdvancedMachineRecipe;
 import io.taraxacum.libs.plugin.dto.LocationRecipeRegistry;
 import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.api.interfaces.item.RecipeItem;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.function.AdvancedAutoCraftMenu;
 import io.taraxacum.libs.plugin.dto.InvWithSlots;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;

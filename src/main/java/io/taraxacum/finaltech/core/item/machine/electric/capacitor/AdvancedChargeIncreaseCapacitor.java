@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.interfaces.item.RecipeItem;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
 import org.bukkit.inventory.ItemStack;
@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
  * @author Final_ROOT
  * @since 2.0
  */
+@Deprecated
 public class AdvancedChargeIncreaseCapacitor extends AbstractChargeIncreaseCapacitor implements RecipeItem {
     private final int capacity = ConfigUtil.getOrDefaultItemSetting(Integer.MAX_VALUE / 4, this, "capacity");
     private final int efficient = ConfigUtil.getOrDefaultItemSetting(4, this, "efficient");

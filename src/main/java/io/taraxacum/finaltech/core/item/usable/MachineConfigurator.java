@@ -10,7 +10,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.common.util.ReflectionUtil;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.interfaces.item.RecipeItem;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;

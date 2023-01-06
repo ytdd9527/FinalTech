@@ -14,7 +14,7 @@ import io.taraxacum.finaltech.util.*;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import io.taraxacum.libs.plugin.util.StringItemUtil;
-import io.taraxacum.finaltech.api.interfaces.item.RecipeItem;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.item.machine.range.cube.AbstractCubeMachine;
 import io.taraxacum.finaltech.core.item.unusable.StorageCard;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;

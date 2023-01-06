@@ -18,7 +18,7 @@ import io.taraxacum.finaltech.core.item.machine.logic.LogicSimilarComparator;
 import io.taraxacum.finaltech.core.item.machine.range.point.face.*;
 import io.taraxacum.finaltech.core.item.tool.*;
 import io.taraxacum.finaltech.core.item.machine.*;
-import io.taraxacum.finaltech.core.item.machine.cargo.unit.*;
+import io.taraxacum.finaltech.core.item.machine.unit.*;
 import io.taraxacum.finaltech.core.item.machine.electric.VariableWireCapacitor;
 import io.taraxacum.finaltech.core.item.machine.electric.VariableWireResistance;
 import io.taraxacum.finaltech.core.item.machine.manual.EquivalentExchangeTable;
