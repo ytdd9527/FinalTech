@@ -66,6 +66,26 @@ public class Updater implements Consumer<FinalTech>{
 
             @Override
             protected void update(FinalTech finalTech) {
+                List<String> allowedIdList = new ArrayList<>();
+                allowedIdList.add("FINALTECH_ADVANCED_COMPOSTER");
+                allowedIdList.add("FINALTECH_ADVANCED_JUICER");
+                allowedIdList.add("FINALTECH_ADVANCED_FURNACE");
+                allowedIdList.add("FINALTECH_ADVANCED_GOLD_PAN");
+                allowedIdList.add("FINALTECH_ADVANCED_DUST_WASHER");
+                allowedIdList.add("FINALTECH_ADVANCED_INGOT_FACTORY");
+                allowedIdList.add("FINALTECH_ADVANCED_CRUCIBLE");
+                allowedIdList.add("FINALTECH_ADVANCED_ORE_GRINDER");
+                allowedIdList.add("FINALTECH_ADVANCED_HEATED_PRESSURE_CHAMBER");
+                allowedIdList.add("FINALTECH_ADVANCED_INGOT_PULVERIZER");
+                allowedIdList.add("FINALTECH_ADVANCED_AUTO_DRIER");
+                allowedIdList.add("FINALTECH_ADVANCED_PRESS");
+                allowedIdList.add("FINALTECH_ADVANCED_FOOD_FACTORY");
+                allowedIdList.add("FINALTECH_ADVANCED_FREEZER");
+                allowedIdList.add("FINALTECH_ADVANCED_CARBON_PRESS");
+                allowedIdList.add("FINALTECH_ADVANCED_SMELTERY");
+                allowedIdList.add("FINALTECH_ADVANCED_DUST_FACTORY");
+                configManager.setValue(allowedIdList, "FINALTECH_MULTI_FRAME_MACHINE", "allowed-id");
+
                 if(updateLanguage) {
                     languageManager.setValue("{color:prandom}Remote Accessor {color:conceal}- {color:positive}Consumable", "items", "FINALTECH_CONSUMABLE_REMOTE_ACCESSOR", "name");
                     languageManager.setValue("{color:prandom}Remote Accessor {color:conceal}- {color:positive}Configurable", "items", "FINALTECH_CONFIGURABLE_REMOTE_ACCESSOR", "name");
