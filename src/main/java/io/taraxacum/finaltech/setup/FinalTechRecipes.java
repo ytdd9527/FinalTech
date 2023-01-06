@@ -1132,6 +1132,12 @@ public final class FinalTechRecipes {
             FinalTechItems.BUG, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.BUG,
             FinalTechItems.PHONY, FinalTechItems.ANNULAR, FinalTechItems.PHONY
     };
+    // 4
+    public static final ItemStack[] MULTI_FRAME_MACHINE = new ItemStack[] {
+            FinalTechItems.PHONY, FinalTechItems.BUG, FinalTechItems.PHONY,
+            FinalTechItems.ANNULAR, FinalTechItems.BASIC_FRAME_MACHINE, FinalTechItems.ANNULAR,
+            FinalTechItems.PHONY, FinalTechItems.BUG, FinalTechItems.PHONY
+    };
     // 8
     public static final ItemStack[] MATRIX_ITEM_DISMANTLE_TABLE = new ItemStack[] {
             FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE,

@@ -2402,6 +2402,8 @@ items:
     parse-success-icon:
       name: '{color:positive}Parse Success'
     parse-amount: '{color:conceal}Amount : {1}'
+  FINALTECH_MULTI_FRAME_MACHINE:
+    name: '{color:prandom}Multi Frame Machine'
   FINALTECH_MATRIX_ITEM_DISMANTLE_TABLE:
     name: '{color:prandom}Matrix Item Dismantle Table'
   FINALTECH_MATRIX_EXPANDED_CAPACITOR:

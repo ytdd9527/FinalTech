@@ -119,6 +119,7 @@ public final class SetupUtil {
         FinalTechItems.MACHINE_ACCELERATE_CARD_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.MACHINE_ACTIVATE_CARD_L4.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.ADVANCED_AUTO_CRAFT.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        FinalTechItems.MULTI_FRAME_MACHINE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.MATRIX_ITEM_DISMANTLE_TABLE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.MATRIX_EXPANDED_CAPACITOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         FinalTechItems.MATRIX_ITEM_DESERIALIZE_PARSER.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);

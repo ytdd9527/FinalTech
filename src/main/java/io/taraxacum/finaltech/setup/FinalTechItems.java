@@ -259,6 +259,8 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MACHINE_ACTIVATE_CARD_L4 = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MACHINE_ACTIVATE_CARD_L4", Material.COPPER_INGOT, "Active Card L4");
     // 4
     public static final SlimefunItemStack ADVANCED_AUTO_CRAFT = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_AUTO_CRAFT", Material.BEACON, "Advanced Auto Craft");
+    // 4
+    public static final SlimefunItemStack MULTI_FRAME_MACHINE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MULTI_FRAME_MACHINE", Material.PURPUR_PILLAR, "Multi Frame Machine");
     // 8
     public static final SlimefunItemStack MATRIX_ITEM_DISMANTLE_TABLE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_ITEM_DISMANTLE_TABLE", Material.OXIDIZED_CUT_COPPER, "Matrix Item Dismantle Table");
     // 12
