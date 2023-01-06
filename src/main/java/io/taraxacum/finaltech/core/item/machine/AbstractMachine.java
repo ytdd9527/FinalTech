@@ -16,6 +16,7 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author Final_ROOT
@@ -80,12 +81,12 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
 
     @Nonnull
     public final int[] getInputSlot() {
-        return this.menu.getInputSlot();
+        return this.menu == null ? new int[0] : this.menu.getInputSlot();
     }
 
     @Nonnull
     public final int[] getOutputSlot() {
-        return this.menu.getOutputSlot();
+        return this.menu == null ? new int[0] : this.menu.getOutputSlot();
     }
 
     @Nonnull
@@ -94,7 +95,7 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
     @Nonnull
     protected abstract BlockBreakHandler onBlockBreak();
 
-    @Nonnull
+    @Nullable
     protected abstract AbstractMachineMenu setMachineMenu();
 
     protected abstract void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config);
