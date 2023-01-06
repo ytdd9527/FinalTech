@@ -104,7 +104,7 @@ public final class SetupUtil {
         FinalTechMenus.MENU_ELECTRICITY_SYSTEM.setTier(0);
         FinalTechMenus.MENU_FUNCTIONAL_MACHINE.setTier(0);
         FinalTechMenus.MENU_PRODUCTIVE_MACHINE.setTier(0);
-        FinalTechMenus.MENU_FINAL_ITEM.setTier(0);
+        FinalTechMenus.MENU_DISC.setTier(0);
 
         /* Enchantment */
         ReflectionUtil.setStaticValue(Enchantment.class, "acceptingNew", true);

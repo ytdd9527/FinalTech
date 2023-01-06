@@ -331,8 +331,14 @@ categories:
     name: '{color:random}Extractions'
   FINALTECH_SUB_MENU_GENERATOR:
     name: '{color:random}Generators'
-  FINALTECH_MAIN_MENU_FINAL_ITEM:
+  FINALTECH_MAIN_MENU_DISC:
+    name: '{color:random}Disc'
+  FINALTECH_SUB_MENU_FINAL_ITEM:
     name: '{color:random}Final Item'
+  FINALTECH_SUB_MENU_TROPHY:
+    name: '{color:random}Trophy'
+  FINALTECH_SUB_MENU_DEPRECATED:
+    name: '{color:random}Deprecated'
 items:
   FINALTECH_WATER_CARD:
     name: '{color:prandom}Water Card'
