@@ -242,8 +242,7 @@ public final class SetupUtil {
         FinalTechMenus.SUB_MENU_ELECTRIC_STORAGE.addTo(
                 new EnergizedStackExpandedCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.ENERGIZED_STACK_EXPANDED_CAPACITOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ENERGIZED_STACK_EXPANDED_CAPACITOR).register(),
                 new OverloadedExpandedCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.OVERLOADED_EXPANDED_CAPACITOR).register(),
-                new AdvancedChargeIncreaseCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.ADVANCED_CHARGE_INCREASE_CAPACITOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_CHARGE_INCREASE_CAPACITOR).register(),
-                new AdvancedConsumeReduceCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.ADVANCED_CONSUME_REDUCE_CAPACITOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_CONSUME_REDUCE_CAPACITOR).register());
+                new TimeCapacitor(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.TIME_CAPACITOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.TIME_CAPACITOR).register());
         // electric transmission
         FinalTechMenus.SUB_MENU_ELECTRIC_TRANSMISSION.addTo(
                 new NormalElectricityShootPile(FinalTechMenus.MENU_ELECTRICITY_SYSTEM, FinalTechItems.NORMAL_ELECTRICITY_SHOOT_PILE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.NORMAL_ELECTRICITY_SHOOT_PILE).register(),
