@@ -10,10 +10,7 @@ import io.taraxacum.finaltech.setup.SetupUtil;
 import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bstats.bukkit.Metrics;
-import org.bstats.charts.AdvancedBarChart;
 import org.bstats.charts.AdvancedPie;
-import org.bstats.charts.DrilldownPie;
-import org.bstats.charts.MultiLineChart;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -85,6 +82,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             return;
         }
 
+        /* update the config file */
         if(this.config.getOrDefault(true, "update", "enable")) {
             this.logger.info("You have enabled the config updater.");
             Updater updater = Updater.getInstance();

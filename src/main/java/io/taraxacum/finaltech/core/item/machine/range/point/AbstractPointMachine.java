@@ -19,5 +19,6 @@ public abstract class AbstractPointMachine extends AbstractRangeMachine {
         return function.apply(this.getTargetLocation(block.getLocation(), range));
     }
 
+    @Nonnull
     protected abstract Location getTargetLocation(@Nonnull Location location, int range);
 }

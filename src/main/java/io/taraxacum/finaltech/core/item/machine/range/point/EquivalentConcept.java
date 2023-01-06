@@ -148,6 +148,7 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
         return false;
     }
 
+    @Nonnull
     @Override
     protected Location getTargetLocation(@Nonnull Location location, int range) {
         int y = location.getBlockY() - range + FinalTech.getRandom().nextInt(range + range);
