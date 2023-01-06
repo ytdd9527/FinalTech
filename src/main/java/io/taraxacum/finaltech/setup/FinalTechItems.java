@@ -2,6 +2,7 @@ package io.taraxacum.finaltech.setup;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.interfaces.MenuUpdater;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import org.bukkit.Material;
 
@@ -109,6 +110,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack OVERLOADED_EXPANDED_CAPACITOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_OVERLOADED_EXPANDED_CAPACITOR", Material.YELLOW_STAINED_GLASS, "Overloaded Expanded Capacitor");
     public static final SlimefunItemStack ADVANCED_CHARGE_INCREASE_CAPACITOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_CHARGE_INCREASE_CAPACITOR", Material.RED_STAINED_GLASS, "Advanced Charge Increase Capacitor");
     public static final SlimefunItemStack ADVANCED_CONSUME_REDUCE_CAPACITOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_CONSUME_REDUCE_CAPACITOR", Material.RED_STAINED_GLASS, "Advanced Consume Reduce Capacitor");
+    public static final SlimefunItemStack TIME_CAPACITOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_TIME_CAPACITOR", Material.BLUE_STAINED_GLASS, "Time Capacitor");
     // electric transmission
     public static final SlimefunItemStack NORMAL_ELECTRICITY_SHOOT_PILE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_NORMAL_ELECTRICITY_SHOOT_PILE", Material.DISPENSER, "Normal Electricity Shoot Pile");
     public static final SlimefunItemStack ENERGIZED_ELECTRICITY_SHOOT_PILE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ENERGIZED_ELECTRICITY_SHOOT_PILE", Material.DISPENSER, "Energized Electricity Shoot Pile");

@@ -1401,6 +1401,17 @@ items:
     status:
       lore:
         - '{color:normal}Stored Energy: {color:number}{1} J'
+  FINALTECH_TIME_CAPACITOR:
+    name: '{color:prandom}Time Capacitor'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Can store {color:number}{1} J {color:normal}of energy'
+          - '{color:normal}Double stored energy with time going'
+    status:
+      lore:
+        - '{color:normal}Stored Energy: {color:number}{1} J'
   FINALTECH_NORMAL_ELECTRICITY_SHOOT_PILE:
     name: '{color:prandom}Normal Electricity Shoot Pile'
     info:

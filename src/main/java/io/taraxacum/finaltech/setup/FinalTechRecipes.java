@@ -435,6 +435,13 @@ public final class FinalTechRecipes {
             ItemStackUtil.cloneItem(FinalTechItems.GEARWHEEL, 12), ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 20), ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 20), ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 20), ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 20), ItemStackUtil.cloneItem(FinalTechItems.GEARWHEEL, 12),
             ItemStackUtil.cloneItem(FinalTechItems.GEARWHEEL, 12), ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 20), ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 20), ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 20), ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST, 20), ItemStackUtil.cloneItem(FinalTechItems.GEARWHEEL, 12)
     };
+    public static final ItemStack[] TIME_CAPACITOR = new ItemStack[] {
+            FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, null,
+            FinalTechItems.SHINE, null, null, null, FinalTechItems.SHINE, null,
+            FinalTechItems.SHINE, null, FinalTechItems.SMALL_EXPANDED_CAPACITOR, null, FinalTechItems.SHINE, null,
+            FinalTechItems.SHINE, null, null, null, FinalTechItems.SHINE, null,
+            FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, null,
+    };
     // electric transmission
     public static final ItemStack[] NORMAL_ELECTRICITY_SHOOT_PILE = new ItemStack[] {
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
