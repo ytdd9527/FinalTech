@@ -352,6 +352,13 @@ public final class FinalTechRecipes {
             FinalTechItems.ENTROPY, null, null, null, null, null,
             FinalTechItems.ENTROPY, FinalTechItems.ENTROPY, FinalTechItems.ENTROPY, FinalTechItems.ENTROPY, FinalTechItems.ENTROPY, null
     };
+    public static final ItemStack[] TIME_GENERATOR = new ItemStack[] {
+            FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, null,
+            FinalTechItems.SHINE, null, null, null, FinalTechItems.SHINE, null,
+            FinalTechItems.SHINE, null, FinalTechItems.BASIC_GENERATOR, null, FinalTechItems.SHINE, null,
+            FinalTechItems.SHINE, null, null, null, FinalTechItems.SHINE, null,
+            FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, null,
+    };
     public static final ItemStack[] ENERGIZED_CHARGE_BASE = new ItemStack[]{
             FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.BUG, null,
             null, FinalTechItems.GEARWHEEL, FinalTechItems.ENERGIZED_GENERATOR, FinalTechItems.GEARWHEEL, null, null,

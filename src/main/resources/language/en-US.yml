@@ -1220,6 +1220,18 @@ items:
         - ''
         - '{color:normal}Power: {color:number}{1}'
         - '{color:normal}Generate Energy: {color:number}{2} J/times'
+  FINALTECH_TIME_GENERATOR:
+    name: '{color:prandom}Time Generator'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Generate energy 1J per {color:number}{1}s'
+          - '{color:normal}Can store {color:number}{2} J {color:normal}of energy'
+          - '{color:normal}Double stored energy with time going'
+    status:
+      lore:
+        - '{color:normal}Stored Energy: {color:number}{1} J'
   FINALTECH_ENERGIZED_CHARGE_BASE:
     name: '{color:prandom}Energized Charge Base'
     info:
