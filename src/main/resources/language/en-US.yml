@@ -959,6 +959,13 @@ items:
           - "{color:action}[Shift + Right-Click] {color:normal}Clear around lives' potion effect"
           - "    {color:normal}Horizontal Range: {color:number}{1}"
           - "    {color:normal}Vertical Range: {color:number}{2}"
+  FINALTECH_GRAVITY_REVERSAL_RUNE:
+    name: '{color:prandom}Gravity Reversal Rune'
+    info:
+      1:
+        name: '{color:positive}Usage'
+        lore:
+          - '{color:action}[Right-Click] {color:normal}Reverse your vertical speed'
   FINALTECH_MENU_VIEWER:
     name: '{color:prandom}Menu Viewer'
     info:

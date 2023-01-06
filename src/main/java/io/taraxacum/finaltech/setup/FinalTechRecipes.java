@@ -222,8 +222,14 @@ public final class FinalTechRecipes {
             null, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, null,
             null, FinalTechItems.UNORDERED_DUST, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.UNORDERED_DUST, null,
             null, FinalTechItems.UNORDERED_DUST, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.UNORDERED_DUST, null,
-            null, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, null,
-            null, null, null, null, null, null
+            null, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, null
+    };
+    public static final ItemStack[] GRAVITY_REVERSAL_RUNE = new ItemStack[] {
+            FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, null,
+            null, null, FinalTechItems.SHINE, null, null, null,
+            null, null, new ItemStack(Material.FEATHER), null, null, null,
+            null, null, FinalTechItems.SHINE, null, null, null,
+            FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, FinalTechItems.SHINE, null
     };
     public static final ItemStack[] MENU_VIEWER = new ItemStack[] {
             null, FinalTechItems.GEARWHEEL, null,

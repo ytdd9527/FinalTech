@@ -195,7 +195,8 @@ public final class SetupUtil {
                 new StaffElementalLine(FinalTechMenus.MENU_ITEMS, FinalTechItems.STAFF_ELEMENTAL_LINE, RecipeType.MAGIC_WORKBENCH, FinalTechRecipes.STAFF_ELEMENTAL_LINE).register(),
                 new PotionEffectCompressor(FinalTechMenus.MENU_ITEMS, FinalTechItems.POTION_EFFECT_COMPRESSOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.POTION_EFFECT_COMPRESSOR).register(),
                 new PotionEffectDilator(FinalTechMenus.MENU_ITEMS, FinalTechItems.POTION_EFFECT_DILATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.POTION_EFFECT_DILATOR).register(),
-                new PotionEffectPurifier(FinalTechMenus.MENU_ITEMS, FinalTechItems.POTION_EFFECT_PURIFIER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.POTION_EFFECT_PURIFIER).register());
+                new PotionEffectPurifier(FinalTechMenus.MENU_ITEMS, FinalTechItems.POTION_EFFECT_PURIFIER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.POTION_EFFECT_PURIFIER).register(),
+                new GravityReversalRune(FinalTechMenus.MENU_ITEMS, FinalTechItems.GRAVITY_REVERSAL_RUNE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.GRAVITY_REVERSAL_RUNE).register());
         FinalTechMenus.SUB_MENU_TOOL.addTo(
                 new MenuViewer(FinalTechMenus.MENU_ITEMS, FinalTechItems.MENU_VIEWER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MENU_VIEWER).register(),
                 new LocationRecorder(FinalTechMenus.MENU_ITEMS, FinalTechItems.LOCATION_RECORDER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LOCATION_RECORDER).register(),
