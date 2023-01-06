@@ -14,7 +14,7 @@ public class Updater implements Consumer<FinalTech>{
     private final Map<String, UpdateFunction> versionMap = new HashMap<>();
     private boolean init = false;
     private static volatile Updater instance;
-    public static final String LATEST_VERSION = "20221204";
+    public static final String LATEST_VERSION = "20221229";
 
     public void init() {
         LanguageManager languageManager = FinalTech.getLanguageManager();
@@ -54,6 +54,119 @@ public class Updater implements Consumer<FinalTech>{
                     languageManager.setValue(lore1, "items", "FINALTECH_ORDERED_DUST_FACTORY_DIRT", "info", "1", "lore");
                     languageManager.setValue(lore2, "items", "FINALTECH_ORDERED_DUST_FACTORY_DIRT", "info", "2", "lore");
                     languageManager.setValue(lore3, "items", "FINALTECH_ORDERED_DUST_FACTORY_DIRT", "info", "3", "lore");
+                }
+            }
+        });
+
+        versionMap.put("20221204", new UpdateFunction() {
+            @Override
+            protected String targetVersion() {
+                return "20221229";
+            }
+
+            @Override
+            protected void update(FinalTech finalTech) {
+                if(updateLanguage) {
+                    languageManager.setValue("{color:prandom}Remote Accessor {color:conceal}- {color:positive}Consumable", "items", "FINALTECH_CONSUMABLE_REMOTE_ACCESSOR", "name");
+                    languageManager.setValue("{color:prandom}Remote Accessor {color:conceal}- {color:positive}Configurable", "items", "FINALTECH_CONFIGURABLE_REMOTE_ACCESSOR", "name");
+                    languageManager.setValue("{color:prandom}Expanded Remote Accessor {color:conceal}- {color:positive}Consumable", "items", "FINALTECH_EXPANDED_CONSUMABLE_REMOTE_ACCESSOR", "name");
+                    languageManager.setValue("{color:prandom}Expanded Remote Accessor {color:conceal}- {color:positive}Configurable", "items", "FINALTECH_EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR", "name");
+                    languageManager.setValue("{color:prandom}Transporter", "items", "FINALTECH_TRANSPORTER", "name");
+                    languageManager.setValue("{color:prandom}Transporter {color:conceal}- {color:positive}Consumable", "items", "FINALTECH_CONSUMABLE_TRANSPORTER", "name");
+                    languageManager.setValue("{color:prandom}Transporter {color:conceal}- {color:positive}Configurable", "items", "FINALTECH_CONFIGURABLE_TRANSPORTER", "name");
+                    languageManager.setValue("{color:prandom}Expanded Transporter {color:conceal}- {color:positive}Consumable", "items", "FINALTECH_EXPANDED_CONSUMABLE_TRANSPORTER", "name");
+                    languageManager.setValue("{color:prandom}Expanded Transporter {color:conceal}- {color:positive}Configurable", "items", "FINALTECH_EXPANDED_CONFIGURABLE_TRANSPORTER", "name");
+
+                    languageManager.setValue("{color:passive}Mechanism", "items", "FINALTECH_CONSUMABLE_REMOTE_ACCESSOR", "info", "1", "name");
+                    languageManager.setValue("{color:passive}Mechanism", "items", "FINALTECH_CONFIGURABLE_REMOTE_ACCESSOR", "info", "1", "name");
+                    languageManager.setValue("{color:passive}Mechanism", "items", "FINALTECH_EXPANDED_CONSUMABLE_REMOTE_ACCESSOR", "info", "1", "name");
+                    languageManager.setValue("{color:passive}Mechanism", "items", "FINALTECH_EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR", "info", "1", "name");
+                    languageManager.setValue("{color:passive}Mechanism", "items", "FINALTECH_TRANSPORTER", "info", "1", "name");
+                    languageManager.setValue("{color:passive}Mechanism", "items", "FINALTECH_CONSUMABLE_TRANSPORTER", "info", "1", "name");
+                    languageManager.setValue("{color:passive}Mechanism", "items", "FINALTECH_CONFIGURABLE_TRANSPORTER", "info", "1", "name");
+                    languageManager.setValue("{color:passive}Mechanism", "items", "FINALTECH_EXPANDED_CONSUMABLE_TRANSPORTER", "info", "1", "name");
+                    languageManager.setValue("{color:passive}Mechanism", "items", "FINALTECH_EXPANDED_CONFIGURABLE_TRANSPORTER", "info", "1", "name");
+
+                    languageManager.setValue("FINALTECH_DIGITAL_ZERO", "items", "FINALTECH_CONSUMABLE_REMOTE_ACCESSOR", "info", "1", "output");
+                    languageManager.setValue("FINALTECH_DIGITAL_ZERO", "items", "FINALTECH_CONFIGURABLE_REMOTE_ACCESSOR", "info", "1", "output");
+                    languageManager.setValue("FINALTECH_DIGITAL_ZERO", "items", "FINALTECH_EXPANDED_CONSUMABLE_REMOTE_ACCESSOR", "info", "1", "output");
+                    languageManager.setValue("FINALTECH_DIGITAL_ZERO", "items", "FINALTECH_EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR", "info", "1", "output");
+                    languageManager.setValue("FINALTECH_DIGITAL_ZERO", "items", "FINALTECH_CONSUMABLE_TRANSPORTER", "info", "1", "output");
+                    languageManager.setValue("FINALTECH_DIGITAL_ZERO", "items", "FINALTECH_CONFIGURABLE_TRANSPORTER", "info", "1", "output");
+                    languageManager.setValue("FINALTECH_DIGITAL_ZERO", "items", "FINALTECH_EXPANDED_CONSUMABLE_TRANSPORTER", "info", "1", "output");
+                    languageManager.setValue("FINALTECH_DIGITAL_ZERO", "items", "FINALTECH_EXPANDED_CONFIGURABLE_TRANSPORTER", "info", "1", "output");
+
+                    List<String> lore1 = new ArrayList<>();
+                    lore1.add("{color:normal}Right click it to config it");
+                    lore1.add("{color:normal}Right click it to open slimefun machine it looking at");
+                    languageManager.setValue(lore1, "items", "FINALTECH_CONSUMABLE_REMOTE_ACCESSOR", "info", "1", "lore");
+                    languageManager.setValue(lore1, "items", "FINALTECH_CONFIGURABLE_REMOTE_ACCESSOR", "info", "1", "lore");
+                    languageManager.setValue(lore1, "items", "FINALTECH_EXPANDED_CONSUMABLE_REMOTE_ACCESSOR", "info", "1", "lore");
+                    languageManager.setValue(lore1, "items", "FINALTECH_EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR", "info", "1", "lore");
+
+                    List<String> lore2 = new ArrayList<>();
+                    lore2.add("{color:normal}Right click it to teleport to the target place");
+                    lore2.add("{color:normal}Range: {color:number}{1}");
+                    languageManager.setValue(lore2, "items", "FINALTECH_TRANSPORTER", "info", "1", "lore");
+
+                    List<String> lore3 = new ArrayList<>();
+                    lore3.add("{color:normal}Right click it to config it");
+                    lore3.add("{color:normal}Right click it to teleport to the target place");
+
+                    languageManager.setValue(lore3, "items", "FINALTECH_CONSUMABLE_TRANSPORTER", "info", "1", "lore");
+                    languageManager.setValue(lore3, "items", "FINALTECH_CONFIGURABLE_TRANSPORTER", "info", "1", "lore");
+                    languageManager.setValue(lore3, "items", "FINALTECH_EXPANDED_CONSUMABLE_TRANSPORTER", "info", "1", "lore");
+                    languageManager.setValue(lore3, "items", "FINALTECH_EXPANDED_CONFIGURABLE_TRANSPORTER", "info", "1", "lore");
+
+                    languageManager.setValue("{color:prandom}Time Generator", "items", "FINALTECH_TIME_GENERATOR", "name");
+                    languageManager.setValue("{color:passive}Mechanism", "items", "FINALTECH_TIME_GENERATOR", "info", "1", "name");
+
+                    languageManager.setValue("{color:prandom}Time Capacitor", "items", "FINALTECH_TIME_CAPACITOR", "name");
+                    languageManager.setValue("{color:passive}Mechanism", "items", "FINALTECH_TIME_CAPACITOR", "info", "1", "name");
+
+                    List<String> lore4 = new ArrayList<>();
+                    lore4.add("{color:normal}Generate energy 1J per {color:number}{1}s");
+                    lore4.add("{color:normal}Can store {color:number}{2} J {color:normal}of energy");
+                    lore4.add("{color:normal}Double stored energy with time going");
+                    languageManager.setValue(lore4, "items", "FINALTECH_TIME_GENERATOR", "info", "1", "lore");
+
+                    List<String> lore5 = new ArrayList<>();
+                    lore5.add("{color:normal}Can store {color:number}{1} J {color:normal}of energy");
+                    lore5.add("{color:normal}Double stored energy with time going");
+                    languageManager.setValue(lore5, "items", "FINALTECH_TIME_CAPACITOR", "info", "1", "lore");
+
+                    List<String> lore6 = new ArrayList<>();
+                    lore6.add("{color:normal}Stored Energy: {color:number}{1} J");
+                    languageManager.setValue(lore6, "items", "FINALTECH_TIME_GENERATOR", "status", "lore");
+                    languageManager.setValue(lore6, "items", "FINALTECH_TIME_CAPACITOR", "status", "lore");
+
+                    languageManager.setValue("{color:prandom}Multi Frame Machine", "items", "FINALTECH_MULTI_FRAME_MACHINE", "name");
+
+                    languageManager.setValue("{color:random}Disc", "categories", "FINALTECH_MAIN_MENU_DISC", "name");
+                    languageManager.setValue("{color:random}Final Item", "categories", "FINALTECH_SUB_MENU_FINAL_ITEM", "name");
+                    languageManager.setValue("{color:random}Trophy", "categories", "FINALTECH_SUB_MENU_TROPHY", "name");
+                    languageManager.setValue("{color:random}Deprecated", "categories", "FINALTECH_SUB_MENU_DEPRECATED", "name");
+
+                    languageManager.setValue("{color:prandom}Digital Extraction", "items", "FINALTECH_DIGITAL_EXTRACTION", "name");
+
+                    List<String> lore7 = new ArrayList<>();
+                    lore7.add("{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack");
+                    lore7.add("{color:normal}Can store {color:number}{2} stack {color:normal}of energy");
+                    lore7.add("{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s");
+
+                    languageManager.setValue(lore7, "items", "FINALTECH_SMALL_EXPANDED_CAPACITOR", "info", "1", "lore");
+                    languageManager.setValue(lore7, "items", "FINALTECH_MEDIUM_EXPANDED_CAPACITOR", "info", "1", "lore");
+                    languageManager.setValue(lore7, "items", "FINALTECH_BIG_EXPANDED_CAPACITOR", "info", "1", "lore");
+                    languageManager.setValue(lore7, "items", "FINALTECH_LARGE_EXPANDED_CAPACITOR", "info", "1", "lore");
+                    languageManager.setValue(lore7, "items", "FINALTECH_CARBONADO_EXPANDED_CAPACITOR", "info", "1", "lore");
+                    languageManager.setValue(lore7, "items", "FINALTECH_ENERGIZED_EXPANDED_CAPACITOR", "info", "1", "lore");
+                    languageManager.setValue(lore7, "items", "FINALTECH_ENERGIZED_STACK_EXPANDED_CAPACITOR", "info", "1", "lore");
+                    languageManager.setValue(lore7, "items", "FINALTECH_OVERLOADED_EXPANDED_CAPACITOR", "info", "1", "lore");
+                    languageManager.setValue(lore7, "items", "FINALTECH_MATRIX_EXPANDED_CAPACITOR", "info", "1", "lore");
+
+                    languageManager.setValue("", "items", "FINALTECH_NORMAL_ELECTRICITY_SHOOT_PILE", "info", "2");
+                    languageManager.setValue("", "items", "FINALTECH_ENERGIZED_ELECTRICITY_SHOOT_PILE", "info", "2");
+                    languageManager.setValue("", "items", "FINALTECH_OVERLOADED_ELECTRICITY_SHOOT_PILE", "info", "2");
                 }
             }
         });
