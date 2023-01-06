@@ -1283,9 +1283,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1298,9 +1296,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1313,9 +1309,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1328,9 +1322,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1343,9 +1335,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1358,9 +1348,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1373,9 +1361,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1388,9 +1374,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -2428,9 +2412,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
