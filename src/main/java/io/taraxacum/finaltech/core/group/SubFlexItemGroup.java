@@ -135,6 +135,14 @@ public class SubFlexItemGroup extends FlexItemGroup {
         }
     }
 
+    public List<SlimefunItem> getSlimefunItems() {
+        List<SlimefunItem> result = new ArrayList<>();
+        for(List<SlimefunItem> list : this.slimefunItemList) {
+            result.addAll(list);
+        }
+        return result;
+    }
+
     @Nonnull
     private ChestMenu generateMenu(@Nonnull Player player, @Nonnull PlayerProfile playerProfile, @Nonnull SlimefunGuideMode slimefunGuideMode) {
         ChestMenu chestMenu = new ChestMenu(FinalTech.getLanguageString(FinalTech.class.getSimpleName()));
