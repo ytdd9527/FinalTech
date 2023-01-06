@@ -1801,6 +1801,50 @@ items:
         - '{color:normal}X: {color:number}{1}'
         - '{color:normal}Z: {color:number}{3}'
         - '{color:normal}Y: {color:number}{2}'
+  FINALTECH_TRANSPORTER:
+    name: '{color:prandom}Transporter'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to teleport to the target place'
+          - '{color:normal}Range: {color:number}{1}'
+  FINALTECH_CONSUMABLE_TRANSPORTER:
+    name: '{color:prandom}Transporter {color:conceal}- {color:positive}Consumable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to teleport to the target place'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_CONFIGURABLE_TRANSPORTER:
+    name: '{color:prandom}Transporter {color:conceal}- {color:positive}Configurable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to teleport to the target place'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_EXPANDED_CONSUMABLE_TRANSPORTER:
+    name: '{color:prandom}Expanded Transporter {color:conceal}- {color:positive}Consumable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to teleport to the target place'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_EXPANDED_CONFIGURABLE_TRANSPORTER:
+    name: '{color:prandom}Expanded Transporter {color:conceal}- {color:positive}Configurable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to teleport to the target place'
+        output: 'FINALTECH_DIGITAL_ZERO'
   FINALTECH_LOGIC_COMPARATOR_NOTNULL:
     name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}Not Null'
     info:

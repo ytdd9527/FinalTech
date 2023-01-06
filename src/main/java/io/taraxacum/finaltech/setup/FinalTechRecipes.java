@@ -601,6 +601,31 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, new ItemStack(Material.TARGET), FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
+    public static final ItemStack[] TRANSPORTER = new ItemStack[] {
+            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+            FinalTechItems.GEARWHEEL, new ItemStack(Material.DISPENSER), FinalTechItems.GEARWHEEL,
+            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
+    };
+    public static final ItemStack[] CONSUMABLE_TRANSPORTER = new ItemStack[] {
+            null, null, null,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.TRANSPORTER, FinalTechItems.ORDERED_DUST,
+            null, null, null
+    };
+    public static final ItemStack[] CONFIGURABLE_TRANSPORTER = new ItemStack[] {
+            FinalTechItems.ORDERED_DUST, null, FinalTechItems.ORDERED_DUST,
+            null, FinalTechItems.TRANSPORTER, null,
+            FinalTechItems.ORDERED_DUST, null, FinalTechItems.ORDERED_DUST
+    };
+    public static final ItemStack[] EXPANDED_CONSUMABLE_TRANSPORTER = new ItemStack[] {
+            null, FinalTechItems.ORDERED_DUST, null,
+            FinalTechItems.CONSUMABLE_TRANSPORTER, FinalTechItems.ORDERED_DUST, FinalTechItems.CONSUMABLE_TRANSPORTER,
+            null, FinalTechItems.ORDERED_DUST, null
+    };
+    public static final ItemStack[] EXPANDED_CONFIGURABLE_TRANSPORTER = new ItemStack[] {
+            null, FinalTechItems.ORDERED_DUST, null,
+            FinalTechItems.CONFIGURABLE_TRANSPORTER, FinalTechItems.ORDERED_DUST, FinalTechItems.CONFIGURABLE_TRANSPORTER,
+            null, FinalTechItems.ORDERED_DUST, null
+    };
     // logic
     public static final ItemStack[] LOGIC_COMPARATOR_NOTNULL = new ItemStack[] {
             FinalTechItems.BASIC_FRAME_MACHINE, null, null, null, null, null,
