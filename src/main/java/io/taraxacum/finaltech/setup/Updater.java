@@ -187,6 +187,34 @@ public class Updater implements Consumer<FinalTech>{
                     languageManager.setValue("", "items", "FINALTECH_NORMAL_ELECTRICITY_SHOOT_PILE", "info", "2");
                     languageManager.setValue("", "items", "FINALTECH_ENERGIZED_ELECTRICITY_SHOOT_PILE", "info", "2");
                     languageManager.setValue("", "items", "FINALTECH_OVERLOADED_ELECTRICITY_SHOOT_PILE", "info", "2");
+
+                    List<String> lore8 = new ArrayList<>();
+                    lore8.add("{color:normal}Transfer energy stored in the capacitor or generator behind it");
+                    lore8.add("{color:normal}To the machine it is pointing at");
+                    lore8.add("");
+                    lore8.add("{color:normal}It will charge only one machine at same time");
+
+                    List<String> lore9 = new ArrayList<>();
+                    lore9.add("{color:normal}Stored Energy: {color:number}{1} J");
+                    lore9.add("{color:normal}Transfer Energy: {color:number}{2} J");
+
+                    languageManager.setValue("{color:prandom}Normal Electricity Shoot Pile {color:conceal}- {color:positive}Consumable", "items", "FINALTECH_NORMAL_CONSUMABLE_ELECTRICITY_SHOOT_PILE", "name");
+                    languageManager.setValue("{color:passive}Mechanism", "items", "FINALTECH_NORMAL_CONSUMABLE_ELECTRICITY_SHOOT_PILE", "info", "1", "name");
+                    languageManager.setValue("FINALTECH_DIGITAL_ZERO", "items", "FINALTECH_NORMAL_CONSUMABLE_ELECTRICITY_SHOOT_PILE", "info", "1", "output");
+                    languageManager.setValue(lore8, "items", "FINALTECH_NORMAL_CONSUMABLE_ELECTRICITY_SHOOT_PILE", "info", "1", "lore");
+                    languageManager.setValue(lore9, "items", "FINALTECH_NORMAL_CONSUMABLE_ELECTRICITY_SHOOT_PILE", "status", "lore");
+
+                    languageManager.setValue("{color:prandom}Normal Electricity Shoot Pile {color:conceal}- {color:positive}Configurable", "items", "FINALTECH_NORMAL_CONFIGURABLE_ELECTRICITY_SHOOT_PILE", "name");
+                    languageManager.setValue("{color:passive}Mechanism", "items", "FINALTECH_NORMAL_CONFIGURABLE_ELECTRICITY_SHOOT_PILE", "info", "1", "name");
+                    languageManager.setValue("FINALTECH_DIGITAL_ZERO", "items", "FINALTECH_NORMAL_CONFIGURABLE_ELECTRICITY_SHOOT_PILE", "info", "1", "output");
+                    languageManager.setValue(lore8, "items", "FINALTECH_NORMAL_CONFIGURABLE_ELECTRICITY_SHOOT_PILE", "info", "1", "lore");
+                    languageManager.setValue(lore9, "items", "FINALTECH_NORMAL_CONFIGURABLE_ELECTRICITY_SHOOT_PILE", "status", "lore");
+
+                    languageManager.setValue("{color:prandom}Gravity Reversal Rune", "items", "FINALTECH_GRAVITY_REVERSAL_RUNE", "name");
+                    languageManager.setValue("{color:passive}Usage", "items", "FINALTECH_GRAVITY_REVERSAL_RUNE", "info", "1", "name");
+                    List<String> lore10 = new ArrayList<>();
+                    lore10.add("{color:action}[Right-Click] {color:normal}Reverse your vertical speed");
+                    languageManager.setValue(lore10, "items", "FINALTECH_GRAVITY_REVERSAL_RUNE", "info", "1", "lore");
                 }
             }
         });
