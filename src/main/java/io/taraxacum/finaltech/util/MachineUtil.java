@@ -179,7 +179,7 @@ public final class MachineUtil {
      * @return Get the Map of ItemWrapper by specified slots.
      */
     public static Map<Integer, ItemWrapper> getSlotItemWrapperMap(@Nonnull Inventory inventory, int[] slots) {
-        Map<Integer, ItemWrapper> itemMap = new HashMap<>(slots.length);
+        Map<Integer, ItemWrapper> itemMap = new LinkedHashMap<>(slots.length);
         for (int slot : slots) {
             ItemStack item = inventory.getItem(slot);
             if (!ItemStackUtil.isItemNull(item)) {

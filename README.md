@@ -21,18 +21,23 @@ Permission
 Notice
 -
 
-This project is still in progress and not fully finished yet. More items will be added in the future.
+This project is still in progress and not fully finished yet. More details will be added in the future.
 
-If there is anything you think is a bug, or you can't understand, just create an issue in the GitHub please.
+It's welcome to report bug here <https://github.com/ecro-fun/FinalTECH/issues>
 
-Language support?
+Wiki
 -
 
-English is default and I will maintain it.
+Almost all items have built-in description in slimefun guide.
+
+You can find some info here <https://github.com/ecro-fun/FinalTECH/wiki>
+
+Language support
+-
+
+English is default and will be maintained over time.
 
 Others may be found here <https://github.com/ecro-fun/FinalTECH/tree/master/language>
-
-It's welcome to upload other language file. Just feel free to do it.
 
 Version history
 -

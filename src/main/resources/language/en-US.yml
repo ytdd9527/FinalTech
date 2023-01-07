@@ -37,11 +37,11 @@ helper:
       name: '{color:normal}Error'
   CARGO_ORDER:
     positive:
-      name: '{color:normal}CARGO ORDER {color:conceal}- {color:random}POSITIVE'
+      name: '{color:normal}Cargo Order {color:conceal}- {color:random}POSITIVE'
       lore:
         - '{color:normal}Iterate through the location queue in positive order'
     reverse:
-      name: '{color:normal}CARGO ORDER {color:conceal}- {color:random}REVERSE'
+      name: '{color:normal}Cargo Order {color:conceal}- {color:random}REVERSE'
       lore:
         - '{color:normal}Iterate through the location queue in reverse order'
   MACHINE_MAX_STACK:
@@ -331,8 +331,14 @@ categories:
     name: '{color:random}Extractions'
   FINALTECH_SUB_MENU_GENERATOR:
     name: '{color:random}Generators'
-  FINALTECH_MAIN_MENU_FINAL_ITEM:
+  FINALTECH_MAIN_MENU_DISC:
+    name: '{color:random}Disc'
+  FINALTECH_SUB_MENU_FINAL_ITEM:
     name: '{color:random}Final Item'
+  FINALTECH_SUB_MENU_TROPHY:
+    name: '{color:random}Trophy'
+  FINALTECH_SUB_MENU_DEPRECATED:
+    name: '{color:random}Deprecated'
 items:
   FINALTECH_WATER_CARD:
     name: '{color:prandom}Water Card'
@@ -798,7 +804,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGIT_ADDER'
   FINALTECH_DIGITAL_FIFTEEN:
-    name: '{color:prandom}Digital {color:conceal}- {color:number}f'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}F'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -953,6 +959,13 @@ items:
           - "{color:action}[Shift + Right-Click] {color:normal}Clear around lives' potion effect"
           - "    {color:normal}Horizontal Range: {color:number}{1}"
           - "    {color:normal}Vertical Range: {color:number}{2}"
+  FINALTECH_GRAVITY_REVERSAL_RUNE:
+    name: '{color:prandom}Gravity Reversal Rune'
+    info:
+      1:
+        name: '{color:positive}Usage'
+        lore:
+          - '{color:action}[Right-Click] {color:normal}Reverse your vertical speed'
   FINALTECH_MENU_VIEWER:
     name: '{color:prandom}Menu Viewer'
     info:
@@ -1220,6 +1233,18 @@ items:
         - ''
         - '{color:normal}Power: {color:number}{1}'
         - '{color:normal}Generate Energy: {color:number}{2} J/times'
+  FINALTECH_TIME_GENERATOR:
+    name: '{color:prandom}Time Generator'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Generate energy 1J per {color:number}{1}s'
+          - '{color:normal}Can store {color:number}{2} J {color:normal}of energy'
+          - '{color:normal}Double stored energy with time going'
+    status:
+      lore:
+        - '{color:normal}Stored Energy: {color:number}{1} J'
   FINALTECH_ENERGIZED_CHARGE_BASE:
     name: '{color:prandom}Energized Charge Base'
     info:
@@ -1283,9 +1308,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1298,9 +1321,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1313,9 +1334,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1328,9 +1347,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1343,9 +1360,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1358,9 +1373,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1373,9 +1386,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1388,9 +1399,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
@@ -1417,6 +1426,17 @@ items:
     status:
       lore:
         - '{color:normal}Stored Energy: {color:number}{1} J'
+  FINALTECH_TIME_CAPACITOR:
+    name: '{color:prandom}Time Capacitor'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Can store {color:number}{1} J {color:normal}of energy'
+          - '{color:normal}Double stored energy with time going'
+    status:
+      lore:
+        - '{color:normal}Stored Energy: {color:number}{1} J'
   FINALTECH_NORMAL_ELECTRICITY_SHOOT_PILE:
     name: '{color:prandom}Normal Electricity Shoot Pile'
     info:
@@ -1429,13 +1449,39 @@ items:
           - '{color:normal}It will charge only one machine at same time'
           - ''
           - '{color:normal}Range: {color:number}{1}'
-      2:
-        name: '{color:negative}Limit'
-        lore:
-          - '{color:normal}Can not transfer energy to another capacitor or generator'
     status:
       lore:
         - '{color:normal}Affected Machine: {color:number}{1}'
+        - '{color:normal}Transfer Energy: {color:number}{2} J'
+  FINALTECH_NORMAL_CONSUMABLE_ELECTRICITY_SHOOT_PILE:
+    name: '{color:prandom}Normal Electricity Shoot Pile {color:conceal}- {color:positive}Consumable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Transfer energy stored in the capacitor or generator behind it'
+          - '{color:normal}To the machine it is pointing at'
+          - ''
+          - '{color:normal}It will charge only one machine at same time'
+        output: 'FINALTECH_DIGITAL_ZERO'
+    status:
+      lore:
+        - '{color:normal}Stored Energy: {color:number}{1} J'
+        - '{color:normal}Transfer Energy: {color:number}{2} J'
+  FINALTECH_NORMAL_CONFIGURABLE_ELECTRICITY_SHOOT_PILE:
+    name: '{color:prandom}Normal Electricity Shoot Pile {color:conceal}- {color:positive}Configurable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Transfer energy stored in the capacitor or generator behind it'
+          - '{color:normal}To the machine it is pointing at'
+          - ''
+          - '{color:normal}It will charge only one machine at same time'
+        output: 'FINALTECH_DIGITAL_ZERO'
+    status:
+      lore:
+        - '{color:normal}Stored Energy: {color:number}{1} J'
         - '{color:normal}Transfer Energy: {color:number}{2} J'
   FINALTECH_ENERGIZED_ELECTRICITY_SHOOT_PILE:
     name: '{color:prandom}Energized Electricity Shoot Pile'
@@ -1752,6 +1798,42 @@ items:
         lore:
           - '{color:normal}Right click it to open slimefun machine it looking at'
           - '{color:normal}Range: {color:number}{1}'
+  FINALTECH_CONSUMABLE_REMOTE_ACCESSOR:
+    name: '{color:prandom}Remote Accessor {color:conceal}- {color:positive}Consumable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to open slimefun machine it looking at'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_CONFIGURABLE_REMOTE_ACCESSOR:
+    name: '{color:prandom}Remote Accessor {color:conceal}- {color:positive}Configurable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to open slimefun machine it looking at'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_EXPANDED_CONSUMABLE_REMOTE_ACCESSOR:
+    name: '{color:prandom}Expanded Remote Accessor {color:conceal}- {color:positive}Consumable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to open slimefun machine it looking at'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR:
+    name: '{color:prandom}Expanded Remote Accessor {color:conceal}- {color:positive}Configurable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to open slimefun machine it looking at'
+        output: 'FINALTECH_DIGITAL_ZERO'
   FINALTECH_AREA_ACCESSOR:
     name: '{color:prandom}Area Accessor'
     info:
@@ -1765,6 +1847,50 @@ items:
         - '{color:normal}X: {color:number}{1}'
         - '{color:normal}Z: {color:number}{3}'
         - '{color:normal}Y: {color:number}{2}'
+  FINALTECH_TRANSPORTER:
+    name: '{color:prandom}Transporter'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to teleport to the target place'
+          - '{color:normal}Range: {color:number}{1}'
+  FINALTECH_CONSUMABLE_TRANSPORTER:
+    name: '{color:prandom}Transporter {color:conceal}- {color:positive}Consumable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to teleport to the target place'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_CONFIGURABLE_TRANSPORTER:
+    name: '{color:prandom}Transporter {color:conceal}- {color:positive}Configurable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to teleport to the target place'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_EXPANDED_CONSUMABLE_TRANSPORTER:
+    name: '{color:prandom}Expanded Transporter {color:conceal}- {color:positive}Consumable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to teleport to the target place'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_EXPANDED_CONFIGURABLE_TRANSPORTER:
+    name: '{color:prandom}Expanded Transporter {color:conceal}- {color:positive}Configurable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Right click it to config it'
+          - '{color:normal}Right click it to teleport to the target place'
+        output: 'FINALTECH_DIGITAL_ZERO'
   FINALTECH_LOGIC_COMPARATOR_NOTNULL:
     name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}Not Null'
     info:
@@ -1975,7 +2101,7 @@ items:
       1:
         name: '{color:passive}Mechanism'
         lore:
-          - '{color:normal}Input items to convert it to value'
+          - '{color:normal}Input items to convert them to value'
           - '{color:normal}Input {id:FINALTECH_UNORDERED_DUST} {color:normal}to consume value and get random item'
     parse-border-icon:
       name: ' '
@@ -2056,7 +2182,7 @@ items:
       info-icon:
         name: '{color:passive}Merge Storage Card'
         lore:
-          - '{color:normal}Merge two {id:FINALTECH_STORAGE_CARD} into one'
+          - '{color:normal}Merge two {id:FINALTECH_STORAGE_CARD} {color:normal}into one'
         output: 'FINALTECH_STORAGE_CARD'
     copy-copy-card:
       info-icon:
@@ -2260,6 +2386,8 @@ items:
     name: '{color:prandom}Wool Conversion'
   FINALTECH_LOGIC_TO_DIGITAL_CONVERSION:
     name: '{color:prandom}Logic To Digital Conversion'
+  FINALTECH_DIGITAL_EXTRACTION:
+    name: '{color:prandom}Digital Extraction'
   FINALTECH_ORE_EXTRACTION:
     name: '{color:prandom}Ore Extraction'
   FINALTECH_STONE_GENERATOR:
@@ -2338,6 +2466,8 @@ items:
     parse-success-icon:
       name: '{color:positive}Parse Success'
     parse-amount: '{color:conceal}Amount : {1}'
+  FINALTECH_MULTI_FRAME_MACHINE:
+    name: '{color:prandom}Multi Frame Machine'
   FINALTECH_MATRIX_ITEM_DISMANTLE_TABLE:
     name: '{color:prandom}Matrix Item Dismantle Table'
   FINALTECH_MATRIX_EXPANDED_CAPACITOR:
@@ -2348,9 +2478,7 @@ items:
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy every stack'
           - '{color:normal}Can store {color:number}{2} stack {color:normal}of energy'
-          - '{color:normal}Get {color:number}{3}%J {color:normal}of energy while being charged'
-          - '{color:normal}Consume {color:number}{4}%J {color:normal}of energy while discharging'
-          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{5} s'
+          - '{color:normal}Generate energy with the same amount of stored energy stack every {color:number}{3} s'
     status:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'

@@ -33,7 +33,7 @@ public final class FinalTechMenus {
     public static final SubItemGroup MENU_CARGO_SYSTEM = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_CARGO_SYSTEM"), MAIN_MENU, new CustomItemStack(Material.COBWEB, FinalTech.getLanguageString("categories", "FINALTECH_MAIN_MENU_CARGO_SYSTEM", "name")));
     public static final SubItemGroup MENU_FUNCTIONAL_MACHINE = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_FUNCTIONAL_MACHINE"), MAIN_MENU, new CustomItemStack(Material.LECTERN, FinalTech.getLanguageString("categories", "FINALTECH_MAIN_MENU_FUNCTIONAL_MACHINE", "name")));
     public static final SubItemGroup MENU_PRODUCTIVE_MACHINE = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_PRODUCTIVE_MACHINE"), MAIN_MENU, new CustomItemStack(Material.SPAWNER, FinalTech.getLanguageString("categories", "FINALTECH_MAIN_MENU_PRODUCTIVE_MACHINE", "name")));
-    public static final SubItemGroup MENU_FINAL_ITEM = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_FINAL_ITEM"), MAIN_MENU, new CustomItemStack(Material.EXPERIENCE_BOTTLE, FinalTech.getLanguageString("categories", "FINALTECH_MAIN_MENU_FINAL_ITEM", "name")));
+    public static final SubItemGroup MENU_DISC = new SubItemGroup(new NamespacedKey(FinalTech.getInstance(), "FINALTECH_DISC"), MAIN_MENU, new CustomItemStack(Material.GILDED_BLACKSTONE, FinalTech.getLanguageString("categories", "FINALTECH_MAIN_MENU_DISC", "name")));
 
     /* My item group */
     public static final MainItemGroup MAIN_ITEM_GROUP = ConfigUtil.getMainItemGroup(FinalTech.getLanguageManager(), "FINALTECH_ITEM_GROUP", Material.OBSERVER, "FINAL TECH");
@@ -76,5 +76,8 @@ public final class FinalTechMenus {
     public static final SubFlexItemGroup SUB_MENU_GENERATOR = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_GENERATOR", Material.OAK_WOOD, "Generator");
 
     // final stage item
-    public static final SubFlexItemGroup MAIN_MENU_FINAL_ITEM = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_MAIN_MENU_FINAL_ITEM", Material.EXPERIENCE_BOTTLE, "Final Item");
+    public static final SubFlexItemGroup MAIN_MENU_DISC = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_MAIN_MENU_DISC", Material.GILDED_BLACKSTONE, "Disc");
+    public static final SubFlexItemGroup SUB_MENU_FINAL_ITEM = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_FINAL_ITEM", Material.EXPERIENCE_BOTTLE, "Final Item");
+    public static final SubFlexItemGroup SUB_MENU_TROPHY = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_TROPHY", Material.LARGE_AMETHYST_BUD, "Trophy");
+    public static final SubFlexItemGroup SUB_MENU_DEPRECATED = ConfigUtil.getSubFlexItemGroup(FinalTech.getLanguageManager(), "FINALTECH_SUB_MENU_DEPRECATED", Material.CRACKED_STONE_BRICKS, "Deprecated");
 }

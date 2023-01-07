@@ -11,7 +11,7 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.libs.plugin.dto.InvWithSlots;
 import io.taraxacum.libs.plugin.dto.ServerRunnableLockFactory;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
-import io.taraxacum.finaltech.api.interfaces.item.RecipeItem;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.dto.SimpleCargoDTO;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.function.LineTransferMenu;
@@ -131,8 +131,12 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                 return;
             }
 
-            if (BlockSearchCycle.VALUE_TRUE.equals(BlockSearchCycle.HELPER.getOrDefaultValue(config)) && finalBlockList.size() > 0) {
-                finalBlockList.add(finalBlockList.get(0));
+            if (BlockSearchCycle.VALUE_TRUE.equals(BlockSearchCycle.HELPER.getOrDefaultValue(config)) && finalBlockList.size() > 1) {
+                if(CargoOrder.VALUE_REVERSE.equals(CargoOrder.HELPER.getOrDefaultValue(config))) {
+                    finalBlockList.add(0, finalBlockList.get(finalBlockList.size() - 1));
+                } else {
+                    finalBlockList.add(finalBlockList.get(0));
+                }
             }
 
             if (drawParticle && finalBlockList.size() > 0) {
@@ -274,8 +278,12 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                         return;
                     }
 
-                    if (BlockSearchCycle.VALUE_TRUE.equals(BlockSearchCycle.HELPER.getOrDefaultValue(config)) && finalBlockList.size() > 0) {
-                        finalBlockList.add(finalBlockList.get(0));
+                    if (BlockSearchCycle.VALUE_TRUE.equals(BlockSearchCycle.HELPER.getOrDefaultValue(config)) && finalBlockList.size() > 1) {
+                        if(CargoOrder.VALUE_REVERSE.equals(CargoOrder.HELPER.getOrDefaultValue(config))) {
+                            finalBlockList.add(0, finalBlockList.get(finalBlockList.size() - 1));
+                        } else {
+                            finalBlockList.add(finalBlockList.get(0));
+                        }
                     }
 
                     if (drawParticle && finalBlockList.size() > 0) {

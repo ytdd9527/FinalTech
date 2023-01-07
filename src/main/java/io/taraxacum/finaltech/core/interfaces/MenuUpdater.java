@@ -10,10 +10,12 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 /**
+ * A Slimefun item that will update its menu to show some info.
  * @author Final_ROOT
  * @since 2.0
  */
 public interface MenuUpdater {
+
     default void updateMenu(@Nonnull BlockMenu blockMenu, int slot, @Nonnull SlimefunItem slimefunItem, @Nonnull String... text) {
         ItemStack item = blockMenu.getItemInSlot(slot);
         if(!ItemStackUtil.isItemNull(item)) {

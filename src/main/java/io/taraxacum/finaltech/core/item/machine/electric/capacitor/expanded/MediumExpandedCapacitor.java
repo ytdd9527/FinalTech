@@ -15,8 +15,6 @@ import javax.annotation.Nonnull;
 public class MediumExpandedCapacitor extends AbstractExpandedElectricCapacitor {
     private final int capacity = ConfigUtil.getOrDefaultItemSetting(512, this, "capacity");
     private final int stack = ConfigUtil.getOrDefaultItemSetting(512, this, "stack");
-    private final double chargeIncrease = ConfigUtil.getOrDefaultItemSetting(1.1, this, "charge-increase");
-    private final double consumeReduce = ConfigUtil.getOrDefaultItemSetting(0.95, this, "consume-reduce");
 
     public MediumExpandedCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -31,15 +29,5 @@ public class MediumExpandedCapacitor extends AbstractExpandedElectricCapacitor {
     @Override
     public String getMaxStack() {
         return String.valueOf(this.stack - 2);
-    }
-
-    @Override
-    public double chargeIncrease() {
-        return this.chargeIncrease;
-    }
-
-    @Override
-    public double consumeReduce() {
-        return this.consumeReduce;
     }
 }

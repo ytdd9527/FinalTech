@@ -29,8 +29,6 @@ import javax.annotation.Nonnull;
 public class MatrixExpandedCapacitor extends AbstractExpandedElectricCapacitor {
     private final int capacity = ConfigUtil.getOrDefaultItemSetting(Integer.MAX_VALUE - 1, this, "capacity");
     private final String stack = ConfigUtil.getOrDefaultItemSetting(StringNumberUtil.VALUE_INFINITY, this, "stack");
-    private final double chargeIncrease = ConfigUtil.getOrDefaultItemSetting(4, this, "charge-increase");
-    private final double consumeReduce = ConfigUtil.getOrDefaultItemSetting(0.25, this, "consume-reduce");
 
     public MatrixExpandedCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -70,22 +68,10 @@ public class MatrixExpandedCapacitor extends AbstractExpandedElectricCapacitor {
     }
 
     @Override
-    public double chargeIncrease() {
-        return this.chargeIncrease;
-    }
-
-    @Override
-    public double consumeReduce() {
-        return this.consumeReduce;
-    }
-
-    @Override
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf((this.capacity / 2)),
                 this.stack,
-                String.format("%.2f", this.chargeIncrease() * 100),
-                String.format("%.2f", this.consumeReduce() * 100),
                 String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0));
     }
 }

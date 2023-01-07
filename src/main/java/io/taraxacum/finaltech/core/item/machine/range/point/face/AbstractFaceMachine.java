@@ -16,6 +16,7 @@ public abstract class AbstractFaceMachine extends AbstractPointMachine {
         super(itemGroup, item, recipeType, recipe);
     }
 
+    @Nonnull
     @Override
     protected final Location getTargetLocation(@Nonnull Location location, int range) {
         Block block = location.getBlock();

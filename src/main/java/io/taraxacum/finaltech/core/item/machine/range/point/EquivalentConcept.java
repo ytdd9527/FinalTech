@@ -8,7 +8,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.*;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.interfaces.item.RecipeItem;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.MachineUtil;
@@ -148,6 +148,7 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
         return false;
     }
 
+    @Nonnull
     @Override
     protected Location getTargetLocation(@Nonnull Location location, int range) {
         int y = location.getBlockY() - range + FinalTech.getRandom().nextInt(range + range);

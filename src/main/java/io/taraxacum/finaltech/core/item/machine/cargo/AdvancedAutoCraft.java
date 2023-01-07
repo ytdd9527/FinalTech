@@ -7,12 +7,13 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.interfaces.LocationMachine;
 import io.taraxacum.libs.slimefun.dto.AdvancedCraft;
 import io.taraxacum.libs.plugin.dto.AdvancedMachineRecipe;
 import io.taraxacum.libs.plugin.dto.LocationRecipeRegistry;
 import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.api.interfaces.item.RecipeItem;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.function.AdvancedAutoCraftMenu;
 import io.taraxacum.libs.plugin.dto.InvWithSlots;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
@@ -37,7 +38,7 @@ import java.util.List;
  * @author Final_ROOT
  * @since 2.0
  */
-public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
+public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem, LocationMachine {
     public AdvancedAutoCraft(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -133,5 +134,10 @@ public class AdvancedAutoCraft extends AbstractCargo implements RecipeItem {
                 }
             }
         }
+    }
+
+    @Override
+    public Location[] getLocation(@Nonnull Location sourceLocation) {
+        return new Location[] {new Location(sourceLocation.getWorld(), sourceLocation.getX(), sourceLocation.getY() - 1, sourceLocation.getZ())};
     }
 }

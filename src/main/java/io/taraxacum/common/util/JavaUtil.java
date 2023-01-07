@@ -21,6 +21,14 @@ public class JavaUtil {
         result.addAll(Arrays.asList(objects));
         return result;
     }
+    public static int[] toArray(List<Integer> list) {
+        int[] result = new int[list.size()];
+        for(int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i);
+        }
+        return result;
+    }
+
     public static int[] reserve(int[] objects) {
         int[] result = objects.clone();
         for (int i = 0; i < objects.length; i++) {

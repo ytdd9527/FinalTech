@@ -7,7 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.api.interfaces.item.RecipeItem;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.interfaces.MenuUpdater;
 import io.taraxacum.finaltech.core.item.machine.electric.capacitor.AbstractElectricCapacitor;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
@@ -112,31 +112,31 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
 
     @Override
     public void setCharge(@Nonnull Location l, int charge) {
-        int oldCharge = this.getCharge(l);
-        int difference = charge - oldCharge;
-        if (difference > 0) {
-            difference *= this.chargeIncrease();
-            if (oldCharge / 2 + difference / 2 > Integer.MAX_VALUE / 2) {
-                difference = Integer.MAX_VALUE - oldCharge;
-            }
-        } else if (difference < 0) {
-            difference *= this.consumeReduce();
-        } else {
-            return;
-        }
-        charge = oldCharge + difference;
+//        int oldCharge = this.getCharge(l);
+//        int difference = charge - oldCharge;
+//        if (difference > 0) {
+//            difference *= this.chargeIncrease();
+//            if (oldCharge / 2 + difference / 2 > Integer.MAX_VALUE / 2) {
+//                difference = Integer.MAX_VALUE - oldCharge;
+//            }
+//        } else if (difference < 0) {
+//            difference *= this.consumeReduce();
+//        } else {
+//            return;
+//        }
+//        charge = oldCharge + difference;
         super.setCharge(l, charge);
     }
 
     @Override
     public void addCharge(@Nonnull Location l, int charge) {
-        charge *= this.chargeIncrease();
+//        charge *= this.chargeIncrease();
         super.addCharge(l, charge);
     }
 
     @Override
     public void removeCharge(@Nonnull Location l, int charge) {
-        charge *= this.consumeReduce();
+//        charge *= this.consumeReduce();
         super.removeCharge(l, charge);
     }
 
@@ -146,17 +146,11 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
     @Nonnull
     public abstract String getMaxStack();
 
-    public abstract double chargeIncrease();
-
-    public abstract double consumeReduce();
-
     @Override
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf((this.getCapacity() / 2)),
                 this.getMaxStack(),
-                String.format("%.2f", this.chargeIncrease() * 100),
-                String.format("%.2f", this.consumeReduce() * 100),
                 String.format("%.2f", Slimefun.getTickerTask().getTickRate() / 20.0));
     }
 }

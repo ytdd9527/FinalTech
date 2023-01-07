@@ -7,7 +7,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.libs.slimefun.dto.AdvancedCraft;
 import io.taraxacum.libs.plugin.dto.AdvancedMachineRecipe;
 import io.taraxacum.libs.slimefun.dto.MachineRecipeFactory;
-import io.taraxacum.finaltech.api.interfaces.item.RecipeItem;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.limit.lock.AbstractLockMachineMenu;
@@ -30,7 +30,7 @@ import java.util.*;
  * @since 1.0
  */
 public abstract class AbstractBasicMachine extends AbstractMachine implements RecipeItem {
-    private static final String OFFSET_KEY = "offset";
+    private final String OFFSET_KEY = "offset";
 
     @ParametersAreNonnullByDefault
     protected AbstractBasicMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {

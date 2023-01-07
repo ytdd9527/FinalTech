@@ -45,7 +45,7 @@ public class OverloadedElectricityShootPile extends AbstractElectricityShootPile
                 Config energyComponentConfig = BlockStorage.getLocationInfo(location);
                 if (energyComponentConfig.contains(ConstantTableUtil.CONFIG_ID)) {
                     SlimefunItem energyComponentItem = SlimefunItem.getById(energyComponentConfig.getString(ConstantTableUtil.CONFIG_ID));
-                    if (energyComponentItem instanceof EnergyNetComponent energyNetComponent && !EnergyNetComponentType.CAPACITOR.equals(energyNetComponent.getEnergyComponentType())&& !EnergyNetComponentType.GENERATOR.equals(energyNetComponent.getEnergyComponentType())) {
+                    if (energyComponentItem instanceof EnergyNetComponent energyNetComponent && !EnergyNetComponentType.NONE.equals(energyNetComponent.getEnergyComponentType())) {
                         int componentEnergy = Integer.parseInt(EnergyUtil.getCharge(energyComponentConfig));
                         int componentCapacity = Integer.MAX_VALUE;
                         int transferEnergy = Math.max(componentCapacity - componentEnergy, 0) / 2;
