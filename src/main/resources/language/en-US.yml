@@ -804,7 +804,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGIT_ADDER'
   FINALTECH_DIGITAL_FIFTEEN:
-    name: '{color:prandom}Digital {color:conceal}- {color:number}f'
+    name: '{color:prandom}Digital {color:conceal}- {color:number}F'
     info:
       1:
         name: '{color:initiative}Production method'
@@ -2101,7 +2101,7 @@ items:
       1:
         name: '{color:passive}Mechanism'
         lore:
-          - '{color:normal}Input items to convert it to value'
+          - '{color:normal}Input items to convert them to value'
           - '{color:normal}Input {id:FINALTECH_UNORDERED_DUST} {color:normal}to consume value and get random item'
     parse-border-icon:
       name: ' '
@@ -2182,7 +2182,7 @@ items:
       info-icon:
         name: '{color:passive}Merge Storage Card'
         lore:
-          - '{color:normal}Merge two {id:FINALTECH_STORAGE_CARD} into one'
+          - '{color:normal}Merge two {id:FINALTECH_STORAGE_CARD} {color:normal}into one'
         output: 'FINALTECH_STORAGE_CARD'
     copy-copy-card:
       info-icon:
