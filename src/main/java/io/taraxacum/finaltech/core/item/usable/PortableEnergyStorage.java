@@ -61,10 +61,10 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
                 if (config.contains(ConstantTableUtil.CONFIG_ID)) {
                     String itemId = config.getString(ConstantTableUtil.CONFIG_ID);
                     SlimefunItem slimefunItem = SlimefunItem.getById(itemId);
-                    if (slimefunItem instanceof EnergyNetComponent energyNetComponent) {
+                    if (slimefunItem instanceof EnergyNetComponent energyNetComponent && energyNetComponent.getCapacity() > 0) {
                         ItemStack item = playerRightClickEvent.getItem();
 
-                        if (EnergyNetComponentType.CONSUMER.equals(energyNetComponent.getEnergyComponentType()) && energyNetComponent.getCapacity() > 0) {
+                        if (!playerRightClickEvent.getPlayer().isSneaking()) {
                             // charge machine
 
                             int capacity = energyNetComponent.getCapacity();
@@ -78,8 +78,7 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
                             this.updateLore(item);
 
                             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
-                        } else if ((EnergyNetComponentType.GENERATOR.equals(energyNetComponent.getEnergyComponentType()) || EnergyNetComponentType.CAPACITOR.equals(energyNetComponent.getEnergyComponentType()))
-                                && energyNetComponent.getCapacity() > 0) {
+                        } else if (playerRightClickEvent.getPlayer().isSneaking()) {
                             // consume energy in machine, charge item
 
                             String energyInMachine = EnergyUtil.getCharge(config);
