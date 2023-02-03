@@ -27,22 +27,7 @@ public class RecipeTypeRegistry {
             return;
         }
 
-        RecipeType recipeType;
-        List<SlimefunItem> slimefunItemList;
-        this.recipeSlimefunItemMap = new HashMap<>();
-        this.recipeTypeSet = new HashSet<>();
-        for (SlimefunItem slimefunItem : Slimefun.getRegistry().getEnabledSlimefunItems()) {
-            recipeType = slimefunItem.getRecipeType();
-            if (this.recipeSlimefunItemMap.containsKey(recipeType)) {
-                slimefunItemList = this.recipeSlimefunItemMap.get(recipeType);
-                slimefunItemList.add(slimefunItem);
-            } else {
-                slimefunItemList = new ArrayList<>();
-                slimefunItemList.add(slimefunItem);
-                this.recipeSlimefunItemMap.put(recipeType, slimefunItemList);
-                this.recipeTypeSet.add(recipeType);
-            }
-        }
+        this.reload();
 
         this.init = true;
     }
