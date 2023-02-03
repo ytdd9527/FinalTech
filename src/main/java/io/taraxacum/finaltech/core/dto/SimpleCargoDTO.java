@@ -11,6 +11,7 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
 
 /**
+ * @see io.taraxacum.finaltech.util.CargoUtil#doSimpleCargo(SimpleCargoDTO, String)
  * @author Final_ROOT
  * @since 2.0
  */
