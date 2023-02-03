@@ -29,8 +29,10 @@ public class Box extends UnusableSlimefunItem implements RecipeItem {
     @Override
     public void register(@Nonnull SlimefunAddon addon) {
         super.register(addon);
-        PluginManager pluginManager = addon.getJavaPlugin().getServer().getPluginManager();
-        pluginManager.registerEvents(new BoxListener(), addon.getJavaPlugin());
+        if(!this.isDisabled()) {
+            PluginManager pluginManager = addon.getJavaPlugin().getServer().getPluginManager();
+            pluginManager.registerEvents(new BoxListener(), addon.getJavaPlugin());
+        }
     }
 
     @Override
