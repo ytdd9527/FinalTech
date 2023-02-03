@@ -23,7 +23,7 @@ public class NullEnchantment extends Enchantment {
     @Nonnull
     @Override
     public String getName() {
-        return " ";
+        return "FINALTECH_NULL_ENCHANTMENT";
     }
 
     @Override
@@ -59,6 +59,6 @@ public class NullEnchantment extends Enchantment {
 
     @Override
     public boolean canEnchantItem(@Nonnull ItemStack itemStack) {
-        return true;
+        return false;
     }
 }
