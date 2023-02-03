@@ -3,8 +3,11 @@ package io.taraxacum.finaltech.core.item.machine.manual;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
+import io.taraxacum.finaltech.util.MachineUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
