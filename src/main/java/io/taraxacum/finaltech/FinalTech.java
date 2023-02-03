@@ -2,6 +2,7 @@ package io.taraxacum.finaltech;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.setup.Updater;
 import io.taraxacum.libs.plugin.dto.ConfigFileManager;
 import io.taraxacum.libs.plugin.dto.*;
@@ -19,9 +20,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import javax.annotation.Nonnull;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 /**
@@ -158,15 +160,16 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         /* run task timer to do some function */
         int tickRate = Slimefun.getTickerTask().getTickRate();
         this.bukkitTask = this.getServer().getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
-            private final AtomicLong currentTimeMillis = new AtomicLong();
-            private final AtomicLong lastTimeMillis = new AtomicLong(System.currentTimeMillis());
-            private final double FULL_SLIMEFUN_TICK = 20 * 50 * tickRate;
+            private long currentNanoTime = System.nanoTime();
+            private long lastNanoTime = System.nanoTime();
+            private final BigDecimal FULL_SLIMEFUN_TICK = new BigDecimal(StringNumberUtil.mul("1000000000", String.valueOf(tickRate)));
 
             @Override
             public void run() {
-                this.currentTimeMillis.set(System.currentTimeMillis());
-                FinalTech.instance.tps = Math.min(FULL_SLIMEFUN_TICK / Math.max(1, currentTimeMillis.get() - lastTimeMillis.get()), 20);
-                this.lastTimeMillis.set(currentTimeMillis.get());
+                currentNanoTime = System.nanoTime();
+                FinalTech.instance.tps = Math.min(FULL_SLIMEFUN_TICK.divide(BigDecimal.valueOf(Math.max(1, currentNanoTime - lastNanoTime)), 10, RoundingMode.FLOOR).doubleValue(), 20);
+                lastNanoTime = currentNanoTime;
+
                 FinalTech.instance.slimefunTickCount++;
             }
         }, 0, tickRate);
