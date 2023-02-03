@@ -35,18 +35,6 @@ public class MatrixCraftingTable extends AbstractManualMachine implements Recipe
         return new MatrixCraftingTableMenu(this);
     }
 
-    @Nonnull
-    @Override
-    protected BlockPlaceHandler onBlockPlace() {
-        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_DENY;
-    }
-
-    @Nonnull
-    @Override
-    protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.simpleBlockBreakerHandler(this);
-    }
-
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);

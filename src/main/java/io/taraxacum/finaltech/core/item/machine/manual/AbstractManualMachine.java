@@ -22,6 +22,18 @@ public abstract class AbstractManualMachine extends AbstractMachine {
 
     @Nonnull
     @Override
+    protected BlockPlaceHandler onBlockPlace() {
+        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_DENY;
+    }
+
+    @Nonnull
+    @Override
+    protected BlockBreakHandler onBlockBreak() {
+        return MachineUtil.simpleBlockBreakerHandler(this);
+    }
+
+    @Nonnull
+    @Override
     protected final AbstractManualMachineMenu setMachineMenu() {
         this.menu = this.newMachineMenu();
         return this.menu;

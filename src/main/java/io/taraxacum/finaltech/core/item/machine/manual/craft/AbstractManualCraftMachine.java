@@ -42,12 +42,6 @@ public abstract class AbstractManualCraftMachine extends AbstractManualMachine i
 
     @Nonnull
     @Override
-    protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.simpleBlockBreakerHandler(this);
-    }
-
-    @Nonnull
-    @Override
     protected BlockPlaceHandler onBlockPlace() {
         return new BlockPlaceHandler(false) {
             @Override

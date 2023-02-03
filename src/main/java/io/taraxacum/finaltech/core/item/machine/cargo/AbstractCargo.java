@@ -34,6 +34,6 @@ public abstract class AbstractCargo extends AbstractMachine {
 
     @Override
     protected boolean isSynchronized() {
-        return false;
+        return true;
     }
 }

@@ -42,12 +42,6 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
 
     @Nonnull
     @Override
-    protected BlockPlaceHandler onBlockPlace() {
-        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_DENY;
-    }
-
-    @Nonnull
-    @Override
     protected BlockBreakHandler onBlockBreak() {
         return MachineUtil.simpleBlockBreakerHandler(this, EquivalentExchangeTableMenu.PARSE_ITEM_SLOT);
     }

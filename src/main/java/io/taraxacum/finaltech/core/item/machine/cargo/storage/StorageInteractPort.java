@@ -193,11 +193,6 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
     }
 
     @Override
-    protected boolean isSynchronized() {
-        return true;
-    }
-
-    @Override
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(this.searchLimit));
