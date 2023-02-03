@@ -17,6 +17,9 @@ import io.taraxacum.finaltech.core.item.machine.logic.LogicAmountComparator;
 import io.taraxacum.finaltech.core.item.machine.logic.LogicEqualComparator;
 import io.taraxacum.finaltech.core.item.machine.logic.LogicNotNullComparator;
 import io.taraxacum.finaltech.core.item.machine.logic.LogicSimilarComparator;
+import io.taraxacum.finaltech.core.item.machine.manual.ItemDismantleTable;
+import io.taraxacum.finaltech.core.item.machine.range.line.ConfigurationCopier;
+import io.taraxacum.finaltech.core.item.machine.range.line.ConfigurationPaster;
 import io.taraxacum.finaltech.core.item.machine.range.point.NormalConfigurableElectricityShootPile;
 import io.taraxacum.finaltech.core.item.machine.range.point.NormalConsumableElectricityShootPile;
 import io.taraxacum.finaltech.core.item.machine.range.point.face.*;
@@ -337,7 +340,8 @@ public final class SetupUtil {
                 new EquivalentExchangeTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.EQUIVALENT_EXCHANGE_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.EQUIVALENT_EXCHANGE_TABLE).register(),
                 new ItemSerializationConstructor(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ITEM_SERIALIZATION_CONSTRUCTOR).register(),
                 new ItemDeserializeParser(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_DESERIALIZE_PARSER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ITEM_DESERIALIZE_PARSER).register(),
-                new CardOperationTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.CARD_OPERATION_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.CARD_OPERATION_TABLE).register());
+                new CardOperationTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.CARD_OPERATION_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.CARD_OPERATION_TABLE).register(),
+                new AdvancedAutoCraftFrame(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ADVANCED_AUTO_CRAFT_FRAME, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_AUTO_CRAFT_FRAME).register());
         // special machines
         FinalTechMenus.SUB_MENU_SPECIAL_MACHINE.addTo(
                 new ItemFixer(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_FIXER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ITEM_FIXER).register(),
