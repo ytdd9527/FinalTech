@@ -1,9 +1,13 @@
 package io.taraxacum.finaltech.core.menu.machine;
 
+import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
+import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
+import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.Location;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
@@ -50,5 +54,15 @@ public class OrderedDustFactoryStoneMenu extends AbstractMachineMenu {
     @Override
     protected void updateInventory(@Nonnull Inventory inventory, @Nonnull Location location) {
 
+    }
+
+    @Override
+    public int[] getSlotsAccessedByItemTransport(ItemTransportFlow itemTransportFlow) {
+        return JavaUtil.shuffle(super.getSlotsAccessedByItemTransport(itemTransportFlow));
+    }
+
+    @Override
+    public int[] getSlotsAccessedByItemTransport(DirtyChestMenu menu, ItemTransportFlow flow, ItemStack item) {
+        return JavaUtil.shuffle(super.getSlotsAccessedByItemTransport(menu, flow, item));
     }
 }
