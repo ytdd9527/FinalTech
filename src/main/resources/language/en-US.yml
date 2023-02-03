@@ -381,6 +381,7 @@ items:
         lore:
           - '{color:normal}Can be obtained in {id:FINALTECH_EQUIVALENT_EXCHANGE_TABLE}'
         output: 'FINALTECH_EQUIVALENT_EXCHANGE_TABLE'
+    message: '{color:normal}You forget something :D'
   FINALTECH_ENTROPY:
     name: '{color:prandom}Entropy'
     info:
@@ -398,6 +399,7 @@ items:
           - '{color:normal}Will be generated while:'
           - '{color:normal}Player get dead'
           - '{color:normal}The death place is 64 blocks above world max height'
+    message: '{color:normal}You forget something :D'
   FINALTECH_SHINE:
     name: '{color:prandom}Shine'
     info:
@@ -2305,6 +2307,32 @@ items:
       name: '{color:negative}No Matched'
       lore:
         - '{color:normal}Please input correct thing.'
+  FINALTECH_ADVANCED_AUTO_CRAFT_FRAME:
+    name: '{color:prandom}Advanced Auto Craft Frame'
+    parse-icon:
+      name: '{color:stress}Parse'
+      lore:
+        - '{color:action}[click] {color:normal}to parse item'
+    wiki-icon:
+      name: '{color:stress}Wiki'
+      lore:
+        - '{color:normal}↓ Put item here'
+        - '{color:normal}↙ Click and parse it'
+        - '{color:normal}↑↑ Put machine item in top two lines to parse item more steps'
+        - '    {color:normal}Available machine item can be found in slimefun guide.'
+        - '{color:normal}↑ Put quantity module to speed up'
+        - '{color:negative}The machine can not work at all'
+    parse-failed-icon:
+      name: '{color:negative}Parse Failed'
+      lore:
+        - '{color:normal}Please try to parse different item'
+    parse-extend-icon:
+      name: '{color:positive}Parse Success'
+      lore:
+        - '{color:action}[click] {color:normal}to get more information'
+    parse-success-icon:
+      name: '{color:positive}Parse Success'
+    parse-amount: '{color:conceal}Amount : {1}'
   FINALTECH_ITEM_FIXER:
     name: '{color:prandom}Item Fixer'
     info:
@@ -2727,6 +2755,8 @@ items:
   ManualCraftMachine:
     craft-icon:
       name: '{color:normal}Click To Craft'
+      lore:
+        - '{color:normal}Energy: {color:number}{1}J'
     status-icon:
       name: '{color:normal}No Valid Craft'
     previous-icon:

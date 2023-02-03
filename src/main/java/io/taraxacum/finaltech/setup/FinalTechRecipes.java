@@ -802,6 +802,14 @@ public final class FinalTechRecipes {
             FinalTechItems.ORDERED_DUST, FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.ORDERED_DUST,
             FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST
     };
+    public static final ItemStack[] AUTO_ITEM_DISMANTLE_TABLE = new ItemStack[] {
+            FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE,
+            FinalTechItems.ITEM_DISMANTLE_TABLE, ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), FinalTechItems.ITEM_DISMANTLE_TABLE,
+            FinalTechItems.ITEM_DISMANTLE_TABLE, ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), CopyCard.newItem(FinalTechItems.GEARWHEEL, "1"), CopyCard.newItem(FinalTechItems.GEARWHEEL, "1"), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), FinalTechItems.ITEM_DISMANTLE_TABLE,
+            FinalTechItems.ITEM_DISMANTLE_TABLE, ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), CopyCard.newItem(FinalTechItems.GEARWHEEL, "1"), CopyCard.newItem(FinalTechItems.GEARWHEEL, "1"), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), FinalTechItems.ITEM_DISMANTLE_TABLE,
+            FinalTechItems.ITEM_DISMANTLE_TABLE, ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), FinalTechItems.ITEM_DISMANTLE_TABLE,
+            FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE
+    };
     public static final ItemStack[] EQUIVALENT_EXCHANGE_TABLE = new ItemStack[] {
             FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST,
             FinalTechItems.ORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.UNORDERED_DUST, FinalTechItems.ORDERED_DUST,

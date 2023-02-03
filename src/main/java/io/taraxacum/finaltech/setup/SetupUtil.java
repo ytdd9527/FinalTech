@@ -21,6 +21,7 @@ import io.taraxacum.finaltech.core.item.machine.range.point.NormalConfigurableEl
 import io.taraxacum.finaltech.core.item.machine.range.point.NormalConsumableElectricityShootPile;
 import io.taraxacum.finaltech.core.item.machine.range.point.face.*;
 import io.taraxacum.finaltech.core.item.machine.template.extraction.DigitalExtraction;
+import io.taraxacum.finaltech.core.item.machine.tower.*;
 import io.taraxacum.finaltech.core.item.tool.*;
 import io.taraxacum.finaltech.core.item.machine.*;
 import io.taraxacum.finaltech.core.item.machine.unit.*;
@@ -34,9 +35,6 @@ import io.taraxacum.finaltech.core.item.machine.template.basic.*;
 import io.taraxacum.finaltech.core.item.machine.template.conversion.*;
 import io.taraxacum.finaltech.core.item.machine.template.extraction.OreExtraction;
 import io.taraxacum.finaltech.core.item.machine.template.generator.*;
-import io.taraxacum.finaltech.core.item.machine.tower.CureTower;
-import io.taraxacum.finaltech.core.item.machine.tower.PurifyLevelTower;
-import io.taraxacum.finaltech.core.item.machine.tower.PurifyTimeTower;
 import io.taraxacum.finaltech.core.item.unusable.*;
 import io.taraxacum.finaltech.core.item.unusable.digital.*;
 import io.taraxacum.finaltech.core.item.unusable.liquid.LavaCard;
@@ -44,6 +42,8 @@ import io.taraxacum.finaltech.core.item.unusable.liquid.MilkCard;
 import io.taraxacum.finaltech.core.item.unusable.liquid.WaterCard;
 import io.taraxacum.finaltech.core.item.unusable.logic.LogicFalse;
 import io.taraxacum.finaltech.core.item.unusable.logic.LogicTrue;
+import io.taraxacum.finaltech.core.item.unusable.trophy.Meawerful;
+import io.taraxacum.finaltech.core.item.unusable.trophy.Shixinzia;
 import io.taraxacum.finaltech.core.item.usable.*;
 import io.taraxacum.finaltech.core.item.usable.machine.*;
 import io.taraxacum.finaltech.core.item.machine.electric.capacitor.AdvancedChargeIncreaseCapacitor;
@@ -333,6 +333,7 @@ public final class SetupUtil {
                 new MatrixCraftingTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.MATRIX_CRAFTING_TABLE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MATRIX_CRAFTING_TABLE).register());
         FinalTechMenus.SUB_MENU_CORE_MACHINE.addTo(
                 new ItemDismantleTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ITEM_DISMANTLE_TABLE).register(),
+                new AutoItemDismantleTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.AUTO_ITEM_DISMANTLE_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.AUTO_ITEM_DISMANTLE_TABLE).register(),
                 new EquivalentExchangeTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.EQUIVALENT_EXCHANGE_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.EQUIVALENT_EXCHANGE_TABLE).register(),
                 new ItemSerializationConstructor(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ITEM_SERIALIZATION_CONSTRUCTOR).register(),
                 new ItemDeserializeParser(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_DESERIALIZE_PARSER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ITEM_DESERIALIZE_PARSER).register(),
@@ -722,6 +723,7 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MATRIX_CRAFTING_TABLE, SlimefunItems.PROGRAMMABLE_ANDROID_2);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ITEM_DISMANTLE_TABLE, SlimefunItems.NUCLEAR_REACTOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.AUTO_ITEM_DISMANTLE_TABLE, SlimefunItems.NUCLEAR_REACTOR);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CARD_OPERATION_TABLE, SlimefunItems.WITHER_ASSEMBLER);
 

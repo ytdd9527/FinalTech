@@ -6,14 +6,15 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
-import io.taraxacum.libs.slimefun.dto.RecipeTypeRegistry;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.core.menu.machine.AutoItemDismantleTableMenu;
 import io.taraxacum.finaltech.core.menu.machine.ItemDismantleTableMenu;
-import io.taraxacum.libs.plugin.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
+import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
+import io.taraxacum.libs.slimefun.dto.RecipeTypeRegistry;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -21,17 +22,18 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Final_ROOT
  * @since 2.0
  */
-public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
+public class AutoItemDismantleTable extends AbstractMachine implements RecipeItem {
     private final Set<String> allowedRecipeType = new HashSet<>(ConfigUtil.getItemStringList(this, "allowed-recipe-type"));
     private final Set<String> notAllowedId = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
 
-    public ItemDismantleTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public AutoItemDismantleTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -50,7 +52,7 @@ public class ItemDismantleTable extends AbstractMachine implements RecipeItem {
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new ItemDismantleTableMenu(this);
+        return new AutoItemDismantleTableMenu(this);
     }
 
     @Override
