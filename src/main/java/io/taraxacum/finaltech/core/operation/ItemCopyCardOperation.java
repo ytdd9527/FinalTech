@@ -2,11 +2,12 @@ package io.taraxacum.finaltech.core.operation;
 
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.item.machine.operation.ItemSerializationConstructor;
 import io.taraxacum.finaltech.core.item.unusable.CopyCard;
 import io.taraxacum.finaltech.core.item.unusable.ItemPhony;
 import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.libs.plugin.dto.ItemWrapper;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import org.bukkit.inventory.ItemStack;
 
@@ -21,15 +22,16 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
     private double count;
     private final int difficulty;
     private final ItemStack matchItem;
+    private final ItemWrapper matchItemWrapper;
     private final ItemStack copyCardItem;
     private final ItemStack showItem;
-    public static final double RATE = ConfigUtil.getOrDefaultItemSetting(0.1, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "rate");
 
     protected ItemCopyCardOperation(@Nonnull ItemStack item) {
         this.count = item.getAmount();
         this.difficulty = ConstantTableUtil.ITEM_COPY_CARD_AMOUNT;
         this.matchItem = item.clone();
         this.matchItem.setAmount(1);
+        this.matchItemWrapper = new ItemWrapper(this.matchItem);
         this.copyCardItem = CopyCard.newItem(this.matchItem, "1");
         this.showItem = new CustomItemStack(item.getType(), FinalTech.getLanguageString("items", FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "copy-card", "name"));
         this.updateShowItem();
@@ -64,15 +66,19 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
         ItemStackUtil.setLore(this.showItem, FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "copy-card", "lore"),
                 ItemStackUtil.getItemName(this.matchItem),
                 String.format("%.8f", this.count),
-                String.valueOf(this.difficulty)));
+                String.valueOf(this.difficulty),
+                String.valueOf(ItemSerializationConstructor.EFFICIENCY > 0 ? 1 / ItemSerializationConstructor.EFFICIENCY : "INFINITY")));
     }
 
     @Override
     public int addItem(@Nullable ItemStack item) {
         if (!this.isFinished()) {
-            if (ItemStackUtil.isItemSimilar(item, this.matchItem)) {
-                double efficiency = Math.pow(RATE, 20.0 - FinalTech.getTps());
+            if (ItemStackUtil.isItemSimilar(item, this.matchItemWrapper)) {
+                double efficiency = ItemSerializationConstructor.EFFICIENCY;
                 efficiency = Math.min(efficiency, 1);
+                if(efficiency <= 0) {
+                    return 0;
+                }
                 if (item.getAmount() * efficiency + this.count < this.difficulty) {
                     int amount = item.getAmount();
                     item.setAmount(item.getAmount() - amount);

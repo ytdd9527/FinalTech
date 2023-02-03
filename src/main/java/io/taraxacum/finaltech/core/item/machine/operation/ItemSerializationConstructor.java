@@ -12,9 +12,9 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.operation.ItemSerializationConstructorOperation;
 import io.taraxacum.finaltech.core.operation.ItemCopyCardOperation;
 import io.taraxacum.finaltech.core.menu.machine.ItemSerializationConstructorMenu;
+import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.util.*;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.ConstantTableUtil;
-import io.taraxacum.finaltech.util.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -25,6 +25,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +39,10 @@ public class ItemSerializationConstructor extends AbstractOperationMachine {
     private final CustomItemStack nullInfoIcon = new CustomItemStack(Material.RED_STAINED_GLASS_PANE, FinalTech.getLanguageString("items", this.getId(), "null-icon", "name"), FinalTech.getLanguageStringArray("items", this.getId(), "null-icon", "lore"));
     private final String blockStorageItemKey = "item";
     private final String blockStorageAmountKey = "amount";
+    public static double EFFICIENCY = 1;
+    public static final double RATE = ConfigUtil.getOrDefaultItemSetting(0.9, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "rate");
+    public static List<Location> LOCATION_LIST = new ArrayList<>();
+    public static List<Location> LAST_LOCATION_LIST = new ArrayList<>();
 
     public ItemSerializationConstructor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -67,6 +72,23 @@ public class ItemSerializationConstructor extends AbstractOperationMachine {
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+        LOCATION_LIST.add(block.getLocation());
+
+        if(FinalTech.getTps() < 20 && LAST_LOCATION_LIST.size() > 1) {
+            if (BlockTickerUtil.hasSleep(config)) {
+                BlockTickerUtil.subSleep(config);
+                return;
+            }
+
+            Location randomLocation = LAST_LOCATION_LIST.get(FinalTech.getRandom().nextInt(LAST_LOCATION_LIST.size()));
+            Location location = block.getLocation();
+            double manhattanDistance = LocationUtil.getManhattanDistance(randomLocation, location);
+            if(manhattanDistance < LAST_LOCATION_LIST.size() && manhattanDistance > 0) {
+                BlockTickerUtil.setSleep(config, String.valueOf(LAST_LOCATION_LIST.size()));
+                return;
+            }
+        }
+
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         ItemSerializationConstructorOperation operation = (ItemSerializationConstructorOperation) this.getMachineProcessor().getOperation(block);
 
@@ -110,7 +132,9 @@ public class ItemSerializationConstructor extends AbstractOperationMachine {
         }
 
         if (operation != null && operation.getType() == ItemSerializationConstructorOperation.COPY_CARD) {
-            BlockStorage.addBlockInfo(block.getLocation(), this.blockStorageItemKey, ItemStackUtil.itemStackToString(((ItemCopyCardOperation)operation).getMatchItem()));
+            if(!config.contains(this.blockStorageItemKey)) {
+                BlockStorage.addBlockInfo(block.getLocation(), this.blockStorageItemKey, ItemStackUtil.itemStackToString(((ItemCopyCardOperation)operation).getMatchItem()));
+            }
             BlockStorage.addBlockInfo(block.getLocation(), this.blockStorageAmountKey, String.valueOf((int)((ItemCopyCardOperation)operation).getCount()));
         }
 
@@ -127,11 +151,26 @@ public class ItemSerializationConstructor extends AbstractOperationMachine {
     }
 
     @Override
+    protected void uniqueTick() {
+        super.uniqueTick();
+        List<Location> locationList = LAST_LOCATION_LIST;
+        LAST_LOCATION_LIST = LOCATION_LIST;
+        LOCATION_LIST = locationList;
+        LOCATION_LIST.clear();
+
+        if(FinalTech.getTps() < 19.5) {
+            EFFICIENCY = Math.pow(RATE / (1 + ItemSerializationConstructor.LAST_LOCATION_LIST.size() + MatrixItemSerializationConstructor.LAST_LOCATION_LIST.size()), 20.0 - FinalTech.getTps());
+            EFFICIENCY /= 1 + ItemSerializationConstructor.LAST_LOCATION_LIST.size() + MatrixItemSerializationConstructor.LAST_LOCATION_LIST.size();
+        } else {
+            EFFICIENCY = 1;
+        }
+    }
+
+    @Override
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT),
                 String.valueOf(ConstantTableUtil.ITEM_SINGULARITY_AMOUNT),
-                String.valueOf(ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT),
-                String.valueOf(ItemCopyCardOperation.RATE));
+                String.valueOf(ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT));
     }
 }

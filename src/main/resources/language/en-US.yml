@@ -2271,6 +2271,7 @@ items:
       lore:
         - '{color:normal}Item Name: {color:number}{1}'
         - '{color:normal}Item Amount: {color:number}{2}{color:normal}/{color:number}{3}'
+        - '{color:normal}Rate: {color:number}{4}'
     phony:
       name: '{color:normal}Status'
       lore:
@@ -2720,6 +2721,7 @@ items:
       lore:
         - '{color:normal}Item Name: {color:number}{1}'
         - '{color:normal}Item Amount: {color:number}{2}{color:normal}/{color:number}{3}'
+        - '{color:normal}Rate: {color:number}{4}'
     phony:
       name: '{color:normal}Status'
       lore:
