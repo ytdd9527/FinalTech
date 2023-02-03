@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.menu.function;
+package io.taraxacum.finaltech.core.menu.cargo;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;

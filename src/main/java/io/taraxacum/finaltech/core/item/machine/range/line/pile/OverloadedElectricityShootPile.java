@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.item.machine.range.line.shooter;
+package io.taraxacum.finaltech.core.item.machine.range.line.pile;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;

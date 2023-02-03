@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.item.machine.range.line.shooter;
+package io.taraxacum.finaltech.core.item.machine.range.line.pile;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -20,12 +20,12 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Final_ROOT
- * @since 1.0
+ * @since 2.0
  */
-public class EnergizedElectricityShootPile extends AbstractElectricityShootPile {
+public class NormalElectricityShootPile extends AbstractElectricityShootPile {
     private final int range = ConfigUtil.getOrDefaultItemSetting(8, this, "range");
 
-    public EnergizedElectricityShootPile(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public NormalElectricityShootPile(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -49,13 +49,13 @@ public class EnergizedElectricityShootPile extends AbstractElectricityShootPile 
                         int componentEnergy = Integer.parseInt(EnergyUtil.getCharge(energyComponentConfig));
                         int componentCapacity = ((EnergyNetComponent) energyComponentItem).getCapacity();
                         if (componentEnergy >= componentCapacity) {
-                            return 0;
+                            return -1;
                         }
                         int transferEnergy = Math.min(summary.getCapacitorEnergy(), componentCapacity - componentEnergy);
                         EnergyUtil.setCharge(location, String.valueOf(componentEnergy + transferEnergy));
                         summary.setCapacitorEnergy(summary.getCapacitorEnergy() - transferEnergy);
                         summary.setEnergyCharge(StringNumberUtil.add(summary.getEnergyCharge(), String.valueOf(transferEnergy)));
-                        return 1;
+                        return -1;
                     }
                 }
             }

@@ -1,11 +1,14 @@
-package io.taraxacum.finaltech.core.item.machine.cargo;
+package io.taraxacum.finaltech.core.item.machine;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
+import io.taraxacum.finaltech.core.item.machine.cargo.AbstractCargo;
 import io.taraxacum.libs.plugin.dto.InvWithSlots;
 import io.taraxacum.finaltech.core.dto.SimpleCargoDTO;
 import io.taraxacum.finaltech.core.helper.CargoFilter;
@@ -30,9 +33,21 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 1.0
  */
-public class BasicFrameMachine extends AbstractCargo implements RecipeItem {
+public class BasicFrameMachine extends AbstractMachine implements RecipeItem {
     public BasicFrameMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+    }
+
+    @Nonnull
+    @Override
+    protected BlockPlaceHandler onBlockPlace() {
+        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_DENY;
+    }
+
+    @Nonnull
+    @Override
+    protected BlockBreakHandler onBlockBreak() {
+        return MachineUtil.simpleBlockBreakerHandler(this);
     }
 
     @Nonnull
@@ -48,6 +63,11 @@ public class BasicFrameMachine extends AbstractCargo implements RecipeItem {
         MachineUtil.stockSlots(blockMenu.toInventory(), this.getInputSlot());
         CargoUtil.doSimpleCargoStrongSymmetry(new SimpleCargoDTO(new InvWithSlots(inventory, this.getInputSlot()), block, SlotSearchSize.VALUE_INPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, new InvWithSlots(inventory, this.getOutputSlot()), block, SlotSearchSize.VALUE_OUTPUTS_ONLY, SlotSearchOrder.VALUE_ASCENT, this.getInputSlot().length * 64, CargoLimit.VALUE_ALL, CargoFilter.VALUE_BLACK, inventory, new int[0]));
         MachineUtil.stockSlots(blockMenu.toInventory(), this.getOutputSlot());
+    }
+
+    @Override
+    protected boolean isSynchronized() {
+        return false;
     }
 
     @Override
