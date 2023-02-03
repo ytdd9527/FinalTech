@@ -5,9 +5,8 @@ import io.taraxacum.finaltech.util.LocationUtil;
 import io.taraxacum.libs.plugin.task.StartTask;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 import javax.annotation.Nonnull;
 
@@ -15,16 +14,17 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class UntreatableEffect extends AbstractEffect implements StartTask<LivingEntity> {
+public class VoidCurse extends AbstractEffect implements StartTask<LivingEntity> {
     private double health;
+    public static final String ID = "VOID_CURSE";
 
-    public UntreatableEffect(int time, int level) {
+    public VoidCurse(int time, int level) {
         super(time, level);
     }
 
     @Override
     public String getId() {
-        return "UNTREATABLE";
+        return ID;
     }
 
     @Override
@@ -41,11 +41,19 @@ public class UntreatableEffect extends AbstractEffect implements StartTask<Livin
     public void tick(@Nonnull LivingEntity livingEntity) {
         double nowHealth = livingEntity.getHealth();
         if (this.health <= 0) {
-            this.health = livingEntity.getMaxHealth();
+            this.health = livingEntity.getMaxHealth() / 3 * 2;
         } else if (this.health < livingEntity.getHealth()) {
             Location location = livingEntity.getLocation();
             location.getWorld().spawnParticle(Particle.FALLING_LAVA, LocationUtil.fromRandom(location, FinalTech.getRandom(), 0.4), 1);
-            livingEntity.setHealth(this.health);
+            this.health = Math.max(this.health - livingEntity.getHealth() + this.health, 0);
+            if(this.health > 0) {
+                livingEntity.setHealth(this.health);
+            } else {
+                this.getPlugin().getServer().getScheduler().runTask(this.getPlugin(), () -> {
+                    livingEntity.setLastDamageCause(new EntityDamageEvent(livingEntity, EntityDamageEvent.DamageCause.VOID, livingEntity.getHealth()));
+                    livingEntity.setHealth(0);
+                });
+            }
         }
         this.health = Math.min(this.health, Math.min(livingEntity.getHealth(), nowHealth));
     }

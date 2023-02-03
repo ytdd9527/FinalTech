@@ -2645,6 +2645,10 @@ items:
     warn:
       - 'Player [{5}] in {1} [{2},{3},{4}] is clicking manual craft machine very quickly.'
       - 'This may be due to server network, else it may cause server lag.'
+effect:
+  VOID_CURSE:
+    message:
+      death: '{1} {color:normal}is swallowed by the void.'
 research:
   LIQUID_CARD: 'Liquid Card'
   ORDER_DUST: 'Basic Material'
