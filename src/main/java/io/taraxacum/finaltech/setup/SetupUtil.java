@@ -1,5 +1,6 @@
 package io.taraxacum.finaltech.setup;
 
+import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
@@ -849,41 +850,76 @@ public final class SetupUtil {
 
     private static void registerBlockTicker(int begin) {
         try {
+            ConfigFileManager configManager = FinalTech.getConfigManager();
             List<SlimefunItem> slimefunItemList = Slimefun.getRegistry().getAllSlimefunItems();
             for(int size = slimefunItemList.size(); begin < size; begin++) {
                 SlimefunItem slimefunItem = slimefunItemList.get(begin);
-                if (!slimefunItem.getAddon().getJavaPlugin().equals(FinalTech.getInstance()) && slimefunItem.getBlockTicker() != null) {
+                SlimefunAddon slimefunAddon = slimefunItem.getAddon();
+                if (slimefunItem.getBlockTicker() != null) {
                     BlockTicker blockTicker = slimefunItem.getBlockTicker();
-                    boolean forceAsync = false;
-                    if (FinalTech.getConfigManager().getOrDefault(false, "super-ban") && slimefunItem.isDisabled()) {
-                        blockTicker = null;
-                    } else {
-                        if(FinalTech.getConfigManager().containPath("interval", "general", slimefunItem.getId())) {
-                            int interval = Integer.parseInt(FinalTech.getConfigManager().getString("interval", "general", slimefunItem.getId()));
-                            if(interval > 0) {
-                                blockTicker = BlockTickerUtil.getGeneralIntervalBlockTicker(blockTicker, interval);
-                            } else {
-                                FinalTech.logger().warning("wrong value of interval.general." + slimefunItem.getId() + " in config file");
-                            }
-                        }
-                        if(FinalTech.getConfigManager().containPath("interval", "independent", slimefunItem.getId())) {
-                            int interval = Integer.parseInt(FinalTech.getConfigManager().getString("interval", "independent", slimefunItem.getId()));
-                            if(interval > 1) {
-                                blockTicker = BlockTickerUtil.getIndependentIntervalBlockTicker(blockTicker, interval);
-                            } else {
-                                FinalTech.logger().warning("wrong value of interval.independent." + slimefunItem.getId() + " in config file");
-                            }
-                        }
-                        forceAsync = !blockTicker.isSynchronized() && (FinalTech.getForceSlimefunMultiThread() || FinalTech.isAsyncSlimefunItem(slimefunItem.getId()));
-                        boolean antiAccelerate = FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId());
-                        boolean performanceLimit = FinalTech.isPerformanceLimitSlimefunItem(slimefunItem.getId());
-                        if(forceAsync || antiAccelerate || performanceLimit) {
-                            blockTicker = BlockTickerUtil.generateBlockTicker(blockTicker, forceAsync, antiAccelerate, performanceLimit);
-                        }
-                    }
+
                     if(FinalTech.debugMode()) {
                         blockTicker = BlockTickerUtil.getDebugModeBlockTicker(blockTicker, slimefunItem);
                     }
+
+                    if(configManager.containPath("tweak", "interval", "general", slimefunItem.getId())) {
+                        int interval = configManager.getOrDefault(-1, "tweak", "interval", "general", slimefunItem.getId());
+                        if(interval > 0) {
+                            blockTicker = BlockTickerUtil.getGeneralIntervalBlockTicker(blockTicker, interval);
+                            FinalTech.logger().info(slimefunItem.getId() + " is tweaked for general interval limit");
+                        } else {
+                            FinalTech.logger().warning("wrong value of tweak.interval.general." + slimefunItem.getId() + " in config file");
+                        }
+                    }
+                    if(configManager.containPath("tweak", "interval", "independent", slimefunItem.getId())) {
+                        int interval = configManager.getOrDefault(-1, "tweak", "interval", "independent", slimefunItem.getId());
+                        if(interval > 1) {
+                            blockTicker = BlockTickerUtil.getIndependentIntervalBlockTicker(blockTicker, interval);
+                            FinalTech.logger().info(slimefunItem.getId() + " is tweaked for independent interval limit");
+                        } else {
+                            FinalTech.logger().warning("wrong value of tweak.interval.independent." + slimefunItem.getId() + " in config file");
+                        }
+                    }
+
+                    if(configManager.containPath("tweak", "range-limit", slimefunItem.getId(), "range")) {
+                        int range = configManager.getOrDefault(-1, "tweak", "range-limit", slimefunItem.getId(), "range");
+                        if(range > 0) {
+                            int mulRange = configManager.getOrDefault(0, "tweak", "range-limit", slimefunItem.getId(), "mul-range");
+                            boolean dropSelf = configManager.getOrDefault(false, "tweak", "range-limit", slimefunItem.getId(), "drop-self");
+                            String message = configManager.getOrDefault("{1} is not allowed to be placed too closely", "tweak", "range-limit", slimefunItem.getId(), "message");
+                            blockTicker = BlockTickerUtil.getRangeLimitBlockTicker(blockTicker, range, mulRange, dropSelf, message);
+                            FinalTech.logger().info(slimefunItem.getId() + " is tweaked for range limit");
+                        } else {
+                            FinalTech.logger().warning("wrong value of tweak.range." + slimefunItem.getId() + " in config file");
+                        }
+                    }
+
+                    boolean forceAsync = !blockTicker.isSynchronized() && (FinalTech.getForceSlimefunMultiThread() || FinalTech.isAsyncSlimefunItem(slimefunItem.getId()) || FinalTech.getAsyncSlimefunPluginSet().contains(slimefunAddon.getName()));
+                    boolean antiAccelerate = FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId()) || FinalTech.getAntiAccelerateSlimefunPluginSet().contains(slimefunAddon.getName());
+                    boolean performanceLimit = FinalTech.isPerformanceLimitSlimefunItem(slimefunItem.getId()) || FinalTech.getPerformanceLimitSlimefunPluginSet().contains(slimefunAddon.getName());
+                    if(forceAsync || antiAccelerate || performanceLimit) {
+                        blockTicker = BlockTickerUtil.generateBlockTicker(blockTicker, forceAsync, antiAccelerate, performanceLimit);
+                        if(antiAccelerate) {
+                            FinalTech.addAntiAccelerateSlimefunItem(slimefunItem.getId());
+                            FinalTech.logger().info(slimefunItem.getId() + " is tweaked for anti accelerate");
+                        }
+                        if(performanceLimit) {
+                            FinalTech.addPerformanceLimitSlimefunItem(slimefunItem.getId());
+                            FinalTech.logger().info(slimefunItem.getId() + " is tweaked for performance limit");
+                        }
+                    }
+
+                    if (configManager.getOrDefault(false, "super-ban") && slimefunItem.isDisabled()) {
+                        blockTicker = null;
+                        FinalTech.logger().info(slimefunItem.getId() + " is tweaked to remove block ticker");
+                    } else if(FinalTech.isNoBlockTickerSlimefunItem(slimefunItem.getId())) {
+                        blockTicker = null;
+                        FinalTech.logger().info(slimefunItem.getId() + " is tweaked to remove block ticker");
+                    } else if(FinalTech.getNoBlockTickerSlimefunPluginSet().contains(slimefunAddon.getJavaPlugin().getName())){
+                        blockTicker = null;
+                        FinalTech.logger().info(slimefunItem.getId() + " is tweaked to remove block ticker");
+                    }
+
                     if(slimefunItem.getBlockTicker() != blockTicker) {
                         Class<SlimefunItem> clazz = SlimefunItem.class;
                         Field declaredField = clazz.getDeclaredField("blockTicker");

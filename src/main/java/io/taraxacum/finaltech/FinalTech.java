@@ -54,6 +54,11 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
     private Set<String> asyncSlimefunIdSet = new HashSet<>();
     private Set<String> antiAccelerateSlimefunIdSet = new HashSet<>();
     private Set<String> performanceLimitSlimefunIdSet = new HashSet<>();
+    private Set<String> noBlockTickerSlimefunIdSet = new HashSet<>();
+    private Set<String> asyncSlimefunPluginSet = new HashSet<>();
+    private Set<String> antiAccelerateSlimefunPluginSet = new HashSet<>();
+    private Set<String> performanceLimitSlimefunPluginSet = new HashSet<>();
+    private Set<String> noBlockTickerSlimefunPluginSet = new HashSet<>();
     private Random random;
     private long seed;
     private BukkitTask bukkitTask;
@@ -137,10 +142,16 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         }
 
         /* read tweak for machine */
-        this.antiAccelerateSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "anti-accelerate"));
-        this.performanceLimitSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "performance-limit"));
-        this.asyncSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "force-async"));
-        if (this.asyncSlimefunIdSet.size() > 0) {
+        this.antiAccelerateSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "anti-accelerate", "item"));
+        this.performanceLimitSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "performance-limit", "item"));
+        this.noBlockTickerSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "no-blockTicker", "item"));
+        this.asyncSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "force-async", "item"));
+        this.antiAccelerateSlimefunPluginSet = new HashSet<>(this.config.getStringList("tweak", "anti-accelerate", "addon"));
+        this.performanceLimitSlimefunPluginSet = new HashSet<>(this.config.getStringList("tweak", "performance-limit", "addon"));
+        this.noBlockTickerSlimefunPluginSet = new HashSet<>(this.config.getStringList("tweak", "no-blockTicker", "addon"));
+        this.asyncSlimefunPluginSet = new HashSet<>(this.config.getStringList("tweak", "force-async", "addon"));
+
+        if (this.asyncSlimefunPluginSet.size() > 0 || this.asyncSlimefunIdSet.size() > 0) {
             this.logger.warning("You set force-async for some SlimefunItems! It's ok but you should be aware that this may cause some strange error.");
         }
 
@@ -352,8 +363,41 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         return instance.antiAccelerateSlimefunIdSet.contains(id);
     }
 
+    public static boolean addAntiAccelerateSlimefunItem(@Nonnull String id) {
+        return instance.antiAccelerateSlimefunIdSet.add(id);
+    }
+
     public static boolean isPerformanceLimitSlimefunItem(@Nonnull String id) {
         // TODO config GUI
         return instance.performanceLimitSlimefunIdSet.contains(id);
+    }
+
+    public static boolean addPerformanceLimitSlimefunItem(@Nonnull String id) {
+        return instance.performanceLimitSlimefunIdSet.add(id);
+    }
+
+    public static boolean isNoBlockTickerSlimefunItem(@Nonnull String id) {
+        // TODO config GUI
+        return instance.noBlockTickerSlimefunIdSet.contains(id);
+    }
+
+    public static boolean addNoBlockTickerSlimefunItem(@Nonnull String id) {
+        return instance.noBlockTickerSlimefunIdSet.add(id);
+    }
+
+    public static Set<String> getAsyncSlimefunPluginSet() {
+        return instance.asyncSlimefunPluginSet;
+    }
+
+    public static Set<String> getAntiAccelerateSlimefunPluginSet() {
+        return instance.antiAccelerateSlimefunPluginSet;
+    }
+
+    public static Set<String> getPerformanceLimitSlimefunPluginSet() {
+        return instance.performanceLimitSlimefunPluginSet;
+    }
+
+    public static Set<String> getNoBlockTickerSlimefunPluginSet() {
+        return instance.noBlockTickerSlimefunPluginSet;
     }
 }
