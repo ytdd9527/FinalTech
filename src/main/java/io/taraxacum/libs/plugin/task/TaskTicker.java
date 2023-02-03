@@ -183,6 +183,19 @@ public class TaskTicker<T> {
         }
     }
 
+    public static <T> boolean has(@Nonnull T object, @Nonnull Class<T> clazz, @Nonnull String id) {
+        TaskMap<T> taskMap = TaskMap.getInstance(clazz);
+        TaskTicker<T> taskTicker = taskMap.getRunner(object);
+        if(taskTicker != null) {
+            for(TickerTask<T> tickerTask : taskTicker.getTickerTaskList()) {
+                if(id.equals(tickerTask.getId())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     @Nullable
     public static <T> TaskTicker<T> getInstance(@Nonnull T object, @Nonnull Class<T> clazz) {
         return TaskMap.getInstance(clazz).getRunner(object);
