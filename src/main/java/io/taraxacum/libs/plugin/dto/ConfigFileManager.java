@@ -101,7 +101,6 @@ public class ConfigFileManager {
             if (this.configFile.isList(path)) {
                 return this.configFile.getStringList(path);
             } else {
-                this.plugin.getLogger().info(this.getClass().getSimpleName() + ": " + "The paths " + Arrays.toString(paths) + " seems to need list.");
                 try {
                     List<String> result = this.configFile.getStringList(path);
                     if(result.isEmpty()) {
@@ -141,7 +140,7 @@ public class ConfigFileManager {
     @Nonnull
     protected static String calPath(@Nonnull String... paths) {
         if (paths.length == 0) {
-            // Please make suer that this will not happen.
+            // Please make sure that this will not happen.
             return "";
         }
         StringBuilder stringBuilder = new StringBuilder();
