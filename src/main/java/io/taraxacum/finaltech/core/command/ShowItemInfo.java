@@ -2,6 +2,8 @@ package io.taraxacum.finaltech.core.command;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
+import io.github.thebusybiscuit.slimefun4.core.guide.GuideHistory;
+import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.libs.slimefun.dto.ItemValueTable;
@@ -9,6 +11,7 @@ import io.taraxacum.finaltech.core.group.RecipeItemGroup;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -35,9 +38,16 @@ public class ShowItemInfo implements CommandExecutor {
             if (playerProfile.isPresent()) {
                 RecipeItemGroup recipeItemGroup = RecipeItemGroup.getByItemStack(player, playerProfile.get(), SlimefunGuideMode.SURVIVAL_MODE, item);
                 if (recipeItemGroup != null) {
+                    GuideHistory guideHistory = playerProfile.get().getGuideHistory();
+                    guideHistory.clear();
                     recipeItemGroup.open(player, playerProfile.get(), SlimefunGuideMode.SURVIVAL_MODE);
+                } else {
+                    GuideHistory guideHistory = playerProfile.get().getGuideHistory();
+                    SlimefunGuide.openMainMenu(playerProfile.get(), SlimefunGuideMode.SURVIVAL_MODE, guideHistory.getMainMenuPage());
                 }
             }
+        } else if(commandSender instanceof ConsoleCommandSender) {
+
         }
         return true;
     }
