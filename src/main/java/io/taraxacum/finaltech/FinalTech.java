@@ -12,6 +12,7 @@ import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
+import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -72,8 +73,6 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         super.onEnable();
 
         instance = this;
-        this.logger = CustomLogger.newInstance(this.getJavaPlugin().getServer().getLogger());
-        this.logger.setBanner("[FinalTECH] ");
 
         /* read config file */
         try {
@@ -96,6 +95,9 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         /* set version */
         if (!this.config.containPath("version")) {
             this.config.setValue(version, "version");
+            if(!this.config.containPath("enable", "item")) {
+                this.config.setValue(false, "enable", "item");
+            }
         }
 
         /* update the config file */
@@ -215,6 +217,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             result.put(FinalTech.getConfigManager().getString("language"), 1);
             return result;
         }));
+        metrics.addCustomChart(new SimplePie("enable item", () -> FinalTech.getConfigManager().getOrDefault(false, "enable", "item").toString()));
     }
 
     @Override
