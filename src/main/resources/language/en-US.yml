@@ -2033,6 +2033,99 @@ items:
         lore:
           - '{color:normal}Transfer items to the specified location'
           - '{color:normal}Need {id:FINALTECH_LOCATION_RECORDER} {color:normal}to work'
+  FINALTECH_ADVANCED_POINT_TRANSFER:
+    name: '{color:prandom}Advanced Point Transfer'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Transfer items from one place to another place'
+      2:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Remote Range: {color:number}{1} Blocks'
+  FINALTECH_ADVANCED_MESH_TRANSFER:
+    name: '{color:prandom}Advanced Mesh Transfer'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Input items to storage and output them'
+      2:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Can use chain to extend range in remote search mode.'
+  FINALTECH_ADVANCED_LINE_TRANSFER:
+    name: '{color:prandom}Advanced Line Transfer'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Transfer items along the place it look at'
+  FINALTECH_ADVANCED_LOCATION_TRANSFER:
+    name: '{color:prandom}Advanced Location Transfer'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Transfer items to the specified location'
+          - '{color:normal}Need {id:FINALTECH_LOCATION_RECORDER} {color:normal}to work'
+  FINALTECH_CONFIGURATION_COPIER:
+    name: '{color:prandom}Configuration Copier'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Copy the configuration of machine it looks at'
+        output: 'FINALTECH_MACHINE_CONFIGURATOR'
+      2:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Use digital item to specify the location'
+          - '{color:normal}Optional, default 0'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_CONFIGURATION_PASTER:
+    name: '{color:prandom}Configuration Paster'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Paste the configuration to machine it looks at'
+        output: 'FINALTECH_MACHINE_CONFIGURATOR'
+      2:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Use digital item to specify the location'
+          - '{color:normal}Optional, default 0'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_CLICK_WORK_MACHINE:
+    name: '{color:prandom}Click Work Machine'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Transfer item from input slot to output slot while being clicked'
+  FINALTECH_SIMULATE_CLICK_MACHINE:
+    name: '{color:prandom}Simulate Click Machine'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Transfer item from input slot to output slot'
+          - '{color:normal}While there is a digit item in input slot'
+          - "{color:normal}And the machine in it's bottom will be clicked by around player"
+          - "{color:normal}Digit to range rate: {1}"
+        output: 'FINALTECH_DIGITAL_ONE'
+  FINALTECH_CONSUMABLE_SIMULATE_CLICK_MACHINE:
+    name: '{color:prandom}Simulate Click Machine {color:conceal}- {color:positive}Consumable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Consume digit item'
+          - "{color:normal}Then the machine in it's bottom will be clicked by around player"
+          - "{color:normal}Digit to range rate: {1}"
+        output: 'FINALTECH_DIGITAL_ONE'
   FINALTECH_ORDERED_DUST_FACTORY_DIRT:
     name: '{color:prandom}Ordered Dust Factory'
     info:

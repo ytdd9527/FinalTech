@@ -7,23 +7,18 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.dto.SimpleCargoDTO;
+import io.taraxacum.finaltech.core.helper.*;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
+import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.core.menu.cargo.AdvancedLineTransferMenu;
+import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.util.*;
 import io.taraxacum.libs.plugin.dto.InvWithSlots;
 import io.taraxacum.libs.plugin.dto.ServerRunnableLockFactory;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
-import io.taraxacum.finaltech.core.interfaces.RecipeItem;
-import io.taraxacum.finaltech.core.dto.SimpleCargoDTO;
-import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.cargo.LineTransferMenu;
-import io.taraxacum.finaltech.core.helper.*;
-import io.taraxacum.finaltech.setup.FinalTechItems;
-import io.taraxacum.common.util.JavaUtil;
-import io.taraxacum.finaltech.util.ConstantTableUtil;
-import io.taraxacum.finaltech.util.PermissionUtil;
-import io.taraxacum.finaltech.util.RecipeUtil;
-import io.taraxacum.finaltech.util.CargoUtil;
-import io.taraxacum.finaltech.util.LocationUtil;
-import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -46,8 +41,8 @@ import java.util.List;
  * @author Final_ROOT
  * @since 1.0
  */
-public class LineTransfer extends AbstractCargo implements RecipeItem {
-    public LineTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class AdvancedLineTransfer extends AbstractCargo implements RecipeItem {
+    public AdvancedLineTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -69,8 +64,16 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                 BlockSearchCycle.HELPER.checkOrSetBlockStorage(location);
                 BlockSearchSelf.HELPER.checkOrSetBlockStorage(location);
 
+                CargoNumber.HELPER.checkOrSetBlockStorage(location);
+                CargoNumberMode.HELPER.checkOrSetBlockStorage(location);
                 CargoMode.HELPER.checkOrSetBlockStorage(location);
                 CargoFilter.HELPER.checkOrSetBlockStorage(location);
+
+                SlotSearchSize.INPUT_HELPER.checkOrSetBlockStorage(location);
+                SlotSearchOrder.INPUT_HELPER.checkOrSetBlockStorage(location);
+                CargoLimit.HELPER.checkOrSetBlockStorage(location);
+                SlotSearchSize.OUTPUT_HELPER.checkOrSetBlockStorage(location);
+                SlotSearchOrder.OUTPUT_HELPER.checkOrSetBlockStorage(location);
             }
         };
     }
@@ -78,13 +81,13 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.simpleBlockBreakerHandler(this, LineTransferMenu.ITEM_MATCH);
+        return MachineUtil.simpleBlockBreakerHandler(this, AdvancedLineTransferMenu.ITEM_MATCH);
     }
 
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new LineTransferMenu(this);
+        return new AdvancedLineTransferMenu(this);
     }
 
     @Override
@@ -135,14 +138,14 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                 javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / finalBlockList.size(), finalBlockList));
             }
 
-            int cargoNumber = Integer.parseInt(CargoNumber.HELPER.defaultValue());
-            String cargoNumberMode = CargoNumberMode.HELPER.defaultValue();
+            int cargoNumber = Integer.parseInt(CargoNumber.HELPER.getOrDefaultValue(config));
+            String cargoNumberMode = CargoNumberMode.HELPER.getOrDefaultValue(config);
             String cargoOrder = CargoOrder.HELPER.getOrDefaultValue(config);
             String cargoMode = CargoMode.HELPER.getOrDefaultValue(config);
-            String inputSize = SlotSearchSize.INPUT_HELPER.defaultValue();
-            String inputOrder = SlotSearchOrder.INPUT_HELPER.defaultValue();
-            String outputSize = SlotSearchSize.OUTPUT_HELPER.defaultValue();
-            String outputOrder = SlotSearchOrder.OUTPUT_HELPER.defaultValue();
+            String inputSize = SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config);
+            String inputOrder = SlotSearchOrder.INPUT_HELPER.getOrDefaultValue(config);
+            String outputSize = SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config);
+            String outputOrder = SlotSearchOrder.OUTPUT_HELPER.getOrDefaultValue(config);
 
             int number;
             Block inputBlock;
@@ -155,10 +158,10 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
             simpleCargoDTO.setInputOrder(inputOrder);
             simpleCargoDTO.setOutputSize(outputSize);
             simpleCargoDTO.setOutputOrder(outputOrder);
-            simpleCargoDTO.setCargoLimit(CargoLimit.HELPER.defaultValue());
+            simpleCargoDTO.setCargoLimit(CargoLimit.HELPER.getOrDefaultValue(config));
             simpleCargoDTO.setCargoFilter(CargoFilter.HELPER.getOrDefaultValue(config));
             simpleCargoDTO.setFilterInv(blockMenu.toInventory());
-            simpleCargoDTO.setFilterSlots(LineTransferMenu.ITEM_MATCH);
+            simpleCargoDTO.setFilterSlots(AdvancedLineTransferMenu.ITEM_MATCH);
 
             for (int i = 0, size = finalBlockList.size(); i < size - 1; i++) {
                 switch (cargoOrder) {
@@ -215,7 +218,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                     return;
                 }
                 BlockFace blockFace = ((Directional) blockData).getFacing();
-                final List<Block> blockList = LineTransfer.this.searchBlock(block, blockFace, BlockSearchMode.LINE_HELPER.getOrDefaultValue(config));
+                final List<Block> blockList = AdvancedLineTransfer.this.searchBlock(block, blockFace, BlockSearchMode.LINE_HELPER.getOrDefaultValue(config));
                 if(blockList.isEmpty()) {
                     return;
                 }
@@ -282,14 +285,14 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                         javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / finalBlockList.size(), finalBlockList));
                     }
 
-                    int cargoNumber = Integer.parseInt(CargoNumber.HELPER.defaultValue());
-                    String cargoNumberMode = CargoNumberMode.HELPER.defaultValue();
+                    int cargoNumber = Integer.parseInt(CargoNumber.HELPER.getOrDefaultValue(config));
+                    String cargoNumberMode = CargoNumberMode.HELPER.getOrDefaultValue(config);
                     String cargoOrder = CargoOrder.HELPER.getOrDefaultValue(config);
                     String cargoMode = CargoMode.HELPER.getOrDefaultValue(config);
-                    String inputSize = SlotSearchSize.INPUT_HELPER.defaultValue();
-                    String inputOrder = SlotSearchOrder.INPUT_HELPER.defaultValue();
-                    String outputSize = SlotSearchSize.OUTPUT_HELPER.defaultValue();
-                    String outputOrder = SlotSearchOrder.OUTPUT_HELPER.defaultValue();
+                    String inputSize = SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config);
+                    String inputOrder = SlotSearchOrder.INPUT_HELPER.getOrDefaultValue(config);
+                    String outputSize = SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config);
+                    String outputOrder = SlotSearchOrder.OUTPUT_HELPER.getOrDefaultValue(config);
 
                     int number;
                     Block inputBlock;
@@ -302,10 +305,10 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                     simpleCargoDTO.setInputOrder(inputOrder);
                     simpleCargoDTO.setOutputSize(outputSize);
                     simpleCargoDTO.setOutputOrder(outputOrder);
-                    simpleCargoDTO.setCargoLimit(CargoLimit.HELPER.defaultValue());
+                    simpleCargoDTO.setCargoLimit(CargoLimit.HELPER.getOrDefaultValue(config));
                     simpleCargoDTO.setCargoFilter(CargoFilter.HELPER.getOrDefaultValue(config));
                     simpleCargoDTO.setFilterInv(blockMenu.toInventory());
-                    simpleCargoDTO.setFilterSlots(LineTransferMenu.ITEM_MATCH);
+                    simpleCargoDTO.setFilterSlots(AdvancedLineTransferMenu.ITEM_MATCH);
 
                     int input;
                     int output;

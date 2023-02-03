@@ -169,6 +169,15 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MESH_TRANSFER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MESH_TRANSFER", Material.TINTED_GLASS, "Station Transfer");
     public static final SlimefunItemStack LINE_TRANSFER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_LINE_TRANSFER", Material.DROPPER, "Line Transfer");
     public static final SlimefunItemStack LOCATION_TRANSFER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_LOCATION_TRANSFER", Material.NOTE_BLOCK, "Location Transfer");
+    public static final SlimefunItemStack ADVANCED_POINT_TRANSFER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_POINT_TRANSFER", Material.END_ROD, "Advanced Point Transfer");
+    public static final SlimefunItemStack ADVANCED_MESH_TRANSFER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_MESH_TRANSFER", Material.TINTED_GLASS, "Advanced Station Transfer");
+    public static final SlimefunItemStack ADVANCED_LINE_TRANSFER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_LINE_TRANSFER", Material.DROPPER, "Advanced Line Transfer");
+    public static final SlimefunItemStack ADVANCED_LOCATION_TRANSFER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_LOCATION_TRANSFER", Material.NOTE_BLOCK, "Advanced Location Transfer");
+    public static final SlimefunItemStack CONFIGURATION_COPIER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_CONFIGURATION_COPIER", Material.STICKY_PISTON, "Configuration Copier");
+    public static final SlimefunItemStack CONFIGURATION_PASTER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_CONFIGURATION_PASTER", Material.STICKY_PISTON, "Configuration Paster");
+    public static final SlimefunItemStack CLICK_WORK_MACHINE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_CLICK_WORK_MACHINE", Material.RED_NETHER_BRICKS, "Click Work Machine");
+    public static final SlimefunItemStack SIMULATE_CLICK_MACHINE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_SIMULATE_CLICK_MACHINE", Material.EMERALD_BLOCK, "Simulate Click Machine");
+    public static final SlimefunItemStack CONSUMABLE_SIMULATE_CLICK_MACHINE = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_CONSUMABLE_SIMULATE_CLICK_MACHINE", Material.EMERALD_BLOCK, "Simulate Click Machine - Consumable");
 
     /* functional machines */
     // core machine

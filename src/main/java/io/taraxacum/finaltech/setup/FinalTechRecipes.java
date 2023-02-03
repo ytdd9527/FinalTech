@@ -729,6 +729,51 @@ public final class FinalTechRecipes {
             new ItemStack(Material.TRIPWIRE_HOOK), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.TRIPWIRE_HOOK),
             new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.STRING), new ItemStack(Material.TRIPWIRE_HOOK)
     };
+    public static final ItemStack[] ADVANCED_POINT_TRANSFER = new ItemStack[] {
+            FinalTechItems.POINT_TRANSFER, FinalTechItems.POINT_TRANSFER, FinalTechItems.POINT_TRANSFER,
+            FinalTechItems.POINT_TRANSFER, new ItemStack(Material.NAME_TAG), FinalTechItems.POINT_TRANSFER,
+            FinalTechItems.POINT_TRANSFER, FinalTechItems.POINT_TRANSFER, FinalTechItems.POINT_TRANSFER
+    };
+    public static final ItemStack[] ADVANCED_MESH_TRANSFER = new ItemStack[] {
+            FinalTechItems.MESH_TRANSFER, FinalTechItems.MESH_TRANSFER, FinalTechItems.MESH_TRANSFER,
+            FinalTechItems.MESH_TRANSFER, new ItemStack(Material.NAME_TAG), FinalTechItems.MESH_TRANSFER,
+            FinalTechItems.MESH_TRANSFER, FinalTechItems.MESH_TRANSFER, FinalTechItems.MESH_TRANSFER
+    };
+    public static final ItemStack[] ADVANCED_LINE_TRANSFER = new ItemStack[] {
+            FinalTechItems.LINE_TRANSFER, FinalTechItems.LINE_TRANSFER, FinalTechItems.LINE_TRANSFER,
+            FinalTechItems.LINE_TRANSFER, new ItemStack(Material.NAME_TAG), FinalTechItems.LINE_TRANSFER,
+            FinalTechItems.LINE_TRANSFER, FinalTechItems.LINE_TRANSFER, FinalTechItems.LINE_TRANSFER
+    };
+    public static final ItemStack[] ADVANCED_LOCATION_TRANSFER = new ItemStack[] {
+            FinalTechItems.LOCATION_TRANSFER, FinalTechItems.LOCATION_TRANSFER, FinalTechItems.LOCATION_TRANSFER,
+            FinalTechItems.LOCATION_TRANSFER, new ItemStack(Material.NAME_TAG), FinalTechItems.LOCATION_TRANSFER,
+            FinalTechItems.LOCATION_TRANSFER, FinalTechItems.LOCATION_TRANSFER, FinalTechItems.LOCATION_TRANSFER
+    };
+    public static final ItemStack[] CONFIGURATION_COPIER = new ItemStack[] {
+            FinalTechItems.ORDERED_DUST, FinalTechItems.MACHINE_CONFIGURATOR, FinalTechItems.ORDERED_DUST,
+            null, FinalTechItems.BASIC_FRAME_MACHINE, null,
+            FinalTechItems.ORDERED_DUST, null, FinalTechItems.ORDERED_DUST
+    };
+    public static final ItemStack[] CONFIGURATION_PASTER = new ItemStack[] {
+            FinalTechItems.ORDERED_DUST, null, FinalTechItems.ORDERED_DUST,
+            null, FinalTechItems.BASIC_FRAME_MACHINE, null,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.MACHINE_CONFIGURATOR, FinalTechItems.ORDERED_DUST
+    };
+    public static final ItemStack[] CLICK_WORK_MACHINE = new ItemStack[] {
+            FinalTechItems.GEARWHEEL, null, FinalTechItems.GEARWHEEL,
+            null, FinalTechItems.BASIC_FRAME_MACHINE, null,
+            FinalTechItems.GEARWHEEL, null, FinalTechItems.GEARWHEEL
+    };
+    public static final ItemStack[] SIMULATE_CLICK_MACHINE = new ItemStack[]{
+            FinalTechItems.ORDERED_DUST, new ItemStack(Material.NAME_TAG), FinalTechItems.ORDERED_DUST,
+            null, FinalTechItems.BASIC_FRAME_MACHINE, null,
+            FinalTechItems.ORDERED_DUST, null, FinalTechItems.ORDERED_DUST
+    };
+    public static final ItemStack[] CONSUMABLE_SIMULATE_CLICK_MACHINE = new ItemStack[] {
+            null, null, null,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.SIMULATE_CLICK_MACHINE, FinalTechItems.ORDERED_DUST,
+            null, null, null
+    };
 
     /* functional machines */
     // core machine

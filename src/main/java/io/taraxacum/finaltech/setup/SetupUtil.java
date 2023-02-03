@@ -11,7 +11,7 @@ import io.taraxacum.finaltech.core.command.ShowItemInfo;
 import io.taraxacum.finaltech.core.command.TransferToCopyCardItem;
 import io.taraxacum.finaltech.core.command.TransferToStorageItem;
 import io.taraxacum.finaltech.core.enchantment.NullEnchantment;
-import io.taraxacum.finaltech.core.item.machine.function.*;
+import io.taraxacum.finaltech.core.item.machine.clicker.*;
 import io.taraxacum.finaltech.core.item.machine.logic.LogicAmountComparator;
 import io.taraxacum.finaltech.core.item.machine.logic.LogicEqualComparator;
 import io.taraxacum.finaltech.core.item.machine.logic.LogicNotNullComparator;
@@ -60,9 +60,9 @@ import io.taraxacum.finaltech.core.item.machine.cargo.storage.StorageInteractPor
 import io.taraxacum.finaltech.core.item.machine.cargo.storage.StorageWithdrawPort;
 import io.taraxacum.finaltech.core.item.machine.manual.CardOperationTable;
 import io.taraxacum.finaltech.core.item.machine.manual.craft.*;
-import io.taraxacum.finaltech.core.item.machine.range.line.shooter.EnergizedElectricityShootPile;
-import io.taraxacum.finaltech.core.item.machine.range.line.shooter.NormalElectricityShootPile;
-import io.taraxacum.finaltech.core.item.machine.range.line.shooter.OverloadedElectricityShootPile;
+import io.taraxacum.finaltech.core.item.machine.range.line.pile.EnergizedElectricityShootPile;
+import io.taraxacum.finaltech.core.item.machine.range.line.pile.NormalElectricityShootPile;
+import io.taraxacum.finaltech.core.item.machine.range.line.pile.OverloadedElectricityShootPile;
 import io.taraxacum.finaltech.core.item.machine.template.advanced.*;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
@@ -312,6 +312,17 @@ public final class SetupUtil {
                 new MeshTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.MESH_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MESH_TRANSFER).register(),
                 new LineTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LINE_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LINE_TRANSFER).register(),
                 new LocationTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LOCATION_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LOCATION_TRANSFER).register());
+        FinalTechMenus.SUB_MENU_CARGO.addTo(
+                new AdvancedPointTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.ADVANCED_POINT_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_POINT_TRANSFER).register(),
+                new AdvancedMeshTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.ADVANCED_MESH_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_MESH_TRANSFER).register(),
+                new AdvancedLineTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.ADVANCED_LINE_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_LINE_TRANSFER).register(),
+                new AdvancedLocationTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.ADVANCED_LOCATION_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_LOCATION_TRANSFER).register());
+        FinalTechMenus.SUB_MENU_CARGO.addTo(
+                new ConfigurationCopier(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.CONFIGURATION_COPIER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CONFIGURATION_COPIER).register(),
+                new ConfigurationPaster(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.CONFIGURATION_PASTER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CONFIGURATION_PASTER).register(),
+                new ClickWorkMachine(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.CLICK_WORK_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CLICK_WORK_MACHINE).register(),
+                new SimulateClickMachine(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.SIMULATE_CLICK_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SIMULATE_CLICK_MACHINE).register(),
+                new ConsumableSimulateClickMachine(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.CONSUMABLE_SIMULATE_CLICK_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CONSUMABLE_SIMULATE_CLICK_MACHINE).register());
 
         /* functional machines */
         // core machines

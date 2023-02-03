@@ -7,18 +7,14 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.dto.CargoDTO;
+import io.taraxacum.finaltech.core.helper.*;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
+import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
+import io.taraxacum.finaltech.core.menu.cargo.AdvancedLocationTransferMenu;
+import io.taraxacum.finaltech.util.*;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
-import io.taraxacum.finaltech.core.interfaces.RecipeItem;
-import io.taraxacum.finaltech.core.dto.CargoDTO;
-import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.cargo.LocationTransferMenu;
-import io.taraxacum.finaltech.core.helper.*;
-import io.taraxacum.finaltech.util.PermissionUtil;
-import io.taraxacum.finaltech.util.RecipeUtil;
-import io.taraxacum.finaltech.util.CargoUtil;
-import io.taraxacum.finaltech.util.LocationUtil;
-import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -35,8 +31,8 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class LocationTransfer extends AbstractCargo implements RecipeItem {
-    public LocationTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class AdvancedLocationTransfer extends AbstractCargo implements RecipeItem {
+    public AdvancedLocationTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -49,6 +45,11 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
                 Block block = blockPlaceEvent.getBlock();
                 Location location = block.getLocation();
 
+                CargoNumber.HELPER.checkOrSetBlockStorage(location);
+                SlotSearchSize.HELPER.checkOrSetBlockStorage(location);
+                SlotSearchOrder.HELPER.checkOrSetBlockStorage(location);
+                CargoLimit.HELPER.checkOrSetBlockStorage(location);
+
                 CargoMode.HELPER.checkOrSetBlockStorage(location);
                 CargoOrder.HELPER.checkOrSetBlockStorage(location);
             }
@@ -58,13 +59,13 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
     @Nonnull
     @Override
     protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.simpleBlockBreakerHandler(this, LocationTransferMenu.LOCATION_RECORDER_SLOT);
+        return MachineUtil.simpleBlockBreakerHandler(this, AdvancedLocationTransferMenu.LOCATION_RECORDER_SLOT);
     }
 
     @Nonnull
     @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new LocationTransferMenu(this);
+        return new AdvancedLocationTransferMenu(this);
     }
 
     @Override
@@ -74,7 +75,7 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
         boolean drawParticle = blockMenu.hasViewer();
 
-        ItemStack locationRecorder = blockMenu.getItemInSlot(LocationTransferMenu.LOCATION_RECORDER_SLOT);
+        ItemStack locationRecorder = blockMenu.getItemInSlot(AdvancedLocationTransferMenu.LOCATION_RECORDER_SLOT);
         if (ItemStackUtil.isItemNull(locationRecorder)) {
             return;
         }
@@ -92,8 +93,8 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, targetBlock));
         }
 
-        String slotSearchSize = SlotSearchSize.HELPER.defaultValue();
-        String slotSearchOrder = SlotSearchOrder.HELPER.defaultValue();
+        String slotSearchSize = SlotSearchSize.HELPER.getOrDefaultValue(config);
+        String slotSearchOrder = SlotSearchOrder.HELPER.getOrDefaultValue(config);
 
         CargoDTO cargoDTO = new CargoDTO();
         cargoDTO.setJavaPlugin(this.addon.getJavaPlugin());
@@ -119,8 +120,8 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
             }
         }
 
-        cargoDTO.setCargoNumber(Integer.parseInt(CargoNumber.HELPER.defaultValue()));
-        cargoDTO.setCargoLimit(CargoLimit.HELPER.defaultValue());
+        cargoDTO.setCargoNumber(Integer.parseInt(CargoNumber.HELPER.getOrDefaultValue(config)));
+        cargoDTO.setCargoLimit(CargoLimit.HELPER.getOrDefaultValue(config));
         cargoDTO.setCargoFilter(CargoFilter.VALUE_BLACK);
         cargoDTO.setFilterInv(blockMenu.toInventory());
         cargoDTO.setFilterSlots(new int[0]);

@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.menu.function;
+package io.taraxacum.finaltech.core.menu.cargo;
 
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class MeshTransferMenu extends AbstractMachineMenu {
-    private static final int[] BORDER = new int[0];
+    private static final int[] BORDER = new int[] {3, 4, 12, 13, 21, 22, 30, 31, 39, 40, 48, 49};
     private static final int[] INPUT_BORDER = new int[] {5, 14, 23};
     private static final int[] OUTPUT_BORDER = new int[] {32, 41, 50};
     private static final int[] INPUT_SLOT = new int[] {6, 7, 8, 15, 16, 17, 24, 25, 26};
@@ -31,20 +31,6 @@ public class MeshTransferMenu extends AbstractMachineMenu {
     private static final int CARGO_FILTER_SLOT = 10;
     private static final int INPUT_BLOCK_SEARCH_MODE_SLOT = 2;
     private static final int OUTPUT_BLOCK_SEARCH_MODE_SLOT = 20;
-
-    private static final int INPUT_CARGO_NUMBER_SUB_SLOT = 3;
-    private static final int INPUT_CARGO_NUMBER_MODE_SLOT = 12;
-    private static final int INPUT_CARGO_NUMBER_ADD_SLOT = 21;
-    private static final int INPUT_SLOT_SEARCH_SIZE_SLOT = 4;
-    private static final int INPUT_SLOT_SEARCH_ORDER_SLOT = 13;
-    private static final int INPUT_CARGO_LIMIT_SLOT = 22;
-
-    private static final int OUTPUT_CARGO_NUMBER_SUB_SLOT = 30;
-    private static final int OUTPUT_CARGO_NUMBER_MODE_SLOT = 39;
-    private static final int OUTPUT_CARGO_NUMBER_ADD_SLOT = 48;
-    private static final int OUTPUT_SLOT_SEARCH_SIZE_SLOT = 31;
-    private static final int OUTPUT_SLOT_SEARCH_ORDER_SLOT = 40;
-    private static final int OUTPUT_CARGO_LIMIT_SLOT = 49;
 
     public static final int[] ITEM_MATCH = new int[] {27, 28, 29, 36, 37, 38, 45, 46, 47};
 
@@ -91,20 +77,6 @@ public class MeshTransferMenu extends AbstractMachineMenu {
         this.addItem(CARGO_FILTER_SLOT, CargoFilter.HELPER.defaultIcon());
         this.addItem(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.MESH_INPUT_HELPER.defaultIcon());
         this.addItem(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.MESH_OUTPUT_HELPER.defaultIcon());
-
-        this.addItem(INPUT_CARGO_NUMBER_SUB_SLOT, CargoNumber.CARGO_NUMBER_SUB_ICON);
-        this.addItem(INPUT_CARGO_NUMBER_MODE_SLOT, CargoNumber.CARGO_NUMBER_ICON);
-        this.addItem(INPUT_CARGO_NUMBER_ADD_SLOT, CargoNumber.CARGO_NUMBER_ADD_ICON);
-        this.addItem(INPUT_SLOT_SEARCH_SIZE_SLOT, SlotSearchSize.INPUT_HELPER.defaultIcon());
-        this.addItem(INPUT_SLOT_SEARCH_ORDER_SLOT, SlotSearchOrder.INPUT_HELPER.defaultIcon());
-        this.addItem(INPUT_CARGO_LIMIT_SLOT, CargoLimit.INPUT_HELPER.defaultIcon());
-
-        this.addItem(OUTPUT_CARGO_NUMBER_SUB_SLOT, CargoNumber.CARGO_NUMBER_SUB_ICON);
-        this.addItem(OUTPUT_CARGO_NUMBER_MODE_SLOT, CargoNumber.CARGO_NUMBER_ICON);
-        this.addItem(OUTPUT_CARGO_NUMBER_ADD_SLOT, CargoNumber.CARGO_NUMBER_ADD_ICON);
-        this.addItem(OUTPUT_SLOT_SEARCH_SIZE_SLOT, SlotSearchSize.OUTPUT_HELPER.defaultIcon());
-        this.addItem(OUTPUT_SLOT_SEARCH_ORDER_SLOT, SlotSearchOrder.OUTPUT_HELPER.defaultIcon());
-        this.addItem(OUTPUT_CARGO_LIMIT_SLOT, CargoLimit.OUTPUT_HELPER.defaultIcon());
     }
 
     @Override
@@ -123,20 +95,6 @@ public class MeshTransferMenu extends AbstractMachineMenu {
         blockMenu.addMenuClickHandler(CARGO_FILTER_SLOT, CargoFilter.HELPER.getHandler(inventory, location, this.getSlimefunItem(), CARGO_FILTER_SLOT));
         blockMenu.addMenuClickHandler(INPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.MESH_INPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), INPUT_BLOCK_SEARCH_MODE_SLOT));
         blockMenu.addMenuClickHandler(OUTPUT_BLOCK_SEARCH_MODE_SLOT, BlockSearchMode.MESH_OUTPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), OUTPUT_BLOCK_SEARCH_MODE_SLOT));
-
-        blockMenu.addMenuClickHandler(INPUT_CARGO_NUMBER_ADD_SLOT, CargoNumber.INPUT_HELPER.getNextHandler(inventory, location, this.getSlimefunItem(), INPUT_CARGO_NUMBER_MODE_SLOT));
-        blockMenu.addMenuClickHandler(INPUT_CARGO_NUMBER_SUB_SLOT, CargoNumber.INPUT_HELPER.getPreviousHandler(inventory, location, this.getSlimefunItem(), INPUT_CARGO_NUMBER_MODE_SLOT));
-        blockMenu.addMenuClickHandler(INPUT_CARGO_NUMBER_MODE_SLOT, CargoNumberMode.INPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), INPUT_CARGO_NUMBER_MODE_SLOT));
-        blockMenu.addMenuClickHandler(INPUT_SLOT_SEARCH_SIZE_SLOT, SlotSearchSize.INPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), INPUT_SLOT_SEARCH_SIZE_SLOT));
-        blockMenu.addMenuClickHandler(INPUT_SLOT_SEARCH_ORDER_SLOT, SlotSearchOrder.INPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), INPUT_SLOT_SEARCH_ORDER_SLOT));
-        blockMenu.addMenuClickHandler(INPUT_CARGO_LIMIT_SLOT, CargoLimit.INPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), INPUT_CARGO_LIMIT_SLOT));
-
-        blockMenu.addMenuClickHandler(OUTPUT_CARGO_NUMBER_ADD_SLOT, CargoNumber.OUTPUT_HELPER.getNextHandler(inventory, location, this.getSlimefunItem(), OUTPUT_CARGO_NUMBER_MODE_SLOT));
-        blockMenu.addMenuClickHandler(OUTPUT_CARGO_NUMBER_SUB_SLOT, CargoNumber.OUTPUT_HELPER.getPreviousHandler(inventory, location, this.getSlimefunItem(), OUTPUT_CARGO_NUMBER_MODE_SLOT));
-        blockMenu.addMenuClickHandler(OUTPUT_CARGO_NUMBER_MODE_SLOT, CargoNumberMode.OUTPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), OUTPUT_CARGO_NUMBER_MODE_SLOT));
-        blockMenu.addMenuClickHandler(OUTPUT_SLOT_SEARCH_SIZE_SLOT, SlotSearchSize.OUTPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), OUTPUT_SLOT_SEARCH_SIZE_SLOT));
-        blockMenu.addMenuClickHandler(OUTPUT_SLOT_SEARCH_ORDER_SLOT, SlotSearchOrder.OUTPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), OUTPUT_SLOT_SEARCH_ORDER_SLOT));
-        blockMenu.addMenuClickHandler(OUTPUT_CARGO_LIMIT_SLOT, CargoLimit.OUTPUT_HELPER.getHandler(inventory, location, this.getSlimefunItem(), OUTPUT_CARGO_LIMIT_SLOT));
     }
 
     @Override
@@ -151,17 +109,5 @@ public class MeshTransferMenu extends AbstractMachineMenu {
         CargoFilter.HELPER.checkAndUpdateIcon(inventory, location, CARGO_FILTER_SLOT);
         BlockSearchMode.MESH_INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_BLOCK_SEARCH_MODE_SLOT);
         BlockSearchMode.MESH_OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_BLOCK_SEARCH_MODE_SLOT);
-
-        CargoNumber.INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_CARGO_NUMBER_MODE_SLOT);
-        CargoNumberMode.INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_CARGO_NUMBER_MODE_SLOT);
-        SlotSearchSize.INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_SLOT_SEARCH_SIZE_SLOT);
-        SlotSearchOrder.INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_SLOT_SEARCH_ORDER_SLOT);
-        CargoLimit.INPUT_HELPER.checkAndUpdateIcon(inventory, location, INPUT_CARGO_LIMIT_SLOT);
-
-        CargoNumber.OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_CARGO_NUMBER_MODE_SLOT);
-        CargoNumberMode.OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_CARGO_NUMBER_MODE_SLOT);
-        SlotSearchSize.OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_SLOT_SEARCH_SIZE_SLOT);
-        SlotSearchOrder.OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_SLOT_SEARCH_ORDER_SLOT);
-        CargoLimit.OUTPUT_HELPER.checkAndUpdateIcon(inventory, location, OUTPUT_CARGO_LIMIT_SLOT);
     }
 }
