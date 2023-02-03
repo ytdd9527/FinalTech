@@ -89,52 +89,112 @@ import java.util.function.Function;
  * @since 1.0
  */
 public final class SetupUtil {
-    public static void init() {
-        FinalTech finalTech = FinalTech.getInstance();
+    public static void setupLanguageManager(@Nonnull LanguageManager languageManager) {
+        // Color normal
+        languageManager.addFunction(new Function<>() {
+            @Override
+            public String apply(String s) {
+                String[] split = StringUtil.split(s, "{color:", "}");
+                if (split.length == 3) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(split[0]);
+                    switch (split[1]) {
+                        case "normal" -> stringBuilder.append(TextUtil.COLOR_NORMAL);
+                        case "stress" -> stringBuilder.append(TextUtil.COLOR_STRESS);
+                        case "action" -> stringBuilder.append(TextUtil.COLOR_ACTION);
+                        case "initiative" -> stringBuilder.append(TextUtil.COLOR_INITIATIVE);
+                        case "passive" -> stringBuilder.append(TextUtil.COLOR_PASSIVE);
+                        case "number" -> stringBuilder.append(TextUtil.COLOR_NUMBER);
+                        case "positive" -> stringBuilder.append(TextUtil.COLOR_POSITIVE);
+                        case "negative" -> stringBuilder.append(TextUtil.COLOR_NEGATIVE);
+                        case "conceal" -> stringBuilder.append(TextUtil.COLOR_CONCEAL);
+                        case "input" -> stringBuilder.append(TextUtil.COLOR_INPUT);
+                        case "output" -> stringBuilder.append(TextUtil.COLOR_OUTPUT);
+                        case "random" -> stringBuilder.append(TextUtil.getRandomColor());
+                        case "prandom" -> stringBuilder.append(TextUtil.getPseudorandomColor(FinalTech.getSeed()));
+                        default -> stringBuilder.append(split[1]);
+                    }
+                    return stringBuilder.append(this.apply(split[2])).toString();
+                } else {
+                    return s;
+                }
+            }
+        });
+        // SlimefunItem name by id
+        languageManager.addFunction(new Function<>() {
+            @Override
+            public String apply(String s) {
+                String[] split = StringUtil.split(s, "{id:", "}");
+                if (split.length == 3) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(split[0]);
+                    SlimefunItem slimefunItem = SlimefunItem.getById(split[1]);
+                    if (slimefunItem != null) {
+                        stringBuilder.append(slimefunItem.getItemName());
+                    } else {
+                        stringBuilder.append(split[1]);
+                    }
+                    return stringBuilder.append(this.apply(split[2])).toString();
+                } else {
+                    return s;
+                }
+            }
+        });
+        // Color random
+        languageManager.addFunction(new Function<>() {
+            @Override
+            public String apply(String s) {
+                String[] split = StringUtil.split(s, "{random-color:start}", "{random-color:end}");
+                if (split.length == 3) {
+                    return split[0] + TextUtil.colorRandomString(split[1]) + this.apply(split[2]);
+                } else {
+                    return s;
+                }
+            }
+        });
+    }
 
-        /* setup config */
+    private static void setupEnchantment() {
+        try {
+            ReflectionUtil.setStaticValue(Enchantment.class, "acceptingNew", true);
+            Enchantment.registerEnchantment(NullEnchantment.ENCHANTMENT);
 
-        ConfigFileManager config = FinalTech.getConfigManager();
+            FinalTechItems.ADVANCED_POINT_TRANSFER.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.ADVANCED_MESH_TRANSFER.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.ADVANCED_LINE_TRANSFER.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.ADVANCED_LOCATION_TRANSFER.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
 
-        AbstractManualCraftMachine.COUNT_THRESHOLD = config.getOrDefault(10, "manual", "count-threshold");
-        if (AbstractManualCraftMachine.COUNT_THRESHOLD == -1) {
-            AbstractManualCraftMachine.COUNT_THRESHOLD = Slimefun.getTickerTask().getTickRate();
+            FinalTechItems.ENTROPY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.QUANTITY_MODULE_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.OPERATION_ACCELERATOR_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.COPY_CARD.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.SHINE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.PHONY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.MACHINE_CHARGE_CARD_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.MACHINE_ACCELERATE_CARD_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.MACHINE_ACTIVATE_CARD_L4.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.ADVANCED_AUTO_CRAFT.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.MULTI_FRAME_MACHINE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.MATRIX_ITEM_DISMANTLE_TABLE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.MATRIX_EXPANDED_CAPACITOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.MATRIX_ITEM_DESERIALIZE_PARSER.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.ENTROPY_CONSTRUCTOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.MATRIX_GENERATOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.MATRIX_ACCELERATOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+            FinalTechItems.MATRIX_REACTOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            FinalTech.logger().warning("Some error occurred while registering enchantment");
         }
+    }
 
-        /* setup menu */
+    public static void setupItem() {
+        ItemStackUtil.setLore(FinalTechItems.TROPHY_MEAWERFUL,
+                "§fThanks for some good idea");
+        ItemStackUtil.setLore(FinalTechItems.TROPHY_SHIXINZIA,
+                "§fThanks for some test work");
 
-        FinalTechMenus.MAIN_MENU.setTier(0);
-        FinalTechMenus.MAIN_MENU.register(finalTech);
-
-        FinalTechMenus.MENU_ITEMS.setTier(0);
-        FinalTechMenus.MENU_CARGO_SYSTEM.setTier(0);
-        FinalTechMenus.MENU_ELECTRICITY_SYSTEM.setTier(0);
-        FinalTechMenus.MENU_FUNCTIONAL_MACHINE.setTier(0);
-        FinalTechMenus.MENU_PRODUCTIVE_MACHINE.setTier(0);
-        FinalTechMenus.MENU_DISC.setTier(0);
-
-        /* Enchantment */
-        ReflectionUtil.setStaticValue(Enchantment.class, "acceptingNew", true);
-        Enchantment.registerEnchantment(NullEnchantment.ENCHANTMENT);
-        FinalTechItems.ENTROPY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.QUANTITY_MODULE_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.OPERATION_ACCELERATOR_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.COPY_CARD.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.SHINE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.PHONY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MACHINE_CHARGE_CARD_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MACHINE_ACCELERATE_CARD_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MACHINE_ACTIVATE_CARD_L4.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.ADVANCED_AUTO_CRAFT.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MULTI_FRAME_MACHINE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MATRIX_ITEM_DISMANTLE_TABLE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MATRIX_EXPANDED_CAPACITOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MATRIX_ITEM_DESERIALIZE_PARSER.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.ENTROPY_CONSTRUCTOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MATRIX_GENERATOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MATRIX_ACCELERATOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MATRIX_REACTOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         ItemStackUtil.addLoreToFirst(FinalTechItems.STORAGE_CARD, StorageCard.ITEM_LORE);
 
         /* items */
@@ -449,6 +509,19 @@ public final class SetupUtil {
                 new StoneGenerator(FinalTechMenus.MENU_DISC, FinalTechItems.STONE_GENERATOR, RecipeType.NULL, new ItemStack[0]).register(),
                 new RawStoneGenerator(FinalTechMenus.MENU_DISC, FinalTechItems.RAW_STONE_GENERATOR, RecipeType.NULL, new ItemStack[0]).register(),
                 new NetherStoneGenerator(FinalTechMenus.MENU_DISC, FinalTechItems.NETHER_STONE_GENERATOR, RecipeType.NULL, new ItemStack[0]).register());
+    }
+
+    private static void setupMenu() {
+        FinalTech finalTech = FinalTech.getInstance();
+
+        FinalTechMenus.MAIN_MENU.setTier(0);
+
+        FinalTechMenus.MENU_ITEMS.setTier(0);
+        FinalTechMenus.MENU_ELECTRICITY_SYSTEM.setTier(0);
+        FinalTechMenus.MENU_CARGO_SYSTEM.setTier(0);
+        FinalTechMenus.MENU_FUNCTIONAL_MACHINE.setTier(0);
+        FinalTechMenus.MENU_PRODUCTIVE_MACHINE.setTier(0);
+        FinalTechMenus.MENU_DISC.setTier(0);
 
         for(SlimefunItem slimefunItem : FinalTechMenus.SUB_MENU_DEPRECATED.getSlimefunItems()) {
             try {
@@ -541,8 +614,9 @@ public final class SetupUtil {
 
         FinalTechMenus.MAIN_ITEM_GROUP.setTier(0);
         FinalTechMenus.MAIN_ITEM_GROUP.register(finalTech);
+    }
 
-        /* Researches */
+    private static void setupResearch() {
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "LIQUID_CARD", 1, false,
                 FinalTechItems.WATER_CARD,
                 FinalTechItems.LAVA_CARD,
@@ -724,6 +798,12 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LINE_TRANSFER, SlimefunItems.CARGO_MANAGER);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LOCATION_TRANSFER, SlimefunItems.CARGO_MANAGER);
 
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CONFIGURATION_COPIER, SlimefunItems.CRAFTING_MOTOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CONFIGURATION_PASTER, SlimefunItems.CRAFTING_MOTOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CLICK_WORK_MACHINE, SlimefunItems.GPS_ACTIVATION_DEVICE_PERSONAL);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SIMULATE_CLICK_MACHINE, SlimefunItems.GPS_ACTIVATION_DEVICE_SHARED);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CONSUMABLE_SIMULATE_CLICK_MACHINE, SlimefunItems.GPS_ACTIVATION_DEVICE_SHARED);
+
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MATRIX_CRAFTING_TABLE, SlimefunItems.PROGRAMMABLE_ANDROID_2);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ITEM_DISMANTLE_TABLE, SlimefunItems.NUCLEAR_REACTOR);
@@ -781,76 +861,30 @@ public final class SetupUtil {
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.GRAVEL_CONVERSION, SlimefunItems.GOLD_PAN);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SOUL_SAND_CONVERSION, SlimefunItems.NETHER_GOLD_PAN);
+    }
 
-        /* command */
+    private static void setupCommand() {
+        FinalTech finalTech = FinalTech.getInstance();
+
         finalTech.getCommand("finaltech-copy-card").setExecutor(new TransferToCopyCardItem());
         finalTech.getCommand("finaltech-storage-card").setExecutor(new TransferToStorageItem());
         finalTech.getCommand("finaltech-info").setExecutor(new ShowItemInfo());
     }
 
-    public static void initLanguageManager(@Nonnull LanguageManager languageManager) {
-        // Color normal
-        languageManager.addFunction(new Function<>() {
-            @Override
-            public String apply(String s) {
-                String[] split = StringUtil.split(s, "{color:", "}");
-                if (split.length == 3) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append(split[0]);
-                    switch (split[1]) {
-                        case "normal" -> stringBuilder.append(TextUtil.COLOR_NORMAL);
-                        case "stress" -> stringBuilder.append(TextUtil.COLOR_STRESS);
-                        case "action" -> stringBuilder.append(TextUtil.COLOR_ACTION);
-                        case "initiative" -> stringBuilder.append(TextUtil.COLOR_INITIATIVE);
-                        case "passive" -> stringBuilder.append(TextUtil.COLOR_PASSIVE);
-                        case "number" -> stringBuilder.append(TextUtil.COLOR_NUMBER);
-                        case "positive" -> stringBuilder.append(TextUtil.COLOR_POSITIVE);
-                        case "negative" -> stringBuilder.append(TextUtil.COLOR_NEGATIVE);
-                        case "conceal" -> stringBuilder.append(TextUtil.COLOR_CONCEAL);
-                        case "input" -> stringBuilder.append(TextUtil.COLOR_INPUT);
-                        case "output" -> stringBuilder.append(TextUtil.COLOR_OUTPUT);
-                        case "random" -> stringBuilder.append(TextUtil.getRandomColor());
-                        case "prandom" -> stringBuilder.append(TextUtil.getPseudorandomColor(FinalTech.getSeed()));
-                        default -> stringBuilder.append(split[1]);
-                    }
-                    return stringBuilder.append(this.apply(split[2])).toString();
-                } else {
-                    return s;
-                }
-            }
-        });
-        // SlimefunItem Name by id
-        languageManager.addFunction(new Function<>() {
-            @Override
-            public String apply(String s) {
-                String[] split = StringUtil.split(s, "{id:", "}");
-                if (split.length == 3) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append(split[0]);
-                    SlimefunItem slimefunItem = SlimefunItem.getById(split[1]);
-                    if (slimefunItem != null) {
-                        stringBuilder.append(slimefunItem.getItemName());
-                    } else {
-                        stringBuilder.append(split[1]);
-                    }
-                    return stringBuilder.append(this.apply(split[2])).toString();
-                } else {
-                    return s;
-                }
-            }
-        });
-        // Color random
-        languageManager.addFunction(new Function<>() {
-            @Override
-            public String apply(String s) {
-                String[] split = StringUtil.split(s, "{random-color:start}", "{random-color:end}");
-                if (split.length == 3) {
-                    return split[0] + TextUtil.colorRandomString(split[1]) + this.apply(split[2]);
-                } else {
-                    return s;
-                }
-            }
-        });
+    public static void init() {
+        ConfigFileManager configManager = FinalTech.getConfigManager();
+
+        setupLanguageManager(FinalTech.getLanguageManager());
+
+        if(configManager.getOrDefault(false, "enable", "item")) {
+            // Yeah, you may not want new items from this plugin.
+            setupEnchantment();
+            setupItem();
+            setupMenu();
+            setupResearch();
+        }
+
+        setupCommand();
     }
 
     public static void registerBlockTicker() {

@@ -13,9 +13,11 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class EnergyUtil {
+    @Nonnull
     public static String getCharge(@Nonnull Location location) {
         return BlockStorage.hasBlockInfo(location) ? EnergyUtil.getCharge(BlockStorage.getLocationInfo(location)) : "0";
     }
+    @Nonnull
     public static String getCharge(@Nonnull Config config) {
         return config.contains(ConstantTableUtil.CONFIG_CHARGE) ? config.getString(ConstantTableUtil.CONFIG_CHARGE) : StringNumberUtil.ZERO;
     }

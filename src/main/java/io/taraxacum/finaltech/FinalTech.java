@@ -89,6 +89,15 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             return;
         }
 
+        /* set logger */
+        this.logger = CustomLogger.newInstance(this.getJavaPlugin().getServer().getLogger());
+        this.logger.setBanner("[" + this.languageManager.getOrDefault("FinalTECH", "FinalTech") + "] ");
+
+        /* set version */
+        if (!this.config.containPath("version")) {
+            this.config.setValue(version, "version");
+        }
+
         /* update the config file */
         if(this.config.getOrDefault(true, "update", "enable")) {
             this.logger.info("You have enabled the config updater.");
@@ -97,7 +106,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
                 updater.update(this);
             } catch (Exception e) {
                 e.printStackTrace();
-                this.logger.info("Some error occurred while doing update..");
+                this.logger.warning("Some error occurred while doing update..");
             }
         } else {
             this.logger.info("You have disabled the config updater.");
@@ -116,11 +125,6 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         /* set runnable factory */
         this.locationRunnableFactory = ServerRunnableLockFactory.getInstance(this, Location.class);
         this.entityRunnableFactory = ServerRunnableLockFactory.getInstance(this, Entity.class);
-
-        // TODO: version update.(Now this is the first version being recorded and will be supported to update)
-        if (!this.config.containPath("version")) {
-            this.config.setValue(version, "version");
-        }
 
         /* configure multi thread level */
         this.multiThreadLevel = this.config.getOrDefault(0, "multi-thread", "level");
@@ -174,22 +178,19 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             }
         }, 0, tickRate);
 
-        SetupUtil.initLanguageManager(FinalTech.instance.languageManager);
+        /* set up my items and menus and... */
+        SetupUtil.init();
+
+        this.performanceLimitSlimefunIdSet.add(FinalTechItems.ORDERED_DUST_FACTORY_DIRT.getItemId());
+        this.performanceLimitSlimefunIdSet.add(FinalTechItems.ORDERED_DUST_FACTORY_STONE.getItemId());
 
         /* mark for some machines */
-        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.VARIABLE_WIRE_RESISTANCE.getItemId());
-        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.VARIABLE_WIRE_CAPACITOR.getItemId());
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ENERGIZED_ACCELERATOR.getItemId());
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.OVERLOADED_ACCELERATOR.getItemId());
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ITEM_DESERIALIZE_PARSER.getItemId());
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ENTROPY_SEED.getItemId());
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.EQUIVALENT_CONCEPT.getItemId());
-        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.MATRIX_GENERATOR.getItemId());
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.MATRIX_ACCELERATOR.getItemId());
-        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.MATRIX_REACTOR.getItemId());
-
-        /* set up my items and menus and... */
-        SetupUtil.init();
 
         /* setup item value table */
         this.getServer().getScheduler().runTaskLater(this, () -> ItemValueTable.getInstance().init(), this.config.getOrDefault(10, "setups", "item-value-table", "delay"));
