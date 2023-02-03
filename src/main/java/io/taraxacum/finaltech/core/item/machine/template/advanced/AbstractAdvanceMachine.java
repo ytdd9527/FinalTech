@@ -85,6 +85,7 @@ public abstract class AbstractAdvanceMachine extends AbstractMachine implements 
         if (recipeLock >= 0) {
             List<AdvancedMachineRecipe> finalAdvancedMachineRecipeList = advancedMachineRecipeList;
             advancedMachineRecipeList = new ArrayList<>(1);
+            recipeLock = recipeLock % finalAdvancedMachineRecipeList.size();
             advancedMachineRecipeList.add(finalAdvancedMachineRecipeList.get(recipeLock));
         }
 
