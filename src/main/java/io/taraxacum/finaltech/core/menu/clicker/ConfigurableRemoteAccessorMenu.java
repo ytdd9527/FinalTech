@@ -1,9 +1,9 @@
-package io.taraxacum.finaltech.core.menu.accessor;
+package io.taraxacum.finaltech.core.menu.clicker;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.taraxacum.finaltech.core.interfaces.DigitalItem;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
-import io.taraxacum.finaltech.core.item.machine.function.RemoteAccessor;
+import io.taraxacum.finaltech.core.item.machine.clicker.RemoteAccessor;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;

@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.menu.accessor;
+package io.taraxacum.finaltech.core.menu.clicker;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
@@ -6,7 +6,7 @@ import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
-import io.taraxacum.finaltech.core.item.machine.function.AreaAccessor;
+import io.taraxacum.finaltech.core.item.machine.clicker.AreaAccessor;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.libs.slimefun.util.SfItemUtil;

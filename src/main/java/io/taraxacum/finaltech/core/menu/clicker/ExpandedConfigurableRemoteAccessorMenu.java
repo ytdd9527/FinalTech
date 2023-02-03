@@ -1,9 +1,9 @@
-package io.taraxacum.finaltech.core.menu.accessor;
+package io.taraxacum.finaltech.core.menu.clicker;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.taraxacum.finaltech.core.interfaces.DigitalItem;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
-import io.taraxacum.finaltech.core.item.machine.function.RemoteAccessor;
+import io.taraxacum.finaltech.core.item.machine.clicker.RemoteAccessor;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -27,14 +27,14 @@ import java.util.List;
  * @author Final_ROOT
  * @since 2.0
  */
-public class ExpandedConsumableRemoteAccessorMenu extends AbstractAccessorMenu {
+public class ExpandedConfigurableRemoteAccessorMenu extends AbstractAccessorMenu {
     private static final int[] BORDER = new int[] {0, 1, 2, 4, 6, 7, 8};
     private static final int[] INPUT_BORDER = new int[0];
     private static final int[] OUTPUT_BORDER = new int[0];
     private static final int[] INPUT_SLOT = new int[] {3, 5};
     private static final int[] OUTPUT_SLOT = new int[] {3, 5};
 
-    public ExpandedConsumableRemoteAccessorMenu(@Nonnull AbstractMachine machine) {
+    public ExpandedConfigurableRemoteAccessorMenu(@Nonnull AbstractMachine machine) {
         super(machine);
     }
 
@@ -42,7 +42,6 @@ public class ExpandedConsumableRemoteAccessorMenu extends AbstractAccessorMenu {
     protected void doFunction(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull Player player) {
         // TODO async
         int digit = -1;
-        ItemStack[] digitItems = new ItemStack[INPUT_SLOT.length];
         for(int i = 0; i < INPUT_SLOT.length; i++) {
             if(i == 0) {
                 digit = 0;
@@ -61,7 +60,6 @@ public class ExpandedConsumableRemoteAccessorMenu extends AbstractAccessorMenu {
                 break;
             }
             digit += digitalItem.getDigit();
-            digitItems[i] = item;
         }
 
         if(digit != -1) {
@@ -100,12 +98,6 @@ public class ExpandedConsumableRemoteAccessorMenu extends AbstractAccessorMenu {
                                 break;
                             }
                         }
-                    }
-                }
-
-                for(ItemStack digitItemStack : digitItems) {
-                    if(!ItemStackUtil.isItemNull(digitItemStack)) {
-                        digitItemStack.setAmount(digitItemStack.getAmount() - 1);
                     }
                 }
                 return;

@@ -1,7 +1,7 @@
-package io.taraxacum.finaltech.core.menu.accessor;
+package io.taraxacum.finaltech.core.menu.clicker;
 
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
-import io.taraxacum.finaltech.core.item.machine.function.Transporter;
+import io.taraxacum.finaltech.core.item.machine.clicker.Transporter;
 import io.taraxacum.finaltech.util.LocationUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;

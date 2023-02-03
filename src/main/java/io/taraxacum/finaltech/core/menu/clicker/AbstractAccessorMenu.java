@@ -1,8 +1,8 @@
-package io.taraxacum.finaltech.core.menu.accessor;
+package io.taraxacum.finaltech.core.menu.clicker;
 
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
-import io.taraxacum.finaltech.core.item.machine.function.AbstractFunctionMachine;
+import io.taraxacum.finaltech.core.item.machine.clicker.AbstractClickerMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -27,16 +27,16 @@ public abstract class AbstractAccessorMenu extends AbstractMachineMenu {
 
         blockMenu.addMenuOpeningHandler(p -> {
             Location location = block.getLocation();
-            String value = BlockStorage.getLocationInfo(location, AbstractFunctionMachine.KEY);
+            String value = BlockStorage.getLocationInfo(location, AbstractClickerMachine.KEY);
             if (value == null) {
-                value = AbstractFunctionMachine.THRESHOLD;
+                value = AbstractClickerMachine.THRESHOLD;
             }
             if (StringNumberUtil.compare(value, StringNumberUtil.ZERO) <= 0) {
                 p.closeInventory();
                 // TODO: waring info in console
                 return;
             }
-            BlockStorage.addBlockInfo(block, AbstractFunctionMachine.KEY, StringNumberUtil.sub(value));
+            BlockStorage.addBlockInfo(block, AbstractClickerMachine.KEY, StringNumberUtil.sub(value));
 
             if(p.getPlayer() != null) {
                 AbstractAccessorMenu.this.doFunction(blockMenu, block, p.getPlayer());

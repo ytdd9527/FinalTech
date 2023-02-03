@@ -1,15 +1,13 @@
-package io.taraxacum.finaltech.core.item.machine.function;
+package io.taraxacum.finaltech.core.item.machine.clicker;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.accessor.ConsumableRemoteAccessorMenu;
+import io.taraxacum.finaltech.core.menu.clicker.ExpandedConsumableRemoteAccessorMenu;
 import io.taraxacum.finaltech.util.ConfigUtil;
-import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
 import io.taraxacum.libs.slimefun.util.SfItemUtil;
 import org.bukkit.inventory.ItemStack;
@@ -20,23 +18,17 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.2
  */
-public class ConsumableRemoteAccessor extends AbstractFunctionMachine implements RecipeItem {
+public class ExpandedConsumableRemoteAccessor extends AbstractClickerMachine implements RecipeItem {
     public static final int RANGE = ConfigUtil.getOrDefaultItemSetting(16, SfItemUtil.getIdFormatName(RemoteAccessor.class), "range");
 
-    public ConsumableRemoteAccessor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public ExpandedConsumableRemoteAccessor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Nonnull
     @Override
-    protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.simpleBlockBreakerHandler(this);
-    }
-
-    @Nonnull
-    @Override
     protected AbstractMachineMenu setMachineMenu() {
-        return new ConsumableRemoteAccessorMenu(this);
+        return new ExpandedConsumableRemoteAccessorMenu(this);
     }
 
     @Override
