@@ -423,6 +423,9 @@ public final class SetupUtil {
                 new MatrixAccelerator(FinalTechMenus.MENU_DISC, FinalTechItems.MATRIX_ACCELERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ACCELERATOR).register(),
                 new MatrixItemSerializationConstructor(FinalTechMenus.MENU_DISC, FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR).register(),
                 new MatrixReactor(FinalTechMenus.MENU_DISC, FinalTechItems.MATRIX_REACTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_REACTOR).register());
+        FinalTechMenus.SUB_MENU_TROPHY.addTo(
+                new Meawerful(FinalTechMenus.MENU_DISC, FinalTechItems.TROPHY_MEAWERFUL, RecipeType.NULL, new ItemStack[0]).register(),
+                new Shixinzia(FinalTechMenus.MENU_DISC, FinalTechItems.TROPHY_SHIXINZIA, RecipeType.NULL, FinalTechRecipes.TROPHY_SHIXINZIA).register());
         FinalTechMenus.SUB_MENU_DEPRECATED.addTo(
                 new BasicChargeIncreaseCapacitor(FinalTechMenus.MENU_DISC, FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, RecipeType.NULL, new ItemStack[0]).register(),
                 new BasicConsumeReduceCapacitor(FinalTechMenus.MENU_DISC, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR, RecipeType.NULL, new ItemStack[0]).register(),

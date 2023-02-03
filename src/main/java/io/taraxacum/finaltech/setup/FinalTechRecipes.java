@@ -1,6 +1,8 @@
 package io.taraxacum.finaltech.setup;
 
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
@@ -1289,5 +1291,10 @@ public final class FinalTechRecipes {
             CopyCard.newItem(FinalTechItems.UNORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.PHONY, 16), CopyCard.newItem(FinalTechItems.UNORDERED_DUST, "1"), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.PHONY, 16), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"),
             null, CopyCard.newItem(FinalTechItems.UNORDERED_DUST, "1"), null, null, CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), null,
             null, null, null, null, null, null,
+    };
+
+    // trophy
+    public static final ItemStack[] TROPHY_SHIXINZIA = new ItemStack[] {
+            ItemStackUtil.cloneItem(FinalTechItems.BUG, 64), ItemStackUtil.cloneItem(Slimefun.getRegistry().getSlimefunGuide(SlimefunGuideMode.CHEAT_MODE).getItem())
     };
 }

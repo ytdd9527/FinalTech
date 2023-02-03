@@ -1,6 +1,7 @@
 package io.taraxacum.finaltech.setup;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.utils.HeadTexture;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import org.bukkit.Material;
@@ -237,7 +238,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack ADVANCED_HEATED_PRESSURE_CHAMBER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_HEATED_PRESSURE_CHAMBER", Material.LIGHT_GRAY_STAINED_GLASS, "Advanced Heated Pressure Chamber");
     public static final SlimefunItemStack ADVANCED_INGOT_PULVERIZER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_INGOT_PULVERIZER", Material.FURNACE, "Advanced Ingot Pulverizer");
     public static final SlimefunItemStack ADVANCED_AUTO_DRIER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_AUTO_DRIER", Material.SMOKER, "Advanced Auto Drier");
-    public static final SlimefunItemStack ADVANCED_PRESS = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_PRESS", Material.STONE, "Advanced Press");
+    public static final SlimefunItemStack ADVANCED_PRESS = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_PRESS", HeadTexture.ELECTRIC_PRESS.getTexture(), "Advanced Press");
     public static final SlimefunItemStack ADVANCED_FOOD_FACTORY = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_FOOD_FACTORY", Material.GREEN_TERRACOTTA, "Advanced Food Factory");
     public static final SlimefunItemStack ADVANCED_FREEZER = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_FREEZER", Material.LIGHT_BLUE_STAINED_GLASS, "Advanced Freezer");
     public static final SlimefunItemStack ADVANCED_CARBON_PRESS = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ADVANCED_CARBON_PRESS", Material.BLACK_STAINED_GLASS, "Advanced Carbon Press");
@@ -251,7 +252,7 @@ public final class FinalTechItems {
     public static final SlimefunItemStack WOOL_CONVERSION = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_WOOL_CONVERSION", Material.MUSHROOM_STEM, "Wool Conversion");
     public static final SlimefunItemStack LOGIC_TO_DIGITAL_CONVERSION = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_LOGIC_TO_DIGITAL_CONVERSION", Material.BONE_BLOCK, "Logic To Digital Conversion");
     // extraction
-    public static final SlimefunItemStack DIGITAL_EXTRACTION = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_DIGITAL_EXTRACTION", Material.CRYING_OBSIDIAN, "Digital Extraction");
+    public static final SlimefunItemStack DIGITAL_EXTRACTION = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_DIGITAL_EXTRACTION", Material.RED_NETHER_BRICKS, "Digital Extraction");
     public static final SlimefunItemStack ORE_EXTRACTION = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_ORE_EXTRACTION", Material.CRYING_OBSIDIAN, "Ore Extraction");
     // generator
     public static final SlimefunItemStack STONE_GENERATOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_STONE_GENERATOR", Material.STONE_BRICKS, "Stone Generator");
@@ -292,4 +293,8 @@ public final class FinalTechItems {
     public static final SlimefunItemStack MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR", Material.AMETHYST_BLOCK, "Matrix Item Serialization Constructor");
     // 64
     public static final SlimefunItemStack MATRIX_REACTOR = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_MATRIX_REACTOR", Material.COAL_BLOCK, "Matrix Reactor");
+
+    // Trophy
+    public static final SlimefunItemStack TROPHY_MEAWERFUL = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_TROPHY_MEAWERFUL", "3c8c397e89c92745ef27a43df1636586ed0bbaeca49e2604c1347c2e149ae58d", "§fmeawerful");
+    public static final SlimefunItemStack TROPHY_SHIXINZIA = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_TROPHY_SHIXINZIA", "2d461f5c7a9bc81c77910980d821d4a550766c7867e112f040794c4fa949b974", "§fshixinzia");
 }
