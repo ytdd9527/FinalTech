@@ -42,28 +42,10 @@ Others may be found here <https://github.com/ecro-fun/FinalTECH/tree/master/lang
 Version history
 -
 
-2.0-preview2(now)
+20230109
 -
-> ~~Double more items and machines~~
-> 
-> Up to 200 items and machines ✔
+> balance tweak for some items
 
-> Balance adjusted ✔
+> more support for config
 
-> Multi-language support ✔
-
-> More config support ✔
-
-> Multi-Thread optimization (doing)
-
-2.0-preview3(next version)
--
-> Papi support
-
-> More api for developers
-
-> Optimization for language support 
-
-> Template machine support
-
-> lib
+> small optimization for some items
