@@ -876,7 +876,7 @@ public final class SetupUtil {
 
         setupLanguageManager(FinalTech.getLanguageManager());
 
-        if(configManager.getOrDefault(false, "enable", "item")) {
+        if(configManager.getOrDefault(true, "enable", "item")) {
             // Yeah, you may not want new items from this plugin.
             setupEnchantment();
             setupItem();
