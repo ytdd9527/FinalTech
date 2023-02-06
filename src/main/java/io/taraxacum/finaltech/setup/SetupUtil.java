@@ -798,6 +798,11 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LINE_TRANSFER, SlimefunItems.CARGO_MANAGER);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LOCATION_TRANSFER, SlimefunItems.CARGO_MANAGER);
 
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_POINT_TRANSFER, SlimefunItems.CARGO_MANAGER);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_MESH_TRANSFER, SlimefunItems.CARGO_MANAGER);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_LINE_TRANSFER, SlimefunItems.CARGO_MANAGER);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_LOCATION_TRANSFER, SlimefunItems.CARGO_MANAGER);
+
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CONFIGURATION_COPIER, SlimefunItems.CRAFTING_MOTOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CONFIGURATION_PASTER, SlimefunItems.CRAFTING_MOTOR);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CLICK_WORK_MACHINE, SlimefunItems.GPS_ACTIVATION_DEVICE_PERSONAL);
@@ -810,6 +815,8 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.AUTO_ITEM_DISMANTLE_TABLE, SlimefunItems.NUCLEAR_REACTOR);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CARD_OPERATION_TABLE, SlimefunItems.WITHER_ASSEMBLER);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_AUTO_CRAFT_FRAME, SlimefunItems.ENHANCED_AUTO_CRAFTER);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ITEM_FIXER, SlimefunItems.IRON_GOLEM_ASSEMBLER);
 
@@ -857,7 +864,6 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_CARBON_PRESS, SlimefunItems.CARBON_PRESS_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_SMELTERY, SlimefunItems.ELECTRIC_SMELTERY_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_COMPOSTER, SlimefunItems.FOOD_COMPOSTER_2);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_DUST_FACTORY, SlimefunItems.PRODUCE_COLLECTOR);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.GRAVEL_CONVERSION, SlimefunItems.GOLD_PAN);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SOUL_SAND_CONVERSION, SlimefunItems.NETHER_GOLD_PAN);
