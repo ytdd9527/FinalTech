@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.common.util.ReflectionUtil;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.helper.IgnorePermission;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.libs.plugin.dto.ConfigFileManager;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -75,6 +76,7 @@ public class ItemConfigurationUtil {
                 keySet.add(ConstantTableUtil.CONFIG_ID);
                 keySet.add(ConstantTableUtil.CONFIG_CHARGE);
                 keySet.add(ConstantTableUtil.CONFIG_UUID);
+                keySet.add(IgnorePermission.KEY);
 
                 itemForbidKeyMap.put(itemId, keySet);
             }
@@ -179,7 +181,9 @@ public class ItemConfigurationUtil {
         configMap = ItemConfigurationUtil.filterByItem(itemId, configMap);
 
         for (Map.Entry<String, String> entry : configMap.entrySet()) {
-            BlockStorage.addBlockInfo(location, entry.getKey(), entry.getValue());
+            if(config.contains(entry.getKey())) {
+                BlockStorage.addBlockInfo(location, entry.getKey(), entry.getValue());
+            }
         }
 
         return true;
