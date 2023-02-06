@@ -143,19 +143,19 @@ public class BlockTickerUtil {
             }
 
             @Override
-            public void tick(Block b, SlimefunItem item, Config data) {
+            public void tick(Block block, SlimefunItem item, Config data) {
                 if(lastLocationList.size() > 1) {
                     Location randomLocation = lastLocationList.get(random.nextInt(lastLocationList.size()));
-                    Location location = b.getLocation();
+                    Location location = block.getLocation();
                     double manhattanDistance = LocationUtil.getManhattanDistance(randomLocation, location);
                     if(manhattanDistance < range + mulRange * lastLocationList.size() && manhattanDistance > 0) {
                         JavaPlugin javaPlugin = item.getAddon().getJavaPlugin();
-                        World world = b.getLocation().getWorld();
+                        World world = block.getLocation().getWorld();
                         javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
                             boolean canBreak = true;
                             if(world != null) {
                                 List<Player> playerList = new ArrayList<>();
-                                for(Entity entity : world.getNearbyEntities(b.getLocation(), range, range, range, entity -> entity instanceof Player)) {
+                                for(Entity entity : world.getNearbyEntities(block.getLocation(), range, range, range, entity -> entity instanceof Player)) {
                                     if(entity instanceof Player player) {
                                         if(canBreak && !PermissionUtil.checkPermission(player, location, Interaction.BREAK_BLOCK)) {
                                             canBreak = false;
@@ -164,13 +164,13 @@ public class BlockTickerUtil {
                                     }
                                 }
                                 if(canBreak) {
-                                    BlockStorage.clearBlockInfo(b);
-                                    b.setType(Material.AIR);
+                                    BlockStorage.clearBlockInfo(block);
+                                    block.setType(Material.AIR);
                                     if(item instanceof MachineProcessHolder machineProcessHolder) {
-                                        machineProcessHolder.getMachineProcessor().endOperation(b);
+                                        machineProcessHolder.getMachineProcessor().endOperation(block);
                                     }
-                                    if(dropSelf) {
-                                        b.getLocation().getWorld().dropItem(b.getLocation(), ItemStackUtil.cloneItem(item.getItem(), 1));
+                                    if(dropSelf && item.getId().equals(BlockStorage.getLocationInfo(block.getLocation(), ConstantTableUtil.CONFIG_ID))) {
+                                        block.getLocation().getWorld().dropItem(block.getLocation(), ItemStackUtil.cloneItem(item.getItem(), 1));
                                     }
                                     for(Player player : playerList) {
                                         player.sendMessage(message.replace("{1}", item.getItemName()));
@@ -181,8 +181,8 @@ public class BlockTickerUtil {
                         return;
                     }
                 }
-                blockTicker.tick(b, item, data);
-                locationList.add(b.getLocation());
+                blockTicker.tick(block, item, data);
+                locationList.add(block.getLocation());
             }
 
             @Override
