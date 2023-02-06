@@ -403,8 +403,8 @@ public class Updater implements Consumer<FinalTech>{
                     lore6.add("{color:normal}Transfer item from input slot to output slot");
                     lore6.add("{color:normal}While there is a digit item in input slot");
                     lore6.add("{color:normal}And the machine in it's bottom will be clicked by around player");
-                    lore6.add("{color:normal}Digit to range rate: {1}");
-                    languageManager.setValue(lore3, "items", "FINALTECH_SIMULATE_CLICK_MACHINE", "info", "1", "lore");
+                    lore6.add("{color:normal}Digit to range rate: {color:number}{1}");
+                    languageManager.setValue(lore6, "items", "FINALTECH_SIMULATE_CLICK_MACHINE", "info", "1", "lore");
                     languageManager.setValue("FINALTECH_DIGITAL_ONE", "FINALTECH_SIMULATE_CLICK_MACHINE", "info", "1", "output");
 
                     // FINALTECH_CONSUMABLE_SIMULATE_CLICK_MACHINE
@@ -414,8 +414,8 @@ public class Updater implements Consumer<FinalTech>{
                     List<String> lore7 = new ArrayList<>();
                     lore7.add("{color:normal}Consume digit item");
                     lore7.add("{color:normal}Then the machine in it's bottom will be clicked by around player");
-                    lore7.add("{color:normal}Digit to range rate: {1}");
-                    languageManager.setValue(lore3, "items", "FINALTECH_CONSUMABLE_SIMULATE_CLICK_MACHINE", "info", "1", "lore");
+                    lore7.add("{color:normal}Digit to range rate: {color:number}{1}");
+                    languageManager.setValue(lore7, "items", "FINALTECH_CONSUMABLE_SIMULATE_CLICK_MACHINE", "info", "1", "lore");
                     languageManager.setValue("FINALTECH_DIGITAL_ONE", "FINALTECH_CONSUMABLE_SIMULATE_CLICK_MACHINE", "info", "1", "output");
 
                     // FINALTECH_ITEM_DISMANTLE_TABLE
@@ -489,6 +489,31 @@ public class Updater implements Consumer<FinalTech>{
                     // FINALTECH_SHINE
 
                     languageManager.setValue("{color:normal}You forget something :D", "items", "FINALTECH_SHINE", "message");
+                    languageManager.setValue("{color:negative}Void Curse", "items", "FINALTECH_SHINE", "info", "2", "name");
+                    languageManager.setValue("{color:negative}Notice", "items", "FINALTECH_SHINE", "info", "3", "name");
+                    languageManager.setValue("{color:negative}Notice", "items", "FINALTECH_SHINE", "info", "4", "name");
+                    languageManager.setValue("{color:negative}Notice", "items", "FINALTECH_SHINE", "info", "5", "name");
+
+                    languageManager.setValue(
+                            List.of("{color:normal}While obtaining {id:FINALTECH_SHINE}",
+                                    "{color:normal}Player will be cursed by void for a short time"),
+                            "items", "FINALTECH_SHINE", "info", "2", "lore");
+                    languageManager.setValue(
+                            List.of("{color:normal}While carrying {id:FINALTECH_SHINE} {color:normal}or {id:FINALTECH_BOX}",
+                                    "{color:normal}The void damage player get will be enlarged greatly"),
+                            "items", "FINALTECH_SHINE", "info", "3", "lore");
+                    languageManager.setValue(
+                            List.of("{color:normal}While carrying {id:FINALTECH_BOX}",
+                                    "{color:normal}if player is in low place or cursed by void",
+                                    "{color:negative}Player will lose all his items after dead!!!"),
+                            "items", "FINALTECH_SHINE", "info", "4", "lore");
+                    languageManager.setValue(
+                            List.of("{color:normal}While carrying {id:FINALTECH_BOX}",
+                                    "{color:normal}if player is in low place or cursed by void",
+                                    "{color:negative}Player will lose all his items after dead!!!",
+                                    "",
+                                    "{color:negative}Soul Bound Rune may be useful"),
+                            "items", "FINALTECH_SHINE", "info", "5", "lore");
 
                     // VOID_CURSE
 
@@ -513,6 +538,10 @@ public class Updater implements Consumer<FinalTech>{
                     // HELPER-RECIPE_ITEM
 
                     languageManager.setValue("{color:stress}Display Recipe", "helper", "ICON", "recipe-icon", "name");
+
+                    // MESSAGE-INVALID_ITEM
+
+                    languageManager.setValue("{color:negative}Not valid item!", "message", "invalid-item");
 
                 }
             }

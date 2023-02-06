@@ -422,25 +422,30 @@ items:
           - '{color:normal}Player is 64 blocks below world minimum height'
           - '{color:normal}Player carries {id:FINALTECH_BOX}'
       2:
-        name: '{color:negative}Notice'
+        name: '{color:negative}Void Curse'
         lore:
-          - '{color:normal}If player die at the place that can obtain {id:FINALTECH_SHINE} {color:normal}while carrying {id:FINALTECH_BOX}'
-          - '{color:normal}Player will lose all his items'
+          - '{color:normal}While obtaining {id:FINALTECH_SHINE}'
+          - '{color:normal}Player will be cursed by void for a short time'
       3:
-        name: '{color:negative}Notice'
-        lore:
-          - '{color:normal}If player die at the place that can obtain {id:FINALTECH_SHINE}'
-          - '{color:normal}Player will lose all {id:FINALTECH_SHINE} {color:normal}he is carrying'
-      4:
-        name: '{color:negative}Notice'
-        lore:
-          - '{color:normal}If player die while carrying {id:FINALTECH_BOX}'
-          - '{color:normal}Player will lose all {id:FINALTECH_SHINE} {color:normal}he is carrying'
-      5:
         name: '{color:negative}Notice'
         lore:
           - '{color:normal}While carrying {id:FINALTECH_SHINE} {color:normal}or {id:FINALTECH_BOX}'
           - '{color:normal}The void damage player get will be enlarged greatly'
+      4:
+        name: '{color:negative}Notice'
+        lore:
+          - '{color:normal}While carrying {id:FINALTECH_BOX}'
+          - '{color:normal}if player is in low place or cursed by void'
+          - '{color:negative}Player will lose all his items after dead!!!'
+      5:
+        name: '{color:negative}Notice'
+        lore:
+          - '{color:normal}While carrying {id:FINALTECH_BOX}'
+          - '{color:normal}if player is in low place or cursed by void'
+          - '{color:negative}Player will lose all his items after dead!!!'
+          - ''
+          - '{color:negative}Soul Bound Rune may be useful.'
+    message: '{color:normal}You forget something :D'
   FINALTECH_COPY_CARD:
     name: '{color:prandom}Copy Card'
     info:

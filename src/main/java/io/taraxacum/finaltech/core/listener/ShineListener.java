@@ -70,7 +70,7 @@ public class ShineListener implements Listener {
             }
         }
 
-        if (haveBox && inCurse || inLowPlace) {
+        if (haveBox && (inCurse || inLowPlace)) {
             playerDeathEvent.setKeepInventory(false);
         }
 
