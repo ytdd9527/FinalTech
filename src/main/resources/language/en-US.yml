@@ -18,6 +18,8 @@ helper:
       CONSUMER: 'Consumer'
       CONNECTOR: 'Connector'
       NONE: 'None'
+    recipe-icon:
+      name: '{color:stress}Display Recipe'
     quantity-module:
       name: '{color:normal}Quantity Module'
       lore:

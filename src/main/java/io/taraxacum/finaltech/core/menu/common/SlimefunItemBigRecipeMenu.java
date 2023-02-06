@@ -111,7 +111,7 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
         }
 
         if (slimefunItem instanceof RecipeDisplayItem && ((RecipeDisplayItem) slimefunItem).getDisplayRecipes().size() > 0) {
-            this.addItem(this.WORK_BUTTON, Icon.WIKI_ICON);
+            this.addItem(this.WORK_BUTTON, Icon.RECIPE_ICON);
             this.addMenuClickHandler(this.WORK_BUTTON, (p, slot, item, action) -> {
                 ChestMenu chestMenu = this.setupWorkContent(page);
                 if (chestMenu != null) {

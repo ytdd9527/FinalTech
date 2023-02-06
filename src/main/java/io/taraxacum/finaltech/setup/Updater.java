@@ -510,6 +510,10 @@ public class Updater implements Consumer<FinalTech>{
                     list11.add("{color:normal}Rate: {color:number}{4}");
                     languageManager.setValue(list11, "items", "FINALTECH_MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR", "copy-card", "lore");
 
+                    // HELPER-RECIPE_ITEM
+
+                    languageManager.setValue("{color:stress}Display Recipe", "helper", "ICON", "recipe-icon", "name");
+
                 }
             }
         });
