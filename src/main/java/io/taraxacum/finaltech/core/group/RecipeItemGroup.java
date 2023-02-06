@@ -98,13 +98,13 @@ public class RecipeItemGroup extends FlexItemGroup {
                         if (ID_MAP.containsKey(slimefunItem.getId())) {
                             return ID_MAP.get(slimefunItem.getId());
                         }
-                        RecipeItemGroup recipeItemGroup = new RecipeItemGroup(new NamespacedKey(FinalTech.getInstance(), "SLIMEFUN_ITEM" + slimefunItem.getId() + "_" + page), slimefunItem);
+                        RecipeItemGroup recipeItemGroup = new RecipeItemGroup(new NamespacedKey(FinalTech.getInstance(), "SLIMEFUN_ITEM" + slimefunItem.getId().hashCode() + "_" + page), slimefunItem);
                         ID_MAP.put(slimefunItem.getId(), recipeItemGroup);
                         return recipeItemGroup;
                     }
                 }
             } else {
-                return new RecipeItemGroup(new NamespacedKey(FinalTech.getInstance(), "SLIMEFUN_ITEM" + slimefunItem.getId()), slimefunItem, page);
+                return new RecipeItemGroup(new NamespacedKey(FinalTech.getInstance(), "SLIMEFUN_ITEM" + slimefunItem.getId().hashCode()), slimefunItem, page);
             }
         } else if (!ItemStackUtil.isItemNull(itemStack)) {
             Material material = itemStack.getType();

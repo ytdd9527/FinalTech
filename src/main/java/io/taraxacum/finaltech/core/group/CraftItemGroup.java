@@ -212,6 +212,6 @@ public class CraftItemGroup extends FlexItemGroup {
 
     @Nonnull
     public static CraftItemGroup getBySlimefunItem(@Nonnull SlimefunItem slimefunItem) {
-        return new CraftItemGroup(new NamespacedKey(JAVA_PLUGIN, "FINALTECH_" + slimefunItem.getId()), slimefunItem);
+        return new CraftItemGroup(new NamespacedKey(JAVA_PLUGIN, "FINALTECH_" + slimefunItem.getId().hashCode()), slimefunItem);
     }
 }
