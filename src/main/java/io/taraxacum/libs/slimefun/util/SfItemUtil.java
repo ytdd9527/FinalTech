@@ -2,6 +2,7 @@ package io.taraxacum.libs.slimefun.util;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -54,5 +55,9 @@ public class SfItemUtil {
                 itemStack.setItemMeta(itemMeta);
             }
         }
+    }
+
+    public static void setSlimefunItemKey(@Nonnull ItemStack itemStack, @Nonnull String id) {
+        ItemStackUtil.setNBT(itemStack, SLIMEFUN_ITEM_KEY, id);
     }
 }

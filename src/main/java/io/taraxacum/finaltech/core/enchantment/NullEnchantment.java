@@ -1,9 +1,11 @@
 package io.taraxacum.finaltech.core.enchantment;
 
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -60,5 +62,10 @@ public class NullEnchantment extends Enchantment {
     @Override
     public boolean canEnchantItem(@Nonnull ItemStack itemStack) {
         return false;
+    }
+
+    public static void addAndHidden(@Nonnull ItemStack item) {
+        item.addUnsafeEnchantment(ENCHANTMENT, 0);
+        ItemStackUtil.addItemFlag(item, ItemFlag.HIDE_ENCHANTS);
     }
 }

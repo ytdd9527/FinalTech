@@ -9,6 +9,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -790,6 +791,37 @@ public final class ItemStackUtil {
             }
         }
         itemMeta.setLore(oldLore);
+        item.setItemMeta(itemMeta);
+    }
+
+    public static void addItemFlag(@Nonnull ItemStack item, @Nonnull ItemFlag itemFlag) {
+        if(!item.hasItemMeta()) {
+            return;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        itemMeta.addItemFlags(itemFlag);
+        item.setItemMeta(itemMeta);
+    }
+
+    public static void addNBT(@Nonnull ItemStack item, @Nonnull NamespacedKey namespacedKey, @Nonnull String value) {
+        if(!item.hasItemMeta()) {
+            return;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+        if(!persistentDataContainer.has(namespacedKey, PersistentDataType.STRING)) {
+            persistentDataContainer.set(namespacedKey, PersistentDataType.STRING, value);
+            item.setItemMeta(itemMeta);
+        }
+    }
+
+    public static void setNBT(@Nonnull ItemStack item, @Nonnull NamespacedKey namespacedKey, @Nonnull String value) {
+        if(!item.hasItemMeta()) {
+            return;
+        }
+        ItemMeta itemMeta = item.getItemMeta();
+        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+        persistentDataContainer.set(namespacedKey, PersistentDataType.STRING, value);
         item.setItemMeta(itemMeta);
     }
 
