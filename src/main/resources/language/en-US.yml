@@ -287,17 +287,17 @@ categories:
   FINALTECH_ITEM_GROUP:
     name: '{color:random}FINAL TECH'
   FINALTECH_MAIN_MENU_ITEM:
-    name: '{color:random}Items'
+    name: '{color:random}Item'
   FINALTECH_SUB_MENU_MATERIAL:
-    name: '{color:random}Materials'
+    name: '{color:random}Material'
   FINALTECH_SUB_MENU_LOGIC_ITEM:
-    name: '{color:random}Logic Items'
+    name: '{color:random}Logic Item'
   FINALTECH_SUB_MENU_CONSUMABLE:
-    name: '{color:random}Consumables'
+    name: '{color:random}Consumable'
   FINALTECH_SUB_MENU_TOOL:
-    name: '{color:random}Tools'
+    name: '{color:random}Tool'
   FINALTECH_SUB_MENU_WEAPON:
-    name: '{color:random}Weapons'
+    name: '{color:random}Weapon'
   FINALTECH_MAIN_MENU_ELECTRICITY_SYSTEM:
     name: '{color:random}Electric System'
   FINALTECH_SUB_MENU_ELECTRIC_GENERATOR:
@@ -323,25 +323,25 @@ categories:
   FINALTECH_MAIN_MENU_FUNCTIONAL_MACHINE:
     name: '{color:random}Functional Machine'
   FINALTECH_SUB_MENU_CORE_MACHINE:
-    name: '{color:random}Core Machines'
+    name: '{color:random}Core Machine'
   FINALTECH_SUB_MENU_SPECIAL_MACHINE:
-    name: '{color:random}Special Machines'
+    name: '{color:random}Special Machine'
   FINALTECH_SUB_MENU_TOWER:
-    name: '{color:random}Towers'
+    name: '{color:random}Tower'
   FINALTECH_MAIN_MENU_PRODUCTIVE_MACHINE:
-    name: '{color:random}Productive Machines'
+    name: '{color:random}Productive Machine'
   FINALTECH_SUB_MENU_MANUAL_MACHINE:
-    name: '{color:random}Manual Machines'
+    name: '{color:random}Manual Machine'
   FINALTECH_SUB_MENU_BASIC_MACHINE:
-    name: '{color:random}Basic Machines'
+    name: '{color:random}Basic Machine'
   FINALTECH_SUB_MENU_ADVANCED_MACHINE:
-    name: '{color:random}Advanced Machines'
+    name: '{color:random}Advanced Machine'
   FINALTECH_SUB_MENU_CONVERSION:
-    name: '{color:random}Conversions'
+    name: '{color:random}Conversion'
   FINALTECH_SUB_MENU_EXTRACTION:
-    name: '{color:random}Extractions'
+    name: '{color:random}Extraction'
   FINALTECH_SUB_MENU_GENERATOR:
-    name: '{color:random}Generators'
+    name: '{color:random}Generator'
   FINALTECH_MAIN_MENU_DISC:
     name: '{color:random}Disc'
   FINALTECH_SUB_MENU_FINAL_ITEM:
@@ -836,7 +836,7 @@ items:
         name: '{color:positive}Usage'
         lore:
           - '{color:normal}Charge machine for {color:number}{1} J + {2}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
   FINALTECH_MACHINE_CHARGE_CARD_L2:
     name: '{color:prandom}Machine Charge Card {color:conceal}- {color:number}L2'
     info:
@@ -844,7 +844,7 @@ items:
         name: '{color:positive}Usage'
         lore:
           - '{color:normal}Charge machine for {color:number}{1} J + {2}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
       2:
         name: '{color:negative}Limit'
         lore:
@@ -856,7 +856,7 @@ items:
         name: '{color:positive}Usage'
         lore:
           - '{color:normal}Charge machine for {color:number}{1} J + {2}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
       2:
         name: '{color:negative}Limit'
         lore:
@@ -898,7 +898,7 @@ items:
         lore:
           - '{color:normal}Make machine work immediately for {color:number}{1} times'
           - '{color:normal}Before every work, it will be charged for {color:number}{2} J + {3}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
   FINALTECH_MACHINE_ACTIVATE_CARD_L2:
     name: '{color:prandom}Machine Activate Card {color:conceal}- {color:number}L2'
     info:
@@ -907,7 +907,7 @@ items:
         lore:
           - '{color:normal}Make machine work immediately for {color:number}{1} times'
           - '{color:normal}Before every work, it will be charged for {color:number}{2} J + {3}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
       2:
         name: '{color:negative}Limit'
         lore:
@@ -920,7 +920,7 @@ items:
         lore:
           - '{color:normal}Make machine work immediately for {color:number}{1} times'
           - '{color:normal}Before every work, it will be charged for {color:number}{2} J + {3}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
       2:
         name: '{color:negative}Limit'
         lore:
@@ -2127,7 +2127,7 @@ items:
           - '{color:normal}Transfer item from input slot to output slot'
           - '{color:normal}While there is a digit item in input slot'
           - "{color:normal}And the machine in it's bottom will be clicked by around player"
-          - "{color:normal}Digit to range rate: {1}"
+          - "{color:normal}Digit to range rate: {color:number}{1}"
         output: 'FINALTECH_DIGITAL_ONE'
   FINALTECH_CONSUMABLE_SIMULATE_CLICK_MACHINE:
     name: '{color:prandom}Simulate Click Machine {color:conceal}- {color:positive}Consumable'
@@ -2137,7 +2137,7 @@ items:
         lore:
           - '{color:normal}Consume digit item'
           - "{color:normal}Then the machine in it's bottom will be clicked by around player"
-          - "{color:normal}Digit to range rate: {1}"
+          - "{color:normal}Digit to range rate: {color:number}{1}"
         output: 'FINALTECH_DIGITAL_ONE'
   FINALTECH_ORDERED_DUST_FACTORY_DIRT:
     name: '{color:prandom}Ordered Dust Factory'
@@ -2558,7 +2558,7 @@ items:
         name: '{color:positive}Usage'
         lore:
           - '{color:normal}Charge machine for {color:number}{1} J + {2}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
   FINALTECH_MACHINE_ACCELERATE_CARD_INFINITY:
     name: '{color:prandom}Infinity Machine Accelerate Card'
     info:
@@ -2574,7 +2574,7 @@ items:
         lore:
           - '{color:normal}Make machine work immediately for {color:number}{1} times'
           - '{color:normal}Before every work, it will be charged for {color:number}{2} J + {3}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
       2:
         name: '{color:negative}Limit'
         lore:
@@ -2809,4 +2809,4 @@ message:
     item: '{color:negative}No permission for this item!'
   no-condition:
     player: '{color:negative}Not meet condition!'
-
+  invalid-item: '{color:negative}Not valid item!'
