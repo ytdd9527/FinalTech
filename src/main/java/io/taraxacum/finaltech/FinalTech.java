@@ -96,7 +96,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         if (!this.config.containPath("version")) {
             this.config.setValue(version, "version");
             if(!this.config.containPath("enable", "item")) {
-                this.config.setValue(false, "enable", "item");
+                this.config.setValue(true, "enable", "item");
             }
         }
 
@@ -217,7 +217,6 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             result.put(FinalTech.getConfigManager().getString("language"), 1);
             return result;
         }));
-        metrics.addCustomChart(new SimplePie("enable item", () -> FinalTech.getConfigManager().getOrDefault(false, "enable", "item").toString()));
     }
 
     @Override
