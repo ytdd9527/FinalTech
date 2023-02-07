@@ -151,5 +151,9 @@ public interface RecipeItem extends RecipeDisplayItem {
         this.getMachineRecipes().clear();
     }
 
+    default int getRegisterRecipeDelay() {
+        return 1;
+    }
+
     void registerDefaultRecipes();
 }
