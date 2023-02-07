@@ -14,7 +14,7 @@ import io.taraxacum.libs.plugin.dto.LocationRecipeRegistry;
 import io.taraxacum.libs.slimefun.dto.MachineRecipeFactory;
 import io.taraxacum.libs.slimefun.dto.RecipeTypeRegistry;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
-import io.taraxacum.finaltech.core.item.machine.cargo.AdvancedAutoCraft;
+import io.taraxacum.finaltech.core.item.machine.range.point.face.AdvancedAutoCraft;
 import io.taraxacum.finaltech.core.item.unusable.CopyCard;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;

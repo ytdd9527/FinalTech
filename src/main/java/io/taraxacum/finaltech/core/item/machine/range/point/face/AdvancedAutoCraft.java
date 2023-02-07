@@ -1,4 +1,4 @@
-package io.taraxacum.finaltech.core.item.machine.cargo;
+package io.taraxacum.finaltech.core.item.machine.range.point.face;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;

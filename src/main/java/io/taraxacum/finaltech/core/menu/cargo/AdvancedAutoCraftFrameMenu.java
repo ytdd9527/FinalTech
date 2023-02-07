@@ -8,9 +8,8 @@ import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.helper.Icon;
-import io.taraxacum.finaltech.core.helper.SlotSearchSize;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
-import io.taraxacum.finaltech.core.item.machine.cargo.AdvancedAutoCraftFrame;
+import io.taraxacum.finaltech.core.item.machine.AdvancedAutoCraftFrame;
 import io.taraxacum.finaltech.core.item.unusable.CopyCard;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
@@ -140,6 +139,7 @@ public class AdvancedAutoCraftFrameMenu extends AbstractMachineMenu {
 
     @Override
     public void updateInventory(@Nonnull Inventory inventory, @Nonnull Location location) {
+        System.out.println("1");
 
         ItemStack parseItem = inventory.getItem(PARSE_ITEM_SLOT);
         if (ItemStackUtil.isItemNull(parseItem)) {
@@ -164,16 +164,34 @@ public class AdvancedAutoCraftFrameMenu extends AbstractMachineMenu {
             this.setParseFailedMenu(inventory, location);
             return;
         }
+        System.out.println("2");
 
         for (int slot : INPUT_SLOT) {
+            System.out.println("slot: " + slot);
             ItemStack machineItem = inventory.getItem(slot);
             SlimefunItem sfMachineItem = SlimefunItem.getByItem(machineItem);
             if (ItemStackUtil.isItemNull(machineItem) || sfMachineItem == null) {
+                System.out.println("3");
                 continue;
             }
 
             List<AdvancedMachineRecipe> advancedMachineRecipeList = RECIPE_MAP.get(sfMachineItem.getId());
+            System.out.println("id: " + sfMachineItem.getId());
+            System.out.println("RECIPE_MAP size:" + RECIPE_MAP.size());
+            for(Map.Entry<String, List<AdvancedMachineRecipe>> entry : RECIPE_MAP.entrySet()) {
+                System.out.println("    map key: " + entry.getKey() + " | value length : " + entry.getValue().size());
+            }
+            System.out.println("RECIPE_TYPE_ID_LIST size:" + RECIPE_TYPE_ID_LIST.size());
+            for(String s : RECIPE_TYPE_ID_LIST) {
+                System.out.println("    recipe type id:" + s);
+            }
+            if(advancedMachineRecipeList != null) {
+                System.out.println("length: " + advancedMachineRecipeList.size());
+            } else {
+                System.out.println("null");
+            }
             if (advancedMachineRecipeList != null) {
+                System.out.println("4");
                 for (int i = 0; i < machineItem.getAmount(); i++) {
                     boolean work = false;
                     List<ItemAmountWrapper> inputListTemp = new ArrayList<>();
