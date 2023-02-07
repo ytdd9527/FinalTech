@@ -36,6 +36,8 @@ public class Icon {
 
     public static final ItemStack WIKI_ICON = new CustomItemStack(Material.KNOWLEDGE_BOOK, FinalTech.getLanguageString("helper", "ICON", "wiki-icon", "name"));
 
+    public static final ItemStack RECIPE_ICON = new CustomItemStack(Material.PAPER, FinalTech.getLanguageString("helper", "ICON", "recipe-icon", "name"));
+
     public static int updateQuantityModule(@Nonnull BlockMenu blockMenu, int quantityModuleSlot, int statusSlot) {
         boolean updateLore = blockMenu.hasViewer();
         ItemStack item = blockMenu.getItemInSlot(quantityModuleSlot);

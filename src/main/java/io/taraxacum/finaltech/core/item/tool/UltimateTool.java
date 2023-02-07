@@ -22,6 +22,7 @@ public abstract class UltimateTool extends AbstractMySlimefunItem {
             for(ItemStack drop : drops) {
                 count += drop.getAmount();
             }
+            count = (int)Math.pow(count, 0.5);
             blockBreakEvent.setExpToDrop(blockBreakEvent.getExpToDrop() + count);
         });
     }

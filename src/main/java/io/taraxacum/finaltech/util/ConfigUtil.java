@@ -48,6 +48,17 @@ public class ConfigUtil {
         return new SlimefunItemStack(id, material, name, languageManager.getStringArray("items", id, "lore"));
     }
 
+    @Nonnull
+    public static SlimefunItemStack getSlimefunItemStack(@Nonnull LanguageManager languageManager, @Nonnull String id, @Nonnull String texture, @Nonnull String defaultName) {
+        String name = languageManager.containPath("items", id, "name") ? languageManager.getString("items", id, "name") : defaultName;
+        try {
+            return new SlimefunItemStack(id, texture, name, languageManager.getStringArray("items", id, "lore"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new SlimefunItemStack(id, Material.STONE, name, languageManager.getStringArray("items", id, "lore"));
+        }
+    }
+
     public static MainItemGroup getMainItemGroup(@Nonnull LanguageManager languageManager, @Nonnull String key, @Nonnull Material defaultMaterial, @Nonnull String defaultName) {
         Material material = defaultMaterial;
         if (languageManager.containPath("categories", key, "material")) {

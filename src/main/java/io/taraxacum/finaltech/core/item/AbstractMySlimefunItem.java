@@ -36,11 +36,17 @@ public abstract class AbstractMySlimefunItem extends SlimefunItem {
     @Override
     public void register(@Nonnull SlimefunAddon addon) {
         super.register(addon);
-        if (this instanceof RecipeItem) {
-            this.getAddon().getJavaPlugin().getServer().getScheduler().runTask((Plugin)addon, () -> {
-                ((RecipeItem) AbstractMySlimefunItem.this).registerDefaultRecipes();
+        if (this instanceof RecipeItem recipeItem) {
+            int delay = recipeItem.getRegisterRecipeDelay();
+            if(delay > 0) {
+                this.getAddon().getJavaPlugin().getServer().getScheduler().runTaskLater((Plugin)addon, () -> {
+                    (recipeItem).registerDefaultRecipes();
+                    MachineRecipeFactory.getInstance().initAdvancedRecipeMap(AbstractMySlimefunItem.this.getClass());
+                }, delay);
+            } else {
+                (recipeItem).registerDefaultRecipes();
                 MachineRecipeFactory.getInstance().initAdvancedRecipeMap(AbstractMySlimefunItem.this.getClass());
-            });
+            }
         }
     }
 

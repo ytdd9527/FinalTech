@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  */
 public class EnergizedStackExpandedCapacitor extends AbstractExpandedElectricCapacitor {
     private final int capacity = ConfigUtil.getOrDefaultItemSetting(16777216, this, "capacity");
-    private final int stack = ConfigUtil.getOrDefaultItemSetting(16777216, this, "stack");
+    private final int stack = ConfigUtil.getOrDefaultItemSetting(524288, this, "stack");
 
     public EnergizedStackExpandedCapacitor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

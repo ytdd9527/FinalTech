@@ -1,17 +1,28 @@
 package io.taraxacum.finaltech.util;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.core.attributes.MachineProcessHolder;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.taraxacum.common.api.RunnableLockFactory;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.libs.plugin.dto.ServerRunnableLockFactory;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * @author Final_ROOT
@@ -54,6 +65,27 @@ public class BlockTickerUtil {
         }
     }
 
+    @Nonnull
+    public static BlockTicker getDebugModeBlockTicker(@Nonnull BlockTicker blockTicker, @Nonnull SlimefunItem slimefunItem) {
+        return new BlockTicker() {
+            @Override
+            public boolean isSynchronized() {
+                return blockTicker.isSynchronized();
+            }
+
+            @Override
+            public void tick(Block b, SlimefunItem item, Config data) {
+                System.out.println("DEBUG MODE: " + slimefunItem.getId() + " | Location: " + b.getLocation());
+                blockTicker.tick(b, item, data);
+            }
+
+            @Override
+            public void uniqueTick() {
+                blockTicker.uniqueTick();
+            }
+        };
+    }
+
     public static BlockTicker getGeneralIntervalBlockTicker(@Nonnull BlockTicker blockTicker, int interval) {
         return new BlockTicker() {
             @Override
@@ -67,6 +99,11 @@ public class BlockTickerUtil {
                     blockTicker.tick(b, item, data);
                 }
             }
+
+            @Override
+            public void uniqueTick() {
+                blockTicker.uniqueTick();
+            }
         };
     }
 
@@ -75,7 +112,7 @@ public class BlockTickerUtil {
         return new BlockTicker() {
             @Override
             public boolean isSynchronized() {
-                return false;
+                return blockTicker.isSynchronized();
             }
 
             @Override
@@ -86,21 +123,75 @@ public class BlockTickerUtil {
                 blockTicker.tick(b, item, data);
                 BlockTickerUtil.setSleep(data, i);
             }
+
+            @Override
+            public void uniqueTick() {
+                blockTicker.uniqueTick();
+            }
         };
     }
 
-    @Nonnull
-    public static BlockTicker getDebugModeBlockTicker(@Nonnull BlockTicker blockTicker, @Nonnull SlimefunItem slimefunItem) {
+    public static BlockTicker getRangeLimitBlockTicker(@Nonnull BlockTicker blockTicker, int range, int mulRange, boolean dropSelf, @Nonnull String message) {
         return new BlockTicker() {
+            private List<Location> lastLocationList = new ArrayList<>();
+            private List<Location> locationList = new ArrayList<>();
+            private Random random = new Random();
+
             @Override
             public boolean isSynchronized() {
                 return blockTicker.isSynchronized();
             }
 
             @Override
-            public void tick(Block b, SlimefunItem item, Config data) {
-                System.out.println("DEBUG MODE: " + slimefunItem.getId() + " | Location: " + b.getLocation());
-                blockTicker.tick(b, item, data);
+            public void tick(Block block, SlimefunItem item, Config data) {
+                if(lastLocationList.size() > 1) {
+                    Location randomLocation = lastLocationList.get(random.nextInt(lastLocationList.size()));
+                    Location location = block.getLocation();
+                    double manhattanDistance = LocationUtil.getManhattanDistance(randomLocation, location);
+                    if(manhattanDistance < range + mulRange * lastLocationList.size() && manhattanDistance > 0) {
+                        JavaPlugin javaPlugin = item.getAddon().getJavaPlugin();
+                        World world = block.getLocation().getWorld();
+                        javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
+                            boolean canBreak = true;
+                            if(world != null) {
+                                List<Player> playerList = new ArrayList<>();
+                                for(Entity entity : world.getNearbyEntities(block.getLocation(), range, range, range, entity -> entity instanceof Player)) {
+                                    if(entity instanceof Player player) {
+                                        if(canBreak && !PermissionUtil.checkPermission(player, location, Interaction.BREAK_BLOCK)) {
+                                            canBreak = false;
+                                        }
+                                        playerList.add(player);
+                                    }
+                                }
+                                if(canBreak) {
+                                    BlockStorage.clearBlockInfo(block);
+                                    block.setType(Material.AIR);
+                                    if(item instanceof MachineProcessHolder machineProcessHolder) {
+                                        machineProcessHolder.getMachineProcessor().endOperation(block);
+                                    }
+                                    if(dropSelf && item.getId().equals(BlockStorage.getLocationInfo(block.getLocation(), ConstantTableUtil.CONFIG_ID))) {
+                                        block.getLocation().getWorld().dropItem(block.getLocation(), ItemStackUtil.cloneItem(item.getItem(), 1));
+                                    }
+                                    for(Player player : playerList) {
+                                        player.sendMessage(message.replace("{1}", item.getItemName()));
+                                    }
+                                }
+                            }
+                        });
+                        return;
+                    }
+                }
+                blockTicker.tick(block, item, data);
+                locationList.add(block.getLocation());
+            }
+
+            @Override
+            public void uniqueTick() {
+                blockTicker.uniqueTick();
+                List<Location> tempLocationList = lastLocationList;
+                lastLocationList = locationList;
+                locationList = tempLocationList;
+                locationList.clear();
             }
         };
     }
@@ -122,6 +213,11 @@ public class BlockTickerUtil {
                         this.runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
                     }
                 }
+
+                @Override
+                public void uniqueTick() {
+                    blockTicker.uniqueTick();
+                }
             };
         } else if (forceAsync && antiAcceleration && !performanceLimit) {
             return new BlockTicker() {
@@ -137,6 +233,11 @@ public class BlockTickerUtil {
                     if (!AntiAccelerationUtil.isAccelerated(data)) {
                         this.runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
                     }
+                }
+
+                @Override
+                public void uniqueTick() {
+                    blockTicker.uniqueTick();
                 }
             };
         } else if (forceAsync && !antiAcceleration && performanceLimit) {
@@ -154,6 +255,11 @@ public class BlockTickerUtil {
                         this.runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
                     }
                 }
+
+                @Override
+                public void uniqueTick() {
+                    blockTicker.uniqueTick();
+                }
             };
         } else if (forceAsync && !antiAcceleration && !performanceLimit) {
             return new BlockTicker() {
@@ -167,6 +273,11 @@ public class BlockTickerUtil {
                 @Override
                 public void tick(Block b, SlimefunItem item, Config data) {
                     this.runnableLockFactory.waitThenRun(() -> blockTicker.tick(b, item, data), b.getLocation());
+                }
+
+                @Override
+                public void uniqueTick() {
+                    blockTicker.uniqueTick();
                 }
             };
         } else if (!forceAsync && antiAcceleration && performanceLimit) {
@@ -182,6 +293,11 @@ public class BlockTickerUtil {
                         blockTicker.tick(b, item, data);
                     }
                 }
+
+                @Override
+                public void uniqueTick() {
+                    blockTicker.uniqueTick();
+                }
             };
         } else if (!forceAsync && antiAcceleration && !performanceLimit) {
             return new BlockTicker() {
@@ -196,6 +312,11 @@ public class BlockTickerUtil {
                         blockTicker.tick(b, item, data);
                     }
                 }
+
+                @Override
+                public void uniqueTick() {
+                    blockTicker.uniqueTick();
+                }
             };
         } else if (!forceAsync && !antiAcceleration && performanceLimit) {
             return new BlockTicker() {
@@ -209,6 +330,11 @@ public class BlockTickerUtil {
                     if (PerformanceLimitUtil.charge(data)) {
                         blockTicker.tick(b, item, data);
                     }
+                }
+
+                @Override
+                public void uniqueTick() {
+                    blockTicker.uniqueTick();
                 }
             };
         } else {

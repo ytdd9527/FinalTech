@@ -9,7 +9,6 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.item.AbstractMySlimefunItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.util.BlockTickerUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import org.bukkit.block.Block;
@@ -55,11 +54,13 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
                 public void tick(Block b, SlimefunItem item, Config data) {
                     AbstractMachine.this.tick(b, item, data);
                 }
+
+                @Override
+                public void uniqueTick() {
+                    AbstractMachine.this.uniqueTick();
+                }
             };
-            if(FinalTech.debugMode()) {
-                blockTicker = BlockTickerUtil.getDebugModeBlockTicker(blockTicker, this);
-            }
-            this.addItemHandler(BlockTickerUtil.generateBlockTicker(blockTicker, true, FinalTech.isAntiAccelerateSlimefunItem(this.getId()), FinalTech.isPerformanceLimitSlimefunItem(this.getId())));
+            FinalTech.addAsyncSlimefunItem(this.getId());
         } else {
             blockTicker = new BlockTicker() {
                 @Override
@@ -71,12 +72,17 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
                 public void tick(Block b, SlimefunItem item, Config data) {
                     AbstractMachine.this.tick(b, item, data);
                 }
+
+                @Override
+                public void uniqueTick() {
+                    AbstractMachine.this.uniqueTick();
+                }
             };
-            if(FinalTech.debugMode()) {
-                blockTicker = BlockTickerUtil.getDebugModeBlockTicker(blockTicker, this);
+            if(!this.isSynchronized() && FinalTech.getMultiThreadLevel() >= 1) {
+                FinalTech.addAsyncSlimefunItem(this.getId());
             }
-            this.addItemHandler(BlockTickerUtil.generateBlockTicker(blockTicker, !this.isSynchronized() && (FinalTech.getMultiThreadLevel() == 1 || FinalTech.isAsyncSlimefunItem(this.getId())), FinalTech.isAntiAccelerateSlimefunItem(this.getId()), FinalTech.isPerformanceLimitSlimefunItem(this.getId())));
         }
+        this.addItemHandler(blockTicker);
     }
 
     @Nonnull
@@ -87,6 +93,10 @@ public abstract class AbstractMachine extends AbstractMySlimefunItem {
     @Nonnull
     public final int[] getOutputSlot() {
         return this.menu == null ? new int[0] : this.menu.getOutputSlot();
+    }
+
+    protected void uniqueTick() {
+
     }
 
     @Nonnull

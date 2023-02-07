@@ -8,11 +8,11 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.interfaces.MenuUpdater;
 import io.taraxacum.finaltech.util.BlockTickerUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
-import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import io.taraxacum.libs.slimefun.dto.LocationWithConfig;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
@@ -37,7 +37,7 @@ import java.util.*;
  * @author Final_ROOT
  * @since 2.0
  */
-public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem {
+public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem, MenuUpdater {
     private final int range = ConfigUtil.getOrDefaultItemSetting(1, this, "range");
     // System.nanoTime
     // 1,000,000ns = 1ms
@@ -71,7 +71,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         Location blockLocation = block.getLocation();
         BlockMenu blockMenu = BlockStorage.getInventory(blockLocation);
-        boolean drawParticle = blockMenu.hasViewer();
+        boolean hasViewer = blockMenu.hasViewer();
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
 
         int accelerate = 0;
@@ -93,7 +93,10 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
         } else {
             machineItem = SlimefunItem.getByItem(matchItem);
             if (machineItem == null || this.invalidIdSet.contains(machineItem.getId()) || machineItem.getBlockTicker() == null) {
-                this.updateMenu(blockMenu, range, 0, 0);
+                if(hasViewer) {
+                    this.updateMenu(blockMenu, StatusL2Menu.STATUS_SLOT, this,
+                            "0", "0");
+                }
                 return;
             }
             machineId = machineItem.getId();
@@ -116,7 +119,10 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
                 return 0;
             });
             if (count <= 1) {
-                this.updateMenu(blockMenu, range, 0, 0);
+                if(hasViewer) {
+                    this.updateMenu(blockMenu, StatusL2Menu.STATUS_SLOT, this,
+                            "0", "0");
+                }
                 return;
             }
         } else {
@@ -134,7 +140,10 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
                 return 0;
             });
             if (count == 0) {
-                this.updateMenu(blockMenu, range, 0, 0);
+                if(hasViewer) {
+                    this.updateMenu(blockMenu, StatusL2Menu.STATUS_SLOT, this,
+                            "0", "0");
+                }
                 return;
             }
             accelerate /= count;
@@ -186,7 +195,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
                                 }
                             }, machineLocation);
                         }
-                        if (drawParticle) {
+                        if (hasViewer) {
                             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, locationConfig.getLocation().getBlock()));
                         }
                         accelerateTimeCount += accelerate;
@@ -233,7 +242,7 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
                                 }
                             }, machineLocation);
                         }
-                        if (drawParticle) {
+                        if (hasViewer) {
                             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, locationConfig.getLocation().getBlock()));
                         }
                         accelerateTimeCount += accelerate;
@@ -243,22 +252,16 @@ public class MatrixAccelerator extends AbstractCubeMachine implements RecipeItem
             }
         }
 
-        this.updateMenu(blockMenu, range, accelerateTimeCount, accelerateMachineCount);
+        if(hasViewer) {
+            this.updateMenu(blockMenu, StatusL2Menu.STATUS_SLOT, this,
+                    String.valueOf(range),
+                    String.valueOf(accelerateTimeCount), String.valueOf(accelerateMachineCount));
+        }
     }
 
     @Override
     protected boolean isSynchronized() {
         return false;
-    }
-
-    private void updateMenu(@Nonnull BlockMenu blockMenu, int range, int accelerateTimeCount, int accelerateMachineCount) {
-        if (blockMenu.hasViewer()) {
-            ItemStack item = blockMenu.getItemInSlot(StatusL2Menu.STATUS_SLOT);
-            ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
-                    String.valueOf(range),
-                    String.valueOf(accelerateMachineCount),
-                    String.valueOf(accelerateTimeCount)));
-        }
     }
 
     @Override

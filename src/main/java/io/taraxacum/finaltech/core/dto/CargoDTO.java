@@ -11,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
+ * @see io.taraxacum.finaltech.util.CargoUtil#doCargo(CargoDTO, String)
  * @author Final_ROOT
  * @since 2.0
  */

@@ -15,7 +15,7 @@ import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.dto.SimpleCargoDTO;
 import io.taraxacum.finaltech.core.helper.*;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.function.MeshTransferMenu;
+import io.taraxacum.finaltech.core.menu.cargo.MeshTransferMenu;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.PermissionUtil;
@@ -66,18 +66,6 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
                 CargoFilter.HELPER.checkOrSetBlockStorage(location);
                 BlockSearchMode.MESH_INPUT_HELPER.checkOrSetBlockStorage(location);
                 BlockSearchMode.MESH_OUTPUT_HELPER.checkOrSetBlockStorage(location);
-
-                CargoNumber.INPUT_HELPER.checkOrSetBlockStorage(location);
-                CargoNumberMode.INPUT_HELPER.getOrDefaultValue(location);
-                SlotSearchSize.INPUT_HELPER.checkOrSetBlockStorage(location);
-                SlotSearchOrder.INPUT_HELPER.checkOrSetBlockStorage(location);
-                CargoLimit.INPUT_HELPER.checkOrSetBlockStorage(location);
-
-                CargoNumber.OUTPUT_HELPER.checkOrSetBlockStorage(location);
-                CargoNumberMode.OUTPUT_HELPER.getOrDefaultValue(location);
-                SlotSearchSize.OUTPUT_HELPER.checkOrSetBlockStorage(location);
-                SlotSearchOrder.OUTPUT_HELPER.checkOrSetBlockStorage(location);
-                CargoLimit.OUTPUT_HELPER.checkOrSetBlockStorage(location);
 
                 BlockStorage.addBlockInfo(block, PositionInfo.KEY, "");
             }
@@ -132,17 +120,17 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
 
             // parse block storage
 
-            String outputSize = SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config);
-            String outputOrder = SlotSearchOrder.OUTPUT_HELPER.getOrDefaultValue(config);
-            int outputCargoNumber = Integer.parseInt(CargoNumber.OUTPUT_HELPER.getOrDefaultValue(config));
-            String outputCargoNumberMode = CargoNumberMode.OUTPUT_HELPER.getOrDefaultValue(config);
-            String outputCargoLimit = CargoLimit.OUTPUT_HELPER.getOrDefaultValue(config);
+            String outputSize = SlotSearchSize.OUTPUT_HELPER.defaultValue();
+            String outputOrder = SlotSearchOrder.OUTPUT_HELPER.defaultValue();
+            int outputCargoNumber = Integer.parseInt(CargoNumber.OUTPUT_HELPER.defaultValue());
+            String outputCargoNumberMode = CargoNumberMode.OUTPUT_HELPER.defaultValue();
+            String outputCargoLimit = CargoLimit.OUTPUT_HELPER.defaultValue();
 
-            String inputSize = SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config);
-            String inputOrder = SlotSearchOrder.INPUT_HELPER.getOrDefaultValue(config);
-            int inputCargoNumber = Integer.parseInt(CargoNumber.INPUT_HELPER.getOrDefaultValue(config));
-            String inputCargoNumberMode = CargoNumberMode.INPUT_HELPER.getOrDefaultValue(config);
-            String inputCargoLimit = CargoLimit.INPUT_HELPER.getOrDefaultValue(config);
+            String inputSize = SlotSearchSize.INPUT_HELPER.defaultValue();
+            String inputOrder = SlotSearchOrder.INPUT_HELPER.defaultValue();
+            int inputCargoNumber = Integer.parseInt(CargoNumber.INPUT_HELPER.defaultValue());
+            String inputCargoNumberMode = CargoNumberMode.INPUT_HELPER.defaultValue();
+            String inputCargoLimit = CargoLimit.INPUT_HELPER.defaultValue();
 
             String cargoFilter = CargoFilter.HELPER.getOrDefaultValue(config);
 
@@ -239,10 +227,10 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
                 }
             }
         } else {
-            String outputSize = SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config);
-            String outputOrder = SlotSearchOrder.OUTPUT_HELPER.getOrDefaultValue(config);
-            String inputSize = SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config);
-            String inputOrder = SlotSearchOrder.INPUT_HELPER.getOrDefaultValue(config);
+            String outputSize = SlotSearchSize.OUTPUT_HELPER.defaultValue();
+            String outputOrder = SlotSearchOrder.OUTPUT_HELPER.defaultValue();
+            String inputSize = SlotSearchSize.INPUT_HELPER.defaultValue();
+            String inputOrder = SlotSearchOrder.INPUT_HELPER.defaultValue();
 
             javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
                 for (int i = 0; i < outputBlocks.length; i++) {
@@ -283,13 +271,13 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
 
                     // parse block storage
 
-                    int outputCargoNumber = Integer.parseInt(CargoNumber.OUTPUT_HELPER.getOrDefaultValue(config));
-                    String outputCargoNumberMode = CargoNumberMode.OUTPUT_HELPER.getOrDefaultValue(config);
-                    String outputCargoLimit = CargoLimit.OUTPUT_HELPER.getOrDefaultValue(config);
+                    int outputCargoNumber = Integer.parseInt(CargoNumber.OUTPUT_HELPER.defaultValue());
+                    String outputCargoNumberMode = CargoNumberMode.OUTPUT_HELPER.defaultValue();
+                    String outputCargoLimit = CargoLimit.OUTPUT_HELPER.defaultValue();
 
-                    int inputCargoNumber = Integer.parseInt(CargoNumber.INPUT_HELPER.getOrDefaultValue(config));
-                    String inputCargoNumberMode = CargoNumberMode.INPUT_HELPER.getOrDefaultValue(config);
-                    String inputCargoLimit = CargoLimit.INPUT_HELPER.getOrDefaultValue(config);
+                    int inputCargoNumber = Integer.parseInt(CargoNumber.INPUT_HELPER.defaultValue());
+                    String inputCargoNumberMode = CargoNumberMode.INPUT_HELPER.defaultValue();
+                    String inputCargoLimit = CargoLimit.INPUT_HELPER.defaultValue();
 
                     String cargoFilter = CargoFilter.HELPER.getOrDefaultValue(config);
 
@@ -386,11 +374,6 @@ public class MeshTransfer extends AbstractCargo implements RecipeItem {
                 }, locations);
             });
         }
-    }
-
-    @Override
-    protected boolean isSynchronized() {
-        return true;
     }
 
     @Nonnull

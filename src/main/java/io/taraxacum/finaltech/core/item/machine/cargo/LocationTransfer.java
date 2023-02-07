@@ -12,7 +12,7 @@ import io.taraxacum.libs.plugin.util.ParticleUtil;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.dto.CargoDTO;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.function.LocationTransferMenu;
+import io.taraxacum.finaltech.core.menu.cargo.LocationTransferMenu;
 import io.taraxacum.finaltech.core.helper.*;
 import io.taraxacum.finaltech.util.PermissionUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
@@ -48,11 +48,6 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
             public void onPlayerPlace(@Nonnull BlockPlaceEvent blockPlaceEvent) {
                 Block block = blockPlaceEvent.getBlock();
                 Location location = block.getLocation();
-
-                CargoNumber.HELPER.checkOrSetBlockStorage(location);
-                SlotSearchSize.HELPER.checkOrSetBlockStorage(location);
-                SlotSearchOrder.HELPER.checkOrSetBlockStorage(location);
-                CargoLimit.HELPER.checkOrSetBlockStorage(location);
 
                 CargoMode.HELPER.checkOrSetBlockStorage(location);
                 CargoOrder.HELPER.checkOrSetBlockStorage(location);
@@ -97,8 +92,8 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, targetBlock));
         }
 
-        String slotSearchSize = SlotSearchSize.HELPER.getOrDefaultValue(config);
-        String slotSearchOrder = SlotSearchOrder.HELPER.getOrDefaultValue(config);
+        String slotSearchSize = SlotSearchSize.HELPER.defaultValue();
+        String slotSearchOrder = SlotSearchOrder.HELPER.defaultValue();
 
         CargoDTO cargoDTO = new CargoDTO();
         cargoDTO.setJavaPlugin(this.addon.getJavaPlugin());
@@ -124,18 +119,13 @@ public class LocationTransfer extends AbstractCargo implements RecipeItem {
             }
         }
 
-        cargoDTO.setCargoNumber(Integer.parseInt(CargoNumber.HELPER.getOrDefaultValue(config)));
-        cargoDTO.setCargoLimit(CargoLimit.HELPER.getOrDefaultValue(config));
+        cargoDTO.setCargoNumber(Integer.parseInt(CargoNumber.HELPER.defaultValue()));
+        cargoDTO.setCargoLimit(CargoLimit.HELPER.defaultValue());
         cargoDTO.setCargoFilter(CargoFilter.VALUE_BLACK);
         cargoDTO.setFilterInv(blockMenu.toInventory());
         cargoDTO.setFilterSlots(new int[0]);
 
         CargoUtil.doCargo(cargoDTO, CargoMode.HELPER.getOrDefaultValue(config));
-    }
-
-    @Override
-    protected boolean isSynchronized() {
-        return true;
     }
 
     @Override

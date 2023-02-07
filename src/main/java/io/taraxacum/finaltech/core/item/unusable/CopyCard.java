@@ -39,13 +39,20 @@ public class CopyCard extends UnusableSlimefunItem implements RecipeItem {
 
     public static ItemStack newItem(@Nonnull ItemStack stringItem, @Nonnull String amount) {
         ItemStack result = ItemStackUtil.cloneItem(FinalTechItems.COPY_CARD);
+        ItemStack temp = new ItemStack(stringItem);
+
+//        if(stringItem instanceof SlimefunItemStack) {
+//            SfItemUtil.setSlimefunItemKey(temp, ((SlimefunItemStack) stringItem).getItemId());
+//        }
+
         result.setAmount(1);
-        StringItemUtil.setItemInCard(result, stringItem, amount);
+        StringItemUtil.setItemInCard(result, temp, amount);
         List<String> loreList = JavaUtil.toList(ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), SfItemUtil.getIdFormatName(CopyCard.class),
-                ItemStackUtil.getItemName(stringItem),
+                ItemStackUtil.getItemName(temp),
                 amount));
         loreList.add(0, ITEM_LORE);
         ItemStackUtil.setLore(result, loreList);
+
         return result;
     }
 

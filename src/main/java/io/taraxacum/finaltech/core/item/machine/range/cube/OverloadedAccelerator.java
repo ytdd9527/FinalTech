@@ -8,11 +8,11 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.interfaces.MenuUpdater;
 import io.taraxacum.finaltech.util.*;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
-import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.slimefun.dto.LocationWithConfig;
 import io.taraxacum.finaltech.util.BlockTickerUtil;
 import io.taraxacum.libs.slimefun.util.EnergyUtil;
@@ -35,7 +35,7 @@ import java.util.*;
  * @author Final_ROOT
  * @since 2.0
  */
-public class OverloadedAccelerator extends AbstractCubeMachine implements RecipeItem {
+public class OverloadedAccelerator extends AbstractCubeMachine implements RecipeItem, MenuUpdater {
     private final int range = ConfigUtil.getOrDefaultItemSetting(2, this, "range");
 
     public OverloadedAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -64,28 +64,35 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         Location blockLocation = block.getLocation();
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        boolean drawParticle = blockMenu.hasViewer();
+        boolean hasViewer = blockMenu.hasViewer();
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
 
         Map<Integer, List<LocationWithConfig>> componentConfigMap = new HashMap<>(range * 3);
-        int count = this.function(block, range, location -> {
+        int validMachineCount = this.function(block, range, location -> {
             if (BlockStorage.hasBlockInfo(location)) {
                 Config componentConfig = BlockStorage.getLocationInfo(location);
                 if (componentConfig.contains(ConstantTableUtil.CONFIG_ID) && SlimefunItem.getById(componentConfig.getString(ConstantTableUtil.CONFIG_ID)) instanceof EnergyNetComponent) {
-                    int distance = Math.abs(location.getBlockX() - blockLocation.getBlockX()) + Math.abs(location.getBlockY() - blockLocation.getBlockY()) + Math.abs(location.getBlockZ() - blockLocation.getBlockZ());
-                    List<LocationWithConfig> componentConfigList = componentConfigMap.computeIfAbsent(distance, d -> new ArrayList<>(d * d * 4 + 2));
-                    componentConfigList.add(new LocationWithConfig(location.clone(), componentConfig));
-                    return 1;
+                    SlimefunItem sfItem = SlimefunItem.getById(componentConfig.getString(ConstantTableUtil.CONFIG_ID));
+                    if(sfItem instanceof EnergyNetComponent energyNetComponent && sfItem.getBlockTicker() != null && energyNetComponent.getCapacity() > 0) {
+                        int distance = Math.abs(location.getBlockX() - blockLocation.getBlockX()) + Math.abs(location.getBlockY() - blockLocation.getBlockY()) + Math.abs(location.getBlockZ() - blockLocation.getBlockZ());
+                        List<LocationWithConfig> componentConfigList = componentConfigMap.computeIfAbsent(distance, d -> new ArrayList<>(d * d * 4 + 2));
+                        componentConfigList.add(new LocationWithConfig(location.clone(), componentConfig));
+                        return 1;
+                    }
                 }
             }
             return 0;
         });
 
-        if (count < 1) {
-            this.updateMenu(blockMenu, 0, 0);
+        if (validMachineCount < 1) {
+            if(hasViewer) {
+                this.updateMenu(blockMenu, StatusMenu.STATUS_SLOT, this,
+                        "0", "0");
+            }
             return;
         }
-        int accelerateMachineCount = 0;
+
+        int accelerateCount = 0;
 
         List<LocationWithConfig> locationConfigList;
         for (int distance = 1; distance <= this.range * 3; distance++) {
@@ -99,8 +106,8 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
                         BlockTicker blockTicker = machineItem.getBlockTicker();
                         int componentCapacity = ((EnergyNetComponent) machineItem).getCapacity();
                         int componentEnergy = Integer.parseInt(EnergyUtil.getCharge(machineConfig));
-                        if (componentCapacity > 0 && componentEnergy > componentCapacity) {
-                            accelerateMachineCount++;
+                        if (componentEnergy > componentCapacity) {
+                            accelerateCount++;
                             Block machineBlock = locationConfig.getLocation().getBlock();
                             if (blockTicker.isSynchronized()) {
                                 javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> {
@@ -123,7 +130,8 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
                                     }
                                 }, locationConfig.getLocation());
                             }
-                            if (drawParticle) {
+
+                            if (hasViewer) {
                                 javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, locationConfig.getLocation().getBlock()));
                             }
                         }
@@ -132,21 +140,16 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
             }
         }
 
-        this.updateMenu(blockMenu, count, accelerateMachineCount);
+        if(hasViewer) {
+            this.updateMenu(blockMenu, StatusMenu.STATUS_SLOT, this,
+                    String.valueOf(validMachineCount),
+                    String.valueOf(accelerateCount));
+        }
     }
 
     @Override
     protected boolean isSynchronized() {
         return false;
-    }
-
-    private void updateMenu(@Nonnull BlockMenu blockMenu, int count, int accelerateMachineCount) {
-        if (blockMenu.hasViewer()) {
-            ItemStack item = blockMenu.getItemInSlot(StatusMenu.STATUS_SLOT);
-            ItemStackUtil.setLore(item, ConfigUtil.getStatusMenuLore(FinalTech.getLanguageManager(), this,
-                    String.valueOf(count),
-                    String.valueOf(accelerateMachineCount)));
-        }
     }
 
     @Override

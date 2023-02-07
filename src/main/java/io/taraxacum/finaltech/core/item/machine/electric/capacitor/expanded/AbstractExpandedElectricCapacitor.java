@@ -111,36 +111,6 @@ public abstract class AbstractExpandedElectricCapacitor extends AbstractElectric
     }
 
     @Override
-    public void setCharge(@Nonnull Location l, int charge) {
-//        int oldCharge = this.getCharge(l);
-//        int difference = charge - oldCharge;
-//        if (difference > 0) {
-//            difference *= this.chargeIncrease();
-//            if (oldCharge / 2 + difference / 2 > Integer.MAX_VALUE / 2) {
-//                difference = Integer.MAX_VALUE - oldCharge;
-//            }
-//        } else if (difference < 0) {
-//            difference *= this.consumeReduce();
-//        } else {
-//            return;
-//        }
-//        charge = oldCharge + difference;
-        super.setCharge(l, charge);
-    }
-
-    @Override
-    public void addCharge(@Nonnull Location l, int charge) {
-//        charge *= this.chargeIncrease();
-        super.addCharge(l, charge);
-    }
-
-    @Override
-    public void removeCharge(@Nonnull Location l, int charge) {
-//        charge *= this.consumeReduce();
-        super.removeCharge(l, charge);
-    }
-
-    @Override
     public abstract int getCapacity();
 
     @Nonnull

@@ -1,0 +1,39 @@
+# All other config will be generated after starting server
+
+tweak:
+  range-limit:
+    FINALTECH_ITEM_DISMANTLE_TABLE:
+      range: 128
+      mul-range: 2
+      drop-self: true
+      message: '{1} is not allowed to be placed too closely'
+    FINALTECH_ORDERED_DUST_FACTORY_DIRT:
+      range: 128
+      mul-range: 2
+      drop-self: false
+      message: '{1} is not allowed to be placed too closely'
+    FINALTECH_ORDERED_DUST_FACTORY_STONE:
+      range: 128
+      mul-range: 2
+      drop-self: false
+      message: '{1} is not allowed to be placed too closely'
+  performance-limit:
+    item:
+      - 'FINALTECH_ORDERED_DUST_FACTORY_DIRT'
+      - 'FINALTECH_ORDERED_DUST_FACTORY_STONE'
+  anti-accelerate:
+    item:
+      - 'VARIABLE_WIRE_RESISTANCE'
+      - 'VARIABLE_WIRE_CAPACITOR'
+      - 'ENTROPY_SEED'
+      - 'EQUIVALENT_CONCEPT'
+      - 'MATRIX_GENERATOR'
+      - 'MATRIX_REACTOR'
+  interval:
+    general:
+      FINALTECH_FUEL_OPERATOR: 1
+    independent:
+      ANY_SLIMEFUN_ITEM_ID: 2
+  no-blockTicker:
+    item:
+      - 'FINALTECH_NORMAL_STORAGE_UNIT'

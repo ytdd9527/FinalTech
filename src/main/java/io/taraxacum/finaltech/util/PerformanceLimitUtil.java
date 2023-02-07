@@ -19,7 +19,7 @@ public class PerformanceLimitUtil {
             if (charge >= 40) {
                 charge -= 20;
             }
-            config.setValue(KEY, String.valueOf(charge - 1000));
+            config.setValue(KEY, String.valueOf(charge - 20));
             return true;
         } else {
             config.setValue(KEY, String.valueOf(charge));

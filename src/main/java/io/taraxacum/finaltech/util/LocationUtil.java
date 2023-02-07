@@ -28,6 +28,10 @@ import java.util.*;
 public class LocationUtil {
     private static final NamespacedKey KEY = new NamespacedKey(FinalTech.getInstance(), "location");
 
+    public static double getManhattanDistance(@Nonnull Location location1, @Nonnull Location location2) {
+        return Math.abs(location1.getX() - location2.getX()) + Math.abs(location1.getY() - location2.getY()) + Math.abs(location1.getZ() - location2.getZ());
+    }
+
     public static boolean isSameLocation(@Nullable Location location1, @Nullable Location location2) {
         if(location1 == null || location2 == null) {
             return false;

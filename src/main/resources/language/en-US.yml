@@ -18,6 +18,8 @@ helper:
       CONSUMER: 'Consumer'
       CONNECTOR: 'Connector'
       NONE: 'None'
+    recipe-icon:
+      name: '{color:stress}Display Recipe'
     quantity-module:
       name: '{color:normal}Quantity Module'
       lore:
@@ -37,11 +39,11 @@ helper:
       name: '{color:normal}Error'
   CARGO_ORDER:
     positive:
-      name: '{color:normal}Cargo Order {color:conceal}- {color:random}POSITIVE'
+      name: '{color:normal}Cargo Order {color:conceal}- {color:random}Positive'
       lore:
         - '{color:normal}Iterate through the location queue in positive order'
     reverse:
-      name: '{color:normal}Cargo Order {color:conceal}- {color:random}REVERSE'
+      name: '{color:normal}Cargo Order {color:conceal}- {color:random}Reverse'
       lore:
         - '{color:normal}Iterate through the location queue in reverse order'
   MACHINE_MAX_STACK:
@@ -272,21 +274,30 @@ helper:
       lore1: '{color:stress}Universally {color:normal}calculate the cargo number'
     standalone:
       lore1: '{color:stress}Individually {color:normal}calculate the cargo number'
+  FORCE_CLOSE:
+    'false':
+      name: '{color:normal}Force Close {color:conceal}- {color:random}False'
+      lore:
+        - '{color:normal}Not close menu if not work'
+    'true':
+      name: '{color:normal}Force Close {color:conceal}- {color:random}True'
+      lore:
+        - '{color:normal}Close menu if not work'
 categories:
   FINALTECH_ITEM_GROUP:
     name: '{color:random}FINAL TECH'
   FINALTECH_MAIN_MENU_ITEM:
-    name: '{color:random}Items'
+    name: '{color:random}Item'
   FINALTECH_SUB_MENU_MATERIAL:
-    name: '{color:random}Materials'
+    name: '{color:random}Material'
   FINALTECH_SUB_MENU_LOGIC_ITEM:
-    name: '{color:random}Logic Items'
+    name: '{color:random}Logic Item'
   FINALTECH_SUB_MENU_CONSUMABLE:
-    name: '{color:random}Consumables'
+    name: '{color:random}Consumable'
   FINALTECH_SUB_MENU_TOOL:
-    name: '{color:random}Tools'
+    name: '{color:random}Tool'
   FINALTECH_SUB_MENU_WEAPON:
-    name: '{color:random}Weapons'
+    name: '{color:random}Weapon'
   FINALTECH_MAIN_MENU_ELECTRICITY_SYSTEM:
     name: '{color:random}Electric System'
   FINALTECH_SUB_MENU_ELECTRIC_GENERATOR:
@@ -312,25 +323,25 @@ categories:
   FINALTECH_MAIN_MENU_FUNCTIONAL_MACHINE:
     name: '{color:random}Functional Machine'
   FINALTECH_SUB_MENU_CORE_MACHINE:
-    name: '{color:random}Core Machines'
+    name: '{color:random}Core Machine'
   FINALTECH_SUB_MENU_SPECIAL_MACHINE:
-    name: '{color:random}Special Machines'
+    name: '{color:random}Special Machine'
   FINALTECH_SUB_MENU_TOWER:
-    name: '{color:random}Towers'
+    name: '{color:random}Tower'
   FINALTECH_MAIN_MENU_PRODUCTIVE_MACHINE:
-    name: '{color:random}Productive Machines'
+    name: '{color:random}Productive Machine'
   FINALTECH_SUB_MENU_MANUAL_MACHINE:
-    name: '{color:random}Manual Machines'
+    name: '{color:random}Manual Machine'
   FINALTECH_SUB_MENU_BASIC_MACHINE:
-    name: '{color:random}Basic Machines'
+    name: '{color:random}Basic Machine'
   FINALTECH_SUB_MENU_ADVANCED_MACHINE:
-    name: '{color:random}Advanced Machines'
+    name: '{color:random}Advanced Machine'
   FINALTECH_SUB_MENU_CONVERSION:
-    name: '{color:random}Conversions'
+    name: '{color:random}Conversion'
   FINALTECH_SUB_MENU_EXTRACTION:
-    name: '{color:random}Extractions'
+    name: '{color:random}Extraction'
   FINALTECH_SUB_MENU_GENERATOR:
-    name: '{color:random}Generators'
+    name: '{color:random}Generator'
   FINALTECH_MAIN_MENU_DISC:
     name: '{color:random}Disc'
   FINALTECH_SUB_MENU_FINAL_ITEM:
@@ -381,6 +392,7 @@ items:
         lore:
           - '{color:normal}Can be obtained in {id:FINALTECH_EQUIVALENT_EXCHANGE_TABLE}'
         output: 'FINALTECH_EQUIVALENT_EXCHANGE_TABLE'
+    message: '{color:normal}You forget something :D'
   FINALTECH_ENTROPY:
     name: '{color:prandom}Entropy'
     info:
@@ -398,6 +410,7 @@ items:
           - '{color:normal}Will be generated while:'
           - '{color:normal}Player get dead'
           - '{color:normal}The death place is 64 blocks above world max height'
+    message: '{color:normal}You forget something :D'
   FINALTECH_SHINE:
     name: '{color:prandom}Shine'
     info:
@@ -409,25 +422,30 @@ items:
           - '{color:normal}Player is 64 blocks below world minimum height'
           - '{color:normal}Player carries {id:FINALTECH_BOX}'
       2:
-        name: '{color:negative}Notice'
+        name: '{color:negative}Void Curse'
         lore:
-          - '{color:normal}If player die at the place that can obtain {id:FINALTECH_SHINE} {color:normal}while carrying {id:FINALTECH_BOX}'
-          - '{color:normal}Player will lose all his items'
+          - '{color:normal}While obtaining {id:FINALTECH_SHINE}'
+          - '{color:normal}Player will be cursed by void for a short time'
       3:
-        name: '{color:negative}Notice'
-        lore:
-          - '{color:normal}If player die at the place that can obtain {id:FINALTECH_SHINE}'
-          - '{color:normal}Player will lose all {id:FINALTECH_SHINE} {color:normal}he is carrying'
-      4:
-        name: '{color:negative}Notice'
-        lore:
-          - '{color:normal}If player die while carrying {id:FINALTECH_BOX}'
-          - '{color:normal}Player will lose all {id:FINALTECH_SHINE} {color:normal}he is carrying'
-      5:
         name: '{color:negative}Notice'
         lore:
           - '{color:normal}While carrying {id:FINALTECH_SHINE} {color:normal}or {id:FINALTECH_BOX}'
           - '{color:normal}The void damage player get will be enlarged greatly'
+      4:
+        name: '{color:negative}Notice'
+        lore:
+          - '{color:normal}While carrying {id:FINALTECH_BOX}'
+          - '{color:normal}if player is in low place or cursed by void'
+          - '{color:negative}Player will lose all his items after dead!!!'
+      5:
+        name: '{color:negative}Notice'
+        lore:
+          - '{color:normal}While carrying {id:FINALTECH_BOX}'
+          - '{color:normal}if player is in low place or cursed by void'
+          - '{color:negative}Player will lose all his items after dead!!!'
+          - ''
+          - '{color:negative}Soul Bound Rune may be useful.'
+    message: '{color:normal}You forget something :D'
   FINALTECH_COPY_CARD:
     name: '{color:prandom}Copy Card'
     info:
@@ -823,7 +841,7 @@ items:
         name: '{color:positive}Usage'
         lore:
           - '{color:normal}Charge machine for {color:number}{1} J + {2}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
   FINALTECH_MACHINE_CHARGE_CARD_L2:
     name: '{color:prandom}Machine Charge Card {color:conceal}- {color:number}L2'
     info:
@@ -831,7 +849,7 @@ items:
         name: '{color:positive}Usage'
         lore:
           - '{color:normal}Charge machine for {color:number}{1} J + {2}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
       2:
         name: '{color:negative}Limit'
         lore:
@@ -843,7 +861,7 @@ items:
         name: '{color:positive}Usage'
         lore:
           - '{color:normal}Charge machine for {color:number}{1} J + {2}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
       2:
         name: '{color:negative}Limit'
         lore:
@@ -885,7 +903,7 @@ items:
         lore:
           - '{color:normal}Make machine work immediately for {color:number}{1} times'
           - '{color:normal}Before every work, it will be charged for {color:number}{2} J + {3}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
   FINALTECH_MACHINE_ACTIVATE_CARD_L2:
     name: '{color:prandom}Machine Activate Card {color:conceal}- {color:number}L2'
     info:
@@ -894,7 +912,7 @@ items:
         lore:
           - '{color:normal}Make machine work immediately for {color:number}{1} times'
           - '{color:normal}Before every work, it will be charged for {color:number}{2} J + {3}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
       2:
         name: '{color:negative}Limit'
         lore:
@@ -907,7 +925,7 @@ items:
         lore:
           - '{color:normal}Make machine work immediately for {color:number}{1} times'
           - '{color:normal}Before every work, it will be charged for {color:number}{2} J + {3}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
       2:
         name: '{color:negative}Limit'
         lore:
@@ -2033,6 +2051,99 @@ items:
         lore:
           - '{color:normal}Transfer items to the specified location'
           - '{color:normal}Need {id:FINALTECH_LOCATION_RECORDER} {color:normal}to work'
+  FINALTECH_ADVANCED_POINT_TRANSFER:
+    name: '{color:prandom}Advanced Point Transfer'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Transfer items from one place to another place'
+      2:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Remote Range: {color:number}{1} Blocks'
+  FINALTECH_ADVANCED_MESH_TRANSFER:
+    name: '{color:prandom}Advanced Mesh Transfer'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Input items to storage and output them'
+      2:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Can use chain to extend range in remote search mode.'
+  FINALTECH_ADVANCED_LINE_TRANSFER:
+    name: '{color:prandom}Advanced Line Transfer'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Transfer items along the place it look at'
+  FINALTECH_ADVANCED_LOCATION_TRANSFER:
+    name: '{color:prandom}Advanced Location Transfer'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Transfer items to the specified location'
+          - '{color:normal}Need {id:FINALTECH_LOCATION_RECORDER} {color:normal}to work'
+  FINALTECH_CONFIGURATION_COPIER:
+    name: '{color:prandom}Configuration Copier'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Copy the configuration of machine it looks at'
+        output: 'FINALTECH_MACHINE_CONFIGURATOR'
+      2:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Use digital item to specify the location'
+          - '{color:normal}Optional, default 0'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_CONFIGURATION_PASTER:
+    name: '{color:prandom}Configuration Paster'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Paste the configuration to machine it looks at'
+        output: 'FINALTECH_MACHINE_CONFIGURATOR'
+      2:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Use digital item to specify the location'
+          - '{color:normal}Optional, default 0'
+        output: 'FINALTECH_DIGITAL_ZERO'
+  FINALTECH_CLICK_WORK_MACHINE:
+    name: '{color:prandom}Click Work Machine'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Transfer item from input slot to output slot while being clicked'
+  FINALTECH_SIMULATE_CLICK_MACHINE:
+    name: '{color:prandom}Simulate Click Machine'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Transfer item from input slot to output slot'
+          - '{color:normal}While there is a digit item in input slot'
+          - "{color:normal}And the machine in it's bottom will be clicked by around player"
+          - "{color:normal}Digit to range rate: {color:number}{1}"
+        output: 'FINALTECH_DIGITAL_ONE'
+  FINALTECH_CONSUMABLE_SIMULATE_CLICK_MACHINE:
+    name: '{color:prandom}Simulate Click Machine {color:conceal}- {color:positive}Consumable'
+    info:
+      1:
+        name: '{color:passive}Mechanism'
+        lore:
+          - '{color:normal}Consume digit item'
+          - "{color:normal}Then the machine in it's bottom will be clicked by around player"
+          - "{color:normal}Digit to range rate: {color:number}{1}"
+        output: 'FINALTECH_DIGITAL_ONE'
   FINALTECH_ORDERED_DUST_FACTORY_DIRT:
     name: '{color:prandom}Ordered Dust Factory'
     info:
@@ -2095,6 +2206,11 @@ items:
         - '{color:normal}Match Amount: {color:number}{1}'
   FINALTECH_ITEM_DISMANTLE_TABLE:
     name: '{color:prandom}Item Dismantle Table'
+    status-icon:
+      lore:
+        - '{color:normal}Charge: {color:number}{1} {color:conceal}/ {color:number}{2}'
+  FINALTECH_AUTO_ITEM_DISMANTLE_TABLE:
+    name: '{color:prandom}Auto Item Dismantle Table'
   FINALTECH_EQUIVALENT_EXCHANGE_TABLE:
     name: '{color:prandom}Equivalent Exchange Table'
     info:
@@ -2162,6 +2278,7 @@ items:
       lore:
         - '{color:normal}Item Name: {color:number}{1}'
         - '{color:normal}Item Amount: {color:number}{2}{color:normal}/{color:number}{3}'
+        - '{color:normal}Rate: {color:number}{4}'
     phony:
       name: '{color:normal}Status'
       lore:
@@ -2212,6 +2329,32 @@ items:
       name: '{color:negative}No Matched'
       lore:
         - '{color:normal}Please input correct thing.'
+  FINALTECH_ADVANCED_AUTO_CRAFT_FRAME:
+    name: '{color:prandom}Advanced Auto Craft Frame'
+    parse-icon:
+      name: '{color:stress}Parse'
+      lore:
+        - '{color:action}[click] {color:normal}to parse item'
+    wiki-icon:
+      name: '{color:stress}Wiki'
+      lore:
+        - '{color:normal}↓ Put item here'
+        - '{color:normal}↙ Click and parse it'
+        - '{color:normal}↑↑ Put machine item in top two lines to parse item more steps'
+        - '    {color:normal}Available machine item can be found in slimefun guide.'
+        - '{color:normal}↑ Put quantity module to speed up'
+        - '{color:negative}The machine can not work at all'
+    parse-failed-icon:
+      name: '{color:negative}Parse Failed'
+      lore:
+        - '{color:normal}Please try to parse different item'
+    parse-extend-icon:
+      name: '{color:positive}Parse Success'
+      lore:
+        - '{color:action}[click] {color:normal}to get more information'
+    parse-success-icon:
+      name: '{color:positive}Parse Success'
+    parse-amount: '{color:conceal}Amount : {1}'
   FINALTECH_ITEM_FIXER:
     name: '{color:prandom}Item Fixer'
     info:
@@ -2420,7 +2563,7 @@ items:
         name: '{color:positive}Usage'
         lore:
           - '{color:normal}Charge machine for {color:number}{1} J + {2}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
   FINALTECH_MACHINE_ACCELERATE_CARD_INFINITY:
     name: '{color:prandom}Infinity Machine Accelerate Card'
     info:
@@ -2436,7 +2579,7 @@ items:
         lore:
           - '{color:normal}Make machine work immediately for {color:number}{1} times'
           - '{color:normal}Before every work, it will be charged for {color:number}{2} J + {3}% of machine capacity'
-          - '{color:normal}Percentage energy charge is not useful to capacitor and generator'
+          - '{color:normal}Percentage energy charge is not applicable to to capacitor and generator'
       2:
         name: '{color:negative}Limit'
         lore:
@@ -2585,6 +2728,7 @@ items:
       lore:
         - '{color:normal}Item Name: {color:number}{1}'
         - '{color:normal}Item Amount: {color:number}{2}{color:normal}/{color:number}{3}'
+        - '{color:normal}Rate: {color:number}{4}'
     phony:
       name: '{color:normal}Status'
       lore:
@@ -2634,6 +2778,8 @@ items:
   ManualCraftMachine:
     craft-icon:
       name: '{color:normal}Click To Craft'
+      lore:
+        - '{color:normal}Energy: {color:number}{1}J'
     status-icon:
       name: '{color:normal}No Valid Craft'
     previous-icon:
@@ -2645,6 +2791,10 @@ items:
     warn:
       - 'Player [{5}] in {1} [{2},{3},{4}] is clicking manual craft machine very quickly.'
       - 'This may be due to server network, else it may cause server lag.'
+effect:
+  VOID_CURSE:
+    message:
+      death: '{1} {color:normal}is swallowed by the void.'
 research:
   LIQUID_CARD: 'Liquid Card'
   ORDER_DUST: 'Basic Material'
@@ -2664,4 +2814,4 @@ message:
     item: '{color:negative}No permission for this item!'
   no-condition:
     player: '{color:negative}Not meet condition!'
-
+  invalid-item: '{color:negative}Not valid item!'

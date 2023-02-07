@@ -5,9 +5,8 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.libs.plugin.dto.ItemAmountWrapper;
@@ -26,7 +25,6 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,12 +36,6 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
 
     public EquivalentExchangeTable(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-    }
-
-    @Nonnull
-    @Override
-    protected BlockPlaceHandler onBlockPlace() {
-        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_DENY;
     }
 
     @Nonnull
@@ -71,54 +63,68 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
                 if (MachineUtil.slotCount(blockMenu.toInventory(), this.getOutputSlot()) == this.getOutputSlot().length) {
                     continue;
                 }
-                this.doCraft(blockMenu, config);
-                value = config.getString(this.key);
-                item.setAmount(item.getAmount() - 1);
+                value = this.doCraft(value, blockMenu, item.getAmount());
+                item.setAmount(0);
                 continue;
             }
             SlimefunItem sfItem = SlimefunItem.getByItem(item);
             if (sfItem != null) {
                 value = StringNumberUtil.add(value, StringNumberUtil.mul(ItemValueTable.getInstance().getOrCalItemInputValue(sfItem), String.valueOf(item.getAmount())));
                 item.setAmount(0);
-                config.setValue(this.key, value);
             }
         }
+
         BlockStorage.addBlockInfo(block.getLocation(), this.key, value);
+
         if (blockMenu.hasViewer()) {
             this.getMachineMenu().updateInventory(blockMenu.toInventory(), block.getLocation());
         }
     }
 
-    @Override
-    protected boolean isSynchronized() {
-        return false;
-    }
+    private String doCraft(@Nonnull String value, @Nonnull BlockMenu blockMenu, int amount) {
+        List<SlimefunItem> slimefunItemList = Slimefun.getRegistry().getAllSlimefunItems();
+        int searchedTime = 0;
+        SlimefunItem searchedSlimefunItem = null;
+        String searchedValue = null;
 
-    private void doCraft(@Nonnull BlockMenu blockMenu, @Nonnull Config config) {
-        String value = config.contains(this.key) ? config.getString(this.key) : StringNumberUtil.ZERO;
-        List<String> valueList = new ArrayList<>(ItemValueTable.getInstance().getValueItemListOutputMap().keySet());
         for (int i = 0, retryTimes = value.length(); i < retryTimes; i++) {
-            String targetValue = valueList.get(FinalTech.getRandom().nextInt(valueList.size()));
+            SlimefunItem slimefunItem = slimefunItemList.get(FinalTech.getRandom().nextInt(slimefunItemList.size()));
+            String targetValue = ItemValueTable.getInstance().getOrCalItemOutputValue(slimefunItem);
+
             if (StringNumberUtil.compare(value, targetValue) >= 0) {
                 List<String> idList = ItemValueTable.getInstance().getValueItemListOutputMap().get(targetValue);
+                if(idList == null || idList.isEmpty()) {
+                    continue;
+                }
                 String id = idList.get((int) (Math.random() * idList.size()));
-                SlimefunItem slimefunItem = SlimefunItem.getById(id);
+                slimefunItem = SlimefunItem.getById(id);
                 if (slimefunItem == null || slimefunItem instanceof MultiBlockMachine) {
                     continue;
                 }
-                ItemStack item = new CustomItemStack(slimefunItem.getItem(), 1);
-                if (MachineUtil.calMaxMatch(blockMenu.toInventory(), this.getOutputSlot(), List.of(new ItemAmountWrapper(item))) >= 1) {
-                    blockMenu.pushItem(item, this.getOutputSlot());
-                    if(StringNumberUtil.ZERO.equals(targetValue)) {
-                        value = StringNumberUtil.ZERO;
-                    } else {
-                        value = StringNumberUtil.sub(value, targetValue);
-                    }
+
+                if(searchedValue == null || StringNumberUtil.ZERO.equals(targetValue) || StringNumberUtil.compare(targetValue, searchedValue) > 0) {
+                    searchedSlimefunItem = slimefunItem;
+                    searchedValue = targetValue;
+                }
+                if(++searchedTime >= amount) {
                     break;
                 }
             }
         }
-        config.setValue(this.key, value);
+
+        if(searchedSlimefunItem != null) {
+            ItemStack item = ItemStackUtil.cloneItem(searchedSlimefunItem.getItem(), 1);
+            if (MachineUtil.calMaxMatch(blockMenu.toInventory(), this.getOutputSlot(), List.of(new ItemAmountWrapper(item))) >= 1) {
+                blockMenu.pushItem(item, this.getOutputSlot());
+                if(StringNumberUtil.ZERO.equals(searchedValue)) {
+                    value = StringNumberUtil.ZERO;
+                } else {
+                    value = StringNumberUtil.sub(value, searchedValue);
+                }
+            }
+        }
+
+        return value;
     }
 
     @Override

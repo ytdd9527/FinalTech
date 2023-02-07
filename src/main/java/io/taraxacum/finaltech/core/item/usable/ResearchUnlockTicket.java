@@ -18,6 +18,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 /**
  * @author Final_ROOT
@@ -37,16 +38,14 @@ public class ResearchUnlockTicket extends UsableSlimefunItem implements RecipeIt
         if (playerProfile.isPresent()) {
             if (!playerProfile.get().hasUnlockedEverything()) {
                 PlayerProfile profile = playerProfile.get();
-                for (Research research : researchList) {
-                    if (!profile.hasUnlocked(research) && research.canUnlock(player)) {
-                        ItemStack item = playerRightClickEvent.getItem();
-                        item.setAmount(item.getAmount() - 1);
-                        research.unlock(player, true);
-                        return;
-                    }
+                Research research = researchList.get(new Random().nextInt(researchList.size() - 1));
+                if (!profile.hasUnlocked(research) && research.canUnlock(player)) {
+                    research.unlock(player, true);
                 }
             }
         }
+        ItemStack item = playerRightClickEvent.getItem();
+        item.setAmount(item.getAmount() - 1);
     }
 
     @Override

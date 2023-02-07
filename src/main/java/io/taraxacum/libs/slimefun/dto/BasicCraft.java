@@ -81,7 +81,7 @@ public class BasicCraft {
 
                     } else {
                         ItemWrapper itemWrapper = indexItemMap.get(i);
-                        if (itemWrapper.getItemStack().getAmount() < itemStack.getAmount() || !ItemStackUtil.isItemSimilar(itemWrapper, itemStack)) {
+                        if (itemWrapper.getItemStack().getAmount() < itemStack.getAmount() || !ItemStackUtil.isItemSimilar(itemWrapper, itemStack) || !ItemStackUtil.isEnchantmentSame(itemWrapper.getItemStack(), itemStack)) {
                             matchAmount = 0;
                             break;
                         }

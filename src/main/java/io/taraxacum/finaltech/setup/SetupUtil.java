@@ -1,5 +1,6 @@
 package io.taraxacum.finaltech.setup;
 
+import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
@@ -11,15 +12,19 @@ import io.taraxacum.finaltech.core.command.ShowItemInfo;
 import io.taraxacum.finaltech.core.command.TransferToCopyCardItem;
 import io.taraxacum.finaltech.core.command.TransferToStorageItem;
 import io.taraxacum.finaltech.core.enchantment.NullEnchantment;
-import io.taraxacum.finaltech.core.item.machine.function.*;
+import io.taraxacum.finaltech.core.item.machine.clicker.*;
 import io.taraxacum.finaltech.core.item.machine.logic.LogicAmountComparator;
 import io.taraxacum.finaltech.core.item.machine.logic.LogicEqualComparator;
 import io.taraxacum.finaltech.core.item.machine.logic.LogicNotNullComparator;
 import io.taraxacum.finaltech.core.item.machine.logic.LogicSimilarComparator;
+import io.taraxacum.finaltech.core.item.machine.manual.ItemDismantleTable;
+import io.taraxacum.finaltech.core.item.machine.range.line.ConfigurationCopier;
+import io.taraxacum.finaltech.core.item.machine.range.line.ConfigurationPaster;
 import io.taraxacum.finaltech.core.item.machine.range.point.NormalConfigurableElectricityShootPile;
 import io.taraxacum.finaltech.core.item.machine.range.point.NormalConsumableElectricityShootPile;
 import io.taraxacum.finaltech.core.item.machine.range.point.face.*;
 import io.taraxacum.finaltech.core.item.machine.template.extraction.DigitalExtraction;
+import io.taraxacum.finaltech.core.item.machine.tower.*;
 import io.taraxacum.finaltech.core.item.tool.*;
 import io.taraxacum.finaltech.core.item.machine.*;
 import io.taraxacum.finaltech.core.item.machine.unit.*;
@@ -33,9 +38,6 @@ import io.taraxacum.finaltech.core.item.machine.template.basic.*;
 import io.taraxacum.finaltech.core.item.machine.template.conversion.*;
 import io.taraxacum.finaltech.core.item.machine.template.extraction.OreExtraction;
 import io.taraxacum.finaltech.core.item.machine.template.generator.*;
-import io.taraxacum.finaltech.core.item.machine.tower.CureTower;
-import io.taraxacum.finaltech.core.item.machine.tower.PurifyLevelTower;
-import io.taraxacum.finaltech.core.item.machine.tower.PurifyTimeTower;
 import io.taraxacum.finaltech.core.item.unusable.*;
 import io.taraxacum.finaltech.core.item.unusable.digital.*;
 import io.taraxacum.finaltech.core.item.unusable.liquid.LavaCard;
@@ -43,6 +45,8 @@ import io.taraxacum.finaltech.core.item.unusable.liquid.MilkCard;
 import io.taraxacum.finaltech.core.item.unusable.liquid.WaterCard;
 import io.taraxacum.finaltech.core.item.unusable.logic.LogicFalse;
 import io.taraxacum.finaltech.core.item.unusable.logic.LogicTrue;
+import io.taraxacum.finaltech.core.item.unusable.trophy.Meawerful;
+import io.taraxacum.finaltech.core.item.unusable.trophy.Shixinzia;
 import io.taraxacum.finaltech.core.item.usable.*;
 import io.taraxacum.finaltech.core.item.usable.machine.*;
 import io.taraxacum.finaltech.core.item.machine.electric.capacitor.AdvancedChargeIncreaseCapacitor;
@@ -60,9 +64,9 @@ import io.taraxacum.finaltech.core.item.machine.cargo.storage.StorageInteractPor
 import io.taraxacum.finaltech.core.item.machine.cargo.storage.StorageWithdrawPort;
 import io.taraxacum.finaltech.core.item.machine.manual.CardOperationTable;
 import io.taraxacum.finaltech.core.item.machine.manual.craft.*;
-import io.taraxacum.finaltech.core.item.machine.range.line.shooter.EnergizedElectricityShootPile;
-import io.taraxacum.finaltech.core.item.machine.range.line.shooter.NormalElectricityShootPile;
-import io.taraxacum.finaltech.core.item.machine.range.line.shooter.OverloadedElectricityShootPile;
+import io.taraxacum.finaltech.core.item.machine.range.line.pile.EnergizedElectricityShootPile;
+import io.taraxacum.finaltech.core.item.machine.range.line.pile.NormalElectricityShootPile;
+import io.taraxacum.finaltech.core.item.machine.range.line.pile.OverloadedElectricityShootPile;
 import io.taraxacum.finaltech.core.item.machine.template.advanced.*;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
@@ -85,52 +89,112 @@ import java.util.function.Function;
  * @since 1.0
  */
 public final class SetupUtil {
-    public static void init() {
-        FinalTech finalTech = FinalTech.getInstance();
+    public static void setupLanguageManager(@Nonnull LanguageManager languageManager) {
+        // Color normal
+        languageManager.addFunction(new Function<>() {
+            @Override
+            public String apply(String s) {
+                String[] split = StringUtil.split(s, "{color:", "}");
+                if (split.length == 3) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(split[0]);
+                    switch (split[1]) {
+                        case "normal" -> stringBuilder.append(TextUtil.COLOR_NORMAL);
+                        case "stress" -> stringBuilder.append(TextUtil.COLOR_STRESS);
+                        case "action" -> stringBuilder.append(TextUtil.COLOR_ACTION);
+                        case "initiative" -> stringBuilder.append(TextUtil.COLOR_INITIATIVE);
+                        case "passive" -> stringBuilder.append(TextUtil.COLOR_PASSIVE);
+                        case "number" -> stringBuilder.append(TextUtil.COLOR_NUMBER);
+                        case "positive" -> stringBuilder.append(TextUtil.COLOR_POSITIVE);
+                        case "negative" -> stringBuilder.append(TextUtil.COLOR_NEGATIVE);
+                        case "conceal" -> stringBuilder.append(TextUtil.COLOR_CONCEAL);
+                        case "input" -> stringBuilder.append(TextUtil.COLOR_INPUT);
+                        case "output" -> stringBuilder.append(TextUtil.COLOR_OUTPUT);
+                        case "random" -> stringBuilder.append(TextUtil.getRandomColor());
+                        case "prandom" -> stringBuilder.append(TextUtil.getPseudorandomColor(FinalTech.getSeed()));
+                        default -> stringBuilder.append(split[1]);
+                    }
+                    return stringBuilder.append(this.apply(split[2])).toString();
+                } else {
+                    return s;
+                }
+            }
+        });
+        // SlimefunItem name by id
+        languageManager.addFunction(new Function<>() {
+            @Override
+            public String apply(String s) {
+                String[] split = StringUtil.split(s, "{id:", "}");
+                if (split.length == 3) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(split[0]);
+                    SlimefunItem slimefunItem = SlimefunItem.getById(split[1]);
+                    if (slimefunItem != null) {
+                        stringBuilder.append(slimefunItem.getItemName());
+                    } else {
+                        stringBuilder.append(split[1]);
+                    }
+                    return stringBuilder.append(this.apply(split[2])).toString();
+                } else {
+                    return s;
+                }
+            }
+        });
+        // Color random
+        languageManager.addFunction(new Function<>() {
+            @Override
+            public String apply(String s) {
+                String[] split = StringUtil.split(s, "{random-color:start}", "{random-color:end}");
+                if (split.length == 3) {
+                    return split[0] + TextUtil.colorRandomString(split[1]) + this.apply(split[2]);
+                } else {
+                    return s;
+                }
+            }
+        });
+    }
 
-        /* setup config */
+    private static void setupEnchantment() {
+        try {
+            ReflectionUtil.setStaticValue(Enchantment.class, "acceptingNew", true);
+            Enchantment.registerEnchantment(NullEnchantment.ENCHANTMENT);
 
-        ConfigFileManager config = FinalTech.getConfigManager();
+            NullEnchantment.addAndHidden(FinalTechItems.ADVANCED_POINT_TRANSFER);
+            NullEnchantment.addAndHidden(FinalTechItems.ADVANCED_MESH_TRANSFER);
+            NullEnchantment.addAndHidden(FinalTechItems.ADVANCED_LINE_TRANSFER);
+            NullEnchantment.addAndHidden(FinalTechItems.ADVANCED_LOCATION_TRANSFER);
 
-        AbstractManualCraftMachine.COUNT_THRESHOLD = config.getOrDefault(10, "manual", "count-threshold");
-        if (AbstractManualCraftMachine.COUNT_THRESHOLD == -1) {
-            AbstractManualCraftMachine.COUNT_THRESHOLD = Slimefun.getTickerTask().getTickRate();
+            NullEnchantment.addAndHidden(FinalTechItems.ENTROPY);
+            NullEnchantment.addAndHidden(FinalTechItems.QUANTITY_MODULE_INFINITY);
+            NullEnchantment.addAndHidden(FinalTechItems.OPERATION_ACCELERATOR_INFINITY);
+            NullEnchantment.addAndHidden(FinalTechItems.COPY_CARD);
+            NullEnchantment.addAndHidden(FinalTechItems.SHINE);
+            NullEnchantment.addAndHidden(FinalTechItems.PHONY);
+            NullEnchantment.addAndHidden(FinalTechItems.MACHINE_CHARGE_CARD_INFINITY);
+            NullEnchantment.addAndHidden(FinalTechItems.MACHINE_ACCELERATE_CARD_INFINITY);
+            NullEnchantment.addAndHidden(FinalTechItems.MACHINE_ACTIVATE_CARD_L4);
+            NullEnchantment.addAndHidden(FinalTechItems.ADVANCED_AUTO_CRAFT);
+            NullEnchantment.addAndHidden(FinalTechItems.MULTI_FRAME_MACHINE);
+            NullEnchantment.addAndHidden(FinalTechItems.MATRIX_ITEM_DISMANTLE_TABLE);
+            NullEnchantment.addAndHidden(FinalTechItems.MATRIX_EXPANDED_CAPACITOR);
+            NullEnchantment.addAndHidden(FinalTechItems.MATRIX_ITEM_DESERIALIZE_PARSER);
+            NullEnchantment.addAndHidden(FinalTechItems.ENTROPY_CONSTRUCTOR);
+            NullEnchantment.addAndHidden(FinalTechItems.MATRIX_GENERATOR);
+            NullEnchantment.addAndHidden(FinalTechItems.MATRIX_ACCELERATOR);
+            NullEnchantment.addAndHidden(FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR);
+            NullEnchantment.addAndHidden(FinalTechItems.MATRIX_REACTOR);
+        } catch (Exception e) {
+            e.printStackTrace();
+            FinalTech.logger().warning("Some error occurred while registering enchantment");
         }
+    }
 
-        /* setup menu */
+    public static void setupItem() {
+        ItemStackUtil.setLore(FinalTechItems.TROPHY_MEAWERFUL,
+                "§fThanks for some good idea");
+        ItemStackUtil.setLore(FinalTechItems.TROPHY_SHIXINZIA,
+                "§fThanks for some test work");
 
-        FinalTechMenus.MAIN_MENU.setTier(0);
-        FinalTechMenus.MAIN_MENU.register(finalTech);
-
-        FinalTechMenus.MENU_ITEMS.setTier(0);
-        FinalTechMenus.MENU_CARGO_SYSTEM.setTier(0);
-        FinalTechMenus.MENU_ELECTRICITY_SYSTEM.setTier(0);
-        FinalTechMenus.MENU_FUNCTIONAL_MACHINE.setTier(0);
-        FinalTechMenus.MENU_PRODUCTIVE_MACHINE.setTier(0);
-        FinalTechMenus.MENU_DISC.setTier(0);
-
-        /* Enchantment */
-        ReflectionUtil.setStaticValue(Enchantment.class, "acceptingNew", true);
-        Enchantment.registerEnchantment(NullEnchantment.ENCHANTMENT);
-        FinalTechItems.ENTROPY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.QUANTITY_MODULE_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.OPERATION_ACCELERATOR_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.COPY_CARD.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.SHINE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.PHONY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MACHINE_CHARGE_CARD_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MACHINE_ACCELERATE_CARD_INFINITY.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MACHINE_ACTIVATE_CARD_L4.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.ADVANCED_AUTO_CRAFT.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MULTI_FRAME_MACHINE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MATRIX_ITEM_DISMANTLE_TABLE.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MATRIX_EXPANDED_CAPACITOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MATRIX_ITEM_DESERIALIZE_PARSER.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.ENTROPY_CONSTRUCTOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MATRIX_GENERATOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MATRIX_ACCELERATOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
-        FinalTechItems.MATRIX_REACTOR.addUnsafeEnchantment(NullEnchantment.ENCHANTMENT, 0);
         ItemStackUtil.addLoreToFirst(FinalTechItems.STORAGE_CARD, StorageCard.ITEM_LORE);
 
         /* items */
@@ -312,6 +376,17 @@ public final class SetupUtil {
                 new MeshTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.MESH_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MESH_TRANSFER).register(),
                 new LineTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LINE_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LINE_TRANSFER).register(),
                 new LocationTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.LOCATION_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LOCATION_TRANSFER).register());
+        FinalTechMenus.SUB_MENU_CARGO.addTo(
+                new AdvancedPointTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.ADVANCED_POINT_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_POINT_TRANSFER).register(),
+                new AdvancedMeshTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.ADVANCED_MESH_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_MESH_TRANSFER).register(),
+                new AdvancedLineTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.ADVANCED_LINE_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_LINE_TRANSFER).register(),
+                new AdvancedLocationTransfer(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.ADVANCED_LOCATION_TRANSFER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_LOCATION_TRANSFER).register());
+        FinalTechMenus.SUB_MENU_CARGO.addTo(
+                new ConfigurationCopier(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.CONFIGURATION_COPIER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CONFIGURATION_COPIER).register(),
+                new ConfigurationPaster(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.CONFIGURATION_PASTER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CONFIGURATION_PASTER).register(),
+                new ClickWorkMachine(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.CLICK_WORK_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CLICK_WORK_MACHINE).register(),
+                new SimulateClickMachine(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.SIMULATE_CLICK_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.SIMULATE_CLICK_MACHINE).register(),
+                new ConsumableSimulateClickMachine(FinalTechMenus.MENU_CARGO_SYSTEM, FinalTechItems.CONSUMABLE_SIMULATE_CLICK_MACHINE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.CONSUMABLE_SIMULATE_CLICK_MACHINE).register());
 
         /* functional machines */
         // core machines
@@ -321,10 +396,12 @@ public final class SetupUtil {
                 new MatrixCraftingTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.MATRIX_CRAFTING_TABLE, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MATRIX_CRAFTING_TABLE).register());
         FinalTechMenus.SUB_MENU_CORE_MACHINE.addTo(
                 new ItemDismantleTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ITEM_DISMANTLE_TABLE).register(),
+                new AutoItemDismantleTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.AUTO_ITEM_DISMANTLE_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.AUTO_ITEM_DISMANTLE_TABLE).register(),
                 new EquivalentExchangeTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.EQUIVALENT_EXCHANGE_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.EQUIVALENT_EXCHANGE_TABLE).register(),
                 new ItemSerializationConstructor(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ITEM_SERIALIZATION_CONSTRUCTOR).register(),
                 new ItemDeserializeParser(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_DESERIALIZE_PARSER, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ITEM_DESERIALIZE_PARSER).register(),
-                new CardOperationTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.CARD_OPERATION_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.CARD_OPERATION_TABLE).register());
+                new CardOperationTable(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.CARD_OPERATION_TABLE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.CARD_OPERATION_TABLE).register(),
+                new AdvancedAutoCraftFrame(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ADVANCED_AUTO_CRAFT_FRAME, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.ADVANCED_AUTO_CRAFT_FRAME).register());
         // special machines
         FinalTechMenus.SUB_MENU_SPECIAL_MACHINE.addTo(
                 new ItemFixer(FinalTechMenus.MENU_FUNCTIONAL_MACHINE, FinalTechItems.ITEM_FIXER, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.ITEM_FIXER).register(),
@@ -411,6 +488,9 @@ public final class SetupUtil {
                 new MatrixAccelerator(FinalTechMenus.MENU_DISC, FinalTechItems.MATRIX_ACCELERATOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ACCELERATOR).register(),
                 new MatrixItemSerializationConstructor(FinalTechMenus.MENU_DISC, FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR).register(),
                 new MatrixReactor(FinalTechMenus.MENU_DISC, FinalTechItems.MATRIX_REACTOR, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.MATRIX_REACTOR).register());
+        FinalTechMenus.SUB_MENU_TROPHY.addTo(
+                new Meawerful(FinalTechMenus.MENU_DISC, FinalTechItems.TROPHY_MEAWERFUL, RecipeType.NULL, new ItemStack[0]).register(),
+                new Shixinzia(FinalTechMenus.MENU_DISC, FinalTechItems.TROPHY_SHIXINZIA, RecipeType.NULL, FinalTechRecipes.TROPHY_SHIXINZIA).register());
         FinalTechMenus.SUB_MENU_DEPRECATED.addTo(
                 new BasicChargeIncreaseCapacitor(FinalTechMenus.MENU_DISC, FinalTechItems.BASIC_CHARGE_INCREASE_CAPACITOR, RecipeType.NULL, new ItemStack[0]).register(),
                 new BasicConsumeReduceCapacitor(FinalTechMenus.MENU_DISC, FinalTechItems.BASIC_CONSUME_REDUCE_CAPACITOR, RecipeType.NULL, new ItemStack[0]).register(),
@@ -429,6 +509,19 @@ public final class SetupUtil {
                 new StoneGenerator(FinalTechMenus.MENU_DISC, FinalTechItems.STONE_GENERATOR, RecipeType.NULL, new ItemStack[0]).register(),
                 new RawStoneGenerator(FinalTechMenus.MENU_DISC, FinalTechItems.RAW_STONE_GENERATOR, RecipeType.NULL, new ItemStack[0]).register(),
                 new NetherStoneGenerator(FinalTechMenus.MENU_DISC, FinalTechItems.NETHER_STONE_GENERATOR, RecipeType.NULL, new ItemStack[0]).register());
+    }
+
+    private static void setupMenu() {
+        FinalTech finalTech = FinalTech.getInstance();
+
+        FinalTechMenus.MAIN_MENU.setTier(0);
+
+        FinalTechMenus.MENU_ITEMS.setTier(0);
+        FinalTechMenus.MENU_ELECTRICITY_SYSTEM.setTier(0);
+        FinalTechMenus.MENU_CARGO_SYSTEM.setTier(0);
+        FinalTechMenus.MENU_FUNCTIONAL_MACHINE.setTier(0);
+        FinalTechMenus.MENU_PRODUCTIVE_MACHINE.setTier(0);
+        FinalTechMenus.MENU_DISC.setTier(0);
 
         for(SlimefunItem slimefunItem : FinalTechMenus.SUB_MENU_DEPRECATED.getSlimefunItems()) {
             try {
@@ -521,8 +614,9 @@ public final class SetupUtil {
 
         FinalTechMenus.MAIN_ITEM_GROUP.setTier(0);
         FinalTechMenus.MAIN_ITEM_GROUP.register(finalTech);
+    }
 
-        /* Researches */
+    private static void setupResearch() {
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "LIQUID_CARD", 1, false,
                 FinalTechItems.WATER_CARD,
                 FinalTechItems.LAVA_CARD,
@@ -704,11 +798,25 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LINE_TRANSFER, SlimefunItems.CARGO_MANAGER);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.LOCATION_TRANSFER, SlimefunItems.CARGO_MANAGER);
 
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_POINT_TRANSFER, SlimefunItems.CARGO_MANAGER);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_MESH_TRANSFER, SlimefunItems.CARGO_MANAGER);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_LINE_TRANSFER, SlimefunItems.CARGO_MANAGER);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_LOCATION_TRANSFER, SlimefunItems.CARGO_MANAGER);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CONFIGURATION_COPIER, SlimefunItems.CRAFTING_MOTOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CONFIGURATION_PASTER, SlimefunItems.CRAFTING_MOTOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CLICK_WORK_MACHINE, SlimefunItems.GPS_ACTIVATION_DEVICE_PERSONAL);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SIMULATE_CLICK_MACHINE, SlimefunItems.GPS_ACTIVATION_DEVICE_SHARED);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CONSUMABLE_SIMULATE_CLICK_MACHINE, SlimefunItems.GPS_ACTIVATION_DEVICE_SHARED);
+
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.MATRIX_CRAFTING_TABLE, SlimefunItems.PROGRAMMABLE_ANDROID_2);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ITEM_DISMANTLE_TABLE, SlimefunItems.NUCLEAR_REACTOR);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.AUTO_ITEM_DISMANTLE_TABLE, SlimefunItems.NUCLEAR_REACTOR);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.CARD_OPERATION_TABLE, SlimefunItems.WITHER_ASSEMBLER);
+
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_AUTO_CRAFT_FRAME, SlimefunItems.ENHANCED_AUTO_CRAFTER);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ITEM_FIXER, SlimefunItems.IRON_GOLEM_ASSEMBLER);
 
@@ -756,80 +864,33 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_CARBON_PRESS, SlimefunItems.CARBON_PRESS_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_SMELTERY, SlimefunItems.ELECTRIC_SMELTERY_2);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_COMPOSTER, SlimefunItems.FOOD_COMPOSTER_2);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItems.ADVANCED_DUST_FACTORY, SlimefunItems.PRODUCE_COLLECTOR);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.GRAVEL_CONVERSION, SlimefunItems.GOLD_PAN);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItems.SOUL_SAND_CONVERSION, SlimefunItems.NETHER_GOLD_PAN);
+    }
 
-        /* command */
+    private static void setupCommand() {
+        FinalTech finalTech = FinalTech.getInstance();
+
         finalTech.getCommand("finaltech-copy-card").setExecutor(new TransferToCopyCardItem());
         finalTech.getCommand("finaltech-storage-card").setExecutor(new TransferToStorageItem());
         finalTech.getCommand("finaltech-info").setExecutor(new ShowItemInfo());
     }
 
-    public static void initLanguageManager(@Nonnull LanguageManager languageManager) {
-        // Color normal
-        languageManager.addFunction(new Function<>() {
-            @Override
-            public String apply(String s) {
-                String[] split = StringUtil.split(s, "{color:", "}");
-                if (split.length == 3) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append(split[0]);
-                    switch (split[1]) {
-                        case "normal" -> stringBuilder.append(TextUtil.COLOR_NORMAL);
-                        case "stress" -> stringBuilder.append(TextUtil.COLOR_STRESS);
-                        case "action" -> stringBuilder.append(TextUtil.COLOR_ACTION);
-                        case "initiative" -> stringBuilder.append(TextUtil.COLOR_INITIATIVE);
-                        case "passive" -> stringBuilder.append(TextUtil.COLOR_PASSIVE);
-                        case "number" -> stringBuilder.append(TextUtil.COLOR_NUMBER);
-                        case "positive" -> stringBuilder.append(TextUtil.COLOR_POSITIVE);
-                        case "negative" -> stringBuilder.append(TextUtil.COLOR_NEGATIVE);
-                        case "conceal" -> stringBuilder.append(TextUtil.COLOR_CONCEAL);
-                        case "input" -> stringBuilder.append(TextUtil.COLOR_INPUT);
-                        case "output" -> stringBuilder.append(TextUtil.COLOR_OUTPUT);
-                        case "random" -> stringBuilder.append(TextUtil.getRandomColor());
-                        case "prandom" -> stringBuilder.append(TextUtil.getPseudorandomColor(FinalTech.getSeed()));
-                        default -> stringBuilder.append(split[1]);
-                    }
-                    return stringBuilder.append(this.apply(split[2])).toString();
-                } else {
-                    return s;
-                }
-            }
-        });
-        // SlimefunItem Name by id
-        languageManager.addFunction(new Function<>() {
-            @Override
-            public String apply(String s) {
-                String[] split = StringUtil.split(s, "{id:", "}");
-                if (split.length == 3) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append(split[0]);
-                    SlimefunItem slimefunItem = SlimefunItem.getById(split[1]);
-                    if (slimefunItem != null) {
-                        stringBuilder.append(slimefunItem.getItemName());
-                    } else {
-                        stringBuilder.append(split[1]);
-                    }
-                    return stringBuilder.append(this.apply(split[2])).toString();
-                } else {
-                    return s;
-                }
-            }
-        });
-        // Color random
-        languageManager.addFunction(new Function<>() {
-            @Override
-            public String apply(String s) {
-                String[] split = StringUtil.split(s, "{random-color:start}", "{random-color:end}");
-                if (split.length == 3) {
-                    return split[0] + TextUtil.colorRandomString(split[1]) + this.apply(split[2]);
-                } else {
-                    return s;
-                }
-            }
-        });
+    public static void init() {
+        ConfigFileManager configManager = FinalTech.getConfigManager();
+
+        setupLanguageManager(FinalTech.getLanguageManager());
+
+        if(configManager.getOrDefault(true, "enable", "item")) {
+            // Yeah, you may not want new items from this plugin.
+            setupEnchantment();
+            setupItem();
+            setupMenu();
+            setupResearch();
+        }
+
+        setupCommand();
     }
 
     public static void registerBlockTicker() {
@@ -838,41 +899,76 @@ public final class SetupUtil {
 
     private static void registerBlockTicker(int begin) {
         try {
+            ConfigFileManager configManager = FinalTech.getConfigManager();
             List<SlimefunItem> slimefunItemList = Slimefun.getRegistry().getAllSlimefunItems();
             for(int size = slimefunItemList.size(); begin < size; begin++) {
                 SlimefunItem slimefunItem = slimefunItemList.get(begin);
-                if (!slimefunItem.getAddon().getJavaPlugin().equals(FinalTech.getInstance()) && slimefunItem.getBlockTicker() != null) {
+                SlimefunAddon slimefunAddon = slimefunItem.getAddon();
+                if (slimefunItem.getBlockTicker() != null) {
                     BlockTicker blockTicker = slimefunItem.getBlockTicker();
-                    boolean forceAsync = false;
-                    if (FinalTech.getConfigManager().getOrDefault(false, "super-ban") && slimefunItem.isDisabled()) {
-                        blockTicker = null;
-                    } else {
-                        if(FinalTech.getConfigManager().containPath("interval", "general", slimefunItem.getId())) {
-                            int interval = Integer.parseInt(FinalTech.getConfigManager().getString("interval", "general", slimefunItem.getId()));
-                            if(interval > 0) {
-                                blockTicker = BlockTickerUtil.getGeneralIntervalBlockTicker(blockTicker, interval);
-                            } else {
-                                FinalTech.logger().warning("wrong value of interval.general." + slimefunItem.getId() + " in config file");
-                            }
-                        }
-                        if(FinalTech.getConfigManager().containPath("interval", "independent", slimefunItem.getId())) {
-                            int interval = Integer.parseInt(FinalTech.getConfigManager().getString("interval", "independent", slimefunItem.getId()));
-                            if(interval > 1) {
-                                blockTicker = BlockTickerUtil.getIndependentIntervalBlockTicker(blockTicker, interval);
-                            } else {
-                                FinalTech.logger().warning("wrong value of interval.independent." + slimefunItem.getId() + " in config file");
-                            }
-                        }
-                        forceAsync = !blockTicker.isSynchronized() && (FinalTech.getForceSlimefunMultiThread() || FinalTech.isAsyncSlimefunItem(slimefunItem.getId()));
-                        boolean antiAccelerate = FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId());
-                        boolean performanceLimit = FinalTech.isPerformanceLimitSlimefunItem(slimefunItem.getId());
-                        if(forceAsync || antiAccelerate || performanceLimit) {
-                            blockTicker = BlockTickerUtil.generateBlockTicker(blockTicker, forceAsync, antiAccelerate, performanceLimit);
-                        }
-                    }
+
                     if(FinalTech.debugMode()) {
                         blockTicker = BlockTickerUtil.getDebugModeBlockTicker(blockTicker, slimefunItem);
                     }
+
+                    if(configManager.containPath("tweak", "interval", "general", slimefunItem.getId())) {
+                        int interval = configManager.getOrDefault(-1, "tweak", "interval", "general", slimefunItem.getId());
+                        if(interval > 0) {
+                            blockTicker = BlockTickerUtil.getGeneralIntervalBlockTicker(blockTicker, interval);
+                            FinalTech.logger().info(slimefunItem.getId() + " is tweaked for general interval limit");
+                        } else {
+                            FinalTech.logger().warning("wrong value of tweak.interval.general." + slimefunItem.getId() + " in config file");
+                        }
+                    }
+                    if(configManager.containPath("tweak", "interval", "independent", slimefunItem.getId())) {
+                        int interval = configManager.getOrDefault(-1, "tweak", "interval", "independent", slimefunItem.getId());
+                        if(interval > 1) {
+                            blockTicker = BlockTickerUtil.getIndependentIntervalBlockTicker(blockTicker, interval);
+                            FinalTech.logger().info(slimefunItem.getId() + " is tweaked for independent interval limit");
+                        } else {
+                            FinalTech.logger().warning("wrong value of tweak.interval.independent." + slimefunItem.getId() + " in config file");
+                        }
+                    }
+
+                    if(configManager.containPath("tweak", "range-limit", slimefunItem.getId(), "range")) {
+                        int range = configManager.getOrDefault(-1, "tweak", "range-limit", slimefunItem.getId(), "range");
+                        if(range > 0) {
+                            int mulRange = configManager.getOrDefault(0, "tweak", "range-limit", slimefunItem.getId(), "mul-range");
+                            boolean dropSelf = configManager.getOrDefault(false, "tweak", "range-limit", slimefunItem.getId(), "drop-self");
+                            String message = configManager.getOrDefault("{1} is not allowed to be placed too closely", "tweak", "range-limit", slimefunItem.getId(), "message");
+                            blockTicker = BlockTickerUtil.getRangeLimitBlockTicker(blockTicker, range, mulRange, dropSelf, message);
+                            FinalTech.logger().info(slimefunItem.getId() + " is tweaked for range limit");
+                        } else {
+                            FinalTech.logger().warning("wrong value of tweak.range." + slimefunItem.getId() + " in config file");
+                        }
+                    }
+
+                    boolean forceAsync = !blockTicker.isSynchronized() && (FinalTech.getForceSlimefunMultiThread() || FinalTech.isAsyncSlimefunItem(slimefunItem.getId()) || FinalTech.getAsyncSlimefunPluginSet().contains(slimefunAddon.getName()));
+                    boolean antiAccelerate = FinalTech.isAntiAccelerateSlimefunItem(slimefunItem.getId()) || FinalTech.getAntiAccelerateSlimefunPluginSet().contains(slimefunAddon.getName());
+                    boolean performanceLimit = FinalTech.isPerformanceLimitSlimefunItem(slimefunItem.getId()) || FinalTech.getPerformanceLimitSlimefunPluginSet().contains(slimefunAddon.getName());
+                    if(forceAsync || antiAccelerate || performanceLimit) {
+                        blockTicker = BlockTickerUtil.generateBlockTicker(blockTicker, forceAsync, antiAccelerate, performanceLimit);
+                        if(antiAccelerate) {
+                            FinalTech.addAntiAccelerateSlimefunItem(slimefunItem.getId());
+                            FinalTech.logger().info(slimefunItem.getId() + " is tweaked for anti accelerate");
+                        }
+                        if(performanceLimit) {
+                            FinalTech.addPerformanceLimitSlimefunItem(slimefunItem.getId());
+                            FinalTech.logger().info(slimefunItem.getId() + " is tweaked for performance limit");
+                        }
+                    }
+
+                    if (configManager.getOrDefault(false, "super-ban") && slimefunItem.isDisabled()) {
+                        blockTicker = null;
+                        FinalTech.logger().info(slimefunItem.getId() + " is tweaked to remove block ticker");
+                    } else if(FinalTech.isNoBlockTickerSlimefunItem(slimefunItem.getId())) {
+                        blockTicker = null;
+                        FinalTech.logger().info(slimefunItem.getId() + " is tweaked to remove block ticker");
+                    } else if(FinalTech.getNoBlockTickerSlimefunPluginSet().contains(slimefunAddon.getJavaPlugin().getName())){
+                        blockTicker = null;
+                        FinalTech.logger().info(slimefunItem.getId() + " is tweaked to remove block ticker");
+                    }
+
                     if(slimefunItem.getBlockTicker() != blockTicker) {
                         Class<SlimefunItem> clazz = SlimefunItem.class;
                         Field declaredField = clazz.getDeclaredField("blockTicker");

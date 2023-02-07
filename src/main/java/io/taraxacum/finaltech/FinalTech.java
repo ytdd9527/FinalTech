@@ -2,6 +2,7 @@ package io.taraxacum.finaltech;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.setup.Updater;
 import io.taraxacum.libs.plugin.dto.ConfigFileManager;
 import io.taraxacum.libs.plugin.dto.*;
@@ -11,6 +12,7 @@ import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
+import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -19,9 +21,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import javax.annotation.Nonnull;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 /**
@@ -54,6 +57,11 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
     private Set<String> asyncSlimefunIdSet = new HashSet<>();
     private Set<String> antiAccelerateSlimefunIdSet = new HashSet<>();
     private Set<String> performanceLimitSlimefunIdSet = new HashSet<>();
+    private Set<String> noBlockTickerSlimefunIdSet = new HashSet<>();
+    private Set<String> asyncSlimefunPluginSet = new HashSet<>();
+    private Set<String> antiAccelerateSlimefunPluginSet = new HashSet<>();
+    private Set<String> performanceLimitSlimefunPluginSet = new HashSet<>();
+    private Set<String> noBlockTickerSlimefunPluginSet = new HashSet<>();
     private Random random;
     private long seed;
     private BukkitTask bukkitTask;
@@ -65,8 +73,6 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         super.onEnable();
 
         instance = this;
-        this.logger = CustomLogger.newInstance(this.getJavaPlugin().getServer().getLogger());
-        this.logger.setBanner("[FinalTECH] ");
 
         /* read config file */
         try {
@@ -82,6 +88,18 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             return;
         }
 
+        /* set logger */
+        this.logger = CustomLogger.newInstance(this.getJavaPlugin().getServer().getLogger());
+        this.logger.setBanner("[" + this.languageManager.getOrDefault("FinalTECH", "FinalTech") + "] ");
+
+        /* set version */
+        if (!this.config.containPath("version")) {
+            this.config.setValue(version, "version");
+            if(!this.config.containPath("enable", "item")) {
+                this.config.setValue(true, "enable", "item");
+            }
+        }
+
         /* update the config file */
         if(this.config.getOrDefault(true, "update", "enable")) {
             this.logger.info("You have enabled the config updater.");
@@ -90,7 +108,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
                 updater.update(this);
             } catch (Exception e) {
                 e.printStackTrace();
-                this.logger.info("Some error occurred while doing update..");
+                this.logger.warning("Some error occurred while doing update..");
             }
         } else {
             this.logger.info("You have disabled the config updater.");
@@ -109,11 +127,6 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         /* set runnable factory */
         this.locationRunnableFactory = ServerRunnableLockFactory.getInstance(this, Location.class);
         this.entityRunnableFactory = ServerRunnableLockFactory.getInstance(this, Entity.class);
-
-        // TODO: version update.(Now this is the first version being recorded and will be supported to update)
-        if (!this.config.containPath("version")) {
-            this.config.setValue(version, "version");
-        }
 
         /* configure multi thread level */
         this.multiThreadLevel = this.config.getOrDefault(0, "multi-thread", "level");
@@ -137,45 +150,49 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         }
 
         /* read tweak for machine */
-        this.antiAccelerateSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "anti-accelerate"));
-        this.performanceLimitSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "performance-limit"));
-        this.asyncSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "force-async"));
-        if (this.asyncSlimefunIdSet.size() > 0) {
+        this.antiAccelerateSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "anti-accelerate", "item"));
+        this.performanceLimitSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "performance-limit", "item"));
+        this.noBlockTickerSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "no-blockTicker", "item"));
+        this.asyncSlimefunIdSet = new HashSet<>(this.config.getStringList("tweak", "force-async", "item"));
+        this.antiAccelerateSlimefunPluginSet = new HashSet<>(this.config.getStringList("tweak", "anti-accelerate", "addon"));
+        this.performanceLimitSlimefunPluginSet = new HashSet<>(this.config.getStringList("tweak", "performance-limit", "addon"));
+        this.noBlockTickerSlimefunPluginSet = new HashSet<>(this.config.getStringList("tweak", "no-blockTicker", "addon"));
+        this.asyncSlimefunPluginSet = new HashSet<>(this.config.getStringList("tweak", "force-async", "addon"));
+
+        if (this.asyncSlimefunPluginSet.size() > 0 || this.asyncSlimefunIdSet.size() > 0) {
             this.logger.warning("You set force-async for some SlimefunItems! It's ok but you should be aware that this may cause some strange error.");
         }
 
         /* run task timer to do some function */
         int tickRate = Slimefun.getTickerTask().getTickRate();
         this.bukkitTask = this.getServer().getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
-            private final AtomicLong currentTimeMillis = new AtomicLong();
-            private final AtomicLong lastTimeMillis = new AtomicLong(System.currentTimeMillis());
-            private final double FULL_SLIMEFUN_TICK = 20 * 50 * tickRate;
+            private long currentNanoTime = System.nanoTime();
+            private long lastNanoTime = System.nanoTime();
+            private final BigDecimal FULL_SLIMEFUN_TICK = new BigDecimal(StringNumberUtil.mul("1000000000", String.valueOf(tickRate)));
 
             @Override
             public void run() {
-                this.currentTimeMillis.set(System.currentTimeMillis());
-                FinalTech.instance.tps = Math.min(FULL_SLIMEFUN_TICK / Math.max(1, currentTimeMillis.get() - lastTimeMillis.get()), 20);
-                this.lastTimeMillis.set(currentTimeMillis.get());
+                currentNanoTime = System.nanoTime();
+                FinalTech.instance.tps = Math.min(FULL_SLIMEFUN_TICK.divide(BigDecimal.valueOf(Math.max(1, currentNanoTime - lastNanoTime)), 10, RoundingMode.FLOOR).doubleValue(), 20);
+                lastNanoTime = currentNanoTime;
+
                 FinalTech.instance.slimefunTickCount++;
             }
         }, 0, tickRate);
 
-        SetupUtil.initLanguageManager(FinalTech.instance.languageManager);
+        /* set up my items and menus and... */
+        SetupUtil.init();
+
+        this.performanceLimitSlimefunIdSet.add(FinalTechItems.ORDERED_DUST_FACTORY_DIRT.getItemId());
+        this.performanceLimitSlimefunIdSet.add(FinalTechItems.ORDERED_DUST_FACTORY_STONE.getItemId());
 
         /* mark for some machines */
-        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.VARIABLE_WIRE_RESISTANCE.getItemId());
-        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.VARIABLE_WIRE_CAPACITOR.getItemId());
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ENERGIZED_ACCELERATOR.getItemId());
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.OVERLOADED_ACCELERATOR.getItemId());
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ITEM_DESERIALIZE_PARSER.getItemId());
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ENTROPY_SEED.getItemId());
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.EQUIVALENT_CONCEPT.getItemId());
-        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.MATRIX_GENERATOR.getItemId());
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.MATRIX_ACCELERATOR.getItemId());
-        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.MATRIX_REACTOR.getItemId());
-
-        /* set up my items and menus and... */
-        SetupUtil.init();
 
         /* setup item value table */
         this.getServer().getScheduler().runTaskLater(this, () -> ItemValueTable.getInstance().init(), this.config.getOrDefault(10, "setups", "item-value-table", "delay"));
@@ -352,8 +369,41 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         return instance.antiAccelerateSlimefunIdSet.contains(id);
     }
 
+    public static boolean addAntiAccelerateSlimefunItem(@Nonnull String id) {
+        return instance.antiAccelerateSlimefunIdSet.add(id);
+    }
+
     public static boolean isPerformanceLimitSlimefunItem(@Nonnull String id) {
         // TODO config GUI
         return instance.performanceLimitSlimefunIdSet.contains(id);
+    }
+
+    public static boolean addPerformanceLimitSlimefunItem(@Nonnull String id) {
+        return instance.performanceLimitSlimefunIdSet.add(id);
+    }
+
+    public static boolean isNoBlockTickerSlimefunItem(@Nonnull String id) {
+        // TODO config GUI
+        return instance.noBlockTickerSlimefunIdSet.contains(id);
+    }
+
+    public static boolean addNoBlockTickerSlimefunItem(@Nonnull String id) {
+        return instance.noBlockTickerSlimefunIdSet.add(id);
+    }
+
+    public static Set<String> getAsyncSlimefunPluginSet() {
+        return instance.asyncSlimefunPluginSet;
+    }
+
+    public static Set<String> getAntiAccelerateSlimefunPluginSet() {
+        return instance.antiAccelerateSlimefunPluginSet;
+    }
+
+    public static Set<String> getPerformanceLimitSlimefunPluginSet() {
+        return instance.performanceLimitSlimefunPluginSet;
+    }
+
+    public static Set<String> getNoBlockTickerSlimefunPluginSet() {
+        return instance.noBlockTickerSlimefunPluginSet;
     }
 }

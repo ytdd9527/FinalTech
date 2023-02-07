@@ -16,7 +16,7 @@ import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.dto.CargoDTO;
 import io.taraxacum.finaltech.core.dto.SimpleCargoDTO;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.core.menu.function.PointTransferMenu;
+import io.taraxacum.finaltech.core.menu.cargo.PointTransferMenu;
 import io.taraxacum.finaltech.core.helper.*;
 import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.ConfigUtil;
@@ -68,17 +68,11 @@ public class PointTransfer extends AbstractCargo implements RecipeItem {
                 IgnorePermission.HELPER.checkOrSetBlockStorage(location);
                 BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_UUID, blockPlaceEvent.getPlayer().getUniqueId().toString());
 
-                CargoNumber.HELPER.checkOrSetBlockStorage(location);
                 CargoFilter.HELPER.checkOrSetBlockStorage(location);
                 CargoMode.HELPER.checkOrSetBlockStorage(location);
-                CargoLimit.HELPER.checkOrSetBlockStorage(location);
 
-                SlotSearchSize.INPUT_HELPER.checkOrSetBlockStorage(location);
-                SlotSearchOrder.INPUT_HELPER.checkOrSetBlockStorage(location);
                 BlockSearchMode.POINT_INPUT_HELPER.checkOrSetBlockStorage(location);
-                SlotSearchSize.OUTPUT_HELPER.checkOrSetBlockStorage(location);
 
-                SlotSearchOrder.OUTPUT_HELPER.checkOrSetBlockStorage(location);
                 BlockSearchMode.POINT_OUTPUT_HELPER.checkOrSetBlockStorage(location);
             }
         };
@@ -125,16 +119,16 @@ public class PointTransfer extends AbstractCargo implements RecipeItem {
                 javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, inputBlock, outputBlock), Slimefun.getTickerTask().getTickRate());
             }
 
-            String inputSlotSearchSize = SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config);
-            String inputSlotSearchOrder = SlotSearchOrder.INPUT_HELPER.getOrDefaultValue(config);
+            String inputSlotSearchSize = SlotSearchSize.INPUT_HELPER.defaultValue();
+            String inputSlotSearchOrder = SlotSearchOrder.INPUT_HELPER.defaultValue();
 
-            String outputSlotSearchSize = SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config);
-            String outputSlotSearchOrder = SlotSearchOrder.OUTPUT_HELPER.getOrDefaultValue(config);
+            String outputSlotSearchSize = SlotSearchSize.OUTPUT_HELPER.defaultValue();
+            String outputSlotSearchOrder = SlotSearchOrder.OUTPUT_HELPER.defaultValue();
 
-            int cargoNumber = Integer.parseInt(CargoNumber.HELPER.getOrDefaultValue(config));
+            int cargoNumber = Integer.parseInt(CargoNumber.HELPER.defaultValue());
             String cargoFilter = CargoFilter.HELPER.getOrDefaultValue(config);
             String cargoMode = CargoMode.HELPER.getOrDefaultValue(config);
-            String cargoLimit = CargoLimit.HELPER.getOrDefaultValue(config);
+            String cargoLimit = CargoLimit.HELPER.defaultValue();
 
             CargoUtil.doCargo(new CargoDTO(javaPlugin, inputBlock, inputSlotSearchSize, inputSlotSearchOrder, outputBlock, outputSlotSearchSize, outputSlotSearchOrder, cargoNumber, cargoLimit, cargoFilter, blockMenu.toInventory(), PointTransferMenu.ITEM_MATCH), cargoMode);
         } else {
@@ -163,11 +157,11 @@ public class PointTransfer extends AbstractCargo implements RecipeItem {
                         return;
                     }
 
-                    String inputSize = SlotSearchSize.INPUT_HELPER.getOrDefaultValue(config);
-                    String inputOrder = SlotSearchOrder.INPUT_HELPER.getOrDefaultValue(config);
+                    String inputSize = SlotSearchSize.INPUT_HELPER.defaultValue();
+                    String inputOrder = SlotSearchOrder.INPUT_HELPER.defaultValue();
 
-                    String outputSize = SlotSearchSize.OUTPUT_HELPER.getOrDefaultValue(config);
-                    String outputOrder = SlotSearchOrder.OUTPUT_HELPER.getOrDefaultValue(config);
+                    String outputSize = SlotSearchSize.OUTPUT_HELPER.defaultValue();
+                    String outputOrder = SlotSearchOrder.OUTPUT_HELPER.defaultValue();
 
                     String cargoMode = CargoMode.HELPER.getOrDefaultValue(config);
 
@@ -201,19 +195,14 @@ public class PointTransfer extends AbstractCargo implements RecipeItem {
                         javaPlugin.getServer().getScheduler().runTaskLaterAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, inputBlock, outputBlock), Slimefun.getTickerTask().getTickRate());
                     }
 
-                    int cargoNumber = Integer.parseInt(CargoNumber.HELPER.getOrDefaultValue(config));
+                    int cargoNumber = Integer.parseInt(CargoNumber.HELPER.defaultValue());
                     String cargoFilter = CargoFilter.HELPER.getOrDefaultValue(config);
-                    String cargoLimit = CargoLimit.HELPER.getOrDefaultValue(config);
+                    String cargoLimit = CargoLimit.HELPER.defaultValue();
 
                     CargoUtil.doSimpleCargo(new SimpleCargoDTO(inputMap, inputBlock, inputSize, inputOrder, outputMap, outputBlock, outputSize, outputOrder, cargoNumber, cargoLimit, cargoFilter, blockMenu.toInventory(), PointTransferMenu.ITEM_MATCH), cargoMode);
                 }, inputBlock.getLocation(), outputBlock.getLocation());
             });
         }
-    }
-
-    @Override
-    protected boolean isSynchronized() {
-        return true;
     }
 
     @Nonnull

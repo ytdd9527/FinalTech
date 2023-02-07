@@ -10,10 +10,12 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.common.util.ReflectionUtil;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
+import io.taraxacum.finaltech.util.ItemConfigurationUtil;
 import io.taraxacum.finaltech.util.PermissionUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
@@ -41,18 +43,8 @@ import java.util.*;
  * @since 2.0
  */
 public class MachineConfigurator extends UsableSlimefunItem implements RecipeItem {
-    private final Set<String> allowedItemId = new HashSet<>(ConfigUtil.getItemStringList(this, "allowed-item-id"));
-    private final Map<String, Set<String>> ignoreInfoMap;
-
     public MachineConfigurator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
-        this.ignoreInfoMap = new HashMap<>(this.allowedItemId.size());
-        for (String itemId : this.allowedItemId) {
-            this.ignoreInfoMap.put(itemId, new HashSet<>(ConfigUtil.getItemStringList(this, "allowed-item-id", itemId)));
-            this.ignoreInfoMap.get(itemId).add("slimefun_item");
-            this.ignoreInfoMap.get(itemId).add("energy-charge");
-            this.ignoreInfoMap.get(itemId).remove(ConstantTableUtil.CONFIG_ID);
-        }
     }
 
     /**
@@ -71,53 +63,25 @@ public class MachineConfigurator extends UsableSlimefunItem implements RecipeIte
             Block block = clickedBlock.get();
             Location location = block.getLocation();
             if (PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), location, Interaction.BREAK_BLOCK, Interaction.INTERACT_BLOCK, Interaction.PLACE_BLOCK) && BlockStorage.hasBlockInfo(location)) {
+                ItemStack item = playerRightClickEvent.getItem();
                 Config config = BlockStorage.getLocationInfo(location);
-                if (config.contains(ConstantTableUtil.CONFIG_ID)) {
-                    String itemId = config.getString(ConstantTableUtil.CONFIG_ID);
+                String itemId = config.getString(ConstantTableUtil.CONFIG_ID);
+                if (playerRightClickEvent.getPlayer().isSneaking()) {
+                    // save data
+
                     SlimefunItem slimefunItem = SlimefunItem.getById(itemId);
-                    if (this.allowedItemId.contains(itemId) && slimefunItem != null && !slimefunItem.isDisabled()) {
-                        ItemStack item = playerRightClickEvent.getItem();
-                        if (item.hasItemMeta()) {
-                            ItemMeta itemMeta = item.getItemMeta();
-                            PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-                            Set<String> ignoreInfoSet = this.ignoreInfoMap.get(itemId);
+                    if(slimefunItem != null && ItemConfigurationUtil.saveConfigToItem(item, config)) {
+                        ItemStackUtil.setLore(item, slimefunItem.getItemName());
 
-                            if (playerRightClickEvent.getPlayer().isSneaking()) {
-                                // save data
+                        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+                    }
+                } else {
+                    // load data
 
-                                for (String key : config.getKeys()) {
-                                    if (!ignoreInfoSet.contains(key)) {
-                                        persistentDataContainer.set(new NamespacedKey(this.addon.getJavaPlugin(), key), PersistentDataType.STRING, config.getString(key));
-                                    }
-                                }
-                                item.setItemMeta(itemMeta);
-                                ItemStackUtil.setLore(item, slimefunItem.getItemName());
+                    if(ItemConfigurationUtil.loadConfigFromItem(item, location)) {
+                        ItemConfigurationUtil.extraSaveFunction(BlockStorage.getInventory(block), itemId);
 
-                                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
-                            } else {
-                                // load data
-
-                                Map<String, String> configMap = new HashMap<>(persistentDataContainer.getKeys().size());
-
-                                for (NamespacedKey namespacedKey : persistentDataContainer.getKeys()) {
-                                    String key = namespacedKey.getKey();
-                                    if (!ignoreInfoSet.contains(key)) {
-                                        String value = persistentDataContainer.get(namespacedKey, PersistentDataType.STRING);
-                                        configMap.put(key, value);
-                                        if (ConstantTableUtil.CONFIG_ID.equals(key) && !value.equals(itemId)) {
-                                            return;
-                                        }
-                                    }
-                                }
-                                for (Map.Entry<String, String> entry : configMap.entrySet()) {
-                                    BlockStorage.addBlockInfo(location, entry.getKey(), entry.getValue());
-                                }
-
-                                this.extraSaveFunction(BlockStorage.getInventory(block), itemId);
-
-                                ParticleUtil.drawCubeByBlock(this.getAddon().getJavaPlugin(), Particle.GLOW, 0, block);
-                            }
-                        }
+                        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
                     }
                 }
             }
@@ -126,52 +90,15 @@ public class MachineConfigurator extends UsableSlimefunItem implements RecipeIte
 
     @Override
     public void registerDefaultRecipes() {
-        for (String id : this.allowedItemId) {
-            SlimefunItem slimefunItem = SlimefunItem.getById(id);
-            if (slimefunItem != null) {
-                this.registerDescriptiveRecipe(slimefunItem.getItem());
-            }
-        }
-    }
-
-    private void extraSaveFunction(@Nonnull BlockMenu blockMenu, @Nonnull String id) {
-        SlimefunItem slimefunItem = SlimefunItem.getById(id);
-
-        // Slimefun cargo node
-        if(JavaUtil.matchOnce(id, SlimefunItems.CARGO_INPUT_NODE.getItemId(), SlimefunItems.CARGO_OUTPUT_NODE.getItemId(), SlimefunItems.CARGO_OUTPUT_NODE_2.getItemId())) {
-            Method method = ReflectionUtil.getMethod(slimefunItem.getClass(), "updateBlockMenu");
-            if(method != null) {
-                try {
-                    method.setAccessible(true);
-                    method.invoke(slimefunItem, blockMenu, blockMenu.getBlock());
-                } catch (IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
+        for(Map.Entry<String, Set<String>> entry : ItemConfigurationUtil.getGroupItemMap().entrySet()) {
+            this.registerDescriptiveRecipe(Icon.BORDER_ICON);
+            for(String id : entry.getValue()) {
+                SlimefunItem slimefunItem = SlimefunItem.getById(id);
+                if (slimefunItem != null) {
+                    this.registerDescriptiveRecipe(slimefunItem.getItem());
                 }
             }
+            this.registerDescriptiveRecipe(Icon.BORDER_ICON);
         }
-
-        // FinalTECH machines
-        if(slimefunItem.getAddon().getJavaPlugin().equals(FinalTech.getInstance())) {
-            if(slimefunItem instanceof AbstractMachine) {
-                try {
-                    Field field = ReflectionUtil.getField(slimefunItem.getClass(), "menu");
-                    if(field != null) {
-                        field.setAccessible(true);
-                        Object menu = field.get(slimefunItem);
-                        if(menu != null) {
-                            Method method = ReflectionUtil.getMethod(menu.getClass(), "updateInventory");
-                            if(method != null) {
-                                method.setAccessible(true);
-                                method.invoke(menu, blockMenu.toInventory(), blockMenu.getLocation());
-                            }
-                        }
-                    }
-                } catch (IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        // TODO: other slimefun addons ?
     }
 }

@@ -43,18 +43,6 @@ public class VariableWireResistance extends AbstractElectricMachine implements R
 
     @Nonnull
     @Override
-    protected BlockPlaceHandler onBlockPlace() {
-        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_DENY;
-    }
-
-    @Nonnull
-    @Override
-    protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.simpleBlockBreakerHandler(this);
-    }
-
-    @Nonnull
-    @Override
     protected AbstractMachineMenu setMachineMenu() {
         return new StatusMenu(this);
     }

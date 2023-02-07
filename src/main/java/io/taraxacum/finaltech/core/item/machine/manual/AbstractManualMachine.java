@@ -3,8 +3,11 @@ package io.taraxacum.finaltech.core.item.machine.manual;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
+import io.taraxacum.finaltech.util.MachineUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -18,6 +21,18 @@ public abstract class AbstractManualMachine extends AbstractMachine {
 
     public AbstractManualMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+    }
+
+    @Nonnull
+    @Override
+    protected BlockPlaceHandler onBlockPlace() {
+        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_DENY;
+    }
+
+    @Nonnull
+    @Override
+    protected BlockBreakHandler onBlockBreak() {
+        return MachineUtil.simpleBlockBreakerHandler(this);
     }
 
     @Nonnull

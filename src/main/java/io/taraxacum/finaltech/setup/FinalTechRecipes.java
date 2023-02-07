@@ -1,6 +1,8 @@
 package io.taraxacum.finaltech.setup;
 
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.taraxacum.finaltech.FinalTech;
@@ -729,6 +731,51 @@ public final class FinalTechRecipes {
             new ItemStack(Material.TRIPWIRE_HOOK), FinalTechItems.BASIC_FRAME_MACHINE, new ItemStack(Material.TRIPWIRE_HOOK),
             new ItemStack(Material.TRIPWIRE_HOOK), new ItemStack(Material.STRING), new ItemStack(Material.TRIPWIRE_HOOK)
     };
+    public static final ItemStack[] ADVANCED_POINT_TRANSFER = new ItemStack[] {
+            FinalTechItems.POINT_TRANSFER, FinalTechItems.POINT_TRANSFER, FinalTechItems.POINT_TRANSFER,
+            FinalTechItems.POINT_TRANSFER, new ItemStack(Material.NAME_TAG), FinalTechItems.POINT_TRANSFER,
+            FinalTechItems.POINT_TRANSFER, FinalTechItems.POINT_TRANSFER, FinalTechItems.POINT_TRANSFER
+    };
+    public static final ItemStack[] ADVANCED_MESH_TRANSFER = new ItemStack[] {
+            FinalTechItems.MESH_TRANSFER, FinalTechItems.MESH_TRANSFER, FinalTechItems.MESH_TRANSFER,
+            FinalTechItems.MESH_TRANSFER, new ItemStack(Material.NAME_TAG), FinalTechItems.MESH_TRANSFER,
+            FinalTechItems.MESH_TRANSFER, FinalTechItems.MESH_TRANSFER, FinalTechItems.MESH_TRANSFER
+    };
+    public static final ItemStack[] ADVANCED_LINE_TRANSFER = new ItemStack[] {
+            FinalTechItems.LINE_TRANSFER, FinalTechItems.LINE_TRANSFER, FinalTechItems.LINE_TRANSFER,
+            FinalTechItems.LINE_TRANSFER, new ItemStack(Material.NAME_TAG), FinalTechItems.LINE_TRANSFER,
+            FinalTechItems.LINE_TRANSFER, FinalTechItems.LINE_TRANSFER, FinalTechItems.LINE_TRANSFER
+    };
+    public static final ItemStack[] ADVANCED_LOCATION_TRANSFER = new ItemStack[] {
+            FinalTechItems.LOCATION_TRANSFER, FinalTechItems.LOCATION_TRANSFER, FinalTechItems.LOCATION_TRANSFER,
+            FinalTechItems.LOCATION_TRANSFER, new ItemStack(Material.NAME_TAG), FinalTechItems.LOCATION_TRANSFER,
+            FinalTechItems.LOCATION_TRANSFER, FinalTechItems.LOCATION_TRANSFER, FinalTechItems.LOCATION_TRANSFER
+    };
+    public static final ItemStack[] CONFIGURATION_COPIER = new ItemStack[] {
+            FinalTechItems.ORDERED_DUST, FinalTechItems.MACHINE_CONFIGURATOR, FinalTechItems.ORDERED_DUST,
+            null, FinalTechItems.BASIC_FRAME_MACHINE, null,
+            FinalTechItems.ORDERED_DUST, null, FinalTechItems.ORDERED_DUST
+    };
+    public static final ItemStack[] CONFIGURATION_PASTER = new ItemStack[] {
+            FinalTechItems.ORDERED_DUST, null, FinalTechItems.ORDERED_DUST,
+            null, FinalTechItems.BASIC_FRAME_MACHINE, null,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.MACHINE_CONFIGURATOR, FinalTechItems.ORDERED_DUST
+    };
+    public static final ItemStack[] CLICK_WORK_MACHINE = new ItemStack[] {
+            FinalTechItems.GEARWHEEL, null, FinalTechItems.GEARWHEEL,
+            null, FinalTechItems.BASIC_FRAME_MACHINE, null,
+            FinalTechItems.GEARWHEEL, null, FinalTechItems.GEARWHEEL
+    };
+    public static final ItemStack[] SIMULATE_CLICK_MACHINE = new ItemStack[]{
+            FinalTechItems.ORDERED_DUST, new ItemStack(Material.NAME_TAG), FinalTechItems.ORDERED_DUST,
+            null, FinalTechItems.BASIC_FRAME_MACHINE, null,
+            FinalTechItems.ORDERED_DUST, null, FinalTechItems.ORDERED_DUST
+    };
+    public static final ItemStack[] CONSUMABLE_SIMULATE_CLICK_MACHINE = new ItemStack[] {
+            null, null, null,
+            FinalTechItems.ORDERED_DUST, FinalTechItems.SIMULATE_CLICK_MACHINE, FinalTechItems.ORDERED_DUST,
+            null, null, null
+    };
 
     /* functional machines */
     // core machine
@@ -754,6 +801,14 @@ public final class FinalTechRecipes {
             FinalTechItems.ORDERED_DUST, FinalTechItems.BUG, new CustomItemStack(Material.CRAFTING_TABLE), new CustomItemStack(Material.CRAFTING_TABLE), FinalTechItems.BUG, FinalTechItems.ORDERED_DUST,
             FinalTechItems.ORDERED_DUST, FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.BUG, FinalTechItems.ORDERED_DUST,
             FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST
+    };
+    public static final ItemStack[] AUTO_ITEM_DISMANTLE_TABLE = new ItemStack[] {
+            FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE,
+            FinalTechItems.ITEM_DISMANTLE_TABLE, ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), FinalTechItems.ITEM_DISMANTLE_TABLE,
+            FinalTechItems.ITEM_DISMANTLE_TABLE, ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), CopyCard.newItem(FinalTechItems.GEARWHEEL, "1"), CopyCard.newItem(FinalTechItems.GEARWHEEL, "1"), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), FinalTechItems.ITEM_DISMANTLE_TABLE,
+            FinalTechItems.ITEM_DISMANTLE_TABLE, ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), CopyCard.newItem(FinalTechItems.GEARWHEEL, "1"), CopyCard.newItem(FinalTechItems.GEARWHEEL, "1"), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), FinalTechItems.ITEM_DISMANTLE_TABLE,
+            FinalTechItems.ITEM_DISMANTLE_TABLE, ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), ItemStackUtil.cloneItem(FinalTechItems.ANNULAR, 64), FinalTechItems.ITEM_DISMANTLE_TABLE,
+            FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE, FinalTechItems.ITEM_DISMANTLE_TABLE
     };
     public static final ItemStack[] EQUIVALENT_EXCHANGE_TABLE = new ItemStack[] {
             FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST, FinalTechItems.ORDERED_DUST,
@@ -785,6 +840,14 @@ public final class FinalTechRecipes {
             FinalTechItems.GEARWHEEL, null, new ItemStack(Material.CRAFTING_TABLE), new ItemStack(Material.CRAFTING_TABLE), null, FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, null, new ItemStack(Material.CRAFTING_TABLE), new ItemStack(Material.CRAFTING_TABLE), null, FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, null, null, null, null, FinalTechItems.GEARWHEEL,
+            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
+    };
+    public static final ItemStack[] ADVANCED_AUTO_CRAFT_FRAME = new ItemStack[] {
+            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, new ItemStack(Material.BEACON), new ItemStack(Material.BEACON), FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, new ItemStack(Material.BEACON), new ItemStack(Material.BEACON), FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
+            FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL,
             FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL, FinalTechItems.GEARWHEEL
     };
     // special machine
@@ -1244,5 +1307,10 @@ public final class FinalTechRecipes {
             CopyCard.newItem(FinalTechItems.UNORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.PHONY, 16), CopyCard.newItem(FinalTechItems.UNORDERED_DUST, "1"), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), ItemStackUtil.cloneItem(FinalTechItems.PHONY, 16), CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"),
             null, CopyCard.newItem(FinalTechItems.UNORDERED_DUST, "1"), null, null, CopyCard.newItem(FinalTechItems.ORDERED_DUST, "1"), null,
             null, null, null, null, null, null,
+    };
+
+    // trophy
+    public static final ItemStack[] TROPHY_SHIXINZIA = new ItemStack[] {
+            ItemStackUtil.cloneItem(FinalTechItems.BUG, 64), ItemStackUtil.cloneItem(Slimefun.getRegistry().getSlimefunGuide(SlimefunGuideMode.CHEAT_MODE).getItem())
     };
 }

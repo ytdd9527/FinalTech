@@ -32,18 +32,6 @@ public abstract class AbstractElectricCapacitor extends AbstractElectricMachine 
 
     @Nonnull
     @Override
-    protected BlockPlaceHandler onBlockPlace() {
-        return MachineUtil.BLOCK_PLACE_HANDLER_PLACER_DENY;
-    }
-
-    @Nonnull
-    @Override
-    protected BlockBreakHandler onBlockBreak() {
-        return MachineUtil.simpleBlockBreakerHandler();
-    }
-
-    @Nonnull
-    @Override
     protected AbstractMachineMenu setMachineMenu() {
         return new StatusMenu(this);
     }
@@ -54,11 +42,6 @@ public abstract class AbstractElectricCapacitor extends AbstractElectricMachine 
         if (blockMenu.hasViewer()) {
             this.updateMenu(blockMenu, StatusMenu.STATUS_SLOT, this, EnergyUtil.getCharge(config));
         }
-    }
-
-    @Override
-    protected boolean isSynchronized() {
-        return false;
     }
 
     @Nonnull
