@@ -940,7 +940,7 @@ public final class SetupUtil {
                             FinalTech.logger().info(slimefunItem.getId() + " is tweaked for range limit");
 
                             if(dropSelf) {
-                                FinalTech.logger().warning("Please be carefully if you installed slimefun addon '基岩科技' and you set drop-self as true.");
+                                FinalTech.logger().warning("Please be carefully if you installed slimefun addon '基岩科技'(BedrockTechnology) and you set drop-self as true.");
                                 FinalTech.logger().warning("There is a duplication bug, and we may fix it in next version");
                             }
                         } else {
