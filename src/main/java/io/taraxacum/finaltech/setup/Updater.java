@@ -14,7 +14,7 @@ public class Updater implements Consumer<FinalTech>{
     private final Map<String, UpdateFunction> versionMap = new HashMap<>();
     private boolean init = false;
     private static volatile Updater instance;
-    public static final String LATEST_VERSION = "20230109";
+    public static final String LATEST_VERSION = "20230211";
 
     public void init() {
         LanguageManager languageManager = FinalTech.getLanguageManager();
@@ -543,6 +543,23 @@ public class Updater implements Consumer<FinalTech>{
 
                     languageManager.setValue("{color:negative}Not valid item!", "message", "invalid-item");
 
+                }
+            }
+        });
+
+        versionMap.put("20230109", new UpdateFunction() {
+            @Override
+            protected String targetVersion() {
+                return "20230211";
+            }
+
+            @Override
+            protected void update(FinalTech finalTech) {
+                if(configManager.containPath("tweak", "range-limit", "FINALTECH_ITEM_DISMANTLE_TABLE", "drop-self")) {
+                    Boolean dropSelf = configManager.getOrDefault(false, "tweak", "range-limit", "FINALTECH_ITEM_DISMANTLE_TABLE", "drop-self");
+                    if(dropSelf) {
+                        configManager.setValue(false, "tweak", "range-limit", "FINALTECH_ITEM_DISMANTLE_TABLE", "drop-self");
+                    }
                 }
             }
         });

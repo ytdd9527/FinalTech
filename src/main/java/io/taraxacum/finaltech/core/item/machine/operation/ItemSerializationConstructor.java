@@ -75,7 +75,7 @@ public class ItemSerializationConstructor extends AbstractOperationMachine {
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         LOCATION_LIST.add(block.getLocation());
 
-        if(FinalTech.getTps() < 20 && LAST_LOCATION_LIST.size() > 1) {
+        if(FinalTech.getTps() < 19.5 && LAST_LOCATION_LIST.size() > 1) {
             if (BlockTickerUtil.hasSleep(config)) {
                 BlockTickerUtil.subSleep(config);
                 return;
@@ -84,8 +84,8 @@ public class ItemSerializationConstructor extends AbstractOperationMachine {
             Location randomLocation = LAST_LOCATION_LIST.get(FinalTech.getRandom().nextInt(LAST_LOCATION_LIST.size()));
             Location location = block.getLocation();
             double manhattanDistance = LocationUtil.getManhattanDistance(randomLocation, location);
-            if(manhattanDistance < LAST_LOCATION_LIST.size() && manhattanDistance > 0) {
-                BlockTickerUtil.setSleep(config, String.valueOf(LAST_LOCATION_LIST.size()));
+            if(manhattanDistance < LAST_LOCATION_LIST.size()) {
+                BlockTickerUtil.setSleep(config, String.valueOf(LAST_LOCATION_LIST.size() * (int)(20 - FinalTech.getTps() + 1)));
                 return;
             }
         }

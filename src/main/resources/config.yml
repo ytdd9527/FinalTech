@@ -5,7 +5,7 @@ tweak:
     FINALTECH_ITEM_DISMANTLE_TABLE:
       range: 128
       mul-range: 2
-      drop-self: true
+      drop-self: false
       message: '{1} is not allowed to be placed too closely'
     FINALTECH_ORDERED_DUST_FACTORY_DIRT:
       range: 128
