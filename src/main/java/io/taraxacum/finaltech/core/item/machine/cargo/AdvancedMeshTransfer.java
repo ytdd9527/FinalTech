@@ -63,13 +63,13 @@ public class AdvancedMeshTransfer extends AbstractCargo implements RecipeItem {
                 BlockSearchMode.MESH_OUTPUT_HELPER.checkOrSetBlockStorage(location);
 
                 CargoNumber.INPUT_HELPER.checkOrSetBlockStorage(location);
-                CargoNumberMode.INPUT_HELPER.getOrDefaultValue(location);
+                CargoNumberMode.INPUT_HELPER.checkOrSetBlockStorage(location);
                 SlotSearchSize.INPUT_HELPER.checkOrSetBlockStorage(location);
                 SlotSearchOrder.INPUT_HELPER.checkOrSetBlockStorage(location);
                 CargoLimit.INPUT_HELPER.checkOrSetBlockStorage(location);
 
                 CargoNumber.OUTPUT_HELPER.checkOrSetBlockStorage(location);
-                CargoNumberMode.OUTPUT_HELPER.getOrDefaultValue(location);
+                CargoNumberMode.OUTPUT_HELPER.checkOrSetBlockStorage(location);
                 SlotSearchSize.OUTPUT_HELPER.checkOrSetBlockStorage(location);
                 SlotSearchOrder.OUTPUT_HELPER.checkOrSetBlockStorage(location);
                 CargoLimit.OUTPUT_HELPER.checkOrSetBlockStorage(location);
