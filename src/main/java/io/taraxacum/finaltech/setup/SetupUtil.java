@@ -938,6 +938,11 @@ public final class SetupUtil {
                             String message = configManager.getOrDefault("{1} is not allowed to be placed too closely", "tweak", "range-limit", slimefunItem.getId(), "message");
                             blockTicker = BlockTickerUtil.getRangeLimitBlockTicker(blockTicker, range, mulRange, dropSelf, message);
                             FinalTech.logger().info(slimefunItem.getId() + " is tweaked for range limit");
+
+                            if(dropSelf) {
+                                FinalTech.logger().warning("Please be carefully if you installed slimefun addon '基岩科技' and you set drop-self as true.");
+                                FinalTech.logger().warning("There is a duplication bug, and we may fix it in next version");
+                            }
                         } else {
                             FinalTech.logger().warning("wrong value of tweak.range." + slimefunItem.getId() + " in config file");
                         }
