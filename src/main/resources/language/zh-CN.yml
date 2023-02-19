@@ -1259,7 +1259,7 @@ items:
         lore:
           - '{color:normal}Generate energy 1J per {color:number}{1}s'
           - '{color:normal}Can store {color:number}{2} J {color:normal}of energy'
-          - '{color:normal}Double stored energy with time going'
+          - '{color:normal}双储存能量，持续时间'
     status:
       lore:
         - '{color:normal}Stored Energy: {color:number}{1} J'
@@ -1822,17 +1822,17 @@ items:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Right click it to config it'
-          - '{color:normal}Right click it to open slimefun machine it looking at'
+          - '{color:normal}右键点击它进行配置'
+          - '{color:normal}右击查看指向的粘液科技机器'
         output: 'FINALTECH_DIGITAL_ZERO'
   FINALTECH_CONFIGURABLE_REMOTE_ACCESSOR:
-    name: '{color:prandom}Remote Accessor {color:conceal}- {color:positive}Configurable'
+    name: '{color:prandom}远程访问者 {color:conceal}- {color:positive}可配置'
     info:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Right click it to config it'
-          - '{color:normal}Right click it to open slimefun machine it looking at'
+          - '{color:normal}右键点击它进行配置'
+          - '{color:normal}右击查看指向的粘液科技机器'
         output: 'FINALTECH_DIGITAL_ZERO'
   FINALTECH_EXPANDED_CONSUMABLE_REMOTE_ACCESSOR:
     name: '{color:prandom}Expanded Remote Accessor {color:conceal}- {color:positive}Consumable'
@@ -1840,17 +1840,17 @@ items:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Right click it to config it'
-          - '{color:normal}Right click it to open slimefun machine it looking at'
+          - '{color:normal}右键点击它进行配置'
+          - '{color:normal}右击查看指向的粘液科技机器'
         output: 'FINALTECH_DIGITAL_ZERO'
   FINALTECH_EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR:
-    name: '{color:prandom}Expanded Remote Accessor {color:conceal}- {color:positive}Configurable'
+    name: '{color:prandom}扩展远程访问器 {color:conceal}- {color:positive}可配置'
     info:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Right click it to config it'
-          - '{color:normal}Right click it to open slimefun machine it looking at'
+          - '{color:normal}右键点击它进行配置'
+          - '{color:normal}右击查看指向的粘液科技机器'
         output: 'FINALTECH_DIGITAL_ZERO'
   FINALTECH_AREA_ACCESSOR:
     name: '{color:prandom}区域存取仪'
@@ -1866,12 +1866,12 @@ items:
         - '{color:normal}Z: {color:number}{3}'
         - '{color:normal}Y: {color:number}{2}'
   FINALTECH_TRANSPORTER:
-    name: '{color:prandom}Transporter'
+    name: '{color:prandom}传输器'
     info:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Right click it to teleport to the target place'
+          - '{color:normal}右键点击它传送到目标位置'
           - '{color:normal}Range: {color:number}{1}'
   FINALTECH_CONSUMABLE_TRANSPORTER:
     name: '{color:prandom}Transporter {color:conceal}- {color:positive}Consumable'
@@ -1879,43 +1879,43 @@ items:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Right click it to config it'
-          - '{color:normal}Right click it to teleport to the target place'
+          - '{color:normal}右键点击它进行配置'
+          - '{color:normal}右键点击它传送到目标位置'
         output: 'FINALTECH_DIGITAL_ZERO'
   FINALTECH_CONFIGURABLE_TRANSPORTER:
-    name: '{color:prandom}Transporter {color:conceal}- {color:positive}Configurable'
+    name: '{color:prandom}传送器 {color:conceal}- {color:positive}可配置'
     info:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Right click it to config it'
-          - '{color:normal}Right click it to teleport to the target place'
+          - '{color:normal}右键点击它进行配置'
+          - '{color:normal}右键点击它传送到目标位置'
         output: 'FINALTECH_DIGITAL_ZERO'
   FINALTECH_EXPANDED_CONSUMABLE_TRANSPORTER:
-    name: '{color:prandom}Expanded Transporter {color:conceal}- {color:positive}Consumable'
+    name: '{color:prandom}扩展传送器 {color:conceal}- {color:positive}消耗量'
     info:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Right click it to config it'
-          - '{color:normal}Right click it to teleport to the target place'
+          - '{color:normal}右键点击它进行配置'
+          - '{color:normal}右键点击它传送到目标位置'
         output: 'FINALTECH_DIGITAL_ZERO'
   FINALTECH_EXPANDED_CONFIGURABLE_TRANSPORTER:
-    name: '{color:prandom}Expanded Transporter {color:conceal}- {color:positive}Configurable'
+    name: '{color:prandom}扩展传送器 {color:conceal}- {color:positive}可配置'
     info:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Right click it to config it'
-          - '{color:normal}Right click it to teleport to the target place'
+          - '{color:normal}右键点击它进行配置'
+          - '{color:normal}右键点击它传送到目标位置'
         output: 'FINALTECH_DIGITAL_ZERO'
   FINALTECH_LOGIC_COMPARATOR_NOTNULL:
-    name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}Not Null'
+    name: '{color:prandom}逻辑比较器 {color:conceal}- {color:positive}不是空的'
     info:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}While matching precondition'
+          - '{color:normal}匹配前提条件时'
           - '{color:normal}It will perform conditional judgment'
           - '{color:normal}And then output specified items'
       2:
@@ -2087,14 +2087,14 @@ items:
         name: '{color:passive}机制'
         lore:
           - '{color:normal}Transfer items to the specified location'
-          - '{color:normal}Need {id:FINALTECH_LOCATION_RECORDER} {color:normal}to work'
+          - '{color:normal}需要{id:FINALTECH_LOCATION_RECORDER}{color:normal}才能工作'
   FINALTECH_CONFIGURATION_COPIER:
     name: '{color:prandom}Configuration Copier'
     info:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Copy the configuration of machine it looks at'
+          - '{color:normal}复制它看到的机器配置'
         output: 'FINALTECH_MACHINE_CONFIGURATOR'
       2:
         name: '{color:passive}机制'
@@ -2108,41 +2108,41 @@ items:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Paste the configuration to machine it looks at'
+          - '{color:normal}粘贴配置到它看起来的机床上'
         output: 'FINALTECH_MACHINE_CONFIGURATOR'
       2:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Use digital item to specify the location'
-          - '{color:normal}Optional, default 0'
+          - '{color:normal}使用数字项指定位置'
+          - '{color:normal}可选，默认0'
         output: 'FINALTECH_DIGITAL_ZERO'
   FINALTECH_CLICK_WORK_MACHINE:
-    name: '{color:prandom}Click Work Machine'
+    name: '{color:prandom}点击工作机'
     info:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Transfer item from input slot to output slot while being clicked'
+          - '{color:normal}点击时从输入栏位传输项目到输出栏位'
   FINALTECH_SIMULATE_CLICK_MACHINE:
-    name: '{color:prandom}Simulate Click Machine'
+    name: '{color:prandom}模拟点击机'
     info:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Transfer item from input slot to output slot'
-          - '{color:normal}While there is a digit item in input slot'
-          - "{color:normal}And the machine in it's bottom will be clicked by around player"
-          - "{color:normal}Digit to range rate: {color:number}{1}"
+          - '{color:normal}从输入栏位传输项目到输出栏位'
+          - '{color:normal}当输入栏位中有一个数字项'
+          - "{color:normal}其底部的机器将被玩家周围点击"
+          - "{color:normal}数字到范围率： {color:number}{1}"
         output: 'FINALTECH_DIGITAL_ONE'
   FINALTECH_CONSUMABLE_SIMULATE_CLICK_MACHINE:
-    name: '{color:prandom}Simulate Click Machine {color:conceal}- {color:positive}Consumable'
+    name: '{color:prandom}模拟点击机器 {color:conceal}- {color:positive}消耗量'
     info:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Consume digit item'
-          - "{color:normal}Then the machine in it's bottom will be clicked by around player"
-          - "{color:normal}Digit to range rate: {color:number}{1}"
+          - '{color:normal}消费数字项'
+          - "{color:normal}然后它底部的机器将被玩家周围点击"
+          - "{color:normal}数字到范围率： {color:number}{1}"
         output: 'FINALTECH_DIGITAL_ONE'
   FINALTECH_ORDERED_DUST_FACTORY_DIRT:
     name: '{color:prandom}有序粉尘工厂 I'
@@ -2152,8 +2152,8 @@ items:
         lore:
           - '{color:normal}输入物品以获取{id:FINALTECH_UNORDERED_DUST} {color:normal}或 {id:FINALTECH_ORDERED_DUST}'
           - ''
-          - '{color:normal}A pair of random number will be generated.'
-          - '{color:normal}They will be used to determine how to craft item.'
+          - '{color:normal}将生成一对随机数字。'
+          - '{color:normal}它们将用于确定如何制作物品。'
       2:
         name: '{color:passive}机制'
         lore:
@@ -2208,9 +2208,9 @@ items:
     name: '{color:prandom}物品拆解台'
     status-icon:
       lore:
-        - '{color:normal}Charge: {color:number}{1} {color:conceal}/ {color:number}{2}'
+        - '{color:normal}收费： {color:number}{1} {color:conceal}/ {color:number}{2}'
   FINALTECH_AUTO_ITEM_DISMANTLE_TABLE:
-    name: '{color:prandom}Auto Item Dismantle Table'
+    name: '{color:prandom}自动拆除表'
   FINALTECH_EQUIVALENT_EXCHANGE_TABLE:
     name: '{color:prandom}等价交换台'
     info:
@@ -2278,7 +2278,7 @@ items:
       lore:
         - '{color:normal}物品名称: {color:number}{1}'
         - '{color:normal}物品数量: {color:number}{2}{color:normal}/{color:number}{3}'
-        - '{color:normal}Rate: {color:number}{4}'
+        - '{color:normal}速率: {color:number}{4}'
     phony:
       name: '{color:normal}状态'
       lore:
@@ -2343,17 +2343,17 @@ items:
         - '{color:normal}↑↑ 将机器物品放在最上面两行以进一步分析物品'
         - '    {color:normal}有效机器物品可在粘液科技指南中查找'
         - '{color:normal}↑ 在此放入数量组件加速'
-        - '{color:negative}The machine can not work at all'
+        - '{color:negative}机器根本无法工作'
     parse-failed-icon:
       name: '{color:negative}分析失败'
       lore:
         - '{color:normal}请尝试分析不同物品'
     parse-extend-icon:
-      name: '{color:positive}Parse Success'
+      name: '{color:positive}分析成功'
       lore:
-        - '{color:action}[click] {color:normal}to get more information'
+        - '{color:action}[单击] {color:normal}获取更多信息'
     parse-success-icon:
-      name: '{color:positive}Parse Success'
+      name: '{color:positive}分析成功'
     parse-amount: '{color:conceal}数量: {1}'
   FINALTECH_ITEM_FIXER:
     name: '{color:prandom}Item Fixer'
@@ -2361,7 +2361,7 @@ items:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Slowly restore durability of input item'
+          - '{color:normal}缓慢恢复输入项的耐久性'
   FINALTECH_COBBLESTONE_FACTORY:
     name: '{color:prandom}圆石工厂'
   FINALTECH_FUEL_CHARGER:
@@ -2385,7 +2385,7 @@ items:
   FINALTECH_OPERATION_ACCELERATOR:
     name: '{color:prandom}运行加速机'
   FINALTECH_OPERATION_ACCELERATOR_INFINITY:
-    name: '{color:prandom}Infinity Operation Accelerator'
+    name: '{color:prandom}无限操作加速器'
   FINALTECH_CURE_TOWER:
     name: '{color:prandom}治愈之塔'
     info:
