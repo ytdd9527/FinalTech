@@ -2055,36 +2055,36 @@ items:
     name: '{color:prandom}Advanced Point Transfer'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Transfer items from one place to another place'
       2:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Remote Range: {color:number}{1} Blocks'
   FINALTECH_ADVANCED_MESH_TRANSFER:
     name: '{color:prandom}Advanced Mesh Transfer'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Input items to storage and output them'
       2:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Can use chain to extend range in remote search mode.'
   FINALTECH_ADVANCED_LINE_TRANSFER:
     name: '{color:prandom}Advanced Line Transfer'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Transfer items along the place it look at'
   FINALTECH_ADVANCED_LOCATION_TRANSFER:
     name: '{color:prandom}Advanced Location Transfer'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Transfer items to the specified location'
           - '{color:normal}Need {id:FINALTECH_LOCATION_RECORDER} {color:normal}to work'
@@ -2092,7 +2092,7 @@ items:
     name: '{color:prandom}Configuration Copier'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Copy the configuration of machine it looks at'
         output: 'FINALTECH_MACHINE_CONFIGURATOR'
@@ -2354,12 +2354,12 @@ items:
         - '{color:action}[click] {color:normal}to get more information'
     parse-success-icon:
       name: '{color:positive}Parse Success'
-    parse-amount: '{color:conceal}Amount : {1}'
+    parse-amount: '{color:conceal}数量: {1}'
   FINALTECH_ITEM_FIXER:
     name: '{color:prandom}Item Fixer'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Slowly restore durability of input item'
   FINALTECH_COBBLESTONE_FACTORY:
@@ -2814,4 +2814,4 @@ message:
     item: '{color:negative}您没有此物品的权限!'
   no-condition:
     player: '{color:negative}不符合条件!'
-  invalid-item: '{color:negative}Not valid item!'
+  invalid-item: '{color:negative}无效项目 ！'
