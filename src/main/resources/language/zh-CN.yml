@@ -1247,7 +1247,7 @@ items:
           - '{color:negative}若无有效物品消耗: {color:number}当前发电量 ÷ 2'
     status:
       lore:
-        - '{color:normal}发电量: {color:number}{1}'
+        - '{color:normal}Stored Energy: {color:number}{3} J'
         - ''
         - '{color:normal}Power: {color:number}{1}'
         - '{color:normal}Generate Energy: {color:number}{2} J/times'
@@ -1940,13 +1940,13 @@ items:
         lore:
           - '{color:normal}While matching precondition'
           - '{color:normal}It will perform conditional judgment'
-          - '{color:normal}And then output specified items'
+          - '{color:normal}然后输出指定的项目'
       2:
-        name: '{color:passive}Precondition'
+        name: '{color:passive}前提条件'
         lore:
-          - '{color:normal}Input two items'
+          - '{color:normal}输入两个项目'
       3:
-        name: '{color:passive}Result {color:conceal}- {color:positive}True'
+        name: '{color:passive}结果 {color:conceal}- {color:positive}True'
         lore:
           - '{color:normal}Items are with same amount'
         output: 'FINALTECH_LOGIC_TRUE'
@@ -1963,34 +1963,34 @@ items:
         lore:
           - '{color:normal}While matching precondition'
           - '{color:normal}It will perform conditional judgment'
-          - '{color:normal}And then output specified items'
+          - '{color:normal}然后输出指定的项目'
       2:
-        name: '{color:passive}Precondition'
+        name: '{color:passive}前提条件'
         lore:
-          - '{color:normal}Input two items'
+          - '{color:normal}输入两个项目'
       3:
-        name: '{color:passive}Result {color:conceal}- {color:positive}True'
+        name: '{color:passive}结果 {color:conceal}- {color:positive}True'
         lore:
-          - '{color:normal}Items are same'
+          - '{color:normal}项是相同的'
         output: 'FINALTECH_LOGIC_TRUE'
       4:
-        name: '{color:passive}Result {color:conceal}- {color:positive}False'
+        name: '{color:passive}结果 {color:conceal}- {color:positive}False'
         lore:
-          - '{color:normal}Items are not same'
+          - '{color:normal}项不相同'
         output: 'FINALTECH_LOGIC_FALSE'
   FINALTECH_LOGIC_COMPARATOR_EQUAL:
-    name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}Equal'
+    name: '{color:prandom}逻辑比较器 {color:conceal}- {color:positive}等于'
     info:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}While matching precondition'
-          - '{color:normal}It will perform conditional judgment'
-          - '{color:normal}And then output specified items'
+          - '{color:normal}匹配前提条件时'
+          - '{color:normal}它将执行有条件的判决'
+          - '{color:normal}然后输出指定的项目'
       2:
-        name: '{color:passive}Precondition'
+        name: '{color:passive}前提条件'
         lore:
-          - '{color:normal}Input two items'
+          - '{color:normal}输入两个项目'
       3:
         name: '{color:passive}Result {color:conceal}- {color:positive}True'
         lore:
@@ -2099,11 +2099,11 @@ items:
       2:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Use digital item to specify the location'
-          - '{color:normal}Optional, default 0'
+          - '{color:normal}使用数字项指定位置'
+          - '{color:normal}可选，默认0'
         output: 'FINALTECH_DIGITAL_ZERO'
   FINALTECH_CONFIGURATION_PASTER:
-    name: '{color:prandom}Configuration Paster'
+    name: '{color:prandom}配置Paster'
     info:
       1:
         name: '{color:passive}机制'
@@ -2330,24 +2330,24 @@ items:
       lore:
         - '{color:normal}请输入正确的物品'
   FINALTECH_ADVANCED_AUTO_CRAFT_FRAME:
-    name: '{color:prandom}Advanced Auto Craft Frame'
+    name: '{color:prandom}高级自动合成帧'
     parse-icon:
       name: '{color:stress}Parse'
       lore:
-        - '{color:action}[click] {color:normal}to parse item'
+        - '{color:action}[单击] {color:normal}分析物品'
     wiki-icon:
-      name: '{color:stress}Wiki'
+      name: '{color:stress}维基Wiki'
       lore:
-        - '{color:normal}↓ Put item here'
-        - '{color:normal}↙ Click and parse it'
-        - '{color:normal}↑↑ Put machine item in top two lines to parse item more steps'
-        - '    {color:normal}Available machine item can be found in slimefun guide.'
-        - '{color:normal}↑ Put quantity module to speed up'
+        - '{color:normal}↓ 在此放入物品'
+        - '{color:normal}↙ 单击分析'
+        - '{color:normal}↑↑ 将机器物品放在最上面两行以进一步分析物品'
+        - '    {color:normal}有效机器物品可在粘液科技指南中查找'
+        - '{color:normal}↑ 在此放入数量组件加速'
         - '{color:negative}The machine can not work at all'
     parse-failed-icon:
-      name: '{color:negative}Parse Failed'
+      name: '{color:negative}分析失败'
       lore:
-        - '{color:normal}Please try to parse different item'
+        - '{color:normal}请尝试分析不同物品'
     parse-extend-icon:
       name: '{color:positive}Parse Success'
       lore:
@@ -2530,7 +2530,7 @@ items:
   FINALTECH_LOGIC_TO_DIGITAL_CONVERSION:
     name: '{color:prandom}逻辑数码转换机'
   FINALTECH_DIGITAL_EXTRACTION:
-    name: '{color:prandom}Digital Extraction'
+    name: '{color:prandom}数字提取器'
   FINALTECH_ORE_EXTRACTION:
     name: '{color:prandom}矿机'
   FINALTECH_STONE_GENERATOR:
