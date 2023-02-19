@@ -656,7 +656,7 @@ items:
           - '{color:normal}Can be crafted in {id:FINALTECH_LOGIC_CRAFTER}'
         output: 'FINALTECH_LOGIC_CRAFTER'
       3:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGIT_ADDER'
@@ -778,7 +778,7 @@ items:
           - '{color:normal}可以在 {id:FINALTECH_LOGIC_CRAFTER} 中合成'
         output: 'FINALTECH_LOGIC_CRAFTER'
       2:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGIT_ADDER'
@@ -791,7 +791,7 @@ items:
           - '{color:normal}可以在 {id:FINALTECH_LOGIC_CRAFTER} 中合成'
         output: 'FINALTECH_LOGIC_CRAFTER'
       2:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGIT_ADDER'
@@ -1448,7 +1448,7 @@ items:
     name: '{color:prandom}Time Capacitor'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Can store {color:number}{1} J {color:normal}of energy'
           - '{color:normal}Double stored energy with time going'
@@ -1475,7 +1475,7 @@ items:
     name: '{color:prandom}Normal Electricity Shoot Pile {color:conceal}- {color:positive}Consumable'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Transfer energy stored in the capacitor or generator behind it'
           - '{color:normal}To the machine it is pointing at'
@@ -1820,7 +1820,7 @@ items:
     name: '{color:prandom}Remote Accessor {color:conceal}- {color:positive}Consumable'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Right click it to config it'
           - '{color:normal}Right click it to open slimefun machine it looking at'
@@ -1829,7 +1829,7 @@ items:
     name: '{color:prandom}Remote Accessor {color:conceal}- {color:positive}Configurable'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Right click it to config it'
           - '{color:normal}Right click it to open slimefun machine it looking at'
@@ -1838,7 +1838,7 @@ items:
     name: '{color:prandom}Expanded Remote Accessor {color:conceal}- {color:positive}Consumable'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Right click it to config it'
           - '{color:normal}Right click it to open slimefun machine it looking at'
@@ -1847,7 +1847,7 @@ items:
     name: '{color:prandom}Expanded Remote Accessor {color:conceal}- {color:positive}Configurable'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Right click it to config it'
           - '{color:normal}Right click it to open slimefun machine it looking at'
@@ -1936,7 +1936,7 @@ items:
     name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}Amount'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}While matching precondition'
           - '{color:normal}It will perform conditional judgment'
