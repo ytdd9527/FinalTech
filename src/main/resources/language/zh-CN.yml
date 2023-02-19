@@ -19,7 +19,7 @@ helper:
       CONNECTOR: '链接器'
       NONE: '无'
     recipe-icon:
-      name: '{color:stress}Display Recipe'
+      name: '{color:stress}显示配方'
     quantity-module:
       name: '{color:normal}数量模块'
       lore:
@@ -442,7 +442,7 @@ items:
         lore:
           - '{color:normal}当手持 {id:FINALTECH_SHINE} {color:normal}或 {id:FINALTECH_BOX} 时'
           - '{color:normal}玩家受到的虚空伤害将会大大增加'
-          - '{color:normal}(三击必杀)'
+          - '{color:negative}Player will lose all his items after dead!!!'
           - ''
           - '{color:negative}Soul Bound Rune may be useful.'
     message: '{color:normal}You forget something :D'
@@ -603,7 +603,7 @@ items:
         name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}可以在 {id:FINALTECH_DIGITAL_GENERATOR} 中获得'
-        output: 'FINALTECH_LOGIC_TO_DIGITAL_CONVERSION'
+        output: 'FINALTECH_DIGITAL_GENERATOR'
       2:
         name: '{color:initiative}Production method'
         lore:
@@ -626,7 +626,7 @@ items:
         name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}可以在 {id:FINALTECH_DIGITAL_GENERATOR} 中获得'
-        output: 'FINALTECH_LOGIC_TO_DIGITAL_CONVERSION'
+        output: 'FINALTECH_DIGITAL_GENERATOR'
       2:
         name: '{color:initiative}Production method'
         lore:
@@ -992,13 +992,13 @@ items:
         lore:
           - '{color:normal}查看机器交互情况'
     void-icon:
-      name: '无交互'
+      name: '{color:normal}无交互'
     input-icon:
-      name: '输入槽'
+      name: '{color:normal}输入槽'
     output-icon:
-      name: '输出槽'
+      name: '{color:normal}输出槽'
     in-and-out-icon:
-      name: '输入和输出槽'
+      name: '{color:normal}输入和输出槽'
   FINALTECH_LOCATION_RECORDER:
     name: '{color:prandom}位置记录仪'
     info:
