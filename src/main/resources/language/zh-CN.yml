@@ -1,17 +1,17 @@
-FinalTech: '终极技术'
+FinalTech: '乱序技艺'
 helper:
   ICON:
     wiki-icon:
-      name: '{color:stress}参数'
+      name: '{color:stress}维基WIKI'
       lore:
         - '§7{1}'
         - '{color:normal}研究： {color:negative}{2}'
-        - '{color:normal}插件： {color:initiative}{3}'
-        - '{color:normal}Value Input: {color:number}{4}'
-        - '{color:normal}Value Output: {color:number}{5}'
+        - '{color:normal}附属： {color:initiative}{3}'
+        - '{color:normal}输入价值: {color:number}{4}'
+        - '{color:normal}输出价值: {color:number}{5}'
       lore-energy:
-        - '{color:normal}Energy Type: {color:passive}{1}'
-        - '{color:normal}Energy Capacity: {color:number}{2}'
+        - '{color:normal}电器类型: {color:passive}{1}'
+        - '{color:normal}总储电量: {color:number}{2}'
       no-research: '{color:positive}NONE'
       GENERATOR: 'Generator'
       CAPACITOR: 'Capacitor'
