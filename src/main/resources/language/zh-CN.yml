@@ -1032,14 +1032,14 @@ items:
     name: '{color:prandom}Super Shovel'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Drop 1 extra exp instead while breaking block'
   FINALTECH_ULTIMATE_SHOVEL:
     name: '{color:prandom}Ultimate Shovel'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Drop extra exp instead while breaking block'
   FINALTECH_SUPER_PICKAXE:
@@ -1053,35 +1053,35 @@ items:
     name: '{color:prandom}Ultimate Pickaxe'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Drop extra exp instead while breaking block'
   FINALTECH_SUPER_AXE:
     name: '{color:prandom}Super Axe'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Drop 1 extra exp instead while breaking block'
   FINALTECH_ULTIMATE_AXE:
     name: '{color:prandom}Ultimate Axe'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Drop extra exp instead while breaking block'
   FINALTECH_SUPER_HOE:
     name: '{color:prandom}Super Hoe'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Drop 1 extra exp instead while breaking block'
   FINALTECH_ULTIMATE_HOE:
     name: '{color:prandom}Ultimate Hoe'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Drop extra exp instead while breaking block'
   FINALTECH_SWORD1:
@@ -1255,7 +1255,7 @@ items:
     name: '{color:prandom}Time Generator'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Generate energy 1J per {color:number}{1}s'
           - '{color:normal}Can store {color:number}{2} J {color:normal}of energy'
@@ -1490,7 +1490,7 @@ items:
     name: '{color:prandom}Normal Electricity Shoot Pile {color:conceal}- {color:positive}Configurable'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Transfer energy stored in the capacitor or generator behind it'
           - '{color:normal}To the machine it is pointing at'
@@ -1869,7 +1869,7 @@ items:
     name: '{color:prandom}Transporter'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Right click it to teleport to the target place'
           - '{color:normal}Range: {color:number}{1}'
@@ -1877,7 +1877,7 @@ items:
     name: '{color:prandom}Transporter {color:conceal}- {color:positive}Consumable'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Right click it to config it'
           - '{color:normal}Right click it to teleport to the target place'
@@ -1886,7 +1886,7 @@ items:
     name: '{color:prandom}Transporter {color:conceal}- {color:positive}Configurable'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Right click it to config it'
           - '{color:normal}Right click it to teleport to the target place'
@@ -1895,7 +1895,7 @@ items:
     name: '{color:prandom}Expanded Transporter {color:conceal}- {color:positive}Consumable'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Right click it to config it'
           - '{color:normal}Right click it to teleport to the target place'
@@ -1904,7 +1904,7 @@ items:
     name: '{color:prandom}Expanded Transporter {color:conceal}- {color:positive}Configurable'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Right click it to config it'
           - '{color:normal}Right click it to teleport to the target place'
@@ -1913,7 +1913,7 @@ items:
     name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}Not Null'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}While matching precondition'
           - '{color:normal}It will perform conditional judgment'
@@ -1959,7 +1959,7 @@ items:
     name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}Similar'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}While matching precondition'
           - '{color:normal}It will perform conditional judgment'
@@ -1982,7 +1982,7 @@ items:
     name: '{color:prandom}Logic Comparator {color:conceal}- {color:positive}Equal'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}While matching precondition'
           - '{color:normal}It will perform conditional judgment'
@@ -2097,7 +2097,7 @@ items:
           - '{color:normal}Copy the configuration of machine it looks at'
         output: 'FINALTECH_MACHINE_CONFIGURATOR'
       2:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Use digital item to specify the location'
           - '{color:normal}Optional, default 0'
@@ -2106,12 +2106,12 @@ items:
     name: '{color:prandom}Configuration Paster'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Paste the configuration to machine it looks at'
         output: 'FINALTECH_MACHINE_CONFIGURATOR'
       2:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Use digital item to specify the location'
           - '{color:normal}Optional, default 0'
@@ -2120,14 +2120,14 @@ items:
     name: '{color:prandom}Click Work Machine'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Transfer item from input slot to output slot while being clicked'
   FINALTECH_SIMULATE_CLICK_MACHINE:
     name: '{color:prandom}Simulate Click Machine'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Transfer item from input slot to output slot'
           - '{color:normal}While there is a digit item in input slot'
@@ -2138,7 +2138,7 @@ items:
     name: '{color:prandom}Simulate Click Machine {color:conceal}- {color:positive}Consumable'
     info:
       1:
-        name: '{color:passive}Mechanism'
+        name: '{color:passive}机制'
         lore:
           - '{color:normal}Consume digit item'
           - "{color:normal}Then the machine in it's bottom will be clicked by around player"
