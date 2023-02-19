@@ -5,8 +5,8 @@ helper:
       name: '{color:stress}维基WIKI'
       lore:
         - '§7{1}'
-        - '{color:normal}研究： {color:negative}{2}'
-        - '{color:normal}附属： {color:initiative}{3}'
+        - '{color:normal}研究: {color:negative}{2}'
+        - '{color:normal}附属: {color:initiative}{3}'
         - '{color:normal}输入价值: {color:number}{4}'
         - '{color:normal}输出价值: {color:number}{5}'
       lore-energy:
@@ -21,130 +21,130 @@ helper:
     recipe-icon:
       name: '{color:stress}Display Recipe'
     quantity-module:
-      name: '{color:normal}Quantity Module'
+      name: '{color:normal}数量模块'
       lore:
-        - '{color:normal}Put {id:FINALTECH_QUANTITY_MODULE} {color:normal}to change efficiency'
+        - '{color:normal}放入{id:FINALTECH_QUANTITY_MODULE} {color:normal}以更改效率'
       amount-lore:
-        - '{color:normal}Efficiency: {color:number}{1}'
-      amount-infinity: '{color:stress}Infinity'
+        - '{color:normal}效率: {color:number}{1}'
+      amount-infinity: '{color:stress}无限'
       amount-none-lore:
-        - '{color:normal}Efficiency: {color:negative}{1}'
+        - '{color:normal}效率: {color:negative}{1}'
     next-page:
-      name: '{color:normal}Next Page'
+      name: '{color:normal}下一页'
     previous-page:
-      name: '{color:normal}Previous Page'
+      name: '{color:normal}上一页'
     status:
-      name: '{color:normal}Status'
+      name: '{color:normal}状态'
     error:
-      name: '{color:normal}Error'
+      name: '{color:normal}错误'
   CARGO_ORDER:
     positive:
-      name: '{color:normal}Cargo Order {color:conceal}- {color:random}Positive'
+      name: '{color:normal}货运节点 {color:conceal}- {color:random}正序'
       lore:
-        - '{color:normal}Iterate through the location queue in positive order'
+        - '{color:normal}以正序遍历位置并进行处理'
     reverse:
-      name: '{color:normal}Cargo Order {color:conceal}- {color:random}Reverse'
+      name: '{color:normal}货运节点 {color:conceal}- {color:random}逆序'
       lore:
-        - '{color:normal}Iterate through the location queue in reverse order'
+        - '{color:normal}以逆序遍历位置并进行处理'
   MACHINE_MAX_STACK:
     icon:
-      name: '{color:normal}Machine Max Stack'
+      name: '{color:normal}运输堆栈'
     '0':
       lore:
-        - '{color:normal}No Limit in input by cargo'
+        - '{color:normal}无物品输入限制'
     value:
       lore:
-        - '{color:normal}Max Stack to input by cargo: {color:number}{1}'
+        - '{color:normal}物品输入最大堆栈: {color:number}{1}'
   CARGO_NUMBER:
     icon:
-      name: '{color:normal}Cargo Number'
+      name: '{color:normal}运输数量'
       lore:
-        - '{color:normal}Transfer up to {color:number}{1} items {color:normal}at one time'
+        - '{color:normal}一次最多运输{color:number}{1}个物品{color:normal}'
       lore0:
-        - '{color:normal}No Limit in transferring items at one time'
+        - '{color:normal}无运输数量限制'
     add-icon:
-      name: '{color:normal}Cargo Number {color:conceal}- {color:random}Add'
+      name: '{color:normal}运输数量 {color:conceal}- {color:random}增加'
     sub-icon:
-      name: '{color:normal}Cargo Number {color:conceal}- {color:random}Sub'
+      name: '{color:normal}运输数量 {color:conceal}- {color:random}减少'
   CARGO_FILTER:
     black-filter-mode:
-      name: '{color:normal}Cargo Filter {color:conceal}- {color:random}Black'
+      name: '{color:normal}货运过滤 {color:conceal}- {color:random}黑名单'
       lore:
-        - '{color:normal}Transfer item that not matches'
+        - '{color:normal}转移不匹配的物品'
     white-filter-mode:
-      name: '{color:normal}Cargo Filter {color:conceal}- {color:random}White'
+      name: '{color:normal}货运过滤 {color:conceal}- {color:random}白名单'
       lore:
-        - '{color:normal}Transfer item that matches'
+        - '{color:normal}转移匹配的物品'
   CARGO_MODE:
     input-main:
-      name: '{color:normal}Cargo Mode {color:conceal}- {color:random}Input Main'
+      name: '{color:normal}货运模式 {color:conceal}- {color:random}输入为主'
       lore:
-        - '{color:normal}Push item from input side to output side'
+        - '{color:normal}将物品从输入侧传至输出侧'
     output-main:
-      name: '{color:normal}Cargo Mode {color:conceal}- {color:random}Output Main'
+      name: '{color:normal}货运模式 {color:conceal}- {color:random}输出为主'
       lore:
-        - '{color:normal}Pull item from input side to output side'
+        - '{color:normal}将物品从输出侧传至输入侧'
     strong-symmetry:
-      name: '{color:normal}Cargo Mode {color:conceal}- {color:random}Strong Symmetry'
+      name: '{color:normal}货运模式 {color:conceal}- {color:random}强对称性'
       lore:
-        - '{color:normal}Transfer item from input side to output side'
-        - '{color:normal}Item will only be transferred to the same slot'
+        - '{color:normal}将物品从输入端转移至输出端'
+        - '{color:normal}物品将只被转移至相同的物品槽'
     weak-symmetry:
-      name: '{color:normal}Cargo Mode {color:conceal}- {color:random}Weak Symmetry'
+      name: '{color:normal}货运模式 {color:conceal}- {color:random}弱对称性'
       lore:
-        - '{color:normal}Transfer item from input side to output side'
-        - '{color:normal}Item will be transferred to the same slot if possible'
+        - '{color:normal}将物品从输入端转移至输出端'
+        - '{color:normal}如果可能，物品将被转移至相同的物品槽'
   CARGO_LIMIT:
     all:
-      name: '{color:normal}Cargo Limit {color:conceal}- {color:random}All'
+      name: '{color:normal}货运限制 {color:conceal}- {color:random}全部'
       lore:
-        - '{color:normal}No Limit'
+        - '{color:normal}无限制'
     type:
-      name: '{color:normal}Cargo Limit {color:conceal}- {color:random}Type'
+      name: '{color:normal}货运限制 {color:conceal}- {color:random}种类'
       lore:
-        - '{color:normal}Only one type of items will be transferred in one time'
+        - '{color:normal}一次只能传输一种类型的物品'
     stack:
-      name: '{color:normal}Cargo Limit {color:conceal}- {color:random}Stack'
+      name: '{color:normal}货运限制 {color:conceal}- {color:random}堆栈'
       lore:
-        - '{color:normal}Only one type of items will be transferred in one time'
-        - '{color:normal}Transfer amount will not be more than max stack amount of the item'
+        - '{color:normal}一次只能传输一种类型的物品'
+        - '{color:normal}转移数量不会超过该物品的最大堆叠数量'
     nonnull:
-      name: '{color:normal}Cargo Limit {color:conceal}- {color:random}Nonnull'
+      name: '{color:normal}货运限制 {color:conceal}- {color:random}非空'
       lore:
-        - '{color:normal}Slots without item will be skipped'
+        - '{color:normal}忽略空物品槽'
     first:
-      name: '{color:normal}Cargo Limit {color:conceal}- {color:random}First'
+      name: '{color:normal}货运限制 {color:conceal}- {color:random}优先'
       lore:
-        - '{color:normal}Only one slot will be involved'
-        - '{color:normal}(mostly like slimefun cargo)'
+        - '{color:normal}仅涉及一个物品槽'
+        - '{color:normal}(大多像粘液科技本体货运)'
   SLOT_SEARCH_SIZE:
     inputs-only:
-      name: '{color:normal}Slot Search Size {color:conceal}- {color:random}Inputs Only'
+      name: '{color:normal}物品槽检索大小 {color:conceal}- {color:random}仅输入'
       lore:
-        - '{color:normal}Only input slots will be involved'
-        - '{color:normal}(Only for slimefun container)'
+        - '{color:normal}仅涉及输入槽'
+        - '{color:normal}(仅适用于slimefun容器)'
     outputs-only:
-      name: '{color:normal}Slot Search Size {color:conceal}- {color:random}Outputs Only'
+      name: '{color:normal}物品槽检索大小 {color:conceal}- {color:random}仅输出'
       lore:
-        - '{color:normal}Only output slots will be involved'
-        - '{color:normal}(Only for slimefun container)'
+        - '{color:normal}仅涉及输出槽'
+        - '{color:normal}(仅适用于slimefun容器)'
     inputs-and-outputs:
-      name: '{color:normal}Slot Search Size {color:conceal}- {color:random}Inputs And Outputs'
+      name: '{color:normal}物品槽检索大小 {color:conceal}- {color:random}输入和输出'
       lore:
-        - '{color:normal}Size = input slots + output slots'
-        - '{color:normal}(Only for slimefun container)'
+        - '{color:normal}检索大小 = 输入槽 + 输出槽'
+        - '{color:normal}(仅适用于slimefun容器)'
     outputs-and-inputs:
-      name: '{color:normal}Slot Search Size {color:conceal}- {color:random}Outputs And Inputs'
+      name: '{color:normal}物品槽检索大小 {color:conceal}- {color:random}输出和输入'
       lore:
-        - '{color:normal}Size = output slots + input slots'
-        - '{color:normal}(Only for slimefun container)'
+        - '{color:normal}检索大小 = 输出槽 + 输入槽'
+        - '{color:normal}(仅适用于slimefun容器)'
   SLOT_SEARCH_ORDER:
     ascent:
-      name: '{color:normal}Slot Search Order {color:conceal}- {color:random}Ascent'
+      name: '{color:normal}物品槽检索顺序 {color:conceal}- {color:random}递增'
       lore:
-        - '{color:normal}Ascent use the result of {color:stress}slot search size'
+        - '{color:normal}结果将递增检索{color:stress}物品槽大小'
     descend:
-      name: '{color:normal}Slot Search Order {color:conceal}- {color:random}Descend'
+      name: '{color:normal}物品槽检索顺序 {color:conceal}- {color:random}递减'
       lore:
         - '{color:normal}Descend use the result of {color:stress}slot search size'
     first-only:
