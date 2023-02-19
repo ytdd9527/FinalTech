@@ -278,11 +278,11 @@ helper:
     'false':
       name: '{color:normal}Force Close {color:conceal}- {color:random}False'
       lore:
-        - '{color:normal}Not close menu if not work'
+        - '{color:normal}如果不能工作，则不关闭菜单'
     'true':
-      name: '{color:normal}Force Close {color:conceal}- {color:random}True'
+      name: '{color:normal}强制关闭 {color:conceal}- {color:random}True'
       lore:
-        - '{color:normal}Close menu if not work'
+        - '{color:normal}关闭菜单，如果不工作'
 categories:
   FINALTECH_ITEM_GROUP:
     name: '{color:random}乱序技艺'
@@ -349,7 +349,7 @@ categories:
   FINALTECH_SUB_MENU_TROPHY:
     name: '{color:random}Trophy'
   FINALTECH_SUB_MENU_DEPRECATED:
-    name: '{color:random}Deprecated'
+    name: '{color:random}废弃的'
 items:
   FINALTECH_WATER_CARD:
     name: '{color:prandom}水卡'
@@ -392,7 +392,7 @@ items:
         lore:
           - '{color:normal}可以在{id:FINALTECH_EQUIVALENT_EXCHANGE_TABLE}中获得'
         output: 'FINALTECH_EQUIVALENT_EXCHANGE_TABLE'
-    message: '{color:normal}You forget something :D'
+    message: '{color:normal}你忘记了一些:D'
   FINALTECH_ENTROPY:
     name: '{color:prandom}熵'
     info:
@@ -410,7 +410,7 @@ items:
           - '{color:normal}将在以下事件中生成:'
           - '{color:normal}玩家死亡'
           - '{color:normal}且死亡点比世界高度上限高出64格'
-    message: '{color:normal}You forget something :D'
+    message: '{color:normal}你忘记了一些:D'
   FINALTECH_SHINE:
     name: '{color:prandom}耀'
     info:
@@ -436,16 +436,16 @@ items:
         lore:
           - '{color:normal}如果玩家死亡时持有 {id:FINALTECH_BOX}'
           - '{color:normal}玩家将强制失去全部持有的 {id:FINALTECH_SHINE} {color:normal}'
-          - '{color:negative}Player will lose all his items after dead!!!'
+          - '{color:negative}玩家死后将丢失所有物品！！！'
       5:
         name: '{color:negative}贴士'
         lore:
           - '{color:normal}当手持 {id:FINALTECH_SHINE} {color:normal}或 {id:FINALTECH_BOX} 时'
           - '{color:normal}玩家受到的虚空伤害将会大大增加'
-          - '{color:negative}Player will lose all his items after dead!!!'
+          - '{color:negative}玩家死后将丢失所有物品！！！'
           - ''
-          - '{color:negative}Soul Bound Rune may be useful.'
-    message: '{color:normal}You forget something :D'
+          - '{color:negative}灵魂绑定神符可能有用。'
+    message: '{color:normal}你忘记了一些:D'
   FINALTECH_COPY_CARD:
     name: '{color:prandom}复制卡'
     info:
@@ -549,22 +549,22 @@ items:
           - '{color:normal}可以在 {id:FINALTECH_LOGIC_GENERATOR} 中获得'
         output: 'FINALTECH_LOGIC_GENERATOR'
       2:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be obtained in {id:FINALTECH_LOGIC_COMPARATOR_NOTNULL}'
         output: 'FINALTECH_LOGIC_COMPARATOR_NOTNULL'
       3:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be obtained in {id:FINALTECH_LOGIC_COMPARATOR_AMOUNT}'
         output: 'FINALTECH_LOGIC_COMPARATOR_AMOUNT'
       4:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be obtained in {id:FINALTECH_LOGIC_COMPARATOR_SIMILAR}'
         output: 'FINALTECH_LOGIC_COMPARATOR_SIMILAR'
       5:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be obtained in {id:FINALTECH_LOGIC_COMPARATOR_EQUAL}'
         output: 'FINALTECH_LOGIC_COMPARATOR_EQUAL'
@@ -577,17 +577,17 @@ items:
           - '{color:normal}可以在 {id:FINALTECH_LOGIC_GENERATOR} 中获得'
         output: 'FINALTECH_LOGIC_GENERATOR'
       2:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be obtained in {id:FINALTECH_LOGIC_COMPARATOR_NOTNULL}'
         output: 'FINALTECH_LOGIC_COMPARATOR_NOTNULL'
       3:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be obtained in {id:FINALTECH_LOGIC_COMPARATOR_AMOUNT}'
         output: 'FINALTECH_LOGIC_COMPARATOR_AMOUNT'
       4:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be obtained in {id:FINALTECH_LOGIC_COMPARATOR_SIMILAR}'
         output: 'FINALTECH_LOGIC_COMPARATOR_SIMILAR'
@@ -700,7 +700,7 @@ items:
           - '{color:normal}可以在 {id:FINALTECH_LOGIC_CRAFTER} 中合成'
         output: 'FINALTECH_LOGIC_CRAFTER'
       2:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGIT_ADDER'
@@ -713,7 +713,7 @@ items:
           - '{color:normal}可以在 {id:FINALTECH_LOGIC_CRAFTER} 中合成'
         output: 'FINALTECH_LOGIC_CRAFTER'
       2:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGIT_ADDER'
@@ -726,7 +726,7 @@ items:
           - '{color:normal}可以在 {id:FINALTECH_LOGIC_CRAFTER} 中合成'
         output: 'FINALTECH_LOGIC_CRAFTER'
       2:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGIT_ADDER'
@@ -739,7 +739,7 @@ items:
           - '{color:normal}可以在 {id:FINALTECH_LOGIC_CRAFTER} 中合成'
         output: 'FINALTECH_LOGIC_CRAFTER'
       2:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGIT_ADDER'
@@ -752,7 +752,7 @@ items:
           - '{color:normal}可以在 {id:FINALTECH_LOGIC_CRAFTER} 中合成'
         output: 'FINALTECH_LOGIC_CRAFTER'
       2:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGIT_ADDER'
@@ -765,7 +765,7 @@ items:
           - '{color:normal}可以在 {id:FINALTECH_LOGIC_CRAFTER} 中合成'
         output: 'FINALTECH_LOGIC_CRAFTER'
       2:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGIT_ADDER'
@@ -804,7 +804,7 @@ items:
           - '{color:normal}可以在 {id:FINALTECH_LOGIC_CRAFTER} 中合成'
         output: 'FINALTECH_LOGIC_CRAFTER'
       2:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGIT_ADDER'
@@ -817,7 +817,7 @@ items:
           - '{color:normal}可以在 {id:FINALTECH_LOGIC_CRAFTER} 中合成'
         output: 'FINALTECH_LOGIC_CRAFTER'
       2:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGIT_ADDER'
@@ -830,7 +830,7 @@ items:
           - '{color:normal}可以在 {id:FINALTECH_LOGIC_CRAFTER} 中合成'
         output: 'FINALTECH_LOGIC_CRAFTER'
       2:
-        name: '{color:initiative}Production method'
+        name: '{color:initiative}生产方法'
         lore:
           - '{color:normal}Can be crafted in {id:FINALTECH_DIGIT_ADDER}'
         output: 'FINALTECH_DIGIT_ADDER'
@@ -978,10 +978,10 @@ items:
           - "    {color:normal}水平范围: {color:number}{1}"
           - "    {color:normal}垂直范围: {color:number}{2}"
   FINALTECH_GRAVITY_REVERSAL_RUNE:
-    name: '{color:prandom}Gravity Reversal Rune'
+    name: '{color:prandom}重力反向神器'
     info:
       1:
-        name: '{color:positive}Usage'
+        name: '{color:positive}用途'
         lore:
           - '{color:action}[Right-Click] {color:normal}Reverse your vertical speed'
   FINALTECH_MENU_VIEWER:
@@ -1034,7 +1034,7 @@ items:
       1:
         name: '{color:passive}机制'
         lore:
-          - '{color:normal}Drop 1 extra exp instead while breaking block'
+          - '{color:normal}破坏方块时额外掉落1点经验值'
   FINALTECH_ULTIMATE_SHOVEL:
     name: '{color:prandom}Ultimate Shovel'
     info:
