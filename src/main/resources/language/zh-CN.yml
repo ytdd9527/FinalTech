@@ -1,12 +1,12 @@
-FinalTech: 'FinalTECH'
+FinalTech: '终极技术'
 helper:
   ICON:
     wiki-icon:
-      name: '{color:stress}Parameters'
+      name: '{color:stress}参数'
       lore:
         - '§7{1}'
-        - '{color:normal}Research: {color:negative}{2}'
-        - '{color:normal}Addon: {color:initiative}{3}'
+        - '{color:normal}研究： {color:negative}{2}'
+        - '{color:normal}插件： {color:initiative}{3}'
         - '{color:normal}Value Input: {color:number}{4}'
         - '{color:normal}Value Output: {color:number}{5}'
       lore-energy:
