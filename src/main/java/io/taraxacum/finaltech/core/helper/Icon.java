@@ -3,7 +3,7 @@ package io.taraxacum.finaltech.core.helper;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -49,13 +49,13 @@ public class Icon {
         ItemStack item = blockMenu.getItemInSlot(quantityModuleSlot);
         int amount;
         List<String> lores = null;
-        if (ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE)) {
+        if (ItemStackUtil.isItemSimilar(item, FinalTechItemStacks.QUANTITY_MODULE)) {
             amount = item.getAmount();
             if (updateLore) {
                 lores = FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "amount-lore"),
                         String.valueOf(amount));
             }
-        } else if (ItemStackUtil.isItemSimilar(item, FinalTechItems.QUANTITY_MODULE_INFINITY)) {
+        } else if (ItemStackUtil.isItemSimilar(item, FinalTechItemStacks.QUANTITY_MODULE_INFINITY)) {
             amount = Integer.MAX_VALUE / ConstantTableUtil.ITEM_MAX_STACK - 1;
             if (updateLore) {
                 lores = FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "amount-lore"),

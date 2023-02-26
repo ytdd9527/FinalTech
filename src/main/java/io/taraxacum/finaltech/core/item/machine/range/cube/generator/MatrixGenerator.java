@@ -12,7 +12,7 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.finaltech.util.*;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.common.util.StringNumberUtil;
@@ -69,7 +69,7 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator {
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
             if (!ItemStackUtil.isItemNull(item)) {
-                if (ItemStackUtil.isItemSimilar(item, FinalTechItems.PHONY)) {
+                if (ItemStackUtil.isItemSimilar(item, FinalTechItemStacks.PHONY)) {
                     for (int i = item.getAmount(); i > 0; i /= 2) {
                         range++;
                     }

@@ -13,7 +13,7 @@ import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.interfaces.MenuUpdater;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
@@ -56,10 +56,10 @@ public class VariableWireResistance extends AbstractElectricMachine implements R
             JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
             javaPlugin.getServer().getScheduler().runTaskLater(javaPlugin, () -> {
                 if(location.getBlock().getType().equals(VariableWireResistance.this.getItem().getType()) && BlockStorage.getLocationInfo(location, ConstantTableUtil.CONFIG_ID) == null) {
-                    block.setType(FinalTechItems.VARIABLE_WIRE_CAPACITOR.getType());
-                    BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, FinalTechItems.VARIABLE_WIRE_CAPACITOR.getItemId(), true);
+                    block.setType(FinalTechItemStacks.VARIABLE_WIRE_CAPACITOR.getType());
+                    BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, FinalTechItemStacks.VARIABLE_WIRE_CAPACITOR.getItemId(), true);
                     BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_CHARGE, String.valueOf(this.getCapacity()));
-//                    Slimefun.getBlockDataService().setBlockData(block, FinalTechItems.VARIABLE_WIRE_CAPACITOR.getItemId());
+//                    Slimefun.getBlockDataService().setBlockData(block, FinalTechItemStacks.VARIABLE_WIRE_CAPACITOR.getItemId());
                 }
             }, Slimefun.getTickerTask().getTickRate() + 1);
         } else {

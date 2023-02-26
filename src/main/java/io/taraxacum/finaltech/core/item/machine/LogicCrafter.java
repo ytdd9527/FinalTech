@@ -11,7 +11,7 @@ import io.taraxacum.finaltech.core.interfaces.LogicItem;
 import io.taraxacum.finaltech.core.item.unusable.digital.AbstractDigitalNumber;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.LogicCrafterMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -88,7 +88,7 @@ public class LogicCrafter extends AbstractMachine implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerRecipe(FinalTechItems.LOGIC_TRUE, ItemStackUtil.AIR);
-        this.registerRecipe(FinalTechItems.LOGIC_FALSE, ItemStackUtil.AIR);
+        this.registerRecipe(FinalTechItemStacks.LOGIC_TRUE, ItemStackUtil.AIR);
+        this.registerRecipe(FinalTechItemStacks.LOGIC_FALSE, ItemStackUtil.AIR);
     }
 }

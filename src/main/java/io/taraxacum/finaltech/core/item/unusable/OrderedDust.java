@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -18,7 +18,7 @@ public class OrderedDust extends UnusableSlimefunItem implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        this.registerDescriptiveRecipe(FinalTechItems.ORDERED_DUST_FACTORY_DIRT);
-        this.registerDescriptiveRecipe(FinalTechItems.ORDERED_DUST_FACTORY_STONE);
+        this.registerDescriptiveRecipe(FinalTechItemStacks.ORDERED_DUST_FACTORY_DIRT);
+        this.registerDescriptiveRecipe(FinalTechItemStacks.ORDERED_DUST_FACTORY_STONE);
     }
 }

@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.task.effect.VoidCurse;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.task.TaskTicker;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import org.bukkit.Location;
@@ -46,10 +46,10 @@ public class ShineListener implements Listener {
         boolean haveBox = false;
         List<ItemStack> shineItemList = new ArrayList<>();
         for (ItemStack itemStack : player.getInventory().getContents()) {
-            if (!haveBox && ItemStackUtil.isItemSimilar(itemStack, FinalTechItems.BOX)) {
+            if (!haveBox && ItemStackUtil.isItemSimilar(itemStack, FinalTechItemStacks.BOX)) {
                 haveBox = true;
             }
-            if (ItemStackUtil.isItemSimilar(itemStack, FinalTechItems.SHINE)) {
+            if (ItemStackUtil.isItemSimilar(itemStack, FinalTechItemStacks.SHINE)) {
                 shineItemList.add(itemStack);
             }
         }
@@ -112,9 +112,9 @@ public class ShineListener implements Listener {
                 boolean haveBox = false;
                 int shineCount = 0;
                 for (ItemStack itemStack : player.getInventory().getContents()) {
-                    if (!haveBox && ItemStackUtil.isItemSimilar(FinalTechItems.BOX, itemStack)) {
+                    if (!haveBox && ItemStackUtil.isItemSimilar(FinalTechItemStacks.BOX, itemStack)) {
                         haveBox = true;
-                    } else if(ItemStackUtil.isItemSimilar(FinalTechItems.SHINE, itemStack)) {
+                    } else if(ItemStackUtil.isItemSimilar(FinalTechItemStacks.SHINE, itemStack)) {
                         shineCount += itemStack.getAmount();
                     }
                 }
@@ -131,7 +131,7 @@ public class ShineListener implements Listener {
                         int[] ints = JavaUtil.generateRandomInts(playerInventory.getSize() - playerInventory.getArmorContents().length);
                         for (int anInt : ints) {
                             if (ItemStackUtil.isItemNull(playerInventory.getItem(anInt))) {
-                                playerInventory.setItem(anInt, ItemStackUtil.cloneItem(FinalTechItems.SHINE, shineCount + 1));
+                                playerInventory.setItem(anInt, ItemStackUtil.cloneItem(FinalTechItemStacks.SHINE, shineCount + 1));
                                 break;
                             }
                         }
@@ -177,7 +177,7 @@ public class ShineListener implements Listener {
         World world = location.getWorld();
         if(world == null || location.getY() < world.getMinHeight() || TaskTicker.has(player, LivingEntity.class, VoidCurse.ID)) {
             for (ItemStack itemStack : player.getInventory().getContents()) {
-                if (ItemStackUtil.isItemSimilar(itemStack, FinalTechItems.SHINE)) {
+                if (ItemStackUtil.isItemSimilar(itemStack, FinalTechItemStacks.SHINE)) {
                     itemStack.setAmount(0);
                 }
             }

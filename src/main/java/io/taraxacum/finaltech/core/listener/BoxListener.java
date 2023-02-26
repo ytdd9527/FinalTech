@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.item.unusable.Box;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -40,7 +40,7 @@ public class BoxListener implements Listener {
                         player.sendMessage(FinalTech.getLanguageString("items", "FINALTECH_BOX", "message"));
                     }
                 } else {
-                    world.dropItem(location, FinalTechItems.BOX);
+                    world.dropItem(location, FinalTechItemStacks.BOX);
                 }
             }
         }

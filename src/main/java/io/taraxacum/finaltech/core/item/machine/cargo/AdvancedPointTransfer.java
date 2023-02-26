@@ -15,7 +15,7 @@ import io.taraxacum.finaltech.core.helper.*;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.cargo.AdvancedPointTransferMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.finaltech.util.*;
 import io.taraxacum.libs.plugin.dto.InvWithSlots;
 import io.taraxacum.libs.plugin.dto.ServerRunnableLockFactory;
@@ -226,13 +226,13 @@ public class AdvancedPointTransfer extends AbstractCargo implements RecipeItem {
         locationSet.add(begin.getLocation());
         while(true) {
             particleLocationList.add(LocationUtil.getCenterLocation(result));
-            if (BlockStorage.hasInventory(result) && !result.getType().equals(FinalTechItems.POINT_TRANSFER.getType())) {
+            if (BlockStorage.hasInventory(result) && !result.getType().equals(FinalTechItemStacks.POINT_TRANSFER.getType())) {
                 break;
             }
             if (PaperLib.getBlockState(result, false).getState() instanceof InventoryHolder) {
                 break;
             }
-            if (result.getType() == FinalTechItems.POINT_TRANSFER.getType()) {
+            if (result.getType() == FinalTechItemStacks.POINT_TRANSFER.getType()) {
                 count = 0;
                 if (locationSet.contains(result.getLocation())) {
                     particleLocationList.add(LocationUtil.getCenterLocation(result));

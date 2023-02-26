@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.StringItemUtil;
 import io.taraxacum.libs.plugin.util.TextUtil;
@@ -37,11 +37,11 @@ public class StorageCard extends UnusableSlimefunItem implements RecipeItem {
 
     @Nonnull
     public static ItemStack newItem() {
-        return new ItemStack(FinalTechItems.STORAGE_CARD);
+        return new ItemStack(FinalTechItemStacks.STORAGE_CARD);
     }
 
     public static ItemStack newItem(@Nonnull ItemStack stringItem, @Nonnull String amount) {
-        ItemStack result = ItemStackUtil.cloneItem(FinalTechItems.STORAGE_CARD);
+        ItemStack result = ItemStackUtil.cloneItem(FinalTechItemStacks.STORAGE_CARD);
         result.setAmount(1);
         StringItemUtil.setItemInCard(result, stringItem, amount);
         StorageCard.updateLore(result);

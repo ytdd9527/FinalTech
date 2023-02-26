@@ -5,7 +5,7 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.item.machine.operation.ItemSerializationConstructor;
 import io.taraxacum.finaltech.core.item.unusable.CopyCard;
 import io.taraxacum.finaltech.core.item.unusable.ItemPhony;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.dto.ItemWrapper;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
@@ -33,7 +33,7 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
         this.matchItem.setAmount(1);
         this.matchItemWrapper = new ItemWrapper(this.matchItem);
         this.copyCardItem = CopyCard.newItem(this.matchItem, "1");
-        this.showItem = new CustomItemStack(item.getType(), FinalTech.getLanguageString("items", FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "copy-card", "name"));
+        this.showItem = new CustomItemStack(item.getType(), FinalTech.getLanguageString("items", FinalTechItemStacks.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "copy-card", "name"));
         this.updateShowItem();
     }
 
@@ -63,7 +63,7 @@ public class ItemCopyCardOperation implements ItemSerializationConstructorOperat
 
     @Override
     public void updateShowItem() {
-        ItemStackUtil.setLore(this.showItem, FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "copy-card", "lore"),
+        ItemStackUtil.setLore(this.showItem, FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", FinalTechItemStacks.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "copy-card", "lore"),
                 ItemStackUtil.getItemName(this.matchItem),
                 String.format("%.8f", this.count),
                 String.valueOf(this.difficulty),

@@ -3,7 +3,7 @@ package io.taraxacum.finaltech.core.operation;
 import io.github.thebusybiscuit.slimefun4.core.machines.MachineOperation;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.libs.plugin.dto.ItemWrapper;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import org.bukkit.inventory.ItemStack;
@@ -76,9 +76,9 @@ public class DustFactoryOperation implements MachineOperation {
     @Nullable
     public ItemStack getResult() {
         if (this.amountCount == this.amountDifficulty && this.typeCount == this.typeDifficulty) {
-            return ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST);
+            return ItemStackUtil.cloneItem(FinalTechItemStacks.ORDERED_DUST);
         } else if (this.isFinished()) {
-            return ItemStackUtil.cloneItem(FinalTechItems.UNORDERED_DUST);
+            return ItemStackUtil.cloneItem(FinalTechItemStacks.UNORDERED_DUST);
         } else {
             return null;
         }

@@ -13,7 +13,7 @@ import io.taraxacum.libs.plugin.dto.ItemWrapper;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.OrderedDustFactoryStoneMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.BlockTickerUtil;
@@ -103,10 +103,10 @@ public class DustFactoryStone extends AbstractMachine implements RecipeItem {
             blockMenu.replaceExistingItem(slot, ItemStackUtil.AIR);
         }
         if (amountList.size() == this.getInputSlot().length && allSameItem) {
-            blockMenu.pushItem(FinalTechItems.ORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
+            blockMenu.pushItem(FinalTechItemStacks.ORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
             BlockTickerUtil.setSleep(config, String.valueOf(this.sleep + FinalTech.getRandom().nextDouble(sleep)));
         } else if (Math.random() < (double)(amountList.size()) / this.getInputSlot().length) {
-            blockMenu.pushItem(FinalTechItems.UNORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
+            blockMenu.pushItem(FinalTechItemStacks.UNORDERED_DUST.clone(), JavaUtil.shuffle(this.getOutputSlot()));
             BlockTickerUtil.setSleep(config, String.valueOf(this.sleep + FinalTech.getRandom().nextDouble(sleep)));
         }
     }

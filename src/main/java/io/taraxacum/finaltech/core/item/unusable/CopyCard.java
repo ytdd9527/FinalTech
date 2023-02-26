@@ -7,7 +7,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.StringItemUtil;
 import io.taraxacum.libs.plugin.util.TextUtil;
@@ -38,7 +38,7 @@ public class CopyCard extends UnusableSlimefunItem implements RecipeItem {
     }
 
     public static ItemStack newItem(@Nonnull ItemStack stringItem, @Nonnull String amount) {
-        ItemStack result = ItemStackUtil.cloneItem(FinalTechItems.COPY_CARD);
+        ItemStack result = ItemStackUtil.cloneItem(FinalTechItemStacks.COPY_CARD);
         ItemStack temp = new ItemStack(stringItem);
 
 //        if(stringItem instanceof SlimefunItemStack) {

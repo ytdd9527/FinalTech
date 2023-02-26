@@ -15,7 +15,7 @@ import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.item.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.DustGeneratorMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
@@ -77,7 +77,7 @@ public class DustGenerator extends AbstractMachine implements RecipeItem, Energy
         boolean work = false;
         for (int slot : this.getInputSlot()) {
             ItemStack item = blockMenu.getItemInSlot(slot);
-            if (ItemStackUtil.isItemSimilar(item, FinalTechItems.UNORDERED_DUST)) {
+            if (ItemStackUtil.isItemSimilar(item, FinalTechItemStacks.UNORDERED_DUST)) {
                 item.setAmount(item.getAmount() - 1);
                 count = Math.min(++count, this.COUNT_LIMIT);
                 work = true;

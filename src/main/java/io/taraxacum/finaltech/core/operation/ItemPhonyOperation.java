@@ -7,7 +7,7 @@ import io.taraxacum.finaltech.core.item.unusable.CopyCard;
 import io.taraxacum.finaltech.core.item.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.item.unusable.Singularity;
 import io.taraxacum.finaltech.core.item.unusable.Spirochete;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +34,7 @@ public class ItemPhonyOperation implements ItemSerializationConstructorOperation
         this.itemAmountCount = item.getAmount();
         this.itemTypeDifficulty = ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT;
         this.itemAmountDifficulty = ConstantTableUtil.ITEM_SINGULARITY_AMOUNT;
-        this.showItem = new CustomItemStack(FinalTechItems.PHONY.getType(), FinalTech.getLanguageString("items", FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "phony", "name"));
+        this.showItem = new CustomItemStack(FinalTechItemStacks.PHONY.getType(), FinalTech.getLanguageString("items", FinalTechItemStacks.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "phony", "name"));
         this.itemTypeList.add(ItemStackWrapper.wrap(item));
     }
 
@@ -51,7 +51,7 @@ public class ItemPhonyOperation implements ItemSerializationConstructorOperation
 
     @Override
     public void updateShowItem() {
-        ItemStackUtil.setLore(this.showItem, FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "phony", "lore"),
+        ItemStackUtil.setLore(this.showItem, FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", FinalTechItemStacks.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "phony", "lore"),
             String.valueOf(this.itemAmountCount),
             String.valueOf(this.itemAmountDifficulty),
             String.valueOf(this.itemTypeCount),

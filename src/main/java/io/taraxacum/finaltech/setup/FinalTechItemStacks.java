@@ -9,7 +9,7 @@ import org.bukkit.Material;
 /**
  * @author Final_ROOT
  */
-public final class FinalTechItems {
+public final class FinalTechItemStacks {
     /* item */
     // material
     public static final SlimefunItemStack WATER_CARD = ConfigUtil.getSlimefunItemStack(FinalTech.getLanguageManager(), "FINALTECH_WATER_CARD", Material.PAPER, "Water Card");

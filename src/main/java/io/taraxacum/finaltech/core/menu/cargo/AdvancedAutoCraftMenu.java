@@ -17,7 +17,7 @@ import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.item.machine.range.point.face.AdvancedAutoCraft;
 import io.taraxacum.finaltech.core.item.unusable.CopyCard;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.helper.SlotSearchSize;
@@ -343,22 +343,22 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
             }
         }
 
-        RECIPE_MAP.put(FinalTechItems.MANUAL_ENHANCED_CRAFTING_TABLE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_ENHANCED_CRAFTING_TABLE));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_GRIND_STONE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_GRIND_STONE));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_ARMOR_FORGE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_ARMOR_FORGE));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_ORE_CRUSHER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_ORE_CRUSHER));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_COMPRESSOR.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_COMPRESSOR));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_SMELTERY.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_SMELTERY));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_PRESSURE_CHAMBER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_PRESSURE_CHAMBER));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_MAGIC_WORKBENCH.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_MAGIC_WORKBENCH));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_ORE_WASHER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.ADVANCED_DUST_WASHER));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_COMPOSTER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_COMPOSTER));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_GOLD_PAN.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_GOLD_PAN));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_CRUCIBLE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_CRUCIBLE));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_JUICER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_JUICER));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_ANCIENT_ALTAR.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_ANCIENT_ALTAR));
-        RECIPE_MAP.put(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER));
-        RECIPE_MAP.put(FinalTechItems.BASIC_COBBLE_FACTORY.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItems.BASIC_COBBLE_FACTORY));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_ENHANCED_CRAFTING_TABLE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_ENHANCED_CRAFTING_TABLE));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_GRIND_STONE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_GRIND_STONE));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_ARMOR_FORGE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_ARMOR_FORGE));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_ORE_CRUSHER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_ORE_CRUSHER));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_COMPRESSOR.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_COMPRESSOR));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_SMELTERY.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_SMELTERY));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_PRESSURE_CHAMBER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_PRESSURE_CHAMBER));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_MAGIC_WORKBENCH.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_MAGIC_WORKBENCH));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_ORE_WASHER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.ADVANCED_DUST_WASHER));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_COMPOSTER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_COMPOSTER));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_GOLD_PAN.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_GOLD_PAN));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_CRUCIBLE.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_CRUCIBLE));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_JUICER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_JUICER));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_ANCIENT_ALTAR.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_ANCIENT_ALTAR));
+        RECIPE_MAP.put(FinalTechItemStacks.MANUAL_HEATED_PRESSURE_CHAMBER.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_HEATED_PRESSURE_CHAMBER));
+        RECIPE_MAP.put(FinalTechItemStacks.BASIC_COBBLE_FACTORY.getItemId(), AdvancedAutoCraftMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.BASIC_COBBLE_FACTORY));
 
         RECIPE_TYPE_ID_LIST.add(RecipeType.ENHANCED_CRAFTING_TABLE.getKey().getKey());
         RECIPE_TYPE_ID_LIST.add(RecipeType.GRIND_STONE.getKey().getKey());

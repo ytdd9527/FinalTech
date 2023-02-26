@@ -12,7 +12,7 @@ import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.ConfigurationWorkerMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.finaltech.util.*;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
@@ -78,7 +78,7 @@ public class ConfigurationPaster extends AbstractMachine implements RecipeItem {
 
         ItemStack itemConfigurator = blockMenu.getItemInSlot(this.getInputSlot()[0]);
         SlimefunItem machineConfigurator = SlimefunItem.getByItem(itemConfigurator);
-        if(machineConfigurator == null || !FinalTechItems.MACHINE_CONFIGURATOR.getItemId().equals(machineConfigurator.getId())) {
+        if(machineConfigurator == null || !FinalTechItemStacks.MACHINE_CONFIGURATOR.getItemId().equals(machineConfigurator.getId())) {
             return;
         }
 

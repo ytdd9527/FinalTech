@@ -14,7 +14,7 @@ import io.taraxacum.common.util.ReflectionUtil;
 import io.taraxacum.libs.slimefun.dto.RandomMachineRecipe;
 import io.taraxacum.libs.plugin.dto.LanguageManager;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import org.bukkit.Material;
@@ -222,9 +222,9 @@ public class RecipeUtil {
             return null;
         }
         return switch (item.getType()) {
-            case WATER_BUCKET -> new ItemStack(FinalTechItems.WATER_CARD);
-            case LAVA_BUCKET -> new ItemStack(FinalTechItems.LAVA_CARD);
-            case MILK_BUCKET -> new ItemStack(FinalTechItems.MILK_CARD);
+            case WATER_BUCKET -> new ItemStack(FinalTechItemStacks.WATER_CARD);
+            case LAVA_BUCKET -> new ItemStack(FinalTechItemStacks.LAVA_CARD);
+            case MILK_BUCKET -> new ItemStack(FinalTechItemStacks.MILK_CARD);
             default -> null;
         };
     }

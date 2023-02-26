@@ -14,7 +14,7 @@ import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
 import io.taraxacum.finaltech.core.menu.manual.EquivalentExchangeTableMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
@@ -59,7 +59,7 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
             if (ItemStackUtil.isItemNull(item)) {
                 continue;
             }
-            if (ItemStackUtil.isItemSimilar(item, FinalTechItems.UNORDERED_DUST)) {
+            if (ItemStackUtil.isItemSimilar(item, FinalTechItemStacks.UNORDERED_DUST)) {
                 if (MachineUtil.slotCount(blockMenu.toInventory(), this.getOutputSlot()) == this.getOutputSlot().length) {
                     continue;
                 }

@@ -4,7 +4,7 @@ import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.core.item.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.core.helper.Icon;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -29,11 +29,11 @@ public class MatrixReactorMenu extends AbstractMachineMenu {
     private static final int[] OUTPUT_SLOT = new int[] {40};
 
     private static final int ORDERED_DUST_SLOT = 1;
-    private static final ItemStack ORDERED_DUST_ICON = ItemStackUtil.cloneItem(FinalTechItems.UNORDERED_DUST);
+    private static final ItemStack ORDERED_DUST_ICON = ItemStackUtil.cloneItem(FinalTechItemStacks.UNORDERED_DUST);
     public static final int[] ORDERED_DUST_INPUT_SLOT = new int[] {25, 34, 43};
 
     private static final int UNORDERED_DUST_SLOT = 7;
-    private static final ItemStack UNORDERED_DUST_ICON = ItemStackUtil.cloneItem(FinalTechItems.ORDERED_DUST);
+    private static final ItemStack UNORDERED_DUST_ICON = ItemStackUtil.cloneItem(FinalTechItemStacks.ORDERED_DUST);
     public static final int[] UNORDERED_DUST_INPUT_SLOT = new int[] {19, 28, 37};
 
     public static final int[] ITEM_PHONY_INPUT_SLOT = new int[] {4};
@@ -108,9 +108,9 @@ public class MatrixReactorMenu extends AbstractMachineMenu {
         } else if (flow == null) {
             return new int[0];
         }
-        if (ItemStackUtil.isItemSimilar(item, FinalTechItems.ORDERED_DUST)) {
+        if (ItemStackUtil.isItemSimilar(item, FinalTechItemStacks.ORDERED_DUST)) {
             return ORDERED_DUST_INPUT_SLOT;
-        } else if (ItemStackUtil.isItemSimilar(item, FinalTechItems.UNORDERED_DUST)) {
+        } else if (ItemStackUtil.isItemSimilar(item, FinalTechItemStacks.UNORDERED_DUST)) {
             return UNORDERED_DUST_INPUT_SLOT;
         } else if (ItemPhony.isValid(item)) {
             return ITEM_PHONY_INPUT_SLOT;

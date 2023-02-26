@@ -6,7 +6,7 @@ import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.setup.Updater;
 import io.taraxacum.libs.plugin.dto.ConfigFileManager;
 import io.taraxacum.libs.plugin.dto.*;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.finaltech.setup.SetupUtil;
 import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -186,16 +186,16 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         /* set up my items and menus and... */
         SetupUtil.init();
 
-        this.performanceLimitSlimefunIdSet.add(FinalTechItems.ORDERED_DUST_FACTORY_DIRT.getItemId());
-        this.performanceLimitSlimefunIdSet.add(FinalTechItems.ORDERED_DUST_FACTORY_STONE.getItemId());
+        this.performanceLimitSlimefunIdSet.add(FinalTechItemStacks.ORDERED_DUST_FACTORY_DIRT.getItemId());
+        this.performanceLimitSlimefunIdSet.add(FinalTechItemStacks.ORDERED_DUST_FACTORY_STONE.getItemId());
 
         /* mark for some machines */
-        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ENERGIZED_ACCELERATOR.getItemId());
-        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.OVERLOADED_ACCELERATOR.getItemId());
-        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ITEM_DESERIALIZE_PARSER.getItemId());
-        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.ENTROPY_SEED.getItemId());
-        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.EQUIVALENT_CONCEPT.getItemId());
-        this.antiAccelerateSlimefunIdSet.add(FinalTechItems.MATRIX_ACCELERATOR.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItemStacks.ENERGIZED_ACCELERATOR.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItemStacks.OVERLOADED_ACCELERATOR.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItemStacks.ITEM_DESERIALIZE_PARSER.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItemStacks.ENTROPY_SEED.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItemStacks.EQUIVALENT_CONCEPT.getItemId());
+        this.antiAccelerateSlimefunIdSet.add(FinalTechItemStacks.MATRIX_ACCELERATOR.getItemId());
 
         /* setup template machine */
         int templateMachineDelay = this.config.getOrDefault(0, "setups", "template-machine", "delay");

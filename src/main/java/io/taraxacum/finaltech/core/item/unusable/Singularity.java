@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
@@ -24,11 +24,11 @@ public class Singularity extends UnusableSlimefunItem implements RecipeItem {
     }
 
     public static boolean isValid(@Nullable ItemStack item) {
-        return ItemStackUtil.isItemSimilar(item, FinalTechItems.SINGULARITY);
+        return ItemStackUtil.isItemSimilar(item, FinalTechItemStacks.SINGULARITY);
     }
 
     public static ItemStack newItem(@Nullable ItemStack item, @Nullable Player player) {
-        return ItemStackUtil.cloneItem(FinalTechItems.SINGULARITY);
+        return ItemStackUtil.cloneItem(FinalTechItemStacks.SINGULARITY);
     }
 
     @Override

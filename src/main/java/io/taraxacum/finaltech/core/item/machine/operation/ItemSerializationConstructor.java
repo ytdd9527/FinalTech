@@ -13,7 +13,7 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.operation.ItemSerializationConstructorOperation;
 import io.taraxacum.finaltech.core.operation.ItemCopyCardOperation;
 import io.taraxacum.finaltech.core.menu.machine.ItemSerializationConstructorMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.finaltech.util.*;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -41,7 +41,7 @@ public class ItemSerializationConstructor extends AbstractOperationMachine {
     private final String blockStorageItemKey = "item";
     private final String blockStorageAmountKey = "amount";
     public static double EFFICIENCY = 1;
-    public static final double RATE = ConfigUtil.getOrDefaultItemSetting(0.9, FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "rate");
+    public static final double RATE = ConfigUtil.getOrDefaultItemSetting(0.9, FinalTechItemStacks.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId(), "rate");
     public static List<Location> LOCATION_LIST = new ArrayList<>();
     public static List<Location> LAST_LOCATION_LIST = new ArrayList<>();
 

@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
 import org.bukkit.inventory.ItemStack;
@@ -22,11 +22,11 @@ public class Entropy extends UnusableSlimefunItem implements RecipeItem {
     }
 
     public static ItemStack newItem(@Nullable ItemStack Item) {
-        return ItemStackUtil.cloneItem(FinalTechItems.ENTROPY);
+        return ItemStackUtil.cloneItem(FinalTechItemStacks.ENTROPY);
     }
 
     public static boolean isValid(@Nullable ItemStack itemStack) {
-        return ItemStackUtil.isItemSimilar(itemStack, FinalTechItems.ENTROPY);
+        return ItemStackUtil.isItemSimilar(itemStack, FinalTechItemStacks.ENTROPY);
     }
 
     @Override

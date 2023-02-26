@@ -12,7 +12,7 @@ import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.item.unusable.ItemPhony;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.MatrixReactorMenu;
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
@@ -105,7 +105,7 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem {
         int unorderedDustItemSlotsP = 0;
         int unorderedDustItemCount = 0;
         for (int slot : MatrixReactorMenu.ORDERED_DUST_INPUT_SLOT) {
-            if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.ORDERED_DUST)) {
+            if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItemStacks.ORDERED_DUST)) {
                 orderedDustItemSlots[orderedDustItemSlotsP++] = slot;
                 orderedDustItemCount += blockMenu.getItemInSlot(slot).getAmount();
                 if (orderedDustItemCount > amount) {
@@ -115,7 +115,7 @@ public class MatrixReactor extends AbstractMachine implements RecipeItem {
         }
         if (orderedDustItemCount >= amount) {
             for (int slot : MatrixReactorMenu.UNORDERED_DUST_INPUT_SLOT) {
-                if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItems.UNORDERED_DUST)) {
+                if (ItemStackUtil.isItemSimilar(blockMenu.getItemInSlot(slot), FinalTechItemStacks.UNORDERED_DUST)) {
                     unorderedDustItemSlots[unorderedDustItemSlotsP++] = slot;
                     unorderedDustItemCount += blockMenu.getItemInSlot(slot).getAmount();
                     if (unorderedDustItemCount > amount) {
