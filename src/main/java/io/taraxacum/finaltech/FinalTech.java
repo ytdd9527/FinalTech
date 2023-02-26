@@ -88,6 +88,9 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             return;
         }
 
+        /* set language manager */
+        SetupUtil.setupLanguageManager(this.languageManager);
+
         /* set logger */
         this.logger = CustomLogger.newInstance(this.getJavaPlugin().getServer().getLogger());
         this.logger.setBanner("[" + this.languageManager.getOrDefault("FinalTECH", "FinalTech") + "] ");
@@ -194,13 +197,27 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.EQUIVALENT_CONCEPT.getItemId());
         this.antiAccelerateSlimefunIdSet.add(FinalTechItems.MATRIX_ACCELERATOR.getItemId());
 
+        /* setup template machine */
+        int templateMachineDelay = this.config.getOrDefault(0, "setups", "template-machine", "delay");
+        if(templateMachineDelay > 0) {
+            this.getServer().getScheduler().runTaskLater(this, () -> new TemplateParser(FinalTech.this.template, false, false).registerMachine(), templateMachineDelay);
+        } else {
+            new TemplateParser(this.template, false, false).registerMachine();
+
+        }
+
         /* setup item value table */
-        this.getServer().getScheduler().runTaskLater(this, () -> ItemValueTable.getInstance().init(), this.config.getOrDefault(10, "setups", "item-value-table", "delay"));
+        int itemValueTableDelay = this.config.getOrDefault(10, "setups", "item-value-table", "delay");
+        if(itemValueTableDelay > 0) {
+            this.getServer().getScheduler().runTaskLater(this, () -> ItemValueTable.getInstance().init(), itemValueTableDelay);
+        } else {
+            ItemValueTable.getInstance().init();
+        }
 
         /* setup slimefun machine block ticker */
         int blockTickerRegisterDelay = this.config.getOrDefault(20, "setups", "slimefun-machine", "delay");
         if (blockTickerRegisterDelay > 0) {
-            this.getServer().getScheduler().runTask(this, SetupUtil::registerBlockTicker);
+            this.getServer().getScheduler().runTaskLater(this, SetupUtil::registerBlockTicker, blockTickerRegisterDelay);
         } else {
             SetupUtil.registerBlockTicker();
         }

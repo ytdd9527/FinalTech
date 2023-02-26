@@ -34,9 +34,15 @@ public class Icon {
 
     public static final ItemStack ERROR_ICON = new CustomItemStack(Material.BARRIER, FinalTech.getLanguageString("helper", "ICON", "error", "name"), FinalTech.getLanguageStringArray("helper", "ICON", "error", "lore"));
 
-    public static final ItemStack WIKI_ICON = new CustomItemStack(Material.KNOWLEDGE_BOOK, FinalTech.getLanguageString("helper", "ICON", "wiki-icon", "name"));
+    public static final ItemStack WIKI_ICON = new CustomItemStack(Material.KNOWLEDGE_BOOK, FinalTech.getLanguageString("helper", "ICON", "wiki-icon", "name"), FinalTech.getLanguageStringArray("helper", "ICON", "wiki-icon", "lore"));
 
-    public static final ItemStack RECIPE_ICON = new CustomItemStack(Material.PAPER, FinalTech.getLanguageString("helper", "ICON", "recipe-icon", "name"));
+    public static final ItemStack RECIPE_ICON = new CustomItemStack(Material.PAPER, FinalTech.getLanguageString("helper", "ICON", "recipe-icon", "name"), FinalTech.getLanguageStringArray("helper", "ICON", "recipe-icon", "lore"));
+
+    public static final ItemStack CONSUMER_ICON = new CustomItemStack(Material.FURNACE, FinalTech.getLanguageString("helper", "ICON", "consumer", "name"), FinalTech.getLanguageStringArray("helper", "ICON", "consumer", "lore"));
+
+    public static final ItemStack GENERATOR_ICON = new CustomItemStack(Material.DAYLIGHT_DETECTOR, FinalTech.getLanguageString("helper", "ICON", "generator", "name"), FinalTech.getLanguageStringArray("helper", "ICON", "generator", "lore"));
+
+    public static final ItemStack CAPACITOR_ICON = new CustomItemStack(Material.YELLOW_STAINED_GLASS, FinalTech.getLanguageString("helper", "ICON", "capacitor", "name"), FinalTech.getLanguageStringArray("helper", "ICON", "capacitor", "lore"));
 
     public static int updateQuantityModule(@Nonnull BlockMenu blockMenu, int quantityModuleSlot, int statusSlot) {
         boolean updateLore = blockMenu.hasViewer();

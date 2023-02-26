@@ -1,6 +1,12 @@
 FinalTech: 'FinalTECH'
 helper:
   ICON:
+    consumer:
+      name: '{color:normal}Consumer'
+    generator:
+      name: '{color:normal}Generator'
+    capacitor:
+      name: '{color:normal}Capacitor'
     wiki-icon:
       name: '{color:stress}Parameters'
       lore:
@@ -2791,6 +2797,36 @@ items:
     warn:
       - 'Player [{5}] in {1} [{2},{3},{4}] is clicking manual craft machine very quickly.'
       - 'This may be due to server network, else it may cause server lag.'
+  ENERGY_REGULATOR:
+    hologram:
+      multi-regulator: '&4Multiple Energy Regulators connected'
+      no-nodes: '&4No Energy Network found'
+    status:
+      lore:
+        - '{color:normal}Consumer:  {color:number}{1} {color:normal}| {color:number}{2} J {color:conceal}/ {color:number}{3} J'
+        - '{color:normal}Generator: {color:number}{4} {color:normal}| {color:number}{5} J {color:conceal}/ {color:number}{6} J'
+        - '{color:normal}Capacitor: {color:number}{7} {color:normal}| {color:number}{8} J {color:conceal}/ {color:number}{9} J'
+        - ''
+        - '{color:normal}Generated Energy: {color:number}{10} J'
+        - '{color:normal}Consumed Energy:  {color:number}{11} J'
+  MULTIMETER:
+    lore-location:
+      - '{color:normal}x: {color:number}{1}'
+      - '{color:normal}y: {color:number}{2}'
+      - '{color:normal}z: {color:number}{3}'
+    GENERATOR: 'Generator'
+    CAPACITOR: 'Capacitor'
+    CONSUMER: 'Consumer'
+    CONNECTOR: 'Connector'
+    NONE: 'None'
+    lore-type:
+      - '{color:normal}Energy Type: {color:passive}{1}'
+    lore-energy:
+      - '{color:normal}Energy: {color:number}{1} J {color:conceal}/ {color:normal}{2} J'
+    lore-generate:
+      - '{color:normal}Generated energy: {color:number}{1} J'
+    lore-consume:
+      - '{color:normal}Consumed energy: {color:number}{1} J'
 effect:
   VOID_CURSE:
     message:
