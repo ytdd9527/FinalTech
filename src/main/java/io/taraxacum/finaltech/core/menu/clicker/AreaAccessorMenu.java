@@ -158,7 +158,7 @@ public class AreaAccessorMenu extends AbstractAccessorMenu {
                             chestMenu.addMenuClickHandler(TEMP_CONTENT[i], (p, slot, item, action) -> {
                                 // BlockMenu may be updated after the menu generated.
                                 if (BlockStorage.hasBlockInfo(l) && BlockStorage.hasInventory(l.getBlock()) && blockMenu.canOpen(l.getBlock(), player)) {
-                                    JavaPlugin javaPlugin = AreaAccessorMenu.this.getMachine().getAddon().getJavaPlugin();
+                                    JavaPlugin javaPlugin = AreaAccessorMenu.this.getSlimefunItem().getAddon().getJavaPlugin();
                                     javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, blockMenu.getBlock()));
                                     blockMenu.open(player);
                                 } else {

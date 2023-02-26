@@ -1,5 +1,6 @@
 package io.taraxacum.finaltech.core.menu;
 
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
@@ -25,16 +26,16 @@ import javax.annotation.Nullable;
  */
 public abstract class AbstractMachineMenu extends BlockMenuPreset {
     @Nonnull
-    private final AbstractMachine machine;
+    private final SlimefunItem slimefunItem;
 
-    public AbstractMachineMenu(@Nonnull String id, @Nonnull String title, @Nonnull AbstractMachine machine) {
+    public AbstractMachineMenu(@Nonnull String id, @Nonnull String title, @Nonnull SlimefunItem slimefunItem) {
         super(id, title);
-        this.machine = machine;
+        this.slimefunItem = slimefunItem;
     }
 
-    public AbstractMachineMenu(@Nonnull AbstractMachine machine) {
-        super(machine.getId(), machine.getItemName());
-        this.machine = machine;
+    public AbstractMachineMenu(@Nonnull SlimefunItem slimefunItem) {
+        super(slimefunItem.getId(), slimefunItem.getItemName());
+        this.slimefunItem = slimefunItem;
     }
 
     @Override
@@ -61,7 +62,7 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
 
     @Override
     public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
-        return player.hasPermission("slimefun.inventory.bypass") || this.machine.canUse(player, false) && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
+        return player.hasPermission("slimefun.inventory.bypass") || this.slimefunItem.canUse(player, false) && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
     }
 
     @Override
@@ -78,11 +79,6 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
     @Override
     public int[] getSlotsAccessedByItemTransport(DirtyChestMenu menu, @Nullable ItemTransportFlow flow, ItemStack item) {
         return this.getSlotsAccessedByItemTransport(flow);
-    }
-
-    @Nonnull
-    protected AbstractMachine getMachine() {
-        return this.machine;
     }
 
     protected abstract int[] getBorder();

@@ -74,7 +74,7 @@ public class MatrixCraftingTableMenu extends AbstractManualMachineMenu{
     @Override
     public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
-        JavaPlugin javaPlugin = this.getMachine().getAddon().getJavaPlugin();
+        JavaPlugin javaPlugin = this.getSlimefunItem().getAddon().getJavaPlugin();
         blockMenu.addMenuClickHandler(PARSE_SLOT, (player, slot, item, action) -> {
             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
