@@ -1,50 +1,50 @@
 
-FinalTECH
+FinalTECH-乱序技艺
 =
 
-About
+关于
 -
 
-A Slimefun addon about making the world a little better.
+一个让世界变得更加美好的Slimefun。
 
-It includes new electric system, new cargo system, and some special machines and items now.
+它包括新的电力系统、新的货运系统以及目前的一些特殊机器和物品。
 
-Permission
+权限
 -
 
-| permission                  | command                 | default | description                                               |
-| --------------------------- | ----------------------- | ------- | --------------------------------------------------------- |
-| finaltech.item.copy-card    | /finaltech-copy-card    | op      | transfer item to a copy card in hand                      |
-| finaltech.item.storage-card | /finaltech-storage-card | op      | transfer a valid item to a storage card with given amount |
-| finaltech.item.info         | /finaltech-info         | true    | show slimefun item info in hand                           |
+| 权限                          | 命令                      | 默认   | 描述                 |
+| --------------------------- | ----------------------- | ---- | ------------------ |
+| finaltech.item.copy-card    | /finaltech-copy-card    | op   | 将物品传送到手头的复制卡       |
+| finaltech.item.storage-card | /finaltech-storage-card | op   | 将一个有效的项目转到给定金额的存储卡 |
+| finaltech.item.info         | /finaltech-info         | true | 手中显示 Slimefun 项目信息 |
 
-Notice
+注意
 -
 
-This project is still in progress and not fully finished yet. More details will be added in the future.
+该项目仍在进行中，尚未完成。 今后将增加更多细节。
 
-It's welcome to report bug here <https://github.com/ecro-fun/FinalTECH/issues>
+欢迎在这里报告错误 <https://github.com/ecro-fun/FinalTECH/issues>
 
-Wiki
+维基
 -
 
-Almost all items have built-in description in slimefun guide.
+几乎所有项目都在Slimefun指南中有内置描述。
 
-You can find some info here <https://github.com/ecro-fun/FinalTECH/wiki>
+您可以在这里找到一些信息 <https://github.com/ecro-fun/FinalTECH/wiki>
 
-Language support
+多语种支持
 -
 
-English is default and will be maintained over time.
+英语是默认的，并将随着时间的推移而保持。
 
-Others may be found here <https://github.com/ecro-fun/FinalTECH/tree/master/language>
+其他人可以在这里找到 <https://github.com/ecro-fun/FinalTECH/tree/master/language>
 
-Version history
+版本历史
 -
 
 20230109
-- > balance tweak for some items
+- > 某些项目的余额调整
 
-> more support for config
+> 更多支持配置
 
-> small optimization for some items
+> 某些项目的小优化
