@@ -48,15 +48,15 @@ public class ItemValueTable {
 
         ConfigFileManager valueFile = FinalTech.getValueManager();
 
-        this.itemInputValueMap.put(SlimefunItems.IRON_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
-        this.itemInputValueMap.put(SlimefunItems.GOLD_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
-        this.itemInputValueMap.put(SlimefunItems.COPPER_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
-        this.itemInputValueMap.put(SlimefunItems.TIN_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
-        this.itemInputValueMap.put(SlimefunItems.LEAD_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
-        this.itemInputValueMap.put(SlimefunItems.SILVER_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
-        this.itemInputValueMap.put(SlimefunItems.ALUMINUM_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
-        this.itemInputValueMap.put(SlimefunItems.ZINC_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
-        this.itemInputValueMap.put(SlimefunItems.MAGNESIUM_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, "2"));
+        this.itemInputValueMap.put(SlimefunItems.IRON_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, StringNumberUtil.ZERO));
+        this.itemInputValueMap.put(SlimefunItems.GOLD_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, StringNumberUtil.ZERO));
+        this.itemInputValueMap.put(SlimefunItems.COPPER_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, StringNumberUtil.ZERO));
+        this.itemInputValueMap.put(SlimefunItems.TIN_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, StringNumberUtil.ZERO));
+        this.itemInputValueMap.put(SlimefunItems.LEAD_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, StringNumberUtil.ZERO));
+        this.itemInputValueMap.put(SlimefunItems.SILVER_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, StringNumberUtil.ZERO));
+        this.itemInputValueMap.put(SlimefunItems.ALUMINUM_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, StringNumberUtil.ZERO));
+        this.itemInputValueMap.put(SlimefunItems.ZINC_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, StringNumberUtil.ZERO));
+        this.itemInputValueMap.put(SlimefunItems.MAGNESIUM_DUST.getItemId(), StringNumberUtil.mul(this.baseInputValue, StringNumberUtil.ZERO));
 
         this.itemOutputValueMap.put(SlimefunItems.IRON_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "16"));
         this.itemOutputValueMap.put(SlimefunItems.GOLD_DUST.getItemId(), StringNumberUtil.mul(this.baseOutputValue, "16"));
