@@ -1090,8 +1090,6 @@ items:
         name: '{color:passive}Mechanism'
         lore:
           - '{color:normal}Drop extra exp instead while breaking block'
-  FINALTECH_SWORD1:
-    name: '{color:prandom}Sword1'
   FINALTECH_BASIC_GENERATOR:
     name: '{color:prandom}Basic Generator'
     info:
@@ -1302,28 +1300,6 @@ items:
       lore:
         - '{color:normal}Stored Energy: {color:number}{1} J'
         - '{color:normal}Charged Energy: {color:number}{2} J'
-  FINALTECH_BASIC_CHARGE_INCREASE_CAPACITOR:
-    name: '{color:prandom}Basic Charge Increase Capacitor'
-    info:
-      1:
-        name: '{color:passive}Mechanism'
-        lore:
-          - '{color:normal}Can store {color:number}{1} J {color:normal}of energy'
-          - '{color:normal}Get {color:number}{2}%J {color:normal}of energy while being charged'
-    status:
-      lore:
-        - '{color:normal}Stored Energy: {color:number}{1} J'
-  FINALTECH_BASIC_CONSUME_REDUCE_CAPACITOR:
-    name: '{color:prandom}Basic Consume Reduce Capacitor'
-    info:
-      1:
-        name: '{color:passive}Mechanism'
-        lore:
-          - '{color:normal}Can store {color:number}{1} J {color:normal}of energy'
-          - '{color:normal}Consume {color:number}{2}%J {color:normal}of energy while discharging'
-    status:
-      lore:
-        - '{color:normal}Stored Energy: {color:number}{1} J'
   FINALTECH_SMALL_EXPANDED_CAPACITOR:
     name: '{color:prandom}Small Expanded Capacitor'
     info:
@@ -1428,28 +1404,6 @@ items:
       lore:
         - '{color:normal}Transferable Energy: {color:number}{1} J'
         - '{color:normal}Stored Energy Stack: {color:number}{2}'
-  FINALTECH_ADVANCED_CHARGE_INCREASE_CAPACITOR:
-    name: '{color:prandom}Advanced Charge Increase Capacitor'
-    info:
-      1:
-        name: '{color:passive}Mechanism'
-        lore:
-          - '{color:normal}Can store {color:number}{1} J {color:normal}of energy'
-          - '{color:normal}Get {color:number}{2}%J {color:normal}of energy while being charged'
-    status:
-      lore:
-        - '{color:normal}Stored Energy: {color:number}{1} J'
-  FINALTECH_ADVANCED_CONSUME_REDUCE_CAPACITOR:
-    name: '{color:prandom}Advanced Consume Reduce Capacitor'
-    info:
-      1:
-        name: '{color:passive}Mechanism'
-        lore:
-          - '{color:normal}Can store {color:number}{1} J {color:normal}of energy'
-          - '{color:normal}consume {color:number}{2}%J {color:normal}of energy while discharging'
-    status:
-      lore:
-        - '{color:normal}Stored Energy: {color:number}{1} J'
   FINALTECH_TIME_CAPACITOR:
     name: '{color:prandom}Time Capacitor'
     info:
@@ -2481,12 +2435,6 @@ items:
     name: '{color:prandom}Manual Ancient Altar'
   FINALTECH_MANUAL_HEATED_PRESSURE_CHAMBER:
     name: '{color:prandom}Manual Heated Pressure Chamber'
-  FINALTECH_BASIC_COBBLE_FACTORY:
-    name: '{color:prandom}Basic Cobble Factory'
-  FINALTECH_BASIC_STONE_FACTORY:
-    name: '{color:prandom}Basic Stone Factory'
-  FINALTECH_BASIC_DUST_FACTORY:
-    name: '{color:prandom}Basic Dust Factory'
   FINALTECH_BASIC_LOGIC_FACTORY:
     name: '{color:prandom}Basic Logic Factory'
   FINALTECH_ADVANCED_COMPOSTER:
@@ -2521,34 +2469,14 @@ items:
     name: '{color:prandom}Advanced Carbon Press'
   FINALTECH_ADVANCED_SMELTERY:
     name: '{color:prandom}Advanced Smeltery'
-  FINALTECH_ADVANCED_DUST_FACTORY:
-    name: '{color:prandom}Advanced Dust Factory'
-  FINALTECH_DUST_CONVERSION:
-    name: '{color:prandom}Dust Conversion'
   FINALTECH_GRAVEL_CONVERSION:
     name: '{color:prandom}Gravel Conversion'
   FINALTECH_SOUL_SAND_CONVERSION:
     name: '{color:prandom}Soul Sand Conversion'
-  FINALTECH_CONCRETE_CONVERSION:
-    name: '{color:prandom}Concrete Conversion'
-  FINALTECH_WOOL_CONVERSION:
-    name: '{color:prandom}Wool Conversion'
   FINALTECH_LOGIC_TO_DIGITAL_CONVERSION:
     name: '{color:prandom}Logic To Digital Conversion'
   FINALTECH_DIGITAL_EXTRACTION:
     name: '{color:prandom}Digital Extraction'
-  FINALTECH_ORE_EXTRACTION:
-    name: '{color:prandom}Ore Extraction'
-  FINALTECH_STONE_GENERATOR:
-    name: '{color:prandom}Stone Generator'
-  FINALTECH_RAW_STONE_GENERATOR:
-    name: '{color:prandom}Raw Stone Generator'
-  FINALTECH_NETHER_STONE_GENERATOR:
-    name: '{color:prandom}Nether Stone Generator'
-  FINALTECH_PLANK_GENERATOR:
-    name: '{color:prandom}Plank Generator'
-  FINALTECH_SAND_GENERATOR:
-    name: '{color:prandom}Sand Generator'
   FINALTECH_LIQUID_CARD_GENERATOR:
     name: '{color:prandom}Liquid Card Generator'
   FINALTECH_LOGIC_GENERATOR:
