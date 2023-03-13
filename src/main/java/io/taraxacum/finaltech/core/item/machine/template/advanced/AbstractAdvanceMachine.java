@@ -96,7 +96,9 @@ public abstract class AbstractAdvanceMachine extends AbstractMachine implements 
                 craft.consumeItem(blockMenu.toInventory());
                 if (recipeLock == Integer.parseInt(MachineRecipeLock.VALUE_UNLOCK)) {
                     ItemStack item = blockMenu.getItemInSlot(AbstractLockMachineMenu.RECIPE_LOCK_SLOT);
-                    MachineRecipeLock.HELPER.setIcon(item, String.valueOf(craft.getOffset()), this);
+                    if(blockMenu.hasViewer()) {
+                        MachineRecipeLock.HELPER.setIcon(item, String.valueOf(craft.getOffset()), this);
+                    }
                     BlockStorage.addBlockInfo(blockMenu.getLocation(), MachineRecipeLock.KEY, String.valueOf(craft.getOffset()));
                 } else if (recipeLock == Integer.parseInt(MachineRecipeLock.VALUE_LOCK_OFF)) {
                     BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, String.valueOf(craft.getOffset()));

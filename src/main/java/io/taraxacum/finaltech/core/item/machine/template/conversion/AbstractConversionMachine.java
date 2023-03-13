@@ -71,7 +71,7 @@ public abstract class AbstractConversionMachine extends AbstractMachine implemen
             itemWrapper.newWrap(item);
             for (AdvancedMachineRecipe advancedMachineRecipe : advancedMachineRecipeList) {
                 if (ItemStackUtil.isItemSimilar(itemWrapper, advancedMachineRecipe.getInput()[0])) {
-                    inventory.setItem(slot, new CustomItemStack(advancedMachineRecipe.getOutput()[0].getItemStack(), item.getAmount()));
+                    inventory.setItem(slot, ItemStackUtil.cloneItem(advancedMachineRecipe.getOutput()[0].getItemStack(), item.getAmount()));
                 }
             }
         }
@@ -84,31 +84,32 @@ public abstract class AbstractConversionMachine extends AbstractMachine implemen
 
     @Override
     public void registerRecipe(@Nonnull MachineRecipe recipe) {
-        // TODO
         if (recipe.getInput().length != 1) {
-            throw new IllegalArgumentException("Register recipe for " + this.getItemName() + " has made a error: " + " input item type should be just one");
+            throw new IllegalArgumentException("Register recipe for " + this.getItemName() + " has occurred a error: " + " input item type should be just one");
         }
+
         if (recipe.getInput()[0].getAmount() > 1) {
-            this.getAddon().getJavaPlugin().getServer().getLogger().info("Register recipe for " + this.getItemName() + " has made a error: " + " input item amount should be one");
+            this.getAddon().getJavaPlugin().getServer().getLogger().info("Register recipe for " + this.getItemName() + " has occurred a error: " + " input item amount should be one");
             recipe.getInput()[0] = new CustomItemStack(recipe.getInput()[0], 1);
         }
-        if (recipe instanceof RandomMachineRecipe) {
-            for (RandomMachineRecipe.RandomOutput randomOutput : ((RandomMachineRecipe) recipe).getRandomOutputs()) {
+
+        if (recipe instanceof RandomMachineRecipe randomMachineRecipe) {
+            for (RandomMachineRecipe.RandomOutput randomOutput : randomMachineRecipe.getRandomOutputs()) {
                 if (randomOutput.getOutputItem().length != 1) {
-                    throw new IllegalArgumentException("Register recipe for " + this.getItemName() + " has made a error: " + " out item type should only just one");
+                    throw new IllegalArgumentException("Register recipe for " + this.getItemName() + " has occurred a error: " + " output item type should be only just one");
                 }
                 if (randomOutput.getOutputItem()[0].getAmount() != 1) {
-                    this.getAddon().getJavaPlugin().getServer().getLogger().info("Register recipe for " + this.getItemName() + " has made a error: " + " output item amount should be one");
+                    this.getAddon().getJavaPlugin().getServer().getLogger().info("Register recipe for " + this.getItemName() + " has occurred a error: " + " output item amount should be one");
                     randomOutput.getOutputItem()[0] = new CustomItemStack(randomOutput.getOutputItem()[0], 1);
                 }
             }
         } else {
             for (int i = 0; i < 100; i++) {
                 if (recipe.getOutput().length != 1) {
-                    throw new IllegalArgumentException("Register recipe for " + this.getItemName() + " has made a error: " + " out item type should only just one");
+                    throw new IllegalArgumentException("Register recipe for " + this.getItemName() + " has occurred a error: " + " out item type should only just one");
                 }
                 if (recipe.getOutput()[0].getAmount() != 1) {
-                    this.getAddon().getJavaPlugin().getServer().getLogger().info("Register recipe for " + this.getItemName() + " has made a error: " + " output item amount should be one");
+                    this.getAddon().getJavaPlugin().getServer().getLogger().info("Register recipe for " + this.getItemName() + " has occurred a error: " + " output item amount should be one");
                     recipe.getOutput()[0] = new CustomItemStack(recipe.getOutput()[0], 1);
                 }
             }
