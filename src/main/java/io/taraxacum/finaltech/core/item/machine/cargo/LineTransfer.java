@@ -47,6 +47,8 @@ import java.util.List;
  * @since 1.0
  */
 public class LineTransfer extends AbstractCargo implements RecipeItem {
+    private final int particleInterval = 2;
+
     public LineTransfer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -93,7 +95,7 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
         Location location = block.getLocation();
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
         boolean primaryThread = javaPlugin.getServer().isPrimaryThread();
-        boolean drawParticle = blockMenu.hasViewer();
+        boolean drawParticle = blockMenu.hasViewer() || RouteShow.VALUE_TRUE.equals(RouteShow.HELPER.getOrDefaultValue(config));
 
         if (primaryThread) {
             BlockData blockData = block.getState().getBlockData();
@@ -131,8 +133,8 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                 }
             }
 
-            if (drawParticle && finalBlockList.size() > 0) {
-                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / finalBlockList.size(), finalBlockList));
+            if (drawParticle && finalBlockList.size() > 0 && FinalTech.getSlimefunTickCount() % this.particleInterval == 0) {
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.ELECTRIC_SPARK, this.particleInterval * Slimefun.getTickerTask().getTickRate() * 50L / finalBlockList.size(), finalBlockList));
             }
 
             int cargoNumber = Integer.parseInt(CargoNumber.HELPER.defaultValue());
@@ -278,8 +280,8 @@ public class LineTransfer extends AbstractCargo implements RecipeItem {
                         }
                     }
 
-                    if (drawParticle && finalBlockList.size() > 0) {
-                        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, Slimefun.getTickerTask().getTickRate() * 50L / finalBlockList.size(), finalBlockList));
+                    if (drawParticle && finalBlockList.size() > 0 && FinalTech.getSlimefunTickCount() % this.particleInterval == 0) {
+                        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.ELECTRIC_SPARK, this.particleInterval * Slimefun.getTickerTask().getTickRate() * 50L / finalBlockList.size(), finalBlockList));
                     }
 
                     int cargoNumber = Integer.parseInt(CargoNumber.HELPER.defaultValue());
