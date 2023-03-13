@@ -5,7 +5,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
-import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.dto.ItemWrapper;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
@@ -21,10 +20,13 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class Spirochete extends UnusableSlimefunItem implements RecipeItem, SimpleValidItem {
-    private final ItemWrapper templateValidItem = new ItemWrapper(this.getValidItem());
+    private final ItemWrapper templateValidItem;
 
     public Spirochete(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+        ItemStack validItem = new ItemStack(this.getItem());
+        SfItemUtil.setSpecialItemKey(validItem);
+        this.templateValidItem = new ItemWrapper(validItem);
     }
 
     @Override
@@ -36,9 +38,7 @@ public class Spirochete extends UnusableSlimefunItem implements RecipeItem, Simp
     @Nonnull
     @Override
     public ItemStack getValidItem() {
-        ItemStack validItem = new ItemStack(this.getItem());
-        SfItemUtil.setSpecialItemKey(validItem);
-        return validItem;
+        return ItemStackUtil.cloneItem(this.templateValidItem.getItemStack());
     }
 
     @Override

@@ -20,10 +20,13 @@ import javax.annotation.Nullable;
  * @since 2.0
  */
 public class Shell extends UnusableSlimefunItem implements RecipeItem, SimpleValidItem {
-    private final ItemWrapper templateValidItem = new ItemWrapper(this.getValidItem());
+    private final ItemWrapper templateValidItem;
 
     public Shell(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+        ItemStack validItem = new ItemStack(this.getItem());
+        SfItemUtil.setSpecialItemKey(validItem);
+        this.templateValidItem = new ItemWrapper(validItem);
     }
 
     @Override
@@ -34,9 +37,7 @@ public class Shell extends UnusableSlimefunItem implements RecipeItem, SimpleVal
     @Nonnull
     @Override
     public ItemStack getValidItem() {
-        ItemStack validItem = new ItemStack(this.getItem());
-        SfItemUtil.setSpecialItemKey(validItem);
-        return validItem;
+        return ItemStackUtil.cloneItem(this.templateValidItem.getItemStack());
     }
 
     @Override

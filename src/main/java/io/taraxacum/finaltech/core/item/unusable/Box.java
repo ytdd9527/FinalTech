@@ -23,12 +23,15 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class Box extends UnusableSlimefunItem implements RecipeItem, SimpleValidItem {
-    public static final double HEIGHT = ConfigUtil.getOrDefaultItemSetting(64, SfItemUtil.getIdFormatName(Box.class), "height");
+    private final double height = ConfigUtil.getOrDefaultItemSetting(64, this, "height");
 
-    private final ItemWrapper templateValidItem = new ItemWrapper(this.getValidItem());
+    private final ItemWrapper templateValidItem;
 
     public Box(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+        ItemStack validItem = new ItemStack(this.getItem());
+        SfItemUtil.setSpecialItemKey(validItem);
+        this.templateValidItem = new ItemWrapper(validItem);
     }
 
     @Override
@@ -36,7 +39,7 @@ public class Box extends UnusableSlimefunItem implements RecipeItem, SimpleValid
         super.register(addon);
         if(!this.isDisabled()) {
             PluginManager pluginManager = addon.getJavaPlugin().getServer().getPluginManager();
-            pluginManager.registerEvents(new BoxListener(), addon.getJavaPlugin());
+            pluginManager.registerEvents(new BoxListener(this.height), addon.getJavaPlugin());
         }
     }
 
@@ -48,9 +51,7 @@ public class Box extends UnusableSlimefunItem implements RecipeItem, SimpleValid
     @Nonnull
     @Override
     public ItemStack getValidItem() {
-        ItemStack validItem = new ItemStack(this.getItem());
-        SfItemUtil.setSpecialItemKey(validItem);
-        return validItem;
+        return ItemStackUtil.cloneItem(this.templateValidItem.getItemStack());
     }
 
     @Override

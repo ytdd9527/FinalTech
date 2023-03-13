@@ -20,10 +20,13 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class Singularity extends UnusableSlimefunItem implements RecipeItem, SimpleValidItem {
-    private final ItemWrapper templateValidItem = new ItemWrapper(this.getValidItem());
+    private final ItemWrapper templateValidItem;
 
     public Singularity(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+        ItemStack validItem = new ItemStack(this.getItem());
+        SfItemUtil.setSpecialItemKey(validItem);
+        this.templateValidItem = new ItemWrapper(validItem);
     }
 
     @Override
@@ -35,9 +38,7 @@ public class Singularity extends UnusableSlimefunItem implements RecipeItem, Sim
     @Nonnull
     @Override
     public ItemStack getValidItem() {
-        ItemStack validItem = new ItemStack(this.getItem());
-        SfItemUtil.setSpecialItemKey(validItem);
-        return validItem;
+        return ItemStackUtil.cloneItem(this.templateValidItem.getItemStack());
     }
 
     @Override
