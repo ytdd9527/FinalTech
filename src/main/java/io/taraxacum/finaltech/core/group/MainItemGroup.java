@@ -10,6 +10,7 @@ import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
 import io.github.thebusybiscuit.slimefun4.implementation.guide.SurvivalSlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.libs.plugin.util.TextUtil;
 import io.taraxacum.libs.slimefun.util.GuideUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import org.bukkit.NamespacedKey;
@@ -92,7 +93,7 @@ public class MainItemGroup extends FlexItemGroup {
 
     @Nonnull
     private ChestMenu generateMenu(@Nonnull Player player, @Nonnull PlayerProfile playerProfile, @Nonnull SlimefunGuideMode slimefunGuideMode) {
-        ChestMenu chestMenu = new ChestMenu(FinalTech.getLanguageString(FinalTech.class.getSimpleName()) + "-" + FinalTech.getConfigManager().getOrDefault("unknown", "version"));
+        ChestMenu chestMenu = new ChestMenu(TextUtil.colorRandomString(FinalTech.getLanguageString(FinalTech.class.getSimpleName()) + "-" + FinalTech.getConfigManager().getOrDefault("unknown", "version")));
 
         chestMenu.setEmptySlotsClickable(false);
         chestMenu.addMenuOpeningHandler(pl -> pl.playSound(pl.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1, 1));
