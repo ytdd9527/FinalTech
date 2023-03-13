@@ -1,10 +1,7 @@
 package io.taraxacum.finaltech.core.menu.clicker;
 
-import io.taraxacum.common.util.StringNumberUtil;
-import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.item.machine.clicker.AbstractClickerMachine;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -17,8 +14,11 @@ import javax.annotation.Nonnull;
  * @since 2.2
  */
 public abstract class AbstractAccessorMenu extends AbstractMachineMenu {
-    public AbstractAccessorMenu(@Nonnull AbstractMachine machine) {
-        super(machine);
+    protected final AbstractClickerMachine clickerMachine;
+
+    public AbstractAccessorMenu(@Nonnull AbstractClickerMachine slimefunItem) {
+        super(slimefunItem);
+        this.clickerMachine = slimefunItem;
     }
 
     @Override
@@ -27,16 +27,14 @@ public abstract class AbstractAccessorMenu extends AbstractMachineMenu {
 
         blockMenu.addMenuOpeningHandler(p -> {
             Location location = block.getLocation();
-            String value = BlockStorage.getLocationInfo(location, AbstractClickerMachine.KEY);
-            if (value == null) {
-                value = AbstractClickerMachine.THRESHOLD;
-            }
-            if (StringNumberUtil.compare(value, StringNumberUtil.ZERO) <= 0) {
+            Integer count = this.clickerMachine.getLocationCountMap().getOrDefault(location, 0);
+            if(count < this.clickerMachine.getCountThreshold()) {
+                this.clickerMachine.getLocationCountMap().put(location, ++count);
+            } else {
                 p.closeInventory();
                 // TODO: waring info in console
                 return;
             }
-            BlockStorage.addBlockInfo(block, AbstractClickerMachine.KEY, StringNumberUtil.sub(value));
 
             if(p.getPlayer() != null) {
                 AbstractAccessorMenu.this.doFunction(blockMenu, block, p.getPlayer());
