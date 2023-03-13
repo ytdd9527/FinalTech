@@ -1,11 +1,11 @@
 package io.taraxacum.finaltech.core.helper;
 
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.setup.FinalTechItemStacks;
+import io.taraxacum.finaltech.core.item.unusable.module.AbstractQuantityModule;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
-import io.taraxacum.finaltech.util.ConstantTableUtil;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -46,38 +46,33 @@ public class Icon {
 
     public static int updateQuantityModule(@Nonnull BlockMenu blockMenu, int quantityModuleSlot, int statusSlot) {
         boolean updateLore = blockMenu.hasViewer();
-        ItemStack item = blockMenu.getItemInSlot(quantityModuleSlot);
+
         int amount;
-        List<String> lores = null;
-        if (ItemStackUtil.isItemSimilar(item, FinalTechItemStacks.QUANTITY_MODULE)) {
-            amount = item.getAmount();
-            if (updateLore) {
-                lores = FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "amount-lore"),
-                        String.valueOf(amount));
-            }
-        } else if (ItemStackUtil.isItemSimilar(item, FinalTechItemStacks.QUANTITY_MODULE_INFINITY)) {
-            amount = Integer.MAX_VALUE / ConstantTableUtil.ITEM_MAX_STACK - 1;
-            if (updateLore) {
-                lores = FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "amount-lore"),
-                        FinalTech.getLanguageString("helper", "ICON", "quantity-module", "amount-infinity"));
+
+        ItemStack itemStack = blockMenu.getItemInSlot(quantityModuleSlot);
+        SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
+        if(slimefunItem instanceof AbstractQuantityModule quantityModule) {
+            amount = quantityModule.getEffect(itemStack.getAmount());
+            if(updateLore) {
+                List<String> loreList = new ArrayList<>(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "lore"));
+                if(amount >= 3456) {
+                    loreList.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "amount-lore"),
+                            FinalTech.getLanguageString("helper", "ICON", "quantity-module", "amount-infinity")));
+                } else {
+                    loreList.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "amount-lore"),
+                            String.valueOf(amount)));
+                }
+                ItemStackUtil.setLore(blockMenu.getItemInSlot(statusSlot), loreList);
             }
         } else {
             amount = 1;
-            if (updateLore) {
-                lores = FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "amount-none-lore"),
-                        "1");
+            if(updateLore) {
+                List<String> loreList = new ArrayList<>(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "lore"));
+                loreList.addAll(FinalTech.getLanguageManager().replaceStringList(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "amount-none-lore"),
+                        "1"));
+                ItemStackUtil.setLore(blockMenu.getItemInSlot(statusSlot), loreList);
             }
         }
-
-        if (!updateLore) {
-            return amount;
-        }
-
-        List<String> loreList = new ArrayList<>(FinalTech.getLanguageStringList("helper", "ICON", "quantity-module", "lore"));
-        loreList.addAll(lores);
-
-        ItemStack infoItem = blockMenu.getItemInSlot(statusSlot);
-        ItemStackUtil.setLore(infoItem, loreList);
 
         return amount;
     }

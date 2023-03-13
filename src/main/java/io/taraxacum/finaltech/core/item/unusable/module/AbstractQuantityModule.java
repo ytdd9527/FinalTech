@@ -1,18 +1,19 @@
-package io.taraxacum.finaltech.core.item.unusable.liquid;
+package io.taraxacum.finaltech.core.item.unusable.module;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.taraxacum.finaltech.core.interfaces.UnCopiableItem;
 import io.taraxacum.finaltech.core.item.unusable.UnusableSlimefunItem;
 import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Final_ROOT
- * @since 2.0
+ * @since 2.4
  */
-public abstract class LiquidCard extends UnusableSlimefunItem implements UnCopiableItem {
-    public LiquidCard(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public abstract class AbstractQuantityModule extends UnusableSlimefunItem {
+    public AbstractQuantityModule(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
+
+    public abstract int getEffect(int itemAmount);
 }
