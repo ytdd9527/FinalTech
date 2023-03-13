@@ -14,9 +14,10 @@ Permission
 
 | permission | command | default | description |
 | ---------- | ------- | ------- | ----------- |
-| finaltech.item.copy-card | /finaltech-copy-card | op | transfer item to a copy card in hand |
-| finaltech.item.storage-card | /finaltech-storage-card | op | transfer a valid item to a storage card with given amount |
+| finaltech.item.copy-card | /finaltech-copy-card | op | transform item to a copy card in hand |
+| finaltech.item.storage-card | /finaltech-storage-card | op | transform a valid item to a storage card with given amount |
 | finaltech.item.info | /finaltech-info | true | show slimefun item info in hand |
+| finaltech.valid.item | /finaltech-valid-item | op | transform specific item to be valid |
 
 Notice
 -

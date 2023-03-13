@@ -3,6 +3,7 @@ package io.taraxacum.finaltech.core.command;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.item.unusable.StorageCard;
+import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,7 +18,7 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.0
  */
-public class TransferToStorageItem implements CommandExecutor {
+public class TransformToStorageItem implements CommandExecutor {
     @Override
     public boolean onCommand(@Nonnull CommandSender commandSender, @Nonnull Command command, @Nonnull String s, @Nonnull String[] strings) {
         if(strings.length != 1) {
@@ -28,14 +29,14 @@ public class TransferToStorageItem implements CommandExecutor {
             return false;
         }
         ItemStack item = player.getItemInHand();
-        if (ItemStackUtil.isItemNull(item) || !StorageCard.storableItem(item)) {
+        if (ItemStackUtil.isItemNull(item) || !FinalTechItems.STORAGE_CARD.isTargetItem(item)) {
             return false;
         }
         String amount = strings[0];
         if(!StringNumberUtil.isNumber(amount)) {
             return false;
         }
-        ItemStack storageCardItem = StorageCard.newItem(item, amount);
+        ItemStack storageCardItem = FinalTechItems.STORAGE_CARD.getValidItem(item, amount);
         player.setItemInHand(storageCardItem);
         return true;
     }

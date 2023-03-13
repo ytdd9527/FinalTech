@@ -8,8 +8,9 @@ import io.taraxacum.common.util.ReflectionUtil;
 import io.taraxacum.common.util.StringUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.command.ShowItemInfo;
-import io.taraxacum.finaltech.core.command.TransferToCopyCardItem;
-import io.taraxacum.finaltech.core.command.TransferToStorageItem;
+import io.taraxacum.finaltech.core.command.TransformToCopyCardItem;
+import io.taraxacum.finaltech.core.command.TransformToStorageItem;
+import io.taraxacum.finaltech.core.command.TransformToValidItem;
 import io.taraxacum.finaltech.core.enchantment.NullEnchantment;
 import io.taraxacum.finaltech.core.item.unusable.StorageCard;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
@@ -793,9 +794,10 @@ public final class SetupUtil {
     private static void setupCommand() {
         FinalTech finalTech = FinalTech.getInstance();
 
-        finalTech.getCommand("finaltech-copy-card").setExecutor(new TransferToCopyCardItem());
-        finalTech.getCommand("finaltech-storage-card").setExecutor(new TransferToStorageItem());
+        finalTech.getCommand("finaltech-copy-card").setExecutor(new TransformToCopyCardItem());
+        finalTech.getCommand("finaltech-storage-card").setExecutor(new TransformToStorageItem());
         finalTech.getCommand("finaltech-info").setExecutor(new ShowItemInfo());
+        finalTech.getCommand("finaltech-valid-item").setExecutor(new TransformToValidItem());
     }
 
     public static void init() {
