@@ -149,4 +149,16 @@ public class JavaUtil {
         runnable.run();
         return System.nanoTime() - beginTime;
     }
+
+    /**
+     * @return In most case, it will not return null. (￣▽￣)"
+     */
+    public static <T> T getFirstNotNull(T... objects) {
+        for(T object : objects) {
+            if(object != null) {
+                return object;
+            }
+        }
+        return null;
+    }
 }
