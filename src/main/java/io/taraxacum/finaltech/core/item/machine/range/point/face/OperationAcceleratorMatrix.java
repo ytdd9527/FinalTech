@@ -11,15 +11,16 @@ import io.github.thebusybiscuit.slimefun4.core.machines.MachineOperation;
 import io.github.thebusybiscuit.slimefun4.core.machines.MachineProcessor;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.finaltech.FinalTech;
+import io.taraxacum.finaltech.core.interfaces.LocationMachine;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.VoidMenu;
 import io.taraxacum.finaltech.util.ConfigUtil;
-import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.BlockTickerUtil;
+import io.taraxacum.libs.slimefun.dto.LocationInfo;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
@@ -32,10 +33,10 @@ import java.util.Set;
  * @author Final_ROOT
  * @since 2.0
  */
-public class OperationAcceleratorInfinity extends AbstractFaceMachine implements RecipeItem {
+public class OperationAcceleratorMatrix extends AbstractFaceMachine implements RecipeItem, LocationMachine {
     private final Set<String> notAllowedId = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
 
-    public OperationAcceleratorInfinity(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public OperationAcceleratorMatrix(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
@@ -59,25 +60,19 @@ public class OperationAcceleratorInfinity extends AbstractFaceMachine implements
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
-        this.function(block, 1, location -> {
-            if (BlockStorage.hasBlockInfo(location)) {
-                Config machineConfig = BlockStorage.getLocationInfo(location);
-                if (machineConfig.contains(ConstantTableUtil.CONFIG_ID)) {
-                    String machineId = machineConfig.getString(ConstantTableUtil.CONFIG_ID);
-                    if(!this.notAllowedId.contains(machineId)) {
-                        SlimefunItem machineItem = SlimefunItem.getById(machineId);
-                        if (machineItem instanceof MachineProcessHolder) {
-                            MachineProcessor<?> machineProcessor = ((MachineProcessHolder<?>) machineItem).getMachineProcessor();
-                            Runnable runnable = () -> {
-                                MachineOperation operation = machineProcessor.getOperation(location);
-                                if (operation != null && operation.getRemainingTicks() > 0) {
-                                    operation.addProgress(operation.getRemainingTicks());
-                                }
-                            };
-                            BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(machineId), runnable, location);
-                            return 1;
+        this.pointFunction(block, 1, location -> {
+            LocationInfo locationInfo = LocationInfo.get(location);
+            if(locationInfo != null && !this.notAllowedId.contains(locationInfo.getId())) {
+                if (locationInfo.getSlimefunItem() instanceof MachineProcessHolder machineProcessHolder) {
+                    MachineProcessor<?> machineProcessor = machineProcessHolder.getMachineProcessor();
+                    Runnable runnable = () -> {
+                        MachineOperation operation = machineProcessor.getOperation(location);
+                        if (operation != null && operation.getRemainingTicks() > 0) {
+                            operation.addProgress(operation.getRemainingTicks());
                         }
-                    }
+                    };
+                    BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(locationInfo.getId()), runnable, location);
+                    return 1;
                 }
             }
             return 0;
@@ -102,5 +97,10 @@ public class OperationAcceleratorInfinity extends AbstractFaceMachine implements
                 this.registerDescriptiveRecipe(slimefunItem.getItem());
             }
         }
+    }
+
+    @Override
+    public Location[] getLocations(@Nonnull Location sourceLocation) {
+        return new Location[] {this.getTargetLocation(sourceLocation, 1)};
     }
 }

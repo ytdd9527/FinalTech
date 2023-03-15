@@ -30,6 +30,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
@@ -88,7 +89,7 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
         return MachineUtil.simpleBlockBreakerHandler();
     }
 
-    @Nonnull
+    @Nullable
     @Override
     protected AbstractMachineMenu setMachineMenu() {
         // this is the only
@@ -122,7 +123,7 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
 
         while (life > 1) {
             final double finalLife = life--;
-            this.function(block, range, location -> {
+            this.pointFunction(block, range, location -> {
                 FinalTech.getLocationRunnableFactory().waitThenRun(() -> {
                     Block targetBlock = location.getBlock();
                     if (!BlockStorage.hasBlockInfo(location)) {
@@ -130,7 +131,7 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
                             BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, EquivalentConcept.this.getId(), true);
                             BlockStorage.addBlockInfo(location, KEY_LIFE, String.valueOf(finalLife * attenuationRate));
                             BlockStorage.addBlockInfo(location, KEY_RANGE, String.valueOf(range + 1));
-                            BlockTickerUtil.setSleep(location, String.valueOf(EquivalentConcept.this.life - finalLife));
+                            BlockTickerUtil.setSleep(BlockStorage.getLocationInfo(location), String.valueOf(EquivalentConcept.this.life - finalLife));
                             JavaPlugin javaPlugin = EquivalentConcept.this.getAddon().getJavaPlugin();
                             javaPlugin.getServer().getScheduler().runTask(javaPlugin, () -> targetBlock.setType(EquivalentConcept.this.getItem().getType()));
                         }
@@ -150,7 +151,7 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
 
     @Nonnull
     @Override
-    protected Location getTargetLocation(@Nonnull Location location, int range) {
+    public Location getTargetLocation(@Nonnull Location location, int range) {
         int y = location.getBlockY() - range + FinalTech.getRandom().nextInt(range + range);
         y = Math.min(location.getWorld().getMaxHeight(), y);
         y = Math.max(location.getWorld().getMinHeight(), y);
