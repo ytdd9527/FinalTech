@@ -10,6 +10,8 @@ import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.item.machine.manual.MatrixCraftingTable;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
+import io.taraxacum.libs.slimefun.interfaces.SimpleValidItem;
+import io.taraxacum.libs.slimefun.interfaces.ValidItem;
 import io.taraxacum.libs.slimefun.util.SfItemUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -25,6 +27,10 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Final_ROOT
+ * @since 2.0
+ */
 public class MatrixCraftingTableMenu extends AbstractManualMachineMenu{
     private static final int[] BORDER = new int[] {6, 7, 8, 15, 17, 24, 25, 26};
     private static final int[] INPUT_BORDER = new int[0];
@@ -95,7 +101,7 @@ public class MatrixCraftingTableMenu extends AbstractManualMachineMenu{
             BasicCraft basicCraft = BasicCraft.doCraft(slimefunItemList, blockMenu.toInventory(), MatrixCraftingTableMenu.this.getInputSlot());
             if (basicCraft != null) {
                 ItemStack existedItem = blockMenu.getItemInSlot(MatrixCraftingTableMenu.this.getOutputSlot()[0]);
-                if (ItemStackUtil.isItemNull(existedItem) || ItemStackUtil.isItemSimilar(existedItem, basicCraft.getMatchItem().getItem())) {
+                if (ItemStackUtil.isItemNull(existedItem) || ItemStackUtil.isItemSimilar(existedItem, basicCraft.getMatchItem() instanceof SimpleValidItem simpleValidItem ? simpleValidItem.getValidItem() : basicCraft.getMatchItem().getItem())) {
                     int amount = action.isRightClicked() || action.isShiftClicked() ? basicCraft.getMatchAmount() : 1;
                     basicCraft.setMatchAmount(amount);
 
@@ -129,6 +135,7 @@ public class MatrixCraftingTableMenu extends AbstractManualMachineMenu{
         if (basicCraft != null) {
             slimefunItem = basicCraft.getMatchItem();
             ItemStack matchItem = ItemStackUtil.cloneItem(slimefunItem.getItem());
+            SfItemUtil.removeSlimefunId(matchItem);
             ItemStackUtil.addLoresToLast(matchItem, FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(MatrixCraftingTable.class), "show-icon", "lore"), String.valueOf(basicCraft.getMatchAmount())));
             inventory.setItem(PARSE_SLOT, matchItem);
         } else {
