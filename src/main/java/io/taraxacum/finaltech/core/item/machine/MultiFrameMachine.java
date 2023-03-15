@@ -82,21 +82,21 @@ public class MultiFrameMachine extends AbstractMachine implements RecipeItem {
             machineItem = inventory.getItem(machineSlot);
             if(!ItemStackUtil.isItemNull(machineItem)) {
                 machineSfItem = SlimefunItem.getByItem(machineItem);
-                if(machineSfItem != null && this.availableMachine.contains(machineSfItem.getId())) {
+                if(machineSfItem != null && this.allowedIdList.contains(machineSfItem.getId())) {
                     MachineUtil.stockSlots(inventory, MultiFrameMachineMenu.WORK_INPUT_SLOT[point][i]);
 
                     if(MachineUtil.slotCount(inventory, MultiFrameMachineMenu.WORK_OUTPUT_SLOT[point][i]) < MultiFrameMachineMenu.WORK_OUTPUT_SLOT[point][i].length) {
-                        offset = config.contains(OFFSET_KEYS[i]) ? Integer.parseInt(config.getString(OFFSET_KEYS[i])) : 0;
+                        offset = config.contains(this.offsetKeys[i]) ? Integer.parseInt(config.getString(this.offsetKeys[i])) : 0;
                         availableRecipe = MachineRecipeFactory.getInstance().getAdvancedRecipe(machineSfItem.getClass());
                         advancedCraft = AdvancedCraft.craftAsc(inventory, MultiFrameMachineMenu.WORK_INPUT_SLOT[point][i], availableRecipe, machineItem.getAmount(), offset);
                         if(advancedCraft != null) {
                             advancedCraft.setMatchCount(Math.min(advancedCraft.getMatchCount(), MachineUtil.calMaxMatch(inventory, MultiFrameMachineMenu.WORK_OUTPUT_SLOT[point][i], advancedCraft.getOutputItemList())));
                             if(advancedCraft.getMatchCount() > 0) {
                                 advancedCraft.consumeItem(inventory);
-                                for (ItemStack item : advancedCraft.calMachineRecipe(0).getOutput()) {
-                                    blockMenu.pushItem(ItemStackUtil.cloneItem(item), MultiFrameMachineMenu.WORK_OUTPUT_SLOT[point][i]);
+                                for (ItemStack itemStack : advancedCraft.calMachineRecipe(0).getOutput()) {
+                                    blockMenu.pushItem(ItemStackUtil.cloneItem(itemStack), MultiFrameMachineMenu.WORK_OUTPUT_SLOT[point][i]);
                                 }
-                                config.setValue(OFFSET_KEYS[i], String.valueOf(advancedCraft.getOffset()));
+                                config.setValue(this.offsetKeys[i], String.valueOf(advancedCraft.getOffset()));
                             }
                         }
                     }
@@ -139,7 +139,7 @@ public class MultiFrameMachine extends AbstractMachine implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
-        for(String id : this.availableMachine) {
+        for(String id : this.allowedIdList) {
             SlimefunItem slimefunItem = SlimefunItem.getById(id);
             if(slimefunItem != null) {
                 this.registerDescriptiveRecipe(slimefunItem.getRecipeOutput());
