@@ -1,7 +1,6 @@
 package io.taraxacum.finaltech.core.menu.clicker;
 
-import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
-import io.taraxacum.finaltech.core.item.machine.clicker.RemoteAccessor;
+import io.taraxacum.finaltech.core.item.machine.clicker.AbstractClickerMachine;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -23,15 +22,18 @@ import java.util.List;
  * @author Final_ROOT
  * @since 2.0
  */
-public class RemoteAccessorMenu extends AbstractAccessorMenu {
+public class RemoteAccessorMenu extends AbstractClickerMenu {
     private static final int[] BORDER = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8};
     private static final int[] INPUT_BORDER = new int[0];
     private static final int[] OUTPUT_BORDER = new int[0];
     private static final int[] INPUT_SLOT = new int[0];
     private static final int[] OUTPUT_SLOT = new int[0];
 
-    public RemoteAccessorMenu(@Nonnull AbstractMachine machine) {
-        super(machine);
+    private final int range;
+
+    public RemoteAccessorMenu(@Nonnull AbstractClickerMachine slimefunItem, int range) {
+        super(slimefunItem);
+        this.range = range;
     }
 
     @Override
@@ -44,7 +46,7 @@ public class RemoteAccessorMenu extends AbstractAccessorMenu {
         if (blockData instanceof Directional) {
             BlockFace blockFace = ((Directional) blockData).getFacing();
             Block targetBlock = block;
-            for (int i = 0; i < RemoteAccessor.RANGE; i++) {
+            for (int i = 0; i < this.range; i++) {
                 targetBlock = targetBlock.getRelative(blockFace);
                 blockList.add(targetBlock);
                 if (BlockStorage.hasInventory(targetBlock)) {

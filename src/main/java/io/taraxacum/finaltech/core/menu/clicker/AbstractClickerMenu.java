@@ -13,10 +13,10 @@ import javax.annotation.Nonnull;
  * @author Final_ROOT
  * @since 2.2
  */
-public abstract class AbstractAccessorMenu extends AbstractMachineMenu {
+public abstract class AbstractClickerMenu extends AbstractMachineMenu {
     protected final AbstractClickerMachine clickerMachine;
 
-    public AbstractAccessorMenu(@Nonnull AbstractClickerMachine slimefunItem) {
+    public AbstractClickerMenu(@Nonnull AbstractClickerMachine slimefunItem) {
         super(slimefunItem);
         this.clickerMachine = slimefunItem;
     }
@@ -37,7 +37,7 @@ public abstract class AbstractAccessorMenu extends AbstractMachineMenu {
             }
 
             if(p.getPlayer() != null) {
-                AbstractAccessorMenu.this.doFunction(blockMenu, block, p.getPlayer());
+                AbstractClickerMenu.this.doFunction(blockMenu, block, p.getPlayer());
             }
         });
     }

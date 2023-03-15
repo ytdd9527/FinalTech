@@ -5,7 +5,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.helper.Icon;
-import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
+import io.taraxacum.finaltech.core.item.machine.clicker.AbstractClickerMachine;
 import io.taraxacum.finaltech.core.item.machine.clicker.AreaAccessor;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
@@ -33,7 +33,7 @@ import java.util.Map;
  * @author Final_ROOT
  * @since 2.0
  */
-public class AreaAccessorMenu extends AbstractAccessorMenu {
+public class AreaAccessorMenu extends AbstractClickerMenu {
     private static final int[] BORDER = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53};
     private static final int[] INPUT_BORDER = new int[0];
     private static final int[] OUTPUT_BORDER = new int[0];
@@ -45,8 +45,11 @@ public class AreaAccessorMenu extends AbstractAccessorMenu {
     private static final int[] TEMP_PREVIOUS_PAGE = new int[] {8, 17, 26};
     private static final int[] TEMP_NEXT_PAGE = new int[] {35, 44, 53};
 
-    public AreaAccessorMenu(@Nonnull AbstractMachine machine) {
-        super(machine);
+    private final int range;
+
+    public AreaAccessorMenu(@Nonnull AbstractClickerMachine slimefunItem, int range) {
+        super(slimefunItem);
+        this.range = range;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class AreaAccessorMenu extends AbstractAccessorMenu {
 
     @Override
     protected void doFunction(@Nonnull BlockMenu blockMenu, @Nonnull Block block, @Nonnull Player player) {
-        this.generateMenu(player, block.getLocation(), AreaAccessor.RANGE, 0);
+        this.generateMenu(player, block.getLocation(), this.range, 0);
     }
 
     @Override

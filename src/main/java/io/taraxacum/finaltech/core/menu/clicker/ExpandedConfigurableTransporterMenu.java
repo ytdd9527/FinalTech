@@ -2,8 +2,7 @@ package io.taraxacum.finaltech.core.menu.clicker;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.taraxacum.finaltech.core.interfaces.DigitalItem;
-import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
-import io.taraxacum.finaltech.core.item.machine.clicker.Transporter;
+import io.taraxacum.finaltech.core.item.machine.clicker.AbstractClickerMachine;
 import io.taraxacum.finaltech.util.LocationUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
@@ -27,15 +26,18 @@ import java.util.List;
  * @author Final_ROOT
  * @since 2.2
  */
-public class ExpandedConfigurableTransporterMenu extends AbstractAccessorMenu {
+public class ExpandedConfigurableTransporterMenu extends AbstractClickerMenu {
     private static final int[] BORDER = new int[] {0, 1, 2, 4, 6, 7, 8};
     private static final int[] INPUT_BORDER = new int[0];
     private static final int[] OUTPUT_BORDER = new int[0];
     private static final int[] INPUT_SLOT = new int[] {3, 5};
     private static final int[] OUTPUT_SLOT = new int[] {3, 5};
 
-    public ExpandedConfigurableTransporterMenu(@Nonnull AbstractMachine machine) {
-        super(machine);
+    private final int range;
+
+    public ExpandedConfigurableTransporterMenu(@Nonnull AbstractClickerMachine slimefunItem, int range) {
+        super(slimefunItem);
+        this.range = range;
     }
 
     @Override
@@ -120,7 +122,7 @@ public class ExpandedConfigurableTransporterMenu extends AbstractAccessorMenu {
                         player.teleport(targetLocation);
                     }
                 } else if(digit == 0) {
-                    for (int i = 0; i < Transporter.RANGE; i++) {
+                    for (int i = 0; i < this.range; i++) {
                         targetBlock = targetBlock.getRelative(blockFace);
                         blockList.add(targetBlock);
                         if(targetBlock.getType().isAir()) {
