@@ -35,8 +35,8 @@ import java.util.List;
  * @since 2.2
  */
 public class MultiFrameMachine extends AbstractMachine implements RecipeItem {
-    private final String[] OFFSET_KEYS = new String[] {"offset1", "offset2", "offset3", "offset4", "offset5", "offset6"};
-    private final List<String> availableMachine = ConfigUtil.getItemStringList(this, "allowed-id");
+    private final String[] offsetKeys = new String[] {"offset1", "offset2", "offset3", "offset4", "offset5", "offset6"};
+    private final List<String> allowedIdList = ConfigUtil.getItemStringList(this, "allowed-id");
 
     public MultiFrameMachine(@Nonnull ItemGroup itemGroup, @Nonnull SlimefunItemStack item, @Nonnull RecipeType recipeType, @Nonnull ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
