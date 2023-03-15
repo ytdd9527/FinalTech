@@ -33,6 +33,9 @@ public class StaffElementalLine extends UsableSlimefunItem implements RecipeItem
     private final double shortRange = ConfigUtil.getOrDefaultItemSetting(4, this, "short-range");
     private final double longRange = ConfigUtil.getOrDefaultItemSetting(16, this, "long-range");
 
+    private final int interval = ConfigUtil.getOrDefaultItemSetting(500, this, "interval");
+    private final int threshold = ConfigUtil.getOrDefaultItemSetting(2, this, "threshold");
+
     public StaffElementalLine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -109,5 +112,15 @@ public class StaffElementalLine extends UsableSlimefunItem implements RecipeItem
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
                 String.valueOf(this.shortRange),
                 String.valueOf(this.longRange));
+    }
+
+    @Override
+    int getThreshold() {
+        return this.threshold;
+    }
+
+    @Override
+    int getInterval() {
+        return this.interval;
     }
 }
