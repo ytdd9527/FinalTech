@@ -5,9 +5,9 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
+import io.taraxacum.finaltech.core.item.unusable.ReplaceableCard;
 import io.taraxacum.libs.slimefun.dto.RandomMachineRecipe;
 import io.taraxacum.libs.slimefun.dto.MachineRecipeFactory;
-import io.taraxacum.finaltech.core.item.unusable.liquid.LiquidCard;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
@@ -92,7 +92,7 @@ public interface RecipeItem extends RecipeDisplayItem {
     /**
      * register a {@link SlimefunItem} whit it's recipe as a {@link MachineRecipe}.
      * if the slimefun-item's recipe contains liquid-bucket(water bucket, lava bucket e.g.),
-     * this method will also register another similar machine-recipe that replace liquid-bucket with {@link LiquidCard}
+     * this method will also register another similar machine-recipe that replace liquid-bucket with {@link ReplaceableCard}
      */
     default void registerRecipeInCard(int seconds, @Nonnull SlimefunItem slimefunItem) {
         this.registerRecipeInCard(seconds, slimefunItem.getRecipe(), new ItemStack[] {slimefunItem.getRecipeOutput()});
@@ -114,18 +114,21 @@ public interface RecipeItem extends RecipeDisplayItem {
             if (ItemStackUtil.isItemNull(item)) {
                 continue;
             }
-            ItemStack liquidCardItem = RecipeUtil.getLiquidCard(item);
-            if (liquidCardItem == null) {
+            ReplaceableCard replaceableCard = RecipeUtil.getReplaceableCard(item);
+            if (replaceableCard == null) {
                 inputList1.add(item);
                 inputList2.add(item);
             } else {
                 extraRecipe = true;
                 inputList1.add(item);
-                inputList2.add(liquidCardItem);
-                outputList1.add(new CustomItemStack(Material.BUCKET));
+                inputList2.add(replaceableCard.getItem());
+                if(replaceableCard.getExtraSourceMaterial() != null) {
+                    outputList1.add(new ItemStack(replaceableCard.getExtraSourceMaterial()));
+                }
             }
         }
         if (extraRecipe && !outputList2.isEmpty()) {
+            // TODO ItemStackWrapper ??????
             this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(inputList1))), ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(outputList1)));
             this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(inputList2))), ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(outputList2)));
         } else {

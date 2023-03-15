@@ -64,9 +64,11 @@ import org.bukkit.inventory.ItemStack;
 public final class FinalTechItems {
     /* items */
     // material
-    public static final WaterCard WATER_CARD = new WaterCard(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.WATER_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.WATER_CARD);
-    public static final LavaCard LAVA_CARD = new  LavaCard(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.LAVA_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LAVA_CARD);
-    public static final MilkCard MILK_CARD = new MilkCard(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.MILK_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MILK_CARD);
+    public static final CopyCard COPY_CARD = new CopyCard(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.COPY_CARD, RecipeType.NULL, new ItemStack[] {});
+
+    public static final ReplaceableCard WATER_CARD = new ReplaceableCard(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.WATER_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.WATER_CARD, Material.WATER_BUCKET, Material.BUCKET);
+    public static final ReplaceableCard LAVA_CARD = new ReplaceableCard(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.LAVA_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.LAVA_CARD, Material.LAVA_BUCKET, Material.BUCKET);
+    public static final ReplaceableCard MILK_CARD = new ReplaceableCard(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.MILK_CARD, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.MILK_CARD, Material.MILK_BUCKET, Material.BUCKET);
 
     public static final Gearwheel GEARWHEEL = new Gearwheel(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.GEARWHEEL, RecipeType.ENHANCED_CRAFTING_TABLE, FinalTechRecipes.GEARWHEEL, ItemStackUtil.cloneItem(FinalTechItemStacks.GEARWHEEL, 4));
     public static final UnorderedDust UNORDERED_DUST = new UnorderedDust(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.UNORDERED_DUST,  FinalTechRecipes.RECIPE_TYPE_ORDERED_DUST_FACTORY, FinalTechRecipes.UNORDERED_DUST);
@@ -75,7 +77,6 @@ public final class FinalTechItems {
     public static final Entropy ENTROPY = new Entropy(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.ENTROPY, FinalTechRecipes.RECIPE_TYPE_ENTROPY_CONSTRUCTOR, FinalTechRecipes.ENTROPY);
     public static final Box BOX = new Box(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.BOX, RecipeType.NULL, FinalTechRecipes.BOX);
     public static final Shine SHINE = new Shine(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.SHINE, FinalTechRecipes.RECIPE_TYPE_BOX, FinalTechRecipes.SHINE);
-    public static final CopyCard COPY_CARD = new CopyCard(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.COPY_CARD, FinalTechRecipes.RECIPE_TYPE_ITEM_SERIALIZATION_CONSTRUCTOR, FinalTechRecipes.COPY_CARD);
 
     public static final Annular ANNULAR = new Annular(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.ANNULAR, FinalTechRecipes.RECIPE_TYPE_CARD_OPERATION_TABLE, FinalTechRecipes.ANNULAR);
     public static final QuantityModule QUANTITY_MODULE = new QuantityModule(FinalTechMenus.MENU_ITEMS, FinalTechItemStacks.QUANTITY_MODULE, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE, FinalTechRecipes.QUANTITY_MODULE);
