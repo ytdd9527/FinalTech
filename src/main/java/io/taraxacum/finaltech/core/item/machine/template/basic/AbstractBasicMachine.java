@@ -30,7 +30,7 @@ import java.util.*;
  * @since 1.0
  */
 public abstract class AbstractBasicMachine extends AbstractMachine implements RecipeItem {
-    private final String OFFSET_KEY = "offset";
+    private final String offsetKey = "offset";
 
     @ParametersAreNonnullByDefault
     protected AbstractBasicMachine(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -63,7 +63,7 @@ public abstract class AbstractBasicMachine extends AbstractMachine implements Re
     @Override
     protected final void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
-        int offset = config.contains(OFFSET_KEY) ? Integer.parseInt(config.getString(OFFSET_KEY)) : 0;
+        int offset = config.contains(this.offsetKey) ? Integer.parseInt(config.getString(offsetKey)) : 0;
         int recipeLock = config.contains(MachineRecipeLock.KEY) ? Integer.parseInt(config.getString(MachineRecipeLock.KEY)) : -2;
         MachineUtil.stockSlots(blockMenu.toInventory(), this.getInputSlot());
         MachineRecipe machineRecipe = this.matchRecipe(blockMenu, offset, recipeLock);
@@ -97,12 +97,12 @@ public abstract class AbstractBasicMachine extends AbstractMachine implements Re
                     }
                     BlockStorage.addBlockInfo(blockMenu.getLocation(), MachineRecipeLock.KEY, String.valueOf(craft.getOffset()));
                 } else if (recipeLock == Integer.parseInt(MachineRecipeLock.VALUE_LOCK_OFF)) {
-                    BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, String.valueOf(craft.getOffset()));
+                    BlockStorage.addBlockInfo(blockMenu.getLocation(), this.offsetKey, String.valueOf(craft.getOffset()));
                 }
                 return craft.calMachineRecipe(this.getMachineRecipes().get(offset).getTicks());
             }
         }
-        BlockStorage.addBlockInfo(blockMenu.getLocation(), OFFSET_KEY, null);
+        BlockStorage.addBlockInfo(blockMenu.getLocation(), this.offsetKey, null);
         return null;
     }
 }
