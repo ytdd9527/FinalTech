@@ -3,7 +3,6 @@ package io.taraxacum.finaltech.core.menu.manual;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
@@ -11,10 +10,8 @@ import io.taraxacum.libs.slimefun.dto.AdvancedCraft;
 import io.taraxacum.libs.plugin.dto.AdvancedMachineRecipe;
 import io.taraxacum.libs.plugin.dto.ItemAmountWrapper;
 import io.taraxacum.libs.slimefun.dto.MachineRecipeFactory;
-import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.item.machine.manual.craft.AbstractManualCraftMachine;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
-import io.taraxacum.finaltech.util.LocationUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.libs.slimefun.util.EnergyUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -64,13 +61,17 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
     private static final String ORDER_VALUE_DESC = "desc";
     private static final String ORDER_VALUE_ASC = "asc";
 
-    public ManualCraftMachineMenu(@Nonnull AbstractMachine abstractMachine) {
+    private final AbstractManualCraftMachine manualCraftMachine;
+
+    public ManualCraftMachineMenu(@Nonnull AbstractManualCraftMachine abstractMachine) {
         super(abstractMachine);
+        this.manualCraftMachine = abstractMachine;
     }
 
     @Override
     public void init() {
         super.init();
+
         this.addItem(STATUS_SLOT, STATUS_ICON);
         for (int slot : STATUS_L_SLOT) {
             this.addItem(slot, STATUS_ICON);
@@ -78,8 +79,10 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         for (int slot : STATUS_R_SLOT) {
             this.addItem(slot, STATUS_ICON);
         }
+
         this.addItem(PREVIOUS_SLOT, new CustomItemStack(new SlimefunItemStack("_UI_PREVIOUS_INACTIVE", Material.BLACK_STAINED_GLASS_PANE, "&8\u21E6 Previous Page"), FinalTech.getLanguageString("items", "ManualCraftMachine", "previous-icon", "name"), FinalTech.getLanguageStringArray("items", "ManualCraftMachine", "previous-icon", "lore")));
         this.addItem(NEXT_SLOT, new CustomItemStack(new SlimefunItemStack("_UI_NEXT_INACTIVE", Material.BLACK_STAINED_GLASS_PANE, "&8Next Page \u21E8"), FinalTech.getLanguageString("items", "ManualCraftMachine", "next-icon", "name"), FinalTech.getLanguageStringArray("items", "ManualCraftMachine", "next-icon", "lore")));
+
         this.addItem(CRAFT_SLOT, CRAFT_ICON);
         for (int slot : CRAFT_L_SLOT) {
             this.addItem(slot, CRAFT_ICON);
@@ -96,29 +99,32 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         Location location = blockMenu.getLocation();
         Config config = BlockStorage.getLocationInfo(location);
         JavaPlugin javaPlugin = this.getSlimefunItem().getAddon().getJavaPlugin();
+
         blockMenu.addMenuOpeningHandler((player -> {
-            config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-            if(StringNumberUtil.compare(config.getString(AbstractManualCraftMachine.KEY_COUNT), String.valueOf(AbstractManualCraftMachine.COUNT_THRESHOLD)) > 0) {
+            if(!ManualCraftMachineMenu.this.verifyCount(location)) {
                 return;
             }
+
             ManualCraftMachineMenu.this.updateInventory(inventory, location);
         }));
+
         blockMenu.addMenuClickHandler(STATUS_SLOT, (((player, i, itemStack, clickAction) -> {
-            config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-            if(StringNumberUtil.compare(config.getString(AbstractManualCraftMachine.KEY_COUNT), String.valueOf(AbstractManualCraftMachine.COUNT_THRESHOLD)) > 0) {
+            if(!ManualCraftMachineMenu.this.verifyCount(location)) {
                 return false;
             }
+
             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
             MachineUtil.stockSlots(inventory, INPUT_SLOT);
             return false;
         })));
+
         for (int slotP = 0; slotP < STATUS_L_SLOT.length; slotP++) {
             final int finalSlotP = slotP;
             blockMenu.addMenuClickHandler(STATUS_L_SLOT[slotP], (player, i, itemStack, clickAction) -> {
-                config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-                if(StringNumberUtil.compare(config.getString(AbstractManualCraftMachine.KEY_COUNT), String.valueOf(AbstractManualCraftMachine.COUNT_THRESHOLD)) > 0) {
+                if(!ManualCraftMachineMenu.this.verifyCount(location)) {
                     return false;
                 }
+
                 javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
                 config.setValue(KEY, config.getString(KEY_L[finalSlotP]));
@@ -126,13 +132,14 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
                 return false;
             });
         }
+
         for (int slotP = 0; slotP < STATUS_R_SLOT.length; slotP++) {
             final int finalSlotP = slotP;
             blockMenu.addMenuClickHandler(STATUS_R_SLOT[slotP], (player, i, itemStack, clickAction) -> {
-                config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-                if(StringNumberUtil.compare(config.getString(AbstractManualCraftMachine.KEY_COUNT), String.valueOf(AbstractManualCraftMachine.COUNT_THRESHOLD)) > 0) {
+                if(!ManualCraftMachineMenu.this.verifyCount(location)) {
                     return false;
                 }
+
                 javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
                 config.setValue(KEY, config.getString(KEY_R[finalSlotP]));
@@ -140,11 +147,12 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
                 return false;
             });
         }
+
         blockMenu.addMenuClickHandler(PREVIOUS_SLOT, ((player, i, itemStack, clickAction) -> {
-            config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-            if(StringNumberUtil.compare(config.getString(AbstractManualCraftMachine.KEY_COUNT), String.valueOf(AbstractManualCraftMachine.COUNT_THRESHOLD)) > 0) {
+            if(!ManualCraftMachineMenu.this.verifyCount(location)) {
                 return false;
             }
+
             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
             int offset = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY));
@@ -155,11 +163,12 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             ManualCraftMachineMenu.this.updateInventory(inventory, location);
             return false;
         }));
+
         blockMenu.addMenuClickHandler(NEXT_SLOT, ((player, i, itemStack, clickAction) -> {
-            config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-            if(StringNumberUtil.compare(config.getString(AbstractManualCraftMachine.KEY_COUNT), String.valueOf(AbstractManualCraftMachine.COUNT_THRESHOLD)) > 0) {
+            if(!ManualCraftMachineMenu.this.verifyCount(location)) {
                 return false;
             }
+
             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
             int offset = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY));
@@ -171,25 +180,25 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             return false;
         }));
         blockMenu.addMenuClickHandler(CRAFT_SLOT, ((player, i, itemStack, clickAction) -> {
-            config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-            if(StringNumberUtil.compare(config.getString(AbstractManualCraftMachine.KEY_COUNT), String.valueOf(AbstractManualCraftMachine.COUNT_THRESHOLD)) > 0) {
+            if(!ManualCraftMachineMenu.this.verifyCount(location)) {
                 return false;
             }
+
             javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
-            int offset = config.contains(KEY) ? Integer.parseInt(config.getValue(KEY).toString()) : 0;
+            int offset = config.contains(KEY) ? Integer.parseInt(config.getString(KEY)) : 0;
             ManualCraftMachineMenu.this.doFunction(blockMenu, clickAction, player, offset);
             return false;
         }));
         for (int slotP = 0; slotP < CRAFT_L_SLOT.length; slotP++) {
             final int fSlotP = slotP;
             blockMenu.addMenuClickHandler(CRAFT_L_SLOT[slotP], (player, i, itemStack, clickAction) -> {
-                config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-                if(StringNumberUtil.compare(config.getString(AbstractManualCraftMachine.KEY_COUNT), String.valueOf(AbstractManualCraftMachine.COUNT_THRESHOLD)) > 0) {
+                if(!ManualCraftMachineMenu.this.verifyCount(location)) {
                     return false;
                 }
+
                 javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
-                int offset = config.contains(KEY_L[fSlotP]) ? Integer.parseInt(config.getValue(KEY_L[fSlotP]).toString()) : 0;
+                int offset = config.contains(KEY_L[fSlotP]) ? Integer.parseInt(config.getString(KEY_L[fSlotP])) : 0;
                 ManualCraftMachineMenu.this.doFunction(blockMenu, clickAction, player, offset);
                 return false;
             });
@@ -197,13 +206,13 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         for (int slotP = 0; slotP < CRAFT_R_SLOT.length; slotP++) {
             final int fSlotP = slotP;
             blockMenu.addMenuClickHandler(CRAFT_R_SLOT[slotP], (player, i, itemStack, clickAction) -> {
-                config.setValue(AbstractManualCraftMachine.KEY_COUNT, StringNumberUtil.add(LocationUtil.getNonNullStringNumber(config, AbstractManualCraftMachine.KEY_COUNT)));
-                if(StringNumberUtil.compare(config.getString(AbstractManualCraftMachine.KEY_COUNT), String.valueOf(AbstractManualCraftMachine.COUNT_THRESHOLD)) > 0) {
+                if(!ManualCraftMachineMenu.this.verifyCount(location)) {
                     return false;
                 }
+
                 javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
 
-                int offset = config.contains(KEY_R[fSlotP]) ? Integer.parseInt(config.getValue(KEY_R[fSlotP]).toString()) : 0;
+                int offset = config.contains(KEY_R[fSlotP]) ? Integer.parseInt(config.getString(KEY_R[fSlotP])) : 0;
                 ManualCraftMachineMenu.this.doFunction(blockMenu, clickAction, player, offset);
                 return false;
             });
@@ -243,7 +252,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
 
         AdvancedCraft craft = null;
         String order = config.getString(KEY_ORDER);
-        int offset = config.contains(KEY) ? Integer.parseInt(config.getValue(KEY).toString()) : 0;
+        int offset = config.contains(KEY) ? Integer.parseInt(config.getString(KEY)) : 0;
         if (order == null || ORDER_VALUE_ASC.equals(order)) {
             craft = AdvancedCraft.craftAsc(inventory, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getSlimefunItem().getClass()), 3456, offset);
         } else if (ORDER_VALUE_DESC.equals(order)) {
@@ -328,13 +337,26 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             return;
         }
 
-        int quantity = 1;
-        if (clickAction.isShiftClicked()) {
-            quantity = 3456;
-        } else if (clickAction.isRightClicked()) {
-            quantity = 64;
+        int quantity;
+        if(!clickAction.isRightClicked()) {
+            if(!clickAction.isShiftClicked()) {
+                // left-click and default 1
+                quantity = this.manualCraftMachine.getLeftClickAmount();
+            } else {
+                // left-shift-click and default 576
+                quantity = this.manualCraftMachine.getLeftShiftClickAmount();
+            }
+        } else {
+            if(!clickAction.isShiftClicked()) {
+                // right-click and default 64
+                quantity = this.manualCraftMachine.getRightClickAmount();
+            } else {
+                // right-shift-click and default 2304
+                quantity = this.manualCraftMachine.getRightShiftClickAmount();
+            }
         }
-        quantity = Math.min(quantity, charge);
+
+        quantity = Math.min(quantity, charge / this.manualCraftMachine.getConsume());
 
         List<AdvancedMachineRecipe> advancedRecipe = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getSlimefunItem().getClass());
         List<AdvancedMachineRecipe> targetAdvancedRecipe = new ArrayList<>(List.of(advancedRecipe.get(offset % advancedRecipe.size())));
@@ -372,8 +394,18 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             blockMenu.pushItem(item, OUTPUT_SLOT);
         }
 
-        EnergyUtil.setCharge(location, String.valueOf(charge - craft.getMatchCount()));
+        EnergyUtil.setCharge(location, String.valueOf(charge - craft.getMatchCount() * this.manualCraftMachine.getConsume()));
 
         this.updateInventory(inventory, blockMenu.getLocation());
+    }
+
+    private boolean verifyCount(@Nonnull Location location) {
+        Integer count = this.manualCraftMachine.getLocationCountMap().getOrDefault(location, 0);
+        if(count < this.manualCraftMachine.getCountThreshold()) {
+            this.manualCraftMachine.getLocationCountMap().put(location, ++count);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
