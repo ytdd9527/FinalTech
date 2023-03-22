@@ -9,8 +9,10 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.event.EnergyDepositEvent;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.PermissionUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import io.taraxacum.libs.slimefun.dto.LocationInfo;
 import io.taraxacum.libs.slimefun.util.EnergyUtil;
@@ -29,7 +31,7 @@ import java.util.*;
  * @author Final_ROOT
  * @version 2.4
  */
-public class EnergyCard extends UsableSlimefunItem {
+public class EnergyCard extends UsableSlimefunItem implements RecipeItem {
     public static final Map<String, EnergyCard> ENERGY_CARD_MAP = new LinkedHashMap<>();
     private final Set<String> notAllowedId = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
     private final String energy;
@@ -72,7 +74,7 @@ public class EnergyCard extends UsableSlimefunItem {
 
         if (locationInfo.getSlimefunItem() instanceof EnergyNetComponent energyNetComponent && energyNetComponent.isChargeable()) {
             JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
-            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(this.getAddon().getJavaPlugin(), Particle.GLOW, 0, block));
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(this.getAddon().getJavaPlugin(), Particle.WAX_OFF, 0, block));
 
             EnergyDepositEvent energyDepositEvent = new EnergyDepositEvent(location, this.energy);
             this.getAddon().getJavaPlugin().getServer().getPluginManager().callEvent(energyDepositEvent);
@@ -107,5 +109,11 @@ public class EnergyCard extends UsableSlimefunItem {
         }
 
         return ENERGY_CARD_MAP.get(targetEnergy);
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                this.energy);
     }
 }
