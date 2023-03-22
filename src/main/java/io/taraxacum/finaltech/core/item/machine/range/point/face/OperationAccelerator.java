@@ -80,34 +80,41 @@ public class OperationAccelerator extends AbstractFaceMachine implements RecipeI
             amount = 1;
         }
 
-        this.pointFunction(block, 1, location -> {
+        int count = this.pointFunction(block, 1, location -> {
             LocationInfo locationInfo = LocationInfo.get(location);
             if(locationInfo != null && !this.notAllowedId.contains(locationInfo.getId())) {
                 if (locationInfo.getSlimefunItem() instanceof MachineProcessHolder machineProcessHolder && locationInfo.getSlimefunItem() instanceof EnergyNetComponent energyNetComponent) {
                     MachineProcessor<?> machineProcessor = machineProcessHolder.getMachineProcessor();
                     Runnable runnable = () -> {
                         int energy = Integer.parseInt(EnergyUtil.getCharge(config));
+                        int time = 0;
                         MachineOperation operation = machineProcessor.getOperation(location);
                         if (operation != null) {
-                            int time = Math.min(Math.min(FinalTech.getRandom().nextInt(amount * this.efficiency), energy / energyNetComponent.getCapacity()), operation.getRemainingTicks());
+                            time = Math.min(Math.min(FinalTech.getRandom().nextInt(amount * this.efficiency), energy / energyNetComponent.getCapacity()), operation.getRemainingTicks());
                             if(time > 0) {
                                 operation.addProgress(Math.min(time, operation.getRemainingTicks()));
                                 EnergyUtil.setCharge(config, Math.max(0, energy - time * energyNetComponent.getCapacity()));
-                                this.updateMenu(blockMenu, StatusL2Menu.STATUS_SLOT, this,
-                                        String.valueOf(energy),
-                                        String.valueOf(time));
                             }
+                        }
+
+                        if(blockMenu.hasViewer()) {
+                            this.updateMenu(blockMenu, StatusL2Menu.STATUS_SLOT, this,
+                                    String.valueOf(energy),
+                                    String.valueOf(time));
                         }
                     };
                     BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(locationInfo.getId()), runnable, () -> new Location[]{location, block.getLocation()});
                     return 1;
                 }
             }
+            return 0;
+        });
+
+        if(count == 0 && blockMenu.hasViewer()) {
             this.updateMenu(blockMenu, StatusL2Menu.STATUS_SLOT, this,
                     EnergyUtil.getCharge(config),
                     "0");
-            return 0;
-        });
+        }
     }
 
     @Override
