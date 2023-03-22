@@ -16,6 +16,7 @@ import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.libs.slimefun.util.EnergyUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -60,6 +61,7 @@ public abstract class AbstractManualCraftMachine extends AbstractManualMachine i
     @Nonnull
     @Override
     protected AbstractManualMachineMenu newMachineMenu() {
+        // TODO more beautiful code
         return new ManualCraftMachineMenu(this);
     }
 
@@ -72,6 +74,11 @@ public abstract class AbstractManualCraftMachine extends AbstractManualMachine i
         }
 
         EnergyUtil.setCharge(block.getLocation(), String.valueOf(Math.min(intCharge, this.capacity)));
+
+        BlockMenu blockMenu = BlockStorage.getInventory(block);
+        if(blockMenu.hasViewer()) {
+            this.setMachineMenu().updateInventory(blockMenu.toInventory(), block.getLocation());
+        }
     }
 
     @Override
