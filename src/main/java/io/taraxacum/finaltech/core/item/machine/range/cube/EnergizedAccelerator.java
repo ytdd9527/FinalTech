@@ -41,6 +41,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyNetComponent, RecipeItem, MenuUpdater, LocationMachine {
     private final Set<String> notAllowedId = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
+    private final Set<String> allowedId = new HashSet<>();
     private final int range = ConfigUtil.getOrDefaultItemSetting(2, this, "range");
     private final int capacity = ConfigUtil.getOrDefaultItemSetting(20000000, this, "capacity");
 
@@ -77,7 +78,7 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
         if (machineEnergy == 0) {
             if(hasViewer) {
                 this.updateMenu(blockMenu, StatusMenu.STATUS_SLOT, this,
-                        "0", "0", "0", "0");
+                        String.valueOf(machineEnergy), "0", "0", "0");
             }
             return;
         }
@@ -86,11 +87,11 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
         Map<Integer, List<LocationInfo>> locationInfoMap = new HashMap<>(this.range * 3);
         int count = this.cubeFunction(block, this.range, location -> {
             LocationInfo locationInfo = LocationInfo.get(location);
-            if(locationInfo != null && !this.notAllowedId.contains(locationInfo.getId()) && locationInfo.getSlimefunItem() instanceof EnergyNetComponent energyNetComponent && locationInfo.getSlimefunItem().getBlockTicker() != null && EnergyNetComponentType.CONSUMER.equals(energyNetComponent.getEnergyComponentType()) && energyNetComponent.isChargeable()) {
+            if(locationInfo != null && this.calAllowed(locationInfo.getSlimefunItem())) {
                 int distance = Math.abs(location.getBlockX() - blockLocation.getBlockX()) + Math.abs(location.getBlockY() - blockLocation.getBlockY()) + Math.abs(location.getBlockZ() - blockLocation.getBlockZ());
                 locationInfoMap.computeIfAbsent(distance, d -> new ArrayList<>(d * d * 4 + 2)).add(locationInfo);
                 locationInfo.cloneLocation();
-                allCapacity.getAndAdd(energyNetComponent.getCapacity());
+                allCapacity.getAndAdd(((EnergyNetComponent) locationInfo.getSlimefunItem()).getCapacity());
                 return 1;
             }
             return 0;
@@ -99,10 +100,11 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
         if (count == 0 || allCapacity.get() == 0L) {
             if(hasViewer) {
                 this.updateMenu(blockMenu, StatusMenu.STATUS_SLOT, this,
-                        "0", "0", "0", "0");
+                        String.valueOf(machineEnergy), "0", "0", "0");
             }
             return;
         }
+
         if(allCapacity.get() > this.capacity) {
             allCapacity.set(this.capacity);
         }
@@ -114,6 +116,7 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
 
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
 
+        int nextEnergy;
         List<LocationInfo> locationInfoList;
         while (machineEnergy > allCapacity.get()) {
             for (int distance = 1; distance <= this.range * 3; distance++) {
@@ -138,7 +141,12 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
             }
 
             accelerateRoundTime++;
-            machineEnergy -= allCapacity.get();
+            nextEnergy = (int) (machineEnergy - allCapacity.get() * accelerateRoundTime);
+            if(nextEnergy > 0) {
+                machineEnergy = nextEnergy;
+            } else {
+                break;
+            }
 
             hasViewer = false;
         }
@@ -203,5 +211,21 @@ public class EnergizedAccelerator extends AbstractCubeMachine implements EnergyN
         }
 
         return locations;
+    }
+
+    protected boolean calAllowed(@Nonnull SlimefunItem slimefunItem) {
+        if(this.allowedId.contains(slimefunItem.getId())) {
+            return true;
+        } else if(this.notAllowedId.contains(slimefunItem.getId())) {
+            return false;
+        } else {
+            if(slimefunItem.getBlockTicker() == null || slimefunItem.getBlockTicker() == null || !(slimefunItem instanceof EnergyNetComponent energyNetComponent) || !EnergyNetComponentType.CONSUMER.equals(energyNetComponent.getEnergyComponentType())) {
+                this.notAllowedId.add(slimefunItem.getId());
+                return false;
+            }
+
+            this.allowedId.add(slimefunItem.getId());
+            return true;
+        }
     }
 }

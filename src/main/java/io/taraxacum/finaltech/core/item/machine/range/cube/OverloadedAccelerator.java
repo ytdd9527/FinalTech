@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.interfaces.LocationMachine;
 import io.taraxacum.finaltech.core.interfaces.MenuUpdater;
@@ -39,6 +40,7 @@ import java.util.*;
  */
 public class OverloadedAccelerator extends AbstractCubeMachine implements RecipeItem, MenuUpdater, LocationMachine {
     private final Set<String> notAllowedId = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
+    private final Set<String> allowedId = new HashSet<>();
     private final int range = ConfigUtil.getOrDefaultItemSetting(2, this, "range");
 
     public OverloadedAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -73,7 +75,7 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
         Map<Integer, List<LocationInfo>> locationInfoMap = new HashMap<>(this.range * 3);
         int count = this.cubeFunction(block, this.range, location -> {
             LocationInfo locationInfo = LocationInfo.get(location);
-            if(locationInfo != null && !this.notAllowedId.contains(locationInfo.getId()) && locationInfo.getSlimefunItem() instanceof EnergyNetComponent energyNetComponent && locationInfo.getSlimefunItem().getBlockTicker() != null && energyNetComponent.isChargeable()) {
+            if(locationInfo != null && this.calAllowed(locationInfo.getSlimefunItem())) {
                 int distance = Math.abs(location.getBlockX() - blockLocation.getBlockX()) + Math.abs(location.getBlockY() - blockLocation.getBlockY()) + Math.abs(location.getBlockZ() - blockLocation.getBlockZ());
                 locationInfoMap.computeIfAbsent(distance, d -> new ArrayList<>(d * d * 4 + 2)).add(locationInfo);
                 locationInfo.cloneLocation();
@@ -106,15 +108,24 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
                         int energy = Integer.parseInt(EnergyUtil.getCharge(locationInfo.getConfig()));
                         if (energy > capacity) {
                             accelerateCount++;
-                            Block machineBlock = locationInfo.getLocation().getBlock();
 
                             Runnable runnable = () -> {
-                                int machineEnergy = Integer.parseInt(EnergyUtil.getCharge(locationInfo.getConfig()));
-                                while (machineEnergy > capacity) {
+                                Block machineBlock = locationInfo.getLocation().getBlock();
+                                int machineEnergy = energy;
+                                int currentMachineEnergy;
+                                int times = 1;
+                                while (machineEnergy >= capacity) {
                                     blockTicker.tick(machineBlock, locationInfo.getSlimefunItem(), locationInfo.getConfig());
-                                    machineEnergy = Integer.parseInt(EnergyUtil.getCharge(locationInfo.getConfig()));
-                                    machineEnergy -= capacity;
-                                    EnergyUtil.setCharge(locationInfo.getConfig(), machineEnergy);
+                                    currentMachineEnergy = Integer.parseInt(EnergyUtil.getCharge(locationInfo.getConfig()));
+                                    if(machineEnergy == currentMachineEnergy) {
+                                        break;
+                                    }
+                                    machineEnergy = currentMachineEnergy - capacity * times++;
+                                    if(machineEnergy >= 0) {
+                                        EnergyUtil.setCharge(locationInfo.getConfig(), machineEnergy);
+                                    } else {
+                                        break;
+                                    }
                                 }
                             };
 
@@ -175,5 +186,21 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
         }
 
         return locations;
+    }
+
+    protected boolean calAllowed(@Nonnull SlimefunItem slimefunItem) {
+        if(this.allowedId.contains(slimefunItem.getId())) {
+            return true;
+        } else if(this.notAllowedId.contains(slimefunItem.getId())) {
+            return false;
+        } else {
+            if(slimefunItem.getBlockTicker() == null || slimefunItem.getBlockTicker() == null || !(slimefunItem instanceof EnergyNetComponent energyNetComponent) || !EnergyNetComponentType.CONSUMER.equals(energyNetComponent.getEnergyComponentType())) {
+                this.notAllowedId.add(slimefunItem.getId());
+                return false;
+            }
+
+            this.allowedId.add(slimefunItem.getId());
+            return true;
+        }
     }
 }

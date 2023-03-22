@@ -45,7 +45,7 @@ import java.util.Set;
  * @since 1.0
  */
 public abstract class AbstractElectricityShootPile extends AbstractLineMachine implements RecipeItem, MenuUpdater, LocationMachine {
-    protected final Set<String> NOT_ALLOWED_ID = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
+    protected final Set<String> notAllowedId = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
 
     public AbstractElectricityShootPile(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -76,15 +76,15 @@ public abstract class AbstractElectricityShootPile extends AbstractLineMachine i
             Runnable runnable = () -> {
                 int count = 0;
                 Summary summary = new Summary();
-                LocationInfo capacitorLocationInfo = LocationInfo.get(block.getRelative(directional.getFacing().getOppositeFace()).getLocation());
-                if(capacitorLocationInfo != null) {
-                    int capacitorEnergy = Integer.parseInt(EnergyUtil.getCharge(capacitorLocationInfo.getConfig()));
+                LocationInfo locationInfo = LocationInfo.get(block.getRelative(directional.getFacing().getOppositeFace()).getLocation());
+                if(locationInfo != null && !this.notAllowedId.contains(locationInfo.getId()) && locationInfo.getSlimefunItem() instanceof EnergyNetComponent energyNetComponent && JavaUtil.matchOnce(energyNetComponent.getEnergyComponentType(), EnergyNetComponentType.CAPACITOR, EnergyNetComponentType.GENERATOR)) {
+                    int capacitorEnergy = Integer.parseInt(EnergyUtil.getCharge(locationInfo.getConfig()));
                     summary.capacitorEnergy = capacitorEnergy;
 
                     count = this.lineFunction(block, this.getRange(), this.doFunction(summary));
 
                     if(capacitorEnergy != summary.capacitorEnergy) {
-                        EnergyUtil.setCharge(capacitorLocationInfo.getConfig(), summary.capacitorEnergy);
+                        EnergyUtil.setCharge(locationInfo.getConfig(), summary.capacitorEnergy);
                     }
                 }
 

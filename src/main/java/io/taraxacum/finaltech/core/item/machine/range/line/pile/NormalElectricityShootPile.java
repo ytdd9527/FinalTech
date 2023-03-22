@@ -39,7 +39,7 @@ public class NormalElectricityShootPile extends AbstractElectricityShootPile {
                 return -1;
             }
             LocationInfo locationInfo = LocationInfo.get(location);
-            if (locationInfo != null && !this.NOT_ALLOWED_ID.contains(locationInfo.getId()) && locationInfo.getSlimefunItem() instanceof EnergyNetComponent energyNetComponent && !EnergyNetComponentType.NONE.equals(energyNetComponent.getEnergyComponentType())) {
+            if (locationInfo != null && !this.notAllowedId.contains(locationInfo.getId()) && locationInfo.getSlimefunItem() instanceof EnergyNetComponent energyNetComponent && !EnergyNetComponentType.NONE.equals(energyNetComponent.getEnergyComponentType())) {
                 int componentCapacity = energyNetComponent.getCapacity();
                 if(componentCapacity > 0) {
                     int componentEnergy = Integer.parseInt(EnergyUtil.getCharge(locationInfo.getConfig()));

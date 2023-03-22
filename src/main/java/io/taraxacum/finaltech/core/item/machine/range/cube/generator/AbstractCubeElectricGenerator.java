@@ -89,13 +89,15 @@ public abstract class AbstractCubeElectricGenerator extends AbstractCubeMachine 
                 int amount = Integer.parseInt(StringNumberUtil.min(StringItemUtil.parseAmountInCard(itemStack), StringNumberUtil.INTEGER_MAX_VALUE));
                 energy = Integer.MAX_VALUE / this.getEnergy() < amount ? Integer.MAX_VALUE : this.getEnergy() * amount;
                 break;
+            } else {
+                energy = this.getEnergy();
             }
         }
 
         int finalEnergy = energy;
         int count = this.cubeFunction(block, this.getRange(), location -> {
             LocationInfo locationInfo = LocationInfo.get(location);
-            if (locationInfo != null && this.notAllowedId.contains(locationInfo.getId()) && locationInfo.getSlimefunItem() instanceof EnergyNetComponent energyNetComponent && !JavaUtil.matchOnce(energyNetComponent.getEnergyComponentType(), EnergyNetComponentType.CAPACITOR, EnergyNetComponentType.GENERATOR)) {
+            if (locationInfo != null && !this.notAllowedId.contains(locationInfo.getId()) && locationInfo.getSlimefunItem() instanceof EnergyNetComponent energyNetComponent && !JavaUtil.matchOnce(energyNetComponent.getEnergyComponentType(), EnergyNetComponentType.CAPACITOR, EnergyNetComponentType.GENERATOR)) {
                 BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(locationInfo.getId()), () -> AbstractCubeElectricGenerator.this.chargeMachine(energyNetComponent, finalEnergy, locationInfo), location);
                 if (drawParticle) {
                     Location cloneLocation = location.clone();

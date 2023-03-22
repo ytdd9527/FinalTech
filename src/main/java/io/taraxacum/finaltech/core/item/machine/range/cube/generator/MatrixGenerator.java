@@ -60,7 +60,7 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator {
         int count = this.cubeFunction(block, range + this.getRange(), location -> {
             LocationInfo locationInfo = LocationInfo.get(location);
 
-            if (locationInfo != null && this.notAllowedId.contains(locationInfo.getId()) && locationInfo.getSlimefunItem() instanceof EnergyNetComponent energyNetComponent && !JavaUtil.matchOnce(energyNetComponent.getEnergyComponentType(), EnergyNetComponentType.CAPACITOR, EnergyNetComponentType.GENERATOR)) {
+            if (locationInfo != null && !this.notAllowedId.contains(locationInfo.getId()) && locationInfo.getSlimefunItem() instanceof EnergyNetComponent energyNetComponent && !JavaUtil.matchOnce(energyNetComponent.getEnergyComponentType(), EnergyNetComponentType.CAPACITOR, EnergyNetComponentType.GENERATOR)) {
                 BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(locationInfo.getId()), () -> this.chargeMachine(energyNetComponent, locationInfo), location);
                 if (drawParticle) {
                     Location cloneLocation = location.clone();
@@ -73,7 +73,8 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator {
 
         if (blockMenu.hasViewer()) {
             this.updateMenu(blockMenu, StatusL2Menu.STATUS_SLOT, this,
-                    String.valueOf(count));
+                    String.valueOf(count),
+                    String.valueOf(range));
         }
     }
 
