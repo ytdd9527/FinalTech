@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
  * @since 2.2
  */
 public class ConfigurableRemoteAccessor extends AbstractClickerMachine implements RecipeItem {
-    private final int range = ConfigUtil.getOrDefaultItemSetting(16, SfItemUtil.getIdFormatName(RemoteAccessor.class), "range");
+    private final int range = ConfigUtil.getOrDefaultItemSetting(16, this, "range");
 
     public ConfigurableRemoteAccessor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

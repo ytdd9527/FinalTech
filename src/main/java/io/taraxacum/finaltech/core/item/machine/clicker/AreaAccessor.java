@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
  * @since 2.0
  */
 public class AreaAccessor extends AbstractClickerMachine implements RecipeItem {
-    private final int range = ConfigUtil.getOrDefaultItemSetting(8, SfItemUtil.getIdFormatName(AreaAccessor.class), "range");
+    private final int range = ConfigUtil.getOrDefaultItemSetting(8, this, "range");
 
     public AreaAccessor(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);

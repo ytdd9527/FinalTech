@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
  * @since 2.2
  */
 public class ConfigurableTransporter extends AbstractClickerMachine implements RecipeItem {
-    private final int range = ConfigUtil.getOrDefaultItemSetting(16, SfItemUtil.getIdFormatName(Transporter.class), "range");
+    private final int range = ConfigUtil.getOrDefaultItemSetting(16, this, "range");
 
     public ConfigurableTransporter(@Nonnull ItemGroup itemGroup, @Nonnull SlimefunItemStack item, @Nonnull RecipeType recipeType, @Nonnull ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
