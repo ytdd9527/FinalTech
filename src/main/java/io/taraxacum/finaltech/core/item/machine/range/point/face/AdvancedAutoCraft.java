@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.interfaces.LocationMachine;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import io.taraxacum.libs.slimefun.dto.AdvancedCraft;
 import io.taraxacum.libs.plugin.dto.AdvancedMachineRecipe;
 import io.taraxacum.libs.plugin.dto.LocationRecipeRegistry;
@@ -125,6 +126,8 @@ public class AdvancedAutoCraft extends AbstractFaceMachine implements RecipeItem
 
     @Override
     public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipeWithBorder(FinalTech.getLanguageManager(), this);
+
         AdvancedAutoCraftMenu.registerRecipe();
         for (String id : AdvancedAutoCraftMenu.RECIPE_MAP.keySet()) {
             SlimefunItem slimefunItem = SlimefunItem.getById(id);

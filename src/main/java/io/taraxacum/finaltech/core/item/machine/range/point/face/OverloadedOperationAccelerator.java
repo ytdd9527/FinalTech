@@ -21,6 +21,7 @@ import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.util.BlockTickerUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.slimefun.dto.LocationInfo;
 import io.taraxacum.libs.slimefun.util.EnergyUtil;
@@ -123,6 +124,10 @@ public class OverloadedOperationAccelerator extends AbstractFaceMachine implemen
 
     @Override
     public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipeWithBorder(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.baseEfficiency),
+                String.valueOf(this.randomEfficiency));
+
         for (SlimefunItem slimefunItem : Slimefun.getRegistry().getAllSlimefunItems()) {
             if (slimefunItem instanceof MachineProcessHolder && !this.notAllowedId.contains(slimefunItem.getId())) {
                 this.registerDescriptiveRecipe(slimefunItem.getItem());

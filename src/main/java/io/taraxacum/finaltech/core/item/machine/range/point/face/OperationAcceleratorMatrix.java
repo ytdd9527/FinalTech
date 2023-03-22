@@ -18,6 +18,7 @@ import io.taraxacum.finaltech.core.menu.unit.VoidMenu;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.BlockTickerUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import io.taraxacum.libs.slimefun.dto.LocationInfo;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import org.bukkit.Location;
@@ -92,6 +93,8 @@ public class OperationAcceleratorMatrix extends AbstractFaceMachine implements R
 
     @Override
     public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipeWithBorder(FinalTech.getLanguageManager(), this);
+
         for (SlimefunItem slimefunItem : Slimefun.getRegistry().getAllSlimefunItems()) {
             if (slimefunItem instanceof MachineProcessHolder) {
                 this.registerDescriptiveRecipe(slimefunItem.getItem());

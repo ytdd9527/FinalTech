@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.dto.SimpleCargoDTO;
 import io.taraxacum.finaltech.core.helper.*;
@@ -14,6 +15,7 @@ import io.taraxacum.finaltech.core.menu.machine.MultiFrameMachineMenu;
 import io.taraxacum.finaltech.util.CargoUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import io.taraxacum.libs.plugin.dto.AdvancedMachineRecipe;
 import io.taraxacum.libs.plugin.dto.InvWithSlots;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
@@ -139,6 +141,8 @@ public class MultiFrameMachine extends AbstractMachine implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipeWithBorder(FinalTech.getLanguageManager(), this);
+
         for(String id : this.allowedIdList) {
             SlimefunItem slimefunItem = SlimefunItem.getById(id);
             if(slimefunItem != null) {

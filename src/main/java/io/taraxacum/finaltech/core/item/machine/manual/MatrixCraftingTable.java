@@ -4,10 +4,11 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.menu.manual.AbstractManualMachineMenu;
 import io.taraxacum.finaltech.core.menu.manual.MatrixCraftingTableMenu;
-import io.taraxacum.finaltech.setup.FinalTechRecipes;
+import io.taraxacum.finaltech.setup.FinalTechRecipeTypes;
 import io.taraxacum.finaltech.util.RecipeUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -42,6 +43,8 @@ public class MatrixCraftingTable extends AbstractManualMachine implements Recipe
 
     @Override
     public void registerDefaultRecipes() {
-        RecipeUtil.registerRecipeByRecipeType(this, FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE);
+        RecipeUtil.registerDescriptiveRecipeWithBorder(FinalTech.getLanguageManager(), this);
+
+        RecipeUtil.registerRecipeByRecipeType(this, FinalTechRecipeTypes.MATRIX_CRAFTING_TABLE);
     }
 }

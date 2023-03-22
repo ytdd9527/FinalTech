@@ -20,6 +20,7 @@ import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.BlockTickerUtil;
 import io.taraxacum.libs.slimefun.dto.LocationInfo;
@@ -41,9 +42,9 @@ import java.util.Set;
  * @since 2.0
  */
 public class OperationAccelerator extends AbstractFaceMachine implements RecipeItem, EnergyNetComponent, MenuUpdater, LocationMachine {
-    private final Set<String> NOT_ALLOWED_ID = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
-    private final int CAPACITY = ConfigUtil.getOrDefaultItemSetting(20000000, this, "capacity");
-    private final int EFFICIENCY = ConfigUtil.getOrDefaultItemSetting(1, this, "efficiency");
+    private final Set<String> notAllowedId = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
+    private final int capacity = ConfigUtil.getOrDefaultItemSetting(20000000, this, "capacity");
+    private final int efficiency = ConfigUtil.getOrDefaultItemSetting(1, this, "efficiency");
 
     public OperationAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -81,14 +82,14 @@ public class OperationAccelerator extends AbstractFaceMachine implements RecipeI
 
         this.pointFunction(block, 1, location -> {
             LocationInfo locationInfo = LocationInfo.get(location);
-            if(locationInfo != null && !this.NOT_ALLOWED_ID.contains(locationInfo.getId())) {
+            if(locationInfo != null && !this.notAllowedId.contains(locationInfo.getId())) {
                 if (locationInfo.getSlimefunItem() instanceof MachineProcessHolder machineProcessHolder && locationInfo.getSlimefunItem() instanceof EnergyNetComponent energyNetComponent) {
                     MachineProcessor<?> machineProcessor = machineProcessHolder.getMachineProcessor();
                     Runnable runnable = () -> {
                         int energy = Integer.parseInt(EnergyUtil.getCharge(config));
                         MachineOperation operation = machineProcessor.getOperation(location);
                         if (operation != null) {
-                            int time = Math.min(Math.min(FinalTech.getRandom().nextInt(amount * this.EFFICIENCY), energy / energyNetComponent.getCapacity()), operation.getRemainingTicks());
+                            int time = Math.min(Math.min(FinalTech.getRandom().nextInt(amount * this.efficiency), energy / energyNetComponent.getCapacity()), operation.getRemainingTicks());
                             if(time > 0) {
                                 operation.addProgress(Math.min(time, operation.getRemainingTicks()));
                                 EnergyUtil.setCharge(config, Math.max(0, energy - time * energyNetComponent.getCapacity()));
@@ -122,8 +123,11 @@ public class OperationAccelerator extends AbstractFaceMachine implements RecipeI
 
     @Override
     public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipeWithBorder(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.efficiency));
+
         for (SlimefunItem slimefunItem : Slimefun.getRegistry().getAllSlimefunItems()) {
-            if (slimefunItem instanceof MachineProcessHolder && !this.NOT_ALLOWED_ID.contains(slimefunItem.getId())) {
+            if (slimefunItem instanceof MachineProcessHolder && !this.notAllowedId.contains(slimefunItem.getId())) {
                 this.registerDescriptiveRecipe(slimefunItem.getItem());
             }
         }
@@ -137,7 +141,7 @@ public class OperationAccelerator extends AbstractFaceMachine implements RecipeI
 
     @Override
     public int getCapacity() {
-        return this.CAPACITY;
+        return this.capacity;
     }
 
     @Override

@@ -6,6 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.item.unusable.ReplaceableCard;
 import io.taraxacum.libs.slimefun.dto.RecipeTypeRegistry;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
@@ -102,6 +103,8 @@ public class MatrixItemDismantleTable extends AbstractMachine implements RecipeI
     @Override
     public void registerDefaultRecipes() {
         RecipeTypeRegistry.getInstance().reload();
+
+        RecipeUtil.registerDescriptiveRecipeWithBorder(FinalTech.getLanguageManager(), this);
 
         for (RecipeType recipeType : RecipeTypeRegistry.getInstance().getRecipeTypeSet()) {
             if (!this.notAllowedRecipeType.contains(recipeType.getKey().getKey()) && !ItemStackUtil.isItemNull(recipeType.toItem())) {

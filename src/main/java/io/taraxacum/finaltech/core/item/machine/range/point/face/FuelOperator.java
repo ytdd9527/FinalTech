@@ -19,6 +19,7 @@ import io.taraxacum.finaltech.core.menu.unit.VoidMenu;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.BlockTickerUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import io.taraxacum.libs.slimefun.dto.LocationInfo;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineFuel;
@@ -94,6 +95,8 @@ public class FuelOperator extends AbstractFaceMachine implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipeWithBorder(FinalTech.getLanguageManager(), this);
+
         for (SlimefunItem slimefunItem : Slimefun.getRegistry().getAllSlimefunItems()) {
             if (!this.notAllowedId.contains(slimefunItem.getId()) && slimefunItem instanceof AbstractEnergyProvider && slimefunItem instanceof MachineProcessHolder) {
                 this.registerDescriptiveRecipe(slimefunItem.getItem());

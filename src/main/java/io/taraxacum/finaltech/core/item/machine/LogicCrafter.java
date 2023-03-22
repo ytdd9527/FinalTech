@@ -6,12 +6,14 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.interfaces.LogicItem;
 import io.taraxacum.finaltech.core.item.unusable.DigitalNumber;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.core.menu.machine.LogicCrafterMenu;
 import io.taraxacum.finaltech.setup.FinalTechItemStacks;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
@@ -92,6 +94,8 @@ public class LogicCrafter extends AbstractMachine implements RecipeItem {
 
     @Override
     public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipeWithBorder(FinalTech.getLanguageManager(), this);
+
         this.registerRecipe(FinalTechItemStacks.LOGIC_TRUE, ItemStackUtil.AIR);
         this.registerRecipe(FinalTechItemStacks.LOGIC_FALSE, ItemStackUtil.AIR);
     }
