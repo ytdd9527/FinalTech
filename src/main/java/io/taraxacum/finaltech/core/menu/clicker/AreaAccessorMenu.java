@@ -1,16 +1,15 @@
 package io.taraxacum.finaltech.core.menu.clicker;
 
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.item.machine.clicker.AbstractClickerMachine;
 import io.taraxacum.finaltech.core.item.machine.clicker.AreaAccessor;
+import io.taraxacum.finaltech.util.LocationUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
-import io.taraxacum.finaltech.util.ConstantTableUtil;
+import io.taraxacum.libs.slimefun.dto.LocationInfo;
 import io.taraxacum.libs.slimefun.util.SfItemUtil;
-import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -146,32 +145,32 @@ public class AreaAccessorMenu extends AbstractClickerMenu {
                 continue;
             }
             Location l = locationList.get((i + page * TEMP_CONTENT.length) % locationList.size());
-            if (BlockStorage.hasBlockInfo(l)) {
-                Config config = BlockStorage.getLocationInfo(l);
-                if (config.contains(ConstantTableUtil.CONFIG_ID)) {
-                    SlimefunItem slimefunItem = SlimefunItem.getById(config.getString(ConstantTableUtil.CONFIG_ID));
-                    if (slimefunItem != null) {
-                        BlockMenu blockMenu = BlockStorage.getInventory(l);
-                        if (blockMenu != null) {
-                            ItemStack icon = new CustomItemStack(slimefunItem.getItem(), slimefunItem.getItemName(), FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(AreaAccessor.class), "temp-icon", "lore"),
-                                    String.valueOf(l.getBlockX() - location.getBlockX()),
-                                    String.valueOf(l.getBlockY() - location.getBlockY()),
-                                    String.valueOf(l.getBlockZ() - location.getBlockZ())));
-                            chestMenu.addItem(TEMP_CONTENT[i], icon);
-                            chestMenu.addMenuClickHandler(TEMP_CONTENT[i], (p, slot, item, action) -> {
-                                // BlockMenu may be updated after the menu generated.
-                                if (BlockStorage.hasBlockInfo(l) && BlockStorage.hasInventory(l.getBlock()) && blockMenu.canOpen(l.getBlock(), player)) {
-                                    JavaPlugin javaPlugin = AreaAccessorMenu.this.getSlimefunItem().getAddon().getJavaPlugin();
-                                    javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, blockMenu.getBlock()));
-                                    blockMenu.open(player);
-                                } else {
-                                    player.sendMessage(FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(AreaAccessor.class), "message", "no-permission", "location"));
-                                }
-                                return false;
-                            });
-                            continue;
+            LocationInfo locationInfo = LocationInfo.get(l);
+            if(locationInfo != null) {
+                BlockMenu blockMenu = BlockStorage.getInventory(l);
+                if (blockMenu != null) {
+                    ItemStack icon = new CustomItemStack(locationInfo.getSlimefunItem().getItem(), locationInfo.getSlimefunItem().getItemName(), FinalTech.getLanguageManager().replaceStringArray(FinalTech.getLanguageStringArray("items", SfItemUtil.getIdFormatName(AreaAccessor.class), "temp-icon", "lore"),
+                            String.valueOf(l.getBlockX() - location.getBlockX()),
+                            String.valueOf(l.getBlockY() - location.getBlockY()),
+                            String.valueOf(l.getBlockZ() - location.getBlockZ())));
+                    chestMenu.addItem(TEMP_CONTENT[i], icon);
+                    chestMenu.addMenuClickHandler(TEMP_CONTENT[i], (p, slot, item, action) -> {
+                        // BlockMenu may be updated after the menu generated.
+                        if (BlockStorage.hasBlockInfo(l) && BlockStorage.hasInventory(l.getBlock()) && blockMenu.canOpen(l.getBlock(), player)) {
+                            JavaPlugin javaPlugin = AreaAccessorMenu.this.getSlimefunItem().getAddon().getJavaPlugin();
+                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, blockMenu.getBlock()));
+                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawLineByDistance(javaPlugin, Particle.WAX_OFF, 0, 0.25, LocationUtil.getCenterLocation(location.getBlock()), LocationUtil.getCenterLocation(blockMenu.getBlock())));
+                            if(action.isRightClicked()) {
+                                player.closeInventory();
+                            } else {
+                                blockMenu.open(player);
+                            }
+                        } else {
+                            player.sendMessage(FinalTech.getLanguageString("items", SfItemUtil.getIdFormatName(AreaAccessor.class), "message", "no-permission", "location"));
                         }
-                    }
+                        return false;
+                    });
+                    continue;
                 }
             }
             chestMenu.addItem(TEMP_CONTENT[i], Icon.ERROR_ICON);
