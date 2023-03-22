@@ -34,6 +34,7 @@ public class ResearchUnlockTicket extends UsableSlimefunItem implements RecipeIt
 
     @Override
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
+        playerRightClickEvent.cancel();
         Player player = playerRightClickEvent.getPlayer();
         List<Research> researchList = new ArrayList<>(Slimefun.getRegistry().getResearches());
         researchList = JavaUtil.shuffle(researchList);

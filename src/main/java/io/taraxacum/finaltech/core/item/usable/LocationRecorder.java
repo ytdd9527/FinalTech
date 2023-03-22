@@ -41,13 +41,15 @@ public class LocationRecorder extends UsableSlimefunItem implements RecipeItem {
 
     @Override
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
+        playerRightClickEvent.cancel();
+
         PlayerInteractEvent interactEvent = playerRightClickEvent.getInteractEvent();
         JavaPlugin javaPlugin = this.getAddon().getJavaPlugin();
 
         if (playerRightClickEvent.getPlayer().isSneaking()) {
             Block block = interactEvent.getClickedBlock();
             if (block != null) {
-                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
                 LocationInfo locationInfo = LocationInfo.get(block.getLocation());
                 if(locationInfo != null && !this.notAllowedId.contains(locationInfo.getId()) && PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), block.getLocation(), Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {
                     ItemStack item = playerRightClickEvent.getItem();
@@ -63,7 +65,7 @@ public class LocationRecorder extends UsableSlimefunItem implements RecipeItem {
             }
 
             Block block = location.getBlock();
-            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
 
             Player player = playerRightClickEvent.getPlayer();
             if (!PermissionUtil.checkPermission(playerRightClickEvent.getPlayer(), location, Interaction.INTERACT_BLOCK, Interaction.BREAK_BLOCK, Interaction.PLACE_BLOCK)) {

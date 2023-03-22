@@ -84,7 +84,7 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
 
                     this.updateLore(item);
 
-                    javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+                    javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
                 } else if (playerRightClickEvent.getPlayer().isSneaking()) {
                     // consume energy in machine, charge item
 
@@ -97,7 +97,7 @@ public class PortableEnergyStorage extends UsableSlimefunItem implements RecipeI
 
                     this.updateLore(item);
 
-                    javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+                    javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
                 }
             }
         }
