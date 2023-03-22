@@ -1,5 +1,6 @@
 package io.taraxacum.finaltech.core.item.usable;
 
+import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -10,9 +11,11 @@ import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.event.ConfigSaveActionEvent;
 import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
+import io.taraxacum.finaltech.core.listener.ConfigSaveListener;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ItemConfigurationUtil;
 import io.taraxacum.finaltech.util.PermissionUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import io.taraxacum.libs.slimefun.dto.LocationInfo;
@@ -20,6 +23,7 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
@@ -34,6 +38,15 @@ public class MachineConfigurator extends UsableSlimefunItem implements RecipeIte
 
     public MachineConfigurator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+    }
+
+    @Override
+    public void register(@Nonnull SlimefunAddon addon) {
+        super.register(addon);
+        if (!this.isDisabled()) {
+            PluginManager pluginManager = addon.getJavaPlugin().getServer().getPluginManager();
+            pluginManager.registerEvents(new ConfigSaveListener(), addon.getJavaPlugin());
+        }
     }
 
     @Override
@@ -71,8 +84,9 @@ public class MachineConfigurator extends UsableSlimefunItem implements RecipeIte
 
     @Override
     public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipeWithBorder(FinalTech.getLanguageManager(), this);
+
         for(Map.Entry<String, Set<String>> entry : ItemConfigurationUtil.getGroupItemMap().entrySet()) {
-            this.registerDescriptiveRecipe(Icon.BORDER_ICON);
             for(String id : entry.getValue()) {
                 SlimefunItem slimefunItem = SlimefunItem.getById(id);
                 if (slimefunItem != null) {

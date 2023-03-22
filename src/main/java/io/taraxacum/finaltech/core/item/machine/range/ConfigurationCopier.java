@@ -103,7 +103,7 @@ public class ConfigurationCopier extends AbstractRangeMachine implements RecipeI
 
                             if (blockMenu.hasViewer()) {
                                 JavaPlugin javaPlugin = ConfigurationCopier.this.getAddon().getJavaPlugin();
-                                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, locationInfo.getLocation().getBlock()));
+                                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, locationInfo.getLocation().getBlock()));
                             }
                         }
                         atomicBoolean.set(true);

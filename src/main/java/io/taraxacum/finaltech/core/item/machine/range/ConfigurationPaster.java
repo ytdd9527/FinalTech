@@ -95,16 +95,16 @@ public class ConfigurationPaster extends AbstractMachine implements RecipeItem, 
 
                     LocationInfo locationInfo = LocationInfo.get(location);
                     if (locationInfo != null) {
-                        if (!ConfigurationPaster.this.notAllowedId.contains(locationInfo.getId())) {
+                        if (ConfigurationPaster.this.notAllowedId.contains(locationInfo.getId())) {
                             return -1;
                         }
 
                         if (ItemConfigurationUtil.loadConfigFromItem(outputItem, locationInfo)) {
-                            FinalTech.getInstance().getServer().getPluginManager().callEvent(new ConfigSaveActionEvent(true, location, locationInfo.getId()));
+                            BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(locationInfo.getId()), () -> FinalTech.getInstance().getServer().getPluginManager().callEvent(new ConfigSaveActionEvent(true, location, locationInfo.getId())), location);
 
                             if (blockMenu.hasViewer()) {
                                 JavaPlugin javaPlugin = ConfigurationPaster.this.getAddon().getJavaPlugin();
-                                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, locationInfo.getLocation().getBlock()));
+                                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, locationInfo.getLocation().getBlock()));
                             }
                         }
                         atomicBoolean.set(true);
