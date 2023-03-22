@@ -2,10 +2,14 @@ package io.taraxacum.finaltech.core.item.usable;
 
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.helper.RouteShow;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.util.ConfigUtil;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import io.taraxacum.libs.slimefun.dto.LocationInfo;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -20,7 +24,7 @@ import java.util.Set;
  * @author Final_ROOT
  * @since 2.4
  */
-public class RouteViewer extends UsableSlimefunItem {
+public class RouteViewer extends UsableSlimefunItem implements RecipeItem {
     private final Set<String> allowedId = new HashSet<>(ConfigUtil.getItemStringList(this, "allowed-id"));
 
     private final int interval = ConfigUtil.getOrDefaultItemSetting(500, this, "interval");
@@ -61,5 +65,17 @@ public class RouteViewer extends UsableSlimefunItem {
     @Override
     int getInterval() {
         return this.interval;
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipeWithBorder(FinalTech.getLanguageManager(), this);
+
+        for(String id : this.allowedId) {
+            SlimefunItem slimefunItem = SlimefunItem.getById(id);
+            if(slimefunItem != null) {
+                this.registerDescriptiveRecipe(slimefunItem.getItem());
+            }
+        }
     }
 }
