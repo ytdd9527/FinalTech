@@ -28,10 +28,14 @@ public class GravityReversalRune extends UsableSlimefunItem implements RecipeIte
 
     @Override
     protected void function(@Nonnull PlayerRightClickEvent playerRightClickEvent) {
+        playerRightClickEvent.cancel();
+
         Player player = playerRightClickEvent.getPlayer();
+        boolean sprinting = player.isSprinting();
         Vector velocity = player.getVelocity();
         Vector vector = velocity.setY(velocity.getY() * -1);
         player.setVelocity(vector);
+        player.setSprinting(sprinting);
     }
 
     @Override
