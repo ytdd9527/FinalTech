@@ -919,4 +919,41 @@ public final class SetupUtil {
             SetupUtil.registerBlockTicker(++begin);
         }
     }
+
+    public static void dataLossFix() {
+        for(World world : FinalTech.getInstance().getServer().getWorlds()) {
+            BlockStorage storage = BlockStorage.getStorage(world);
+            if(storage != null) {
+                try {
+                    // todo test it
+                    Map<Location, BlockMenu> inventories = ReflectionUtil.getProperty(storage, Map.class, "inventories");
+                    if(inventories != null) {
+                        for(Map.Entry<Location, BlockMenu> entry : inventories.entrySet()) {
+                            Location location = entry.getKey();
+                            LocationInfo locationInfo = LocationInfo.get(location);
+                            if(locationInfo == null) {
+                                String id = entry.getValue().getPreset().getID();
+                                FinalTech.logger().warning("Data Loss Fix: location " + location + " seems loss its data. There should be " + id);
+                                SlimefunItem slimefunItem = SlimefunItem.getById(id);
+                                if(!(slimefunItem instanceof AbstractMachine)) {
+                                    Map<String, String> configMap = FinalTech.getDataLossFixCustomMap(id);
+                                    if(configMap == null) {
+                                        FinalTech.logger().warning("Data Loss Fix: I don't know how to fix it. Config me in config.yml with path: " + "data-loss-fix-custom" + "." + "config" + "." + id);
+                                        continue;
+                                    }
+
+                                    BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, id);
+                                    for(Map.Entry<String, String> configEntry : configMap.entrySet()) {
+                                        BlockStorage.addBlockInfo(location, configEntry.getKey(), configEntry.getValue());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

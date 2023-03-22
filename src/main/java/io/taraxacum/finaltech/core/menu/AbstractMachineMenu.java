@@ -4,8 +4,12 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.helper.Icon;
+import io.taraxacum.finaltech.util.ConstantTableUtil;
+import io.taraxacum.libs.slimefun.dto.LocationInfo;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.inventory.DirtyChestMenu;
@@ -57,6 +61,20 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
     @Override
     public void newInstance(@Nonnull BlockMenu blockMenu, @Nonnull Block block) {
         super.newInstance(blockMenu, block);
+
+        if(FinalTech.getDataLossFix()) {
+            Location location = block.getLocation();
+            LocationInfo locationInfo = LocationInfo.get(block.getLocation());
+            if(locationInfo == null) {
+                FinalTech.logger().warning("Data Loss Fix: location " + location + " seems loss its data. There should be " + this.slimefunItem.getId());
+
+                // TODO
+                BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, this.slimefunItem.getId());
+
+                FinalTech.logger().warning("Data Loss Fix: fix up!");
+            }
+        }
+
         this.updateInventory(blockMenu.toInventory(), block.getLocation());
     }
 
