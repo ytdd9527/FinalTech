@@ -14,9 +14,9 @@ import javax.annotation.Nullable;
  */
 public class LocationInfo {
     private Location location;
-    private final Config config;
-    private final String id;
-    private final SlimefunItem slimefunItem;
+    private Config config;
+    private String id;
+    private SlimefunItem slimefunItem;
 
     private LocationInfo(@Nonnull Location location, @Nonnull Config config, @Nonnull String id, @Nonnull SlimefunItem slimefunItem) {
         this.location = location;
@@ -47,6 +47,32 @@ public class LocationInfo {
 
     public SlimefunItem getSlimefunItem() {
         return slimefunItem;
+    }
+
+    /**
+     * @return false if there is no location info
+     */
+    public boolean newInstance(@Nonnull Location location) {
+        Config config = BlockStorage.getLocationInfo(location);
+        String id = config.getString("id");
+        if(id == null) {
+            return false;
+        }
+        SlimefunItem slimefunItem = SlimefunItem.getById(id);
+        if(slimefunItem == null) {
+            return false;
+        }
+
+        this.location = location;
+        this.config = config;
+        this.id = id;
+        this.slimefunItem = slimefunItem;
+
+        return true;
+    }
+
+    public boolean newInstance() {
+        return this.newInstance(this.location);
     }
 
     @Nullable

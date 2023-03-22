@@ -82,14 +82,19 @@ public class BasicCraft {
                         continue;
                     }
 
-                    SlimefunItem sfItem = SlimefunItem.getByItem(itemStack);
-                    if(sfItem instanceof ValidItem validItem && !validItem.verifyItem(indexItemMap.get(i).getItemStack())) {
+                    ItemWrapper itemWrapper = indexItemMap.get(i);
+                    if (itemWrapper.getItemStack().getAmount() < itemStack.getAmount() || !ItemStackUtil.isEnchantmentSame(itemWrapper.getItemStack(), itemStack)) {
                         matchAmount = 0;
                         break;
                     }
 
-                    ItemWrapper itemWrapper = indexItemMap.get(i);
-                    if (itemWrapper.getItemStack().getAmount() < itemStack.getAmount() || !ItemStackUtil.isItemSimilar(itemWrapper, itemStack) || !ItemStackUtil.isEnchantmentSame(itemWrapper.getItemStack(), itemStack)) {
+                    SlimefunItem sfItem = SlimefunItem.getByItem(itemStack);
+                    if(sfItem instanceof ValidItem validItem) {
+                        if(!validItem.verifyItem(itemWrapper.getItemStack())) {
+                            matchAmount = 0;
+                            break;
+                        }
+                    } else if(!ItemStackUtil.isItemSimilar(itemStack, itemWrapper)) {
                         matchAmount = 0;
                         break;
                     }
