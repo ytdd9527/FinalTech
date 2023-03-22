@@ -91,7 +91,7 @@ public class OverloadedOperationAccelerator extends AbstractFaceMachine implemen
                         int time = 0;
                         MachineOperation operation = machineProcessor.getOperation(location);
                         if (operation != null) {
-                            time = Math.min(Math.min(amount * this.baseEfficiency + FinalTech.getRandom().nextInt(amount * this.randomEfficiency), energy / energyNetComponent.getCapacity()), operation.getRemainingTicks());
+                            time = Math.min(Math.min(amount * this.baseEfficiency + FinalTech.getRandom().nextInt(1 + amount * this.randomEfficiency), energy / energyNetComponent.getCapacity()), operation.getRemainingTicks());
                             if(time > 0) {
                                 operation.addProgress(Math.min(time, operation.getRemainingTicks()));
                                 EnergyUtil.setCharge(config, Math.max(0, energy - time * energyNetComponent.getCapacity()));

@@ -10,7 +10,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.menu.unit.StatusL2Menu;
-import io.taraxacum.finaltech.setup.FinalTechItemStacks;
+import io.taraxacum.finaltech.setup.FinalTechItems;
 import io.taraxacum.finaltech.util.*;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.BlockTickerUtil;
@@ -47,12 +47,10 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator {
 
         int range = 0;
         for (int slot : this.getInputSlot()) {
-            ItemStack item = blockMenu.getItemInSlot(slot);
-            if (!ItemStackUtil.isItemNull(item)) {
-                if (ItemStackUtil.isItemSimilar(item, FinalTechItemStacks.PHONY)) {
-                    for (int i = item.getAmount(); i > 0; i /= 2) {
-                        range++;
-                    }
+            ItemStack itemStack = blockMenu.getItemInSlot(slot);
+            if (!ItemStackUtil.isItemNull(itemStack) && FinalTechItems.ITEM_PHONY.verifyItem(itemStack)) {
+                for (int i = itemStack.getAmount(); i > 0; i /= 2) {
+                    range++;
                 }
             }
         }
@@ -74,7 +72,7 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator {
         if (blockMenu.hasViewer()) {
             this.updateMenu(blockMenu, StatusL2Menu.STATUS_SLOT, this,
                     String.valueOf(count),
-                    String.valueOf(range));
+                    String.valueOf(range + this.getRange()));
         }
     }
 

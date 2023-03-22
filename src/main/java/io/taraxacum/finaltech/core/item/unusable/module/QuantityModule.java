@@ -23,7 +23,7 @@ public class QuantityModule extends AbstractQuantityModule implements RecipeItem
 
     @Override
     public int getEffect(int itemAmount) {
-        return itemAmount * this.baseEfficiency + FinalTech.getRandom().nextInt(itemAmount * this.randomEfficiency);
+        return itemAmount * this.baseEfficiency + FinalTech.getRandom().nextInt(1 + itemAmount * this.randomEfficiency);
     }
 
     @Override

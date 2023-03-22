@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public class QuantityModuleOverloaded extends AbstractQuantityModule implements RecipeItem {
     private final int baseEfficiency = ConfigUtil.getOrDefaultItemSetting(1, this, "base-efficiency");
-    private final int randomEfficiency = ConfigUtil.getOrDefaultItemSetting(4, this, "random-efficiency");
+    private final int randomEfficiency = ConfigUtil.getOrDefaultItemSetting(7, this, "random-efficiency");
 
     public QuantityModuleOverloaded(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
@@ -23,7 +23,7 @@ public class QuantityModuleOverloaded extends AbstractQuantityModule implements 
 
     @Override
     public int getEffect(int itemAmount) {
-        return itemAmount * this.baseEfficiency + FinalTech.getRandom().nextInt(itemAmount * this.randomEfficiency);
+        return itemAmount * this.baseEfficiency + FinalTech.getRandom().nextInt(1 + itemAmount * this.randomEfficiency);
     }
 
     @Override
