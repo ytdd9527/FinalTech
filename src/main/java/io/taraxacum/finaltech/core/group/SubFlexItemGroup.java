@@ -197,7 +197,7 @@ public class SubFlexItemGroup extends FlexItemGroup {
                     SlimefunItem slimefunItem = slimefunItemList.get(j);
                     Research research = slimefunItem.getResearch();
                     if (playerProfile.hasUnlocked(research)) {
-                        ItemStack itemStack = ItemStackUtil.cloneItem(slimefunItem.getItem());
+                        ItemStack itemStack = ItemStackUtil.cloneWithoutNBT(slimefunItem.getItem());
                         ItemStackUtil.addLoreToFirst(itemStack, "§7" + slimefunItem.getId());
                         chestMenu.addItem(MAIN_CONTENT_L[i][j], itemStack);
                         chestMenu.addMenuClickHandler(MAIN_CONTENT_L[i][j], (p, slot, item, action) -> {

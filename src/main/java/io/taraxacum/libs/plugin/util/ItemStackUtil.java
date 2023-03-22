@@ -840,6 +840,31 @@ public final class ItemStackUtil {
         item.setItemMeta(itemMeta);
     }
 
+    public static void clearNBT(@Nonnull ItemStack itemStack) {
+        if(!itemStack.hasItemMeta()) {
+            return;
+        }
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
+        for(NamespacedKey namespacedKey : persistentDataContainer.getKeys()) {
+            persistentDataContainer.remove(namespacedKey);
+        }
+        itemStack.setItemMeta(itemMeta);
+    }
+
+    @Nullable
+    public static ItemStack cloneWithoutNBT(@Nullable ItemStack itemStack) {
+        if(itemStack == null) {
+            return null;
+        }
+        if(!itemStack.hasItemMeta()) {
+            return new ItemStack(itemStack);
+        }
+        ItemStack result = new ItemStack(itemStack);
+        ItemStackUtil.clearNBT(result);
+        return result;
+    }
+
     public static ItemStack getDried(@Nonnull ItemStack item) {
         if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
             return null;
