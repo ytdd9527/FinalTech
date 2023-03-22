@@ -81,7 +81,7 @@ public abstract class AbstractAdvanceMachine extends AbstractMachine implements 
     protected MachineRecipe matchRecipe(@Nonnull BlockMenu blockMenu, int offset, int recipeLock) {
         int quantityModule = Icon.updateQuantityModule(blockMenu, AdvancedMachineMenu.MODULE_SLOT, AdvancedMachineMenu.STATUS_SLOT);
 
-        List<AdvancedMachineRecipe> advancedMachineRecipeList = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getClass());
+        List<AdvancedMachineRecipe> advancedMachineRecipeList = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getId());
         if (recipeLock >= 0) {
             List<AdvancedMachineRecipe> finalAdvancedMachineRecipeList = advancedMachineRecipeList;
             advancedMachineRecipeList = new ArrayList<>(1);

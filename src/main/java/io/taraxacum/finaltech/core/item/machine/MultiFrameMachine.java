@@ -87,7 +87,7 @@ public class MultiFrameMachine extends AbstractMachine implements RecipeItem {
 
                     if(MachineUtil.slotCount(inventory, MultiFrameMachineMenu.WORK_OUTPUT_SLOT[point][i]) < MultiFrameMachineMenu.WORK_OUTPUT_SLOT[point][i].length) {
                         offset = config.contains(this.offsetKeys[i]) ? Integer.parseInt(config.getString(this.offsetKeys[i])) : 0;
-                        availableRecipe = MachineRecipeFactory.getInstance().getAdvancedRecipe(machineSfItem.getClass());
+                        availableRecipe = MachineRecipeFactory.getInstance().getAdvancedRecipe(machineSfItem.getId());
                         advancedCraft = AdvancedCraft.craftAsc(inventory, MultiFrameMachineMenu.WORK_INPUT_SLOT[point][i], availableRecipe, machineItem.getAmount(), offset);
                         if(advancedCraft != null) {
                             advancedCraft.setMatchCount(Math.min(advancedCraft.getMatchCount(), MachineUtil.calMaxMatch(inventory, MultiFrameMachineMenu.WORK_OUTPUT_SLOT[point][i], advancedCraft.getOutputItemList())));

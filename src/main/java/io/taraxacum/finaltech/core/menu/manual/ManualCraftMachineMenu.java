@@ -254,9 +254,9 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
         String order = config.getString(KEY_ORDER);
         int offset = config.contains(KEY) ? Integer.parseInt(config.getString(KEY)) : 0;
         if (order == null || ORDER_VALUE_ASC.equals(order)) {
-            craft = AdvancedCraft.craftAsc(inventory, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getSlimefunItem().getClass()), 3456, offset);
+            craft = AdvancedCraft.craftAsc(inventory, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getID()), 3456, offset);
         } else if (ORDER_VALUE_DESC.equals(order)) {
-            craft = AdvancedCraft.craftDesc(inventory, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getSlimefunItem().getClass()), 3456, offset);
+            craft = AdvancedCraft.craftDesc(inventory, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getID()), 3456, offset);
         }
 
         if (craft != null) {
@@ -266,7 +266,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             inventory.setItem(STATUS_SLOT, item);
             int offsetR = offset + 1;
             for (int i = 0; i < STATUS_R_SLOT.length; i++) {
-                craft = AdvancedCraft.craftAsc(inventory, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getSlimefunItem().getClass()), 3456, offsetR);
+                craft = AdvancedCraft.craftAsc(inventory, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getID()), 3456, offsetR);
                 if (craft != null) {
                     config.setValue(KEY_R[i], String.valueOf(craft.getOffset()));
                     offsetR = craft.getOffset() + 1;
@@ -280,7 +280,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             }
             int offsetL = offset - 1;
             for (int i = 0; i < STATUS_L_SLOT.length; i++) {
-                craft = AdvancedCraft.craftDesc(inventory, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getSlimefunItem().getClass()), 3456, offsetL);
+                craft = AdvancedCraft.craftDesc(inventory, INPUT_SLOT, MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getID()), 3456, offsetL);
                 if (craft != null) {
                     config.setValue(KEY_L[i], String.valueOf(craft.getOffset()));
                     offsetL = craft.getOffset() - 1;
@@ -358,7 +358,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
 
         quantity = Math.min(quantity, charge / this.manualCraftMachine.getConsume());
 
-        List<AdvancedMachineRecipe> advancedRecipe = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getSlimefunItem().getClass());
+        List<AdvancedMachineRecipe> advancedRecipe = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getID());
         List<AdvancedMachineRecipe> targetAdvancedRecipe = new ArrayList<>(List.of(advancedRecipe.get(offset % advancedRecipe.size())));
 
         AdvancedCraft craft;
@@ -384,7 +384,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
             craft.setMatchCount(Math.min(craft.getMatchCount(), (OUTPUT_SLOT.length - MachineUtil.slotCount(inventory, OUTPUT_SLOT)) * ConstantTableUtil.ITEM_MAX_STACK));
         }
 
-        AdvancedMachineRecipe advancedMachineRecipe = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getSlimefunItem().getClass()).get(craft.getOffset());
+        AdvancedMachineRecipe advancedMachineRecipe = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getID()).get(craft.getOffset());
         if (advancedMachineRecipe.getOutputs().length > 1) {
             craft.setMatchCount(Math.min(64, craft.getMatchCount()));
         }

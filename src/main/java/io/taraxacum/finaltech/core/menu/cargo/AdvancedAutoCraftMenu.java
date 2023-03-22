@@ -7,7 +7,8 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.FinalTech;
-import io.taraxacum.finaltech.setup.FinalTechRecipes;
+import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechRecipeTypes;
 import io.taraxacum.libs.plugin.dto.AdvancedMachineRecipe;
 import io.taraxacum.libs.plugin.dto.ItemAmountWrapper;
 import io.taraxacum.libs.plugin.dto.LocationRecipeRegistry;
@@ -15,7 +16,6 @@ import io.taraxacum.libs.slimefun.dto.MachineRecipeFactory;
 import io.taraxacum.libs.slimefun.dto.RecipeTypeRegistry;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.core.item.machine.range.point.face.AdvancedAutoCraft;
-import io.taraxacum.finaltech.core.item.unusable.CopyCard;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
@@ -198,7 +198,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
                                     if (advancedRandomOutput.getOutputItem().length == 1 && oldInputItem.getAmount() >= outputItem.getAmount() && ItemStackUtil.isItemSimilar(oldInputItem, outputItem)) {
                                         int count = oldInputItem.getAmount() / outputItem.getAmount();
                                         for (ItemAmountWrapper inputItem : advancedMachineRecipe.getInput()) {
-                                            ItemAmountWrapper.addToList(inputListTemp, inputItem, count);
+                                            ItemAmountWrapper.addToList(inputListTemp, inputItem, count * advancedMachineRecipe.getWeightSum() / advancedRandomOutput.weight());
                                         }
                                         oldInputItem.setAmount(oldInputItem.getAmount() - count * outputItem.getAmount());
                                         work = true;
@@ -216,7 +216,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
                         break;
                     }
                 }
-            } else if (CopyCard.isValid(machineItem)) {
+            } else if (FinalTechItems.COPY_CARD.verifyItem(machineItem)) {
                 ItemStack stringItem = StringItemUtil.parseItemInCard(machineItem);
                 if(!ItemStackUtil.isItemNull(stringItem)) {
                     String amount = StringItemUtil.parseAmountInCard(machineItem);
@@ -313,7 +313,7 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
     private static List<AdvancedMachineRecipe> getAdvancedMachineRecipeList(@Nonnull SlimefunItemStack slimefunItemStack) {
         SlimefunItem slimefunItem = SlimefunItem.getByItem(slimefunItemStack);
         if (slimefunItem != null) {
-            return MachineRecipeFactory.getInstance().getAdvancedRecipe(slimefunItem.getClass());
+            return MachineRecipeFactory.getInstance().getAdvancedRecipe(slimefunItem.getId());
         }
         return new ArrayList<>();
     }
@@ -373,6 +373,5 @@ public class AdvancedAutoCraftMenu extends AbstractMachineMenu {
         RECIPE_TYPE_ID_LIST.add(RecipeType.JUICER.getKey().getKey());
         RECIPE_TYPE_ID_LIST.add(RecipeType.ANCIENT_ALTAR.getKey().getKey());
         RECIPE_TYPE_ID_LIST.add(RecipeType.HEATED_PRESSURE_CHAMBER.getKey().getKey());
-        RECIPE_TYPE_ID_LIST.add(FinalTechRecipes.RECIPE_TYPE_MATRIX_CRAFTING_TABLE.getKey().getKey());
     }
 }

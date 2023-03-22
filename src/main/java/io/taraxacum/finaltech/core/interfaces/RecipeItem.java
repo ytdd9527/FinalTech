@@ -53,7 +53,7 @@ public interface RecipeItem extends RecipeDisplayItem {
 
     @Nonnull
     default List<MachineRecipe> getMachineRecipes() {
-        return MachineRecipeFactory.getInstance().getRecipe(this.getClass());
+        return MachineRecipeFactory.getInstance().getRecipe(this.getId());
     }
 
     default void registerRecipe(@Nonnull MachineRecipe recipe) {

@@ -60,7 +60,7 @@ public abstract class AbstractConversionMachine extends AbstractMachine implemen
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         BlockMenu blockMenu = BlockStorage.getInventory(block);
         Inventory inventory = blockMenu.toInventory();
-        List<AdvancedMachineRecipe> advancedMachineRecipeList = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getClass());
+        List<AdvancedMachineRecipe> advancedMachineRecipeList = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getId());
         int quantityModule = Icon.updateQuantityModule(blockMenu, ConversionMachineMenu.MODULE_SLOT, ConversionMachineMenu.STATUS_SLOT);
         ItemWrapper itemWrapper = new ItemWrapper();
         for (int slot : this.getInputSlot()) {

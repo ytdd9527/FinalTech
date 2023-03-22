@@ -66,7 +66,7 @@ public abstract class AbstractExtractionMachine extends AbstractMachine implemen
         ItemWrapper itemWrapper = new ItemWrapper(item);
         int matchAmount = 0;
         ItemAmountWrapper[] outputItems = null;
-        List<AdvancedMachineRecipe> advancedRecipeList = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getClass());
+        List<AdvancedMachineRecipe> advancedRecipeList = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getId());
         for (AdvancedMachineRecipe advancedMachineRecipe : advancedRecipeList) {
             if (itemWrapper.getItemStack().getAmount() >= advancedMachineRecipe.getInput()[0].getAmount() && ItemStackUtil.isItemSimilar(advancedMachineRecipe.getInput()[0], itemWrapper)) {
                 outputItems = advancedMachineRecipe.getOutput();

@@ -11,7 +11,6 @@ import io.taraxacum.finaltech.core.item.machine.manual.MatrixCraftingTable;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import io.taraxacum.libs.slimefun.interfaces.SimpleValidItem;
-import io.taraxacum.libs.slimefun.interfaces.ValidItem;
 import io.taraxacum.libs.slimefun.util.SfItemUtil;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -86,7 +85,7 @@ public class MatrixCraftingTableMenu extends AbstractManualMachineMenu{
 
             SlimefunItem slimefunItem;
 
-            List<MachineRecipe> machineRecipeList = MachineRecipeFactory.getInstance().getRecipe(MatrixCraftingTable.class);
+            List<MachineRecipe> machineRecipeList = MachineRecipeFactory.getInstance().getRecipe(this.getID());
             List<SlimefunItem> slimefunItemList = new ArrayList<>(machineRecipeList.size());
             for (MachineRecipe machineRecipe : machineRecipeList) {
                 ItemStack[] output = machineRecipe.getOutput();
@@ -118,7 +117,7 @@ public class MatrixCraftingTableMenu extends AbstractManualMachineMenu{
     public void updateInventory(@Nonnull Inventory inventory, @Nonnull Location location) {
         SlimefunItem slimefunItem;
 
-        List<MachineRecipe> machineRecipeList = MachineRecipeFactory.getInstance().getRecipe(MatrixCraftingTable.class);
+        List<MachineRecipe> machineRecipeList = MachineRecipeFactory.getInstance().getRecipe(this.getID());
         List<SlimefunItem> slimefunItemList = new ArrayList<>(machineRecipeList.size());
         for (MachineRecipe machineRecipe : machineRecipeList) {
             ItemStack[] output = machineRecipe.getOutput();
