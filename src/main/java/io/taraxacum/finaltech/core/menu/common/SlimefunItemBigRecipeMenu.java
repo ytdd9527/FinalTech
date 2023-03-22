@@ -7,7 +7,7 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.core.guide.GuideHistory;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideMode;
-import io.github.thebusybiscuit.slimefun4.implementation.guide.SurvivalSlimefunGuide;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.core.group.CraftItemGroup;
 import io.taraxacum.finaltech.core.group.RecipeItemGroup;
@@ -72,7 +72,7 @@ public class SlimefunItemBigRecipeMenu extends ChestMenu {
             if (action.isShiftClicked()) {
                 SlimefunGuide.openMainMenu(playerProfile, slimefunGuideMode, guideHistory.getMainMenuPage());
             } else {
-                guideHistory.goBack(new SurvivalSlimefunGuide(false, false));
+                guideHistory.goBack(Slimefun.getRegistry().getSlimefunGuide(SlimefunGuideMode.SURVIVAL_MODE));
             }
             return false;
         });

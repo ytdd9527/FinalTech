@@ -114,7 +114,7 @@ public class CraftItemGroup extends FlexItemGroup {
             if (action.isShiftClicked()) {
                 SlimefunGuide.openMainMenu(playerProfile, slimefunGuideMode, guideHistory.getMainMenuPage());
             } else {
-                guideHistory.goBack(new SurvivalSlimefunGuide(false, false));
+                guideHistory.goBack(Slimefun.getRegistry().getSlimefunGuide(SlimefunGuideMode.SURVIVAL_MODE));
             }
             return false;
         });
@@ -175,7 +175,7 @@ public class CraftItemGroup extends FlexItemGroup {
 
                         if (!event.isCancelled() && !playerProfile.hasUnlocked(research)) {
                             if (research.canUnlock(player)) {
-                                new SurvivalSlimefunGuide(false, false).unlockItem(player, slimefunItem, player1 -> this.refresh(player, playerProfile, slimefunGuideMode));
+                                Slimefun.getRegistry().getSlimefunGuide(SlimefunGuideMode.SURVIVAL_MODE).unlockItem(player, slimefunItem, player1 -> this.refresh(player, playerProfile, slimefunGuideMode));
                             } else {
                                 this.refresh(player, playerProfile, slimefunGuideMode);
                                 Slimefun.getLocalization().sendMessage(player, "messages.not-enough-xp", true);
