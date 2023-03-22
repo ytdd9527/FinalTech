@@ -243,7 +243,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
         /* setup item value table */
         int itemValueTableDelay = this.config.getOrDefault(10, "setups", "item-value-table", "delay");
-        if(itemValueTableDelay > 0) {
+        if(itemValueTableDelay >= 0) {
             this.getServer().getScheduler().runTaskLater(this, () -> ItemValueTable.getInstance().init(), itemValueTableDelay);
         } else {
             ItemValueTable.getInstance().init();
@@ -251,7 +251,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
         /* setup slimefun machine block ticker */
         int blockTickerRegisterDelay = this.config.getOrDefault(20, "setups", "slimefun-machine", "delay");
-        if (blockTickerRegisterDelay > 0) {
+        if (blockTickerRegisterDelay >= 0) {
             this.getServer().getScheduler().runTaskLater(this, SetupUtil::registerBlockTicker, blockTickerRegisterDelay);
         } else {
             SetupUtil.registerBlockTicker();
