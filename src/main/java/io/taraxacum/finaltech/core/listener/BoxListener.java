@@ -22,6 +22,12 @@ import java.util.Optional;
  * @author Final_ROOT
  */
 public class BoxListener implements Listener {
+    private final double height;
+
+    public BoxListener(double height) {
+        this.height = height;
+    }
+
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent playerDeathEvent) {
@@ -30,7 +36,7 @@ public class BoxListener implements Listener {
         World world = location.getWorld();
         if (world != null) {
             int maxHeight = world.getMaxHeight();
-            if (location.getY() >= maxHeight + Box.HEIGHT) {
+            if (location.getY() >= maxHeight + this.height) {
                 EntityDamageEvent lastDamageEvent = player.getLastDamageCause();
                 if(lastDamageEvent != null && EntityDamageEvent.DamageCause.SUICIDE.equals(lastDamageEvent.getCause())) {
                     Optional<PlayerProfile> playerProfile = PlayerProfile.find(player);
