@@ -254,7 +254,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
                 return true;
             }
         });
-        // half-distribution-storage-card
+        // distribute-storage-card
         CRAFT_LIST.add(new Craft() {
             private final boolean enable = ConfigUtil.getOrDefaultItemSetting(true, CardOperationPortMenu.this.getID(), this.getId(), "enable");
             private final String infoName = FinalTech.getLanguageString("items", CardOperationPortMenu.this.getID(), this.getId(), "info-icon", "name");
@@ -264,7 +264,7 @@ public class CardOperationPortMenu extends AbstractManualMachineMenu {
             @Nonnull
             @Override
             public String getId() {
-                return "half-distribution-storage-card";
+                return "distribute-storage-card";
             }
 
             @Override
