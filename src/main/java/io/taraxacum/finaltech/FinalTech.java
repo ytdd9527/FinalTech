@@ -6,6 +6,7 @@ import io.taraxacum.common.util.StringNumberUtil;
 import io.taraxacum.finaltech.core.patch.EnergyRegulatorBlockTicker;
 import io.taraxacum.finaltech.setup.TemplateParser;
 import io.taraxacum.finaltech.setup.Updater;
+import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.libs.plugin.dto.ConfigFileManager;
 import io.taraxacum.libs.plugin.dto.*;
 import io.taraxacum.finaltech.setup.FinalTechItemStacks;
@@ -49,6 +50,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
     private int slimefunTickCount = 0;
     private boolean dataLossFix = false;
     private boolean dataLossFixCustom = false;
+    private boolean dataLossFixCustomAll = false;
     private Map<String, Map<String, String>> dataLossFixCustomMap = new HashMap<>();
     private double tps = 20;
     private boolean debugMode = false;
@@ -159,10 +161,14 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
             this.forceSlimefunMultiThread = false;
         }
 
+        /* setup data loss bug fix */
         this.dataLossFix = this.config.getOrDefault(false, "data-loss-fix", "enable");
-
         this.dataLossFixCustom = this.config.getOrDefault(false, "data-loss-fix-custom", "enable");
         if(this.config.containPath("data-loss-fix-custom", "config")) {
+            this.dataLossFixCustomAll = this.config.getOrDefault(false, "data-loss-fix-custom", "all");
+            if(this.dataLossFixCustomAll) {
+                this.logger.warning("You have enabled all items to be fixed for data loss bug!");
+            }
             for(String id : this.config.getStringList("data-loss-fix-custom", "config")) {
                 List<String> keyList = this.config.getStringList("data-loss-fix-custom", "config", id);
                 Map<String, String> configMap = new HashMap<>(keyList.size());
@@ -364,7 +370,13 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
     @Nullable
     public static Map<String, String> getDataLossFixCustomMap(@Nonnull String id) {
-        return instance.dataLossFixCustomMap.get(id);
+        Map<String, String> map = instance.dataLossFixCustomMap.get(id);
+        if(map == null && instance.dataLossFixCustomAll) {
+            map = new HashMap<>();
+            map.put(ConstantTableUtil.CONFIG_ID, id);
+            instance.dataLossFixCustomMap.put(id, map);
+        }
+        return map;
     }
 
     public static int getSlimefunTickCount() {

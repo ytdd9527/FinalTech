@@ -946,17 +946,21 @@ public final class SetupUtil {
             BlockStorage storage = BlockStorage.getStorage(world);
             if(storage != null) {
                 try {
-                    // todo test it
-                    Map<Location, BlockMenu> inventories = ReflectionUtil.getProperty(storage, Map.class, "inventories");
+                    Map<Location, BlockMenu> inventories = ReflectionUtil.getProperty(storage, BlockStorage.class, "inventories");
                     if(inventories != null) {
+                        int count = 0;
+                        FinalTech.logger().info("Data Loss Fix: start work for world: " + world.getName());
                         for(Map.Entry<Location, BlockMenu> entry : inventories.entrySet()) {
                             Location location = entry.getKey();
+                            if(location.getBlock().getType().isAir()) {
+                                continue;
+                            }
                             LocationInfo locationInfo = LocationInfo.get(location);
                             if(locationInfo == null) {
                                 String id = entry.getValue().getPreset().getID();
-                                FinalTech.logger().warning("Data Loss Fix: location " + location + " seems loss its data. There should be " + id);
                                 SlimefunItem slimefunItem = SlimefunItem.getById(id);
-                                if(!(slimefunItem instanceof AbstractMachine)) {
+                                if(slimefunItem != null && !(slimefunItem instanceof AbstractMachine) && slimefunItem.getItem().getType().equals(location.getBlock().getType())) {
+                                    FinalTech.logger().warning("Data Loss Fix: location " + location + " seems loss its data. There should be " + id + " (" + slimefunItem.getItemName() + ")");
                                     Map<String, String> configMap = FinalTech.getDataLossFixCustomMap(id);
                                     if(configMap == null) {
                                         FinalTech.logger().warning("Data Loss Fix: I don't know how to fix it. Config me in config.yml with path: " + "data-loss-fix-custom" + "." + "config" + "." + id);
@@ -967,8 +971,15 @@ public final class SetupUtil {
                                     for(Map.Entry<String, String> configEntry : configMap.entrySet()) {
                                         BlockStorage.addBlockInfo(location, configEntry.getKey(), configEntry.getValue());
                                     }
+                                    FinalTech.logger().info("Data Loss Fix: added location info to location: " + location);
+                                    count++;
                                 }
                             }
+                        }
+                        if(count > 0) {
+                            FinalTech.logger().info("Data Loss Fix: totally " + count + " block" + (count == 1 ? " is" : "s are") + " fixed");
+                        } else {
+                            FinalTech.logger().info("Data Loss Fix: nothing changed! This is the best situation!");
                         }
                     }
                 } catch (Exception e) {

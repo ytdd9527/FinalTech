@@ -65,13 +65,12 @@ public abstract class AbstractMachineMenu extends BlockMenuPreset {
         if(FinalTech.getDataLossFix()) {
             Location location = block.getLocation();
             LocationInfo locationInfo = LocationInfo.get(block.getLocation());
-            if(locationInfo == null) {
-                FinalTech.logger().warning("Data Loss Fix: location " + location + " seems loss its data. There should be " + this.slimefunItem.getId());
+            if(locationInfo == null && this.slimefunItem.getItem().getType().equals(block.getType())) {
+                FinalTech.logger().warning("Data Loss Fix For " + FinalTech.getInstance().getName() + ": location " + location + " seems loss its data. There should be " + this.slimefunItem.getId());
 
                 // TODO
                 BlockStorage.addBlockInfo(location, ConstantTableUtil.CONFIG_ID, this.slimefunItem.getId());
-
-                FinalTech.logger().warning("Data Loss Fix: fix up!");
+                FinalTech.logger().info("Data Loss Fix For " + FinalTech.getInstance().getName() + ": added location info to location: " + location);
             }
         }
 
