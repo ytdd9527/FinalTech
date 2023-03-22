@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
+import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.item.unusable.ReplaceableCard;
 import io.taraxacum.libs.slimefun.dto.RandomMachineRecipe;
 import io.taraxacum.libs.slimefun.dto.MachineRecipeFactory;
@@ -148,6 +149,10 @@ public interface RecipeItem extends RecipeDisplayItem {
     }
     default void registerDescriptiveRecipe(@Nonnull ItemStack item, @Nonnull String name, @Nonnull String... lore) {
         this.registerRecipe(0, new CustomItemStack(Material.BOOK, name, lore), item);
+    }
+
+    default void registerBorder() {
+        this.registerRecipe(0, Icon.BORDER_ICON, Icon.BORDER_ICON);
     }
 
     default void clearRecipe() {

@@ -78,7 +78,7 @@ public class BlockTickerUtil {
 
             @Override
             public void tick(Block b, SlimefunItem item, Config data) {
-                System.out.println("DEBUG MODE: " + slimefunItem.getId() + " | Location: " + b.getLocation());
+                FinalTech.logger().info("DEBUG MODE: " + slimefunItem.getId() + " | Location: " + b.getLocation());
                 blockTicker.tick(b, item, data);
             }
 

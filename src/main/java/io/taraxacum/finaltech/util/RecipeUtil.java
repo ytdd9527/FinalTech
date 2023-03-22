@@ -131,6 +131,14 @@ public class RecipeUtil {
         }
     }
 
+    public static void registerDescriptiveRecipeWithBorder(@Nonnull LanguageManager languageManager, @Nonnull RecipeItem recipeItem, String... strings) {
+        String id = recipeItem.getId();
+        if(languageManager.containPath("items", id, "info")) {
+            registerDescriptiveRecipe(languageManager, recipeItem, strings);
+            recipeItem.registerBorder();
+        }
+    }
+
     public static void registerDescriptiveRecipe(@Nonnull LanguageManager languageManager, @Nonnull RecipeItem recipeItem, String... strings) {
         String id = recipeItem.getId();
         int i = 1;
@@ -215,7 +223,7 @@ public class RecipeUtil {
      */
     @Nullable
     public static ReplaceableCard getReplaceableCard(@Nullable ItemStack itemStack) {
-        if (ItemStackUtil.isItemNull(itemStack)) {
+        if (ItemStackUtil.isItemNull(itemStack) || ReplaceableCard.getByMaterial(itemStack.getType()) == null) {
             return null;
         }
         if (!ItemStackUtil.isItemSimilar(itemStack, new ItemStack(itemStack.getType()))) {
