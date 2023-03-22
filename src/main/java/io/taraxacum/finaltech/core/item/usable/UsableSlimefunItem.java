@@ -43,6 +43,7 @@ public abstract class UsableSlimefunItem extends AbstractMySlimefunItem {
             }
             if(timeList.size() < this.getThreshold()) {
                 timeList.add(nowTime);
+                this.intervalThresholdMap.put(player, timeList);
                 this.function(playerRightClickEvent);
             } else {
                 this.errorFunction(playerRightClickEvent);
