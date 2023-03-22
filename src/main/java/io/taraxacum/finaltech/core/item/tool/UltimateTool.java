@@ -19,27 +19,26 @@ import java.util.Map;
  */
 public abstract class UltimateTool extends AbstractMySlimefunItem {
     private final Map<Player, Long> timeMap = new HashMap<>();
-    private final long intervalThreshold = ConfigUtil.getOrDefaultItemSetting(40, this, "interval-threshold");
+    private final long intervalThreshold = ConfigUtil.getOrDefaultItemSetting(20, this, "interval-threshold");
 
     public UltimateTool(@Nonnull ItemGroup itemGroup, @Nonnull SlimefunItemStack item, @Nonnull RecipeType recipeType, @Nonnull ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
         this.addItemHandler((ToolUseHandler) (blockBreakEvent, itemStack, fortune, drops) -> {
+            blockBreakEvent.setDropItems(false);
             Player player = blockBreakEvent.getPlayer();
             Long lastTime = this.timeMap.get(player);
             long nowTime = System.currentTimeMillis();
-            if(nowTime - lastTime < this.intervalThreshold) {
+            if(lastTime != null && nowTime - lastTime < this.intervalThreshold) {
                 return;
             }
+            this.timeMap.put(player, nowTime);
 
-            blockBreakEvent.setDropItems(false);
             int count = 1;
             for(ItemStack drop : drops) {
                 count += drop.getAmount();
             }
             count = (int)Math.pow(count, 0.5);
             blockBreakEvent.setExpToDrop(blockBreakEvent.getExpToDrop() + count);
-
-            this.timeMap.put(player, nowTime);
         });
     }
 }
