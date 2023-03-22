@@ -64,7 +64,7 @@ public class MatrixGenerator extends AbstractCubeElectricGenerator {
                 BlockTickerUtil.runTask(FinalTech.getLocationRunnableFactory(), FinalTech.isAsyncSlimefunItem(locationInfo.getId()), () -> this.chargeMachine(energyNetComponent, locationInfo), location);
                 if (drawParticle) {
                     Location cloneLocation = location.clone();
-                    javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, cloneLocation.getBlock()));
+                    javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, cloneLocation.getBlock()));
                 }
                 return 1;
             }

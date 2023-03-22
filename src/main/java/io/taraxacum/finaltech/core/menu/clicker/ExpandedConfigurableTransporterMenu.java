@@ -113,7 +113,7 @@ public class ExpandedConfigurableTransporterMenu extends AbstractClickerMenu {
 
                     if(targetBlock.getType().isAir()) {
                         JavaPlugin javaPlugin = this.getSlimefunItem().getAddon().getJavaPlugin();
-                        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, blockList));
+                        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, blockList));
 
                         Location sourceLocation = player.getLocation().clone();
                         Location targetLocation = LocationUtil.getCenterLocation(targetBlock);
@@ -127,7 +127,7 @@ public class ExpandedConfigurableTransporterMenu extends AbstractClickerMenu {
                         blockList.add(targetBlock);
                         if(targetBlock.getType().isAir()) {
                             JavaPlugin javaPlugin = this.getSlimefunItem().getAddon().getJavaPlugin();
-                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, blockList));
+                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, blockList));
 
                             Location sourceLocation = player.getLocation().clone();
                             Location targetLocation = LocationUtil.getCenterLocation(targetBlock);
@@ -143,6 +143,6 @@ public class ExpandedConfigurableTransporterMenu extends AbstractClickerMenu {
         }
 
         JavaPlugin javaPlugin = this.getSlimefunItem().getAddon().getJavaPlugin();
-        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, block));
+        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
     }
 }

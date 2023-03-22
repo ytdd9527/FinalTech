@@ -54,7 +54,7 @@ public class MachineConfigurator extends UsableSlimefunItem implements RecipeIte
                     if(ItemConfigurationUtil.saveConfigToItem(itemStack, locationInfo.getConfig())) {
                         ItemStackUtil.setLore(itemStack, locationInfo.getSlimefunItem().getItemName());
 
-                        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+                        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
                     }
                 } else {
                     // load data
@@ -62,7 +62,7 @@ public class MachineConfigurator extends UsableSlimefunItem implements RecipeIte
                     if(ItemConfigurationUtil.loadConfigFromItem(itemStack, location)) {
                         FinalTech.getInstance().getServer().getPluginManager().callEvent(new ConfigSaveActionEvent(false, location, locationInfo.getId()));
 
-                        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+                        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
                     }
                 }
             }

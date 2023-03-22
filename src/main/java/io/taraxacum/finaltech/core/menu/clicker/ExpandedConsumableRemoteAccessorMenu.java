@@ -3,6 +3,7 @@ package io.taraxacum.finaltech.core.menu.clicker;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.taraxacum.finaltech.core.interfaces.DigitalItem;
 import io.taraxacum.finaltech.core.item.machine.clicker.AbstractClickerMachine;
+import io.taraxacum.finaltech.util.LocationUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -70,7 +71,6 @@ public class ExpandedConsumableRemoteAccessorMenu extends AbstractClickerMenu {
             blockMenu.close();
 
             BlockData blockData = block.getState().getBlockData();
-            List<Block> blockList = new ArrayList<>();
             if (blockData instanceof Directional) {
                 BlockFace blockFace = ((Directional) blockData).getFacing();
                 Block targetBlock = block;
@@ -79,25 +79,27 @@ public class ExpandedConsumableRemoteAccessorMenu extends AbstractClickerMenu {
                     for(int i = 0; i < digit; i++) {
                         targetBlock = targetBlock.getRelative(blockFace);
                     }
-                    blockList.add(targetBlock);
 
                     if(BlockStorage.hasInventory(targetBlock)) {
                         BlockMenu targetBlockMenu = BlockStorage.getInventory(targetBlock);
                         if(targetBlockMenu.canOpen(targetBlock, player)) {
                             JavaPlugin javaPlugin = this.getSlimefunItem().getAddon().getJavaPlugin();
-                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, blockList));
+                            Block finalTargetBlock = targetBlock;
+                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, finalTargetBlock));
+                            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawLineByDistance(javaPlugin, Particle.WAX_OFF, 0, 0.25, LocationUtil.getCenterLocation(block), LocationUtil.getCenterLocation(finalTargetBlock)));
                             targetBlockMenu.open(player);
                         }
                     }
                 } else if(digit == 0) {
                     for (int i = 0; i < this.range; i++) {
                         targetBlock = targetBlock.getRelative(blockFace);
-                        blockList.add(targetBlock);
                         if (BlockStorage.hasInventory(targetBlock)) {
                             BlockMenu targetBlockMenu = BlockStorage.getInventory(targetBlock);
                             if (targetBlockMenu.canOpen(targetBlock, player)) {
                                 JavaPlugin javaPlugin = this.getSlimefunItem().getAddon().getJavaPlugin();
-                                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, blockList));
+                                Block finalTargetBlock = targetBlock;
+                                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, finalTargetBlock));
+                                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawLineByDistance(javaPlugin, Particle.WAX_OFF, 0, 0.25, LocationUtil.getCenterLocation(block), LocationUtil.getCenterLocation(finalTargetBlock)));
                                 targetBlockMenu.open(player);
                                 break;
                             }
@@ -115,7 +117,7 @@ public class ExpandedConsumableRemoteAccessorMenu extends AbstractClickerMenu {
         }
 
         JavaPlugin javaPlugin = this.getSlimefunItem().getAddon().getJavaPlugin();
-        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, block));
+        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
     }
 
     @Override

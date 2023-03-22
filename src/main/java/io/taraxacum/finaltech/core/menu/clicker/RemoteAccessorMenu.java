@@ -1,6 +1,8 @@
 package io.taraxacum.finaltech.core.menu.clicker;
 
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.item.machine.clicker.AbstractClickerMachine;
+import io.taraxacum.finaltech.util.LocationUtil;
 import io.taraxacum.libs.plugin.util.ParticleUtil;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -42,21 +44,19 @@ public class RemoteAccessorMenu extends AbstractClickerMenu {
         blockMenu.close();
 
         BlockData blockData = block.getState().getBlockData();
-        List<Block> blockList = new ArrayList<>();
-        if (blockData instanceof Directional) {
-            BlockFace blockFace = ((Directional) blockData).getFacing();
+        if (blockData instanceof Directional directional) {
+            BlockFace blockFace = directional.getFacing();
             Block targetBlock = block;
             for (int i = 0; i < this.range; i++) {
                 targetBlock = targetBlock.getRelative(blockFace);
-                blockList.add(targetBlock);
-                if (BlockStorage.hasInventory(targetBlock)) {
-                    BlockMenu targetBlockMenu = BlockStorage.getInventory(targetBlock);
-                    if (targetBlockMenu.canOpen(targetBlock, player)) {
-                        JavaPlugin javaPlugin = this.getSlimefunItem().getAddon().getJavaPlugin();
-                        javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.COMPOSTER, 0, blockList));
-                        targetBlockMenu.open(player);
-                        return;
-                    }
+                BlockMenu targetBlockMenu = BlockStorage.getInventory(targetBlock);
+                if (targetBlockMenu != null && targetBlockMenu.canOpen(targetBlock, player)) {
+                    JavaPlugin javaPlugin = this.getSlimefunItem().getAddon().getJavaPlugin();
+                    Block finalTargetBlock = targetBlock;
+                    javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, finalTargetBlock));
+                    javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawLineByDistance(javaPlugin, Particle.WAX_OFF, 0, 0.25, LocationUtil.getCenterLocation(block), LocationUtil.getCenterLocation(finalTargetBlock)));
+                    targetBlockMenu.open(player);
+                    return;
                 }
             }
         }

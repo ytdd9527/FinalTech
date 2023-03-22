@@ -4,8 +4,11 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.interfaces.DigitalItem;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.interfaces.UnCopiableItem;
+import io.taraxacum.finaltech.util.RecipeUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -17,7 +20,7 @@ import java.util.stream.Collectors;
  * @author Final_ROOT
  * @since 2.0
  */
-public class DigitalNumber extends UnusableSlimefunItem implements DigitalItem, UnCopiableItem {
+public class DigitalNumber extends UnusableSlimefunItem implements RecipeItem, DigitalItem, UnCopiableItem {
     private static final Map<Integer, DigitalNumber> DIGIT_MAP = new HashMap<>(16);
 
     private final int digit;
@@ -49,5 +52,10 @@ public class DigitalNumber extends UnusableSlimefunItem implements DigitalItem, 
     @Override
     public int getDigit() {
         return this.digit;
+    }
+
+    @Override
+    public void registerDefaultRecipes() {
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
     }
 }

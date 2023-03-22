@@ -113,7 +113,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
                 return false;
             }
 
-            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
             MachineUtil.stockSlots(inventory, INPUT_SLOT);
             return false;
         })));
@@ -125,7 +125,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
                     return false;
                 }
 
-                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
 
                 config.setValue(KEY, config.getString(KEY_L[finalSlotP]));
                 ManualCraftMachineMenu.this.updateInventory(inventory, location);
@@ -140,7 +140,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
                     return false;
                 }
 
-                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
 
                 config.setValue(KEY, config.getString(KEY_R[finalSlotP]));
                 ManualCraftMachineMenu.this.updateInventory(inventory, location);
@@ -153,10 +153,10 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
                 return false;
             }
 
-            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
 
             int offset = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY));
-            int length = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getSlimefunItem().getClass()).size();
+            int length = MachineRecipeFactory.getInstance().getRecipe(this.getID()).size();
             offset = (offset + length - 1) % length;
             config.setValue(KEY, String.valueOf(offset));
             config.setValue(KEY_ORDER, ORDER_VALUE_DESC);
@@ -169,10 +169,10 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
                 return false;
             }
 
-            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
 
             int offset = Integer.parseInt(BlockStorage.getLocationInfo(block.getLocation(), KEY));
-            int length = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getSlimefunItem().getClass()).size();
+            int length = MachineRecipeFactory.getInstance().getAdvancedRecipe(this.getID()).size();
             offset = (offset + 1) % length;
             config.setValue(KEY, String.valueOf(offset));
             config.setValue(KEY_ORDER, ORDER_VALUE_ASC);
@@ -184,7 +184,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
                 return false;
             }
 
-            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
 
             int offset = config.contains(KEY) ? Integer.parseInt(config.getString(KEY)) : 0;
             ManualCraftMachineMenu.this.doFunction(blockMenu, clickAction, player, offset);
@@ -197,7 +197,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
                     return false;
                 }
 
-                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
                 int offset = config.contains(KEY_L[fSlotP]) ? Integer.parseInt(config.getString(KEY_L[fSlotP])) : 0;
                 ManualCraftMachineMenu.this.doFunction(blockMenu, clickAction, player, offset);
                 return false;
@@ -210,7 +210,7 @@ public class ManualCraftMachineMenu extends AbstractManualMachineMenu {
                     return false;
                 }
 
-                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
 
                 int offset = config.contains(KEY_R[fSlotP]) ? Integer.parseInt(config.getString(KEY_R[fSlotP])) : 0;
                 ManualCraftMachineMenu.this.doFunction(blockMenu, clickAction, player, offset);

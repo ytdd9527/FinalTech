@@ -81,7 +81,7 @@ public class MatrixCraftingTableMenu extends AbstractManualMachineMenu{
         super.newInstance(blockMenu, block);
         JavaPlugin javaPlugin = this.getSlimefunItem().getAddon().getJavaPlugin();
         blockMenu.addMenuClickHandler(PARSE_SLOT, (player, slot, item, action) -> {
-            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
 
             SlimefunItem slimefunItem;
 

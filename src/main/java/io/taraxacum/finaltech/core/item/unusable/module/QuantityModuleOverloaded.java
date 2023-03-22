@@ -23,11 +23,13 @@ public class QuantityModuleOverloaded extends AbstractQuantityModule implements 
 
     @Override
     public int getEffect(int itemAmount) {
-        return itemAmount * baseEfficiency + FinalTech.getRandom().nextInt(itemAmount * randomEfficiency);
+        return itemAmount * this.baseEfficiency + FinalTech.getRandom().nextInt(itemAmount * this.randomEfficiency);
     }
 
     @Override
     public void registerDefaultRecipes() {
-        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.baseEfficiency),
+                String.valueOf(this.randomEfficiency));
     }
 }

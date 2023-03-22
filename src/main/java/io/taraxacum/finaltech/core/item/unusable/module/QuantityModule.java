@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.interfaces.RecipeItem;
+import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
 import org.bukkit.inventory.ItemStack;
 
@@ -13,17 +14,22 @@ import org.bukkit.inventory.ItemStack;
  * @since 2.0
  */
 public class QuantityModule extends AbstractQuantityModule implements RecipeItem {
+    private final int baseEfficiency = ConfigUtil.getOrDefaultItemSetting(1, this, "base-efficiency");
+    private final int randomEfficiency = ConfigUtil.getOrDefaultItemSetting(0, this, "random-efficiency");
+
     public QuantityModule(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     @Override
     public int getEffect(int itemAmount) {
-        return itemAmount;
+        return itemAmount * this.baseEfficiency + FinalTech.getRandom().nextInt(itemAmount * this.randomEfficiency);
     }
 
     @Override
     public void registerDefaultRecipes() {
-        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
+        RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this,
+                String.valueOf(this.baseEfficiency),
+                String.valueOf(this.randomEfficiency));
     }
 }

@@ -93,7 +93,7 @@ public class ClickWorkMachineMenu extends AbstractClickerMenu {
             blockMenu.close();
 
             JavaPlugin javaPlugin = this.getSlimefunItem().getAddon().getJavaPlugin();
-            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, block));
+            javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, block));
         }
     }
 

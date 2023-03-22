@@ -125,7 +125,7 @@ public class OverloadedAccelerator extends AbstractCubeMachine implements Recipe
                             }
 
                             if (hasViewer) {
-                                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.GLOW, 0, locationInfo.getLocation().getBlock()));
+                                javaPlugin.getServer().getScheduler().runTaskAsynchronously(javaPlugin, () -> ParticleUtil.drawCubeByBlock(javaPlugin, Particle.WAX_OFF, 0, locationInfo.getLocation().getBlock()));
                             }
                         }
                     }

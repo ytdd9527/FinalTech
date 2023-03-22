@@ -41,11 +41,11 @@ public abstract class AbstractMySlimefunItem extends SlimefunItem {
             if(delay > 0) {
                 this.getAddon().getJavaPlugin().getServer().getScheduler().runTaskLater((Plugin)addon, () -> {
                     (recipeItem).registerDefaultRecipes();
-                    MachineRecipeFactory.getInstance().initAdvancedRecipeMap(AbstractMySlimefunItem.this.getClass());
+                    MachineRecipeFactory.getInstance().initAdvancedRecipeMap(this.getId());
                 }, delay);
             } else {
                 (recipeItem).registerDefaultRecipes();
-                MachineRecipeFactory.getInstance().initAdvancedRecipeMap(AbstractMySlimefunItem.this.getClass());
+                MachineRecipeFactory.getInstance().initAdvancedRecipeMap(this.getId());
             }
         }
     }
