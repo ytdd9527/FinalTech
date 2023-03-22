@@ -73,8 +73,10 @@ public class EntropySeed extends AbstractMachine implements RecipeItem {
 
     @Override
     protected void tick(@Nonnull Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
+        // TODO optimization
+
         Location location = block.getLocation();
-        if (config.contains(this.key) && this.value.equals(config.getValue(this.key))) {
+        if (config.contains(this.key) && this.value.equals(config.getString(this.key))) {
             BlockStorage.addBlockInfo(location, this.key, null);
             SlimefunItem sfItem = SlimefunItem.getByItem(FinalTechItemStacks.EQUIVALENT_CONCEPT);
             if (sfItem != null) {

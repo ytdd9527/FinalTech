@@ -12,20 +12,26 @@ import io.taraxacum.finaltech.core.command.TransformToCopyCardItem;
 import io.taraxacum.finaltech.core.command.TransformToStorageItem;
 import io.taraxacum.finaltech.core.command.TransformToValidItem;
 import io.taraxacum.finaltech.core.enchantment.NullEnchantment;
-import io.taraxacum.finaltech.core.item.unusable.StorageCard;
+import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.BlockTickerUtil;
+import io.taraxacum.libs.slimefun.dto.LocationInfo;
 import io.taraxacum.libs.slimefun.util.ResearchUtil;
 import io.taraxacum.libs.plugin.util.TextUtil;
 import io.taraxacum.libs.plugin.dto.ConfigFileManager;
 import io.taraxacum.libs.plugin.dto.LanguageManager;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -33,6 +39,7 @@ import java.util.function.Function;
  * @since 1.0
  */
 public final class SetupUtil {
+
     public static void setupLanguageManager(@Nonnull LanguageManager languageManager) {
         // Color normal
         languageManager.addFunction(new Function<>() {
@@ -109,8 +116,8 @@ public final class SetupUtil {
             NullEnchantment.addAndHidden(FinalTechItemStacks.ADVANCED_LOCATION_TRANSFER);
 
             NullEnchantment.addAndHidden(FinalTechItemStacks.ENTROPY);
-            NullEnchantment.addAndHidden(FinalTechItemStacks.QUANTITY_MODULE_INFINITY);
-            NullEnchantment.addAndHidden(FinalTechItemStacks.OPERATION_ACCELERATOR_INFINITY);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.QUANTITY_MODULE_MATRIX);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.MATRIX_OPERATION_ACCELERATOR);
             NullEnchantment.addAndHidden(FinalTechItemStacks.COPY_CARD);
             NullEnchantment.addAndHidden(FinalTechItemStacks.SHINE);
             NullEnchantment.addAndHidden(FinalTechItemStacks.PHONY);
@@ -139,8 +146,6 @@ public final class SetupUtil {
         ItemStackUtil.setLore(FinalTechItemStacks.TROPHY_SHIXINZIA,
                 "§fThanks for some test work");
 
-        ItemStackUtil.addLoreToFirst(FinalTechItemStacks.STORAGE_CARD, StorageCard.ITEM_LORE);
-
         /* items */
         // material
         FinalTechMenus.SUB_MENU_MATERIAL.addTo(
@@ -159,7 +164,8 @@ public final class SetupUtil {
         FinalTechMenus.SUB_MENU_MATERIAL.addTo(
                 FinalTechItems.ANNULAR.register(),
                 FinalTechItems.QUANTITY_MODULE.register(),
-                FinalTechItems.QUANTITY_MODULE_INFINITY.register(),
+                FinalTechItems.QUANTITY_MODULE_ENERGIZED.register(),
+                FinalTechItems.QUANTITY_MODULE_OVERLOADED.register(),
                 FinalTechItems.SINGULARITY.register(),
                 FinalTechItems.SPIROCHETE.register(),
                 FinalTechItems.SHELL.register(),
@@ -196,7 +202,12 @@ public final class SetupUtil {
                 FinalTechItems.MACHINE_ACCELERATE_CARD_L3.register(),
                 FinalTechItems.MACHINE_ACTIVATE_CARD_L1.register(),
                 FinalTechItems.MACHINE_ACTIVATE_CARD_L2.register(),
-                FinalTechItems.MACHINE_ACTIVATE_CARD_L3.register());
+                FinalTechItems.MACHINE_ACTIVATE_CARD_L3.register(),
+                FinalTechItems.ENERGY_CARD_K.register(),
+                FinalTechItems.ENERGY_CARD_M.register(),
+                FinalTechItems.ENERGY_CARD_B.register(),
+                FinalTechItems.ENERGY_CARD_T.register(),
+                FinalTechItems.ENERGY_CARD_Q.register());
         FinalTechMenus.SUB_MENU_CONSUMABLE.addTo(
                 FinalTechItems.MAGIC_HYPNOTIC.register(),
                 FinalTechItems.RESEARCH_UNLOCK_TICKET.register());
@@ -209,6 +220,7 @@ public final class SetupUtil {
                 FinalTechItems.GRAVITY_REVERSAL_RUNE.register());
         FinalTechMenus.SUB_MENU_TOOL.addTo(
                 FinalTechItems.MENU_VIEWER.register(),
+                FinalTechItems.ROUTE_VIEWER.register(),
                 FinalTechItems.LOCATION_RECORDER.register(),
                 FinalTechItems.MACHINE_CONFIGURATOR.register(),
                 FinalTechItems.PORTABLE_ENERGY_STORAGE.register());
@@ -294,6 +306,7 @@ public final class SetupUtil {
                 FinalTechItems.CONFIGURABLE_REMOTE_ACCESSOR.register(),
                 FinalTechItems.EXPANDED_CONSUMABLE_REMOTE_ACCESSOR.register(),
                 FinalTechItems.EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR.register(),
+                FinalTechItems.RANDOM_ACCESSOR.register(),
                 FinalTechItems.AREA_ACCESSOR.register());
         FinalTechMenus.SUB_MENU_ACCESSOR.addTo(
                 FinalTechItems.TRANSPORTER.register(),
@@ -331,6 +344,7 @@ public final class SetupUtil {
         /* functional machines */
         // core machines
         FinalTechMenus.SUB_MENU_CORE_MACHINE.addTo(
+                FinalTechItems.BEDROCK_CRAFT_TABLE.register(),
                 FinalTechItems.DUST_FACTORY_DIRT.register(),
                 FinalTechItems.DUST_FACTORY_STONE.register(),
                 FinalTechItems.MATRIX_CRAFTING_TABLE.register());
@@ -341,7 +355,10 @@ public final class SetupUtil {
                 FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.register(),
                 FinalTechItems.ITEM_DESERIALIZE_PARSER.register(),
                 FinalTechItems.CARD_OPERATION_TABLE.register(),
-                FinalTechItems.ADVANCED_AUTO_CRAFT_FRAME.register());
+                FinalTechItems.ADVANCED_AUTO_CRAFT_FRAME.register(),
+                FinalTechItems.ENERGY_TABLE.register(),
+                FinalTechItems.ENERGY_INPUT_TABLE.register(),
+                FinalTechItems.ENERGY_OUTPUT_TABLE.register());
         // special machines
         FinalTechMenus.SUB_MENU_SPECIAL_MACHINE.addTo(
                 FinalTechItems.ITEM_FIXER.register(),
@@ -350,7 +367,8 @@ public final class SetupUtil {
                 FinalTechItems.FUEL_ACCELERATOR.register(),
                 FinalTechItems.FUEL_OPERATOR.register(),
                 FinalTechItems.OPERATION_ACCELERATOR.register(),
-                FinalTechItems.OPERATION_ACCELERATOR_INFINITY.register());
+                FinalTechItems.ENERGIZED_OPERATION_ACCELERATOR.register(),
+                FinalTechItems.OVERLOADED_OPERATION_ACCELERATOR.register());
         // tower
         FinalTechMenus.SUB_MENU_TOWER.addTo(
                 FinalTechItems.CURE_TOWER.register(),
@@ -360,6 +378,7 @@ public final class SetupUtil {
         /* productive machine */
         // manual machine
         FinalTechMenus.SUB_MENU_MANUAL_MACHINE.addTo(
+                FinalTechItems.MANUAL_CRAFT_MACHINE,
                 FinalTechItems.MANUAL_CRAFTING_TABLE.register(),
                 FinalTechItems.MANUAL_ENHANCED_CRAFTING_TABLE.register(),
                 FinalTechItems.MANUAL_GRIND_STONE.register(),
@@ -416,7 +435,9 @@ public final class SetupUtil {
                 FinalTechItems.ENTROPY_SEED.register(),
                 FinalTechItems.MACHINE_CHARGE_CARD_INFINITY.register(),
                 FinalTechItems.MACHINE_ACCELERATE_CARD_INFINITY.register(),
-                FinalTechItems.MACHINE_ACTIVATE_CARD_L4.register());
+                FinalTechItems.MACHINE_ACTIVATE_CARD_L4.register(),
+                FinalTechItems.QUANTITY_MODULE_MATRIX.register(),
+                FinalTechItems.OPERATION_ACCELERATOR_MATRIX.register());
         FinalTechMenus.SUB_MENU_FINAL_ITEM.addTo(
                 FinalTechItems.ADVANCED_AUTO_CRAFT.register(),
                 FinalTechItems.MULTI_FRAME_MACHINE.register(),
@@ -429,8 +450,8 @@ public final class SetupUtil {
                 FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR.register(),
                 FinalTechItems.MATRIX_REACTOR.register());
         FinalTechMenus.SUB_MENU_TROPHY.addTo(
-                FinalTechItems.TROPHY_MEAWERFUL.register(),
-                FinalTechItems.TROPHY_SHIXINZIA.register());
+                FinalTechItems.TROPHY_MEAWERFUL,
+                FinalTechItems.TROPHY_SHIXINZIA);
     }
 
     private static void setupMenu() {
@@ -565,7 +586,7 @@ public final class SetupUtil {
                 FinalTechItemStacks.COPY_CARD,
                 FinalTechItemStacks.ANNULAR,
                 FinalTechItemStacks.QUANTITY_MODULE,
-                FinalTechItemStacks.QUANTITY_MODULE_INFINITY,
+                FinalTechItemStacks.QUANTITY_MODULE_MATRIX,
                 FinalTechItemStacks.ITEM_SERIALIZATION_CONSTRUCTOR,
                 FinalTechItemStacks.ITEM_DESERIALIZE_PARSER);
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "PHONY", (int)Math.pow(ConstantTableUtil.ITEM_SINGULARITY_AMOUNT * ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT, 0.6), true,
@@ -748,7 +769,7 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.FUEL_OPERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.FUEL_ACCELERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.OPERATION_ACCELERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.OPERATION_ACCELERATOR_INFINITY, SlimefunItems.PROGRAMMABLE_ANDROID_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.MATRIX_OPERATION_ACCELERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.CURE_TOWER, SlimefunItems.GPS_TRANSMITTER_4);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.PURIFY_LEVEL_TOWER, SlimefunItems.GPS_TRANSMITTER_3);
