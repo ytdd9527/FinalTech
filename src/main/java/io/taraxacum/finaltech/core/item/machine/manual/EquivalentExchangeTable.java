@@ -20,6 +20,7 @@ import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
 import io.taraxacum.libs.slimefun.interfaces.SimpleValidItem;
+import io.taraxacum.libs.slimefun.interfaces.ValidItem;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -73,7 +74,11 @@ public class EquivalentExchangeTable extends AbstractManualMachine implements Re
 
             SlimefunItem sfItem = SlimefunItem.getByItem(itemStack);
             if (sfItem != null) {
-                value = StringNumberUtil.add(value, StringNumberUtil.mul(ItemValueTable.getInstance().getOrCalItemInputValue(sfItem), String.valueOf(itemStack.getAmount())));
+                if(sfItem instanceof ValidItem validItem && !validItem.verifyItem(itemStack)) {
+                    value = StringNumberUtil.add(value);
+                } else {
+                    value = StringNumberUtil.add(value, StringNumberUtil.mul(ItemValueTable.getInstance().getOrCalItemInputValue(sfItem), String.valueOf(itemStack.getAmount())));
+                }
                 itemStack.setAmount(0);
             }
         }
