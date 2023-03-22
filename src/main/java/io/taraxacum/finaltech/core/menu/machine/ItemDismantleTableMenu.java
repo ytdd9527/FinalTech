@@ -78,12 +78,12 @@ public class ItemDismantleTableMenu extends AbstractManualMachineMenu {
 
         blockMenu.addMenuClickHandler(STATUS_SLOT, (player, slot, itemStack, action) -> {
             Config config = BlockStorage.getLocationInfo(block.getLocation());
-            String count = JavaUtil.getFirstNotNull(FinalTechItems.ITEM_DISMANTLE_TABLE.getKey(), StringNumberUtil.ZERO);
+            String count = JavaUtil.getFirstNotNull(config.getString(FinalTechItems.ITEM_DISMANTLE_TABLE.getKey()), StringNumberUtil.ZERO);
             if(StringNumberUtil.compare(count, FinalTechItems.ITEM_DISMANTLE_TABLE.getCount()) >= 0) {
-                if (MachineUtil.isEmpty(blockMenu.toInventory(), ItemDismantleTableMenu.this.getOutputSlot())) {
-                    ItemStack item = blockMenu.getItemInSlot(ItemDismantleTableMenu.this.getInputSlot()[0]);
+                if (MachineUtil.isEmpty(blockMenu.toInventory(), this.getOutputSlot())) {
+                    ItemStack item = blockMenu.getItemInSlot(this.getInputSlot()[0]);
                     SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
-                    if (slimefunItem != null && !FinalTechItems.ITEM_DISMANTLE_TABLE.calAllowed(slimefunItem) && item.getAmount() >= slimefunItem.getRecipeOutput().getAmount()) {
+                    if (slimefunItem != null && FinalTechItems.ITEM_DISMANTLE_TABLE.calAllowed(slimefunItem) && item.getAmount() >= slimefunItem.getRecipeOutput().getAmount()) {
                         boolean verify;
                         if(slimefunItem instanceof ValidItem validItem) {
                             verify = validItem.verifyItem(item);
@@ -100,10 +100,12 @@ public class ItemDismantleTableMenu extends AbstractManualMachineMenu {
                             item.setAmount(item.getAmount() - slimefunItem.getRecipeOutput().getAmount() * amount);
                             for (int i = 0; i < ItemDismantleTableMenu.this.getOutputSlot().length && i < slimefunItem.getRecipe().length; i++) {
                                 if (!ItemStackUtil.isItemNull(slimefunItem.getRecipe()[i])) {
-                                    ItemStack outputItem = ItemStackUtil.cloneItem(slimefunItem.getRecipe()[i]);
-                                    ReplaceableCard replaceableCard = RecipeUtil.getReplaceableCard(outputItem);
+                                    ItemStack outputItem;
+                                    ReplaceableCard replaceableCard = RecipeUtil.getReplaceableCard(slimefunItem.getRecipe()[i]);
                                     if (replaceableCard != null && replaceableCard.getExtraSourceMaterial() != null) {
-                                        outputItem = replaceableCard.getItem();
+                                        outputItem = ItemStackUtil.cloneItem(replaceableCard.getItem());
+                                    } else {
+                                        outputItem = ItemStackUtil.cloneItem(slimefunItem.getRecipe()[i]);
                                     }
                                     outputItem.setAmount(outputItem.getAmount() * amount);
                                     blockMenu.replaceExistingItem(ItemDismantleTableMenu.this.getOutputSlot()[i], outputItem);

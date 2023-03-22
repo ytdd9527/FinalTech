@@ -81,10 +81,12 @@ public class MatrixItemDismantleTable extends AbstractMachine implements RecipeI
                     itemStack.setAmount(itemStack.getAmount() - sfItem.getRecipeOutput().getAmount() * amount);
                     for (int i = 0; i < this.getOutputSlot().length && i < sfItem.getRecipe().length; i++) {
                         if (!ItemStackUtil.isItemNull(sfItem.getRecipe()[i])) {
-                            ItemStack outputItem = ItemStackUtil.cloneItem(sfItem.getRecipe()[i]);
-                            ReplaceableCard replaceableCard = RecipeUtil.getReplaceableCard(outputItem);
+                            ItemStack outputItem;
+                            ReplaceableCard replaceableCard = RecipeUtil.getReplaceableCard(sfItem.getRecipe()[i]);
                             if (replaceableCard != null && replaceableCard.getExtraSourceMaterial() != null) {
-                                outputItem = replaceableCard.getItem();
+                                outputItem = ItemStackUtil.cloneItem(replaceableCard.getItem());
+                            } else {
+                                outputItem = ItemStackUtil.cloneItem(sfItem.getRecipe()[i]);
                             }
                             outputItem.setAmount(outputItem.getAmount() * amount);
                             blockMenu.replaceExistingItem(this.getOutputSlot()[i], outputItem);
