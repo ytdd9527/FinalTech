@@ -1,10 +1,10 @@
 # Id
-FINALTECH_LOGIC_FACTORY:
+FINALTECH_DEMO_BASIC_MACHINE:
   name: 'Logic Factory'
   material: 'OBSIDIAN'
   lore:
-    - 'lore1'
-    - 'lore2'
+    - 'you can add lore'
+    - 'and more lore!'
   # 'BASIC' or 'ADVANCED'
   type: 'BASIC'
   research:
