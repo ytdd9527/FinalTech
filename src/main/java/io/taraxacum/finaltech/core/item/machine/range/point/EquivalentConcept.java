@@ -16,6 +16,10 @@ import io.taraxacum.finaltech.util.BlockTickerUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
+import io.taraxacum.libs.plugin.dto.ItemWrapper;
+import io.taraxacum.libs.plugin.util.ItemStackUtil;
+import io.taraxacum.libs.slimefun.interfaces.SimpleValidItem;
+import io.taraxacum.libs.slimefun.util.SfItemUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
@@ -31,6 +35,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -38,15 +44,22 @@ import java.util.Random;
  * @author Final_ROOT
  * @since 2.0
  */
-public class EquivalentConcept extends AbstractPointMachine implements RecipeItem {
+public class EquivalentConcept extends AbstractPointMachine implements RecipeItem, SimpleValidItem {
     public static final String KEY_LIFE = "l";
     public static final String KEY_RANGE = "r";
     private final double attenuationRate = ConfigUtil.getOrDefaultItemSetting(0.95, this, "attenuation-rate");
     private final double life = ConfigUtil.getOrDefaultItemSetting(4.0, this, "life");
     private final int range = ConfigUtil.getOrDefaultItemSetting(2, this, "range");
 
+    private final ItemWrapper templateValidItem;
+
     public EquivalentConcept(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+
+        ItemStack validItem = new ItemStack(this.getItem());
+        SfItemUtil.setSpecialItemKey(validItem);
+        this.templateValidItem = new ItemWrapper(validItem);
+
         this.addItemHandler(new ItemUseHandler() {
             @Override
             @EventHandler(priority = EventPriority.LOWEST)
@@ -87,6 +100,14 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
     @Override
     protected BlockBreakHandler onBlockBreak() {
         return MachineUtil.simpleBlockBreakerHandler();
+    }
+
+    @Nonnull
+    @Override
+    public Collection<ItemStack> getDrops() {
+        ArrayList<ItemStack> drops = new ArrayList<>();
+        drops.add(this.getValidItem());
+        return drops;
     }
 
     @Nullable
@@ -161,5 +182,16 @@ public class EquivalentConcept extends AbstractPointMachine implements RecipeIte
     @Override
     public void registerDefaultRecipes() {
         RecipeUtil.registerDescriptiveRecipe(FinalTech.getLanguageManager(), this);
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack getValidItem() {
+        return ItemStackUtil.cloneItem(this.templateValidItem.getItemStack());
+    }
+
+    @Override
+    public boolean verifyItem(@Nonnull ItemStack itemStack) {
+        return ItemStackUtil.isItemSimilar(itemStack, this.templateValidItem);
     }
 }

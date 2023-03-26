@@ -13,6 +13,8 @@ import io.taraxacum.libs.slimefun.util.SfItemUtil;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author Final_ROOT
@@ -26,6 +28,14 @@ public class Justifiability extends UnusableSlimefunItem implements RecipeItem, 
         ItemStack validItem = new ItemStack(this.getItem());
         SfItemUtil.setSpecialItemKey(validItem);
         this.templateValidItem = new ItemWrapper(validItem);
+    }
+
+    @Nonnull
+    @Override
+    public Collection<ItemStack> getDrops() {
+        ArrayList<ItemStack> drops = new ArrayList<>();
+        drops.add(this.getValidItem());
+        return drops;
     }
 
     @Override
