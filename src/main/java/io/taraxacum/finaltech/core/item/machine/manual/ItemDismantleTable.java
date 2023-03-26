@@ -17,6 +17,7 @@ import io.taraxacum.finaltech.core.menu.machine.ItemDismantleTableMenu;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import io.taraxacum.finaltech.util.ConfigUtil;
+import io.taraxacum.libs.slimefun.interfaces.ValidItem;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
@@ -123,7 +124,11 @@ public class ItemDismantleTable extends AbstractManualMachine implements RecipeI
                         continue;
                     }
                     hasRecipe = true;
-                    if (SlimefunItem.getByItem(itemStack) == null && !ItemStackUtil.isItemSimilar(itemStack, new ItemStack(itemStack.getType()))) {
+                    SlimefunItem sfItem = SlimefunItem.getByItem(itemStack);
+                    if (sfItem == null && !ItemStackUtil.isItemSimilar(itemStack, new ItemStack(itemStack.getType()))) {
+                        this.notAllowedId.add(slimefunItemId);
+                        return false;
+                    } else if(sfItem instanceof ValidItem) {
                         this.notAllowedId.add(slimefunItemId);
                         return false;
                     }

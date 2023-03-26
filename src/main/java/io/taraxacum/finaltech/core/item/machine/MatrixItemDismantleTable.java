@@ -145,7 +145,11 @@ public class MatrixItemDismantleTable extends AbstractMachine implements RecipeI
                         continue;
                     }
                     hasRecipe = true;
-                    if (SlimefunItem.getByItem(itemStack) == null && !ItemStackUtil.isItemSimilar(itemStack, new ItemStack(itemStack.getType()))) {
+                    SlimefunItem sfItem = SlimefunItem.getByItem(itemStack);
+                    if (sfItem == null && !ItemStackUtil.isItemSimilar(itemStack, new ItemStack(itemStack.getType()))) {
+                        this.notAllowedId.add(slimefunItemId);
+                        return false;
+                    } else if(sfItem instanceof ValidItem) {
                         this.notAllowedId.add(slimefunItemId);
                         return false;
                     }
