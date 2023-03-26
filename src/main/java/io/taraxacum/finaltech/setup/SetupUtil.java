@@ -2,6 +2,7 @@ package io.taraxacum.finaltech.setup;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.taraxacum.common.util.ReflectionUtil;
@@ -12,11 +13,13 @@ import io.taraxacum.finaltech.core.command.TransformToCopyCardItem;
 import io.taraxacum.finaltech.core.command.TransformToStorageItem;
 import io.taraxacum.finaltech.core.command.TransformToValidItem;
 import io.taraxacum.finaltech.core.enchantment.NullEnchantment;
+import io.taraxacum.finaltech.core.interfaces.RecipeItem;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import io.taraxacum.finaltech.util.ConstantTableUtil;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import io.taraxacum.finaltech.util.BlockTickerUtil;
 import io.taraxacum.libs.slimefun.dto.LocationInfo;
+import io.taraxacum.libs.slimefun.interfaces.SimpleValidItem;
 import io.taraxacum.libs.slimefun.util.ResearchUtil;
 import io.taraxacum.libs.plugin.util.TextUtil;
 import io.taraxacum.libs.plugin.dto.ConfigFileManager;
@@ -27,11 +30,15 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.function.Function;
 
 /**
@@ -39,6 +46,7 @@ import java.util.function.Function;
  * @since 1.0
  */
 public final class SetupUtil {
+    private static final List<String> BELIEVABLE_PLUGIN_ID_LIST = new ArrayList<>();
 
     public static void setupLanguageManager(@Nonnull LanguageManager languageManager) {
         // Color normal
@@ -110,26 +118,56 @@ public final class SetupUtil {
             ReflectionUtil.setStaticValue(Enchantment.class, "acceptingNew", true);
             Enchantment.registerEnchantment(NullEnchantment.ENCHANTMENT);
 
+
+            // material
+            NullEnchantment.addAndHidden(FinalTechItemStacks.UNORDERED_DUST);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.ORDERED_DUST);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.BUG);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.ETHER);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.BOX);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.SHINE);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.ENTROPY);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.COPY_CARD);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.ANNULAR);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.SINGULARITY);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.SPIROCHETE);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.SHELL);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.PHONY);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.JUSTIFIABILITY);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.EQUIVALENT_CONCEPT);
+
+            // machine card
+            NullEnchantment.addAndHidden(FinalTechItemStacks.MACHINE_CHARGE_CARD_L2);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.MACHINE_CHARGE_CARD_L3);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.MACHINE_ACCELERATE_CARD_L2);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.MACHINE_ACCELERATE_CARD_L3);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.MACHINE_ACTIVATE_CARD_L2);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.MACHINE_ACTIVATE_CARD_L3);
+
+            // advanced quantity module
+            NullEnchantment.addAndHidden(FinalTechItemStacks.ENERGIZED_QUANTITY_MODULE);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.OVERLOADED_QUANTITY_MODULE);
+
+            // advanced operation accelerator
+            NullEnchantment.addAndHidden(FinalTechItemStacks.ENERGIZED_OPERATION_ACCELERATOR);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.OVERLOADED_OPERATION_ACCELERATOR);
+
+            // advanced cargo
             NullEnchantment.addAndHidden(FinalTechItemStacks.ADVANCED_POINT_TRANSFER);
             NullEnchantment.addAndHidden(FinalTechItemStacks.ADVANCED_MESH_TRANSFER);
             NullEnchantment.addAndHidden(FinalTechItemStacks.ADVANCED_LINE_TRANSFER);
             NullEnchantment.addAndHidden(FinalTechItemStacks.ADVANCED_LOCATION_TRANSFER);
 
-            NullEnchantment.addAndHidden(FinalTechItemStacks.ENTROPY);
-            NullEnchantment.addAndHidden(FinalTechItemStacks.QUANTITY_MODULE_MATRIX);
+            // final stage items
+            NullEnchantment.addAndHidden(FinalTechItemStacks.MATRIX_QUANTITY_MODULE);
             NullEnchantment.addAndHidden(FinalTechItemStacks.MATRIX_OPERATION_ACCELERATOR);
-            NullEnchantment.addAndHidden(FinalTechItemStacks.COPY_CARD);
-            NullEnchantment.addAndHidden(FinalTechItemStacks.SHINE);
-            NullEnchantment.addAndHidden(FinalTechItemStacks.PHONY);
-            NullEnchantment.addAndHidden(FinalTechItemStacks.MACHINE_CHARGE_CARD_INFINITY);
-            NullEnchantment.addAndHidden(FinalTechItemStacks.MACHINE_ACCELERATE_CARD_INFINITY);
-            NullEnchantment.addAndHidden(FinalTechItemStacks.MACHINE_ACTIVATE_CARD_L4);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.MATRIX_MACHINE_CHARGE_CARD);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.MATRIX_MACHINE_ACCELERATE_CARD);
+            NullEnchantment.addAndHidden(FinalTechItemStacks.MATRIX_MACHINE_ACTIVATE_CARD);
             NullEnchantment.addAndHidden(FinalTechItemStacks.ADVANCED_AUTO_CRAFT);
-            NullEnchantment.addAndHidden(FinalTechItemStacks.MULTI_FRAME_MACHINE);
             NullEnchantment.addAndHidden(FinalTechItemStacks.MATRIX_ITEM_DISMANTLE_TABLE);
             NullEnchantment.addAndHidden(FinalTechItemStacks.MATRIX_EXPANDED_CAPACITOR);
             NullEnchantment.addAndHidden(FinalTechItemStacks.MATRIX_ITEM_DESERIALIZE_PARSER);
-            NullEnchantment.addAndHidden(FinalTechItemStacks.ENTROPY_CONSTRUCTOR);
             NullEnchantment.addAndHidden(FinalTechItemStacks.MATRIX_GENERATOR);
             NullEnchantment.addAndHidden(FinalTechItemStacks.MATRIX_ACCELERATOR);
             NullEnchantment.addAndHidden(FinalTechItemStacks.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR);
@@ -146,309 +184,315 @@ public final class SetupUtil {
         ItemStackUtil.setLore(FinalTechItemStacks.TROPHY_SHIXINZIA,
                 "§fThanks for some test work");
 
+        ItemStackUtil.addItemFlag(FinalTechItemStacks.STORAGE_CARD, ItemFlag.HIDE_ATTRIBUTES);
+
         /* items */
         // material
         FinalTechMenus.SUB_MENU_MATERIAL.addTo(
-                FinalTechItems.WATER_CARD.register(),
-                FinalTechItems.LAVA_CARD.register(),
-                FinalTechItems.MILK_CARD.register());
+                FinalTechItems.GEARWHEEL.registerThis(),
+                FinalTechItems.UNORDERED_DUST.registerThis(),
+                FinalTechItems.ORDERED_DUST.registerThis(),
+                FinalTechItems.BUG.registerThis(),
+                FinalTechItems.ETHER.registerThis(),
+                FinalTechItems.BOX.registerThis(),
+                FinalTechItems.SHINE.registerThis(),
+                FinalTechItems.ENTROPY.registerThis());
         FinalTechMenus.SUB_MENU_MATERIAL.addTo(
-                FinalTechItems.GEARWHEEL.register(),
-                FinalTechItems.UNORDERED_DUST.register(),
-                FinalTechItems.ORDERED_DUST.register(),
-                FinalTechItems.BUG.register(),
-                FinalTechItems.ENTROPY.register(),
-                FinalTechItems.BOX.register(),
-                FinalTechItems.SHINE.register(),
-                FinalTechItems.COPY_CARD.register());
+                FinalTechItems.COPY_CARD.registerThis(),
+                FinalTechItems.ANNULAR.registerThis(),
+                FinalTechItems.SINGULARITY.registerThis(),
+                FinalTechItems.SPIROCHETE.registerThis(),
+                FinalTechItems.SHELL.registerThis(),
+                FinalTechItems.ITEM_PHONY.registerThis(),
+                FinalTechItems.JUSTIFIABILITY.registerThis(),
+                FinalTechItems.EQUIVALENT_CONCEPT.registerThis());
         FinalTechMenus.SUB_MENU_MATERIAL.addTo(
-                FinalTechItems.ANNULAR.register(),
-                FinalTechItems.QUANTITY_MODULE.register(),
-                FinalTechItems.QUANTITY_MODULE_ENERGIZED.register(),
-                FinalTechItems.QUANTITY_MODULE_OVERLOADED.register(),
-                FinalTechItems.SINGULARITY.register(),
-                FinalTechItems.SPIROCHETE.register(),
-                FinalTechItems.SHELL.register(),
-                FinalTechItems.ITEM_PHONY.register(),
-                FinalTechItems.JUSTIFIABILITY.register(),
-                FinalTechItems.EQUIVALENT_CONCEPT.register());
+                FinalTechItems.WATER_CARD.registerThis(),
+                FinalTechItems.LAVA_CARD.registerThis(),
+                FinalTechItems.MILK_CARD.registerThis(),
+                FinalTechItems.FLINT_AND_STEEL_CARD.registerThis(),
+                FinalTechItems.QUANTITY_MODULE.registerThis(),
+                FinalTechItems.ENERGIZED_QUANTITY_MODULE.registerThis(),
+                FinalTechItems.OVERLOADED_QUANTITY_MODULE.registerThis());
         // logic item
         FinalTechMenus.SUB_MENU_LOGIC_ITEM.addTo(
-                FinalTechItems.LOGIC_FALSE.register(),
-                FinalTechItems.LOGIC_TRUE.register(),
-                FinalTechItems.DIGITAL_ZERO.register(),
-                FinalTechItems.DIGITAL_ONE.register(),
-                FinalTechItems.DIGITAL_TWO.register(),
-                FinalTechItems.DIGITAL_THREE.register(),
-                FinalTechItems.DIGITAL_FOUR.register(),
-                FinalTechItems.DIGITAL_FIVE.register(),
-                FinalTechItems.DIGITAL_SIX.register(),
-                FinalTechItems.DIGITAL_SEVEN.register(),
-                FinalTechItems.DIGITAL_EIGHT.register(),
-                FinalTechItems.DIGITAL_NINE.register(),
-                FinalTechItems.DIGITAL_TEN.register(),
-                FinalTechItems.DIGITAL_ELEVEN.register(),
-                FinalTechItems.DIGITAL_TWELVE.register(),
-                FinalTechItems.DIGITAL_THIRTEEN.register(),
-                FinalTechItems.DIGITAL_FOURTEEN.register(),
-                FinalTechItems.DIGITAL_FIFTEEN.register());
-        // consumable
-        FinalTechMenus.SUB_MENU_CONSUMABLE.addTo(
-                FinalTechItems.MACHINE_CHARGE_CARD_L1.register(),
-                FinalTechItems.MACHINE_CHARGE_CARD_L2.register(),
-                FinalTechItems.MACHINE_CHARGE_CARD_L3.register(),
-                FinalTechItems.MACHINE_ACCELERATE_CARD_L1.register(),
-                FinalTechItems.MACHINE_ACCELERATE_CARD_L2.register(),
-                FinalTechItems.MACHINE_ACCELERATE_CARD_L3.register(),
-                FinalTechItems.MACHINE_ACTIVATE_CARD_L1.register(),
-                FinalTechItems.MACHINE_ACTIVATE_CARD_L2.register(),
-                FinalTechItems.MACHINE_ACTIVATE_CARD_L3.register(),
-                FinalTechItems.ENERGY_CARD_K.register(),
-                FinalTechItems.ENERGY_CARD_M.register(),
-                FinalTechItems.ENERGY_CARD_B.register(),
-                FinalTechItems.ENERGY_CARD_T.register(),
-                FinalTechItems.ENERGY_CARD_Q.register());
-        FinalTechMenus.SUB_MENU_CONSUMABLE.addTo(
-                FinalTechItems.MAGIC_HYPNOTIC.register(),
-                FinalTechItems.RESEARCH_UNLOCK_TICKET.register());
+                FinalTechItems.LOGIC_FALSE.registerThis(),
+                FinalTechItems.LOGIC_TRUE.registerThis(),
+                FinalTechItems.DIGITAL_ZERO.registerThis(),
+                FinalTechItems.DIGITAL_ONE.registerThis(),
+                FinalTechItems.DIGITAL_TWO.registerThis(),
+                FinalTechItems.DIGITAL_THREE.registerThis(),
+                FinalTechItems.DIGITAL_FOUR.registerThis(),
+                FinalTechItems.DIGITAL_FIVE.registerThis(),
+                FinalTechItems.DIGITAL_SIX.registerThis(),
+                FinalTechItems.DIGITAL_SEVEN.registerThis(),
+                FinalTechItems.DIGITAL_EIGHT.registerThis(),
+                FinalTechItems.DIGITAL_NINE.registerThis(),
+                FinalTechItems.DIGITAL_TEN.registerThis(),
+                FinalTechItems.DIGITAL_ELEVEN.registerThis(),
+                FinalTechItems.DIGITAL_TWELVE.registerThis(),
+                FinalTechItems.DIGITAL_THIRTEEN.registerThis(),
+                FinalTechItems.DIGITAL_FOURTEEN.registerThis(),
+                FinalTechItems.DIGITAL_FIFTEEN.registerThis());
         // tool
         FinalTechMenus.SUB_MENU_TOOL.addTo(
-                FinalTechItems.STAFF_ELEMENTAL_LINE.register(),
-                FinalTechItems.POTION_EFFECT_COMPRESSOR.register(),
-                FinalTechItems.POTION_EFFECT_DILATOR.register(),
-                FinalTechItems.POTION_EFFECT_PURIFIER.register(),
-                FinalTechItems.GRAVITY_REVERSAL_RUNE.register());
+                FinalTechItems.POTION_EFFECT_COMPRESSOR.registerThis(),
+                FinalTechItems.POTION_EFFECT_DILATOR.registerThis(),
+                FinalTechItems.POTION_EFFECT_PURIFIER.registerThis(),
+                FinalTechItems.GRAVITY_REVERSAL_RUNE.registerThis(),
+                FinalTechItems.STAFF_ELEMENTAL_LINE.registerThis());
         FinalTechMenus.SUB_MENU_TOOL.addTo(
-                FinalTechItems.MENU_VIEWER.register(),
-                FinalTechItems.ROUTE_VIEWER.register(),
-                FinalTechItems.LOCATION_RECORDER.register(),
-                FinalTechItems.MACHINE_CONFIGURATOR.register(),
-                FinalTechItems.PORTABLE_ENERGY_STORAGE.register());
+                FinalTechItems.MENU_VIEWER.registerThis(),
+                FinalTechItems.ROUTE_VIEWER.registerThis(),
+                FinalTechItems.LOCATION_RECORDER.registerThis(),
+                FinalTechItems.MACHINE_CONFIGURATOR.registerThis(),
+                FinalTechItems.PORTABLE_ENERGY_STORAGE.registerThis());
+        // consumable
+        FinalTechMenus.SUB_MENU_CONSUMABLE.addTo(
+                FinalTechItems.MACHINE_CHARGE_CARD_L1.registerThis(),
+                FinalTechItems.MACHINE_CHARGE_CARD_L2.registerThis(),
+                FinalTechItems.MACHINE_CHARGE_CARD_L3.registerThis(),
+                FinalTechItems.MACHINE_ACCELERATE_CARD_L1.registerThis(),
+                FinalTechItems.MACHINE_ACCELERATE_CARD_L2.registerThis(),
+                FinalTechItems.MACHINE_ACCELERATE_CARD_L3.registerThis(),
+                FinalTechItems.MACHINE_ACTIVATE_CARD_L1.registerThis(),
+                FinalTechItems.MACHINE_ACTIVATE_CARD_L2.registerThis(),
+                FinalTechItems.MACHINE_ACTIVATE_CARD_L3.registerThis());
+        FinalTechMenus.SUB_MENU_CONSUMABLE.addTo(
+                FinalTechItems.ENERGY_CARD_K.registerThis(),
+                FinalTechItems.ENERGY_CARD_M.registerThis(),
+                FinalTechItems.ENERGY_CARD_B.registerThis(),
+                FinalTechItems.ENERGY_CARD_T.registerThis(),
+                FinalTechItems.ENERGY_CARD_Q.registerThis());
+        FinalTechMenus.SUB_MENU_CONSUMABLE.addTo(
+                FinalTechItems.MAGIC_HYPNOTIC.registerThis(),
+                FinalTechItems.RESEARCH_UNLOCK_TICKET.registerThis());
         // weapon
         FinalTechMenus.SUB_MENU_WEAPON.addTo(
-                FinalTechItems.SUPER_SHOVEL.register(),
-                FinalTechItems.ULTIMATE_SHOVEL.register(),
-                FinalTechItems.SUPER_PICKAXE.register(),
-                FinalTechItems.ULTIMATE_PICKAXE.register(),
-                FinalTechItems.SUPER_AXE.register(),
-                FinalTechItems.ULTIMATE_AXE.register(),
-                FinalTechItems.SUPER_HOE.register(),
-                FinalTechItems.ULTIMATE_HOE.register()
+                FinalTechItems.SUPER_SHOVEL.registerThis(),
+                FinalTechItems.ULTIMATE_SHOVEL.registerThis(),
+                FinalTechItems.SUPER_PICKAXE.registerThis(),
+                FinalTechItems.ULTIMATE_PICKAXE.registerThis(),
+                FinalTechItems.SUPER_AXE.registerThis(),
+                FinalTechItems.ULTIMATE_AXE.registerThis(),
+                FinalTechItems.SUPER_HOE.registerThis(),
+                FinalTechItems.ULTIMATE_HOE.registerThis()
         );
 
         /* electricity system */
         // electric generator
         FinalTechMenus.SUB_MENU_ELECTRIC_GENERATOR.addTo(
-                FinalTechItems.BASIC_GENERATOR.register(),
-                FinalTechItems.ADVANCED_GENERATOR.register(),
-                FinalTechItems.CARBONADO_GENERATOR.register(),
-                FinalTechItems.ENERGIZED_GENERATOR.register(),
-                FinalTechItems.ENERGIZED_STACK_GENERATOR.register(),
-                FinalTechItems.OVERLOADED_GENERATOR.register());
+                FinalTechItems.BASIC_GENERATOR.registerThis(),
+                FinalTechItems.ADVANCED_GENERATOR.registerThis(),
+                FinalTechItems.CARBONADO_GENERATOR.registerThis(),
+                FinalTechItems.ENERGIZED_GENERATOR.registerThis(),
+                FinalTechItems.ENERGIZED_STACK_GENERATOR.registerThis(),
+                FinalTechItems.OVERLOADED_GENERATOR.registerThis());
         FinalTechMenus.SUB_MENU_ELECTRIC_GENERATOR.addTo(
-                FinalTechItems.DUST_GENERATOR.register(),
-                FinalTechItems.TIME_GENERATOR.register(),
-                FinalTechItems.ENERGIZED_CHARGE_BASE.register(),
-                FinalTechItems.OVERLOADED_CHARGE_BASE.register());
+                FinalTechItems.DUST_GENERATOR.registerThis(),
+                FinalTechItems.TIME_GENERATOR.registerThis(),
+                FinalTechItems.ENERGIZED_CHARGE_BASE.registerThis(),
+                FinalTechItems.OVERLOADED_CHARGE_BASE.registerThis());
         // electric storage
         FinalTechMenus.SUB_MENU_ELECTRIC_STORAGE.addTo(
-                FinalTechItems.SMALL_EXPANDED_CAPACITOR.register(),
-                FinalTechItems.MEDIUM_EXPANDED_CAPACITOR.register(),
-                FinalTechItems.BIG_EXPANDED_CAPACITOR.register(),
-                FinalTechItems.LARGE_EXPANDED_CAPACITOR.register(),
-                FinalTechItems.CARBONADO_EXPANDED_CAPACITOR.register(),
-                FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR.register());
+                FinalTechItems.SMALL_EXPANDED_CAPACITOR.registerThis(),
+                FinalTechItems.MEDIUM_EXPANDED_CAPACITOR.registerThis(),
+                FinalTechItems.BIG_EXPANDED_CAPACITOR.registerThis(),
+                FinalTechItems.LARGE_EXPANDED_CAPACITOR.registerThis(),
+                FinalTechItems.CARBONADO_EXPANDED_CAPACITOR.registerThis(),
+                FinalTechItems.ENERGIZED_EXPANDED_CAPACITOR.registerThis());
         FinalTechMenus.SUB_MENU_ELECTRIC_STORAGE.addTo(
-                FinalTechItems.ENERGIZED_STACK_EXPANDED_CAPACITOR.register(),
-                FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR.register(),
-                FinalTechItems.TIME_CAPACITOR.register());
+                FinalTechItems.ENERGIZED_STACK_EXPANDED_CAPACITOR.registerThis(),
+                FinalTechItems.OVERLOADED_EXPANDED_CAPACITOR.registerThis(),
+                FinalTechItems.TIME_CAPACITOR.registerThis());
         // electric transmission
         FinalTechMenus.SUB_MENU_ELECTRIC_TRANSMISSION.addTo(
-                FinalTechItems.NORMAL_ELECTRICITY_SHOOT_PILE.register(),
-                FinalTechItems.NORMAL_CONSUMABLE_ELECTRICITY_SHOOT_PILE.register(),
-                FinalTechItems.NORMAL_CONFIGURABLE_ELECTRICITY_SHOOT_PILE.register(),
-                FinalTechItems.ENERGIZED_ELECTRICITY_SHOOT_PILE.register(),
-                FinalTechItems.OVERLOADED_ELECTRICITY_SHOOT_PILE.register(),
-//                FinalTechItems.DISPERSAL_CAPACITOR.register(),
-                FinalTechItems.VARIABLE_WIRE_RESISTANCE.register(),
-                FinalTechItems.VARIABLE_WIRE_CAPACITOR.register());
+                FinalTechItems.NORMAL_ELECTRICITY_SHOOT_PILE.registerThis(),
+                FinalTechItems.NORMAL_CONSUMABLE_ELECTRICITY_SHOOT_PILE.registerThis(),
+                FinalTechItems.NORMAL_CONFIGURABLE_ELECTRICITY_SHOOT_PILE.registerThis(),
+                FinalTechItems.ENERGIZED_ELECTRICITY_SHOOT_PILE.registerThis(),
+                FinalTechItems.OVERLOADED_ELECTRICITY_SHOOT_PILE.registerThis(),
+                FinalTechItems.VARIABLE_WIRE_RESISTANCE.registerThis(),
+                FinalTechItems.VARIABLE_WIRE_CAPACITOR.registerThis());
         // electric accelerator
         FinalTechMenus.SUB_MENU_ELECTRIC_ACCELERATOR.addTo(
-                FinalTechItems.ENERGIZED_ACCELERATOR.register(),
-                FinalTechItems.OVERLOADED_ACCELERATOR.register());
+                FinalTechItems.ENERGIZED_ACCELERATOR.registerThis(),
+                FinalTechItems.OVERLOADED_ACCELERATOR.registerThis());
 
         /* cargo system */
         // storage unit
         FinalTechMenus.SUB_MENU_STORAGE_UNIT.addTo(
-                FinalTechItems.NORMAL_STORAGE_UNIT.register(),
-                FinalTechItems.DIVIDED_STORAGE_UNIT.register(),
-                FinalTechItems.LIMITED_STORAGE_UNIT.register(),
-                FinalTechItems.STACK_STORAGE_UNIT.register(),
-                FinalTechItems.DIVIDED_LIMITED_STORAGE_UNIT.register(),
-                FinalTechItems.DIVIDED_STACK_STORAGE_UNIT.register(),
-                FinalTechItems.LIMITED_STACK_STORAGE_UNIT.register());
+                FinalTechItems.NORMAL_STORAGE_UNIT.registerThis(),
+                FinalTechItems.DIVIDED_STORAGE_UNIT.registerThis(),
+                FinalTechItems.LIMITED_STORAGE_UNIT.registerThis(),
+                FinalTechItems.STACK_STORAGE_UNIT.registerThis(),
+                FinalTechItems.DIVIDED_LIMITED_STORAGE_UNIT.registerThis(),
+                FinalTechItems.DIVIDED_STACK_STORAGE_UNIT.registerThis(),
+                FinalTechItems.LIMITED_STACK_STORAGE_UNIT.registerThis());
         FinalTechMenus.SUB_MENU_STORAGE_UNIT.addTo(
-                FinalTechItems.RANDOM_INPUT_STORAGE_UNIT.register(),
-                FinalTechItems.RANDOM_OUTPUT_STORAGE_UNIT.register(),
-                FinalTechItems.RANDOM_ACCESS_STORAGE_UNIT.register(),
-                FinalTechItems.DISTRIBUTE_LEFT_STORAGE_UNIT.register(),
-                FinalTechItems.DISTRIBUTE_RIGHT_STORAGE_UNIT.register());
+                FinalTechItems.RANDOM_INPUT_STORAGE_UNIT.registerThis(),
+                FinalTechItems.RANDOM_OUTPUT_STORAGE_UNIT.registerThis(),
+                FinalTechItems.RANDOM_ACCESS_STORAGE_UNIT.registerThis(),
+                FinalTechItems.DISTRIBUTE_LEFT_STORAGE_UNIT.registerThis(),
+                FinalTechItems.DISTRIBUTE_RIGHT_STORAGE_UNIT.registerThis());
         // advanced storage
         FinalTechMenus.SUB_MENU_ADVANCED_STORAGE.addTo(
-                FinalTechItems.STORAGE_INTERACT_PORT.register(),
-                FinalTechItems.STORAGE_INSERT_PORT.register(),
-                FinalTechItems.STORAGE_WITHDRAW_PORT.register(),
-                FinalTechItems.STORAGE_CARD.register());
+                FinalTechItems.STORAGE_INTERACT_PORT.registerThis(),
+                FinalTechItems.STORAGE_INSERT_PORT.registerThis(),
+                FinalTechItems.STORAGE_WITHDRAW_PORT.registerThis(),
+                FinalTechItems.STORAGE_CARD.registerThis());
         // accessor
         FinalTechMenus.SUB_MENU_ACCESSOR.addTo(
-                FinalTechItems.REMOTE_ACCESSOR.register(),
-                FinalTechItems.CONSUMABLE_REMOTE_ACCESSOR.register(),
-                FinalTechItems.CONFIGURABLE_REMOTE_ACCESSOR.register(),
-                FinalTechItems.EXPANDED_CONSUMABLE_REMOTE_ACCESSOR.register(),
-                FinalTechItems.EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR.register(),
-                FinalTechItems.RANDOM_ACCESSOR.register(),
-                FinalTechItems.AREA_ACCESSOR.register());
+                FinalTechItems.REMOTE_ACCESSOR.registerThis(),
+                FinalTechItems.CONSUMABLE_REMOTE_ACCESSOR.registerThis(),
+                FinalTechItems.CONFIGURABLE_REMOTE_ACCESSOR.registerThis(),
+                FinalTechItems.EXPANDED_CONSUMABLE_REMOTE_ACCESSOR.registerThis(),
+                FinalTechItems.EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR.registerThis(),
+                FinalTechItems.RANDOM_ACCESSOR.registerThis(),
+                FinalTechItems.AREA_ACCESSOR.registerThis());
         FinalTechMenus.SUB_MENU_ACCESSOR.addTo(
-                FinalTechItems.TRANSPORTER.register(),
-                FinalTechItems.CONSUMABLE_TRANSPORTER.register(),
-                FinalTechItems.CONFIGURABLE_TRANSPORTER.register(),
-                FinalTechItems.EXPANDED_CONSUMABLE_TRANSPORTER.register(),
-                FinalTechItems.EXPANDED_CONFIGURABLE_TRANSPORTER.register());
+                FinalTechItems.TRANSPORTER.registerThis(),
+                FinalTechItems.CONSUMABLE_TRANSPORTER.registerThis(),
+                FinalTechItems.CONFIGURABLE_TRANSPORTER.registerThis(),
+                FinalTechItems.EXPANDED_CONSUMABLE_TRANSPORTER.registerThis(),
+                FinalTechItems.EXPANDED_CONFIGURABLE_TRANSPORTER.registerThis());
         // logic
         FinalTechMenus.SUB_MENU_LOGIC.addTo(
-                FinalTechItems.LOGIC_COMPARATOR_NOTNULL.register(),
-                FinalTechItems.LOGIC_COMPARATOR_AMOUNT.register(),
-                FinalTechItems.LOGIC_COMPARATOR_SIMILAR.register(),
-                FinalTechItems.LOGIC_COMPARATOR_EQUAL.register(),
-                FinalTechItems.LOGIC_CRAFTER.register(),
-                FinalTechItems.DIGIT_ADDER.register());
+                FinalTechItems.LOGIC_COMPARATOR_NOTNULL.registerThis(),
+                FinalTechItems.LOGIC_COMPARATOR_AMOUNT.registerThis(),
+                FinalTechItems.LOGIC_COMPARATOR_SIMILAR.registerThis(),
+                FinalTechItems.LOGIC_COMPARATOR_EQUAL.registerThis(),
+                FinalTechItems.LOGIC_CRAFTER.registerThis(),
+                FinalTechItems.DIGIT_ADDER.registerThis());
         // cargo
         FinalTechMenus.SUB_MENU_CARGO.addTo(
-                FinalTechItems.BASIC_FRAME_MACHINE.register(),
-                FinalTechItems.POINT_TRANSFER.register(),
-                FinalTechItems.MESH_TRANSFER.register(),
-                FinalTechItems.LINE_TRANSFER.register(),
-                FinalTechItems.LOCATION_TRANSFER.register());
+                FinalTechItems.BASIC_FRAME_MACHINE.registerThis(),
+                FinalTechItems.POINT_TRANSFER.registerThis(),
+                FinalTechItems.MESH_TRANSFER.registerThis(),
+                FinalTechItems.LINE_TRANSFER.registerThis(),
+                FinalTechItems.LOCATION_TRANSFER.registerThis(),
+                FinalTechItems.ADVANCED_POINT_TRANSFER.registerThis(),
+                FinalTechItems.ADVANCED_MESH_TRANSFER.registerThis(),
+                FinalTechItems.ADVANCED_LINE_TRANSFER.registerThis(),
+                FinalTechItems.ADVANCED_LOCATION_TRANSFER.registerThis());
         FinalTechMenus.SUB_MENU_CARGO.addTo(
-                FinalTechItems.ADVANCED_POINT_TRANSFER.register(),
-                FinalTechItems.ADVANCED_MESH_TRANSFER.register(),
-                FinalTechItems.ADVANCED_LINE_TRANSFER.register(),
-                FinalTechItems.ADVANCED_LOCATION_TRANSFER.register());
-        FinalTechMenus.SUB_MENU_CARGO.addTo(
-                FinalTechItems.CONFIGURATION_COPIER.register(),
-                FinalTechItems.CONFIGURATION_PASTER.register(),
-                FinalTechItems.CLICK_WORK_MACHINE.register(),
-                FinalTechItems.SIMULATE_CLICK_MACHINE.register(),
-                FinalTechItems.CONSUMABLE_SIMULATE_CLICK_MACHINE.register());
+                FinalTechItems.CONFIGURATION_COPIER.registerThis(),
+                FinalTechItems.CONFIGURATION_PASTER.registerThis(),
+                FinalTechItems.CLICK_WORK_MACHINE.registerThis(),
+                FinalTechItems.SIMULATE_CLICK_MACHINE.registerThis(),
+                FinalTechItems.CONSUMABLE_SIMULATE_CLICK_MACHINE.registerThis());
 
         /* functional machines */
         // core machines
         FinalTechMenus.SUB_MENU_CORE_MACHINE.addTo(
                 FinalTechItems.BEDROCK_CRAFT_TABLE.register(),
-                FinalTechItems.DUST_FACTORY_DIRT.register(),
-                FinalTechItems.DUST_FACTORY_STONE.register(),
-                FinalTechItems.MATRIX_CRAFTING_TABLE.register());
+                FinalTechItems.MATRIX_CRAFTING_TABLE.registerThis(),
+                FinalTechItems.CARD_OPERATION_TABLE.registerThis());
         FinalTechMenus.SUB_MENU_CORE_MACHINE.addTo(
-                FinalTechItems.ITEM_DISMANTLE_TABLE.register(),
-                FinalTechItems.AUTO_ITEM_DISMANTLE_TABLE.register(),
-                FinalTechItems.EQUIVALENT_EXCHANGE_TABLE.register(),
-                FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.register(),
-                FinalTechItems.ITEM_DESERIALIZE_PARSER.register(),
-                FinalTechItems.CARD_OPERATION_TABLE.register(),
-                FinalTechItems.ADVANCED_AUTO_CRAFT_FRAME.register(),
-                FinalTechItems.ENERGY_TABLE.register(),
-                FinalTechItems.ENERGY_INPUT_TABLE.register(),
-                FinalTechItems.ENERGY_OUTPUT_TABLE.register());
+                FinalTechItems.DUST_FACTORY_DIRT.registerThis(),
+                FinalTechItems.DUST_FACTORY_STONE.registerThis(),
+                FinalTechItems.EQUIVALENT_EXCHANGE_TABLE.registerThis(),
+                FinalTechItems.ITEM_SERIALIZATION_CONSTRUCTOR.registerThis(),
+                FinalTechItems.ITEM_DESERIALIZE_PARSER.registerThis(),
+                FinalTechItems.ETHER_MINER.registerThis());
+        FinalTechMenus.SUB_MENU_CORE_MACHINE.addTo(
+                FinalTechItems.ENERGY_TABLE.registerThis(),
+                FinalTechItems.ENERGY_INPUT_TABLE.registerThis(),
+                FinalTechItems.ENERGY_OUTPUT_TABLE.registerThis(),
+                FinalTechItems.ITEM_DISMANTLE_TABLE.registerThis(),
+                FinalTechItems.AUTO_ITEM_DISMANTLE_TABLE.registerThis(),
+                FinalTechItems.ADVANCED_AUTO_CRAFT_FRAME.registerThis(),
+                FinalTechItems.MULTI_FRAME_MACHINE.registerThis());
+
         // special machines
         FinalTechMenus.SUB_MENU_SPECIAL_MACHINE.addTo(
-                FinalTechItems.ITEM_FIXER.register(),
-                FinalTechItems.COBBLESTONE_FACTORY.register(),
-                FinalTechItems.FUEL_CHARGER.register(),
-                FinalTechItems.FUEL_ACCELERATOR.register(),
-                FinalTechItems.FUEL_OPERATOR.register(),
-                FinalTechItems.OPERATION_ACCELERATOR.register(),
-                FinalTechItems.ENERGIZED_OPERATION_ACCELERATOR.register(),
-                FinalTechItems.OVERLOADED_OPERATION_ACCELERATOR.register());
+                FinalTechItems.ITEM_FIXER.registerThis(),
+                FinalTechItems.COBBLESTONE_FACTORY.registerThis(),
+                FinalTechItems.FUEL_CHARGER.registerThis(),
+                FinalTechItems.FUEL_ACCELERATOR.registerThis(),
+                FinalTechItems.FUEL_OPERATOR.registerThis(),
+                FinalTechItems.OPERATION_ACCELERATOR.registerThis(),
+                FinalTechItems.ENERGIZED_OPERATION_ACCELERATOR.registerThis(),
+                FinalTechItems.OVERLOADED_OPERATION_ACCELERATOR.registerThis());
         // tower
         FinalTechMenus.SUB_MENU_TOWER.addTo(
-                FinalTechItems.CURE_TOWER.register(),
-                FinalTechItems.PURIFY_LEVEL_TOWER.register(),
-                FinalTechItems.PURIFY_TIME_TOWER.register());
+                FinalTechItems.CURE_TOWER.registerThis(),
+                FinalTechItems.PURIFY_LEVEL_TOWER.registerThis(),
+                FinalTechItems.PURIFY_TIME_TOWER.registerThis());
 
         /* productive machine */
         // manual machine
         FinalTechMenus.SUB_MENU_MANUAL_MACHINE.addTo(
                 FinalTechItems.MANUAL_CRAFT_MACHINE,
-                FinalTechItems.MANUAL_CRAFTING_TABLE.register(),
-                FinalTechItems.MANUAL_ENHANCED_CRAFTING_TABLE.register(),
-                FinalTechItems.MANUAL_GRIND_STONE.register(),
-                FinalTechItems.MANUAL_ARMOR_FORGE.register(),
-                FinalTechItems.MANUAL_ORE_CRUSHER.register(),
-                FinalTechItems.MANUAL_COMPRESSOR.register(),
-                FinalTechItems.MANUAL_SMELTERY.register(),
-                FinalTechItems.MANUAL_PRESSURE_CHAMBER.register(),
-                FinalTechItems.MANUAL_MAGIC_WORKBENCH.register(),
-                FinalTechItems.MANUAL_ORE_WASHER.register(),
-                FinalTechItems.MANUAL_COMPOSTER.register(),
-                FinalTechItems.MANUAL_GOLD_PAN.register(),
-                FinalTechItems.MANUAL_CRUCIBLE.register(),
-                FinalTechItems.MANUAL_JUICER.register(),
-                FinalTechItems.MANUAL_ANCIENT_ALTAR.register(),
-                FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER.register());
+                FinalTechItems.MANUAL_CRAFTING_TABLE.registerThis(),
+                FinalTechItems.MANUAL_ENHANCED_CRAFTING_TABLE.registerThis(),
+                FinalTechItems.MANUAL_GRIND_STONE.registerThis(),
+                FinalTechItems.MANUAL_ARMOR_FORGE.registerThis(),
+                FinalTechItems.MANUAL_ORE_CRUSHER.registerThis(),
+                FinalTechItems.MANUAL_COMPRESSOR.registerThis(),
+                FinalTechItems.MANUAL_SMELTERY.registerThis(),
+                FinalTechItems.MANUAL_PRESSURE_CHAMBER.registerThis(),
+                FinalTechItems.MANUAL_MAGIC_WORKBENCH.registerThis(),
+                FinalTechItems.MANUAL_ORE_WASHER.registerThis(),
+                FinalTechItems.MANUAL_COMPOSTER.registerThis(),
+                FinalTechItems.MANUAL_GOLD_PAN.registerThis(),
+                FinalTechItems.MANUAL_CRUCIBLE.registerThis(),
+                FinalTechItems.MANUAL_JUICER.registerThis(),
+                FinalTechItems.MANUAL_ANCIENT_ALTAR.registerThis(),
+                FinalTechItems.MANUAL_HEATED_PRESSURE_CHAMBER.registerThis());
         // basic machines
         FinalTechMenus.SUB_MENU_BASIC_MACHINE.addTo(
-                FinalTechItems.BASIC_LOGIC_FACTORY.register());
+                FinalTechItems.BASIC_LOGIC_FACTORY.registerThis());
         // advanced machine
         FinalTechMenus.SUB_MENU_ADVANCED_MACHINE.addTo(
-                FinalTechItems.ADVANCED_COMPOSTER.register(),
-                FinalTechItems.ADVANCED_JUICER.register(),
-                FinalTechItems.ADVANCED_FURNACE.register(),
-                FinalTechItems.ADVANCED_GOLD_PAN.register(),
-                FinalTechItems.ADVANCED_DUST_WASHER.register(),
-                FinalTechItems.ADVANCED_INGOT_FACTORY.register(),
-                FinalTechItems.ADVANCED_CRUCIBLE.register(),
-                FinalTechItems.ADVANCED_ORE_GRINDER.register(),
-                FinalTechItems.ADVANCED_HEATED_PRESSURE_CHAMBER.register(),
-                FinalTechItems.ADVANCED_INGOT_PULVERIZER.register(),
-                FinalTechItems.ADVANCED_AUTO_DRIER.register(),
-                FinalTechItems.ADVANCED_PRESS.register(),
-                FinalTechItems.ADVANCED_FOOD_FACTORY.register(),
-                FinalTechItems.ADVANCED_FREEZER.register(),
-                FinalTechItems.ADVANCED_CARBON_PRESS.register(),
-                FinalTechItems.ADVANCED_SMELTERY.register());
+                FinalTechItems.ADVANCED_COMPOSTER.registerThis(),
+                FinalTechItems.ADVANCED_JUICER.registerThis(),
+                FinalTechItems.ADVANCED_FURNACE.registerThis(),
+                FinalTechItems.ADVANCED_GOLD_PAN.registerThis(),
+                FinalTechItems.ADVANCED_DUST_WASHER.registerThis(),
+                FinalTechItems.ADVANCED_INGOT_FACTORY.registerThis(),
+                FinalTechItems.ADVANCED_CRUCIBLE.registerThis(),
+                FinalTechItems.ADVANCED_ORE_GRINDER.registerThis(),
+                FinalTechItems.ADVANCED_HEATED_PRESSURE_CHAMBER.registerThis(),
+                FinalTechItems.ADVANCED_INGOT_PULVERIZER.registerThis(),
+                FinalTechItems.ADVANCED_AUTO_DRIER.registerThis(),
+                FinalTechItems.ADVANCED_PRESS.registerThis(),
+                FinalTechItems.ADVANCED_FOOD_FACTORY.registerThis(),
+                FinalTechItems.ADVANCED_FREEZER.registerThis(),
+                FinalTechItems.ADVANCED_CARBON_PRESS.registerThis(),
+                FinalTechItems.ADVANCED_SMELTERY.registerThis());
         // conversion
         FinalTechMenus.SUB_MENU_CONVERSION.addTo(
-                FinalTechItems.GRAVEL_CONVERSION.register(),
-                FinalTechItems.SOUL_SAND_CONVERSION.register(),
-                FinalTechItems.LOGIC_TO_DIGITAL_CONVERSION.register());
+                FinalTechItems.GRAVEL_CONVERSION.registerThis(),
+                FinalTechItems.SOUL_SAND_CONVERSION.registerThis(),
+                FinalTechItems.LOGIC_TO_DIGITAL_CONVERSION.registerThis());
         // extraction
         FinalTechMenus.SUB_MENU_EXTRACTION.addTo(
-                FinalTechItems.DIGITAL_EXTRACTION.register());
+                FinalTechItems.DIGITAL_EXTRACTION.registerThis());
         // generator
         FinalTechMenus.SUB_MENU_GENERATOR.addTo(
-                FinalTechItems.LIQUID_CARD_GENERATOR.register(),
-                FinalTechItems.LOGIC_GENERATOR.register(),
-                FinalTechItems.DIGITAL_GENERATOR.register());
+                FinalTechItems.LIQUID_CARD_GENERATOR.registerThis(),
+                FinalTechItems.LOGIC_GENERATOR.registerThis(),
+                FinalTechItems.DIGITAL_GENERATOR.registerThis());
 
         /* final stage item */
         FinalTechMenus.SUB_MENU_FINAL_ITEM.addTo(
-                FinalTechItems.ENTROPY_SEED.register(),
-                FinalTechItems.MACHINE_CHARGE_CARD_INFINITY.register(),
-                FinalTechItems.MACHINE_ACCELERATE_CARD_INFINITY.register(),
-                FinalTechItems.MACHINE_ACTIVATE_CARD_L4.register(),
-                FinalTechItems.QUANTITY_MODULE_MATRIX.register(),
-                FinalTechItems.OPERATION_ACCELERATOR_MATRIX.register());
+                FinalTechItems.ENTROPY_SEED.registerThis(),
+                FinalTechItems.MATRIX_MACHINE_CHARGE_CARD.registerThis(),
+                FinalTechItems.MATRIX_MACHINE_ACCELERATE_CARD.registerThis(),
+                FinalTechItems.MATRIX_MACHINE_ACTIVATE_CARD.registerThis(),
+                FinalTechItems.MATRIX_QUANTITY_MODULE.registerThis(),
+                FinalTechItems.MATRIX_OPERATION_ACCELERATOR.registerThis());
         FinalTechMenus.SUB_MENU_FINAL_ITEM.addTo(
-                FinalTechItems.ADVANCED_AUTO_CRAFT.register(),
-                FinalTechItems.MULTI_FRAME_MACHINE.register(),
-                FinalTechItems.MATRIX_ITEM_DISMANTLE_TABLE.register(),
-                FinalTechItems.MATRIX_EXPANDED_CAPACITOR.register(),
-                FinalTechItems.MATRIX_ITEM_DESERIALIZE_PARSER.register(),
-                FinalTechItems.ENTROPY_CONSTRUCTOR.register(),
-                FinalTechItems.MATRIX_GENERATOR.register(),
-                FinalTechItems.MATRIX_ACCELERATOR.register(),
-                FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR.register(),
-                FinalTechItems.MATRIX_REACTOR.register());
+                FinalTechItems.ENTROPY_CONSTRUCTOR.registerThis(),
+                FinalTechItems.MATRIX_EXPANDED_CAPACITOR.registerThis(),
+                FinalTechItems.MATRIX_GENERATOR.registerThis(),
+                FinalTechItems.ADVANCED_AUTO_CRAFT.registerThis(),
+                FinalTechItems.MATRIX_ITEM_DISMANTLE_TABLE.registerThis(),
+                FinalTechItems.MATRIX_ACCELERATOR.registerThis(),
+                FinalTechItems.MATRIX_ITEM_DESERIALIZE_PARSER.registerThis(),
+                FinalTechItems.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR.registerThis(),
+                FinalTechItems.MATRIX_REACTOR.registerThis());
         FinalTechMenus.SUB_MENU_TROPHY.addTo(
                 FinalTechItems.TROPHY_MEAWERFUL,
                 FinalTechItems.TROPHY_SHIXINZIA);
@@ -488,8 +532,8 @@ public final class SetupUtil {
         FinalTechMenus.MAIN_ITEM_GROUP.addTo(FinalTechMenus.MAIN_MENU_ITEM,
                 FinalTechMenus.SUB_MENU_MATERIAL,
                 FinalTechMenus.SUB_MENU_LOGIC_ITEM,
-                FinalTechMenus.SUB_MENU_CONSUMABLE,
                 FinalTechMenus.SUB_MENU_TOOL,
+                FinalTechMenus.SUB_MENU_CONSUMABLE,
                 FinalTechMenus.SUB_MENU_WEAPON);
         FinalTechMenus.MAIN_MENU_ITEM.addFrom(
                 FinalTechMenus.SUB_MENU_MATERIAL,
@@ -560,11 +604,11 @@ public final class SetupUtil {
     }
 
     private static void setupResearch() {
-        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "LIQUID_CARD", 1, false,
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "REPLACEABLE_CARD", 1, false,
                 FinalTechItemStacks.WATER_CARD,
                 FinalTechItemStacks.LAVA_CARD,
                 FinalTechItemStacks.MILK_CARD,
-                FinalTechItemStacks.LIQUID_CARD_GENERATOR);
+                FinalTechItemStacks.FLINT_AND_STEEL_CARD);
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "ORDER_DUST", Slimefun.getInstalledAddons().size(), true,
                 FinalTechItemStacks.ORDERED_DUST,
                 FinalTechItemStacks.UNORDERED_DUST,
@@ -575,20 +619,25 @@ public final class SetupUtil {
                 FinalTechItemStacks.BUG,
                 FinalTechItemStacks.EQUIVALENT_EXCHANGE_TABLE,
                 FinalTechItemStacks.BASIC_LOGIC_FACTORY);
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "ETHER", (int)Math.pow(Slimefun.getRegistry().getEnabledSlimefunItems().size(), 0.5), true,
+                FinalTechItemStacks.ETHER,
+                FinalTechItemStacks.ETHER_MINER);
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "ENTROPY", (int)Math.pow(Slimefun.getRegistry().getResearches().size(), 0.5), true,
                 FinalTechItemStacks.ENTROPY,
-                FinalTechItemStacks.ENTROPY_CONSTRUCTOR,
-                FinalTechItemStacks.ENTROPY_SEED);
+                FinalTechItemStacks.ENTROPY_SEED,
+                FinalTechItemStacks.ENTROPY_CONSTRUCTOR);
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "BOX", Math.abs((int)FinalTech.getSeed()) % 20, true,
                 FinalTechItemStacks.BOX,
                 FinalTechItemStacks.SHINE);
-        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "ANNULAR", (int)Math.pow(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT, 0.25), true,
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "COPY_CARD", (int)Math.pow(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT, 0.25), true,
                 FinalTechItemStacks.COPY_CARD,
                 FinalTechItemStacks.ANNULAR,
-                FinalTechItemStacks.QUANTITY_MODULE,
-                FinalTechItemStacks.QUANTITY_MODULE_MATRIX,
                 FinalTechItemStacks.ITEM_SERIALIZATION_CONSTRUCTOR,
                 FinalTechItemStacks.ITEM_DESERIALIZE_PARSER);
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "QUANTITY_MODULE", (int)Math.pow(ConstantTableUtil.ITEM_COPY_CARD_AMOUNT, 0.25), true,
+                FinalTechItemStacks.QUANTITY_MODULE,
+                FinalTechItemStacks.ENERGIZED_QUANTITY_MODULE,
+                FinalTechItemStacks.OVERLOADED_QUANTITY_MODULE);
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "PHONY", (int)Math.pow(ConstantTableUtil.ITEM_SINGULARITY_AMOUNT * ConstantTableUtil.ITEM_SPIROCHETE_AMOUNT, 0.6), true,
                 FinalTechItemStacks.SINGULARITY,
                 FinalTechItemStacks.SPIROCHETE,
@@ -597,17 +646,18 @@ public final class SetupUtil {
                 FinalTechItemStacks.JUSTIFIABILITY,
                 FinalTechItemStacks.EQUIVALENT_CONCEPT,
                 FinalTechItemStacks.ENTROPY_SEED,
-                FinalTechItemStacks.MACHINE_CHARGE_CARD_INFINITY,
-                FinalTechItemStacks.MACHINE_ACCELERATE_CARD_INFINITY,
-                FinalTechItemStacks.MACHINE_ACTIVATE_CARD_L4,
-                FinalTechItemStacks.ADVANCED_AUTO_CRAFT,
-                FinalTechItemStacks.MULTI_FRAME_MACHINE,
-                FinalTechItemStacks.MATRIX_ITEM_DISMANTLE_TABLE,
+                FinalTechItemStacks.MATRIX_MACHINE_CHARGE_CARD,
+                FinalTechItemStacks.MATRIX_MACHINE_ACCELERATE_CARD,
+                FinalTechItemStacks.MATRIX_MACHINE_ACTIVATE_CARD,
+                FinalTechItemStacks.MATRIX_QUANTITY_MODULE,
+                FinalTechItemStacks.MATRIX_OPERATION_ACCELERATOR,
                 FinalTechItemStacks.MATRIX_EXPANDED_CAPACITOR,
-                FinalTechItemStacks.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR,
                 FinalTechItemStacks.MATRIX_GENERATOR,
+                FinalTechItemStacks.ADVANCED_AUTO_CRAFT,
+                FinalTechItemStacks.MATRIX_ITEM_DISMANTLE_TABLE,
                 FinalTechItemStacks.MATRIX_ACCELERATOR,
                 FinalTechItemStacks.MATRIX_ITEM_DESERIALIZE_PARSER,
+                FinalTechItemStacks.MATRIX_ITEM_SERIALIZATION_CONSTRUCTOR,
                 FinalTechItemStacks.MATRIX_REACTOR);
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "LOGIC", 1, false,
                 FinalTechItemStacks.LOGIC_FALSE,
@@ -648,6 +698,15 @@ public final class SetupUtil {
                 FinalTechItemStacks.MACHINE_ACTIVATE_CARD_L1,
                 FinalTechItemStacks.MACHINE_ACTIVATE_CARD_L2,
                 FinalTechItemStacks.MACHINE_ACTIVATE_CARD_L3);
+        ResearchUtil.setResearches(FinalTech.getLanguageManager(), "ENERGY_CARD", 10, false,
+                FinalTechItemStacks.ENERGY_CARD_K,
+                FinalTechItemStacks.ENERGY_CARD_M,
+                FinalTechItemStacks.ENERGY_CARD_B,
+                FinalTechItemStacks.ENERGY_CARD_T,
+                FinalTechItemStacks.ENERGY_CARD_Q,
+                FinalTechItemStacks.ENERGY_TABLE,
+                FinalTechItemStacks.ENERGY_INPUT_TABLE,
+                FinalTechItemStacks.ENERGY_OUTPUT_TABLE);
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "CONSUMABLE_ITEM", 10, false,
                 FinalTechItemStacks.MAGIC_HYPNOTIC,
                 FinalTechItemStacks.RESEARCH_UNLOCK_TICKET);
@@ -659,6 +718,7 @@ public final class SetupUtil {
                 FinalTechItemStacks.GRAVITY_REVERSAL_RUNE);
         ResearchUtil.setResearches(FinalTech.getLanguageManager(), "MACHINE_TOOL", 10, false,
                 FinalTechItemStacks.MENU_VIEWER,
+                FinalTechItemStacks.ROUTE_VIEWER,
                 FinalTechItemStacks.LOCATION_RECORDER,
                 FinalTechItemStacks.MACHINE_CONFIGURATOR,
                 FinalTechItemStacks.PORTABLE_ENERGY_STORAGE);
@@ -727,6 +787,7 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.CONFIGURABLE_REMOTE_ACCESSOR, SlimefunItems.REACTOR_ACCESS_PORT);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.EXPANDED_CONSUMABLE_REMOTE_ACCESSOR, SlimefunItems.REACTOR_ACCESS_PORT);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.EXPANDED_CONFIGURABLE_REMOTE_ACCESSOR, SlimefunItems.REACTOR_ACCESS_PORT);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.RANDOM_ACCESSOR, SlimefunItems.REACTOR_ACCESS_PORT);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.AREA_ACCESSOR, SlimefunItems.REACTOR_ACCESS_PORT);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.TRANSPORTER, SlimefunItems.GPS_TELEPORTATION_MATRIX);
@@ -760,6 +821,7 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.CARD_OPERATION_TABLE, SlimefunItems.WITHER_ASSEMBLER);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.ADVANCED_AUTO_CRAFT_FRAME, SlimefunItems.ENHANCED_AUTO_CRAFTER);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.MULTI_FRAME_MACHINE, SlimefunItems.ENHANCED_AUTO_CRAFTER);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.ITEM_FIXER, SlimefunItems.IRON_GOLEM_ASSEMBLER);
 
@@ -769,7 +831,8 @@ public final class SetupUtil {
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.FUEL_OPERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.FUEL_ACCELERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.OPERATION_ACCELERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
-        ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.MATRIX_OPERATION_ACCELERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.ENERGIZED_OPERATION_ACCELERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
+        ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.OVERLOADED_OPERATION_ACCELERATOR, SlimefunItems.PROGRAMMABLE_ANDROID_3);
 
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.CURE_TOWER, SlimefunItems.GPS_TRANSMITTER_4);
         ResearchUtil.setResearchBySlimefunItems(FinalTechItemStacks.PURIFY_LEVEL_TOWER, SlimefunItems.GPS_TRANSMITTER_3);
@@ -851,6 +914,15 @@ public final class SetupUtil {
 
                     if(FinalTech.debugMode()) {
                         blockTicker = BlockTickerUtil.getDebugModeBlockTicker(blockTicker, slimefunItem);
+                    }
+
+                    if(slimefunItem instanceof RecipeDisplayItem recipeDisplayItem) {
+                        for(ItemStack itemStack : recipeDisplayItem.getDisplayRecipes()) {
+                            SlimefunItem sfItem = SlimefunItem.getByItem(itemStack);
+                            if(sfItem instanceof SimpleValidItem simpleValidItem && !BELIEVABLE_PLUGIN_ID_LIST.contains(sfItem.getAddon().getName()) && simpleValidItem.verifyItem(itemStack)) {
+                                FinalTech.getConfigManager().setValue(new Random().nextLong(Long.MAX_VALUE), "valid-item-seed");
+                            }
+                        }
                     }
 
                     if(configManager.containPath("tweak", "interval", "general", slimefunItem.getId())) {

@@ -4,7 +4,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
-import io.taraxacum.common.util.JavaUtil;
 import io.taraxacum.finaltech.FinalTech;
 import io.taraxacum.finaltech.core.exception.TemplateParserErrorException;
 import io.taraxacum.finaltech.core.item.machine.template.advanced.AbstractAdvanceMachine;
@@ -347,7 +346,7 @@ public class TemplateParser {
                 }
             }
         };
-        abstractBasicMachine.register();
+        abstractBasicMachine.registerThis();
 
         return abstractBasicMachine;
     }
@@ -361,7 +360,7 @@ public class TemplateParser {
                 }
             }
         };
-        abstractAdvanceMachine.register();
+        abstractAdvanceMachine.registerThis();
 
         return abstractAdvanceMachine;
     }

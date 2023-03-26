@@ -34,10 +34,10 @@ import java.util.Set;
  * @author Final_ROOT
  * @since 2.0
  */
-public class OperationAcceleratorMatrix extends AbstractFaceMachine implements RecipeItem, LocationMachine {
+public class MatrixOperationAccelerator extends AbstractFaceMachine implements RecipeItem, LocationMachine {
     private final Set<String> notAllowedId = new HashSet<>(ConfigUtil.getItemStringList(this, "not-allowed-id"));
 
-    public OperationAcceleratorMatrix(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public MatrixOperationAccelerator(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 

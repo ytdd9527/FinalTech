@@ -13,11 +13,11 @@ import org.bukkit.inventory.ItemStack;
  * @author Final_ROOT
  * @since 2.4
  */
-public class QuantityModuleOverloaded extends AbstractQuantityModule implements RecipeItem {
-    private final int baseEfficiency = ConfigUtil.getOrDefaultItemSetting(1, this, "base-efficiency");
-    private final int randomEfficiency = ConfigUtil.getOrDefaultItemSetting(7, this, "random-efficiency");
+public class EnergizedQuantityModule extends AbstractQuantityModule implements RecipeItem {
+    private final int baseEfficiency = ConfigUtil.getOrDefaultItemSetting(2, this, "base-efficiency");
+    private final int randomEfficiency = ConfigUtil.getOrDefaultItemSetting(4, this, "random-efficiency");
 
-    public QuantityModuleOverloaded(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+    public EnergizedQuantityModule(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 

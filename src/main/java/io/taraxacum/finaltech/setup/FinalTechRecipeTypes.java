@@ -9,6 +9,7 @@ import java.util.Locale;
 public class FinalTechRecipeTypes {
     // RecipesType
     public static final RecipeType ORDERED_DUST_FACTORY = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItemStacks.ORDERED_DUST_FACTORY_DIRT.getItemId().toLowerCase(Locale.ROOT)), FinalTechItemStacks.ORDERED_DUST_FACTORY_DIRT);
+    public static final RecipeType ETHER_MINER = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItemStacks.ETHER_MINER.getItemId().toUpperCase(Locale.ROOT)), FinalTechItemStacks.ETHER_MINER);
     public static final RecipeType ITEM_SERIALIZATION_CONSTRUCTOR = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItemStacks.ITEM_SERIALIZATION_CONSTRUCTOR.getItemId().toLowerCase(Locale.ROOT)), FinalTechItemStacks.ITEM_SERIALIZATION_CONSTRUCTOR);
     public static final RecipeType MATRIX_CRAFTING_TABLE = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItemStacks.MATRIX_CRAFTING_TABLE.getItemId().toLowerCase(Locale.ROOT)), FinalTechItemStacks.MATRIX_CRAFTING_TABLE);
     public static final RecipeType ENERGY_TABLE = new RecipeType(new NamespacedKey(FinalTech.getInstance(), FinalTechItemStacks.ENERGY_TABLE.getItemId().toUpperCase(Locale.ROOT)), FinalTechItemStacks.ENERGY_TABLE);
