@@ -335,7 +335,6 @@ public class AdvancedAutoCraftFrameMenu extends AbstractMachineMenu {
         this.recipeMap.put(FinalTechItemStacks.MANUAL_JUICER.getItemId(), AdvancedAutoCraftFrameMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_JUICER));
         this.recipeMap.put(FinalTechItemStacks.MANUAL_ANCIENT_ALTAR.getItemId(), AdvancedAutoCraftFrameMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_ANCIENT_ALTAR));
         this.recipeMap.put(FinalTechItemStacks.MANUAL_HEATED_PRESSURE_CHAMBER.getItemId(), AdvancedAutoCraftFrameMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.MANUAL_HEATED_PRESSURE_CHAMBER));
-        this.recipeMap.put(FinalTechItemStacks.BASIC_COBBLE_FACTORY.getItemId(), AdvancedAutoCraftFrameMenu.getAdvancedMachineRecipeList(FinalTechItemStacks.BASIC_COBBLE_FACTORY));
 
         this.recipeTypeIdList.add(RecipeType.ENHANCED_CRAFTING_TABLE.getKey().getKey());
         this.recipeTypeIdList.add(RecipeType.GRIND_STONE.getKey().getKey());
