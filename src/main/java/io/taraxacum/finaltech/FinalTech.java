@@ -230,12 +230,13 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         this.antiAccelerateSlimefunIdSet.add(FinalTechItemStacks.MATRIX_ACCELERATOR.getItemId());
 
         /* setup template machine */
-        int templateMachineDelay = this.config.getOrDefault(-1, "setups", "template-machine", "delay");
-        if(templateMachineDelay >= 0) {
-            this.getServer().getScheduler().runTaskLater(this, () -> new TemplateParser(FinalTech.this.template, false, false).registerMachine(), templateMachineDelay);
-        } else {
-            new TemplateParser(this.template, false, false).registerMachine();
-        }
+        // we need more test. and it's not all finished.
+//        int templateMachineDelay = this.config.getOrDefault(-1, "setups", "template-machine", "delay");
+//        if(templateMachineDelay >= 0) {
+//            this.getServer().getScheduler().runTaskLater(this, () -> new TemplateParser(FinalTech.this.template, false, false).registerMachine(), templateMachineDelay);
+//        } else {
+//            new TemplateParser(this.template, false, false).registerMachine();
+//        }
 
         /* fix data loss for others */
         if(this.dataLossFixCustom) {
