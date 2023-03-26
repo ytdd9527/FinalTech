@@ -1,13 +1,16 @@
 package io.taraxacum.finaltech.core.patch;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
 import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.menu.AbstractMachineMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
@@ -16,12 +19,17 @@ import javax.annotation.Nonnull;
  * @since 2.4
  */
 public class EnergyRegulatorStaticsMenu extends AbstractMachineMenu {
-    private static final int[] BORDER = new int[] {0, 1, 2, 3, 5 ,6 ,7, 8};
+    private static final int[] BORDER = new int[] {0, 1, 2, 3, 5 ,6 ,7};
     private static final int[] INPUT_BORDER = new int[0];
     private static final int[] OUTPUT_BORDER = new int[0];
     private static final int[] INPUT_SLOT = new int[0];
     private static final int[] OUTPUT_SLOT = new int[0];
     public static final int STATUS_SLOT = 4;
+
+    public static final int BUG_REPORT_SLOT = 8;
+    public static final ItemStack BUG_REPORT_ICON = new CustomItemStack(Material.BOOK, "&fBug report",
+            "&fThe energy regulator is altered by plugin FinalTECH.",
+            "&fIf any bug is found, report it to FinalTECH, not Slimefun!");
 
     public EnergyRegulatorStaticsMenu(@Nonnull SlimefunItem slimefunItem) {
         super(slimefunItem);
@@ -62,6 +70,8 @@ public class EnergyRegulatorStaticsMenu extends AbstractMachineMenu {
         super.init();
         this.addItem(STATUS_SLOT, Icon.STATUS_ICON);
         this.addMenuClickHandler(STATUS_SLOT, ChestMenuUtils.getEmptyClickHandler());
+        this.addItem(BUG_REPORT_SLOT, BUG_REPORT_ICON);
+        this.addMenuClickHandler(BUG_REPORT_SLOT, ChestMenuUtils.getEmptyClickHandler());
     }
 
     @Override

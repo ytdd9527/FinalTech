@@ -204,32 +204,32 @@ public class EnergyRegulatorDetailMenu extends ChestMenu {
             EnergyNetComponent energyNetComponent = energyNetComponentMap.get(componentLocation);
             if (energyNetComponent instanceof SlimefunItem slimefunItem) {
                 ItemStack itemStack = ItemStackUtil.cloneItem(slimefunItem.getItem());
-                List<String> loreList = languageManager.replaceStringList(languageManager.getStringList("items", "MULTIMETER", "lore-location"),
+                List<String> loreList = languageManager.replaceStringList(languageManager.getStringList("items", "ENERGY_REGULATOR", "statistics", "lore-location"),
                         String.valueOf(componentLocation.getBlockX() - this.location.getBlockX()),
                         String.valueOf(componentLocation.getBlockY() - this.location.getBlockY()),
                         String.valueOf(componentLocation.getBlockZ() - this.location.getBlockZ()));
 
                 String energyTypeName = energyNetComponent.getEnergyComponentType().name();
-                energyTypeName = languageManager.getString("items", "MULTIMETER", energyTypeName);
+                energyTypeName = languageManager.getString("items", "ENERGY_REGULATOR", "statistics", energyTypeName);
 
-                loreList.addAll(languageManager.replaceStringList(languageManager.getStringList("items", "MULTIMETER", "lore-type"), energyTypeName));
+                loreList.addAll(languageManager.replaceStringList(languageManager.getStringList("items", "ENERGY_REGULATOR", "statistics", "lore-type"), energyTypeName));
 
                 if(energyNetComponent.isChargeable()) {
                     int charge = energyNetComponent.getCharge(componentLocation);
                     int capacity = energyNetComponent.getCapacity();
-                    loreList.addAll(languageManager.replaceStringList(languageManager.getStringList("items", "MULTIMETER", "lore-energy"),
+                    loreList.addAll(languageManager.replaceStringList(languageManager.getStringList("items", "ENERGY_REGULATOR", "statistics", "lore-energy"),
                             String.valueOf(charge),
                             String.valueOf(capacity)));
                 }
 
                 Long generatedEnergy = generatedEnergyMap.get(componentLocation);
                 if(generatedEnergy != null) {
-                    loreList.addAll(languageManager.replaceStringList(languageManager.getStringList("items", "MULTIMETER", "lore-generate"), String.valueOf(generatedEnergy)));
+                    loreList.addAll(languageManager.replaceStringList(languageManager.getStringList("items", "ENERGY_REGULATOR", "statistics", "lore-generate"), String.valueOf(generatedEnergy)));
                 }
 
                 Long consumedEnergy = consumedEnergyMap.get(componentLocation);
                 if (consumedEnergy != null) {
-                    loreList.addAll(languageManager.replaceStringList(languageManager.getStringList("items", "MULTIMETER", "lore-consume"), String.valueOf(consumedEnergy)));
+                    loreList.addAll(languageManager.replaceStringList(languageManager.getStringList("items", "ENERGY_REGULATOR", "statistics", "lore-consume"), String.valueOf(consumedEnergy)));
                 }
 
                 ItemStackUtil.setLore(itemStack, loreList);
