@@ -266,14 +266,39 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
 
         /* setup bstats */
         Metrics metrics = new Metrics(this, 16920);
+        metrics.addCustomChart(new AdvancedPie("how you translate GEARWHEEL?", () -> {
+            Map<String, Integer> result = new HashMap<>();
+            result.put(FinalTechItemStacks.GEARWHEEL.getDisplayName(), 1);
+            return result;
+        }));
+        metrics.addCustomChart(new AdvancedPie("how you called this plugin?", () -> {
+            Map<String, Integer> result = new HashMap<>();
+            result.put(FinalTech.getLanguageManager().getOrDefault("unknown", "FinalTech"), 1);
+            return result;
+        }));
+        metrics.addCustomChart(new AdvancedPie("data loss fix", () -> {
+            Map<String, Integer> result = new HashMap<>();
+            result.put(String.valueOf(FinalTech.getDataLossFix()), 1);
+            return result;
+        }));
+        metrics.addCustomChart(new AdvancedPie("data loss fix for others", () -> {
+            Map<String, Integer> result = new HashMap<>();
+            result.put(String.valueOf(FinalTech.getDataLossFixCustom()), 1);
+            return result;
+        }));
         metrics.addCustomChart(new AdvancedPie("multi_thread_level", () -> {
             Map<String, Integer> result = new LinkedHashMap<>();
             result.put(String.valueOf(FinalTech.getMultiThreadLevel()), 1);
             return result;
         }));
-        metrics.addCustomChart(new AdvancedPie("languages", () -> {
+        metrics.addCustomChart(new AdvancedPie("patch for energy regulator", () -> {
             Map<String, Integer> result = new HashMap<>();
-            result.put(FinalTech.getConfigManager().getString("language"), 1);
+            result.put(String.valueOf(FinalTech.getConfigManager().getOrDefault(true, "patches", "ENERGY_REGULATOR", "enable")), 1);
+            return result;
+        }));
+        metrics.addCustomChart(new AdvancedPie("config version", () -> {
+            Map<String, Integer> result = new HashMap<>();
+            result.put(FinalTech.getConfigManager().getOrDefault("unknown", "version"), 1);
             return result;
         }));
     }
