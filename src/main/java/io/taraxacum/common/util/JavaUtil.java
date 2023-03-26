@@ -106,6 +106,14 @@ public class JavaUtil {
         return JavaUtil.shuffle(result);
     }
 
+    public static int[] generateInts(int length) {
+        int[] result = new int[length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = i;
+        }
+        return result;
+    }
+
     /**
      * shuffle a list by int[]
      * outputList[0] = inputList[int[0]]
