@@ -11,6 +11,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
+import java.util.Random;
 
 /**
  * @author Final_ROOT
@@ -19,7 +20,7 @@ import javax.annotation.Nonnull;
 public class SfItemUtil {
     private static final NamespacedKey SLIMEFUN_ITEM_KEY = new NamespacedKey(Slimefun.instance(), "slimefun_item");
     private static final NamespacedKey SPECIAL_ITEM_KEY = new NamespacedKey(FinalTech.getInstance(), "ft_item");
-    private static final String SPECIAL_ITEM_VALUE = String.valueOf(FinalTech.getRandom().hashCode());
+    private static final String SPECIAL_ITEM_VALUE = String.valueOf(FinalTech.getConfigManager().getOrDefault(new Random().nextLong(Long.MAX_VALUE), "valid-item-seed"));
 
     @Nonnull
     public static String getIdFormatName(@Nonnull Class<? extends SlimefunItem> clazz) {
