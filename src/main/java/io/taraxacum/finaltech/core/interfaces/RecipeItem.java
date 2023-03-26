@@ -4,7 +4,6 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.github.thebusybiscuit.slimefun4.utils.itemstack.ItemStackWrapper;
 import io.taraxacum.finaltech.core.helper.Icon;
 import io.taraxacum.finaltech.core.item.unusable.ReplaceableCard;
 import io.taraxacum.libs.slimefun.dto.RandomMachineRecipe;
@@ -100,7 +99,6 @@ public interface RecipeItem extends RecipeDisplayItem {
     }
 
     default void registerRecipeInCard(int seconds, @Nonnull ItemStack[] input, @Nonnull ItemStack[] output) {
-        boolean extraRecipe = false;
         List<ItemStack> inputList1 = new ArrayList<>(input.length);
         List<ItemStack> inputList2 = new ArrayList<>(input.length);
         List<ItemStack> outputList1 = new ArrayList<>(output.length);
@@ -111,16 +109,19 @@ public interface RecipeItem extends RecipeDisplayItem {
             }
         }
         outputList2.addAll(outputList1);
+        int extraRecipe = 0;
+        int inputSize = 0;
         for (ItemStack item : input) {
             if (ItemStackUtil.isItemNull(item)) {
                 continue;
             }
+            inputSize++;
             ReplaceableCard replaceableCard = RecipeUtil.getReplaceableCard(item);
             if (replaceableCard == null) {
                 inputList1.add(item);
                 inputList2.add(item);
             } else {
-                extraRecipe = true;
+                extraRecipe++;
                 inputList1.add(item);
                 inputList2.add(replaceableCard.getItem());
                 if(replaceableCard.getExtraSourceMaterial() != null) {
@@ -128,12 +129,11 @@ public interface RecipeItem extends RecipeDisplayItem {
                 }
             }
         }
-        if (extraRecipe && !outputList2.isEmpty()) {
-            // TODO ItemStackWrapper ??????
-            this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(inputList1))), ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(outputList1)));
-            this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(inputList2))), ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(outputList2)));
+        if (extraRecipe != inputSize && !outputList2.isEmpty()) {
+            this.registerRecipe(seconds, ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(inputList1)), ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(outputList1)));
+            this.registerRecipe(seconds, ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(inputList2)), ItemStackUtil.getNoNullItemArray(ItemStackUtil.calMergeItems(outputList2)));
         } else {
-            this.registerRecipe(seconds, ItemStackWrapper.wrapArray(ItemStackUtil.calMergeItems(input)), ItemStackWrapper.wrapArray(ItemStackUtil.calMergeItems(output)));
+            this.registerRecipe(seconds, ItemStackUtil.calMergeItems(input), ItemStackUtil.calMergeItems(output));
         }
     }
 
