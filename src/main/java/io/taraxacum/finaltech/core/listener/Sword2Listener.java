@@ -1,6 +1,6 @@
 package io.taraxacum.finaltech.core.listener;
 
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -15,7 +15,7 @@ public class Sword2Listener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerAttack(EntityDamageByEntityEvent entityDamageByEntityEvent) {
-        if (entityDamageByEntityEvent.getDamager() instanceof Player && entityDamageByEntityEvent.getEntity() instanceof LivingEntity && EntityDamageByEntityEvent.DamageCause.ENTITY_ATTACK.equals(entityDamageByEntityEvent.getCause()) && ItemStackUtil.isItemSimilar(((Player) entityDamageByEntityEvent.getDamager()).getInventory().getItemInMainHand(), FinalTechItems.SWORD2)) {
+        if (entityDamageByEntityEvent.getDamager() instanceof Player && entityDamageByEntityEvent.getEntity() instanceof LivingEntity && EntityDamageByEntityEvent.DamageCause.ENTITY_ATTACK.equals(entityDamageByEntityEvent.getCause()) && ItemStackUtil.isItemSimilar(((Player) entityDamageByEntityEvent.getDamager()).getInventory().getItemInMainHand(), FinalTechItemStacks.SWORD2)) {
             double damage = entityDamageByEntityEvent.getDamage();
             AttributeInstance maxHealthAttributeInstance = ((LivingEntity) entityDamageByEntityEvent.getEntity()).getAttribute(Attribute.GENERIC_MAX_HEALTH);
             if (maxHealthAttributeInstance != null) {

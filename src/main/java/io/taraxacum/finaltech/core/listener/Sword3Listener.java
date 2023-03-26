@@ -1,6 +1,6 @@
 package io.taraxacum.finaltech.core.listener;
 
-import io.taraxacum.finaltech.setup.FinalTechItems;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
 import io.taraxacum.libs.plugin.util.ItemStackUtil;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -13,7 +13,7 @@ public class Sword3Listener implements Listener {
 
     @EventHandler
     public void onPlayerAttack(EntityDamageByEntityEvent entityDamageByEntityEvent) {
-        if (entityDamageByEntityEvent.getDamager() instanceof Player && entityDamageByEntityEvent.getEntity() instanceof LivingEntity && EntityDamageByEntityEvent.DamageCause.ENTITY_ATTACK.equals(entityDamageByEntityEvent.getCause()) && ItemStackUtil.isItemSimilar(((Player) entityDamageByEntityEvent.getDamager()).getInventory().getItemInMainHand(), FinalTechItems.SWORD3)) {
+        if (entityDamageByEntityEvent.getDamager() instanceof Player && entityDamageByEntityEvent.getEntity() instanceof LivingEntity && EntityDamageByEntityEvent.DamageCause.ENTITY_ATTACK.equals(entityDamageByEntityEvent.getCause()) && ItemStackUtil.isItemSimilar(((Player) entityDamageByEntityEvent.getDamager()).getInventory().getItemInMainHand(), FinalTechItemStacks.SWORD3)) {
             LivingEntity entity = (LivingEntity)entityDamageByEntityEvent.getEntity();
             for (PotionEffect potionEffect : entity.getActivePotionEffects()) {
                 entity.removePotionEffect(potionEffect.getType());
