@@ -212,9 +212,9 @@ public class SubFlexItemGroup extends FlexItemGroup {
                                 "§7" + research.getName(player),
                                 "§4§l" + Slimefun.getLocalization().getMessage(player, "guide.locked"),
                                 "",
-                                "§a> Click to unlock",
+                                "§a> 点击解锁",
                                 "",
-                                "§7Cost: §b" + research.getCost() + " Level(s)");
+                                "§7花费: §b" + research.getCost() + " 等级经验");
                         chestMenu.addItem(MAIN_CONTENT_L[i][j], icon);
                         chestMenu.addMenuClickHandler(MAIN_CONTENT_L[i][j], (p, slot, item, action) -> {
                             PlayerPreResearchEvent event = new PlayerPreResearchEvent(player, research, slimefunItem);
